@@ -30,7 +30,7 @@ export function HelpButton() {
                <HelpCircle className="size-4" />
             </Button>
          </DropdownMenuTrigger>
-         <DropdownMenuContent align="end" className="w-64">
+         <DropdownMenuContent align="end" className="w-60">
             <div className="p-2">
                <div className="relative">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

@@ -27,7 +27,7 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
                <span className="text-sm text-muted-foreground">{count}</span>
             </div>
 
-            <Button size="icon" variant="ghost">
+            <Button className="size-6 " size="icon" variant="ghost">
                <Plus className="size-4" />
             </Button>
          </div>

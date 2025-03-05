@@ -48,7 +48,7 @@ export function OrgSwitcher() {
                   <CreateNewIssue />
                </div>
                <DropdownMenuContent
-                  className="w-[--radix-dropdown-menu-trigger-width] min-w-64 rounded-lg"
+                  className="w-[--radix-dropdown-menu-trigger-width] min-w-60 rounded-lg"
                   side="bottom"
                   align="end"
                   sideOffset={4}
