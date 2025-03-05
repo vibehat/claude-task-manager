@@ -4,12 +4,9 @@ import { type LucideIcon } from 'lucide-react';
 
 import {
    SidebarGroup,
-   SidebarGroupLabel,
    SidebarMenu,
-   SidebarMenuAction,
    SidebarMenuButton,
    SidebarMenuItem,
-   useSidebar,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 
@@ -22,8 +19,6 @@ export function NavInbox({
       icon: LucideIcon;
    }[];
 }) {
-   const { isMobile } = useSidebar();
-
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarMenu>

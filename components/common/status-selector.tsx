@@ -25,7 +25,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps) {
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
 
-   const { issues, updateIssueStatus, filterByStatus } = useIssuesStore();
+   const { updateIssueStatus, filterByStatus } = useIssuesStore();
 
    useEffect(() => {
       setValue(status.id);

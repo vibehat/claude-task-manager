@@ -17,18 +17,11 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-   SidebarMenu,
-   SidebarMenuButton,
-   SidebarMenuItem,
-   useSidebar,
-} from '@/components/ui/sidebar';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { Button } from '../../ui/button';
 import { CreateNewIssue } from './create-new-issue';
 
-export function OrgSwitcher({}) {
-   const { isMobile } = useSidebar();
-
+export function OrgSwitcher() {
    return (
       <SidebarMenu>
          <SidebarMenuItem>

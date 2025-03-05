@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Issue, issues as mockIssues, groupIssuesByStatus } from '@/lib/mock-data/issues';
-import { Status, status } from '@/lib/mock-data/status';
+import { Status } from '@/lib/mock-data/status';
 import { Priority } from '@/lib/mock-data/priorities';
 import { User } from '@/lib/mock-data/users';
 import { LabelInterface } from '@/lib/mock-data/labels';

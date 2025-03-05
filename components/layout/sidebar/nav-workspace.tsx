@@ -13,10 +13,8 @@ import {
    SidebarGroup,
    SidebarGroupLabel,
    SidebarMenu,
-   SidebarMenuAction,
    SidebarMenuButton,
    SidebarMenuItem,
-   useSidebar,
 } from '@/components/ui/sidebar';
 import { RemixiconComponentType } from '@remixicon/react';
 import Link from 'next/link';
@@ -30,8 +28,6 @@ export function NavWorkspace({
       icon: LucideIcon | RemixiconComponentType;
    }[];
 }) {
-   const { isMobile } = useSidebar();
-
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarGroupLabel>Workspace</SidebarGroupLabel>

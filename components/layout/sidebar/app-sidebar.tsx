@@ -9,13 +9,7 @@ import { NavWorkspace } from '@/components/layout/sidebar/nav-workspace';
 import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
 import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
-import {
-   Sidebar,
-   SidebarContent,
-   SidebarFooter,
-   SidebarHeader,
-   SidebarRail,
-} from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
 import { teams } from '@/lib/mock-data/teams';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
