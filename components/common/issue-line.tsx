@@ -16,7 +16,7 @@ export function IssueLine({ issue }: { issue: Issue }) {
       >
          <div className="flex items-center gap-0.5">
             <PrioritySelector priority={issue.priority} issueId={issue.id} />
-            <span className="text-sm hidden sm:inline-block text-muted-foreground font-medium w-[68px] truncate shrink-0 mr-0.5">
+            <span className="text-sm hidden sm:inline-block text-muted-foreground font-medium w-[66px] truncate shrink-0 mr-0.5">
                {issue.identifier}
             </span>
             <StatusSelector status={issue.status} issueId={issue.id} />

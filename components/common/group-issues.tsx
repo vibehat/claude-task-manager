@@ -14,22 +14,24 @@ interface GroupIssuesProps {
 
 export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    return (
-      <div className="sticky top-0 z-10 bg-container">
-         <div
-            className="flex items-center justify-between h-10 px-6"
-            style={{
-               backgroundColor: `${status.color}08`,
-            }}
-         >
-            <div className="flex items-center gap-2">
-               <status.icon />
-               <span className="text-sm font-medium">{status.name}</span>
-               <span className="text-sm text-muted-foreground">{count}</span>
-            </div>
+      <div className="bg-container">
+         <div className="sticky top-0 z-10 bg-container w-full h-10">
+            <div
+               className="w-full h-full flex items-center justify-between px-6"
+               style={{
+                  backgroundColor: `${status.color}08`,
+               }}
+            >
+               <div className="flex items-center gap-2">
+                  <status.icon />
+                  <span className="text-sm font-medium">{status.name}</span>
+                  <span className="text-sm text-muted-foreground">{count}</span>
+               </div>
 
-            <Button className="size-6 " size="icon" variant="ghost">
-               <Plus className="size-4" />
-            </Button>
+               <Button className="size-6 " size="icon" variant="ghost">
+                  <Plus className="size-4" />
+               </Button>
+            </div>
          </div>
 
          <div className="space-y-0">
