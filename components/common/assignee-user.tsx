@@ -25,27 +25,32 @@ interface AssigneeUserProps {
 export function AssigneeUser({ user }: AssigneeUserProps) {
    const [open, setOpen] = useState(false);
    const [currentAssignee, setCurrentAssignee] = useState<User | null>(user);
+
+   const renderAvatar = () => {
+      if (currentAssignee) {
+         return (
+            <Avatar className="size-6 shrink-0">
+               <AvatarImage src={currentAssignee.avatarUrl} alt={currentAssignee.name} />
+               <AvatarFallback>{currentAssignee.name[0]}</AvatarFallback>
+            </Avatar>
+         );
+      } else {
+         return (
+            <div className="size-6 flex items-center justify-center">
+               <CircleUserRound className="size-5 text-zinc-600" />
+            </div>
+         );
+      }
+   };
+
    return (
       <DropdownMenu open={open} onOpenChange={setOpen}>
          <DropdownMenuTrigger asChild>
             <button className="relative w-fit focus:outline-none">
-               <Avatar className="size-6 shrink-0">
-                  {currentAssignee ? (
-                     <>
-                        <AvatarImage src={currentAssignee.avatarUrl} alt={currentAssignee.name} />
-                        <AvatarFallback>{currentAssignee.name[0]}</AvatarFallback>
-                     </>
-                  ) : (
-                     <>
-                        <AvatarFallback className="bg-transparent">
-                           <CircleUserRound className="size-5 text-zinc-600" />
-                        </AvatarFallback>
-                     </>
-                  )}
-               </Avatar>
+               {renderAvatar()}
                {currentAssignee && (
                   <span
-                     className={`border-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full border-2`}
+                     className="border-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full border-2"
                      style={{ backgroundColor: color[currentAssignee.status] }}
                   >
                      <span className="sr-only">{currentAssignee.status}</span>
