@@ -6,6 +6,7 @@ import { SearchIcon } from 'lucide-react';
 import { useSearchStore } from '@/lib/store/search-store';
 import { Input } from '@/components/ui/input';
 import { useEffect, useRef } from 'react';
+import Notifications from './notifications';
 
 export default function HeaderNav() {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =
@@ -41,6 +42,7 @@ export default function HeaderNav() {
          <SidebarTrigger className="" />
 
          <div className="flex items-center gap-2">
+            <Notifications />
             {isSearchOpen ? (
                <div
                   ref={searchContainerRef}
