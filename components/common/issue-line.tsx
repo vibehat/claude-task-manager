@@ -21,7 +21,7 @@ export function IssueLine({ issue }: { issue: Issue }) {
             </span>
             <StatusSelector status={issue.status} issueId={issue.id} />
          </div>
-         <span className="min-w-0 flex items-center justify-start mr-1">
+         <span className="min-w-0 flex items-center justify-start mr-1 ml-0.5">
             <span className="text-xs sm:text-sm font-medium sm:font-semibold truncate">
                {issue.title}
             </span>

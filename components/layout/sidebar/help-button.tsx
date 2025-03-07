@@ -1,15 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import {
-   Book,
-   ExternalLink,
-   HelpCircle,
-   Keyboard,
-   MessageSquare,
-   Search,
-   Users,
-} from 'lucide-react';
+import { ExternalLink, HelpCircle, Keyboard, Search } from 'lucide-react';
 
 import {
    DropdownMenu,
@@ -21,6 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
+import { RiBox3Fill, RiLinkedinFill, RiThreadsFill, RiTwitterXFill } from '@remixicon/react';
 
 export function HelpButton() {
    return (
@@ -45,53 +39,65 @@ export function HelpButton() {
                <span className="ml-auto text-xs text-muted-foreground">⌘/</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel>Resources</DropdownMenuLabel>
-            <DropdownMenuItem>
-               <Users className="mr-2 h-4 w-4" />
-               <span>Community</span>
-               <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
+            <DropdownMenuLabel>Follow me</DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+               <Link href="https://x.com/ln_dev7" target="_blank">
+                  <RiTwitterXFill className="mr-2 h-4 w-4" />
+                  <span>X - Twitter</span>
+                  <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
+               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-               <Book className="mr-2 h-4 w-4" />
-               <span>Documentation</span>
-               <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
+            <DropdownMenuItem asChild>
+               <Link href="https://threads.net/@ln_dev7" target="_blank">
+                  <RiThreadsFill className="mr-2 h-4 w-4" />
+                  <span>Threads</span>
+                  <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
+               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-               <Book className="mr-2 h-4 w-4" />
-               <span>API Documentation</span>
-               <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
+            <DropdownMenuItem asChild>
+               <Link href="https://linkedin.com/in/lndev" target="_blank">
+                  <RiLinkedinFill className="mr-2 h-4 w-4" />
+                  <span>LinkedIn</span>
+                  <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
+               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-               <MessageSquare className="mr-2 h-4 w-4" />
-               <span>Contact us</span>
+            <DropdownMenuItem asChild>
+               <Link href="https://ui.lndev.me" target="_blank">
+                  <RiBox3Fill className="mr-2 h-4 w-4" />
+                  <span>lndev-ui</span>
+               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuLabel>What&apos;s new</DropdownMenuLabel>
-            <DropdownMenuItem>
-               <div className="flex items-center">
+            <DropdownMenuItem asChild>
+               <Link href="https://ui.lndev.me" target="_blank" className="flex items-center">
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                      <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
                   </div>
-                  <span>Initiative updates</span>
-               </div>
+                  <span>Launch lndev-ui</span>
+               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-               <div className="flex items-center">
+            <DropdownMenuItem asChild>
+               <Link href="https://lndev.me" target="_blank" className="flex items-center">
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                      <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
                   </div>
-                  <span>Pull Request reviews (alpha)</span>
-               </div>
+                  <span>New portfolio</span>
+               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-               <div className="flex items-center">
+            <DropdownMenuItem asChild>
+               <Link
+                  href="https://github.com/lndev7/lndev-ui"
+                  target="_blank"
+                  className="flex items-center"
+               >
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                      <div className="h-1.5 w-1.5 rounded-full bg-transparent"></div>
                   </div>
-                  <span>Full changelog</span>
+                  <span>GitHub</span>
                   <ExternalLink className="ml-2 h-3 w-3 text-muted-foreground" />
-               </div>
+               </Link>
             </DropdownMenuItem>
          </DropdownMenuContent>
       </DropdownMenu>
