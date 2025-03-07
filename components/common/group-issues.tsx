@@ -3,8 +3,11 @@
 import { Status } from '@/lib/mock-data/status';
 import { Issue } from '@/lib/mock-data/issues';
 import { IssueLine } from './issue-line';
+import { IssueGrid } from './issue-grid';
 import { Button } from '../ui/button';
 import { Plus } from 'lucide-react';
+import { useViewStore } from '@/lib/store/view-store';
+import { cn } from '@/lib/utils';
 
 interface GroupIssuesProps {
    status: Status;
@@ -13,13 +16,28 @@ interface GroupIssuesProps {
 }
 
 export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
+   const { viewType } = useViewStore();
+
    return (
-      <div className="bg-container">
-         <div className="sticky top-0 z-10 bg-container w-full h-10">
+      <div
+         className={cn(
+            'overflow-hidden bg-conainer',
+            viewType === 'grid' ? 'rounded-md h-full flex-shrink-0 w-[348px] flex flex-col' : ''
+         )}
+      >
+         <div
+            className={cn(
+               'sticky top-0 z-10 bg-container w-full',
+               viewType === 'grid' ? 'rounded-t-md h-[50px]' : 'h-10'
+            )}
+         >
             <div
-               className="w-full h-full flex items-center justify-between px-6"
+               className={cn(
+                  'w-full h-full flex items-center justify-between',
+                  viewType === 'grid' ? 'px-3' : 'px-6'
+               )}
                style={{
-                  backgroundColor: `${status.color}08`,
+                  backgroundColor: `${status.color}10`,
                }}
             >
                <div className="flex items-center gap-2">
@@ -34,11 +52,19 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
             </div>
          </div>
 
-         <div className="space-y-0">
-            {issues.map((issue) => (
-               <IssueLine key={issue.id} issue={issue} />
-            ))}
-         </div>
+         {viewType === 'list' ? (
+            <div className="space-y-0">
+               {issues.map((issue) => (
+                  <IssueLine key={issue.id} issue={issue} />
+               ))}
+            </div>
+         ) : (
+            <div className="flex-1 overflow-y-auto p-2 space-y-2 bg-zinc-50/50 dark:bg-zinc-900/50">
+               {issues.map((issue) => (
+                  <IssueGrid key={issue.id} issue={issue} />
+               ))}
+            </div>
+         )}
       </div>
    );
 }
