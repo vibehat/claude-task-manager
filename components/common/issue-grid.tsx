@@ -30,7 +30,7 @@ export function IssueGrid({ issue }: { issue: Issue }) {
             {issue.project && <ProjectBadge project={issue.project} />}
          </div>
 
-         <div className="flex items-center justify-between mt-auto pt-2 border-t">
+         <div className="flex items-center justify-between mt-auto pt-2">
             <span className="text-xs text-muted-foreground">
                {format(new Date(issue.createdAt), 'MMM dd')}
             </span>
