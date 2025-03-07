@@ -21,8 +21,10 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    return (
       <div
          className={cn(
-            'overflow-hidden bg-conainer',
-            viewType === 'grid' ? 'rounded-md h-full flex-shrink-0 w-[348px] flex flex-col' : ''
+            'bg-conainer',
+            viewType === 'grid'
+               ? 'overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col'
+               : ''
          )}
       >
          <div
@@ -37,7 +39,7 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
                   viewType === 'grid' ? 'px-3' : 'px-6'
                )}
                style={{
-                  backgroundColor: `${status.color}10`,
+                  backgroundColor: viewType === 'grid' ? `${status.color}10` : `${status.color}08`,
                }}
             >
                <div className="flex items-center gap-2">
