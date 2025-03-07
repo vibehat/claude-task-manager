@@ -14,6 +14,7 @@ export default function HeaderNav() {
       useSearchStore();
    const searchInputRef = useRef<HTMLInputElement>(null);
    const searchContainerRef = useRef<HTMLDivElement>(null);
+   const previousValueRef = useRef<string>('');
 
    useEffect(() => {
       if (isSearchOpen && searchInputRef.current) {
@@ -50,9 +51,22 @@ export default function HeaderNav() {
                >
                   <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input
+                     type="search"
                      ref={searchInputRef}
                      value={searchQuery}
-                     onChange={(e) => setSearchQuery(e.target.value)}
+                     onChange={(e) => {
+                        // Store the previous value before updating
+                        previousValueRef.current = searchQuery;
+
+                        // Update the value
+                        const newValue = e.target.value;
+                        setSearchQuery(newValue);
+
+                        // If the value goes from non-empty to empty, it's probably a click on the cross
+                        if (previousValueRef.current && newValue === '') {
+                           closeSearch();
+                        }
+                     }}
                      placeholder="Search issues..."
                      className="pl-8 h-7 text-sm"
                      onKeyDown={(e) => {
