@@ -151,13 +151,23 @@ export const TechnicalReviewIcon: React.FC = () => {
       </svg>
    );
 };
+
 export const CompletedIcon: React.FC = () => {
    return (
-      <svg width="20" height="20" viewBox="0 0 14 14" fill="none">
-         <circle cx="7" cy="7" r="6" fill="#8b5cf6" />
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+         <circle
+            cx="7"
+            cy="7"
+            r="6"
+            fill="none"
+            stroke="#8b5cf6"
+            strokeWidth="2"
+            strokeDasharray="3.14 0"
+            strokeDashoffset="-0.7"
+         ></circle>
          <path
-            d="M4.5 7L6 8.5L9.5 5"
-            stroke="white"
+            d="M4.5 7L6.5 9L9.5 5"
+            stroke="#8b5cf6"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
