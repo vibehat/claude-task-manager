@@ -52,15 +52,19 @@ export const metadata: Metadata = {
    keywords: ['ui', 'lndev', 'components', 'template'],
 };
 
+import { ThemeProvider } from '@/components/layout/theme-provider';
+
 export default function RootLayout({
    children,
 }: Readonly<{
    children: React.ReactNode;
 }>) {
    return (
-      <html lang="en" className="dark bg-background" style={{ colorScheme: 'dark' }}>
-         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-            {children}
+      <html lang="en" suppressHydrationWarning>
+         <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+               {children}
+            </ThemeProvider>
          </body>
       </html>
    );

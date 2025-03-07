@@ -7,6 +7,7 @@ import { useSearchStore } from '@/lib/store/search-store';
 import { Input } from '@/components/ui/input';
 import { useEffect, useRef } from 'react';
 import Notifications from './notifications';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
 
 export default function HeaderNav() {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =
@@ -42,7 +43,6 @@ export default function HeaderNav() {
          <SidebarTrigger className="" />
 
          <div className="flex items-center gap-2">
-            <Notifications />
             {isSearchOpen ? (
                <div
                   ref={searchContainerRef}
@@ -63,15 +63,19 @@ export default function HeaderNav() {
                   />
                </div>
             ) : (
-               <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleSearch}
-                  className="h-8 w-8"
-                  aria-label="Search"
-               >
-                  <SearchIcon className="h-4 w-4" />
-               </Button>
+               <>
+                  <Button
+                     variant="ghost"
+                     size="icon"
+                     onClick={toggleSearch}
+                     className="h-8 w-8"
+                     aria-label="Search"
+                  >
+                     <SearchIcon className="h-4 w-4" />
+                  </Button>
+                  <ThemeToggle />
+                  <Notifications />
+               </>
             )}
          </div>
       </div>
