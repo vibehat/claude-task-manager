@@ -13,25 +13,19 @@ export default function AllIssues() {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
 
+   const isViewTypeGrid = viewType === 'grid';
+   const issuesContainerClassName = isViewTypeGrid
+      ? 'flex h-full gap-3 px-2 py-2 min-w-max'
+      : undefined;
+
    return (
-      <div className={cn('w-full h-full', viewType === 'grid' ? 'overflow-x-auto' : '')}>
+      <div className={cn('w-full h-full', isViewTypeGrid ? 'overflow-x-auto' : '')}>
          {isSearchOpen && searchQuery.trim() !== '' ? (
             <div className="px-6 mb-6">
                <SearchIssues />
             </div>
-         ) : viewType === 'list' ? (
-            <div>
-               {status.map((statusItem) => (
-                  <GroupIssues
-                     key={statusItem.id}
-                     status={statusItem}
-                     issues={issuesByStatus[statusItem.id] || []}
-                     count={issuesByStatus[statusItem.id]?.length || 0}
-                  />
-               ))}
-            </div>
          ) : (
-            <div className="flex h-full gap-3 px-2 py-2 min-w-max">
+            <div className={issuesContainerClassName}>
                {status.map((statusItem) => (
                   <GroupIssues
                      key={statusItem.id}
