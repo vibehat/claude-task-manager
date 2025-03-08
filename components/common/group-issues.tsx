@@ -6,7 +6,7 @@ import { useIssuesStore } from '@/lib/store/issues-store';
 import { useViewStore } from '@/lib/store/view-store';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Button } from '../ui/button';
 import { IssueDragType, IssueGrid } from './issue-grid';
@@ -78,8 +78,8 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({ issues, status
    // Set up drop functionality to accept only issue items.
    const [, drop] = useDrop(() => ({
       accept: IssueDragType,
-      drop(item: Issue) {
-         if (item.status.id !== status.id) {
+      drop(item: Issue, monitor) {
+         if (monitor.didDrop() && item.status.id !== status.id) {
             updateIssueStatus(item.id, status);
          }
       },
