@@ -11,15 +11,19 @@ Project management interface inspired by Linear. Built with Next.js and shadcn/u
 
 ### 📦 Installation
 
-```bash
+```shell
 git clone https://github.com/lndev-ui/circle.git
 cd circle
 ```
 
 ### Install dependencies
 
+```shell
 pnpm install
+```
 
 ### Start the development server
 
+```shell
 pnpm dev
+```
