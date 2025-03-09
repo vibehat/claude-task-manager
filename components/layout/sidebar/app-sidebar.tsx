@@ -55,7 +55,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
          <SidebarContent>
             <NavInbox inbox={data.inbox} />
             <NavWorkspace workspace={data.workspace} />
-            <NavTeams items={teams} />
+            <NavTeams items={teams.filter((t) => t.joined)} />
          </SidebarContent>
          <SidebarFooter>
             <div className="w-full flex items-center justify-between">

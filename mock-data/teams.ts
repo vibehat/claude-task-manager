@@ -70,7 +70,7 @@ export const teams: Team[] = [
       id: 'WEB',
       name: 'Web Development',
       icon: '🌐',
-      joined: false,
+      joined: true,
       color: '#0000FF',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
