@@ -62,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
          <SidebarFooter>
             <div className="w-full flex flex-col gap-2">
                {open && (
-                  <div className="group relative flex flex-col gap-2 rounded-lg border p-4 text-sm w-full">
+                  <div className="group/sidebar relative flex flex-col gap-2 rounded-lg border p-4 text-sm w-full">
                      <div
                         className="absolute top-2.5 right-2 z-10 cursor-pointer"
                         onClick={() => setOpen(!open)}
@@ -70,7 +70,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                      >
                         <X className="size-4" />
                      </div>
-                     <div className="text-balance text-lg font-semibold leading-tight group-hover:underline">
+                     <div className="text-balance text-lg font-semibold leading-tight group-hover/sidebar:underline">
                         Fine components coded by lndev.
                      </div>
                      <div>
