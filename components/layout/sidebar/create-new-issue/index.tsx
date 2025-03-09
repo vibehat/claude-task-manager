@@ -22,35 +22,41 @@ import { LabelSelector } from './label-selector';
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const [open, setOpen] = useState<boolean>(false);
-
    const { addIssue, getAllIssues } = useIssuesStore();
-
-   const identifiers = getAllIssues().map((issue) => issue.identifier);
-   let identifier = Math.floor(Math.random() * 999)
-      .toString()
-      .padStart(3, '0');
-   while (identifiers.includes(`LNUI-${identifier}`)) {
-      identifier = Math.floor(Math.random() * 999)
+   
+   const generateUniqueIdentifier = () => {
+      const identifiers = getAllIssues().map((issue) => issue.identifier);
+      let identifier = Math.floor(Math.random() * 999)
          .toString()
          .padStart(3, '0');
-   }
-
-   const defaultData: Issue = {
-      id: uuidv4(),
-      identifier: `LNUI-${identifier}`,
-      title: '',
-      description: '',
-      status: status.find((s) => s.id === 'to-do')!,
-      assignees: null,
-      priority: priorities.find((p) => p.id === 'no-priority')!,
-      labels: [],
-      createdAt: new Date().toISOString(),
-      cycleId: '',
-      project: undefined,
-      subissues: [],
+      while (identifiers.includes(`LNUI-${identifier}`)) {
+         identifier = Math.floor(Math.random() * 999)
+            .toString()
+            .padStart(3, '0');
+      }
+      return identifier;
    };
 
-   const [addIssueForm, setAddIssueForm] = useState<Issue>(defaultData);
+   // Créer une fonction pour générer les données par défaut
+   const createDefaultData = () => {
+      const identifier = generateUniqueIdentifier();
+      return {
+         id: uuidv4(),
+         identifier: `LNUI-${identifier}`,
+         title: '',
+         description: '',
+         status: status.find((s) => s.id === 'to-do')!,
+         assignees: null,
+         priority: priorities.find((p) => p.id === 'no-priority')!,
+         labels: [],
+         createdAt: new Date().toISOString(),
+         cycleId: '',
+         project: undefined,
+         subissues: [],
+      };
+   };
+
+   const [addIssueForm, setAddIssueForm] = useState<Issue>(createDefaultData());
 
    const createIssue = () => {
       if (!addIssueForm.title) {
@@ -60,7 +66,7 @@ export function CreateNewIssue() {
       toast.success('Issue created');
       addIssue(addIssueForm);
       setOpen(createMore);
-      setAddIssueForm(defaultData);
+      setAddIssueForm(createDefaultData());
    };
 
    return (
