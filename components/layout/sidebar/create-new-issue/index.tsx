@@ -23,7 +23,7 @@ export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const [open, setOpen] = useState<boolean>(false);
    const { addIssue, getAllIssues } = useIssuesStore();
-   
+
    const generateUniqueIdentifier = () => {
       const identifiers = getAllIssues().map((issue) => issue.identifier);
       let identifier = Math.floor(Math.random() * 999)

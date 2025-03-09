@@ -62,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
          <SidebarFooter>
             <div className="w-full flex flex-col gap-2">
                {open && (
-                  <div className="group relative flex flex-col gap-2 rounded-lg border p-4 text-sm mt-6 w-full">
+                  <div className="group relative flex flex-col gap-2 rounded-lg border p-4 text-sm w-full">
                      <div
                         className="absolute top-2.5 right-2 z-10 cursor-pointer"
                         onClick={() => setOpen(!open)}
