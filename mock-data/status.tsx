@@ -186,7 +186,7 @@ export const status: Status[] = [
    },
    { id: 'completed', name: 'Completed', color: '#8b5cf6', icon: CompletedIcon },
    { id: 'paused', name: 'Paused', color: '#0ea5e9', icon: PausedIcon },
-   { id: 'to-do', name: 'To Do', color: '#f97316', icon: ToDoIcon },
+   { id: 'to-do', name: 'Todo', color: '#f97316', icon: ToDoIcon },
    { id: 'backlog', name: 'Backlog', color: '#ec4899', icon: BacklogIcon },
 ];
 

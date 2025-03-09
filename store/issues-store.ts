@@ -11,6 +11,9 @@ interface IssuesState {
    issues: Issue[];
    issuesByStatus: Record<string, Issue[]>;
 
+   //
+   getAllIssues: () => Issue[];
+
    // Actions
    addIssue: (issue: Issue) => void;
    updateIssue: (id: string, updatedIssue: Partial<Issue>) => void;
@@ -48,6 +51,9 @@ export const useIssuesStore = create<IssuesState>((set, get) => ({
    // Initial state
    issues: mockIssues,
    issuesByStatus: groupIssuesByStatus(mockIssues),
+
+   //
+   getAllIssues: () => get().issues,
 
    // Actions
    addIssue: (issue: Issue) => {
