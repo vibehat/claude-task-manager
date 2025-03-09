@@ -1,6 +1,7 @@
 'use client';
 
 import { useViewStore } from '@/store/view-store';
+import { useCreateIssueStore } from '@/store/create-issue-store';
 import { cn } from '@/lib/utils';
 import { Issue } from '@/mock-data/issues';
 import { Status } from '@/mock-data/status';
@@ -17,6 +18,7 @@ interface GroupIssuesProps {
 
 export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    const { viewType } = useViewStore();
+   const { openModal } = useCreateIssueStore();
 
    return (
       <div
@@ -48,7 +50,12 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
                   <span className="text-sm text-muted-foreground">{count}</span>
                </div>
 
-               <Button className="size-6 " size="icon" variant="ghost">
+               <Button
+                  className="size-6"
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => openModal(status)}
+               >
                   <Plus className="size-4" />
                </Button>
             </div>

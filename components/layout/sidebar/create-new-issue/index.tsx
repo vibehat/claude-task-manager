@@ -6,11 +6,12 @@ import { Heart } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { RiEditLine } from '@remixicon/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Issue } from '@/mock-data/issues';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
+import { useCreateIssueStore } from '@/store/create-issue-store';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { StatusSelector } from './status-selector';
@@ -21,7 +22,7 @@ import { LabelSelector } from './label-selector';
 
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
-   const [open, setOpen] = useState<boolean>(false);
+   const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
    const { addIssue, getAllIssues } = useIssuesStore();
 
    const generateUniqueIdentifier = () => {
@@ -37,7 +38,6 @@ export function CreateNewIssue() {
       return identifier;
    };
 
-   // Créer une fonction pour générer les données par défaut
    const createDefaultData = () => {
       const identifier = generateUniqueIdentifier();
       return {
@@ -45,7 +45,7 @@ export function CreateNewIssue() {
          identifier: `LNUI-${identifier}`,
          title: '',
          description: '',
-         status: status.find((s) => s.id === 'to-do')!,
+         status: defaultStatus || status.find((s) => s.id === 'to-do')!,
          assignees: null,
          priority: priorities.find((p) => p.id === 'no-priority')!,
          labels: [],
@@ -58,6 +58,10 @@ export function CreateNewIssue() {
 
    const [addIssueForm, setAddIssueForm] = useState<Issue>(createDefaultData());
 
+   useEffect(() => {
+      setAddIssueForm(createDefaultData());
+   }, [defaultStatus]);
+
    const createIssue = () => {
       if (!addIssueForm.title) {
          toast.error('Title is required');
@@ -65,12 +69,14 @@ export function CreateNewIssue() {
       }
       toast.success('Issue created');
       addIssue(addIssueForm);
-      setOpen(createMore);
+      if (!createMore) {
+         closeModal();
+      }
       setAddIssueForm(createDefaultData());
    };
 
    return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={isOpen} onOpenChange={(value) => (value ? openModal() : closeModal())}>
          <DialogTrigger asChild>
             <Button className="size-8 shrink-0" variant="secondary" size="icon">
                <RiEditLine />
