@@ -9,7 +9,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { useViewStore, ViewType } from '@/store/view-store';
-import { LayoutGrid, LayoutList, ListFilter, SlidersHorizontal } from 'lucide-react';
+import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
+import {Filter} from './filter';
 
 export default function HeaderOptions() {
    const { viewType, setViewType } = useViewStore();
@@ -20,10 +21,7 @@ export default function HeaderOptions() {
 
    return (
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
-         <Button size="xs" variant="ghost">
-            <ListFilter className="size-4 mr-1" />
-            Filter
-         </Button>
+         <Filter />
          <DropdownMenu>
             <DropdownMenuTrigger asChild>
                <Button className="relative" size="xs" variant="secondary">
