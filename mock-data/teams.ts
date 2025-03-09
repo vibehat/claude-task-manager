@@ -31,7 +31,7 @@ export const teams: Team[] = [
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
    {
-      id: 'PERFOMANCE',
+      id: 'PERF',
       name: 'Performance Lab',
       icon: '☀️',
       joined: true,

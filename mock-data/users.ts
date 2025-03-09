@@ -11,6 +11,12 @@ export interface User {
 
 const avatarUrl = (seed: string) => `https://api.dicebear.com/9.x/glass/svg?seed=${seed}`;
 
+export const statusUserColors = {
+   online: '#00cc66',
+   offline: '#969696',
+   away: '#ffcc00',
+};
+
 export const users: User[] = [
    {
       id: 'ln',
@@ -20,7 +26,7 @@ export const users: User[] = [
       status: 'online',
       role: 'Admin',
       joinedDate: '2022-01-01',
-      teamIds: ['CORE'],
+      teamIds: ['CORE', 'PERF', 'DESIGN', 'WEB'],
    },
    {
       id: 'sophia',
@@ -30,7 +36,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Admin',
       joinedDate: '2023-06-04',
-      teamIds: ['CORE', 'PERFOMANCE'],
+      teamIds: ['CORE', 'PERF'],
    },
    {
       id: 'mason',
@@ -60,7 +66,7 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2023-05-15',
-      teamIds: ['DESIGN', 'PERFOMANCE'],
+      teamIds: ['DESIGN', 'PERF'],
    },
    {
       id: 'olivia',
@@ -70,7 +76,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Admin',
       joinedDate: '2022-08-22',
-      teamIds: ['PERFOMANCE'],
+      teamIds: ['PERF'],
    },
    {
       id: 'lucas',
@@ -80,7 +86,7 @@ export const users: User[] = [
       status: 'away',
       role: 'Member',
       joinedDate: '2023-02-14',
-      teamIds: ['CORE', 'DESIGN', 'PERFOMANCE'],
+      teamIds: ['CORE', 'DESIGN', 'PERF'],
    },
    {
       id: 'isabella',
@@ -100,7 +106,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2023-07-18',
-      teamIds: ['CORE', 'PERFOMANCE'],
+      teamIds: ['CORE', 'PERF'],
    },
    {
       id: 'amelia',
@@ -130,7 +136,7 @@ export const users: User[] = [
       status: 'online',
       role: 'Guest',
       joinedDate: '2022-04-03',
-      teamIds: ['PERFOMANCE'],
+      teamIds: ['PERF'],
    },
    {
       id: 'aiden',
@@ -150,7 +156,7 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2022-10-05',
-      teamIds: ['DESIGN', 'PERFOMANCE'],
+      teamIds: ['DESIGN', 'PERF'],
    },
    {
       id: 'logan',
@@ -170,7 +176,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2022-07-29',
-      teamIds: ['PERFOMANCE'],
+      teamIds: ['PERF'],
    },
    {
       id: 'gabriel',
@@ -200,7 +206,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2023-10-21',
-      teamIds: ['CORE', 'PERFOMANCE'],
+      teamIds: ['CORE', 'PERF'],
    },
    {
       id: 'abigail',
@@ -210,6 +216,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2022-06-17',
-      teamIds: ['DESIGN', 'PERFOMANCE'],
+      teamIds: ['DESIGN', 'PERF'],
    },
 ];
