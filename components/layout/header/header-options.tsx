@@ -1,8 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ListFilter, SlidersHorizontal, LayoutGrid, LayoutList } from 'lucide-react';
-import { useViewStore, ViewType } from '@/lib/store/view-store';
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -10,6 +8,8 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { useViewStore, ViewType } from '@/store/view-store';
+import { LayoutGrid, LayoutList, ListFilter, SlidersHorizontal } from 'lucide-react';
 
 export default function HeaderOptions() {
    const { viewType, setViewType } = useViewStore();

@@ -1,11 +1,11 @@
 'use client';
 
-import { Issue } from '@/lib/mock-data/issues';
-import { AssigneeUser } from './assignee-user';
+import { Issue } from '@/mock-data/issues';
 import { format } from 'date-fns';
+import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
-import { ProjectBadge } from './project-badge';
 import { PrioritySelector } from './priority-selector';
+import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
 
 export function IssueLine({ issue }: { issue: Issue }) {

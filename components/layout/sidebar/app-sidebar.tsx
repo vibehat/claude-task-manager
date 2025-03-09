@@ -1,17 +1,17 @@
 'use client';
 
-import * as React from 'react';
+import { RiGithubLine, RiPresentationLine } from '@remixicon/react';
 import { Box, FolderKanban, Inbox, Layers } from 'lucide-react';
-import { RiPresentationLine, RiGithubLine } from '@remixicon/react';
+import * as React from 'react';
 
+import { HelpButton } from '@/components/layout/sidebar/help-button';
+import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
 import { NavTeams } from '@/components/layout/sidebar/nav-teams';
 import { NavWorkspace } from '@/components/layout/sidebar/nav-workspace';
-import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
-import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
-import { teams } from '@/lib/mock-data/teams';
 import { Button } from '@/components/ui/button';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
+import { teams } from '@/mock-data/teams';
 import Link from 'next/link';
 
 const data = {

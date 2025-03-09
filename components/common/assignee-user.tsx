@@ -1,6 +1,5 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, users } from '@/lib/mock-data/users';
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -9,6 +8,7 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { User, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState } from 'react';
 

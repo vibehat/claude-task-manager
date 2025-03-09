@@ -1,8 +1,8 @@
 'use client';
 
+import { useIssuesStore } from '@/store/issues-store';
+import { useSearchStore } from '@/store/search-store';
 import { useEffect, useState } from 'react';
-import { useIssuesStore } from '@/lib/store/issues-store';
-import { useSearchStore } from '@/lib/store/search-store';
 import { IssueLine } from './issue-line';
 
 export function SearchIssues() {

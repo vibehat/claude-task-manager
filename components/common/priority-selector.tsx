@@ -10,10 +10,10 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { priorities, Priority } from '@/lib/mock-data/priorities';
-import { useIssuesStore } from '@/lib/store/issues-store';
+import { useIssuesStore } from '@/store/issues-store';
+import { priorities, Priority } from '@/mock-data/priorities';
 import { CheckIcon } from 'lucide-react';
-import { useId, useState, useEffect } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
    priority: Priority;

@@ -15,6 +15,13 @@ import Link from 'next/link';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuSeparator,
+   DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
    SidebarGroup,
    SidebarGroupLabel,
    SidebarMenu,
@@ -25,14 +32,7 @@ import {
    SidebarMenuSubButton,
    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { Team } from '@/lib/mock-data/teams';
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuSeparator,
-   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Team } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
 
 export function NavTeams({ items }: { items: Team[] }) {

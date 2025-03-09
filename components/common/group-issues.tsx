@@ -1,13 +1,13 @@
 'use client';
 
-import { Status } from '@/lib/mock-data/status';
-import { Issue } from '@/lib/mock-data/issues';
-import { IssueLine } from './issue-line';
-import { IssueGrid } from './issue-grid';
-import { Button } from '../ui/button';
-import { Plus } from 'lucide-react';
-import { useViewStore } from '@/lib/store/view-store';
+import { useViewStore } from '@/store/view-store';
 import { cn } from '@/lib/utils';
+import { Issue } from '@/mock-data/issues';
+import { Status } from '@/mock-data/status';
+import { Plus } from 'lucide-react';
+import { Button } from '../ui/button';
+import { IssueGrid } from './issue-grid';
+import { IssueLine } from './issue-line';
 
 interface GroupIssuesProps {
    status: Status;

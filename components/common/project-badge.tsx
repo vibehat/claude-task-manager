@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { Project } from '@/lib/mock-data/projects';
+import { Project } from '@/mock-data/projects';
 import Link from 'next/link';
 
 export function ProjectBadge({ project }: { project: Project }) {

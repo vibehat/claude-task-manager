@@ -1,13 +1,13 @@
 'use client';
 
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { Button } from '@/components/ui/button';
-import { SearchIcon } from 'lucide-react';
-import { useSearchStore } from '@/lib/store/search-store';
 import { Input } from '@/components/ui/input';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useSearchStore } from '@/store/search-store';
+import { SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import Notifications from './notifications';
-import { ThemeToggle } from '@/components/layout/theme-toggle';
 
 export default function HeaderNav() {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =

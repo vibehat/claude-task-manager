@@ -10,10 +10,10 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { status as allStatus, Status } from '@/lib/mock-data/status';
-import { useIssuesStore } from '@/lib/store/issues-store';
+import { useIssuesStore } from '@/store/issues-store';
+import { status as allStatus, Status } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
-import { useId, useState, useEffect } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
    status: Status;

@@ -6,6 +6,7 @@ export interface Team {
    name: string;
    icon: string;
    joined: boolean;
+   color: string;
    members: User[];
    projects: Project[];
 }
@@ -16,6 +17,7 @@ export const teams: Team[] = [
       name: 'LNDev Core',
       icon: '🛠️',
       joined: true,
+      color: '#FF0000',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
@@ -24,6 +26,7 @@ export const teams: Team[] = [
       name: 'Design System',
       icon: '🎨',
       joined: true,
+      color: '#00FF00',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
@@ -32,6 +35,7 @@ export const teams: Team[] = [
       name: 'Performance Lab',
       icon: '☀️',
       joined: true,
+      color: '#0000FF',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
@@ -40,6 +44,7 @@ export const teams: Team[] = [
       name: 'UX Team',
       icon: '👨🏼‍🎨',
       joined: false,
+      color: '#FF00FF',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
@@ -48,6 +53,7 @@ export const teams: Team[] = [
       name: 'Data Science',
       icon: '📊',
       joined: false,
+      color: '#0000FF',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
@@ -56,6 +62,7 @@ export const teams: Team[] = [
       name: 'Mobile Development',
       icon: '📱',
       joined: false,
+      color: '#0000FF',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
@@ -64,6 +71,16 @@ export const teams: Team[] = [
       name: 'Web Development',
       icon: '🌐',
       joined: false,
+      color: '#0000FF',
+      members: [users[0], users[1], users[2], users[3]],
+      projects: [projects[1], projects[1], projects[2], projects[3]],
+   },
+   {
+      id: 'UI',
+      name: 'UI/UX Team',
+      icon: '👨🏼‍🎨',
+      joined: false,
+      color: '#FF00FF',
       members: [users[0], users[1], users[2], users[3]],
       projects: [projects[1], projects[1], projects[2], projects[3]],
    },
