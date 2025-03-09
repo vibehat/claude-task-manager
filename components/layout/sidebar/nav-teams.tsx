@@ -114,7 +114,7 @@ export function NavTeams({ items }: { items: Team[] }) {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
+                                 <Link href="/lndev-ui/projects">
                                     <Box size={14} />
                                     <span>Projects</span>
                                  </Link>
@@ -122,7 +122,7 @@ export function NavTeams({ items }: { items: Team[] }) {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
+                                 <Link href="#">
                                     <Layers size={14} />
                                     <span>Views</span>
                                  </Link>
