@@ -1,11 +1,11 @@
 'use client';
 
-import { GroupIssues } from '@/components/common/group-issues';
+import { GroupIssues } from '@/components/common/issues/group-issues';
+import { cn } from '@/lib/utils';
+import { status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
-import { cn } from '@/lib/utils';
-import { status } from '@/mock-data/status';
 import { SearchIssues } from './search-issues';
 
 export default function AllIssues() {

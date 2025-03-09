@@ -8,15 +8,9 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { User, users } from '@/mock-data/users';
+import { statusUserColors, User, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState } from 'react';
-
-const color = {
-   online: '#00cc66',
-   offline: '#969696',
-   away: '#ffcc00',
-};
 
 interface AssigneeUserProps {
    user: User | null;
@@ -51,7 +45,7 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
                {currentAssignee && (
                   <span
                      className="border-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full border-2"
-                     style={{ backgroundColor: color[currentAssignee.status] }}
+                     style={{ backgroundColor: statusUserColors[currentAssignee.status] }}
                   >
                      <span className="sr-only">{currentAssignee.status}</span>
                   </span>

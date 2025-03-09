@@ -1,12 +1,12 @@
 'use client';
 
-import { useViewStore } from '@/store/view-store';
-import { useCreateIssueStore } from '@/store/create-issue-store';
 import { cn } from '@/lib/utils';
 import { Issue } from '@/mock-data/issues';
 import { Status } from '@/mock-data/status';
+import { useCreateIssueStore } from '@/store/create-issue-store';
+import { useViewStore } from '@/store/view-store';
 import { Plus } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { IssueGrid } from './issue-grid';
 import { IssueLine } from './issue-line';
 
