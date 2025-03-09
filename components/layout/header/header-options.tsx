@@ -10,7 +10,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useViewStore, ViewType } from '@/store/view-store';
 import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
-import {Filter} from './filter';
+import { Filter } from './filter';
 
 export default function HeaderOptions() {
    const { viewType, setViewType } = useViewStore();

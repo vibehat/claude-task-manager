@@ -1,3 +1,3 @@
-export default function IssueId() {
+export default function TeamsPage() {
    return <div className=""></div>;
 }

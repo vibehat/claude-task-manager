@@ -1,7 +1,7 @@
 'use client';
 
-import { RiGithubLine, RiPresentationLine } from '@remixicon/react';
-import { Box, FolderKanban, Inbox, Layers } from 'lucide-react';
+import { RiGithubLine } from '@remixicon/react';
+import { Box, ContactRound, FolderKanban, Inbox, UserRound } from 'lucide-react';
 import * as React from 'react';
 
 import { HelpButton } from '@/components/layout/sidebar/help-button';
@@ -30,19 +30,19 @@ const data = {
    ],
    workspace: [
       {
-         name: 'Initiatives',
-         url: '#',
-         icon: RiPresentationLine,
+         name: 'Teams',
+         url: '/lndev-ui/teams',
+         icon: ContactRound,
       },
       {
          name: 'Projects',
-         url: '/lndev-ui/team/CORE/projects/all',
+         url: '/lndev-ui/projects',
          icon: Box,
       },
       {
-         name: 'Views',
-         url: '#',
-         icon: Layers,
+         name: 'Members',
+         url: '/lndev-ui/members',
+         icon: UserRound,
       },
    ],
 };
