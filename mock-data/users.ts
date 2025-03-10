@@ -106,7 +106,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2023-07-18',
-      teamIds: ['CORE', 'PERF'],
+      teamIds: ['PERF'],
    },
    {
       id: 'amelia',
@@ -126,7 +126,7 @@ export const users: User[] = [
       status: 'away',
       role: 'Member',
       joinedDate: '2023-09-27',
-      teamIds: ['CORE'],
+      teamIds: ['PERF', 'DESIGN'],
    },
    {
       id: 'charlotte',
@@ -146,7 +146,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Admin',
       joinedDate: '2023-01-12',
-      teamIds: ['CORE', 'DESIGN'],
+      teamIds: ['DESIGN'],
    },
    {
       id: 'mia',
@@ -166,7 +166,7 @@ export const users: User[] = [
       status: 'away',
       role: 'Guest',
       joinedDate: '2023-08-14',
-      teamIds: ['CORE'],
+      teamIds: ['PERF', 'DESIGN'],
    },
    {
       id: 'harper',
@@ -186,7 +186,7 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2023-04-17',
-      teamIds: ['CORE', 'DESIGN'],
+      teamIds: ['DESIGN'],
    },
    {
       id: 'victoria',
@@ -206,7 +206,7 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2023-10-21',
-      teamIds: ['CORE', 'PERF'],
+      teamIds: ['PERF'],
    },
    {
       id: 'abigail',

@@ -68,25 +68,27 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
                {!currentAssignee && <CheckIcon className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {users.map((user) => (
-               <DropdownMenuItem
-                  key={user.id}
-                  onClick={(e) => {
-                     e.stopPropagation();
-                     setCurrentAssignee(user);
-                     setOpen(false);
-                  }}
-               >
-                  <div className="flex items-center gap-2">
-                     <Avatar className="h-5 w-5">
-                        <AvatarImage src={user.avatarUrl} alt={user.name} />
-                        <AvatarFallback>{user.name[0]}</AvatarFallback>
-                     </Avatar>
-                     <span>{user.name}</span>
-                  </div>
-                  {currentAssignee?.id === user.id && <CheckIcon className="ml-auto h-4 w-4" />}
-               </DropdownMenuItem>
-            ))}
+            {users
+               .filter((user) => user.teamIds.includes('CORE'))
+               .map((user) => (
+                  <DropdownMenuItem
+                     key={user.id}
+                     onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentAssignee(user);
+                        setOpen(false);
+                     }}
+                  >
+                     <div className="flex items-center gap-2">
+                        <Avatar className="h-5 w-5">
+                           <AvatarImage src={user.avatarUrl} alt={user.name} />
+                           <AvatarFallback>{user.name[0]}</AvatarFallback>
+                        </Avatar>
+                        <span>{user.name}</span>
+                     </div>
+                     {currentAssignee?.id === user.id && <CheckIcon className="ml-auto h-4 w-4" />}
+                  </DropdownMenuItem>
+               ))}
             <DropdownMenuSeparator />
             <DropdownMenuLabel>New user</DropdownMenuLabel>
             <DropdownMenuItem>
