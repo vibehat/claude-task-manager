@@ -1,6 +1,5 @@
 'use client';
 
-import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -87,7 +86,6 @@ export default function HeaderNav() {
                   >
                      <SearchIcon className="h-4 w-4" />
                   </Button>
-                  <ThemeToggle />
                   <Notifications />
                </>
             )}
