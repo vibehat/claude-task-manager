@@ -91,7 +91,7 @@ export function HelpButton() {
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
                <Link
-                  href="https://github.com/lndev7/lndev-ui"
+                  href="https://github.com/ln-dev7/circle"
                   target="_blank"
                   className="flex items-center"
                >

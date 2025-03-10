@@ -12,7 +12,7 @@ Project management interface inspired by Linear. Built with Next.js and shadcn/u
 ### 📦 Installation
 
 ```shell
-git clone https://github.com/lndev-ui/circle.git
+git clone https://github.com/ln-dev7/circle.git
 cd circle
 ```
 
