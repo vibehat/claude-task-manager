@@ -54,7 +54,10 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
                   className="size-6"
                   size="icon"
                   variant="ghost"
-                  onClick={() => openModal(status)}
+                  onClick={(e) => {
+                     e.stopPropagation();
+                     openModal(status);
+                  }}
                >
                   <Plus className="size-4" />
                </Button>

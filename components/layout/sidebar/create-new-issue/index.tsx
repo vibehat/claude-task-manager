@@ -107,7 +107,7 @@ export function CreateNewIssue() {
                   }
                />
 
-               <div className="w-full flex items-center justify-start gap-1.5">
+               <div className="w-full flex items-center justify-start gap-1.5 flex-wrap">
                   <StatusSelector
                      status={addIssueForm.status}
                      onChange={(newStatus) =>
