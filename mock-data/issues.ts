@@ -471,3 +471,21 @@ export function groupIssuesByStatus(issues: Issue[]): Record<string, Issue[]> {
       return acc;
    }, {});
 }
+
+export function sortIssuesByPriority(issues: Issue[]): Issue[] {
+   const priorityOrder: Record<string, number> = {
+      'urgent': 0,
+      'high': 1,
+      'medium': 2,
+      'low': 3,
+      'no-priority': 4,
+   };
+
+   return issues
+      .slice()
+      .sort(
+         (a, b) =>
+            priorityOrder[a.priority.id as keyof typeof priorityOrder] -
+            priorityOrder[b.priority.id as keyof typeof priorityOrder]
+      );
+}

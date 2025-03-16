@@ -12,6 +12,7 @@ import { Button } from '../../ui/button';
 import { IssueDragType, IssueGrid } from './issue-grid';
 import { IssueLine } from './issue-line';
 import { useCreateIssueStore } from '@/store/create-issue-store';
+import { sortIssuesByPriority } from '@/mock-data/issues';
 
 interface GroupIssuesProps {
    status: Status;
@@ -23,6 +24,7 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    const { viewType } = useViewStore();
    const isViewTypeGrid = viewType === 'grid';
    const { openModal } = useCreateIssueStore();
+   const sortedIssues = sortIssuesByPriority(issues);
 
    return (
       <div
@@ -70,8 +72,8 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
 
          {viewType === 'list' ? (
             <div className="space-y-0">
-               {issues.map((issue) => (
-                  <IssueLine key={issue.id} issue={issue} />
+               {sortedIssues.map((issue) => (
+                  <IssueLine key={issue.id} issue={issue} layoutId={true} />
                ))}
             </div>
          ) : (

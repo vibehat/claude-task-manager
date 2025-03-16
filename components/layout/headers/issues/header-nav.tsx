@@ -28,7 +28,9 @@ export default function HeaderNav() {
             !searchContainerRef.current.contains(event.target as Node) &&
             isSearchOpen
          ) {
-            closeSearch();
+            if (searchQuery.trim() === '') {
+               closeSearch();
+            }
          }
       };
 
@@ -36,7 +38,7 @@ export default function HeaderNav() {
       return () => {
          document.removeEventListener('mousedown', handleClickOutside);
       };
-   }, [isSearchOpen, closeSearch]);
+   }, [isSearchOpen, closeSearch, searchQuery]);
 
    return (
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
@@ -54,23 +56,29 @@ export default function HeaderNav() {
                      ref={searchInputRef}
                      value={searchQuery}
                      onChange={(e) => {
-                        // Store the previous value before updating
                         previousValueRef.current = searchQuery;
-
-                        // Update the value
                         const newValue = e.target.value;
                         setSearchQuery(newValue);
 
-                        // If the value goes from non-empty to empty, it's probably a click on the cross
                         if (previousValueRef.current && newValue === '') {
-                           closeSearch();
+                           const inputEvent = e.nativeEvent as InputEvent;
+                           if (
+                              inputEvent.inputType !== 'deleteContentBackward' &&
+                              inputEvent.inputType !== 'deleteByCut'
+                           ) {
+                              closeSearch();
+                           }
                         }
                      }}
                      placeholder="Search issues..."
                      className="pl-8 h-7 text-sm"
                      onKeyDown={(e) => {
                         if (e.key === 'Escape') {
-                           closeSearch();
+                           if (searchQuery.trim() === '') {
+                              closeSearch();
+                           } else {
+                              setSearchQuery('');
+                           }
                         }
                      }}
                   />
