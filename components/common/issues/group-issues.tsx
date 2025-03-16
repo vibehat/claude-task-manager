@@ -98,12 +98,14 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({ issues, status
    }));
    drop(ref);
 
+   const sortedIssues = sortIssuesByPriority(issues);
+
    return (
       <div
          ref={ref}
          className="flex-1 overflow-y-auto p-2 space-y-2 bg-zinc-50/50 dark:bg-zinc-900/50"
       >
-         {issues.map((issue) => (
+         {sortedIssues.map((issue) => (
             <IssueGrid key={issue.id} issue={issue} />
          ))}
       </div>
