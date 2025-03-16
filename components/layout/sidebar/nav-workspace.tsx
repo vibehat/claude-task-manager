@@ -1,6 +1,6 @@
 'use client';
 
-import { ContactRound, LayoutList, MoreHorizontal, UserRound, type LucideIcon } from 'lucide-react';
+import { Layers, LayoutList, MoreHorizontal, type LucideIcon } from 'lucide-react';
 
 import {
    DropdownMenu,
@@ -16,7 +16,7 @@ import {
    SidebarMenuButton,
    SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { RemixiconComponentType } from '@remixicon/react';
+import { RemixiconComponentType, RiPresentationLine } from '@remixicon/react';
 import Link from 'next/link';
 
 export function NavWorkspace({
@@ -54,12 +54,12 @@ export function NavWorkspace({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-48 rounded-lg" side="bottom" align="start">
                      <DropdownMenuItem>
-                        <ContactRound className="text-muted-foreground" />
-                        <span>Teams</span>
+                        <RiPresentationLine className="text-muted-foreground" />
+                        <span>Initiatives</span>
                      </DropdownMenuItem>
                      <DropdownMenuItem>
-                        <UserRound className="text-muted-foreground" />
-                        <span>Members</span>
+                        <Layers className="text-muted-foreground" />
+                        <span>Views</span>
                      </DropdownMenuItem>
                      <DropdownMenuSeparator />
                      <DropdownMenuItem>

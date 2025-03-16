@@ -15,6 +15,13 @@ import Link from 'next/link';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuSeparator,
+   DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
    SidebarGroup,
    SidebarGroupLabel,
    SidebarMenu,
@@ -25,14 +32,7 @@ import {
    SidebarMenuSubButton,
    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { Team } from '@/lib/mock-data/teams';
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuSeparator,
-   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Team } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
 
 export function NavTeams({ items }: { items: Team[] }) {
@@ -114,7 +114,7 @@ export function NavTeams({ items }: { items: Team[] }) {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
+                                 <Link href="/lndev-ui/projects">
                                     <Box size={14} />
                                     <span>Projects</span>
                                  </Link>
@@ -122,7 +122,7 @@ export function NavTeams({ items }: { items: Team[] }) {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
+                                 <Link href="#">
                                     <Layers size={14} />
                                     <span>Views</span>
                                  </Link>

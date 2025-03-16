@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronsUpDown, Search } from 'lucide-react';
+import { ChevronsUpDown } from 'lucide-react';
 
 import {
    DropdownMenu,
@@ -18,8 +18,8 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Button } from '../../ui/button';
 import { CreateNewIssue } from './create-new-issue';
+import { ThemeToggle } from '../theme-toggle';
 
 export function OrgSwitcher() {
    return (
@@ -41,9 +41,8 @@ export function OrgSwitcher() {
                         <ChevronsUpDown className="ml-auto" />
                      </SidebarMenuButton>
                   </DropdownMenuTrigger>
-                  <Button className="size-8 shrink-0" variant="ghost" size="icon">
-                     <Search />
-                  </Button>
+
+                  <ThemeToggle />
 
                   <CreateNewIssue />
                </div>
