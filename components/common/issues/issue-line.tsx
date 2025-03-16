@@ -7,11 +7,13 @@ import { LabelBadge } from './label-badge';
 import { PrioritySelector } from './priority-selector';
 import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
+import { motion } from 'motion/react';
 
-export function IssueLine({ issue }: { issue: Issue }) {
+export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?: boolean }) {
    return (
-      <div
+      <motion.div
          //href={`/lndev-ui/issue/${issue.identifier}`}
+         {...(layoutId && { layoutId: `issue-line-${issue.identifier}` })}
          className="w-full flex items-center justify-start h-11 px-6 hover:bg-sidebar/50"
       >
          <div className="flex items-center gap-0.5">
@@ -37,6 +39,6 @@ export function IssueLine({ issue }: { issue: Issue }) {
             </span>
             <AssigneeUser user={issue.assignees} />
          </div>
-      </div>
+      </motion.div>
    );
 }

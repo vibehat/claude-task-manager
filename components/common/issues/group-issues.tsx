@@ -9,6 +9,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { IssueGrid } from './issue-grid';
 import { IssueLine } from './issue-line';
+import { sortIssuesByPriority } from '@/mock-data/issues';
 
 interface GroupIssuesProps {
    status: Status;
@@ -19,6 +20,7 @@ interface GroupIssuesProps {
 export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    const { viewType } = useViewStore();
    const { openModal } = useCreateIssueStore();
+   const sortedIssues = sortIssuesByPriority(issues);
 
    return (
       <div
@@ -66,13 +68,13 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
 
          {viewType === 'list' ? (
             <div className="space-y-0">
-               {issues.map((issue) => (
-                  <IssueLine key={issue.id} issue={issue} />
+               {sortedIssues.map((issue) => (
+                  <IssueLine key={issue.id} issue={issue} layoutId={true} />
                ))}
             </div>
          ) : (
             <div className="flex-1 overflow-y-auto p-2 space-y-2 bg-zinc-50/50 dark:bg-zinc-900/50">
-               {issues.map((issue) => (
+               {sortedIssues.map((issue) => (
                   <IssueGrid key={issue.id} issue={issue} />
                ))}
             </div>

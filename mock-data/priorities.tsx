@@ -105,8 +105,8 @@ export interface Priority {
 
 export const priorities: Priority[] = [
    { id: 'no-priority', name: 'No priority', icon: NoPriorityIcon },
+   { id: 'urgent', name: 'Urgent', icon: UrgentPriorityIcon },
    { id: 'high', name: 'High', icon: HighPriorityIcon },
    { id: 'medium', name: 'Medium', icon: MediumPriorityIcon },
    { id: 'low', name: 'Low', icon: LowPriorityIcon },
-   { id: 'urgent', name: 'Urgent', icon: UrgentPriorityIcon },
 ];
