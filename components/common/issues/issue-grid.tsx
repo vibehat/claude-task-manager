@@ -48,7 +48,7 @@ function IssueDragPreview({ issue }: { issue: Issue }) {
 
 // Custom DragLayer to show custom preview during drag
 export function CustomDragLayer() {
-   const { itemType, isDragging, item, currentOffset } = useDragLayer((monitor: any) => ({
+   const { itemType, isDragging, item, currentOffset } = useDragLayer((monitor) => ({
       item: monitor.getItem() as Issue,
       itemType: monitor.getItemType(),
       currentOffset: monitor.getSourceClientOffset(),
