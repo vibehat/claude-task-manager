@@ -9,6 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { GroupIssues } from './group-issues';
 import { SearchIssues } from './search-issues';
+import { CustomDragLayer } from './issue-grid';
 import { cn } from '@/lib/utils';
 
 export default function AllIssues() {
@@ -41,6 +42,7 @@ const GroupIssuesListView: FC<{
    const { issuesByStatus } = useIssuesStore();
    return (
       <DndProvider backend={HTML5Backend}>
+         <CustomDragLayer />
          <div className={cn(isViewTypeGrid && 'flex h-full gap-3 px-2 py-2 min-w-max')}>
             {status.map((statusItem) => (
                <GroupIssues
