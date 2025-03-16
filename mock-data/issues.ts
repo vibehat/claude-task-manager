@@ -1,8 +1,9 @@
+import { LexoRank } from '@/lib/utils';
 import { LabelInterface, labels } from './labels';
-import { Project, projects } from './projects';
-import { User, users } from './users';
 import { Priority, priorities } from './priorities';
+import { Project, projects } from './projects';
 import { Status, status } from './status';
+import { User, users } from './users';
 
 export interface Issue {
    id: string;
@@ -17,7 +18,21 @@ export interface Issue {
    cycleId: string;
    project?: Project;
    subissues?: string[];
+   rank: string;
 }
+
+// generates issues ranks using LexoRank algorithm.
+export const ranks: string[] = [];
+const generateIssuesRanks = () => {
+   const firstRank = new LexoRank('a3c');
+   ranks.push(firstRank.toString());
+   for (let i = 1; i < 30; i++) {
+      const previousRank = LexoRank.from(ranks[i - 1]);
+      const currentRank = previousRank.increment();
+      ranks.push(currentRank.toString());
+   }
+};
+generateIssuesRanks();
 
 export const issues: Issue[] = [
    {
@@ -32,6 +47,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-08',
       cycleId: '42',
       project: projects[0],
+      rank: ranks[0],
    },
    {
       id: '2',
@@ -45,6 +61,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-12',
       cycleId: '42',
       subissues: ['1', '3'],
+      rank: ranks[1],
    },
    {
       id: '3',
@@ -58,6 +75,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-14',
       cycleId: '42',
       project: projects[1],
+      rank: ranks[2],
    },
    {
       id: '4',
@@ -71,6 +89,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-09',
       cycleId: '42',
       project: projects[2],
+      rank: ranks[3],
    },
    {
       id: '5',
@@ -85,6 +104,7 @@ export const issues: Issue[] = [
       cycleId: '42',
       project: projects[4],
       subissues: ['8', '9'],
+      rank: ranks[4],
    },
    {
       id: '6',
@@ -98,6 +118,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-11',
       cycleId: '42',
       project: projects[5],
+      rank: ranks[5],
    },
    {
       id: '7',
@@ -111,6 +132,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-12',
       cycleId: '42',
       project: projects[5],
+      rank: ranks[6],
    },
    {
       id: '8',
@@ -124,6 +146,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-13',
       cycleId: '42',
       project: projects[6],
+      rank: ranks[7],
    },
    {
       id: '9',
@@ -137,6 +160,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-14',
       cycleId: '42',
       project: projects[6],
+      rank: ranks[8],
    },
    {
       id: '10',
@@ -150,6 +174,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-15',
       cycleId: '42',
       project: projects[7],
+      rank: ranks[9],
    },
    {
       id: '11',
@@ -163,6 +188,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-16',
       cycleId: '42',
       project: projects[7],
+      rank: ranks[10],
    },
    {
       id: '12',
@@ -176,6 +202,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-17',
       cycleId: '42',
       project: projects[8],
+      rank: ranks[11],
    },
    {
       id: '13',
@@ -189,6 +216,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-18',
       cycleId: '42',
       project: projects[8],
+      rank: ranks[12],
    },
    {
       id: '14',
@@ -202,6 +230,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-19',
       cycleId: '42',
       project: projects[9],
+      rank: ranks[13],
    },
    {
       id: '15',
@@ -215,6 +244,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-20',
       cycleId: '42',
       project: projects[9],
+      rank: ranks[14],
    },
    {
       id: '16',
@@ -228,6 +258,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-21',
       cycleId: '42',
       project: projects[9],
+      rank: ranks[15],
    },
    {
       id: '17',
@@ -241,6 +272,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-22',
       cycleId: '42',
       project: projects[0],
+      rank: ranks[16],
    },
    {
       id: '18',
@@ -254,6 +286,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-23',
       cycleId: '42',
       project: projects[0],
+      rank: ranks[17],
    },
    {
       id: '19',
@@ -267,6 +300,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-24',
       cycleId: '42',
       project: projects[0],
+      rank: ranks[18],
    },
    {
       id: '20',
@@ -280,6 +314,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-25',
       cycleId: '42',
       project: projects[0],
+      rank: ranks[19],
    },
    {
       id: '21',
@@ -293,6 +328,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-26',
       cycleId: '42',
       project: projects[1],
+      rank: ranks[20],
    },
    {
       id: '22',
@@ -306,6 +342,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-27',
       cycleId: '42',
       project: projects[1],
+      rank: ranks[21],
    },
    {
       id: '23',
@@ -319,6 +356,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-28',
       cycleId: '42',
       project: projects[4],
+      rank: ranks[22],
    },
    {
       id: '24',
@@ -332,6 +370,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-29',
       cycleId: '42',
       project: projects[3],
+      rank: ranks[23],
    },
    {
       id: '25',
@@ -345,6 +384,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-30',
       cycleId: '42',
       project: projects[3],
+      rank: ranks[24],
    },
    {
       id: '26',
@@ -358,6 +398,7 @@ export const issues: Issue[] = [
       createdAt: '2025-03-31',
       cycleId: '42',
       project: projects[6],
+      rank: ranks[25],
    },
    {
       id: '27',
@@ -371,6 +412,7 @@ export const issues: Issue[] = [
       createdAt: '2025-04-01',
       cycleId: '42',
       project: projects[6],
+      rank: ranks[26],
    },
    {
       id: '28',
@@ -384,6 +426,7 @@ export const issues: Issue[] = [
       createdAt: '2025-04-02',
       cycleId: '42',
       project: projects[5],
+      rank: ranks[27],
    },
    {
       id: '29',
@@ -397,6 +440,7 @@ export const issues: Issue[] = [
       createdAt: '2025-04-03',
       cycleId: '42',
       project: projects[5],
+      rank: ranks[28],
    },
    {
       id: '30',
@@ -410,6 +454,7 @@ export const issues: Issue[] = [
       createdAt: '2025-04-04',
       cycleId: '42',
       project: projects[1],
+      rank: ranks[29],
    },
 ];
 

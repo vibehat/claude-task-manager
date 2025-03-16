@@ -6,7 +6,7 @@ import { Heart } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { RiEditLine } from '@remixicon/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Issue } from '@/mock-data/issues';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/status';
@@ -19,13 +19,14 @@ import { PrioritySelector } from './priority-selector';
 import { AssigneeSelector } from './assignee-selector';
 import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
+import { ranks } from '@/mock-data/issues';
 
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
    const { addIssue, getAllIssues } = useIssuesStore();
 
-   const generateUniqueIdentifier = () => {
+   const generateUniqueIdentifier = useCallback(() => {
       const identifiers = getAllIssues().map((issue) => issue.identifier);
       let identifier = Math.floor(Math.random() * 999)
          .toString()
@@ -36,9 +37,9 @@ export function CreateNewIssue() {
             .padStart(3, '0');
       }
       return identifier;
-   };
+   }, [getAllIssues]);
 
-   const createDefaultData = () => {
+   const createDefaultData = useCallback(() => {
       const identifier = generateUniqueIdentifier();
       return {
          id: uuidv4(),
@@ -53,14 +54,15 @@ export function CreateNewIssue() {
          cycleId: '',
          project: undefined,
          subissues: [],
+         rank: ranks[ranks.length - 1],
       };
-   };
+   }, [defaultStatus, generateUniqueIdentifier]);
 
    const [addIssueForm, setAddIssueForm] = useState<Issue>(createDefaultData());
 
    useEffect(() => {
       setAddIssueForm(createDefaultData());
-   }, [defaultStatus]);
+   }, [createDefaultData]);
 
    const createIssue = () => {
       if (!addIssueForm.title) {

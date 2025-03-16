@@ -49,7 +49,7 @@ interface IssuesState {
 
 export const useIssuesStore = create<IssuesState>((set, get) => ({
    // Initial state
-   issues: mockIssues,
+   issues: mockIssues.sort((a, b) => b.rank.localeCompare(a.rank)),
    issuesByStatus: groupIssuesByStatus(mockIssues),
 
    //
