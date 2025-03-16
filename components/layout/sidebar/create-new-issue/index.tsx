@@ -19,6 +19,7 @@ import { PrioritySelector } from './priority-selector';
 import { AssigneeSelector } from './assignee-selector';
 import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
+import { ranks } from '@/mock-data/issues';
 
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
@@ -53,6 +54,7 @@ export function CreateNewIssue() {
          cycleId: '',
          project: undefined,
          subissues: [],
+         rank: ranks[ranks.length - 1],
       };
    };
 

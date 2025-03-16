@@ -38,9 +38,8 @@ export function IssueGrid({ issue }: IssueGridProps) {
    return (
       <motion.div
          ref={ref}
-         layoutId={`issue-grid-${issue.identifier}`}
-         className="w-full p-3 bg-background rounded-md shadow-xs border border-border/50 cursor-pointer"
-         style={{ opacity: isDragging ? 0.5 : 1 }}
+         className="w-full p-3 bg-background rounded-md shadow-xs border border-border/50 cursor-default"
+         style={{ opacity: isDragging ? 0.5 : 1, cursor: isDragging ? 'grabbing' : 'default' }}
       >
          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-1.5">

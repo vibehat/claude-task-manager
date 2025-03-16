@@ -22,7 +22,7 @@ export interface Issue {
 }
 
 // generates issues ranks using LexoRank algorithm.
-const ranks: string[] = [];
+export const ranks: string[] = [];
 const generateIssuesRanks = () => {
    const firstRank = new LexoRank('a3c');
    ranks.push(firstRank.toString());
