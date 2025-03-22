@@ -19,7 +19,7 @@ export function TeamsTooltip({ teamIds }: TeamsTooltipProps) {
             ))}
             {teamIds.length > 2 && <span className="mt-0.5">+ {teamIds.length - 2}</span>}
          </TooltipTrigger>
-         <TooltipContent sideOffset={8} className="p-2">
+         <TooltipContent className="p-2">
             <div className="flex flex-col gap-1">
                {teams
                   .filter((team) => teamIds.includes(team.id))

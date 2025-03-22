@@ -30,7 +30,7 @@ export function MembersTooltip({ members }: MembersTooltipProps) {
                   )}
                </div>
             </TooltipTrigger>
-            <TooltipContent sideOffset={8} className="p-2">
+            <TooltipContent className="p-2">
                <div className="flex flex-col gap-1">
                   {members.map((member, index) => (
                      <div key={index} className="flex items-center gap-1.5">

@@ -18,7 +18,7 @@ export function ProjectsTooltip({ projects }: ProjectsTooltipProps) {
                   <span>{projects.length}</span>
                </div>
             </TooltipTrigger>
-            <TooltipContent sideOffset={8} className="p-2">
+            <TooltipContent className="p-2">
                <div className="flex flex-col gap-1">
                   {projects.map((project, index) => (
                      <div key={index} className="flex items-center gap-1.5">
