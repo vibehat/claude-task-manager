@@ -71,23 +71,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <X className="size-4" />
                      </div>
                      <div className="text-balance text-lg font-semibold leading-tight group-hover/sidebar:underline">
-                        Fine components coded by lndev.
+                        Open-source layouts by lndev-ui
                      </div>
                      <div>
-                        A fun collection of small, well-coded components to streamline your
-                        development process.
+                        Collection of beautifully crafted open-source layouts UI built with
+                        shadcn/ui.
                      </div>
                      <Link
                         target="_blank"
                         rel="noreferrer"
                         className="absolute inset-0"
-                        href="https://ui.lndev.me"
+                        href="https://square.lndev.me"
                      >
-                        <span className="sr-only">Deploy to Vercel</span>
+                        <span className="sr-only">Square by lndev-ui</span>
                      </Link>
                      <Button size="sm" className="w-full">
-                        <Link href="https://ui.lndev.me" target="_blank" rel="noopener noreferrer">
-                           ui.lndev.me
+                        <Link
+                           href="https://square.lndev.me"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                        >
+                           square.lndev.me
                         </Link>
                      </Button>
                   </div>
