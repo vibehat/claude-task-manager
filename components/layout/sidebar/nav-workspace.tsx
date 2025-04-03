@@ -1,6 +1,6 @@
 'use client';
 
-import { Layers, LayoutList, MoreHorizontal, type LucideIcon } from 'lucide-react';
+import { Layers, LayoutList, MoreHorizontal } from 'lucide-react';
 
 import {
    DropdownMenu,
@@ -16,23 +16,16 @@ import {
    SidebarMenuButton,
    SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { RemixiconComponentType, RiPresentationLine } from '@remixicon/react';
 import Link from 'next/link';
+import { workspaceItems } from '@/mock-data/side-bar-nav';
+import { RiPresentationLine } from '@remixicon/react';
 
-export function NavWorkspace({
-   workspace,
-}: {
-   workspace: {
-      name: string;
-      url: string;
-      icon: LucideIcon | RemixiconComponentType;
-   }[];
-}) {
+export function NavWorkspace() {
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
          <SidebarMenu>
-            {workspace.map((item) => (
+            {workspaceItems.map((item) => (
                <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
                      <Link href={item.url}>

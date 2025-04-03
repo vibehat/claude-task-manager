@@ -1,23 +1,26 @@
 'use client';
 
+import Link from 'next/link';
+
 import {
    SidebarGroup,
+   SidebarGroupLabel,
    SidebarMenu,
    SidebarMenuButton,
    SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import Link from 'next/link';
-import { inboxItems } from '@/mock-data/side-bar-nav';
+import { accountItems } from '@/mock-data/side-bar-nav';
 
-export function NavInbox() {
+export function NavAccount() {
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+         <SidebarGroupLabel>Account</SidebarGroupLabel>
          <SidebarMenu>
-            {inboxItems.map((item) => (
+            {accountItems.map((item) => (
                <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
                      <Link href={item.url}>
-                        <item.icon />
+                        <item.icon className="size-4" />
                         <span>{item.name}</span>
                      </Link>
                   </SidebarMenuButton>

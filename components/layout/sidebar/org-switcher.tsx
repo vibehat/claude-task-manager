@@ -20,6 +20,7 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { CreateNewIssue } from './create-new-issue';
 import { ThemeToggle } from '../theme-toggle';
+import Link from 'next/link';
 
 export function OrgSwitcher() {
    return (
@@ -53,9 +54,11 @@ export function OrgSwitcher() {
                   sideOffset={4}
                >
                   <DropdownMenuGroup>
-                     <DropdownMenuItem>
-                        Settings
-                        <DropdownMenuShortcut>G then S</DropdownMenuShortcut>
+                     <DropdownMenuItem asChild>
+                        <Link href="/lndev-ui/settings">
+                           Settings
+                           <DropdownMenuShortcut>G then S</DropdownMenuShortcut>
+                        </Link>
                      </DropdownMenuItem>
                      <DropdownMenuItem>Invite and manage members</DropdownMenuItem>
                   </DropdownMenuGroup>

@@ -8,56 +8,39 @@ import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
 import { NavTeams } from '@/components/layout/sidebar/nav-teams';
 import { NavWorkspace } from '@/components/layout/sidebar/nav-workspace';
+import { NavAccount } from '@/components/layout/sidebar/nav-account';
+import { NavFeatures } from '@/components/layout/sidebar/nav-features';
+import { NavTeamsSettings } from '@/components/layout/sidebar/nav-teams-settings';
 import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
 import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
 import { teams } from '@/mock-data/teams';
 import Link from 'next/link';
 import { X } from 'lucide-react';
-
-const data = {
-   inbox: [
-      {
-         name: 'Inbox',
-         url: '#',
-         icon: Inbox,
-      },
-      {
-         name: 'My issues',
-         url: '#',
-         icon: FolderKanban,
-      },
-   ],
-   workspace: [
-      {
-         name: 'Teams',
-         url: '/lndev-ui/teams',
-         icon: ContactRound,
-      },
-      {
-         name: 'Projects',
-         url: '/lndev-ui/projects',
-         icon: Box,
-      },
-      {
-         name: 'Members',
-         url: '/lndev-ui/members',
-         icon: UserRound,
-      },
-   ],
-};
+import { usePathname } from 'next/navigation';
+import { BackToApp } from '@/components/layout/sidebar/back-to-app';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
    const [open, setOpen] = React.useState(true);
+   const pathname = usePathname();
+   const isSettings = pathname.includes('/settings');
    return (
       <Sidebar collapsible="offcanvas" {...props}>
-         <SidebarHeader>
-            <OrgSwitcher />
-         </SidebarHeader>
+         <SidebarHeader>{isSettings ? <BackToApp /> : <OrgSwitcher />}</SidebarHeader>
          <SidebarContent>
-            <NavInbox inbox={data.inbox} />
-            <NavWorkspace workspace={data.workspace} />
-            <NavTeams items={teams.filter((t) => t.joined)} />
+            {isSettings ? (
+               <>
+                  <NavAccount />
+                  <NavFeatures />
+                  <NavTeamsSettings />
+               </>
+            ) : (
+               <>
+                  <NavInbox />
+                  <NavWorkspace />
+                  <NavTeams />
+               </>
+            )}
          </SidebarContent>
          <SidebarFooter>
             <div className="w-full flex flex-col gap-2">
