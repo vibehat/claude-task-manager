@@ -1,7 +1,6 @@
 'use client';
 
 import { RiGithubLine } from '@remixicon/react';
-import { Box, ContactRound, FolderKanban, Inbox, UserRound } from 'lucide-react';
 import * as React from 'react';
 
 import { HelpButton } from '@/components/layout/sidebar/help-button';
@@ -14,7 +13,6 @@ import { NavTeamsSettings } from '@/components/layout/sidebar/nav-teams-settings
 import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
 import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
-import { teams } from '@/mock-data/teams';
 import Link from 'next/link';
 import { X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
