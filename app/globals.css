@@ -161,21 +161,6 @@
    --color-sidebar-border: var(--sidebar-border);
    --color-sidebar-ring: var(--sidebar-ring);
    --color-container: var(--container);
-   --font-weight-light: 700;
-   --font-weight-normal: 700;
-   --font-weight-medium: 700;
-   --font-weight-semibold: 700;
-   --font-sans: Nunito, sans-serif;
-   --font-serif: PT Serif, serif;
-   --shadow-xs: 0 2px 0 0 var(--border);
-   --shadow-sm: 0 2px 0 0 var(--border);
-   --shadow-md: 0 2px 0 0 var(--border);
-   --shadow-lg: 0 2px 0 0 var(--border);
-   --shadow-xl: 0 2px 0 0 var(--border);
-   --shadow-2xl: 0 2px 0 0 var(--border);
-   --shadow-3xl: 0 2px 0 0 var(--border);
-   --color-destructive-border: var(--destructive-border);
-   --color-primary-border: var(--primary-border);
 }
 
 @layer base {
