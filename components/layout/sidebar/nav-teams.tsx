@@ -60,9 +60,11 @@ export function NavTeams() {
                            </span>
                            <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                 <SidebarMenuAction showOnHover>
-                                    <MoreHorizontal />
-                                    <span className="sr-only">More</span>
+                                 <SidebarMenuAction asChild showOnHover>
+                                    <div>
+                                       <MoreHorizontal />
+                                       <span className="sr-only">More</span>
+                                    </div>
                                  </SidebarMenuAction>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent
