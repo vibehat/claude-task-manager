@@ -14,6 +14,17 @@ import {
 export function ThemeToggle() {
    const { theme, setTheme } = useTheme();
 
+   // To avoid a hydration error caused by mismatched server/client rendering,
+   // we wait for the component to mount before using `theme` from `next-themes`,
+   // since it relies on localStorage and is not available during SSR.s
+   const [mounted, setMounted] = React.useState(false);
+
+   React.useEffect(() => {
+      setMounted(true);
+   }, []);
+
+   if (!mounted) return null;
+
    return (
       <DropdownMenu>
          <DropdownMenuTrigger asChild>
