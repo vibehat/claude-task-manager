@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Heart } from 'lucide-react';
@@ -20,6 +20,7 @@ import { AssigneeSelector } from './assignee-selector';
 import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
 import { ranks } from '@/mock-data/issues';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 export function CreateNewIssue() {
    const [createMore, setCreateMore] = useState<boolean>(false);
@@ -85,12 +86,16 @@ export function CreateNewIssue() {
             </Button>
          </DialogTrigger>
          <DialogContent className="w-full sm:max-w-[750px] p-0 shadow-xl top-[30%]">
-            <div className="flex items-center px-4 pt-4 gap-2">
-               <Button size="sm" variant="outline" className="gap-1.5">
-                  <Heart className="size-4 text-orange-500 fill-orange-500" />
-                  <span className="font-medium">CORE</span>
-               </Button>
-            </div>
+            <DialogHeader>
+               <DialogTitle>
+                  <div className="flex items-center px-4 pt-4 gap-2">
+                     <Button size="sm" variant="outline" className="gap-1.5">
+                        <Heart className="size-4 text-orange-500 fill-orange-500" />
+                        <span className="font-medium">CORE</span>
+                     </Button>
+                  </div>
+               </DialogTitle>
+            </DialogHeader>
 
             <div className="px-4 pb-0 space-y-3 w-full">
                <Input
