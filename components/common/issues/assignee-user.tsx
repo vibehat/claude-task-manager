@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { statusUserColors, User, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface AssigneeUserProps {
    user: User | null;
@@ -19,6 +19,10 @@ interface AssigneeUserProps {
 export function AssigneeUser({ user }: AssigneeUserProps) {
    const [open, setOpen] = useState(false);
    const [currentAssignee, setCurrentAssignee] = useState<User | null>(user);
+
+   useEffect(() => {
+      setCurrentAssignee(user);
+   }, [user]);
 
    const renderAvatar = () => {
       if (currentAssignee) {
