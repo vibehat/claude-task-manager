@@ -10,7 +10,7 @@ import { StatusSelector } from './status-selector';
 import { motion } from 'motion/react';
 
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
-import { IssueContextMenu } from './IssueContextMenu';
+import { IssueContextMenu } from './issue-context-menu';
 
 export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?: boolean }) {
    return (
@@ -46,7 +46,7 @@ export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?
                </div>
             </motion.div>
          </ContextMenuTrigger>
-         <IssueContextMenu />
+         <IssueContextMenu issueId={issue.id} />
       </ContextMenu>
    );
 }

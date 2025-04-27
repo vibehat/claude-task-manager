@@ -19,6 +19,7 @@ export interface Issue {
    project?: Project;
    subissues?: string[];
    rank: string;
+   dueDate?: string;
 }
 
 // generates issues ranks using LexoRank algorithm.

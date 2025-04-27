@@ -12,7 +12,7 @@ import { PrioritySelector } from './priority-selector';
 import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
-import { IssueContextMenu } from './IssueContextMenu';
+import { IssueContextMenu } from './issue-context-menu';
 
 export const IssueDragType = 'ISSUE';
 type IssueGridProps = {
@@ -133,7 +133,7 @@ export function IssueGrid({ issue }: IssueGridProps) {
                </div>
             </motion.div>
          </ContextMenuTrigger>
-         <IssueContextMenu />
+         <IssueContextMenu issueId={issue.id} />
       </ContextMenu>
    );
 }
