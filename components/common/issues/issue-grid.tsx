@@ -42,7 +42,7 @@ function IssueDragPreview({ issue }: { issue: Issue }) {
             <span className="text-xs text-muted-foreground">
                {format(new Date(issue.createdAt), 'MMM dd')}
             </span>
-            <AssigneeUser user={issue.assignees} />
+            <AssigneeUser user={issue.assignee} />
          </div>
       </div>
    );
@@ -129,7 +129,7 @@ export function IssueGrid({ issue }: IssueGridProps) {
                   <span className="text-xs text-muted-foreground">
                      {format(new Date(issue.createdAt), 'MMM dd')}
                   </span>
-                  <AssigneeUser user={issue.assignees} />
+                  <AssigneeUser user={issue.assignee} />
                </div>
             </motion.div>
          </ContextMenuTrigger>

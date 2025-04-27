@@ -1,3 +1,4 @@
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
    ContextMenuContent,
    ContextMenuGroup,
@@ -57,7 +58,6 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       removeIssueLabel,
       updateIssueProject,
       updateIssue,
-      deleteIssue,
       getIssueById,
    } = useIssuesStore();
 
@@ -196,13 +196,10 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
                            key={user.id}
                            onClick={() => handleAssigneeChange(user.id)}
                         >
-                           <div className="size-4 rounded-full overflow-hidden">
-                              <img
-                                 src={user.avatarUrl}
-                                 alt={user.name}
-                                 className="w-full h-full object-cover"
-                              />
-                           </div>
+                           <Avatar className="size-4">
+                              <AvatarImage src={user.avatarUrl} alt={user.name} />
+                              <AvatarFallback>{user.name[0]}</AvatarFallback>
+                           </Avatar>
                            {user.name}
                         </ContextMenuItem>
                      ))}
@@ -316,7 +313,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
                   <CopyIcon className="size-4" /> Duplicate
                </ContextMenuItem>
                <ContextMenuItem onClick={() => handleMarkAs("Won't Fix")}>
-                  <Clock className="size-4" /> Won't Fix
+                  <Clock className="size-4" /> Won&apos;t Fix
                </ContextMenuItem>
             </ContextMenuSubContent>
          </ContextMenuSub>
