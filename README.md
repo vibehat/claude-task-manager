@@ -27,3 +27,7 @@ pnpm install
 ```shell
 pnpm dev
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ln-dev7/circle&type=Date)](https://www.star-history.com/#ln-dev7/circle&Date)
