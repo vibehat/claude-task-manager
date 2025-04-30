@@ -17,8 +17,7 @@ import { Issue } from '@/mock-data/issues';
 export default function AllIssues() {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
-   const { filters, hasActiveFilters } = useFilterStore();
-   const { filterIssues } = useIssuesStore();
+   const { hasActiveFilters } = useFilterStore();
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
