@@ -6,6 +6,14 @@ import { Status } from '@/mock-data/status';
 import { User } from '@/mock-data/users';
 import { create } from 'zustand';
 
+interface FilterOptions {
+   status?: string[];
+   assignee?: string[];
+   priority?: string[];
+   labels?: string[];
+   project?: string[];
+}
+
 interface IssuesState {
    // Data
    issues: Issue[];
@@ -26,6 +34,7 @@ interface IssuesState {
    filterByLabel: (labelId: string) => Issue[];
    filterByProject: (projectId: string) => Issue[];
    searchIssues: (query: string) => Issue[];
+   filterIssues: (filters: FilterOptions) => Issue[];
 
    // Status management
    updateIssueStatus: (issueId: string, newStatus: Status) => void;
@@ -120,6 +129,54 @@ export const useIssuesStore = create<IssuesState>((set, get) => ({
             issue.title.toLowerCase().includes(lowerCaseQuery) ||
             issue.identifier.toLowerCase().includes(lowerCaseQuery)
       );
+   },
+
+   filterIssues: (filters: FilterOptions) => {
+      let filteredIssues = get().issues;
+
+      // Filter by status
+      if (filters.status && filters.status.length > 0) {
+         filteredIssues = filteredIssues.filter((issue) =>
+            filters.status!.includes(issue.status.id)
+         );
+      }
+
+      // Filter by assignee
+      if (filters.assignee && filters.assignee.length > 0) {
+         filteredIssues = filteredIssues.filter((issue) => {
+            if (filters.assignee!.includes('unassigned')) {
+               // If 'unassigned' is selected and the issue has no assignee
+               if (issue.assignee === null) {
+                  return true;
+               }
+            }
+            // Check if the issue's assignee is in the selected assignees
+            return issue.assignee && filters.assignee!.includes(issue.assignee.id);
+         });
+      }
+
+      // Filter by priority
+      if (filters.priority && filters.priority.length > 0) {
+         filteredIssues = filteredIssues.filter((issue) =>
+            filters.priority!.includes(issue.priority.id)
+         );
+      }
+
+      // Filter by labels
+      if (filters.labels && filters.labels.length > 0) {
+         filteredIssues = filteredIssues.filter((issue) =>
+            issue.labels.some((label) => filters.labels!.includes(label.id))
+         );
+      }
+
+      // Filter by project
+      if (filters.project && filters.project.length > 0) {
+         filteredIssues = filteredIssues.filter(
+            (issue) => issue.project && filters.project!.includes(issue.project.id)
+         );
+      }
+
+      return filteredIssues;
    },
 
    // Status management
