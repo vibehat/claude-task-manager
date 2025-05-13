@@ -66,19 +66,7 @@ export default function RootLayout({
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
          </head>
          <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
-            <ThemeProvider
-               attribute="class"
-               defaultTheme="dark"
-               forcedTheme={undefined}
-               storageKey="theme"
-               value={{
-                  light: 'light',
-                  dark: 'dark',
-                  ghibli: 'ghibli',
-                  system: 'system',
-               }}
-            >
-               <div className="texture" />
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                {children}
                <Toaster />
             </ThemeProvider>
