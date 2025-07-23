@@ -77,6 +77,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                      </Button>
                   </div>
                )}
+               <a className="my-1.5" href="https://vercel.com/oss">
+                  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
+               </a>
                <div className="w-full flex items-center justify-between">
                   <HelpButton />
                   <Button size="icon" variant="secondary" asChild>
