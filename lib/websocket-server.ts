@@ -129,6 +129,15 @@ export class TaskMasterWebSocketServer extends EventEmitter {
       if (!this.io) return;
 
       this.io.on('connection', (socket) => {
+         // Check connection limit
+         if (this.clients.size >= this.config.maxConnections) {
+            console.log(
+               `Connection rejected: limit exceeded (${this.clients.size}/${this.config.maxConnections})`
+            );
+            socket.disconnect(true);
+            return;
+         }
+
          const clientId = this.generateClientId();
 
          // Register client
@@ -489,6 +498,8 @@ export class TaskMasterWebSocketServer extends EventEmitter {
       }
 
       if (this.io) {
+         // Disconnect all clients first
+         this.io.disconnectSockets(true);
          await new Promise<void>((resolve) => {
             this.io!.close(() => {
                console.log('WebSocket server closed');
@@ -497,6 +508,10 @@ export class TaskMasterWebSocketServer extends EventEmitter {
          });
          this.io = null;
       }
+
+      // Clear client tracking
+      this.clients.clear();
+      this.rooms.clear();
 
       if (this.httpServer) {
          await new Promise<void>((resolve) => {

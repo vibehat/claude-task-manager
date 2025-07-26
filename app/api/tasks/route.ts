@@ -1,15 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-   Task,
-   TasksData,
-   TasksResponse,
-   TaskResponse,
-   validateTask,
-   validateTasksData,
-   safeParseTasksData,
-   TaskMasterAPIError,
-   DEFAULT_TASK_PRIORITY,
-} from '@/lib/types';
+import { Task, TasksData, TaskMasterAPIError } from '@/lib/types';
 import { TaskMasterFileOperations, FileOperationError } from '@/lib/fs-operations';
 
 // Helper function to read tasks from file with error recovery

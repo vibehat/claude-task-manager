@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Calculate operation success rate
-function calculateSuccessRate(operations: any[]): number {
+function calculateSuccessRate(operations: Array<{ status: string }>): number {
    if (operations.length === 0) return 1.0;
 
    const completed = operations.filter((op) => op.status === 'completed' || op.status === 'failed');

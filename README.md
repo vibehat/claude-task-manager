@@ -7,10 +7,11 @@
   
   *Transform your AI-powered task management with a modern, comprehensive UI inspired by Linear's design philosophy*
 
-  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-  [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-  [![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com/)
+
 </div>
 
 ## 🎯 Overview
@@ -21,7 +22,7 @@ Claude Task Master UI is a comprehensive web interface that brings all the power
 
 - **🎨 Modern UI/UX**: Clean, responsive interface inspired by Linear's design philosophy
 - **🤖 Complete Claude Task Master Integration**: Full coverage of all CLI functionality
-- **📊 Visual Task Management**: Interactive dashboards, kanban boards, and project views  
+- **📊 Visual Task Management**: Interactive dashboards, kanban boards, and project views
 - **🔄 Real-time Updates**: Live synchronization with your task master data
 - **🎭 Multi-Model AI Support**: Configure and manage multiple AI providers seamlessly
 - **👥 Multi-Agent AI Collaboration**: Multiple AI agents can work on the same project simultaneously
@@ -41,12 +42,14 @@ Claude Task Master UI is a comprehensive web interface that brings all the power
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/your-username/claude-task-master-ui.git
    cd claude-task-master-ui
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    # or
@@ -54,15 +57,17 @@ Claude Task Master UI is a comprehensive web interface that brings all the power
    ```
 
 3. **Configure your environment**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Edit `.env.local` with your configuration:
+
    ```env
    # Task Master Integration
    TASK_MASTER_API_URL=http://localhost:3001
-   
+
    # AI Provider Keys (at least one required)
    ANTHROPIC_API_KEY=your_claude_key_here
    OPENAI_API_KEY=your_openai_key_here
@@ -71,6 +76,7 @@ Claude Task Master UI is a comprehensive web interface that brings all the power
    ```
 
 4. **Start the development server**
+
    ```bash
    pnpm dev
    # or
@@ -164,24 +170,24 @@ This UI provides comprehensive coverage of all Claude Task Master CLI functional
 
 ### Core Commands Coverage
 
-| CLI Command | UI Feature | Description |
-|-------------|------------|-------------|
-| `task-master init` | **Project Setup Wizard** | Interactive project initialization |
-| `task-master parse-prd` | **PRD Upload Interface** | Drag-and-drop PRD parsing with preview |
-| `task-master list` | **Task Dashboard** | Comprehensive task listing with filters |
-| `task-master next` | **Next Task Widget** | Priority-based task recommendations |
-| `task-master show <id>` | **Task Detail View** | Rich task information with editing |
-| `task-master add-task` | **Task Creation Modal** | AI-enhanced task creation interface |
-| `task-master expand` | **Task Breakdown Tool** | Interactive task subdivision |
-| `task-master update-task` | **Inline Task Editing** | Real-time task updates |
-| `task-master research` | **Research Panel** | Built-in research tools with context |
-| `task-master models` | **Model Configuration** | Visual AI provider management |
-| `task-master analyze-complexity` | **Complexity Dashboard** | Visual complexity analysis and reports |
+| CLI Command                      | UI Feature               | Description                             |
+| -------------------------------- | ------------------------ | --------------------------------------- |
+| `task-master init`               | **Project Setup Wizard** | Interactive project initialization      |
+| `task-master parse-prd`          | **PRD Upload Interface** | Drag-and-drop PRD parsing with preview  |
+| `task-master list`               | **Task Dashboard**       | Comprehensive task listing with filters |
+| `task-master next`               | **Next Task Widget**     | Priority-based task recommendations     |
+| `task-master show <id>`          | **Task Detail View**     | Rich task information with editing      |
+| `task-master add-task`           | **Task Creation Modal**  | AI-enhanced task creation interface     |
+| `task-master expand`             | **Task Breakdown Tool**  | Interactive task subdivision            |
+| `task-master update-task`        | **Inline Task Editing**  | Real-time task updates                  |
+| `task-master research`           | **Research Panel**       | Built-in research tools with context    |
+| `task-master models`             | **Model Configuration**  | Visual AI provider management           |
+| `task-master analyze-complexity` | **Complexity Dashboard** | Visual complexity analysis and reports  |
 
 ### Advanced Features
 
 - **Dependency Visualization**: Interactive dependency graphs and management
-- **Progress Tracking**: Visual progress indicators and milestone tracking  
+- **Progress Tracking**: Visual progress indicators and milestone tracking
 - **Agent Orchestration**: Intelligent coordination of multiple AI agents
 - **Template Management**: Create and manage task and project templates
 - **Multi-Agent Reporting**: Generate insights on agent performance and collaboration
@@ -240,6 +246,7 @@ Built on top of Radix UI primitives with custom styling:
 ### Self-Hosted
 
 1. **Build the application**
+
    ```bash
    pnpm build
    ```
@@ -295,7 +302,7 @@ pnpm format       # Format code with Prettier
 ## 📚 Documentation
 
 - **[User Guide](docs/USER_GUIDE.md)**: Complete user documentation
-- **[API Reference](docs/API.md)**: Integration API documentation  
+- **[API Reference](docs/API.md)**: Integration API documentation
 - **[Development Guide](docs/DEVELOPMENT.md)**: Contributor guidelines
 - **[Deployment Guide](docs/DEPLOYMENT.md)**: Production deployment instructions
 - **[Troubleshooting](docs/TROUBLESHOOTING.md)**: Common issues and solutions
@@ -310,24 +317,28 @@ pnpm format       # Format code with Prettier
 ## 📊 Roadmap
 
 ### Phase 1: Core Interface ✅
+
 - [x] Basic task management interface
 - [x] Claude Task Master CLI integration
 - [x] Responsive design implementation
 - [x] AI model configuration UI
 
 ### Phase 2: Multi-Agent Features 🚧
+
 - [ ] Multi-agent AI coordination system
 - [ ] Agent performance analytics dashboard
 - [ ] Intelligent task distribution
 - [ ] Agent specialization framework
 
 ### Phase 3: Advanced AI Features 📋
+
 - [ ] Cross-agent communication protocols
 - [ ] Advanced agent orchestration
 - [ ] AI agent learning and adaptation
 - [ ] Custom agent behavior configuration
 
 ### Phase 4: AI Enhancements 🔮
+
 - [ ] AI-powered task suggestions
 - [ ] Natural language task creation
 - [ ] Intelligent project insights
@@ -354,39 +365,39 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 </div>
 
 <!-- TASKMASTER_EXPORT_START -->
-> 🎯 **Taskmaster Export** - 2025-07-26 01:02:05 UTC
+
+> 🎯 **Taskmaster Export** - 2025-07-26 03:49:54 UTC
 > 📋 Export: without subtasks • Status filter: none
 > 🔗 Powered by [Task Master](https://task-master.dev?utm_source=github-readme&utm_medium=readme-export&utm_campaign=claude-task-master-ui&utm_content=task-export-link)
 
-| Project Dashboard |  |
-| :-                |:-|
-| Task Progress     | ██████░░░░░░░░░░░░░░ 30% |
-| Done | 3 |
-| In Progress | 0 |
-| Pending | 5 |
-| Deferred | 0 |
-| Cancelled | 2 |
-|-|-|
-| Subtask Progress | ░░░░░░░░░░░░░░░░░░░░ 0% |
-| Completed | 0 |
-| In Progress | 0 |
-| Pending | 0 |
+| Project Dashboard |                          |
+| :---------------- | :----------------------- |
+| Task Progress     | ███████░░░░░░░░░░░░░ 36% |
+| Done              | 4                        |
+| In Progress       | 1                        |
+| Pending           | 4                        |
+| Deferred          | 0                        |
+| Cancelled         | 2                        |
+| -                 | -                        |
+| Subtask Progress  | ███████████████████░ 93% |
+| Completed         | 14                       |
+| In Progress       | 1                        |
+| Pending           | 0                        |
 
-
-| ID | Title | Status | Priority | Dependencies | Complexity |
-| :- | :-    | :-     | :-       | :-           | :-         |
-| 1 | Setup Next.js 15 Project Foundation | ✓&nbsp;done | high | None | N/A |
-| 2 | Implement Task Master CLI Integration Layer | ○&nbsp;pending | high | 1 | N/A |
-| 3 | Build Core UI Component Library | ✓&nbsp;done | medium | 1 | N/A |
-| 4 | Create Task Management Dashboard | ✓&nbsp;done | high | 2, 3 | N/A |
-| 5 | Implement AI Provider Configuration System | ○&nbsp;pending | medium | 3 | N/A |
-| 6 | Develop Multi-Agent Management System | ○&nbsp;pending | high | 4, 5 | N/A |
-| 7 | Build PRD Parsing and Project Setup Interface | ○&nbsp;pending | medium | 4, 5 | N/A |
-| 8 | Implement Real-time Collaboration Features | ○&nbsp;pending | medium | 6 | N/A |
-| 9 | Develop Advanced Analytics and Reporting | x&nbsp;cancelled | low | 6, 8 | N/A |
-| 10 | Implement Mobile-First Responsive Design and PWA | x&nbsp;cancelled | medium | 4, 8 | N/A |
+| ID  | Title                                                   | Status             | Priority | Dependencies       | Complexity |
+| :-- | :------------------------------------------------------ | :----------------- | :------- | :----------------- | :--------- |
+| 1   | Setup Next.js 15 Project Foundation                     | ✓&nbsp;done        | high     | None               | N/A        |
+| 2   | Implement Task Master CLI Integration Layer             | ✓&nbsp;done        | high     | 1                  | ● 9        |
+| 3   | Build Core UI Component Library                         | ✓&nbsp;done        | medium   | 1                  | N/A        |
+| 4   | Create Task Management Dashboard                        | ✓&nbsp;done        | high     | 2, 3               | N/A        |
+| 5   | Implement AI Provider Configuration System              | ○&nbsp;pending     | medium   | 3                  | ● 7        |
+| 6   | Develop Multi-Agent Management System                   | ○&nbsp;pending     | high     | 4, 5               | ● 8        |
+| 7   | Build PRD Parsing and Project Setup Interface           | ○&nbsp;pending     | medium   | 4, 5               | ● 6        |
+| 8   | Implement Real-time Collaboration Features              | ○&nbsp;pending     | medium   | 6                  | ● 8        |
+| 9   | Develop Advanced Analytics and Reporting                | x&nbsp;cancelled   | low      | 6, 8               | N/A        |
+| 10  | Implement Mobile-First Responsive Design and PWA        | x&nbsp;cancelled   | medium   | 4, 8               | N/A        |
+| 11  | Write Comprehensive API Tests for CLI Integration Layer | ►&nbsp;in-progress | medium   | 2.1, 2.2, 2.3, 2.4 | N/A        |
 
 > 📋 **End of Taskmaster Export** - Tasks are synced from your project using the `sync-readme` command.
+
 <!-- TASKMASTER_EXPORT_END -->
-
-

@@ -36,6 +36,7 @@ task-master expand --id=$ARGUMENTS
 ## Enhanced Features
 
 Based on task type:
+
 - **Feature**: Setup → Implement → Test → Integrate
 - **Bug Fix**: Reproduce → Diagnose → Fix → Verify
 - **Refactor**: Analyze → Plan → Refactor → Validate
@@ -43,6 +44,7 @@ Based on task type:
 ## Post-Expansion
 
 After expansion:
+
 1. Show subtask hierarchy
 2. Update time estimates
 3. Suggest implementation order

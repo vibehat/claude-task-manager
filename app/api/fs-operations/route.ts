@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BackupManager, TaskMasterFileOperations, FileOperationError } from '@/lib/fs-operations';
-import { TaskMasterAPIError } from '@/lib/types';
+import { unlink } from 'fs/promises';
+// Removed unused import TaskMasterAPIError
 
 // GET /api/fs-operations - Get file system information and backup status
 export async function GET(request: NextRequest) {
@@ -71,7 +72,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
    try {
       const body = await request.json();
-      const { operation, target, backupPath } = body;
+      const { operation, target } = body;
 
       if (!operation) {
          return NextResponse.json({ error: 'Operation is required' }, { status: 400 });
@@ -217,7 +218,7 @@ export async function DELETE(request: NextRequest) {
                const backupDate = new Date(backupTimestamp.replace(/-/g, ':'));
                if (backupDate < cutoffDate) {
                   try {
-                     await require('fs/promises').unlink(backupPath);
+                     await unlink(backupPath);
                      totalDeleted++;
                   } catch (deleteError) {
                      console.warn(`Failed to delete backup ${backupPath}:`, deleteError);

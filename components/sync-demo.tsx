@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSync, useTaskStatusSync, useBatchSync, useSyncMonitor } from '@/hooks/use-sync';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,7 +13,7 @@ import { Progress } from '@/components/ui/progress';
 export function SyncDemo() {
    const [selectedTaskId, setSelectedTaskId] = useState('2.7');
    const [newStatus, setNewStatus] = useState('done');
-   const [batchTasks, setBatchTasks] = useState<string[]>(['2.7', '2.8']);
+   const [batchTasks] = useState<string[]>(['2.7', '2.8']);
 
    // Main sync hook
    const sync = useSync({
@@ -23,7 +23,7 @@ export function SyncDemo() {
    });
 
    // Specialized hooks
-   const taskStatusSync = useTaskStatusSync();
+   const _taskStatusSync = useTaskStatusSync();
    const batchSync = useBatchSync();
    const monitor = useSyncMonitor();
 

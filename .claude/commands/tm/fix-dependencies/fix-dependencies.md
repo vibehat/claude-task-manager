@@ -13,18 +13,21 @@ task-master fix-dependencies
 ## What Gets Fixed
 
 ### 1. **Auto-Fixable Issues**
+
 - Remove references to deleted tasks
 - Break simple circular dependencies
 - Remove self-dependencies
 - Clean up duplicate dependencies
 
 ### 2. **Smart Resolutions**
+
 - Reorder dependencies to maintain logic
 - Suggest task merging for over-dependent tasks
 - Flatten unnecessary dependency chains
 - Remove redundant transitive dependencies
 
 ### 3. **Manual Review Required**
+
 - Complex circular dependencies
 - Critical path modifications
 - Business logic dependencies

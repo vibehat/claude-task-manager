@@ -117,7 +117,7 @@ class SSEManager {
       }
    }
 
-   broadcast(data: any) {
+   broadcast(data: Record<string, unknown>) {
       if (this.connections.size === 0) {
          return; // No connections to broadcast to
       }
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
                   connectionCount: sseManager.getConnectionCount(),
                })}\n\n`;
                controller.enqueue(encoder.encode(heartbeat));
-            } catch (error) {
+            } catch {
                clearInterval(heartbeatInterval);
                sseManager.removeConnection(controller);
             }

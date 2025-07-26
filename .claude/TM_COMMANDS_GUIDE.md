@@ -25,6 +25,7 @@ All Task Master functionality is available through the `/project:tm/` namespace 
 ## Command Structure
 
 Commands are organized hierarchically to match Task Master's CLI:
+
 - Main commands at `/project:tm/[command]`
 - Subcommands for specific operations `/project:tm/[command]/[subcommand]`
 - Natural language arguments accepted throughout
@@ -32,6 +33,7 @@ Commands are organized hierarchically to match Task Master's CLI:
 ## Complete Command Reference
 
 ### Setup & Configuration
+
 - `/project:tm/setup/install` - Full installation guide
 - `/project:tm/setup/quick-install` - One-line install
 - `/project:tm/init` - Initialize project
@@ -40,11 +42,13 @@ Commands are organized hierarchically to match Task Master's CLI:
 - `/project:tm/models/setup` - Configure AI
 
 ### Task Generation
+
 - `/project:tm/parse-prd` - Generate from PRD
 - `/project:tm/parse-prd/with-research` - Enhanced parsing
 - `/project:tm/generate` - Create task files
 
 ### Task Management
+
 - `/project:tm/list` - List with natural language filters
 - `/project:tm/list/with-subtasks` - Hierarchical view
 - `/project:tm/list/by-status <status>` - Filter by status
@@ -54,6 +58,7 @@ Commands are organized hierarchically to match Task Master's CLI:
 - `/project:tm/remove-task` - Delete task
 
 ### Status Management
+
 - `/project:tm/set-status/to-pending <id>`
 - `/project:tm/set-status/to-in-progress <id>`
 - `/project:tm/set-status/to-done <id>`
@@ -62,23 +67,27 @@ Commands are organized hierarchically to match Task Master's CLI:
 - `/project:tm/set-status/to-cancelled <id>`
 
 ### Task Analysis
+
 - `/project:tm/analyze-complexity` - AI analysis
 - `/project:tm/complexity-report` - View report
 - `/project:tm/expand <id>` - Break down task
 - `/project:tm/expand/all` - Expand all complex
 
 ### Dependencies
+
 - `/project:tm/add-dependency` - Add dependency
 - `/project:tm/remove-dependency` - Remove dependency
 - `/project:tm/validate-dependencies` - Check issues
 - `/project:tm/fix-dependencies` - Auto-fix
 
 ### Workflows
+
 - `/project:tm/workflows/smart-flow` - Adaptive workflows
 - `/project:tm/workflows/pipeline` - Chain commands
 - `/project:tm/workflows/auto-implement` - AI implementation
 
 ### Utilities
+
 - `/project:tm/status` - Project dashboard
 - `/project:tm/next` - Next task recommendation
 - `/project:tm/utils/analyze` - Project analysis
@@ -87,7 +96,9 @@ Commands are organized hierarchically to match Task Master's CLI:
 ## Key Features
 
 ### Natural Language Support
+
 All commands understand natural language:
+
 ```
 /project:tm/list pending high priority
 /project:tm/update mark 23 as done
@@ -95,13 +106,16 @@ All commands understand natural language:
 ```
 
 ### Smart Context
+
 Commands analyze project state and provide intelligent suggestions based on:
+
 - Current task status
 - Dependencies
 - Team patterns
 - Project phase
 
 ### Visual Enhancements
+
 - Progress bars and indicators
 - Status badges
 - Organized displays
@@ -110,6 +124,7 @@ Commands analyze project state and provide intelligent suggestions based on:
 ## Common Workflows
 
 ### Daily Development
+
 ```
 /project:tm/workflows/smart-flow morning
 /project:tm/next
@@ -118,6 +133,7 @@ Commands analyze project state and provide intelligent suggestions based on:
 ```
 
 ### Task Breakdown
+
 ```
 /project:tm/show <id>
 /project:tm/expand <id>
@@ -125,6 +141,7 @@ Commands analyze project state and provide intelligent suggestions based on:
 ```
 
 ### Sprint Planning
+
 ```
 /project:tm/analyze-complexity
 /project:tm/workflows/pipeline init → expand/all → status
@@ -132,10 +149,10 @@ Commands analyze project state and provide intelligent suggestions based on:
 
 ## Migration from Old Commands
 
-| Old | New |
-|-----|-----|
-| `/project:task-master:list` | `/project:tm/list` |
-| `/project:task-master:complete` | `/project:tm/set-status/to-done` |
+| Old                                 | New                                    |
+| ----------------------------------- | -------------------------------------- |
+| `/project:task-master:list`         | `/project:tm/list`                     |
+| `/project:task-master:complete`     | `/project:tm/set-status/to-done`       |
 | `/project:workflows:auto-implement` | `/project:tm/workflows/auto-implement` |
 
 ## Tips

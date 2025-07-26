@@ -48,6 +48,7 @@ Create a secure user authentication system with login, logout, and session manag
 ## File Organization
 
 Creates structure:
+
 ```
 .taskmaster/
 └── tasks/
@@ -88,6 +89,7 @@ Creates structure:
 ## Generation Options
 
 Based on arguments:
+
 - Filter by status
 - Include/exclude completed
 - Custom templates

@@ -1,154 +1,148 @@
 // Task Master CLI Data Structures
 export interface Task {
-  id: number;
-  title: string;
-  description: string;
-  status: TaskStatus;
-  priority: TaskPriority;
-  dependencies: number[];
-  details?: string;
-  testStrategy?: string;
-  subtasks?: Subtask[];
-  complexity?: number;
+   id: number;
+   title: string;
+   description: string;
+   status: TaskStatus;
+   priority: TaskPriority;
+   dependencies: number[];
+   details?: string;
+   testStrategy?: string;
+   subtasks?: Subtask[];
+   complexity?: number;
 }
 
 export interface Subtask {
-  id: number;
-  title: string;
-  description: string;
-  status: TaskStatus;
-  dependencies: string[];
-  details?: string;
-  testStrategy?: string;
+   id: number;
+   title: string;
+   description: string;
+   status: TaskStatus;
+   dependencies: string[];
+   details?: string;
+   testStrategy?: string;
 }
 
-export type TaskStatus = 
-  | 'pending' 
-  | 'in-progress' 
-  | 'done' 
-  | 'cancelled' 
-  | 'deferred'
-  | 'blocked';
+export type TaskStatus = 'pending' | 'in-progress' | 'done' | 'cancelled' | 'deferred' | 'blocked';
 
 export type TaskPriority = 'high' | 'medium' | 'low';
 
 export interface TasksData {
-  tasks: {
-    master: Task[];
-  };
-  metadata: {
-    created: string;
-    updated: string;
-    description: string;
-  };
+   tasks: {
+      master: Task[];
+   };
+   metadata: {
+      created: string;
+      updated: string;
+      description: string;
+   };
 }
 
 // API Response Types
 export interface ApiResponse<T = any> {
-  success?: boolean;
-  data?: T;
-  error?: string;
-  message?: string;
-  timestamp?: string;
+   success?: boolean;
+   data?: T;
+   error?: string;
+   message?: string;
+   timestamp?: string;
 }
 
 export interface TasksResponse extends ApiResponse {
-  tasks: Task[];
-  metadata: TasksData['metadata'];
-  total: number;
+   tasks: Task[];
+   metadata: TasksData['metadata'];
+   total: number;
 }
 
 export interface TaskResponse extends ApiResponse {
-  task: Task;
+   task: Task;
 }
 
 export interface CLIExecuteRequest {
-  command: string;
-  args?: string[];
+   command: string;
+   args?: string[];
 }
 
 export interface CLIExecuteResponse extends ApiResponse {
-  command: string;
-  output: {
-    stdout: string;
-    stderr: string;
-    parsed?: any;
-  };
-  exitCode: number;
+   command: string;
+   output: {
+      stdout: string;
+      stderr: string;
+      parsed?: any;
+   };
+   exitCode: number;
 }
 
 // File Watch Types
 export interface FileWatchEvent {
-  type: 'file-change' | 'connection-established' | 'heartbeat' | 'manual-trigger';
-  path?: string;
-  label?: string;
-  eventType?: string;
-  filename?: string;
-  timestamp: string;
-  message?: string;
-  connectionCount?: number;
-  watching?: string[];
+   type: 'file-change' | 'connection-established' | 'heartbeat' | 'manual-trigger';
+   path?: string;
+   label?: string;
+   eventType?: string;
+   filename?: string;
+   timestamp: string;
+   message?: string;
+   connectionCount?: number;
+   watching?: string[];
 }
 
 // Configuration Types
 export interface TaskMasterConfig {
-  models: {
-    main?: string;
-    research?: string;
-    fallback?: string;
-  };
-  apiKeys: {
-    [provider: string]: string;
-  };
-  settings: {
-    defaultPriority: TaskPriority;
-    autoExpand: boolean;
-    research: boolean;
-  };
+   models: {
+      main?: string;
+      research?: string;
+      fallback?: string;
+   };
+   apiKeys: {
+      [provider: string]: string;
+   };
+   settings: {
+      defaultPriority: TaskPriority;
+      autoExpand: boolean;
+      research: boolean;
+   };
 }
 
 // Utility Types
 export interface TaskFilter {
-  status?: TaskStatus;
-  priority?: TaskPriority;
-  id?: number;
-  hasSubtasks?: boolean;
+   status?: TaskStatus;
+   priority?: TaskPriority;
+   id?: number;
+   hasSubtasks?: boolean;
 }
 
 export interface TaskUpdate {
-  id: number;
-  title?: string;
-  description?: string;
-  status?: TaskStatus;
-  priority?: TaskPriority;
-  dependencies?: number[];
-  details?: string;
-  testStrategy?: string;
+   id: number;
+   title?: string;
+   description?: string;
+   status?: TaskStatus;
+   priority?: TaskPriority;
+   dependencies?: number[];
+   details?: string;
+   testStrategy?: string;
 }
 
 export interface CreateTaskRequest {
-  title: string;
-  description: string;
-  priority?: TaskPriority;
-  dependencies?: number[];
-  details?: string;
-  testStrategy?: string;
+   title: string;
+   description: string;
+   priority?: TaskPriority;
+   dependencies?: number[];
+   details?: string;
+   testStrategy?: string;
 }
 
 // Error Types
 export interface APIError {
-  code: string;
-  message: string;
-  details?: any;
+   code: string;
+   message: string;
+   details?: any;
 }
 
 export class TaskMasterAPIError extends Error {
-  constructor(
-    public code: string,
-    message: string,
-    public details?: any
-  ) {
-    super(message);
-    this.name = 'TaskMasterAPIError';
-  }
+   constructor(
+      public code: string,
+      message: string,
+      public details?: any
+   ) {
+      super(message);
+      this.name = 'TaskMasterAPIError';
+   }
 }
