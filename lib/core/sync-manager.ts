@@ -1299,5 +1299,3 @@ export function getGlobalSyncManager(): TaskMasterSyncManager {
    }
    return globalSyncManager;
 }
-
-export { ConflictResolution };

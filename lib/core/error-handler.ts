@@ -772,5 +772,3 @@ export const ErrorUtils = {
       return handler.retryOperation(operation, context, config);
    },
 };
-
-export { ErrorType, ErrorCategory, ErrorSeverity };

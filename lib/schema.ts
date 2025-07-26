@@ -1,4 +1,5 @@
 import { gql } from 'graphql-tag';
+import extendedTypeDefs from './schema-extended';
 
 const typeDefs = gql`
    scalar DateTime
@@ -373,6 +374,82 @@ const typeDefs = gql`
       status: JSON!
       timestamp: DateTime!
    }
+
+   # Subscription Types
+   type TaskUpdatePayload {
+      task: Task!
+      changeType: TaskChangeType!
+      timestamp: DateTime!
+      source: String!
+      previousState: JSON
+   }
+
+   enum TaskChangeType {
+      CREATED
+      UPDATED
+      DELETED
+      STATUS_CHANGED
+   }
+
+   type CLICommandProgressPayload {
+      commandId: ID!
+      command: String!
+      status: CLICommandStatus!
+      output: String
+      progress: Int
+      timestamp: DateTime!
+      metadata: JSON
+   }
+
+   type SyncOperationPayload {
+      operation: SyncOperation!
+      changeType: SyncChangeType!
+      timestamp: DateTime!
+   }
+
+   enum SyncChangeType {
+      STARTED
+      PROGRESS
+      COMPLETED
+      FAILED
+      CONFLICT_DETECTED
+      CONFLICT_RESOLVED
+   }
+
+   input TaskSubscriptionFilter {
+      taskIds: [ID!]
+      statuses: [TaskStatus!]
+      priorities: [TaskPriority!]
+      source: String
+   }
+
+   input CLICommandSubscriptionFilter {
+      commandIds: [ID!]
+      commands: [String!]
+      statuses: [CLICommandStatus!]
+   }
+
+   input SyncOperationSubscriptionFilter {
+      operationIds: [ID!]
+      types: [SyncOperationType!]
+      statuses: [SyncOperationStatus!]
+   }
+
+   # Root Subscription Type
+   type Subscription {
+      # Task subscriptions
+      taskUpdated(filter: TaskSubscriptionFilter): TaskUpdatePayload!
+
+      # CLI command subscriptions
+      cliCommandProgress(filter: CLICommandSubscriptionFilter): CLICommandProgressPayload!
+
+      # Sync operation subscriptions
+      syncOperationUpdated(filter: SyncOperationSubscriptionFilter): SyncOperationPayload!
+
+      # File watch subscriptions
+      fileWatchEvent: FileWatchTriggerResult!
+   }
 `;
 
-export default typeDefs;
+// Combine original and extended schemas
+export default [typeDefs, extendedTypeDefs];

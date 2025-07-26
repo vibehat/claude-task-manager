@@ -6,7 +6,7 @@ import { CircleCheck, CircleX, AlertCircle, HelpCircle, Bell } from 'lucide-reac
 import { Project } from '@/mock-data/projects';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/core';
+import { cn } from '@/lib/utils';
 
 interface HealthPopoverProps {
    project: Project;
