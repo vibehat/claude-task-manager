@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile, writeFile } from 'fs/promises';
-import { join } from 'path';
 import {
    Task,
    TasksData,
@@ -12,39 +10,31 @@ import {
    TaskMasterAPIError,
    DEFAULT_TASK_PRIORITY,
 } from '@/lib/types';
+import { TaskMasterFileOperations, FileOperationError } from '@/lib/fs-operations';
 
-// Helper function to get tasks file path
-const getTasksFilePath = () => {
-   return join(process.cwd(), '.taskmaster', 'tasks', 'tasks.json');
-};
-
-// Helper function to read tasks from file
+// Helper function to read tasks from file with error recovery
 async function readTasks(): Promise<TasksData> {
    try {
-      const filePath = getTasksFilePath();
-      const fileContent = await readFile(filePath, 'utf-8');
-      return JSON.parse(fileContent);
+      return await TaskMasterFileOperations.readTasks();
    } catch (error) {
       console.error('Error reading tasks file:', error);
-      throw new Error('Failed to read tasks data');
+      if (error instanceof FileOperationError) {
+         throw new TaskMasterAPIError(`File operation failed: ${error.message}`, 500);
+      }
+      throw new TaskMasterAPIError('Failed to read tasks data', 500);
    }
 }
 
-// Helper function to write tasks to file
+// Helper function to write tasks to file with backup and validation
 async function writeTasks(data: TasksData): Promise<void> {
    try {
-      const filePath = getTasksFilePath();
-      const updatedData = {
-         ...data,
-         metadata: {
-            ...data.metadata,
-            updated: new Date().toISOString(),
-         },
-      };
-      await writeFile(filePath, JSON.stringify(updatedData, null, 2));
+      await TaskMasterFileOperations.writeTasks(data);
    } catch (error) {
       console.error('Error writing tasks file:', error);
-      throw new Error('Failed to write tasks data');
+      if (error instanceof FileOperationError) {
+         throw new TaskMasterAPIError(`File operation failed: ${error.message}`, 500);
+      }
+      throw new TaskMasterAPIError('Failed to write tasks data', 500);
    }
 }
 
@@ -57,7 +47,7 @@ export async function GET(request: NextRequest) {
       const id = searchParams.get('id');
 
       const tasksData = await readTasks();
-      let tasks = tasksData.tasks.master;
+      let tasks = tasksData.master.tasks;
 
       // Filter by specific task ID
       if (id) {
@@ -81,7 +71,7 @@ export async function GET(request: NextRequest) {
 
       return NextResponse.json({
          tasks,
-         metadata: tasksData.metadata,
+         metadata: tasksData.master.metadata,
          total: tasks.length,
       });
    } catch (error) {
@@ -102,7 +92,7 @@ export async function POST(request: NextRequest) {
       }
 
       const tasksData = await readTasks();
-      const tasks = tasksData.tasks.master;
+      const tasks = tasksData.master.tasks;
 
       // Generate new task ID
       const maxId = tasks.reduce((max, task) => Math.max(max, task.id), 0);
@@ -142,7 +132,7 @@ export async function PUT(request: NextRequest) {
       }
 
       const tasksData = await readTasks();
-      const tasks = tasksData.tasks.master;
+      const tasks = tasksData.master.tasks;
       const taskIndex = tasks.findIndex((task) => task.id === id);
 
       if (taskIndex === -1) {
@@ -175,7 +165,7 @@ export async function DELETE(request: NextRequest) {
 
       const taskId = parseInt(id);
       const tasksData = await readTasks();
-      const tasks = tasksData.tasks.master;
+      const tasks = tasksData.master.tasks;
       const taskIndex = tasks.findIndex((task) => task.id === taskId);
 
       if (taskIndex === -1) {

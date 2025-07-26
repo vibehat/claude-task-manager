@@ -296,13 +296,4 @@ export const TypeGuards = {
    },
 } as const;
 
-// Export all validation functions
-export {
-   validateTask,
-   validateSubtask,
-   validateTasksData,
-   validateTaskMasterConfig,
-   safeParseTask,
-   safeParseTasksData,
-   safeParseConfig,
-};
+// Functions are already exported as individual exports above

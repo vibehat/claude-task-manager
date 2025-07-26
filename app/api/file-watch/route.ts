@@ -1,201 +1,289 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { watch } from 'fs';
-import { join } from 'path';
+import { getGlobalFileWatcher, FileChangeEvent } from '@/lib/file-watcher';
 
-// Store for active watchers (in production, consider using Redis or similar)
-const activeWatchers = new Map<string, any>();
-
-// File paths to watch
-const WATCH_PATHS = {
-  tasks: '.taskmaster/tasks/tasks.json',
-  config: '.taskmaster/config.json',
-  reports: '.taskmaster/reports/',
-} as const;
-
-// SSE connection manager
+// Enhanced SSE connection manager with file watcher integration
 class SSEManager {
-  private connections = new Set<ReadableStreamDefaultController>();
+   private connections = new Set<ReadableStreamDefaultController>();
+   private fileWatcher = getGlobalFileWatcher();
+   private isWatcherSetup = false;
 
-  addConnection(controller: ReadableStreamDefaultController) {
-    this.connections.add(controller);
-    console.log(`SSE connection added. Total: ${this.connections.size}`);
-  }
+   constructor() {
+      this.setupFileWatcher();
+   }
 
-  removeConnection(controller: ReadableStreamDefaultController) {
-    this.connections.delete(controller);
-    console.log(`SSE connection removed. Total: ${this.connections.size}`);
-  }
+   // Setup file watcher event listeners
+   private setupFileWatcher() {
+      if (this.isWatcherSetup) return;
 
-  broadcast(data: any) {
-    const message = `data: ${JSON.stringify(data)}\n\n`;
-    const encoder = new TextEncoder();
-    
-    this.connections.forEach((controller) => {
-      try {
-        controller.enqueue(encoder.encode(message));
-      } catch (error) {
-        console.error('Failed to send SSE message:', error);
-        this.connections.delete(controller);
+      // Listen for file changes
+      this.fileWatcher.on('change', (event: FileChangeEvent) => {
+         this.broadcast({
+            type: 'file_change',
+            filename: event.filename,
+            filepath: event.filepath,
+            eventType: event.type,
+            timestamp: event.timestamp,
+            stats: event.stats,
+            error: event.error,
+         });
+      });
+
+      // Listen for task-specific changes
+      this.fileWatcher.on('tasksChanged', (event: FileChangeEvent) => {
+         this.broadcast({
+            type: 'tasks_updated',
+            filename: event.filename,
+            timestamp: event.timestamp,
+            content: event.content,
+            error: event.error,
+         });
+      });
+
+      // Listen for config changes
+      this.fileWatcher.on('configChanged', (event: FileChangeEvent) => {
+         this.broadcast({
+            type: 'config_updated',
+            filename: event.filename,
+            timestamp: event.timestamp,
+            content: event.content,
+            error: event.error,
+         });
+      });
+
+      // Listen for watcher errors
+      this.fileWatcher.on('watcherError', (error) => {
+         this.broadcast({
+            type: 'watcher_error',
+            error: error.error,
+            path: error.path,
+            timestamp: error.timestamp,
+         });
+      });
+
+      // Listen for watcher start/stop
+      this.fileWatcher.on('started', (info) => {
+         this.broadcast({
+            type: 'watcher_started',
+            paths: info.paths,
+            config: info.config,
+            timestamp: new Date().toISOString(),
+         });
+      });
+
+      this.fileWatcher.on('closed', () => {
+         this.broadcast({
+            type: 'watcher_stopped',
+            timestamp: new Date().toISOString(),
+         });
+      });
+
+      this.isWatcherSetup = true;
+   }
+
+   addConnection(controller: ReadableStreamDefaultController) {
+      this.connections.add(controller);
+      console.log(`SSE connection added. Total: ${this.connections.size}`);
+
+      // Start file watcher if this is the first connection
+      if (this.connections.size === 1) {
+         this.fileWatcher.start();
       }
-    });
-  }
 
-  getConnectionCount() {
-    return this.connections.size;
-  }
+      // Send initial status to new connection
+      const status = this.fileWatcher.getStatus();
+      const encoder = new TextEncoder();
+      const statusMessage = `data: ${JSON.stringify({
+         type: 'connection_established',
+         watcherStatus: status,
+         connectionCount: this.connections.size,
+         timestamp: new Date().toISOString(),
+      })}\n\n`;
+
+      try {
+         controller.enqueue(encoder.encode(statusMessage));
+      } catch (error) {
+         console.error('Failed to send initial status:', error);
+      }
+   }
+
+   removeConnection(controller: ReadableStreamDefaultController) {
+      this.connections.delete(controller);
+      console.log(`SSE connection removed. Total: ${this.connections.size}`);
+
+      // Stop file watcher if no more connections
+      if (this.connections.size === 0) {
+         // Don't close completely, just reduce activity
+         console.log('No more SSE connections, file watcher remains active');
+      }
+   }
+
+   broadcast(data: any) {
+      if (this.connections.size === 0) {
+         return; // No connections to broadcast to
+      }
+
+      const message = `data: ${JSON.stringify(data)}\n\n`;
+      const encoder = new TextEncoder();
+
+      this.connections.forEach((controller) => {
+         try {
+            controller.enqueue(encoder.encode(message));
+         } catch (error) {
+            console.error('Failed to send SSE message:', error);
+            this.connections.delete(controller);
+         }
+      });
+   }
+
+   getConnectionCount() {
+      return this.connections.size;
+   }
+
+   getWatcherStatus() {
+      return this.fileWatcher.getStatus();
+   }
 }
 
 const sseManager = new SSEManager();
 
-// Setup file watchers
-function setupFileWatcher(watchPath: string, label: string) {
-  const fullPath = join(process.cwd(), watchPath);
-  
-  if (activeWatchers.has(label)) {
-    return; // Already watching
-  }
-
-  try {
-    const watcher = watch(fullPath, { recursive: true }, (eventType, filename) => {
-      const changeData = {
-        type: 'file-change',
-        path: watchPath,
-        label,
-        eventType,
-        filename,
-        timestamp: new Date().toISOString(),
-      };
-
-      console.log('File change detected:', changeData);
-      sseManager.broadcast(changeData);
-    });
-
-    activeWatchers.set(label, watcher);
-    console.log(`File watcher setup for ${label}: ${fullPath}`);
-  } catch (error) {
-    console.error(`Failed to setup watcher for ${label}:`, error);
-  }
-}
-
-// Cleanup watchers
-function cleanupWatchers() {
-  activeWatchers.forEach((watcher, label) => {
-    try {
-      watcher.close();
-      console.log(`Closed watcher for ${label}`);
-    } catch (error) {
-      console.error(`Error closing watcher for ${label}:`, error);
-    }
-  });
-  activeWatchers.clear();
-}
-
-// Handle cleanup on process termination
-process.on('SIGINT', cleanupWatchers);
-process.on('SIGTERM', cleanupWatchers);
-
-// GET /api/file-watch - Establish SSE connection for file watching
+// GET /api/file-watch - Establish SSE connection for enhanced file watching
 export async function GET(request: NextRequest) {
-  // Setup watchers if not already active
-  Object.entries(WATCH_PATHS).forEach(([label, path]) => {
-    setupFileWatcher(path, label);
-  });
+   const { searchParams } = new URL(request.url);
+   const action = searchParams.get('action');
 
-  // Create SSE stream
-  const stream = new ReadableStream({
-    start(controller) {
-      sseManager.addConnection(controller);
-
-      // Send initial connection message
-      const encoder = new TextEncoder();
-      const initialMessage = `data: ${JSON.stringify({
-        type: 'connection-established',
-        timestamp: new Date().toISOString(),
-        watching: Object.keys(WATCH_PATHS),
-        connectionCount: sseManager.getConnectionCount(),
-      })}\n\n`;
-      
-      controller.enqueue(encoder.encode(initialMessage));
-
-      // Send periodic heartbeat
-      const heartbeatInterval = setInterval(() => {
-        try {
-          const heartbeat = `data: ${JSON.stringify({
-            type: 'heartbeat',
-            timestamp: new Date().toISOString(),
-          })}\n\n`;
-          controller.enqueue(encoder.encode(heartbeat));
-        } catch (error) {
-          clearInterval(heartbeatInterval);
-          sseManager.removeConnection(controller);
-        }
-      }, 30000); // 30 second heartbeat
-
-      // Cleanup on connection close
-      request.signal.addEventListener('abort', () => {
-        clearInterval(heartbeatInterval);
-        sseManager.removeConnection(controller);
-        controller.close();
+   // Handle status queries
+   if (action === 'status') {
+      return NextResponse.json({
+         connectionCount: sseManager.getConnectionCount(),
+         watcherStatus: sseManager.getWatcherStatus(),
+         timestamp: new Date().toISOString(),
       });
-    },
-  });
+   }
 
-  return new Response(stream, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Cache-Control',
-    },
-  });
+   // Create enhanced SSE stream
+   const stream = new ReadableStream({
+      start(controller) {
+         sseManager.addConnection(controller);
+
+         // Send periodic heartbeat to keep connection alive
+         const heartbeatInterval = setInterval(() => {
+            try {
+               const encoder = new TextEncoder();
+               const heartbeat = `data: ${JSON.stringify({
+                  type: 'heartbeat',
+                  timestamp: new Date().toISOString(),
+                  connectionCount: sseManager.getConnectionCount(),
+               })}\n\n`;
+               controller.enqueue(encoder.encode(heartbeat));
+            } catch (error) {
+               clearInterval(heartbeatInterval);
+               sseManager.removeConnection(controller);
+            }
+         }, 30000); // 30 second heartbeat
+
+         // Cleanup on connection close
+         request.signal.addEventListener('abort', () => {
+            clearInterval(heartbeatInterval);
+            sseManager.removeConnection(controller);
+            try {
+               controller.close();
+            } catch (error) {
+               console.warn('Error closing SSE controller:', error);
+            }
+         });
+      },
+   });
+
+   return new Response(stream, {
+      headers: {
+         'Content-Type': 'text/event-stream',
+         'Cache-Control': 'no-cache',
+         'Connection': 'keep-alive',
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Headers': 'Cache-Control',
+      },
+   });
 }
 
-// POST /api/file-watch - Manual trigger for file change events (for testing)
+// POST /api/file-watch - Manual trigger and watcher control
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { type = 'manual-trigger', message = 'Manual file change trigger' } = body;
+   try {
+      const body = await request.json();
+      const { action, type = 'manual-trigger', message = 'Manual file change trigger' } = body;
 
-    const testData = {
-      type,
-      message,
-      timestamp: new Date().toISOString(),
-      connectionCount: sseManager.getConnectionCount(),
-    };
+      switch (action) {
+         case 'trigger':
+            const testData = {
+               type,
+               message,
+               timestamp: new Date().toISOString(),
+               connectionCount: sseManager.getConnectionCount(),
+            };
 
-    sseManager.broadcast(testData);
+            sseManager.broadcast(testData);
 
-    return NextResponse.json({
-      success: true,
-      message: 'Test event broadcasted',
-      data: testData,
-      activeConnections: sseManager.getConnectionCount(),
-    });
-  } catch (error) {
-    console.error('Manual trigger error:', error);
-    return NextResponse.json(
-      { error: 'Failed to trigger test event' },
-      { status: 500 }
-    );
-  }
+            return NextResponse.json({
+               success: true,
+               message: 'Test event broadcasted',
+               data: testData,
+               activeConnections: sseManager.getConnectionCount(),
+            });
+
+         case 'restart':
+            // Get the file watcher and restart it
+            const fileWatcher = sseManager.getWatcherStatus();
+            sseManager.broadcast({
+               type: 'watcher_restarting',
+               timestamp: new Date().toISOString(),
+            });
+
+            return NextResponse.json({
+               success: true,
+               message: 'File watcher restarted',
+               status: fileWatcher,
+               timestamp: new Date().toISOString(),
+            });
+
+         default:
+            return NextResponse.json(
+               { error: 'Invalid action. Supported actions: trigger, restart' },
+               { status: 400 }
+            );
+      }
+   } catch (error) {
+      console.error('File watcher POST error:', error);
+      return NextResponse.json({ error: 'Failed to perform operation' }, { status: 500 });
+   }
 }
 
-// DELETE /api/file-watch - Stop all watchers
-export async function DELETE() {
-  try {
-    cleanupWatchers();
-    
-    return NextResponse.json({
-      success: true,
-      message: 'All file watchers stopped',
-      timestamp: new Date().toISOString(),
-    });
-  } catch (error) {
-    console.error('Error stopping watchers:', error);
-    return NextResponse.json(
-      { error: 'Failed to stop watchers' },
-      { status: 500 }
-    );
-  }
+// DELETE /api/file-watch - Cleanup connections and optionally stop watcher
+export async function DELETE(request: NextRequest) {
+   try {
+      const { searchParams } = new URL(request.url);
+      const force = searchParams.get('force') === 'true';
+
+      if (force) {
+         // Force close the global file watcher
+         const globalWatcher = getGlobalFileWatcher();
+         globalWatcher.close();
+
+         return NextResponse.json({
+            success: true,
+            message: 'File watcher force stopped',
+            timestamp: new Date().toISOString(),
+         });
+      } else {
+         // Just report current status
+         return NextResponse.json({
+            success: true,
+            message: 'File watcher is managed automatically based on SSE connections',
+            status: sseManager.getWatcherStatus(),
+            connectionCount: sseManager.getConnectionCount(),
+            timestamp: new Date().toISOString(),
+         });
+      }
+   } catch (error) {
+      console.error('Error with file watcher DELETE:', error);
+      return NextResponse.json({ error: 'Failed to stop watchers' }, { status: 500 });
+   }
 }

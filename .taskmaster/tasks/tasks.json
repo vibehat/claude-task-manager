@@ -44,7 +44,7 @@
                   "id": 3,
                   "title": "Build File System Operations Layer",
                   "description": "Implement safe read/write operations for .taskmaster/tasks/tasks.json and config files",
-                  "status": "pending",
+                  "status": "done",
                   "dependencies": [],
                   "details": "Create atomic file operations with proper locking, backup mechanisms, and permission handling. Implement JSON parsing with validation and error recovery.",
                   "testStrategy": ""
@@ -53,7 +53,7 @@
                   "id": 4,
                   "title": "Integrate CLI Command Execution",
                   "description": "Implement child_process integration for executing task-master commands programmatically",
-                  "status": "pending",
+                  "status": "done",
                   "dependencies": [],
                   "details": "Build command execution wrapper with timeout handling, error parsing, and response formatting. Include command sanitization and security validation.",
                   "testStrategy": ""
@@ -62,7 +62,7 @@
                   "id": 5,
                   "title": "Implement File System Watcher",
                   "description": "Create real-time file monitoring using chokidar for .taskmaster directory changes",
-                  "status": "pending",
+                  "status": "done",
                   "dependencies": [],
                   "details": "Set up file watchers for tasks.json and config.json changes. Implement debouncing and change detection to trigger UI updates efficiently.",
                   "testStrategy": ""
@@ -201,11 +201,68 @@
             "dependencies": [4, 8],
             "status": "cancelled",
             "subtasks": []
+         },
+         {
+            "id": 11,
+            "title": "Write Comprehensive API Tests for CLI Integration Layer",
+            "description": "Create a complete test suite covering unit tests for the CLI executor class, integration tests for all API endpoints, security validation, timeout handling, and error scenarios using Jest and supertest.",
+            "status": "pending",
+            "dependencies": ["2.1", "2.2", "2.3", "2.4"],
+            "priority": "medium",
+            "details": "Implement comprehensive testing architecture with Jest as the testing framework and supertest for API endpoint testing. Create unit tests for the CLI executor class covering command validation, output parsing, process management, and execution history tracking. Develop integration tests for all API endpoints including /api/cli-execute (command execution with various parameters), /api/tasks (CRUD operations), /api/fs-operations (file system operations), and /api/file-watch (real-time file monitoring). Implement security validation tests to prevent command injection, unauthorized file access, and malicious input. Add timeout handling tests for long-running commands and process cleanup. Create error handling tests for invalid commands, file permission issues, CLI binary not found, and network failures. Include mock implementations for CLI responses to ensure reliable testing. Test WebSocket connections for real-time updates and file system watcher functionality. Implement performance tests for concurrent command execution and memory usage monitoring. Add test utilities for temporary directory setup, mock file generation, and cleanup procedures.",
+            "testStrategy": "Set up Jest test environment with isolated test databases and temporary file systems. Create comprehensive test suites: Unit tests for CLIExecutor class methods with 90%+ code coverage. Integration tests for each API endpoint using supertest with various request scenarios. Security tests including SQL injection attempts, path traversal attacks, and command injection prevention. Performance tests measuring response times under load and memory consumption. Mock external dependencies including child_process, file system operations, and WebSocket connections. Test error scenarios with malformed requests, missing dependencies, and system failures. Implement test fixtures for consistent PRD parsing and task generation testing. Use test reporters for coverage analysis and continuous integration compatibility.",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Setup Jest Testing Environment and Configuration",
+                  "description": "Configure Jest test framework with proper setup files, TypeScript support, and testing utilities for the CLI integration layer",
+                  "status": "pending",
+                  "dependencies": [],
+                  "details": "Install and configure Jest with TypeScript support, create jest.config.js with proper module resolution for Next.js app structure. Set up test environment configuration files including setupTests.js for global test utilities. Configure test scripts in package.json for unit, integration, and watch modes. Create mock directories and utility functions for common test scenarios. Set up temporary directory management and cleanup procedures for file system tests.",
+                  "testStrategy": "Verify Jest configuration loads correctly, TypeScript compilation works in test environment, and mock utilities function properly"
+               },
+               {
+                  "id": 2,
+                  "title": "Create Unit Tests for CLI Executor Class",
+                  "description": "Develop comprehensive unit tests for the CLIExecutor class covering all methods and edge cases",
+                  "status": "pending",
+                  "dependencies": [1],
+                  "details": "Create unit tests for CLIExecutor class methods including command validation, output parsing, process management, and execution history tracking. Test command sanitization and injection prevention. Mock subprocess execution to test various command outputs and error scenarios. Test timeout handling, process cleanup, and memory management. Achieve 90%+ code coverage for the CLIExecutor class with tests for both success and failure paths.",
+                  "testStrategy": "Use Jest mocks for child_process module, test all public methods with various inputs, verify error handling and edge cases"
+               },
+               {
+                  "id": 3,
+                  "title": "Implement API Endpoint Integration Tests",
+                  "description": "Create integration tests for all API endpoints using supertest framework",
+                  "status": "pending",
+                  "dependencies": [1],
+                  "details": "Develop integration tests using supertest for all API endpoints: /api/cli-execute (command execution with various parameters), /api/tasks (CRUD operations), /api/fs-operations (file system operations), and /api/file-watch (real-time file monitoring). Test request/response handling, HTTP status codes, response data validation, and endpoint authentication. Create test scenarios for valid and invalid requests, parameter validation, and error responses.",
+                  "testStrategy": "Use supertest to make HTTP requests to API endpoints, validate response structure and status codes, test with various request payloads"
+               },
+               {
+                  "id": 4,
+                  "title": "Develop Security and Error Handling Tests",
+                  "description": "Create comprehensive security validation tests and error handling scenarios",
+                  "status": "pending",
+                  "dependencies": [2, 3],
+                  "details": "Implement security validation tests to prevent command injection, unauthorized file access, and malicious input processing. Test path traversal prevention, command sanitization, and input validation. Create error handling tests for invalid commands, file permission issues, CLI binary not found, network failures, and malformed requests. Test rate limiting, authentication failures, and resource exhaustion scenarios.",
+                  "testStrategy": "Test with malicious inputs, verify security measures block dangerous operations, validate proper error messages and status codes"
+               },
+               {
+                  "id": 5,
+                  "title": "Create WebSocket and Performance Tests",
+                  "description": "Implement WebSocket connection tests and performance monitoring for concurrent operations",
+                  "status": "pending",
+                  "dependencies": [3, 4],
+                  "details": "Test WebSocket connections for real-time updates and file system watcher functionality. Create tests for connection establishment, message broadcasting, client disconnection handling, and real-time data synchronization. Implement performance tests for concurrent command execution, memory usage monitoring, and response time validation. Test system behavior under load with multiple simultaneous requests and WebSocket connections.",
+                  "testStrategy": "Use WebSocket testing libraries to verify real-time functionality, implement load testing with multiple concurrent connections and commands"
+               }
+            ]
          }
       ],
       "metadata": {
          "created": "2025-07-26T00:47:21.699Z",
-         "updated": "2025-07-26T01:35:58.515Z",
+         "updated": "2025-07-26T02:08:08.587Z",
          "description": "Tasks for master context"
       }
    }
