@@ -1,7 +1,7 @@
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { CreateIssueModalProvider } from '@/components/common/issues/create-issue-modal-provider';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/client/utils';
 
 interface MainLayoutProps {
    children: React.ReactNode;

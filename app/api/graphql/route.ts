@@ -1,11 +1,10 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import schema from '@/lib/schema';
-import { mergedResolvers } from '@/lib/resolvers';
+import { typeDefs, resolvers } from '@/libs/server/graphql';
 
 const server = new ApolloServer({
-   typeDefs: schema,
-   resolvers: mergedResolvers,
+   typeDefs,
+   resolvers,
    // Enable introspection and playground in development
    introspection: process.env.NODE_ENV !== 'production',
    plugins: [],

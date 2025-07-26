@@ -2,6 +2,7 @@
 
 import { status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
+import { useIssuesIntegration } from '@/libs/client/hooks/use-issues-integration';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
 import { useFilterStore } from '@/store/filter-store';
@@ -11,7 +12,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { GroupIssues } from './group-issues';
 import { SearchIssues } from './search-issues';
 import { CustomDragLayer } from './issue-grid';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/client/utils';
 import { Issue } from '@/mock-data/issues';
 
 export default function AllIssues() {
@@ -19,9 +20,28 @@ export default function AllIssues() {
    const { viewType } = useViewStore();
    const { hasActiveFilters } = useFilterStore();
 
+   // Initialize GraphQL data integration
+   const { loading, error } = useIssuesIntegration();
+
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
    const isFiltering = hasActiveFilters();
+
+   if (loading) {
+      return (
+         <div className="flex items-center justify-center h-64">
+            <div className="text-sm text-muted-foreground">Loading issues...</div>
+         </div>
+      );
+   }
+
+   if (error) {
+      return (
+         <div className="flex items-center justify-center h-64">
+            <div className="text-sm text-red-500">Error loading issues: {error.message}</div>
+         </div>
+      );
+   }
 
    return (
       <div className={cn('w-full h-full', isViewTypeGrid && 'overflow-x-auto')}>
