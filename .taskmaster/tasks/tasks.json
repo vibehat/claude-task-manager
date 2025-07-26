@@ -1,235 +1,167 @@
 {
-  "master": {
-    "tasks": [
-      {
-        "id": 1,
-        "title": "Setup Next.js 15 Project Foundation",
-        "description": "Initialize the Next.js 15 project with App Router, TypeScript, Tailwind CSS 4, and essential development tools",
-        "details": "Create Next.js 15 project using `npx create-next-app@latest` with TypeScript and App Router. Configure Tailwind CSS 4, ESLint, Prettier, and TypeScript strict mode. Set up project structure with app/, components/, lib/, and types/ directories. Install shadcn/ui and Radix UI dependencies. Configure environment variables structure for API keys.",
-        "testStrategy": "Verify project builds successfully, TypeScript compiles without errors, Tailwind classes work, and all linting rules pass. Test hot reload functionality.",
-        "priority": "high",
-        "dependencies": [],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 2,
-        "title": "Implement Task Master CLI Integration Layer",
-        "description": "Create comprehensive Node.js integration layer with Next.js API routes to interface with .taskmaster directory structure and execute CLI commands programmatically",
-        "status": "pending",
-        "dependencies": [
-          1
-        ],
-        "priority": "high",
-        "details": "Build robust API architecture with /api/tasks, /api/cli-execute, and /api/file-watch endpoints. Implement TypeScript interfaces (Task, Project, Config, Status) matching CLI data structures. Create file system watchers using chokidar for real-time synchronization. Integrate child_process for CLI command execution with proper error handling, timeout management, and response parsing. Implement WebSocket connections for live updates and bidirectional sync between UI state and CLI files. Include security measures: input validation, command sanitization, and file path restrictions. Support optimistic updates with rollback on CLI failures, batch operations for multiple task updates, and conflict resolution for concurrent modifications.",
-        "testStrategy": "Comprehensive testing suite including: Unit tests for file operations with temporary directories, integration tests with actual .taskmaster files, mocked CLI responses for reliable testing. Test child_process integration, WebSocket connections, file system permissions, JSON parsing/validation, and network connectivity. Load testing with large task lists (1000+ tasks) and performance optimization validation. Security testing for command injection and file path traversal vulnerabilities.",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Create Next.js API Routes Architecture",
-            "description": "Implement /api/tasks, /api/cli-execute, and /api/file-watch endpoints with proper request/response handling",
-            "status": "pending",
+   "master": {
+      "tasks": [
+         {
+            "id": 28,
+            "title": "Create Individual Mode Layout System",
+            "description": "Implement core layout structure for individual project management mode with reusable components",
+            "details": "Create `/app/indie/layout.tsx` using Next.js 14+ app router pattern. Implement `IndieLayout` component in `/components/layout/indie-layout.tsx` that wraps content with existing `SidebarProvider` and maintains consistent styling with team mode. Use TypeScript with strict mode and follow existing component patterns. Implement individual mode project context using React Context API with proper TypeScript interfaces. Ensure responsive design using Tailwind CSS classes matching existing design system.",
+            "testStrategy": "Unit tests for IndieLayout component, integration tests for route rendering, visual regression tests for layout consistency across devices",
+            "priority": "high",
             "dependencies": [],
-            "details": "Build API route structure with TypeScript, implement request validation, error handling middleware, and response formatting. Set up proper HTTP methods and status codes.",
-            "testStrategy": ""
-          },
-          {
-            "id": 2,
-            "title": "Implement TypeScript Interfaces for CLI Data Structures",
-            "description": "Create comprehensive TypeScript types matching task-master CLI format",
+            "status": "done",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Create Next.js app router layout structure",
+                  "description": "Implement `/app/indie/layout.tsx` using Next.js 14+ app router pattern with proper TypeScript configuration",
+                  "dependencies": [],
+                  "details": "Create the main layout file at `/app/indie/layout.tsx` following Next.js 14+ app router conventions. Set up proper TypeScript interfaces for layout props, implement metadata configuration, and ensure proper component structure with children prop handling. Follow existing app router patterns from team mode layouts.",
+                  "status": "done",
+                  "testStrategy": "Unit tests for layout component rendering, route configuration testing, TypeScript compilation verification"
+               },
+               {
+                  "id": 2,
+                  "title": "Build IndieLayout wrapper component",
+                  "description": "Create reusable `IndieLayout` component in `/components/layout/indie-layout.tsx` with SidebarProvider integration",
+                  "dependencies": ["28.1"],
+                  "details": "Implement the main IndieLayout component that wraps content with existing SidebarProvider. Ensure consistent styling with team mode using shared design tokens and Tailwind CSS classes. Include proper TypeScript interfaces and props handling for children and layout configuration.",
+                  "status": "done",
+                  "testStrategy": "Component testing for layout rendering, SidebarProvider integration testing, responsive design testing across devices"
+               },
+               {
+                  "id": 3,
+                  "title": "Implement individual mode project context",
+                  "description": "Create React Context API setup for individual project management with TypeScript interfaces",
+                  "dependencies": ["28.2"],
+                  "details": "Build React Context using createContext and useContext hooks with proper TypeScript interfaces for individual project state management. Include project selection, current project state, and project switching functionality. Implement context provider component with state management and proper error boundaries.",
+                  "status": "done",
+                  "testStrategy": "Context provider testing, state management testing, TypeScript interface validation, error boundary testing"
+               },
+               {
+                  "id": 4,
+                  "title": "Ensure responsive design consistency",
+                  "description": "Apply responsive Tailwind CSS classes matching existing design system across all layout components",
+                  "dependencies": ["28.2", "28.3"],
+                  "details": "Implement responsive design using Tailwind CSS breakpoints and utility classes. Ensure layout adapts properly on mobile, tablet, and desktop screens. Apply consistent spacing, typography, and component sizing that matches the existing team mode design system.",
+                  "status": "done",
+                  "testStrategy": "Visual regression testing for layout consistency, responsive design testing across multiple device sizes, design system compliance verification"
+               },
+               {
+                  "id": 5,
+                  "title": "Integrate layout components and test end-to-end flow",
+                  "description": "Connect all layout components together and verify complete individual mode layout functionality",
+                  "dependencies": ["28.1", "28.2", "28.3", "28.4"],
+                  "details": "Integrate the Next.js layout file with IndieLayout component and project context. Test complete user flow from route access to layout rendering. Ensure proper component composition, context propagation, and layout state management. Verify integration with existing SidebarProvider and design system.",
+                  "status": "done",
+                  "testStrategy": "End-to-end integration testing, user flow testing, layout state persistence testing, cross-browser compatibility testing"
+               }
+            ]
+         },
+         {
+            "id": 29,
+            "title": "Build Individual Mode Sidebar",
+            "description": "Create simplified sidebar navigation for individual project focus with mode switching capability",
+            "details": "Create `IndieSidebar` component in `/components/layout/sidebar/indie-sidebar.tsx` using existing sidebar UI patterns. Build navigation data structure in `/mock-data/indie-sidebar-nav.ts` with Dashboard, Tasks, and Settings sections. Implement mode switcher component using Radix UI Select or similar for toggling between team and individual modes. Reuse existing `NavItem`, `NavSection` components and Lucide React icons. Store mode preference in localStorage with proper TypeScript typing.",
+            "testStrategy": "Component testing for sidebar rendering, interaction testing for mode switcher, localStorage persistence testing, accessibility testing for navigation",
+            "priority": "high",
+            "dependencies": [28],
             "status": "pending",
-            "dependencies": [],
-            "details": "Define Task, Project, Config, Status interfaces. Include validation schemas and type guards for runtime type checking. Support nested subtask structures and dependency arrays.",
-            "testStrategy": ""
-          },
-          {
-            "id": 3,
-            "title": "Build File System Operations Layer",
-            "description": "Implement safe read/write operations for .taskmaster/tasks/tasks.json and config files",
+            "subtasks": []
+         },
+         {
+            "id": 30,
+            "title": "Implement Individual Mode Routes",
+            "description": "Set up complete route structure for individual task management with proper page components",
+            "details": "Create Next.js 14 app router pages: `/app/indie/page.tsx` for dashboard, `/app/indie/tasks/page.tsx` reusing existing AllIssues component, `/app/indie/tasks/[taskId]/page.tsx` for task details with dynamic routing, and `/app/indie/settings/page.tsx` for individual settings. Implement proper metadata, loading states, and error boundaries. Use existing components where possible and ensure proper TypeScript interfaces for route params.",
+            "testStrategy": "Route testing with Next.js testing utilities, page load performance testing, error boundary testing, SEO metadata validation",
+            "priority": "medium",
+            "dependencies": [29],
             "status": "pending",
-            "dependencies": [],
-            "details": "Create atomic file operations with proper locking, backup mechanisms, and permission handling. Implement JSON parsing with validation and error recovery.",
-            "testStrategy": ""
-          },
-          {
-            "id": 4,
-            "title": "Integrate CLI Command Execution",
-            "description": "Implement child_process integration for executing task-master commands programmatically",
+            "subtasks": []
+         },
+         {
+            "id": 31,
+            "title": "Create Unified Task/Subtask Component with Hierarchy",
+            "description": "Build flexible TaskItem component supporting unlimited hierarchical nesting with visual hierarchy indicators",
+            "details": "Create `TaskItem` component in `/components/common/tasks/task-item.tsx` with recursive rendering capability. Extend existing Issue interface to include `parentId?: string`, `subtasks: Task[]`, and `depth: number` properties. Implement visual hierarchy with CSS-in-JS or Tailwind classes for indentation (depth * 1rem), nested borders, and hierarchical icons. Use React.memo for performance optimization and implement expand/collapse state management with useState or Zustand. Support drag-and-drop reordering with @dnd-kit/core library.",
+            "testStrategy": "Component testing for hierarchy rendering, performance testing for large task trees, accessibility testing for screen readers, drag-and-drop interaction testing",
+            "priority": "high",
+            "dependencies": [30],
             "status": "pending",
-            "dependencies": [],
-            "details": "Build command execution wrapper with timeout handling, error parsing, and response formatting. Include command sanitization and security validation.",
-            "testStrategy": ""
-          },
-          {
-            "id": 5,
-            "title": "Implement File System Watcher",
-            "description": "Create real-time file monitoring using chokidar for .taskmaster directory changes",
+            "subtasks": []
+         },
+         {
+            "id": 32,
+            "title": "Adapt Existing Issue System for Hierarchical Tasks",
+            "description": "Modify existing issue components to work with parent-child task relationships and hierarchy-aware filtering",
+            "details": "Update `AllIssues` component to use new `TaskItem` for hierarchical rendering. Modify existing filtering logic in `/components/common/issues/` to handle parent-child relationships with proper type guards. Adapt `GroupIssues` component to maintain hierarchy within groups. Update search functionality to search across nested tasks and highlight matches in hierarchy. Ensure existing Zustand stores work with hierarchical data structures.",
+            "testStrategy": "Integration testing for filter functionality, search performance testing across hierarchy levels, regression testing for existing issue features",
+            "priority": "medium",
+            "dependencies": [31],
             "status": "pending",
-            "dependencies": [],
-            "details": "Set up file watchers for tasks.json and config.json changes. Implement debouncing and change detection to trigger UI updates efficiently.",
-            "testStrategy": ""
-          },
-          {
-            "id": 6,
-            "title": "Build WebSocket Connection Layer",
-            "description": "Implement WebSocket server for real-time bidirectional communication",
+            "subtasks": []
+         },
+         {
+            "id": 33,
+            "title": "Enhanced Task Detail View with Subtask Management",
+            "description": "Create comprehensive task detail page with inline subtask creation and management capabilities",
+            "details": "Build task detail page reusing existing issue detail components. Implement inline subtask creation with form validation using react-hook-form and zod schemas. Add subtask reordering with @dnd-kit/sortable, maintaining parent-child relationships. Integrate existing `IssueContextMenu` for both tasks and subtasks with hierarchy-aware actions. Implement breadcrumb navigation using Next.js Link components showing full task hierarchy path.",
+            "testStrategy": "End-to-end testing for subtask CRUD operations, form validation testing, breadcrumb navigation testing, context menu functionality testing",
+            "priority": "medium",
+            "dependencies": [32],
             "status": "pending",
-            "dependencies": [],
-            "details": "Set up WebSocket server with Socket.io or native WebSockets. Handle connection management, message routing, and error recovery. Support multiple client connections.",
-            "testStrategy": ""
-          },
-          {
-            "id": 7,
-            "title": "Implement Bidirectional Sync Logic",
-            "description": "Create synchronization layer between UI state and CLI file system",
+            "subtasks": []
+         },
+         {
+            "id": 34,
+            "title": "Individual Mode Dashboard with Hierarchical View",
+            "description": "Create project-focused dashboard displaying collapsible task tree with progress tracking",
+            "details": "Build dashboard component with collapsible task tree using Radix UI Collapsible or similar. Implement hierarchy-aware progress calculations including subtask completion percentages. Add quick action buttons for creating tasks and subtasks with modal dialogs using Radix UI Dialog. Display project statistics with charts using Recharts library. Use existing design tokens and maintain consistent styling with team mode dashboard.",
+            "testStrategy": "Dashboard rendering testing, progress calculation accuracy testing, quick action modal testing, chart rendering and data accuracy testing",
+            "priority": "medium",
+            "dependencies": [33],
             "status": "pending",
-            "dependencies": [],
-            "details": "Build optimistic update patterns with rollback capabilities. Implement conflict resolution for concurrent modifications and batch operation support.",
-            "testStrategy": ""
-          },
-          {
-            "id": 8,
-            "title": "Add Comprehensive Error Handling",
-            "description": "Implement robust error handling for CLI failures, file operations, and network issues",
+            "subtasks": []
+         },
+         {
+            "id": 35,
+            "title": "Update Application Entry Point for Mode Detection",
+            "description": "Modify main routing logic to support individual mode detection and seamless mode switching",
+            "details": "Update `app/page.tsx` and `getDefaultRoute()` function to detect individual mode preference from localStorage or user settings. Implement route redirection logic for mode switching using Next.js redirect() or router.push(). Update existing navigation components to include mode context awareness. Ensure proper TypeScript typing for mode detection and maintain backward compatibility with existing team mode functionality.",
+            "testStrategy": "Route redirection testing, mode persistence testing, backward compatibility testing, navigation context testing",
+            "priority": "medium",
+            "dependencies": [34],
             "status": "pending",
-            "dependencies": [],
-            "details": "Create error classification system, user-friendly error messages, retry mechanisms, and logging. Handle CLI timeouts, permission errors, and JSON validation failures.",
-            "testStrategy": ""
-          },
-          {
-            "id": 9,
-            "title": "Build Security and Validation Layer",
-            "description": "Implement input validation, command sanitization, and file path restrictions",
+            "subtasks": []
+         },
+         {
+            "id": 36,
+            "title": "Individual Mode Data Context with Hierarchy Support",
+            "description": "Adapt existing data management for hierarchical task operations while maintaining GraphQL and CLI compatibility",
+            "details": "Create individual project context wrapper using React Context API with TypeScript interfaces. Modify existing Zustand stores to handle hierarchical task data with proper parent-child relationship management. Update task CRUD operations to maintain hierarchy integrity with optimistic updates. Ensure existing GraphQL schema supports task hierarchy with proper resolver updates. Maintain compatibility with Task Master CLI integration by preserving existing data structures and API contracts.",
+            "testStrategy": "Context provider testing, Zustand store testing for hierarchy operations, GraphQL integration testing, CLI compatibility testing, data consistency testing",
+            "priority": "high",
+            "dependencies": [35],
             "status": "pending",
-            "dependencies": [],
-            "details": "Create security middleware for API routes, validate CLI commands against allowlist, implement file path sanitization, and add rate limiting.",
-            "testStrategy": ""
-          },
-          {
-            "id": 10,
-            "title": "Implement Performance Optimization",
-            "description": "Optimize for large task lists and high-frequency updates",
+            "subtasks": []
+         },
+         {
+            "id": 37,
+            "title": "Performance Optimization and Final Integration",
+            "description": "Optimize hierarchical task rendering performance and ensure seamless integration with existing systems",
+            "details": "Implement React.memo, useMemo, and useCallback for hierarchical task components to prevent unnecessary re-renders. Add virtualization for large task lists using @tanstack/react-virtual. Implement lazy loading for deep task hierarchies with React.lazy and Suspense. Add performance monitoring with Next.js built-in metrics and ensure proper bundle splitting. Conduct comprehensive testing across all individual mode features and ensure backward compatibility with team mode.",
+            "testStrategy": "Performance benchmarking for large task hierarchies, memory usage testing, bundle size analysis, cross-mode compatibility testing, comprehensive end-to-end testing",
+            "priority": "low",
+            "dependencies": [36],
             "status": "pending",
-            "dependencies": [],
-            "details": "Add caching layers, implement pagination for large datasets, optimize WebSocket message batching, and add performance monitoring.",
-            "testStrategy": ""
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "title": "Build Core UI Component Library",
-        "description": "Develop reusable UI components using shadcn/ui and Radix UI with consistent styling and accessibility",
-        "details": "Implement core components: Button, Input, Card, Modal, Dropdown, Table, Form controls. Create task-specific components: TaskCard, TaskList, TaskForm, PriorityBadge, StatusBadge. Implement dark/light theme support with CSS variables. Ensure WCAG 2.1 AA compliance with proper ARIA attributes, keyboard navigation, and focus management. Use Inter font family throughout.",
-        "testStrategy": "Component testing with Jest and React Testing Library. Accessibility testing with axe-core. Visual regression testing with Chromatic. Test keyboard navigation and screen reader compatibility.",
-        "priority": "medium",
-        "dependencies": [
-          1
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 4,
-        "title": "Create Task Management Dashboard",
-        "description": "Build the main dashboard interface with task overview, kanban boards, and task management features",
-        "details": "Implement dashboard layout with sidebar navigation, main content area, and quick actions. Create kanban board with drag-and-drop functionality using @dnd-kit/core. Build task list view with sorting, filtering, and search. Implement task detail modal with rich editing capabilities. Add bulk operations for task management. Use React Query for data fetching and caching.",
-        "testStrategy": "End-to-end tests for drag-and-drop functionality, search performance tests, integration tests for task CRUD operations. Test with datasets of 1000+ tasks for performance validation.",
-        "priority": "high",
-        "dependencies": [
-          2,
-          3
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 5,
-        "title": "Implement AI Provider Configuration System",
-        "description": "Build comprehensive AI model management interface supporting multiple providers with secure API key storage",
-        "details": "Create configuration UI for Claude, OpenAI, Gemini, Perplexity, Mistral, and other providers. Implement secure API key storage using browser encryption. Build model selection interface with provider comparison. Add API connectivity testing and status monitoring. Implement usage tracking and cost estimation. Create provider-specific configuration options.",
-        "testStrategy": "Test API key encryption/decryption, mock API provider responses, test connectivity validation, verify usage tracking accuracy. Security audit for API key handling.",
-        "priority": "medium",
-        "dependencies": [
-          3
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 6,
-        "title": "Develop Multi-Agent Management System",
-        "description": "Create agent orchestration interface for managing multiple AI agents working on the same project",
-        "details": "Build agent management dashboard showing active agents, their specializations, and current tasks. Implement agent creation/configuration UI with role assignment. Create task distribution algorithm to assign tasks to appropriate agents. Build agent communication protocol for inter-agent coordination. Implement conflict resolution for overlapping agent work. Add agent performance monitoring and analytics.",
-        "testStrategy": "Test agent creation/deletion, task distribution algorithms with mock agents, conflict resolution scenarios, performance monitoring accuracy. Load testing with 10+ simultaneous agents.",
-        "priority": "high",
-        "dependencies": [
-          4,
-          5
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 7,
-        "title": "Build PRD Parsing and Project Setup Interface",
-        "description": "Create intuitive interface for uploading PRDs, parsing them with AI, and generating initial task structures",
-        "details": "Implement drag-and-drop file upload for PRD documents (.txt, .md, .pdf). Build AI-powered parsing interface that calls task-master parse-prd functionality. Create project setup wizard with template selection. Implement task generation preview before committing. Add project metadata management and configuration options. Support both new projects and appending to existing ones.",
-        "testStrategy": "Test file upload functionality, PRD parsing accuracy with sample documents, task generation verification, project creation workflow. Test with various PRD formats and sizes.",
-        "priority": "medium",
-        "dependencies": [
-          4,
-          5
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 8,
-        "title": "Implement Real-time Collaboration Features",
-        "description": "Add real-time updates, activity feeds, and collaborative editing capabilities for team coordination",
-        "details": "Implement WebSocket connections for real-time updates using Socket.io or Server-Sent Events. Build activity feed showing recent project changes and agent activities. Create collaborative editing for task descriptions with operational transforms. Implement user presence indicators and real-time cursor positions. Add notification system for important updates and agent completions.",
-        "testStrategy": "Test WebSocket connections, real-time update delivery, collaborative editing conflict resolution, notification delivery. Load testing with multiple concurrent users.",
-        "priority": "medium",
-        "dependencies": [
-          6
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 9,
-        "title": "Develop Advanced Analytics and Reporting",
-        "description": "Create comprehensive analytics dashboard for project insights, agent performance, and productivity metrics",
-        "details": "Build analytics dashboard with project progress visualization using Chart.js or D3. Implement agent performance metrics including task completion rates, accuracy, and speed. Create burndown charts, velocity tracking, and completion predictions. Add custom report generation with export capabilities. Implement complexity analysis visualization and dependency graph rendering.",
-        "testStrategy": "Test chart rendering performance, data accuracy in analytics calculations, export functionality, complex data set handling. Visual regression tests for charts and graphs.",
-        "priority": "low",
-        "dependencies": [
-          6,
-          8
-        ],
-        "status": "cancelled",
-        "subtasks": []
-      },
-      {
-        "id": 10,
-        "title": "Implement Mobile-First Responsive Design and PWA",
-        "description": "Optimize the interface for mobile devices and implement Progressive Web App features for offline access",
-        "details": "Implement mobile-first responsive design with optimized touch interfaces. Create PWA manifest and service worker for offline functionality. Implement mobile-specific navigation patterns and gestures. Add pull-to-refresh functionality and mobile-optimized modals. Ensure touch-friendly drag-and-drop on mobile devices. Implement app-like installation prompts and offline task management.",
-        "testStrategy": "Test responsive breakpoints on various devices, PWA installation flow, offline functionality, touch interactions, performance on mobile networks. Cross-browser testing on mobile Safari, Chrome Mobile, Firefox Mobile.",
-        "priority": "medium",
-        "dependencies": [
-          4,
-          8
-        ],
-        "status": "cancelled",
-        "subtasks": []
+            "subtasks": []
+         }
+      ],
+      "metadata": {
+         "created": "2025-07-26T00:47:21.699Z",
+         "updated": "2025-07-26T18:00:31.600Z",
+         "description": "Tasks for master context"
       }
-    ],
-    "metadata": {
-      "created": "2025-07-26T00:47:21.699Z",
-      "updated": "2025-07-26T00:54:53.810Z",
-      "description": "Tasks for master context"
-    }
-  }
+   }
 }

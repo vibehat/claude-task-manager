@@ -22,6 +22,7 @@ task-master set-status --id=$ARGUMENTS --status=in-progress
 ## Environment Setup
 
 After setting to in-progress:
+
 1. Create/checkout appropriate git branch
 2. Open relevant documentation
 3. Set up test watchers if applicable

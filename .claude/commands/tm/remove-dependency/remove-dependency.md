@@ -11,6 +11,7 @@ Removes a dependency relationship, potentially unblocking tasks.
 ## Argument Parsing
 
 Parse natural language or IDs:
+
 - "remove dependency between 5 and 3"
 - "5 no longer needs 3"
 - "unblock 5 from 3"
@@ -32,6 +33,7 @@ task-master remove-dependency --id=<task-id> --depends-on=<dependency-id>
 ## Smart Analysis
 
 Before removing:
+
 - Show why dependency might have existed
 - Check if removal makes tasks executable
 - Verify no critical path disruption
@@ -40,6 +42,7 @@ Before removing:
 ## Post-Removal
 
 After removing:
+
 1. Show updated task status
 2. List newly unblocked tasks
 3. Update project timeline

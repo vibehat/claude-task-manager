@@ -9,6 +9,7 @@ Advanced implementation with context awareness and quality checks.
 ### 1. **Pre-Implementation Analysis**
 
 Before starting:
+
 - Analyze task complexity and requirements
 - Check codebase patterns and conventions
 - Identify similar completed tasks
@@ -20,6 +21,7 @@ Before starting:
 Based on task type and context:
 
 **Feature Tasks**
+
 1. Research existing patterns
 2. Design component architecture
 3. Implement with tests
@@ -27,6 +29,7 @@ Based on task type and context:
 5. Update documentation
 
 **Bug Fix Tasks**
+
 1. Reproduce issue
 2. Identify root cause
 3. Implement minimal fix
@@ -34,6 +37,7 @@ Based on task type and context:
 5. Verify side effects
 
 **Refactoring Tasks**
+
 1. Analyze current structure
 2. Plan incremental changes
 3. Maintain test coverage
@@ -43,12 +47,14 @@ Based on task type and context:
 ### 3. **Code Intelligence**
 
 **Pattern Recognition**
+
 - Learn from existing code
 - Follow team conventions
 - Use preferred libraries
 - Match style guidelines
 
 **Test-Driven Approach**
+
 - Write tests first when possible
 - Ensure comprehensive coverage
 - Include edge cases
@@ -57,6 +63,7 @@ Based on task type and context:
 ### 4. **Progressive Implementation**
 
 Step-by-step with validation:
+
 ```
 Step 1/5: Setting up component structure ✓
 Step 2/5: Implementing core logic ✓
@@ -70,6 +77,7 @@ Current: Adding try-catch blocks and validation...
 ### 5. **Quality Assurance**
 
 Automated checks:
+
 - Linting and formatting
 - Test execution
 - Type checking
@@ -79,6 +87,7 @@ Automated checks:
 ### 6. **Smart Recovery**
 
 If issues arise:
+
 - Diagnostic analysis
 - Suggestion generation
 - Fallback strategies
@@ -88,6 +97,7 @@ If issues arise:
 ### 7. **Post-Implementation**
 
 After completion:
+
 - Generate PR description
 - Update documentation
 - Log lessons learned

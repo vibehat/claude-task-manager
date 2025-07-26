@@ -62,6 +62,7 @@ Continue? (y/n)
 ## Alternative Options
 
 Suggest alternatives:
+
 - Convert important subtasks to tasks
 - Keep completed subtasks
 - Archive instead of delete

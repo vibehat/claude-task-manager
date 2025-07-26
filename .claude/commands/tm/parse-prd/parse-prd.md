@@ -36,6 +36,7 @@ task-master parse-prd --input=$ARGUMENTS
 ## Options
 
 Parse arguments for modifiers:
+
 - Number after filename → `--num-tasks`
 - `research` → Use research mode
 - `comprehensive` → Generate more tasks
@@ -43,6 +44,7 @@ Parse arguments for modifiers:
 ## Post-Generation
 
 After parsing:
+
 1. Display task summary
 2. Show dependency graph
 3. Suggest task expansion for complex items

@@ -14,6 +14,7 @@ task-master models --status || echo "Note: You'll need to set up an AI provider 
 ```
 
 If you see "command not found" after installation, you may need to:
+
 1. Restart your terminal
 2. Or add npm global bin to PATH: `export PATH=$(npm bin -g):$PATH`
 

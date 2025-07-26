@@ -21,11 +21,11 @@ This guide explains how to contribute effectively, including how to commit, bran
 
 ## 🧰 Development Workflow
 
-1. Fork or clone the repository  
-2. Create a new branch from `master`  
-3. Make your changes  
-4. Commit using the proper format  
-5. Open a Pull Request (PR) against `master`  
+1. Fork or clone the repository
+2. Create a new branch from `master`
+3. Make your changes
+4. Commit using the proper format
+5. Open a Pull Request (PR) against `master`
 
 > ℹ️ Do not commit directly to `master`.
 
@@ -129,7 +129,7 @@ Ensure commits follow the **correct format** or they may be skipped from release
 We use a **single source of truth** approach for managing domain configurations:
 
 - **Source of Truth**: `apps/api/src/domains/` directory structure
-- **Auto-synced**: PR labeler and release notes configurations  
+- **Auto-synced**: PR labeler and release notes configurations
 - **Zero dependencies**: Runs instantly without installation
 
 📎 **See the full [Domain Sync Guide](./domain-sync.md)** for details on how this works.
@@ -138,13 +138,13 @@ We use a **single source of truth** approach for managing domain configurations:
 
 ## ✅ Before You Submit
 
-* [ ] Code builds without errors
-* [ ] Tests added or updated
-* [ ] Lint passes (`npm run lint`)
-* [ ] Commit messages follow [Conventional Commits](#-commit-message-format)
-* [ ] PR title follows [same format as commits](#-pull-request-title-format)
-* [ ] You rebased from `master`
+- [ ] Code builds without errors
+- [ ] Tests added or updated
+- [ ] Lint passes (`npm run lint`)
+- [ ] Commit messages follow [Conventional Commits](#-commit-message-format)
+- [ ] PR title follows [same format as commits](#-pull-request-title-format)
+- [ ] You rebased from `master`
 
 ---
 
-Thank you for helping us build a better platform! 💙 
+Thank you for helping us build a better platform! 💙

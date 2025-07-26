@@ -4,37 +4,37 @@ Below is a **refined and expanded label set proposal** based on your project str
 
 ---
 
-## 🔹 **📍 Scope Labels** – *Where is the change?*
+## 🔹 **📍 Scope Labels** – _Where is the change?_
 
-| Label            | Match Glob(s)                              | Description                           |
-| ---------------- | ------------------------------------------ | ------------------------------------- |
-| `📦 API`         | `apps/api/**`                              | Backend business logic                |
-| `🌉 Gateway`     | `apps/gateway/**`                          | Gateway logic or BFF                  |
-| `🧩 Packages`    | `packages/**`                              | Internal shared libraries             |
+| Label               | Match Glob(s)                              | Description                           |
+| ------------------- | ------------------------------------------ | ------------------------------------- |
+| `📦 API`            | `apps/api/**`                              | Backend business logic                |
+| `🌉 Gateway`        | `apps/gateway/**`                          | Gateway logic or BFF                  |
+| `🧩 Packages`       | `packages/**`                              | Internal shared libraries             |
 | `⚙️ Infrastructure` | `infra/**`, `.github/**`, `scripts/**`     | Infra, CI/CD, GitHub Actions, tooling |
-| `🧪 Tests`       | `**/__tests__/**`, `**/*.spec.ts`          | Unit/integration test updates         |
-| `📖 Documentation` | `docs/**`, `README.md`, `*.md`             | Documentation only                    |
-| `🧷 Dependencies` | `package.json`, `yarn.lock`                | Dependency changes                    |
-| `🔧 Configuration` | `apps/**/config/**`, `.env*`, `*.config.*` | Runtime or service configuration      |
+| `🧪 Tests`          | `**/__tests__/**`, `**/*.spec.ts`          | Unit/integration test updates         |
+| `📖 Documentation`  | `docs/**`, `README.md`, `*.md`             | Documentation only                    |
+| `🧷 Dependencies`   | `package.json`, `yarn.lock`                | Dependency changes                    |
+| `🔧 Configuration`  | `apps/**/config/**`, `.env*`, `*.config.*` | Runtime or service configuration      |
 
 ---
 
-## 🔹 **🎯 Change Type Labels** – *What kind of change is it?*
+## 🔹 **🎯 Change Type Labels** – _What kind of change is it?_
 
-| Label           | Description                                 |
-| --------------- | ------------------------------------------- |
+| Label            | Description                                 |
+| ---------------- | ------------------------------------------- |
 | `✨ Feature`     | Adds new functionality                      |
-| `🐞 Fix`        | Fixes bugs                                  |
-| `🔨 Refactor`   | Internal rework without changing behavior   |
-| `🧹 Cleanup`    | Code/style tweaks with no behavior change   |
+| `🐞 Fix`         | Fixes bugs                                  |
+| `🔨 Refactor`    | Internal rework without changing behavior   |
+| `🧹 Cleanup`     | Code/style tweaks with no behavior change   |
 | `⚡ Performance` | Improves performance                        |
-| `🛡️ Security`  | Changes to auth, roles, secrets, encryption |
-| `🎨 UI`         | UI or visual presentation changes           |
-| `🧪 Test Only`  | Test logic or test infra only               |
+| `🛡️ Security`    | Changes to auth, roles, secrets, encryption |
+| `🎨 UI`          | UI or visual presentation changes           |
+| `🧪 Test Only`   | Test logic or test infra only               |
 
 ---
 
-## 🔹 **🚨 Risk/Deployment Labels** – *What needs attention?*
+## 🔹 **🚨 Risk/Deployment Labels** – _What needs attention?_
 
 | Label               | Description                                               |
 | ------------------- | --------------------------------------------------------- |
@@ -48,29 +48,29 @@ Below is a **refined and expanded label set proposal** based on your project str
 
 ---
 
-## 🔹 **🧠 Domain Labels** – *Who should review this?*
+## 🔹 **🧠 Domain Labels** – _Who should review this?_
 
 Auto-labeled by checking `apps/api/src/domains/**`
 
-| Label            | Match Path                            |
-| ---------------- | ------------------------------------- |
-| `🧠 User`        | `apps/api/src/domains/user/**`        |
-| `🧠 Maintenance` | `apps/api/src/domains/maintenance/**` |
-| `🧠 Finance`     | `apps/api/src/domains/finance/**`     |
-| `🧠 Customer`    | `apps/api/src/domains/customer/**`    |
-| `🧠 Alert`       | `apps/api/src/domains/alert/**`       |
-| `🧠 QA`          | `apps/api/src/domains/qa-reports/**`  |
-| `🧠 DataSync`    | `apps/api/src/domains/data-sync/**`   |
-| `🧠 PSP`         | `apps/api/src/domains/psp/**`         |
-| *(+ add per domain)* | *One per major domain folder*         |
+| Label                | Match Path                            |
+| -------------------- | ------------------------------------- |
+| `🧠 User`            | `apps/api/src/domains/user/**`        |
+| `🧠 Maintenance`     | `apps/api/src/domains/maintenance/**` |
+| `🧠 Finance`         | `apps/api/src/domains/finance/**`     |
+| `🧠 Customer`        | `apps/api/src/domains/customer/**`    |
+| `🧠 Alert`           | `apps/api/src/domains/alert/**`       |
+| `🧠 QA`              | `apps/api/src/domains/qa-reports/**`  |
+| `🧠 DataSync`        | `apps/api/src/domains/data-sync/**`   |
+| `🧠 PSP`             | `apps/api/src/domains/psp/**`         |
+| _(+ add per domain)_ | _One per major domain folder_         |
 
 ---
 
-## 🔹 **🔁 Git Flow Labels** – *Meta PR context*
+## 🔹 **🔁 Git Flow Labels** – _Meta PR context_
 
-| Label        | Description                           |
-| ------------ | ------------------------------------- |
+| Label        | Description                             |
+| ------------ | --------------------------------------- |
 | `🔄 Sync`    | Sync from `master` to `develop` or vice |
-| `🏁 Release` | PR made for production release        |
-| `🧪 Beta`    | Feature in beta stage or behind flag  |
-| `🚧 WIP`     | Work-in-progress, not for review yet  |
+| `🏁 Release` | PR made for production release          |
+| `🧪 Beta`    | Feature in beta stage or behind flag    |
+| `🚧 WIP`     | Work-in-progress, not for review yet    |

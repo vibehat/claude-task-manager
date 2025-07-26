@@ -1,0 +1,191 @@
+# Task Operations
+
+query GetTasks($filter: TaskFilterInput, $orderBy: [TaskOrderByInput!], $pagination: PaginationInput) {
+  tasks(filter: $filter, orderBy: $orderBy, pagination: $pagination) {
+    edges {
+      node {
+        id
+        title
+        description
+        status
+        priority
+        dependencies
+        details
+        testStrategy
+        complexity
+        createdAt
+        updatedAt
+        progress
+        isReady
+        subtasks {
+          id
+          title
+          description
+          status
+          dependencies
+          details
+          testStrategy
+          createdAt
+          updatedAt
+        }
+      }
+      cursor
+    }
+    nodes {
+      id
+      title
+      description
+      status
+      priority
+      dependencies
+      details
+      testStrategy
+      complexity
+      createdAt
+      updatedAt
+      progress
+      isReady
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+query GetTask($id: ID!) {
+  task(id: $id) {
+    id
+    title
+    description
+    status
+    priority
+    dependencies
+    details
+    testStrategy
+    complexity
+    createdAt
+    updatedAt
+    progress
+    isReady
+    subtasks {
+      id
+      title
+      description
+      status
+      dependencies
+      details
+      testStrategy
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+query GetReadyTasks($filter: TaskFilterInput, $orderBy: [TaskOrderByInput!], $pagination: PaginationInput) {
+  readyTasks(filter: $filter, orderBy: $orderBy, pagination: $pagination) {
+    edges {
+      node {
+        id
+        title
+        description
+        status
+        priority
+        dependencies
+        details
+        testStrategy
+        complexity
+        createdAt
+        updatedAt
+        progress
+        isReady
+      }
+      cursor
+    }
+    nodes {
+      id
+      title
+      description
+      status
+      priority
+      dependencies
+      details
+      testStrategy
+      complexity
+      createdAt
+      updatedAt
+      progress
+      isReady
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+mutation CreateTask($input: CreateTaskInput!) {
+  createTask(input: $input) {
+    id
+    title
+    description
+    status
+    priority
+    dependencies
+    details
+    testStrategy
+    complexity
+    createdAt
+    updatedAt
+    progress
+    isReady
+  }
+}
+
+mutation UpdateTask($id: ID!, $input: UpdateTaskInput!) {
+  updateTask(id: $id, input: $input) {
+    id
+    title
+    description
+    status
+    priority
+    dependencies
+    details
+    testStrategy
+    complexity
+    createdAt
+    updatedAt
+    progress
+    isReady
+  }
+}
+
+mutation DeleteTask($id: ID!) {
+  deleteTask(id: $id)
+}
+
+mutation UpdateTaskStatus($taskId: ID!, $status: TaskStatus!, $source: String) {
+  updateTaskStatus(taskId: $taskId, status: $status, source: $source) {
+    id
+    type
+    status
+    timestamp
+    source
+    taskIds
+    metadata
+    retryCount
+    error {
+      code
+      message
+      details
+      operationId
+    }
+    completedAt
+  }
+}

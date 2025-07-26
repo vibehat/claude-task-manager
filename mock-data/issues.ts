@@ -1,4 +1,4 @@
-import { LexoRank } from '@/lib/utils';
+import { LexoRank } from '@/libs/client/utils';
 import { LabelInterface, labels } from './labels';
 import { Priority, priorities } from './priorities';
 import { Project, projects } from './projects';

@@ -41,6 +41,7 @@ import { users } from '@/mock-data/users';
 import { labels } from '@/mock-data/labels';
 import { projects } from '@/mock-data/projects';
 import { toast } from 'sonner';
+import { DEFAULT_CONFIG } from '@/lib/config/defaults';
 
 interface IssueContextMenuProps {
    issueId?: string;
@@ -190,7 +191,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
                      <User className="size-4" /> Unassigned
                   </ContextMenuItem>
                   {users
-                     .filter((user) => user.teamIds.includes('CORE'))
+                     .filter((user) => user.teamIds.includes(DEFAULT_CONFIG.DEFAULT_TEAM_ID))
                      .map((user) => (
                         <ContextMenuItem
                            key={user.id}

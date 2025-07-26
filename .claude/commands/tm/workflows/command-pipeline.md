@@ -7,26 +7,31 @@ Arguments: $ARGUMENTS
 Parse pipeline specification from arguments. Supported formats:
 
 ### Simple Pipeline
+
 `init → expand-all → sprint-plan`
 
-### Conditional Pipeline  
+### Conditional Pipeline
+
 `status → if:pending>10 → sprint-plan → else → next`
 
 ### Iterative Pipeline
+
 `for:pending-tasks → expand → complexity-check`
 
 ### Smart Pipeline Patterns
 
 **1. Project Setup Pipeline**
+
 ```
-init [prd] → 
-expand-all → 
-complexity-report → 
-sprint-plan → 
+init [prd] →
+expand-all →
+complexity-report →
+sprint-plan →
 show first-sprint
 ```
 
 **2. Daily Work Pipeline**
+
 ```
 standup →
 if:in-progress → continue →
@@ -34,6 +39,7 @@ else → next → start
 ```
 
 **3. Task Completion Pipeline**
+
 ```
 complete [id] →
 git-commit →
@@ -42,6 +48,7 @@ next
 ```
 
 **4. Quality Check Pipeline**
+
 ```
 list in-progress →
 for:each → check-idle-time →
@@ -51,16 +58,19 @@ if:idle>1day → prompt-update
 ### Pipeline Features
 
 **Variables**
+
 - Store results: `status → $count=pending-count`
 - Use in conditions: `if:$count>10`
 - Pass between commands: `expand $high-priority-tasks`
 
 **Error Handling**
+
 - On failure: `try:complete → catch:show-blockers`
 - Skip on error: `optional:test-run`
 - Retry logic: `retry:3:commit`
 
 **Parallel Execution**
+
 - Parallel branches: `[analyze | test | lint]`
 - Join results: `parallel → join:report`
 

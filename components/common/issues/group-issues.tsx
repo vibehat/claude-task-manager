@@ -4,7 +4,7 @@ import { Issue } from '@/mock-data/issues';
 import { Status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
 import { useViewStore } from '@/store/view-store';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/client/utils';
 import { Plus } from 'lucide-react';
 import { FC, useRef } from 'react';
 import { useDrop } from 'react-dnd';

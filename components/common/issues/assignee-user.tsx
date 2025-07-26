@@ -11,6 +11,7 @@ import {
 import { statusUserColors, User, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { DEFAULT_CONFIG } from '@/lib/config/defaults';
 
 interface AssigneeUserProps {
    user: User | null;
@@ -73,7 +74,7 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             {users
-               .filter((user) => user.teamIds.includes('CORE'))
+               .filter((user) => user.teamIds.includes(DEFAULT_CONFIG.DEFAULT_TEAM_ID))
                .map((user) => (
                   <DropdownMenuItem
                      key={user.id}

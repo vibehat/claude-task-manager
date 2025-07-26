@@ -14,7 +14,7 @@ import { useIssuesStore } from '@/store/issues-store';
 import { LabelInterface, labels } from '@/mock-data/labels';
 import { CheckIcon, TagIcon } from 'lucide-react';
 import { useId, useState } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/client/utils';
 
 interface LabelSelectorProps {
    selectedLabels: LabelInterface[];

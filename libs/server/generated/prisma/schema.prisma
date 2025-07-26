@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Main Task model matching Task Master structure
+model Task {
+  id           Int     @id
+  title        String
+  description  String
+  details      String?
+  testStrategy String?
+  priority     String // 'high', 'medium', 'low'
+  status       String // 'pending', 'in-progress', 'done', 'deferred', 'cancelled', 'blocked'
+  complexity   Int?
+
+  // Relationships
+  subtasks     Subtask[]
+  dependencies TaskDependency[] @relation("TaskToDependencies")
+  dependents   TaskDependency[] @relation("DependencyToTasks")
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tasks")
+}
+
+// Subtask model for nested task structure
+model Subtask {
+  id           String  @id // Format: "parentId.subtaskId" (e.g., "1.1", "1.2")
+  title        String
+  description  String
+  details      String?
+  testStrategy String?
+  status       String // same status values as Task
+
+  // Parent relationship
+  parentId   Int
+  parentTask Task @relation(fields: [parentId], references: [id], onDelete: Cascade)
+
+  // Subtask dependencies (array stored as JSON)
+  dependencies String @default("[]") // JSON array of subtask IDs
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subtasks")
+}
+
+// Task dependency junction table
+model TaskDependency {
+  id Int @id @default(autoincrement())
+
+  // The task that depends on another
+  taskId Int
+  task   Task @relation("TaskToDependencies", fields: [taskId], references: [id], onDelete: Cascade)
+
+  // The task that is depended upon
+  dependsOnId Int
+  dependsOn   Task @relation("DependencyToTasks", fields: [dependsOnId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  @@unique([taskId, dependsOnId])
+  @@map("task_dependencies")
+}
+
+// Task Master metadata model
+model TaskMasterMetadata {
+  id          Int      @id @default(autoincrement())
+  created     DateTime
+  updated     DateTime
+  description String
+
+  // Only one metadata record should exist
+  @@map("taskmaster_metadata")
+}
+
+// Sync operation tracking for the sync system
+model SyncOperation {
+  id          String    @id @default(cuid())
+  type        String // 'task_update', 'task_create', 'task_delete', 'status_change', 'batch_update', 'file_sync'
+  status      String // 'pending', 'executing', 'completed', 'failed', 'cancelled'
+  source      String // 'ui', 'cli', 'file'
+  timestamp   DateTime  @default(now())
+  completedAt DateTime?
+
+  // Operation data stored as JSON
+  data         String // JSON string containing operation data
+  rollbackData String? // JSON string for rollback data
+  metadata     String? // JSON string for additional metadata
+
+  // Retry and error handling
+  retryCount Int     @default(0)
+  maxRetries Int     @default(3)
+  error      String? // Error message if failed
+
+  // Task relationships (multiple tasks can be affected)
+  taskIds String @default("[]") // JSON array of task IDs
+
+  @@map("sync_operations")
+}
+
+// Sync conflict tracking
+model SyncConflict {
+  id            String @id @default(cuid())
+  operationType String // sync operation type that caused conflict
+  taskId        String // task ID involved in conflict
+
+  // Conflict data
+  uiVersion  String // JSON string of UI version
+  cliVersion String // JSON string of CLI/file version
+
+  // Resolution
+  resolved   Boolean   @default(false)
+  resolution String? // 'ui_wins', 'cli_wins', 'last_write_wins', 'merge', 'user_resolve'
+  resolvedAt DateTime?
+  resolvedBy String?
+
+  // Timestamps
+  timestamp DateTime @default(now())
+
+  @@map("sync_conflicts")
+}

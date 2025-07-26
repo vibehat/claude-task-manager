@@ -11,6 +11,7 @@ Creates a dependency where one task must be completed before another can start.
 ## Argument Parsing
 
 Parse natural language or IDs:
+
 - "make 5 depend on 3" → task 5 depends on task 3
 - "5 needs 3" → task 5 depends on task 3
 - "5 3" → task 5 depends on task 3
@@ -25,6 +26,7 @@ task-master add-dependency --id=<task-id> --depends-on=<dependency-id>
 ## Validation
 
 Before adding:
+
 1. **Verify both tasks exist**
 2. **Check for circular dependencies**
 3. **Ensure dependency makes logical sense**
@@ -40,6 +42,7 @@ Before adding:
 ## Post-Addition
 
 After adding dependency:
+
 1. Show updated dependency graph
 2. Identify any newly blocked tasks
 3. Suggest task order changes

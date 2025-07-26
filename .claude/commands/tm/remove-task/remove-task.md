@@ -36,17 +36,18 @@ task-master remove-task --id=<id> [-y]
    - Blocking implications
 
 3. **Impact Assessment**
+
    ```
    Task Removal Impact
    ━━━━━━━━━━━━━━━━━━
    Task: #5 "Implement authentication" (in-progress)
    Status: 60% complete (~8 hours work)
-   
+
    Will affect:
    - 3 tasks depend on this (will be blocked)
    - Has 4 subtasks (will be deleted)
    - Part of critical path
-   
+
    ⚠️  This action cannot be undone
    ```
 
@@ -69,6 +70,7 @@ task-master remove-task --id=<id> [-y]
 ## Alternative Actions
 
 Suggest before deletion:
+
 - Mark as cancelled instead
 - Convert to documentation
 - Archive task data
