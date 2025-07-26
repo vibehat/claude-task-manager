@@ -1,0 +1,64 @@
+name: "Pull Request Update"
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+    branches:
+      - master
+      - develop
+      - develop
+      - 'release-*'
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  sync-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Auto sync feature calls
+        run: node scripts/sync-features.js
+        continue-on-error: true
+
+      - name: Sync labeler configuration
+        run: node scripts/sync-labeler.js
+        continue-on-error: true
+
+      - name: Update commit references
+        run: node scripts/commit-reference.js
+        continue-on-error: true
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(ci): auto sync features and labeler configuration"
+            git push origin ${{ github.event.pull_request.head.ref }}
+            echo "✅ Changes committed and pushed to branch"
+          else
+            echo "ℹ️ No changes to commit"
+          fi
+        continue-on-error: true
+
+      - name: Apply labels based on changed files
+        uses: actions/labeler@v5
+        with:
+          configuration-path: .github/labeler.yml
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          dot: true

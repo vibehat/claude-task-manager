@@ -1,0 +1,73 @@
+name: Deploy Storybook Preview on PR
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "packages/ui/**"
+    branches:
+      - develop
+      - dev
+      - develop
+
+env:
+  GCS_BUCKET: paydirection-dev-storybook
+  GCP_PROJECT: paydirection-dev
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  deploy-preview:
+    if: |
+      contains(github.event.pull_request.title, 'feat(common-ui)') ||
+      contains(github.event.pull_request.title, 'fix(common-ui)')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: "${{ secrets.GCP_PAYDIRECTION_DEV_SA_KEY }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Yarn
+        run: corepack prepare yarn@4.6.0 --activate
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Modal
+        run: yarn build:modal
+
+      - name: Build Storybook
+        run: yarn build:sb
+
+      - name: Deploy PR Preview to GCS
+        run: |
+          chmod +x ./infra/gcs/deploy-storybook.sh
+          ./infra/gcs/deploy-storybook.sh pr-${{ github.event.pull_request.number }}
+
+      - name: Comment Preview URL on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            🚀 Storybook preview deployed for PR #${{ github.event.pull_request.number }}
+            🔗 [View Storybook](https://storage.googleapis.com/${{ env.GCS_BUCKET }}/pr-${{ github.event.pull_request.number }}/index.html)

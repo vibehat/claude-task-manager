@@ -1,0 +1,67 @@
+name: "Pull Request Verify"
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+    branches:
+      - master
+      - develop
+      - develop
+      - 'release-*'
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate-pr-title:
+    if: |
+      startsWith(github.base_ref, 'release-') ||
+      github.base_ref == 'master' ||
+      github.base_ref == 'develop' ||
+      github.base_ref == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Validate PR title
+        run: |
+          node ./scripts/validate-pr-title.js "${{ github.event.pull_request.title }}"
+
+  check-release-version:
+    needs: validate-pr-title
+    if: startsWith(github.base_ref, 'release-v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate release version
+        run: |
+          # Extract version from branch name (release-v1.49.6 -> 1.49.6)
+          BRANCH_VERSION="${{ github.base_ref }}"
+          BRANCH_VERSION="${BRANCH_VERSION#release-v}"
+
+          # Read version from VERSION file
+          FILE_VERSION=$(cat VERSION | tr -d '\n\r')
+
+          echo "Branch version: $BRANCH_VERSION"
+          echo "VERSION file: $FILE_VERSION"
+
+          if [ "$BRANCH_VERSION" != "$FILE_VERSION" ]; then
+            echo "❌ Version mismatch: Branch indicates v$BRANCH_VERSION but VERSION file contains $FILE_VERSION"
+            exit 1
+          else
+            echo "✅ Version check passed: Branch and VERSION file both indicate v$BRANCH_VERSION"
+          fi

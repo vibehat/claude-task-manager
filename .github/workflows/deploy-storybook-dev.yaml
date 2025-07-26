@@ -1,0 +1,57 @@
+name: Deploy Storybook to GCS (Dev)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "apps/storybook/**"
+      - "packages/ui/**"
+    branches:
+      - develop
+
+env:
+  GCS_BUCKET: paydirection-dev-storybook
+  GCP_PROJECT: paydirection-dev
+
+jobs:
+  deploy-storybook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: "${{ secrets.GCP_PAYDIRECTION_DEV_SA_KEY }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Yarn
+        run: corepack prepare yarn@4.6.0 --activate
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Modal
+        run: yarn build:modal
+
+      - name: Build Storybook
+        run: yarn build:sb
+
+      - name: Deploy to GCS (master)
+        run: |
+          chmod +x ./infra/gcs/deploy-storybook.sh
+          ./infra/gcs/deploy-storybook.sh dev
