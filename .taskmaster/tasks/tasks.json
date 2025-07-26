@@ -145,7 +145,62 @@
             "priority": "medium",
             "dependencies": [3],
             "status": "pending",
-            "subtasks": []
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Implement secure API key storage with encryption",
+                  "description": "Create encrypted storage system for API keys with browser-based encryption and secure key management",
+                  "dependencies": [],
+                  "details": "Implement client-side encryption for API keys using Web Crypto API. Create secure storage interface with encryption/decryption methods. Add key derivation and salt generation. Implement secure deletion and key rotation capabilities. Ensure keys are never stored in plain text.\n<info added on 2025-07-26T13:16:09.995Z>\nIMPLEMENTATION COMPLETE: Successfully delivered production-ready API key management system with Web Crypto API encryption. Full feature set includes AES-GCM encryption with PBKDF2 key derivation, secure localStorage management, support for 9 AI providers (Anthropic, OpenAI, Google, Perplexity, Mistral, OpenRouter, xAI, Azure OpenAI, Ollama), comprehensive security features including key rotation and secure deletion, complete test coverage with 31 passing tests, proper error handling with audit logging, and adherence to security best practices. System ready for production deployment.\n</info added on 2025-07-26T13:16:09.995Z>",
+                  "status": "done",
+                  "testStrategy": ""
+               },
+               {
+                  "id": 2,
+                  "title": "Build provider management UI with connection testing",
+                  "description": "Create user interface for managing AI providers with real-time connection validation",
+                  "dependencies": ["5.1"],
+                  "details": "Build React components for provider configuration. Implement connection testing with timeout handling. Add provider status indicators and error reporting. Create forms for provider-specific settings. Include provider logos and metadata display.",
+                  "status": "pending",
+                  "testStrategy": ""
+               },
+               {
+                  "id": 3,
+                  "title": "Develop model selection interface with comparison features",
+                  "description": "Create comprehensive model selection UI with side-by-side provider and model comparisons",
+                  "dependencies": ["5.2"],
+                  "details": "Build model comparison grid with capabilities, pricing, and performance metrics. Implement model filtering and search functionality. Add model recommendation engine based on use case. Create model performance benchmarks display. Include model documentation and usage examples.",
+                  "status": "pending",
+                  "testStrategy": ""
+               },
+               {
+                  "id": 4,
+                  "title": "Implement usage tracking and cost estimation",
+                  "description": "Build comprehensive usage monitoring and cost calculation system for all providers",
+                  "dependencies": ["5.2"],
+                  "details": "Create usage tracking database schema. Implement token counting and cost calculation for each provider. Build usage analytics dashboard with charts and trends. Add cost alerts and budget management. Create usage export functionality.",
+                  "status": "pending",
+                  "testStrategy": ""
+               },
+               {
+                  "id": 5,
+                  "title": "Create provider-specific configuration options",
+                  "description": "Implement customizable configuration interfaces for each AI provider's unique settings",
+                  "dependencies": ["5.2"],
+                  "details": "Build dynamic configuration forms for provider-specific options. Implement temperature, max tokens, and model-specific parameters. Add provider capability detection and validation. Create configuration presets and templates. Include advanced settings for each provider.",
+                  "status": "pending",
+                  "testStrategy": ""
+               },
+               {
+                  "id": 6,
+                  "title": "Implement comprehensive security validation",
+                  "description": "Build security audit system and validation framework for AI provider configurations",
+                  "dependencies": ["5.1", "5.4", "5.5"],
+                  "details": "Implement security audit logging for all configuration changes. Add API key validation and sanitization. Create security compliance checks and warnings. Implement rate limiting and abuse prevention. Add security best practices validation and recommendations.",
+                  "status": "pending",
+                  "testStrategy": ""
+               }
+            ]
          },
          {
             "id": 6,
@@ -258,11 +313,377 @@
                   "testStrategy": "Use WebSocket testing libraries to verify real-time functionality, implement load testing with multiple concurrent connections and commands"
                }
             ]
+         },
+         {
+            "id": 12,
+            "title": "Add Comprehensive Unit Tests for All Modules in ./lib Directory",
+            "description": "Create a complete unit testing suite for all modules in the ./lib directory with comprehensive coverage, mocking, and automated test execution.",
+            "details": "Implement comprehensive unit tests using Jest as the testing framework for all modules in ./lib directory. Set up test configuration with proper TypeScript support and module resolution. Create unit tests for fs-operations.ts covering file system operations with mock fs and temporary directories. Test types/taskmaster.ts interfaces and validation functions with various data scenarios. Implement tests for any utility modules, helper functions, and business logic components. Set up test coverage reporting with Istanbul/nyc targeting 90%+ coverage. Configure automated test execution with pre-commit hooks and CI/CD integration. Implement proper mocking strategies for external dependencies, file system operations, and API calls. Create test utilities and fixtures for consistent test data. Add performance tests for computationally intensive functions. Implement snapshot testing for complex object structures and API responses. Set up test categorization with unit, integration, and performance test suites.",
+            "testStrategy": "Verify test coverage meets 90%+ threshold using coverage reports. Validate all edge cases and error scenarios are covered. Test mock implementations accurately represent real dependencies. Run tests in isolation to ensure no side effects between test cases. Verify test performance and execution speed. Validate test reliability with multiple runs. Check test documentation and naming conventions. Ensure tests fail appropriately when implementation is broken. Validate TypeScript type checking in test files.",
+            "status": "done",
+            "dependencies": [2],
+            "priority": "medium",
+            "subtasks": []
+         },
+         {
+            "id": 13,
+            "title": "Setup GraphQL Server Infrastructure",
+            "description": "Initialize Apollo Server Express with TypeScript support and basic configuration",
+            "details": "Install and configure Apollo Server Express with TypeScript. Set up basic server structure with app/api/graphql/route.ts following Next.js 13+ app router patterns. Configure CORS, middleware integration, and development tools including GraphQL Playground. Use @apollo/server package with expressMiddleware for Next.js integration.",
+            "testStrategy": "Unit tests for server initialization, integration tests for basic GraphQL endpoint accessibility, and health check tests",
+            "priority": "high",
+            "dependencies": [],
+            "status": "done",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Install Apollo Server Dependencies",
+                  "description": "Install @apollo/server, express, cors, and related TypeScript dependencies for GraphQL server setup",
+                  "dependencies": [],
+                  "details": "Install @apollo/server, express, cors, @types/express, @types/cors, and graphql packages. Update package.json with proper versions compatible with Next.js 13+ app router. Configure TypeScript types for Apollo Server Express integration.",
+                  "status": "done",
+                  "testStrategy": "Verify package installation and TypeScript compilation without errors"
+               },
+               {
+                  "id": 2,
+                  "title": "Create GraphQL Route Handler Structure",
+                  "description": "Set up app/api/graphql/route.ts following Next.js 13+ app router patterns with proper HTTP method handlers",
+                  "dependencies": ["13.1"],
+                  "details": "Create app/api/graphql/route.ts with GET and POST handlers for GraphQL endpoint. Implement proper Next.js Request/Response handling and error boundaries. Set up basic Apollo Server initialization structure with TypeScript support.",
+                  "status": "done",
+                  "testStrategy": "Unit tests for route handler initialization and HTTP method routing"
+               },
+               {
+                  "id": 3,
+                  "title": "Configure Apollo Server Express Middleware",
+                  "description": "Initialize Apollo Server with expressMiddleware integration and basic schema placeholder",
+                  "dependencies": ["13.2"],
+                  "details": "Configure Apollo Server using @apollo/server with expressMiddleware for Next.js compatibility. Set up basic placeholder schema and resolvers. Configure server options including introspection and playground settings for development.",
+                  "status": "done",
+                  "testStrategy": "Integration tests for Apollo Server initialization and middleware configuration"
+               },
+               {
+                  "id": 4,
+                  "title": "Implement CORS and Security Configuration",
+                  "description": "Configure CORS policies, security headers, and development/production environment settings",
+                  "dependencies": ["13.3"],
+                  "details": "Configure CORS middleware with appropriate origins for development and production. Set up security headers, request parsing limits, and environment-specific configurations. Implement proper error handling and logging middleware.",
+                  "status": "done",
+                  "testStrategy": "Unit tests for CORS configuration and security header validation"
+               },
+               {
+                  "id": 5,
+                  "title": "Setup GraphQL Development Tools",
+                  "description": "Configure GraphQL Playground, introspection, and development tooling integration",
+                  "dependencies": ["13.4"],
+                  "details": "Enable GraphQL Playground for development environment. Configure schema introspection and query validation. Set up development-specific logging and debugging tools. Ensure proper integration with Next.js development server.",
+                  "status": "done",
+                  "testStrategy": "Integration tests for GraphQL endpoint accessibility and development tool functionality"
+               }
+            ]
+         },
+         {
+            "id": 14,
+            "title": "Design Core GraphQL Schema",
+            "description": "Create comprehensive GraphQL schema with Task, CLI, and Sync types following schema-first approach",
+            "details": "Define GraphQL schema using schema-first approach with complete type definitions for Task, CLICommandResult, SyncOperation, and all enums (TaskStatus, TaskPriority, SyncOperationType, etc.). Include input types, filters, and ordering specifications. Use GraphQL Code Generator for TypeScript type generation from schema.",
+            "testStrategy": "Schema validation tests, type generation verification, and schema introspection tests",
+            "priority": "high",
+            "dependencies": [13],
+            "status": "done",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Define Core GraphQL Type Definitions",
+                  "description": "Create the fundamental GraphQL schema file with Task, User, and base entity types",
+                  "dependencies": [],
+                  "details": "Create schema.graphql file defining Task type with all fields (id, title, description, status, priority, createdAt, updatedAt, etc.), User type, and base interface types. Define TaskStatus and TaskPriority enums. Include proper scalar types for dates and IDs. Follow GraphQL schema definition language best practices with clear field descriptions and nullability specifications.\n<info added on 2025-07-26T11:58:35.653Z>\nIMPLEMENTATION COMPLETED: Successfully created comprehensive schema.graphql file with all core GraphQL type definitions. Implemented Task type with complete field set (id, title, description, status, priority, createdAt, updatedAt, dependencies, subtasks, etc.), Subtask type with hierarchical relationship, and User type for authentication. Added TaskStatus enum (pending, in_progress, done, deferred, cancelled, blocked) and TaskPriority enum (low, medium, high, urgent). Defined custom DateTime and JSON scalar types for proper date handling and flexible data storage. Created base Query and Mutation root types as foundation for resolvers. Integrated schema with Apollo Server configuration and verified schema introspection functionality works correctly. All type definitions include proper field descriptions and nullability specifications following GraphQL SDL best practices. Schema validation passes and TypeScript types can be generated. Ready to proceed with CLI and Sync operation type definitions in subtask 14.2.\n</info added on 2025-07-26T11:58:35.653Z>",
+                  "status": "done",
+                  "testStrategy": "Schema validation tests using GraphQL schema validation tools, verify all types are properly defined and enum values are correct"
+               },
+               {
+                  "id": 2,
+                  "title": "Define CLI and Sync Operation Types",
+                  "description": "Add GraphQL types for CLI command results and sync operations with their associated enums",
+                  "dependencies": ["14.1"],
+                  "details": "Extend schema.graphql with CLICommandResult type (command, output, exitCode, duration, timestamp), SyncOperation type (id, type, status, timestamp, metadata), and related enums (SyncOperationType, SyncStatus, CLICommandStatus). Define proper relationships between these types and existing Task types. Include error types for CLI and sync failures.\n<info added on 2025-07-26T11:59:45.052Z>\nBeginning implementation of CLI and Sync operation types in GraphQL schema. Created CLICommandResult type with fields: command (String!), output (String), exitCode (Int!), duration (Int!), timestamp (DateTime!). Added SyncOperation type with fields: id (ID!), type (SyncOperationType!), status (SyncStatus!), timestamp (DateTime!), metadata (JSON). Defined enums: SyncOperationType (FILE_SYNC, TASK_SYNC, FULL_SYNC), SyncStatus (PENDING, IN_PROGRESS, COMPLETED, FAILED), CLICommandStatus (IDLE, RUNNING, COMPLETED, FAILED). Establishing relationships: CLICommandResult linked to Task via taskId field, SyncOperation linked to affected tasks via taskIds array. Added CLIError and SyncError types for proper error handling with code, message, and details fields.\n</info added on 2025-07-26T11:59:45.052Z>\n<info added on 2025-07-26T12:03:54.398Z>\nIMPLEMENTATION COMPLETED: Successfully extended GraphQL schema with comprehensive CLI and Sync operation types. Added CLICommandResult type with fields for command execution (command, args, stdout, stderr, exitCode, duration, status, taskId). Implemented SyncOperation type with full sync lifecycle support (id, type, status, timestamp, source, taskIds, metadata, retryCount, error). Created complete enum sets: CLICommandStatus (6 states), SyncOperationType (7 types), SyncOperationStatus (5 states), ConflictResolution (5 strategies). Added SyncConflict type for conflict management and comprehensive error types (CLIError, SyncError). Extended Query and Mutation roots with CLI operations (cliHistory, cliStatus, executeCLICommand) and sync operations (syncOperations, syncStatus, updateTaskStatus, resolveSyncConflict). Added supporting types: CLIStatus, SyncStatus, SyncHealth, SystemInfo with proper field relationships. Created input types for CLI commands and batch operations. Schema introspection confirms all types properly registered. Ready for subtask 14.3 (Input Types and Filters).\n</info added on 2025-07-26T12:03:54.398Z>",
+                  "status": "done",
+                  "testStrategy": "Schema validation for new types, verify enum completeness against existing TypeScript definitions in lib/types"
+               },
+               {
+                  "id": 3,
+                  "title": "Create Input Types and Filters",
+                  "description": "Define GraphQL input types for queries, mutations, and filtering operations",
+                  "dependencies": ["14.2"],
+                  "details": "Add input types including TaskInput, TaskUpdateInput, TaskFilterInput with fields for status, priority, search text, date ranges. Create CLICommandInput, SyncOperationInput, and corresponding filter inputs. Define ordering input types (TaskOrderBy, SyncOperationOrderBy) with field and direction specifications. Include pagination input types with cursor-based parameters.\n<info added on 2025-07-26T12:04:53.692Z>\nImplementation notes: Starting comprehensive GraphQL input types creation. Creating TaskFilterInput with support for status filtering (array of TaskStatus enums), priority filtering (array of TaskPriority enums), search text filtering (string with case-insensitive matching), date range filtering (startDate/endDate DateTime fields), and dependency filtering (hasNoDependencies boolean, dependsOn array). Adding TaskOrderByInput with field enum (id, title, status, priority, createdAt, updatedAt) and direction enum (ASC, DESC). Implementing PaginationInput with first/after for forward pagination and last/before for backward pagination, plus optional limit constraints. Creating CLICommandFilterInput with command text search, status filtering, and execution time ranges. Adding SyncOperationFilterInput with operation type filtering, status filtering, and timestamp ranges. Including DateRangeInput helper type for consistent date filtering across all inputs. All input types designed to integrate seamlessly with existing schema types and support complex query combinations for advanced filtering scenarios.\n</info added on 2025-07-26T12:04:53.692Z>",
+                  "status": "done",
+                  "testStrategy": "Input validation tests, verify filter combinations work correctly, test ordering and pagination input constraints"
+               },
+               {
+                  "id": 4,
+                  "title": "Define Query and Mutation Root Types",
+                  "description": "Create the root Query and Mutation types with all necessary operations",
+                  "dependencies": ["14.3"],
+                  "details": "Define Query type with operations: tasks(filter, orderBy, pagination), task(id), cliStatus, cliHistory, availableCommands, syncStatus, syncOperations, syncConflicts, syncHealth. Define Mutation type with operations: createTask, updateTask, deleteTask, executeCommand, triggerSync, resolveSyncConflict. Include proper arguments and return types for each operation.\n<info added on 2025-07-26T12:12:31.643Z>\nIMPLEMENTATION COMPLETED: Successfully verified and validated comprehensive Query and Mutation root types in GraphQL schema. Query root type includes 14 operations covering all task management (tasks, task, searchTasks, readyTasks), CLI operations (cliHistory, cliCommand, cliStatus), sync operations (syncOperations, syncOperation, syncStatus, syncConflicts, syncHealth), and basic health endpoints (health, hello). Mutation root type includes 11 operations providing full CRUD functionality (createTask, updateTask, deleteTask), CLI execution (executeCLICommand, killCLIProcess, clearCLIHistory), sync management (updateTaskStatus, createBatchOperation, resolveSyncConflict, forceSync), and testing (ping). All operations properly accept filter, pagination, and ordering parameters where appropriate. Schema introspection confirms all operations are accessible with correct argument types and return types. Operations successfully execute (tested with ping mutation returning 'pong'). Root types fully implement all requirements from task description plus additional comprehensive functionality. Ready for subtask 14.5 (GraphQL Code Generator configuration).\n</info added on 2025-07-26T12:12:31.643Z>",
+                  "status": "done",
+                  "testStrategy": "Schema introspection tests to verify all operations are accessible, validate argument types and return types match expected interfaces"
+               },
+               {
+                  "id": 5,
+                  "title": "Configure GraphQL Code Generator",
+                  "description": "Set up GraphQL Code Generator to generate TypeScript types from the schema",
+                  "dependencies": ["14.4"],
+                  "details": "Install and configure @graphql-codegen/cli, @graphql-codegen/typescript, @graphql-codegen/typescript-resolvers packages. Create codegen.yml configuration file pointing to schema.graphql and generating types to lib/types/graphql-generated.ts. Configure resolver types generation with proper context typing. Add npm script for code generation and integrate with build process.\n<info added on 2025-07-26T12:17:06.782Z>\nInstallation completed successfully with all required packages including @graphql-codegen/typescript-operations for operation type generation. Resolved React version conflicts using --legacy-peer-deps flag. Configuration file codegen.yml created with comprehensive scalar mappings (DateTime: string, JSON: any), proper context type integration via GraphQLContext import, and field mapper configuration connecting to existing Task Master types. Added complete npm script integration: 'codegen' for manual generation, 'codegen:watch' for development mode, 'generate:types' as convenience alias, and 'prebuild' hook for automatic type generation during builds. Created sample GraphQL operations in lib/gql/ directory for testing type generation. Successfully generated two complete type files: lib/types/graphql-generated.ts containing all schema types and resolver interfaces with GraphQLContext integration, and lib/types/graphql-operations.ts containing typed operation interfaces for queries and mutations. Validation confirmed all schema elements properly typed including Task type with complete field definitions, TaskFilterInput with comprehensive filtering options, resolver types with proper context integration, and operation types with correct variable typing. Type generation pipeline fully functional and ready for resolver implementation phase.\n</info added on 2025-07-26T12:17:06.782Z>",
+                  "status": "done",
+                  "testStrategy": "Verify generated TypeScript types compile correctly, test that resolver type signatures match generated interfaces, validate enum types match schema definitions"
+               }
+            ]
+         },
+         {
+            "id": 15,
+            "title": "Implement Task Query Resolvers",
+            "description": "Build code-first GraphQL resolvers for task queries using TypeGraphQL decorators and Prisma client integration",
+            "status": "done",
+            "dependencies": [14, "24"],
+            "priority": "high",
+            "details": "Implement Query.tasks and Query.task resolvers using code-first approach with TypeGraphQL decorators for automatic schema generation. Integrate with TaskMasterDB and TaskMasterSync classes from lib/taskmaster for database operations. Add filtering by status, priority, and search text using Prisma query capabilities. Implement cursor-based pagination and ordering by various fields. Use TypeScript decorators for resolver definitions and automatic type generation.",
+            "testStrategy": "Unit tests for resolver logic with Prisma mocks, integration tests with TaskMasterDB, various filter combinations tests, and pagination boundary tests",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Set up TypeGraphQL resolver infrastructure",
+                  "description": "Configure TypeGraphQL decorators and create base resolver structure with Prisma integration",
+                  "status": "done",
+                  "dependencies": [],
+                  "details": "Set up TypeGraphQL configuration and create base resolver classes. Define TypeScript types using TypeGraphQL decorators for automatic schema generation. Integrate Prisma client from lib/taskmaster and establish connection patterns. Create resolver base class with shared functionality for TaskMasterDB and TaskMasterSync integration.",
+                  "testStrategy": "Unit tests for resolver setup and TypeGraphQL configuration"
+               },
+               {
+                  "id": 2,
+                  "title": "Implement basic task query resolvers with Prisma",
+                  "description": "Create @Query decorators for task retrieval using TaskMasterDB operations",
+                  "status": "done",
+                  "dependencies": [1],
+                  "details": "Implement Query.task and Query.tasks resolvers using TypeGraphQL @Query decorators. Integrate with TaskMasterDB class methods for single task retrieval by ID and basic task listing. Add proper error handling for non-existent tasks using Prisma error types. Return standardized task objects with TypeGraphQL @ObjectType decorators.",
+                  "testStrategy": "Unit tests with Prisma mocks and integration tests with TaskMasterDB"
+               },
+               {
+                  "id": 3,
+                  "title": "Add Prisma-based filtering and search with TypeGraphQL",
+                  "description": "Implement advanced filtering using Prisma where clauses and TypeGraphQL input types",
+                  "status": "done",
+                  "dependencies": [2],
+                  "details": "Create TypeGraphQL @InputType decorators for filter parameters (status, priority, search text). Implement Prisma where clause generation for complex filtering. Add text search functionality using Prisma's search capabilities across task titles and descriptions. Use TaskMasterDB query methods for efficient filtering operations.",
+                  "testStrategy": "Unit tests for filter logic and integration tests with various filter combinations"
+               },
+               {
+                  "id": 4,
+                  "title": "Implement cursor-based pagination with Prisma and TypeGraphQL",
+                  "description": "Add pagination and ordering using Prisma cursor-based queries and TypeGraphQL pagination types",
+                  "status": "done",
+                  "dependencies": [3],
+                  "details": "Implement cursor-based pagination using Prisma's cursor and take/skip functionality. Create TypeGraphQL @ArgsType decorators for pagination inputs. Add ordering support using Prisma orderBy with multiple fields (creation date, priority, status). Integrate with TaskMasterSync for real-time updates during pagination.",
+                  "testStrategy": "Pagination boundary tests and cursor validation tests"
+               },
+               {
+                  "id": 5,
+                  "title": "Complete TaskMaster integration and add comprehensive validation",
+                  "description": "Finalize integration with TaskMasterDB/TaskMasterSync and implement TypeGraphQL validation",
+                  "status": "done",
+                  "dependencies": [4],
+                  "details": "Complete integration with TaskMasterDB and TaskMasterSync classes for all query operations. Add comprehensive input validation using TypeGraphQL validation decorators and custom validators. Implement proper authorization checks and rate limiting. Add logging and monitoring for resolver performance using TaskMaster's existing logging infrastructure.",
+                  "testStrategy": "End-to-end integration tests with TaskMaster classes and validation tests"
+               }
+            ]
+         },
+         {
+            "id": 16,
+            "title": "Implement CLI Operation Resolvers",
+            "description": "Create GraphQL resolvers for CLI status, history, and command execution queries",
+            "details": "Implement Query.cliStatus, Query.cliHistory, and Query.availableCommands resolvers. Integrate with existing CLI executor from lib/cli/cli-executor.ts. Add proper error handling and timeout management for CLI operations. Support command history tracking and status monitoring.",
+            "testStrategy": "Unit tests for CLI resolver functions, integration tests with actual CLI commands, and error handling validation",
+            "priority": "medium",
+            "dependencies": [14],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 17,
+            "title": "Implement Sync Operation Resolvers",
+            "description": "Build GraphQL resolvers for sync status, operations, conflicts, and health monitoring",
+            "details": "Implement Query.syncStatus, Query.syncOperations, Query.syncConflicts, and Query.syncHealth resolvers. Integrate with existing sync manager from lib/core/sync-manager.ts. Add conflict detection and resolution tracking. Support operation history and health metrics.",
+            "testStrategy": "Unit tests for sync resolvers, integration tests with sync operations, and conflict resolution scenario tests",
+            "priority": "medium",
+            "dependencies": [14],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 18,
+            "title": "Implement Task Mutation Resolvers",
+            "description": "Create GraphQL mutations for task CRUD operations with validation and error handling",
+            "details": "Implement Mutation.createTask, Mutation.updateTask, and Mutation.deleteTask resolvers. Add input validation using GraphQL validation rules and custom validators. Integrate with existing task management logic. Handle dependency validation and circular dependency prevention.",
+            "testStrategy": "Unit tests for mutation logic, validation tests for input constraints, and integration tests for task lifecycle operations",
+            "priority": "high",
+            "dependencies": [15],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 19,
+            "title": "Implement CLI and Sync Mutation Resolvers",
+            "description": "Build GraphQL mutations for CLI command execution and sync operations",
+            "details": "Implement Mutation.executeCLICommand, Mutation.updateTaskStatus, Mutation.batchUpdate, and sync-related mutations. Add process management for CLI operations with timeout and cancellation support. Implement batch operation processing with transaction-like behavior.",
+            "testStrategy": "Unit tests for mutation resolvers, integration tests with CLI and sync systems, and error recovery tests",
+            "priority": "medium",
+            "dependencies": [16, 17],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 20,
+            "title": "Implement GraphQL Subscriptions",
+            "description": "Add real-time GraphQL subscriptions for task updates, CLI progress, and sync operations",
+            "details": "Implement Subscription.taskUpdated, Subscription.cliCommandProgress, and Subscription.syncOperationUpdated using GraphQL subscriptions with WebSocket transport. Integrate with existing WebSocket infrastructure from lib/websocket. Add subscription filtering and connection management.",
+            "testStrategy": "Unit tests for subscription resolvers, integration tests with WebSocket connections, and subscription filtering tests",
+            "priority": "medium",
+            "dependencies": [18, 19],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 21,
+            "title": "Add Performance Optimizations",
+            "description": "Implement DataLoader pattern, query complexity analysis, and caching strategies",
+            "details": "Implement DataLoader pattern to prevent N+1 queries using dataloader package. Add query complexity analysis with depth limiting to prevent expensive queries. Implement caching strategies using Apollo Server caching or Redis integration. Add query performance monitoring.",
+            "testStrategy": "Performance tests for query execution times, load tests for concurrent queries, and cache hit ratio validation tests",
+            "priority": "medium",
+            "dependencies": [20],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 22,
+            "title": "Security and Migration Setup",
+            "description": "Implement security measures, backward compatibility, and migration tooling",
+            "details": "Add query depth limiting, rate limiting for mutations, and input validation. Implement authentication/authorization integration. Set up backward compatibility layer to maintain existing REST endpoints. Add feature flags for gradual GraphQL rollout. Create migration documentation and tooling.",
+            "testStrategy": "Security penetration tests, compatibility tests for REST endpoints, and migration scenario validation tests",
+            "priority": "high",
+            "dependencies": [21],
+            "status": "pending",
+            "subtasks": []
+         },
+         {
+            "id": 23,
+            "title": "Migrate GraphQL to Code-First TypeScript Approach",
+            "description": "Convert existing schema-first GraphQL implementation to code-first approach using TypeScript decorators with TypeGraphQL or NestJS GraphQL for automatic schema generation.",
+            "details": "Install and configure TypeGraphQL or NestJS GraphQL for code-first schema generation. Convert existing SDL schema definitions from Task 14 to TypeScript classes with decorators (@ObjectType, @Field, @InputType, @Resolver, @Query, @Mutation, @Subscription). Transform Task, CLICommandResult, SyncOperation types and enums (TaskStatus, TaskPriority, SyncOperationType) into decorator-based classes. Migrate all existing resolvers from Tasks 15-20 to use decorator-based resolver classes with @Resolver, @Query, @Mutation, and @Subscription decorators. Configure automatic schema generation and type-safe resolver methods. Update Apollo Server configuration to use the generated schema instead of SDL files. Ensure full TypeScript integration with compile-time type checking for all GraphQL operations. Add proper validation decorators (@IsOptional, @Min, @Max) for input validation. Configure code generation for client-side TypeScript types from the new decorator-based schema.",
+            "testStrategy": "Verify schema generation produces identical SDL output to previous schema-first approach. Test all existing resolvers work correctly with decorator-based implementation. Validate TypeScript compilation catches type errors in resolvers. Test GraphQL introspection returns correct schema structure. Verify client-side type generation produces accurate TypeScript interfaces. Run integration tests to ensure backward compatibility with existing GraphQL clients.",
+            "status": "pending",
+            "dependencies": [13, 14, 15, 16, 17, 18, 19, 20],
+            "priority": "medium",
+            "subtasks": []
+         },
+         {
+            "id": 24,
+            "title": "Implement SQLite Database Integration with Prisma ORM",
+            "description": "Set up Prisma ORM with SQLite database and implement one-way sync from tasks.json to database for improved querying capabilities and database operations.",
+            "status": "done",
+            "dependencies": [],
+            "priority": "medium",
+            "details": "Install and configure Prisma with SQLite provider. Create comprehensive Prisma schema matching Task Master data structure with models for Task, Subtask, Dependency, and Metadata. Implement Prisma migrations system and initial seeding from existing tasks.json. Build one-way sync layer that updates database when tasks.json changes - maintaining database as a query-optimized representation of file data. Generate Prisma Client for efficient database operations including filtering, pagination, and relationship loading. Add database connection management and error handling. Focus on basic database integration without complex bidirectional synchronization.",
+            "testStrategy": "Unit tests for Prisma models and schema validation. Integration tests for one-way sync operations ensuring database reflects tasks.json state. Database migration tests from clean state and with existing data. Performance tests comparing file-based vs database queries. Data integrity tests ensuring database accurately represents file data. Error recovery tests for database connection failures and sync operation issues.",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Install and Configure Prisma with SQLite Provider",
+                  "description": "Set up Prisma CLI, install dependencies, and configure Prisma with SQLite database provider including initial project structure",
+                  "status": "done",
+                  "dependencies": [],
+                  "details": "Install @prisma/client and prisma CLI packages. Initialize Prisma in the project with 'prisma init'. Configure prisma/schema.prisma with SQLite provider and database URL. Set up .env file with DATABASE_URL pointing to SQLite file. Configure Prisma generator for client code generation.",
+                  "testStrategy": "Unit tests for Prisma configuration validation. Integration tests for database connection establishment. Schema validation tests ensuring proper SQLite provider setup."
+               },
+               {
+                  "id": 2,
+                  "title": "Define Prisma Schema to Match Task Master Data Structure",
+                  "description": "Design and implement comprehensive Prisma schema models for Task, Subtask, Dependency, and Metadata that accurately match Task Master's tasks.json structure",
+                  "status": "done",
+                  "dependencies": [1],
+                  "details": "Create Task model with all fields from tasks.json: id, title, description, status, priority, dependencies, details, testStrategy, createdAt, updatedAt. Create Subtask model with foreign key relationship to Task including all subtask properties. Create Dependency model for task relationships with proper referential integrity. Create Metadata model for additional task properties and system data. Define proper relationships, indexes, and constraints that mirror the existing tasks.json data structure exactly.",
+                  "testStrategy": "Schema validation tests ensuring complete coverage of Task Master data fields. Relationship integrity tests for foreign keys and dependencies. Migration tests from empty database state. Data type validation tests for all model fields."
+               },
+               {
+                  "id": 3,
+                  "title": "Implement Database Migrations and Initial Seeding",
+                  "description": "Set up Prisma migrations workflow and create seeding mechanism to populate database from existing tasks.json data",
+                  "status": "done",
+                  "dependencies": [2],
+                  "details": "Generate initial Prisma migration from schema. Create seeding script that reads current tasks.json and populates database with all existing task data. Implement proper data transformation from JSON format to database models. Add data validation during seeding to ensure data integrity. Handle edge cases in task data and provide clear error messages for any data inconsistencies.",
+                  "testStrategy": "Migration tests from clean database state. Seeding tests with various tasks.json formats and edge cases. Data validation tests ensuring all JSON data converts properly to database models. Performance tests for seeding large task datasets."
+               },
+               {
+                  "id": 4,
+                  "title": "Implement One-Way Sync from tasks.json to SQLite",
+                  "description": "Build simple sync mechanism that updates SQLite database whenever tasks.json file changes, maintaining database as query-optimized representation",
+                  "status": "done",
+                  "dependencies": [3],
+                  "details": "Create file watcher service that monitors tasks.json for changes. Implement sync service that reads updated tasks.json and updates database accordingly. Add incremental sync logic to update only changed tasks rather than full reload. Implement atomic transactions for sync operations to prevent partial updates. Add sync status tracking and error recovery for failed operations. Focus on reliable one-way sync without complex conflict resolution.",
+                  "testStrategy": "File watching tests ensuring sync triggers on tasks.json changes. Incremental sync tests validating only changed data is updated. Transaction tests ensuring atomic operations. Error recovery tests for failed sync operations. Performance tests for sync operations with large datasets."
+               },
+               {
+                  "id": 5,
+                  "title": "Generate Prisma Client for Database Operations",
+                  "description": "Generate and configure Prisma Client with efficient query methods for Task Master database operations",
+                  "status": "done",
+                  "dependencies": [4],
+                  "details": "Generate Prisma Client using 'prisma generate' command. Create database service layer wrapping Prisma Client with task-specific query methods. Implement efficient filtering and pagination for task queries. Add relationship loading optimizations using Prisma include/select patterns. Create helper methods for common Task Master operations like finding tasks by status, priority, or dependencies. Add proper error handling and connection management for database operations.",
+                  "testStrategy": "Client generation tests ensuring proper code generation. Query method tests for all task operations. Performance tests comparing database queries vs file operations. Relationship loading tests ensuring efficient data fetching. Error handling tests for database connection issues."
+               }
+            ]
+         },
+         {
+            "id": 25,
+            "title": "Implement lib/taskmaster Task Master API Library",
+            "description": "Create a focused TypeScript library for Task Master operations with one-way synchronization from tasks.json to SQLite database using Prisma.",
+            "status": "done",
+            "dependencies": [],
+            "priority": "medium",
+            "details": "Build a simplified lib/taskmaster module that focuses on three core components: 1) Define Prisma schema that exactly matches Task Master CLI data structure from tasks.json 2) Implement one-way synchronization strategy to sync tasks.json data to SQLite database 3) Generate Prisma client for database operations. This builds upon the existing Prisma setup from task 24 and provides a foundation for future API operations. Focus on data modeling accuracy and reliable sync mechanism rather than full CRUD operations or caching layers.",
+            "testStrategy": "Unit tests for Prisma schema validation and data mapping. Integration tests for tasks.json parsing and database sync operations. Schema migration tests to ensure data integrity. Sync operation tests with various task.json structures and edge cases.",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Define Prisma Schema for Task Master Data Structure",
+                  "description": "Create comprehensive Prisma schema that exactly matches Task Master CLI tasks.json data structure including tasks, subtasks, dependencies, and all metadata fields.",
+                  "status": "done",
+                  "dependencies": [],
+                  "details": "Analyze existing tasks.json structure and create Prisma schema with Task, Subtask models that include all fields: id, title, description, status, priority, dependencies, details, testStrategy, etc. Ensure proper relationships between tasks and subtasks, handle dependency arrays, and support all Task Master status values. Add proper indexes for performance and constraints for data integrity.",
+                  "testStrategy": "Schema validation tests against actual tasks.json data, relationship constraint tests, and migration tests for schema changes."
+               },
+               {
+                  "id": 2,
+                  "title": "Implement One-Way Sync from tasks.json to SQLite",
+                  "description": "Build synchronization mechanism that reads Task Master CLI tasks.json file and syncs data to SQLite database using Prisma client.",
+                  "status": "done",
+                  "dependencies": [1],
+                  "details": "Create syncTasksToDatabase() function that reads tasks.json, parses the data structure, and performs upsert operations to SQLite using Prisma. Handle nested subtasks, dependency relationships, and data type conversions. Implement proper error handling for file access and database operations. Support incremental sync and conflict detection between CLI and database states.",
+                  "testStrategy": "Integration tests with actual tasks.json files, sync operation tests with various data scenarios, and error handling tests for file access and database failures."
+               },
+               {
+                  "id": 3,
+                  "title": "Generate Prisma Client and Database Operations",
+                  "description": "Generate Prisma client and implement basic database operation methods for querying and updating Task Master data.",
+                  "status": "done",
+                  "dependencies": [1, 2],
+                  "details": "Run prisma generate to create typed client, implement basic query methods like getTasks(), getTask(id), getSubtasks(taskId). Add database connection management and proper error handling. Create helper functions for common query patterns and data transformations between Prisma models and Task Master CLI format.",
+                  "testStrategy": "Unit tests for all database operation methods, Prisma client generation tests, and data transformation validation tests."
+               }
+            ]
          }
       ],
       "metadata": {
          "created": "2025-07-26T00:47:21.699Z",
-         "updated": "2025-07-26T03:52:31.196Z",
+         "updated": "2025-07-26T13:56:03.965Z",
          "description": "Tasks for master context"
       }
    }

@@ -145,15 +145,15 @@ export function validateTasksData(data: any): data is TasksData {
       throw new ValidationError('TasksData must be an object');
    }
 
-   if (!data.tasks || typeof data.tasks !== 'object') {
-      throw new ValidationError('TasksData must have a tasks object', 'tasks');
+   if (!data.master || typeof data.master !== 'object') {
+      throw new ValidationError('TasksData must have a master object', 'master');
    }
 
-   if (!Array.isArray(data.tasks.master)) {
-      throw new ValidationError('TasksData.tasks.master must be an array', 'tasks.master');
+   if (!Array.isArray(data.master.tasks)) {
+      throw new ValidationError('TasksData.master.tasks must be an array', 'master.tasks');
    }
 
-   data.tasks.master.forEach((task: any, index: number) => {
+   data.master.tasks.forEach((task: any, index: number) => {
       try {
          validateTask(task);
       } catch (error) {
@@ -161,11 +161,11 @@ export function validateTasksData(data: any): data is TasksData {
       }
    });
 
-   if (!data.metadata || typeof data.metadata !== 'object') {
-      throw new ValidationError('TasksData must have metadata object', 'metadata');
+   if (!data.master.metadata || typeof data.master.metadata !== 'object') {
+      throw new ValidationError('TasksData must have metadata object', 'master.metadata');
    }
 
-   const { metadata } = data;
+   const { metadata } = data.master;
    if (!metadata.created || typeof metadata.created !== 'string') {
       throw new ValidationError('Metadata must have created timestamp', 'metadata.created');
    }
@@ -185,6 +185,19 @@ export function validateTasksData(data: any): data is TasksData {
 export function validateTaskMasterConfig(data: any): data is TaskMasterConfig {
    if (!data || typeof data !== 'object') {
       throw new ValidationError('Config must be an object');
+   }
+
+   // Required fields
+   if (!data.models || typeof data.models !== 'object') {
+      throw new ValidationError('Config must have models object', 'models');
+   }
+
+   if (!data.apiKeys || typeof data.apiKeys !== 'object') {
+      throw new ValidationError('Config must have apiKeys object', 'apiKeys');
+   }
+
+   if (!data.settings || typeof data.settings !== 'object') {
+      throw new ValidationError('Config must have settings object', 'settings');
    }
 
    if (data.models && typeof data.models === 'object') {
@@ -210,21 +223,23 @@ export function validateTaskMasterConfig(data: any): data is TaskMasterConfig {
 
    if (data.settings && typeof data.settings === 'object') {
       const { settings } = data;
-      if (settings.defaultPriority !== undefined && !isTaskPriority(settings.defaultPriority)) {
+
+      // Required settings fields
+      if (settings.defaultPriority === undefined || !isTaskPriority(settings.defaultPriority)) {
          throw new ValidationError(
-            'Config settings.defaultPriority must be a valid priority',
+            'Config settings.defaultPriority is required and must be a valid priority',
             'settings.defaultPriority'
          );
       }
-      if (settings.autoExpand !== undefined && typeof settings.autoExpand !== 'boolean') {
+      if (settings.autoExpand === undefined || typeof settings.autoExpand !== 'boolean') {
          throw new ValidationError(
-            'Config settings.autoExpand must be a boolean',
+            'Config settings.autoExpand is required and must be a boolean',
             'settings.autoExpand'
          );
       }
-      if (settings.research !== undefined && typeof settings.research !== 'boolean') {
+      if (settings.research === undefined || typeof settings.research !== 'boolean') {
          throw new ValidationError(
-            'Config settings.research must be a boolean',
+            'Config settings.research is required and must be a boolean',
             'settings.research'
          );
       }

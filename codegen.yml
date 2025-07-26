@@ -1,0 +1,80 @@
+# GraphQL Code Generator Configuration
+# Generates TypeScript types from GraphQL schema for Task Master application
+
+overwrite: true
+schema: './lib/graphql/schema/schema.graphql'
+
+generates:
+   # Generated TypeScript types for schema types
+   ./lib/types/graphql-generated.ts:
+      plugins:
+         - 'typescript'
+         - 'typescript-resolvers'
+      config:
+         # Basic TypeScript configuration
+         scalars:
+            DateTime: string
+            JSON: any
+
+         # Generate resolver types with proper context
+         contextType: './graphql-context#GraphQLContext'
+
+         # Enable helpful type generation features
+         useIndexSignature: true
+         enumsAsTypes: true
+         constEnums: true
+
+         # Resolver signature configuration
+         defaultMapper: 'Partial<{T}>'
+         mappers:
+            Task: '../taskmaster#Task'
+            Subtask: '../taskmaster#Subtask'
+            TasksData: '../taskmaster#TasksData'
+            CLICommandResult: '../types#CLIExecuteResponse'
+
+         # Additional configuration
+         maybeValue: 'T | null | undefined'
+         inputMaybeValue: 'T | null | undefined'
+
+         # Skip generating types for Node modules
+         skipTypename: false
+         nonOptionalTypename: false
+
+         # Generate helper types
+         withHooks: false
+         withComponent: false
+         withHOC: false
+
+   # Generated types for GraphQL operations (queries, mutations)
+   ./lib/types/graphql-operations.ts:
+      documents: './lib/gql/**/*.graphql'
+      plugins:
+         - 'typescript'
+         - 'typescript-operations'
+      config:
+         scalars:
+            DateTime: string
+            JSON: any
+
+         # Operation result types
+         operationResultSuffix: 'Result'
+         dedupeOperationSuffix: true
+         omitOperationSuffix: false
+
+         # Variable types
+         variablesSuffix: 'Variables'
+         namespacedImportName: 'Types'
+
+hooks:
+   afterAllFileWrite:
+      - prettier --write
+
+config:
+   # Global scalar mappings
+   scalars:
+      DateTime:
+         input: string
+         output: string
+      JSON:
+         input: any
+         output: any

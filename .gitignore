@@ -66,3 +66,5 @@ node_modules/
 # Task files
 # tasks.json
 # tasks/ 
+
+/lib/generated/prisma

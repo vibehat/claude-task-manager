@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { useWebSocket } from './use-websocket';
+// TODO: Use GraphQL subscriptions for real-time sync updates
 
 // Sync operation status
 export enum SyncOperationStatus {
@@ -24,7 +24,7 @@ export interface SyncOperation {
    id: string;
    type: 'task_update' | 'task_create' | 'task_delete' | 'status_change' | 'batch_update';
    timestamp: number;
-   source: 'ui' | 'cli' | 'file' | 'websocket';
+   source: 'ui' | 'cli' | 'file';
    data: any;
    rollbackData?: any;
    status: SyncOperationStatus;
@@ -117,18 +117,13 @@ export function useSync(config: UseSyncConfig = {}): UseSyncReturn {
 
    const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-   // WebSocket integration for real-time updates
-   const { isConnected, emit, lastMessage } = useWebSocket(
-      {},
-      {
-         onConnect: () => {
-            // Join sync room for real-time updates
-            emit('join-room', 'sync');
-         },
-      }
-   );
+   // TODO: Replace with GraphQL subscriptions for real-time updates
+   // GraphQL subscriptions will provide real-time sync updates
+   const isConnected = true; // Placeholder until GraphQL subscriptions
+   const emit = () => {}; // Placeholder
+   const lastMessage: any = null; // Placeholder
 
-   // Handle WebSocket sync updates
+   // TODO: Handle GraphQL subscription sync updates
    useEffect(() => {
       if (lastMessage && lastMessage.type?.startsWith('sync-')) {
          setLastSyncUpdate(lastMessage.data);
@@ -155,22 +150,29 @@ export function useSync(config: UseSyncConfig = {}): UseSyncReturn {
 
    // Fetch sync status
    const fetchSyncStatus = useCallback(async (): Promise<SyncStatus> => {
-      const response = await fetch('/api/sync?action=status');
-      if (!response.ok) {
-         throw new Error(`Failed to fetch sync status: ${response.statusText}`);
-      }
-      const data = await response.json();
-      return data.status;
+      const { graphqlClient, SYNC_QUERIES } = await import('@/lib/graphql-client');
+      const data = await graphqlClient.query(SYNC_QUERIES.GET_SYNC_STATUS);
+      return data.syncStatus;
    }, []);
 
    // Fetch sync health
    const fetchSyncHealth = useCallback(async () => {
       try {
-         const response = await fetch('/api/sync?action=health');
-         if (response.ok) {
-            const data = await response.json();
-            setSyncHealth(data.health);
-         }
+         const { graphqlClient, SYNC_QUERIES } = await import('@/lib/graphql-client');
+         const data = await graphqlClient.query(SYNC_QUERIES.GET_SYNC_STATUS);
+         const syncStatus = data.syncStatus;
+
+         // Calculate health metrics from sync status
+         const healthMetrics = {
+            healthy: syncStatus.state !== 'ERROR',
+            successRate: 1.0, // Default success rate
+            activeOperations: syncStatus.operations.filter((op: any) => op.status === 'EXECUTING')
+               .length,
+            queuedOperations: syncStatus.queueSize,
+            unresolvedConflicts: syncStatus.conflicts.filter((c: any) => !c.resolved).length,
+         };
+
+         setSyncHealth(healthMetrics);
       } catch (error) {
          console.error('Failed to fetch sync health:', error);
       }
@@ -197,30 +199,24 @@ export function useSync(config: UseSyncConfig = {}): UseSyncReturn {
    const updateTaskStatus = useCallback(
       async (taskId: string, status: string): Promise<string> => {
          try {
-            const response = await fetch('/api/sync', {
-               method: 'POST',
-               headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify({
-                  action: 'update-task-status',
-                  data: { taskId, status, source: 'ui' },
-               }),
+            const { graphqlClient, SYNC_MUTATIONS } = await import('@/lib/graphql-client');
+            const data = await graphqlClient.mutate(SYNC_MUTATIONS.UPDATE_TASK_STATUS, {
+               taskId,
+               status: status.toUpperCase(),
+               source: 'ui',
             });
 
-            if (!response.ok) {
-               throw new Error(`Failed to update task status: ${response.statusText}`);
-            }
-
-            const data = await response.json();
+            const operation = data.updateTaskStatus;
 
             // Apply optimistic update
             if (enableOptimisticUpdates) {
                setOptimisticUpdates((prev) => ({
                   ...prev,
-                  [data.operationId]: { taskId, status },
+                  [operation.id]: { taskId, status },
                }));
             }
 
-            return data.operationId;
+            return operation.id;
          } catch (error) {
             setError(error instanceof Error ? error.message : 'Failed to update task status');
             throw error;

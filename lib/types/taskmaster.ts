@@ -27,13 +27,13 @@ export type TaskStatus = 'pending' | 'in-progress' | 'done' | 'cancelled' | 'def
 export type TaskPriority = 'high' | 'medium' | 'low';
 
 export interface TasksData {
-   tasks: {
-      master: Task[];
-   };
-   metadata: {
-      created: string;
-      updated: string;
-      description: string;
+   master: {
+      tasks: Task[];
+      metadata: {
+         created: string;
+         updated: string;
+         description: string;
+      };
    };
 }
 
@@ -48,7 +48,7 @@ export interface ApiResponse<T = any> {
 
 export interface TasksResponse extends ApiResponse {
    tasks: Task[];
-   metadata: TasksData['metadata'];
+   metadata: TasksData['master']['metadata'];
    total: number;
 }
 
@@ -138,9 +138,8 @@ export interface APIError {
 
 export class TaskMasterAPIError extends Error {
    constructor(
-      public code: string,
       message: string,
-      public details?: any
+      public statusCode: number = 500
    ) {
       super(message);
       this.name = 'TaskMasterAPIError';

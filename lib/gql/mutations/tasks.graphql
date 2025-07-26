@@ -1,0 +1,47 @@
+# Task Mutations
+# Example GraphQL mutations for testing code generation
+
+mutation CreateTask($input: CreateTaskInput!) {
+   createTask(input: $input) {
+      id
+      title
+      description
+      status
+      priority
+      dependencies
+      details
+      testStrategy
+      createdAt
+      updatedAt
+   }
+}
+
+mutation UpdateTask($id: ID!, $input: UpdateTaskInput!) {
+   updateTask(id: $id, input: $input) {
+      id
+      title
+      description
+      status
+      priority
+      dependencies
+      details
+      testStrategy
+      updatedAt
+   }
+}
+
+mutation DeleteTask($id: ID!) {
+   deleteTask(id: $id)
+}
+
+mutation UpdateTaskStatus($taskId: ID!, $status: TaskStatus!, $source: String) {
+   updateTaskStatus(taskId: $taskId, status: $status, source: $source) {
+      id
+      type
+      status
+      timestamp
+      source
+      taskIds
+      metadata
+   }
+}

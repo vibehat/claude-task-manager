@@ -11,7 +11,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { GroupIssues } from './group-issues';
 import { SearchIssues } from './search-issues';
 import { CustomDragLayer } from './issue-grid';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/core';
 import { Issue } from '@/mock-data/issues';
 
 export default function AllIssues() {
