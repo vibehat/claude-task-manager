@@ -21,8 +21,11 @@
       "sync:taskmaster:force": "npm run sync:taskmaster sync --force"
    },
    "dependencies": {
+      "@apollo/client": "^3.13.8",
       "@apollo/server": "^5.0.0",
+      "@apollo/server-plugin-response-cache": "^5.0.0",
       "@as-integrations/next": "^4.0.0",
+      "@graphql-codegen/typescript-react-apollo": "^4.3.3",
       "@graphql-tools/schema": "^10.0.25",
       "@hookform/resolvers": "^4.1.2",
       "@kayron013/lexorank": "^2.0.0",
@@ -46,6 +49,7 @@
       "@radix-ui/react-tooltip": "^1.1.8",
       "@remixicon/react": "^4.6.0",
       "@types/cors": "^2.8.19",
+      "@types/ioredis": "^4.28.10",
       "class-transformer": "^0.5.1",
       "class-validator": "^0.14.2",
       "class-variance-authority": "^0.7.1",
@@ -59,6 +63,7 @@
       "graphql-subscriptions": "^3.0.0",
       "graphql-tag": "^2.12.6",
       "graphql-ws": "^6.0.6",
+      "ioredis": "^5.6.1",
       "lucide-react": "^0.476.0",
       "motion": "^12.4.10",
       "next": "15.2.4",

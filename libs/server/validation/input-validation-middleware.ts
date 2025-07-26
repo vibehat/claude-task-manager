@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
-import { commonValidationSchemas } from './security-middleware';
+import { commonValidationSchemas } from '../security/security-middleware';
 
 // Input validation configuration
 export interface ValidationConfig {

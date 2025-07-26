@@ -15,6 +15,7 @@ import { User, users } from '@/mock-data/users';
 import { CheckIcon, UserCircle } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DEFAULT_CONFIG } from '@/lib/config/defaults';
 
 interface AssigneeSelectorProps {
    assignee: User | null;
@@ -106,7 +107,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
                            </span>
                         </CommandItem>
                         {users
-                           .filter((user) => user.teamIds.includes('CORE'))
+                           .filter((user) => user.teamIds.includes(DEFAULT_CONFIG.DEFAULT_TEAM_ID))
                            .map((user) => (
                               <CommandItem
                                  key={user.id}

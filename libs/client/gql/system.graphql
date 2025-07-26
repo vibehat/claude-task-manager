@@ -1,0 +1,9 @@
+# System Operations
+
+query Health {
+  health
+}
+
+query Hello {
+  hello
+}

@@ -1,319 +1,427 @@
-# Claude Task Master UI - Product Requirements Document
+# Individual Project Management Mode - Product Requirements Document
 
 ## Executive Summary
 
-Claude Task Master UI is a comprehensive web interface that transforms the powerful Claude Task Master CLI tool into an intuitive, modern web application. This product bridges the gap between AI-powered task management and user-friendly interface design, making enterprise-grade task management accessible to teams of all sizes.
+The Individual Project Management Mode transforms Claude Task Master UI into a focused, single-project management system designed for individual developers, freelancers, and solo entrepreneurs. This mode integrates AI agent collaboration, task hierarchy management, and documentation capabilities into a streamlined interface optimized for personal productivity and AI-augmented development workflows.
 
 ## Product Vision
 
-Create the definitive web interface for AI-powered task management that combines the sophisticated functionality of Claude Task Master with the intuitive design patterns of modern productivity tools like Linear, resulting in a seamless experience for developers, project managers, and teams.
+Create a revolutionary individual project management experience that seamlessly integrates AI agents as team members, enabling solo developers to achieve team-level productivity through intelligent task delegation, automated documentation, and AI-powered development assistance.
 
 ## Target Users
 
 ### Primary Users
 
-- **Development Teams**: Software engineers using Claude Task Master for project planning
-- **Project Managers**: Non-technical managers needing visual task oversight
-- **Product Owners**: Strategic planners requiring comprehensive project visibility
-- **Individual Developers**: Personal productivity and project organization with AI assistance
+- **Individual Developers**: Solo developers managing personal or client projects
+- **Freelancers**: Independent contractors juggling multiple project phases
+- **Indie Hackers**: Entrepreneurs building products independently with AI assistance
+- **Open Source Maintainers**: Individual maintainers managing community projects
 
 ### Secondary Users
 
-- **AI Researchers**: Teams experimenting with multi-agent AI coordination
-- **Consultants**: External teams managing multiple client projects with AI agents
-- **Startup Teams**: Fast-moving teams requiring AI-powered agile task management
+- **Students**: Computer science students managing academic projects
+- **Researchers**: Individual researchers organizing complex research projects
+- **Content Creators**: Technical writers and educators managing educational content
 
 ## Core Product Requirements
 
-### 1. Complete CLI Functionality Coverage
+### 1. Single-Project Focus
 
-**Requirement**: Implement full feature parity with Claude Task Master CLI
+**Requirement**: Optimize the entire interface for managing one project at a time
 
-- All CLI commands must have UI equivalents
-- Real-time synchronization with task-master data files
-- Seamless import/export capabilities
-- Advanced features like dependency management and complexity analysis
-
-**Success Criteria**:
-
-- 100% CLI command coverage in web interface
-- Zero data loss during CLI ↔ UI transitions
-- Sub-second response times for core operations
-
-### 2. Modern Web Application Architecture
-
-**Requirement**: Build using modern web technologies for performance and maintainability
-
-- Next.js 15 with App Router for optimal performance
-- TypeScript for type safety and developer experience
-- Tailwind CSS 4 for consistent, maintainable styling
-- Radix UI + shadcn/ui for accessible, high-quality components
+- Dedicated project context throughout the application
+- Simplified navigation without organization/team switching
+- Project-specific settings and configurations
+- Quick project switching for users with multiple projects
 
 **Success Criteria**:
 
-- Core Web Vitals scores > 90
-- Mobile-first responsive design
-- WCAG 2.1 AA accessibility compliance
-- TypeScript strict mode with zero type errors
+- Reduced cognitive load with focused interface
+- 50% fewer clicks to access core features
+- Instant project context availability
 
-### 3. AI Integration Dashboard
+### 2. Hierarchical Task Management
 
-**Requirement**: Comprehensive AI model management and configuration
+**Requirement**: Implement comprehensive task and subtask management system
 
-- Visual setup for multiple AI providers (Claude, OpenAI, Gemini, Perplexity)
-- Real-time model status monitoring
-- Usage analytics and cost tracking
-- Model performance comparison tools
+- Create, edit, and delete tasks with multiple subtask levels
+- Drag-and-drop task organization
+- Task dependencies and relationships
+- Progress tracking at task and subtask levels
+- Bulk operations for task management
 
-**Success Criteria**:
+**Features**:
 
-- Support for 8+ AI providers
-- Real-time API connectivity monitoring
-- Usage cost estimation within 5% accuracy
-- Model switching without data loss
-
-### 4. Visual Task Management System
-
-**Requirement**: Intuitive task organization and management interface
-
-- Interactive kanban boards with drag-and-drop
-- Advanced filtering and search capabilities
-- Bulk operations for efficient task management
-- Rich task editing with AI-enhanced descriptions
+- Task templates for common workflows
+- Recurring tasks with customizable patterns
+- Task time tracking and estimates
+- Priority levels and urgency indicators
+- Rich text descriptions with markdown support
 
 **Success Criteria**:
 
-- Sub-200ms drag-and-drop performance
-- Search results within 100ms
-- Support for 10,000+ tasks without performance degradation
-- Rich text editing with markdown support
+- Support for unlimited subtask nesting
+- Real-time progress calculation
+- < 100ms task creation/update response time
 
-### 5. Multi-Agent AI Collaboration System
+### 3. AI Agent Team Management
 
-**Requirement**: Multiple AI agents working on the same project simultaneously
+**Requirement**: Integrate AI agents as first-class team members
 
-- Agent management and coordination system
-- Task distribution and assignment to different AI agents
-- Real-time agent communication and synchronization
-- Agent performance monitoring and analytics
+- Agent library with specialized capabilities
+- Task assignment to human or AI agents
+- Agent performance monitoring and metrics
+- Collaborative agent interactions
+- Agent configuration and customization
+
+**Agent Types**:
+
+- **Code Agent**: Code generation, review, and refactoring
+- **Docs Agent**: Documentation writing and maintenance
+- **Test Agent**: Test case generation and execution
+- **Design Agent**: UI/UX suggestions and mockups
+- **Research Agent**: Technical research and analysis
+
+**Features**:
+
+- Visual agent assignment interface
+- Agent capability matching to tasks
+- Real-time agent status and progress
+- Agent conversation history
+- Performance analytics per agent
 
 **Success Criteria**:
 
-- Support for 10+ AI agents per project
-- Sub-second agent coordination
-- Intelligent task distribution based on agent specializations
-- Real-time agent activity monitoring and conflict resolution
+- Seamless agent-task assignment
+- Clear agent status visibility
+- Measurable productivity improvements
 
-## Technical Requirements
+### 4. Integrated Documentation System
 
-### Performance Requirements
+**Requirement**: Built-in markdown-based documentation management
 
-- **Page Load Time**: < 2 seconds for initial load
-- **Time to Interactive**: < 3 seconds
-- **API Response Time**: < 500ms for CRUD operations
-- **Real-time Updates**: < 1 second latency
+- Create and edit markdown documents
+- Document versioning and history
+- Link documents to tasks and features
+- Full-text search across documentation
+- Export capabilities (PDF, HTML, Markdown)
 
-### Scalability Requirements
+**Features**:
 
-- **Task Capacity**: Support 100,000+ tasks per project
-- **Agent Capacity**: Support 50+ AI agents working simultaneously
-- **Project Capacity**: Support 10,000+ projects per user
-- **Storage**: Efficient data storage with compression and agent state management
+- WYSIWYG markdown editor with preview
+- Document templates (README, API docs, guides)
+- Automatic table of contents generation
+- Code syntax highlighting
+- Inline task references
+- Document collaboration with AI agents
 
-### Security Requirements
+**Success Criteria**:
 
-- **API Key Management**: Encrypted storage of AI provider keys
-- **Agent Isolation**: Secure sandboxing of AI agent operations
-- **Data Protection**: Local-first with optional cloud sync
-- **Audit Logging**: Comprehensive activity tracking for all agents
+- Instant document loading and saving
+- Comprehensive search functionality
+- Seamless task-document linking
 
-### Integration Requirements
+### 5. Project Dashboard
 
-- **CLI Compatibility**: Seamless bidirectional sync with CLI
-- **File System**: Direct integration with .taskmaster directory structure
-- **Version Control**: Git integration for task versioning
-- **External APIs**: RESTful API for third-party integrations
+**Requirement**: Comprehensive project overview and insights
+
+- Project progress visualization
+- Task completion trends
+- Agent activity summary
+- Recent documentation updates
+- Upcoming deadlines and milestones
+
+**Widgets**:
+
+- Task burndown chart
+- Agent utilization graph
+- Documentation coverage meter
+- Activity timeline
+- Quick actions panel
+
+**Success Criteria**:
+
+- Real-time dashboard updates
+- Customizable widget layout
+- Mobile-responsive design
 
 ## User Experience Requirements
 
-### Design System
+### 1. Simplified Navigation
 
-- **Visual Identity**: Professional, modern interface inspired by Linear
-- **Typography**: Inter font family with accessibility considerations
-- **Color System**: Sophisticated palette with dark/light mode support
-- **Component Library**: Consistent, reusable components
-- **Animation**: Smooth, purposeful micro-interactions
+**Layout Structure**:
 
-### Responsive Design
+```
+┌─────────────────────────────────────────┐
+│ Project Name    [Search]    [User Menu] │
+├─────────────┬───────────────────────────┤
+│             │                           │
+│  Dashboard  │                           │
+│  Tasks      │      Main Content         │
+│  Agents     │                           │
+│  Docs       │                           │
+│  Settings   │                           │
+│             │                           │
+└─────────────┴───────────────────────────┘
+```
 
-- **Mobile Experience**: Full functionality on mobile devices
-- **Tablet Support**: Optimized layouts for tablet interaction
-- **Desktop Features**: Enhanced productivity features for desktop
-- **Cross-browser**: Support for modern browsers (Chrome, Firefox, Safari, Edge)
+**Navigation Principles**:
 
-### Accessibility
+- Maximum 2 clicks to any feature
+- Persistent project context
+- Keyboard shortcuts for power users
+- Breadcrumb navigation for deep hierarchies
 
-- **Screen Reader Support**: Full ARIA compliance
-- **Keyboard Navigation**: Complete keyboard accessibility
-- **Color Contrast**: WCAG 2.1 AA color contrast ratios
-- **Focus Management**: Clear focus indicators and logical tab order
+### 2. Task Interaction Patterns
 
-## Feature Specifications
+- **Quick Add**: Global shortcut (Cmd/Ctrl + N) for task creation
+- **Inline Editing**: Click to edit any task field
+- **Bulk Actions**: Select multiple tasks for batch operations
+- **Smart Filters**: Natural language task filtering
+- **Keyboard Navigation**: Full keyboard support for task management
 
-### 1. Dashboard and Overview
+### 3. AI Agent Interaction
 
-- **Project Overview**: High-level project status and metrics
-- **Task Summary**: Priority tasks and upcoming deadlines
-- **Activity Feed**: Recent project activity and updates
-- **Quick Actions**: Frequently used operations accessible immediately
+- **Agent Chat**: Persistent chat sidebar for agent communication
+- **Visual Assignment**: Drag tasks to agents for assignment
+- **Status Indicators**: Real-time agent availability and workload
+- **Suggestion Mode**: Agents proactively suggest task improvements
 
-### 2. Task Management Interface
+### 4. Documentation Workflow
 
-- **Task Lists**: Sortable, filterable task tables
-- **Kanban Boards**: Customizable workflow columns
-- **Task Details**: Rich editing with AI assistance
-- **Dependency Visualization**: Interactive dependency graphs
+- **Quick Create**: Create docs from task context
+- **Auto-linking**: Automatic detection of task references
+- **Version Comparison**: Visual diff for document changes
+- **Export Options**: One-click export to various formats
 
-### 3. AI Configuration Panel
+## Technical Requirements
 
-- **Provider Setup**: Streamlined API key configuration
-- **Model Selection**: Visual model comparison and selection
-- **Usage Monitoring**: Real-time usage and cost tracking
-- **Research Tools**: Integrated research interface
+### 1. Route Structure
 
-### 4. Project Management
+```
+/indie/
+├── page.tsx                    # Project dashboard
+├── tasks/
+│   ├── page.tsx               # Task list view
+│   ├── [taskId]/page.tsx      # Task detail view
+│   └── board/page.tsx         # Kanban board view
+├── agents/
+│   ├── page.tsx               # Agent management
+│   ├── [agentId]/page.tsx     # Agent detail/config
+│   └── chat/page.tsx          # Agent chat interface
+├── docs/
+│   ├── page.tsx               # Documentation home
+│   ├── [slug]/page.tsx        # Document viewer
+│   └── editor/page.tsx        # Document editor
+└── settings/
+    ├── page.tsx               # General settings
+    ├── project/page.tsx       # Project settings
+    └── agents/page.tsx        # Agent settings
+```
 
-- **Project Creation**: Guided project setup wizard
-- **PRD Upload**: Drag-and-drop PRD parsing
-- **Template Management**: Project and task templates
-- **Export/Import**: Data portability features
+### 2. Component Architecture
 
-### 5. Multi-Agent Coordination
+**Layout Components**:
 
-- **Agent Management**: AI agent configuration and specialization
-- **Task Distribution**: Intelligent assignment of tasks to agents
-- **Agent Communication**: Inter-agent messaging and coordination
-- **Activity Dashboard**: Real-time agent performance and status monitoring
+- `IndieLayout`: Main layout wrapper
+- `ProjectSidebar`: Navigation sidebar
+- `ProjectHeader`: Context-aware header
 
-## Data Requirements
+**Task Components**:
 
-### Data Storage
+- `TaskList`: Hierarchical task display
+- `TaskCard`: Individual task representation
+- `SubtaskTree`: Nested subtask visualization
+- `TaskAssignment`: Agent/human assignment UI
 
-- **Local Storage**: Browser-based caching for offline access
-- **File System**: Integration with .taskmaster directory structure
-- **Cloud Sync**: Optional cloud synchronization
-- **Backup**: Automated backup and recovery systems
+**Agent Components**:
 
-### Data Formats
+- `AgentCard`: Agent profile and capabilities
+- `AgentChat`: Communication interface
+- `AgentMetrics`: Performance visualization
+- `AgentLibrary`: Available agents browser
 
-- **JSON**: Primary data format for task storage
-- **Markdown**: Rich text formatting for descriptions
-- **CSV/Excel**: Export formats for reporting
-- **API**: RESTful JSON API for integrations
+**Documentation Components**:
 
-## Quality Assurance Requirements
+- `MarkdownEditor`: Rich markdown editing
+- `DocViewer`: Rendered document display
+- `DocTree`: Document navigation
+- `DocSearch`: Full-text search interface
 
-### Testing Strategy
+### 3. State Management
 
-- **Unit Testing**: 90%+ code coverage
-- **Integration Testing**: API and component integration
-- **End-to-End Testing**: Complete user workflow testing
-- **Performance Testing**: Load and stress testing
+- **Project Context**: Global project state using React Context
+- **Task Store**: Zustand for task management
+- **Agent State**: Real-time agent status with WebSocket
+- **Document Cache**: Local storage for offline access
 
-### Monitoring and Analytics
+### 4. API Integration
 
-- **Error Tracking**: Comprehensive error monitoring
-- **Performance Monitoring**: Core Web Vitals tracking
-- **Usage Analytics**: Feature usage and adoption metrics
-- **User Feedback**: In-app feedback collection system
+**Task Master Integration**:
 
-## Deployment and DevOps
+- Direct file system access to `.taskmaster/` directory
+- Real-time sync with CLI operations
+- WebSocket for live updates
 
-### Deployment Targets
+**AI Agent APIs**:
 
-- **Vercel**: Primary deployment platform
-- **Self-hosted**: Docker containerization support
-- **Enterprise**: On-premises deployment options
-- **CDN**: Global content delivery optimization
+- RESTful API for agent management
+- WebSocket for real-time agent communication
+- Streaming responses for long-running tasks
 
-### Development Workflow
+### 5. Performance Requirements
 
-- **CI/CD**: Automated testing and deployment
-- **Code Quality**: ESLint, Prettier, TypeScript strict mode
-- **Version Control**: Git with conventional commits
-- **Documentation**: Comprehensive technical documentation
+- **Initial Load**: < 2 seconds
+- **Task Operations**: < 100ms response time
+- **Agent Assignment**: < 500ms
+- **Document Loading**: < 300ms
+- **Search Results**: < 200ms
+
+## Data Model
+
+### Project Entity
+
+```typescript
+interface Project {
+   id: string;
+   name: string;
+   description: string;
+   createdAt: Date;
+   updatedAt: Date;
+   settings: ProjectSettings;
+   statistics: ProjectStats;
+}
+```
+
+### Task Entity
+
+```typescript
+interface Task {
+   id: string;
+   title: string;
+   description: string;
+   status: 'pending' | 'in-progress' | 'completed' | 'blocked';
+   priority: 'low' | 'medium' | 'high' | 'urgent';
+   assignee: string; // human or agent ID
+   parentId?: string;
+   subtasks: Task[];
+   dependencies: string[];
+   createdAt: Date;
+   updatedAt: Date;
+   dueDate?: Date;
+   timeEstimate?: number;
+   timeSpent?: number;
+   tags: string[];
+   linkedDocs: string[];
+}
+```
+
+### Agent Entity
+
+```typescript
+interface Agent {
+   id: string;
+   name: string;
+   type: 'code' | 'docs' | 'test' | 'design' | 'research';
+   capabilities: string[];
+   status: 'idle' | 'working' | 'offline';
+   currentTask?: string;
+   performance: {
+      tasksCompleted: number;
+      averageTime: number;
+      successRate: number;
+   };
+   configuration: Record<string, any>;
+}
+```
+
+### Document Entity
+
+```typescript
+interface Document {
+   id: string;
+   title: string;
+   slug: string;
+   content: string;
+   type: 'readme' | 'guide' | 'api' | 'notes';
+   linkedTasks: string[];
+   version: number;
+   createdAt: Date;
+   updatedAt: Date;
+   author: string; // human or agent ID
+}
+```
 
 ## Success Metrics
 
-### User Adoption
+### Productivity Metrics
 
-- **Monthly Active Users**: Target 5,000 MAU within 6 months
-- **Agent Utilization**: 80% of projects using multiple AI agents
-- **Feature Adoption**: 70% of users using multi-agent features
-- **User Satisfaction**: 4.5+ star rating
+- **Task Completion Rate**: Target 80% weekly completion
+- **Agent Utilization**: Target 60% agent active time
+- **Time to Complete**: 30% reduction vs manual work
 
-### Performance Metrics
+### Quality Metrics
 
-- **Core Web Vitals**: All metrics in "Good" range
-- **Uptime**: 99.9% availability
-- **Error Rate**: < 0.1% error rate
-- **Support Tickets**: < 5% users requiring support
+- **Documentation Coverage**: 90% of features documented
+- **Code Review Time**: 50% reduction with AI agents
+- **Bug Detection**: 40% increase with test agents
 
-### Business Metrics
+### User Experience Metrics
 
-- **Time to Value**: Users productive with AI agents within 15 minutes
-- **CLI Migration**: 30% of CLI users adopt UI with multi-agent features
-- **AI Integration**: Support for 8+ AI providers
-- **Community Growth**: 1,000+ GitHub stars
+- **Time to First Task**: < 2 minutes for new users
+- **Daily Active Usage**: 90% of work days
+- **Feature Adoption**: 80% using AI agents within first week
 
-## Risk Assessment
+## Migration Strategy
 
-### Technical Risks
+### From Team Mode to Individual Mode
 
-- **CLI Compatibility**: Breaking changes in task-master CLI
-- **Performance**: Large dataset performance degradation
-- **Browser Support**: Cross-browser compatibility issues
-- **API Limits**: AI provider rate limiting
+1. **Data Migration**: Export team project to individual format
+2. **Permission Simplification**: Remove team permissions
+3. **UI Transition**: Guided tour of individual mode features
+4. **Agent Onboarding**: Interactive agent selection wizard
 
-### Mitigation Strategies
+### Progressive Enhancement
 
-- **Version Pinning**: Lock to specific CLI versions
-- **Virtualization**: Implement virtual scrolling for large datasets
-- **Progressive Enhancement**: Graceful degradation for older browsers
-- **Rate Limiting**: Intelligent request batching and caching
+1. **Phase 1**: Core task management and basic AI agents
+2. **Phase 2**: Advanced agent capabilities and automation
+3. **Phase 3**: Full documentation system and integrations
+4. **Phase 4**: Advanced analytics and insights
 
-## Timeline and Milestones
+## Security & Privacy
 
-### Phase 1: Core Interface (Months 1-3)
+### Data Protection
 
-- Basic task management interface implementation
-- Claude Task Master CLI integration
-- Responsive design and accessibility
-- AI model configuration UI
+- Local-first architecture with optional cloud sync
+- Encrypted storage for sensitive project data
+- Agent API keys stored securely
+- No telemetry without explicit consent
 
-### Phase 2: Multi-Agent Features (Months 4-6)
+### AI Agent Security
 
-- Multi-agent AI coordination system
-- Agent performance analytics dashboard
-- Intelligent task distribution algorithms
-- Agent specialization framework
+- Sandboxed agent execution environment
+- Rate limiting for agent API calls
+- Audit logs for all agent actions
+- Configurable agent permissions
 
-### Phase 3: Advanced AI Features (Months 7-9)
+## Future Enhancements
 
-- Cross-agent communication protocols
-- Advanced agent orchestration
-- AI agent learning and adaptation
-- Custom agent behavior configuration
+### Planned Features
 
-### Phase 4: AI Enhancements (Months 10-12)
+1. **Voice Commands**: Natural language task creation
+2. **Mobile App**: Native iOS/Android applications
+3. **Plugin System**: Custom agent development
+4. **Time Tracking**: Automatic time tracking with reports
+5. **Invoice Generation**: Freelancer billing integration
 
-- AI-powered task suggestions
-- Natural language task creation
-- Intelligent project insights
-- Predictive task completion
+### Integration Possibilities
+
+- GitHub/GitLab integration
+- Calendar synchronization
+- Email task creation
+- Slack notifications
+- CI/CD pipeline integration
 
 ## Conclusion
 
-Claude Task Master UI represents a significant leap forward in AI-powered task management interfaces. By combining the robust functionality of the CLI tool with modern web application design principles and multi-agent AI collaboration, this product will democratize access to sophisticated AI-assisted task management capabilities while maintaining the power and flexibility that advanced users require.
-
-The success of this product depends on meticulous attention to user experience, seamless integration with existing workflows, intelligent multi-agent coordination, and maintaining the high performance standards expected in modern web applications. With proper execution, Claude Task Master UI will become the definitive interface for multi-agent AI-powered project management.
+The Individual Project Management Mode represents a paradigm shift in personal productivity tools by treating AI agents as true team members. This focused, single-project approach eliminates the complexity of team management while providing powerful capabilities previously available only to large teams. By combining intuitive task management, intelligent AI assistance, and integrated documentation, this mode empowers individual developers to achieve unprecedented productivity levels.

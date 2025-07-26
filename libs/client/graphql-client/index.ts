@@ -1,107 +1,38 @@
 /**
- * GraphQL Client - Main entry point
+ * Modern GraphQL Client with Apollo Client and CodeGen
+ *
+ * This module provides a fully-typed GraphQL client using Apollo Client
+ * with automatic code generation for types and hooks.
  */
 
-// Core client functionality
+// Apollo Client exports
+export { apolloClient as client, apolloClient, cacheHelpers } from './apollo-client';
+
+// Generated types and hooks
+export * from './generated';
+
+// Enhanced hooks with better UX
+export * from './hooks';
+
+// Re-export Apollo Client utilities for convenience
 export {
-   GraphQLClient,
-   createGraphQLClient,
-   type GraphQLResponse,
-   type GraphQLClientConfig,
-} from './client';
+   useQuery,
+   useMutation,
+   useSubscription,
+   useLazyQuery,
+   gql,
+   type QueryHookOptions,
+   type MutationHookOptions,
+   type SubscriptionHookOptions,
+   type LazyQueryHookOptions,
+} from '@apollo/client';
 
-// React hooks
-export {
-   useGraphQLQuery,
-   useGraphQLMutation,
-   useLazyGraphQLQuery,
-   useGraphQLClient,
-   type UseGraphQLQueryOptions,
-   type UseGraphQLQueryResult,
-   type UseGraphQLMutationOptions,
-   type UseGraphQLMutationResult,
-} from './hooks';
+// Provider component for React apps
+export { ApolloProvider } from '@apollo/client';
+export { GraphQLProvider } from './provider';
 
-// Caching functionality
-export {
-   GraphQLCache,
-   CachedGraphQLClient,
-   defaultCache,
-   type CacheEntry,
-   type CacheOptions,
-} from './cache';
+// Error handling utilities
+export { ApolloError, isApolloError } from '@apollo/client';
 
-// Predefined operations
-export {
-   GRAPHQL_OPERATIONS,
-   TASK_OPERATIONS,
-   ISSUE_OPERATIONS,
-   USER_OPERATIONS,
-   PROJECT_OPERATIONS,
-   REFERENCE_OPERATIONS,
-   SYSTEM_OPERATIONS,
-   type TaskQueryVariables,
-   type CreateTaskVariables,
-   type UpdateTaskVariables,
-} from './operations';
-
-// Typed hooks for specific operations
-export {
-   // Task hooks
-   useTasks,
-   useTask,
-   useCreateTask,
-   useUpdateTask,
-   useDeleteTask,
-
-   // Issue hooks
-   useIssues,
-   useIssue,
-   useCreateIssue,
-   useUpdateIssue,
-   useDeleteIssue,
-
-   // User hooks
-   useUsers,
-   useUser,
-
-   // Project hooks
-   useProjects,
-   useProject,
-
-   // Reference data hooks
-   useStatuses,
-   usePriorities,
-   useLabels,
-   useTeams,
-
-   // System hooks
-   useHealthCheck,
-   useHello,
-   useCLIStatus,
-
-   // Compound hooks
-   useIssueManagement,
-   useTaskManagement,
-
-   // Real-time hooks
-   useRealtimeIssues,
-   useRealtimeTasks,
-} from './typed-hooks';
-
-// Default configured client instance
-export { createGraphQLClient as createClient } from './client';
-
-// Convenience function to create a client with caching
-import { createGraphQLClient } from './client';
-import { CachedGraphQLClient, defaultCache } from './cache';
-
-export function createCachedClient(config?: Parameters<typeof createGraphQLClient>[0]) {
-   const client = createGraphQLClient(config);
-   return new CachedGraphQLClient(client, defaultCache);
-}
-
-// Re-export for backward compatibility
-export { useIssues as useGraphQLIssues } from './typed-hooks';
-export { useUsers as useGraphQLUsers } from './typed-hooks';
-export { useProjects as useGraphQLProjects } from './typed-hooks';
+// Cache utilities
+export { InMemoryCache } from '@apollo/client';

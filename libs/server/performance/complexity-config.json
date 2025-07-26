@@ -1,0 +1,29 @@
+{
+   "development": {
+      "maximumComplexity": 1200,
+      "maximumDepth": 15,
+      "introspection": true,
+      "scalarCost": 1,
+      "objectCost": 2,
+      "listFactor": 10,
+      "depthCostFactor": 2
+   },
+   "production": {
+      "maximumComplexity": 800,
+      "maximumDepth": 12,
+      "introspection": false,
+      "scalarCost": 1,
+      "objectCost": 2,
+      "listFactor": 8,
+      "depthCostFactor": 3
+   },
+   "testing": {
+      "maximumComplexity": 2000,
+      "maximumDepth": 20,
+      "introspection": true,
+      "scalarCost": 1,
+      "objectCost": 1,
+      "listFactor": 5,
+      "depthCostFactor": 1
+   }
+}

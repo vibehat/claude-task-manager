@@ -1,5 +1,10 @@
 import { redirect } from 'next/navigation';
+import { getDefaultOrgRoute } from '@/lib/config/defaults';
 
-export default function OrgIdPage() {
-   redirect('lndev-ui/team/CORE/all');
+interface OrgIdPageProps {
+   params: { orgId: string };
+}
+
+export default function OrgIdPage({ params }: OrgIdPageProps) {
+   redirect(getDefaultOrgRoute(params.orgId));
 }

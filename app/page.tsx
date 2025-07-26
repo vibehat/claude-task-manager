@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
+import { getDefaultRoute } from '@/lib/config/defaults';
 
 export default function Home() {
-   redirect('lndev-ui/team/CORE/all');
+   redirect(getDefaultRoute());
 }

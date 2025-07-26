@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { Task, Subtask, TasksData } from '../taskmaster';
 import { CLIExecuteResponse } from '../types';
-import { GraphQLContext } from './graphql-context';
+import { GraphQLContext } from '../graphql/context';
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };

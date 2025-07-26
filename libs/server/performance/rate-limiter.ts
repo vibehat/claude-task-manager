@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
-import { getGlobalCLIValidator } from './cli-command-validator';
+import { getGlobalCLIValidator } from '../cli/cli-command-validator';
 
 // Rate limiting configuration interfaces
 export interface RateLimitRule {

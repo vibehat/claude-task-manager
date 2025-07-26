@@ -21,6 +21,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui
 import { CreateNewIssue } from './create-new-issue';
 import { ThemeToggle } from '../theme-toggle';
 import Link from 'next/link';
+import { DEFAULT_CONFIG } from '@/lib/config/defaults';
 
 export function OrgSwitcher() {
    return (
@@ -37,7 +38,9 @@ export function OrgSwitcher() {
                            LN
                         </div>
                         <div className="grid flex-1 text-left text-sm leading-tight">
-                           <span className="truncate font-semibold">lndev-ui</span>
+                           <span className="truncate font-semibold">
+                              {DEFAULT_CONFIG.DEFAULT_ORG_ID}
+                           </span>
                         </div>
                         <ChevronsUpDown className="ml-auto" />
                      </SidebarMenuButton>
@@ -55,7 +58,7 @@ export function OrgSwitcher() {
                >
                   <DropdownMenuGroup>
                      <DropdownMenuItem asChild>
-                        <Link href="/lndev-ui/settings">
+                        <Link href={`/${DEFAULT_CONFIG.DEFAULT_ORG_ID}/settings`}>
                            Settings
                            <DropdownMenuShortcut>G then S</DropdownMenuShortcut>
                         </Link>
@@ -77,7 +80,7 @@ export function OrgSwitcher() {
                               <div className="flex aspect-square size-6 items-center justify-center rounded bg-orange-500 text-sidebar-primary-foreground">
                                  LN
                               </div>
-                              lndev-ui
+                              {DEFAULT_CONFIG.DEFAULT_ORG_ID}
                            </DropdownMenuItem>
                            <DropdownMenuSeparator />
                            <DropdownMenuItem>Create or join workspace</DropdownMenuItem>

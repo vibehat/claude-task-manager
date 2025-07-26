@@ -1,261 +1,157 @@
 /**
- * GraphQL Client - React hooks for data fetching
+ * Enhanced GraphQL hooks with better error handling and loading states
  */
 
-'use client';
+import { useCallback } from 'react';
+import {
+   useGetTasksQuery,
+   useGetTaskQuery,
+   useGetReadyTasksQuery,
+   useCreateTaskMutation,
+   useUpdateTaskMutation,
+   useDeleteTaskMutation,
+   useUpdateTaskStatusMutation,
+   useHealthQuery,
+   useHelloQuery,
+   type GetTasksQueryVariables,
+   type GetTaskQueryVariables,
+   type GetReadyTasksQueryVariables,
+   type CreateTaskMutationVariables,
+   type UpdateTaskMutationVariables,
+   type DeleteTaskMutationVariables,
+   type UpdateTaskStatusMutationVariables,
+} from './generated';
+import { cacheHelpers } from './apollo-client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { createGraphQLClient, GraphQLResponse } from './client';
-
-export interface UseGraphQLQueryOptions {
-   skip?: boolean;
-   pollInterval?: number;
-   errorPolicy?: 'none' | 'ignore' | 'all';
-}
-
-export interface UseGraphQLQueryResult<T> {
-   data: T | null;
-   loading: boolean;
-   error: Error | null;
-   refetch: () => Promise<void>;
-   startPolling: (pollInterval: number) => void;
-   stopPolling: () => void;
-}
-
-export interface UseGraphQLMutationOptions {
-   errorPolicy?: 'none' | 'ignore' | 'all';
-   onCompleted?: (data: any) => void;
-   onError?: (error: Error) => void;
-}
-
-export interface UseGraphQLMutationResult<T, V = Record<string, any>> {
-   mutate: (variables?: V) => Promise<T>;
-   data: T | null;
-   loading: boolean;
-   error: Error | null;
-   reset: () => void;
-}
-
-// Global client instance
-const defaultClient = createGraphQLClient();
+// Enhanced hooks with better error handling and loading states
 
 /**
- * Hook for GraphQL queries with caching and polling support
+ * Enhanced tasks query hook with automatic error handling
  */
-export function useGraphQLQuery<T = any>(
-   query: string,
-   variables?: Record<string, any>,
-   options: UseGraphQLQueryOptions = {}
-): UseGraphQLQueryResult<T> {
-   const [data, setData] = useState<T | null>(null);
-   const [loading, setLoading] = useState(!options.skip);
-   const [error, setError] = useState<Error | null>(null);
-
-   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
-   const mountedRef = useRef(true);
-
-   const executeQuery = useCallback(async () => {
-      if (options.skip || !mountedRef.current) return;
-
-      try {
-         setLoading(true);
-         setError(null);
-
-         const response: GraphQLResponse<T> = await defaultClient.query(query, variables);
-
-         if (!mountedRef.current) return;
-
-         if (response.errors && response.errors.length > 0) {
-            const error = new Error(response.errors[0].message);
-
-            if (options.errorPolicy === 'ignore') {
-               // Ignore errors but still set data if available
-               if (response.data) {
-                  setData(response.data);
-               }
-            } else if (options.errorPolicy === 'all') {
-               // Set both data and error
-               if (response.data) {
-                  setData(response.data);
-               }
-               setError(error);
-            } else {
-               // Default: only set error
-               setError(error);
-            }
-         } else {
-            setData(response.data || null);
-         }
-      } catch (err) {
-         if (!mountedRef.current) return;
-         setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-         if (mountedRef.current) {
-            setLoading(false);
-         }
-      }
-   }, [query, variables, options.skip, options.errorPolicy]);
-
-   const refetch = useCallback(async () => {
-      await executeQuery();
-   }, [executeQuery]);
-
-   const startPolling = useCallback(
-      (pollInterval: number) => {
-         if (pollIntervalRef.current) {
-            clearInterval(pollIntervalRef.current);
-         }
-
-         pollIntervalRef.current = setInterval(() => {
-            executeQuery();
-         }, pollInterval);
-      },
-      [executeQuery]
-   );
-
-   const stopPolling = useCallback(() => {
-      if (pollIntervalRef.current) {
-         clearInterval(pollIntervalRef.current);
-         pollIntervalRef.current = null;
-      }
-   }, []);
-
-   // Initial query execution
-   useEffect(() => {
-      executeQuery();
-
-      // Set up polling if specified
-      if (options.pollInterval && options.pollInterval > 0) {
-         startPolling(options.pollInterval);
-      }
-
-      return () => {
-         stopPolling();
-      };
-   }, [executeQuery, options.pollInterval, startPolling, stopPolling]);
-
-   // Cleanup on unmount
-   useEffect(() => {
-      return () => {
-         mountedRef.current = false;
-         stopPolling();
-      };
-   }, [stopPolling]);
-
-   return {
-      data,
-      loading,
-      error,
-      refetch,
-      startPolling,
-      stopPolling,
-   };
-}
-
-/**
- * Hook for GraphQL mutations
- */
-export function useGraphQLMutation<T = any, V = Record<string, any>>(
-   mutation: string,
-   options: UseGraphQLMutationOptions = {}
-): UseGraphQLMutationResult<T, V> {
-   const [data, setData] = useState<T | null>(null);
-   const [loading, setLoading] = useState(false);
-   const [error, setError] = useState<Error | null>(null);
-
-   const mutate = useCallback(
-      async (variables?: V): Promise<T> => {
-         try {
-            setLoading(true);
-            setError(null);
-
-            const response: GraphQLResponse<T> = await defaultClient.mutate(mutation, variables);
-
-            if (response.errors && response.errors.length > 0) {
-               const error = new Error(response.errors[0].message);
-
-               if (options.errorPolicy === 'ignore') {
-                  // Ignore errors but still set data if available
-                  if (response.data) {
-                     setData(response.data);
-                     options.onCompleted?.(response.data);
-                     return response.data;
-                  }
-               } else if (options.errorPolicy === 'all') {
-                  // Set both data and error
-                  if (response.data) {
-                     setData(response.data);
-                     options.onCompleted?.(response.data);
-                  }
-                  setError(error);
-                  options.onError?.(error);
-                  throw error;
-               } else {
-                  // Default: only set error
-                  setError(error);
-                  options.onError?.(error);
-                  throw error;
-               }
-            } else if (response.data) {
-               setData(response.data);
-               options.onCompleted?.(response.data);
-               return response.data;
-            }
-
-            throw new Error('No data returned from mutation');
-         } catch (err) {
-            const error = err instanceof Error ? err : new Error('Unknown error');
-            setError(error);
-            options.onError?.(error);
-            throw error;
-         } finally {
-            setLoading(false);
-         }
-      },
-      [mutation, options]
-   );
-
-   const reset = useCallback(() => {
-      setData(null);
-      setError(null);
-      setLoading(false);
-   }, []);
-
-   return {
-      mutate,
-      data,
-      loading,
-      error,
-      reset,
-   };
-}
-
-/**
- * Hook for lazy GraphQL queries (executed on demand)
- */
-export function useLazyGraphQLQuery<T = any>(
-   query: string,
-   options: UseGraphQLQueryOptions = {}
-): [(variables?: Record<string, any>) => Promise<void>, UseGraphQLQueryResult<T>] {
-   const [variables, setVariables] = useState<Record<string, any> | undefined>();
-   const [shouldSkip, setShouldSkip] = useState(true);
-
-   const queryResult = useGraphQLQuery<T>(query, variables, {
-      ...options,
-      skip: shouldSkip || options.skip,
+export function useTasks(variables?: GetTasksQueryVariables) {
+   const result = useGetTasksQuery({
+      variables,
+      errorPolicy: 'all',
+      notifyOnNetworkStatusChange: true,
    });
 
-   const executeQuery = useCallback(async (queryVariables?: Record<string, any>) => {
-      setVariables(queryVariables);
-      setShouldSkip(false);
-   }, []);
-
-   return [executeQuery, queryResult];
+   return {
+      ...result,
+      tasks: result.data?.tasks?.nodes || [],
+      connection: result.data?.tasks,
+      hasNextPage: result.data?.tasks?.pageInfo?.hasNextPage || false,
+      hasPreviousPage: result.data?.tasks?.pageInfo?.hasPreviousPage || false,
+   };
 }
 
 /**
- * Get the GraphQL client instance for direct use
+ * Enhanced single task query hook
  */
-export function useGraphQLClient() {
-   return defaultClient;
+export function useTask(taskId: string) {
+   const result = useGetTaskQuery({
+      variables: { id: taskId },
+      errorPolicy: 'all',
+      skip: !taskId,
+   });
+
+   return {
+      ...result,
+      task: result.data?.task,
+   };
+}
+
+/**
+ * Enhanced ready tasks query hook
+ */
+export function useReadyTasks(variables?: GetReadyTasksQueryVariables) {
+   const result = useGetReadyTasksQuery({
+      variables,
+      errorPolicy: 'all',
+      notifyOnNetworkStatusChange: true,
+   });
+
+   return {
+      ...result,
+      tasks: result.data?.readyTasks?.nodes || [],
+      connection: result.data?.readyTasks,
+      hasNextPage: result.data?.readyTasks?.pageInfo?.hasNextPage || false,
+      hasPreviousPage: result.data?.readyTasks?.pageInfo?.hasPreviousPage || false,
+   };
+}
+
+/**
+ * System health check hook
+ */
+export function useHealth() {
+   const result = useHealthQuery({
+      errorPolicy: 'all',
+      // Poll every 30 seconds for health status
+      pollInterval: 30000,
+   });
+
+   return {
+      ...result,
+      isHealthy: result.data?.health === 'OK',
+      health: result.data?.health,
+   };
+}
+
+/**
+ * Hello query hook for testing
+ */
+export function useHello() {
+   const result = useHelloQuery({
+      errorPolicy: 'all',
+   });
+
+   return {
+      ...result,
+      message: result.data?.hello,
+   };
+}
+
+// Utility hooks for common patterns
+
+/**
+ * Hook for managing task lists with pagination
+ */
+export function useTaskList(initialFilters?: GetTasksQueryVariables) {
+   const { data, loading, error, fetchMore, refetch, tasks, connection, hasNextPage } =
+      useTasks(initialFilters);
+
+   const loadMore = useCallback(async () => {
+      if (!hasNextPage || loading) return;
+
+      try {
+         await fetchMore({
+            variables: {
+               ...initialFilters,
+               pagination: {
+                  ...initialFilters?.pagination,
+                  after: connection?.pageInfo?.endCursor,
+               },
+            },
+         });
+      } catch (error) {
+         console.error('Error loading more tasks:', error);
+      }
+   }, [fetchMore, hasNextPage, loading, connection, initialFilters]);
+
+   const refresh = useCallback(async () => {
+      try {
+         await refetch();
+      } catch (error) {
+         console.error('Error refreshing tasks:', error);
+      }
+   }, [refetch]);
+
+   return {
+      tasks,
+      loading,
+      error,
+      hasNextPage,
+      loadMore,
+      refresh,
+      connection,
+   };
 }

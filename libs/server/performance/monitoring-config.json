@@ -1,0 +1,53 @@
+{
+   "development": {
+      "slowQueryThreshold": 2000,
+      "highMemoryThreshold": 85,
+      "highCpuThreshold": 80,
+      "lowCacheHitThreshold": 0.4,
+      "highErrorRateThreshold": 10,
+      "metricsRetentionDays": 3,
+      "alertCooldownMinutes": 5,
+      "systemMetricsInterval": 30,
+      "enableDetailedLogging": true,
+      "alerting": {
+         "enabled": true,
+         "webhookUrl": null,
+         "slackWebhook": null,
+         "emailRecipients": []
+      }
+   },
+   "production": {
+      "slowQueryThreshold": 1000,
+      "highMemoryThreshold": 75,
+      "highCpuThreshold": 70,
+      "lowCacheHitThreshold": 0.6,
+      "highErrorRateThreshold": 3,
+      "metricsRetentionDays": 7,
+      "alertCooldownMinutes": 15,
+      "systemMetricsInterval": 60,
+      "enableDetailedLogging": false,
+      "alerting": {
+         "enabled": true,
+         "webhookUrl": "${MONITORING_WEBHOOK_URL}",
+         "slackWebhook": "${SLACK_WEBHOOK_URL}",
+         "emailRecipients": ["${ALERT_EMAIL}"]
+      }
+   },
+   "testing": {
+      "slowQueryThreshold": 5000,
+      "highMemoryThreshold": 90,
+      "highCpuThreshold": 90,
+      "lowCacheHitThreshold": 0.2,
+      "highErrorRateThreshold": 20,
+      "metricsRetentionDays": 1,
+      "alertCooldownMinutes": 1,
+      "systemMetricsInterval": 10,
+      "enableDetailedLogging": true,
+      "alerting": {
+         "enabled": false,
+         "webhookUrl": null,
+         "slackWebhook": null,
+         "emailRecipients": []
+      }
+   }
+}

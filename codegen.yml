@@ -2,11 +2,11 @@
 # Generates TypeScript types from GraphQL schema for Task Master application
 
 overwrite: true
-schema: './lib/graphql/schema/schema.graphql'
+schema: './libs/server/graphql/schema/schema.graphql'
 
 generates:
-   # Generated TypeScript types for schema types
-   ./lib/types/graphql-generated.ts:
+   # Generated TypeScript types for schema types (server-side)
+   ./libs/server/types/graphql-generated.ts:
       plugins:
          - 'typescript'
          - 'typescript-resolvers'
@@ -17,7 +17,7 @@ generates:
             JSON: any
 
          # Generate resolver types with proper context
-         contextType: './graphql-context#GraphQLContext'
+         contextType: '../graphql/context#GraphQLContext'
 
          # Enable helpful type generation features
          useIndexSignature: true
@@ -45,17 +45,25 @@ generates:
          withComponent: false
          withHOC: false
 
-   # Generated types for GraphQL operations (queries, mutations)
-   ./lib/types/graphql-operations.ts:
-      documents: './lib/gql/**/*.graphql'
+   # Generated types for GraphQL operations with Apollo Client hooks (client-side)
+   ./libs/client/graphql-client/generated.ts:
+      documents: './libs/client/gql/**/*.graphql'
       plugins:
          - 'typescript'
          - 'typescript-operations'
+         - 'typescript-react-apollo'
       config:
          scalars:
             DateTime: string
             JSON: any
 
+         # Apollo Client configuration
+         withHooks: true
+         withComponent: false
+         withHOC: false
+         withMutationFn: true
+         withRefetchFn: true
+         
          # Operation result types
          operationResultSuffix: 'Result'
          dedupeOperationSuffix: true
@@ -63,7 +71,10 @@ generates:
 
          # Variable types
          variablesSuffix: 'Variables'
-         namespacedImportName: 'Types'
+         
+         # Apollo Client specific
+         apolloReactCommonImportFrom: '@apollo/client'
+         apolloReactHooksImportFrom: '@apollo/client'
 
 hooks:
    afterAllFileWrite:

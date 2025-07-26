@@ -34,6 +34,7 @@ import {
 } from '@/components/ui/sidebar';
 import { teams } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
+import { DEFAULT_CONFIG, getTeamRoute } from '@/lib/config/defaults';
 
 export function NavTeams() {
    const joinedTeams = teams.filter((t) => t.joined);
@@ -101,7 +102,7 @@ export function NavTeams() {
                         <SidebarMenuSub>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
+                                 <Link href={getTeamRoute(DEFAULT_CONFIG.DEFAULT_ORG_ID, item.id)}>
                                     <CopyMinus size={14} />
                                     <span>Issues</span>
                                  </Link>
@@ -109,7 +110,7 @@ export function NavTeams() {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
+                                 <Link href={getTeamRoute(DEFAULT_CONFIG.DEFAULT_ORG_ID, item.id)}>
                                     <RiDonutChartFill size={14} />
                                     <span>Cycles</span>
                                  </Link>
@@ -117,7 +118,7 @@ export function NavTeams() {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/projects">
+                                 <Link href={`/${DEFAULT_CONFIG.DEFAULT_ORG_ID}/projects`}>
                                     <Box size={14} />
                                     <span>Projects</span>
                                  </Link>
