@@ -1,0 +1,89 @@
+name: Draft A Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release type (patch, minor, major, prerelease)'
+        required: false
+        default: 'patch'
+      preid:
+        description: 'Prerelease identifier (beta, rc) - only used with prerelease type'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout latest master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run release script
+        run: |
+          chmod +x scripts/release.sh
+          if [[ "${{ github.event.inputs.release_type }}" == "prerelease" ]]; then
+            if [[ -z "${{ github.event.inputs.preid }}" ]]; then
+              echo "❌ Prerelease type requires a preid (beta, rc, etc.)"
+              exit 1
+            fi
+            ./scripts/release.sh ${{ github.event.inputs.release_type }} ${{ github.event.inputs.preid }}
+          else
+            ./scripts/release.sh ${{ github.event.inputs.release_type }}
+          fi
+
+      - name: Read version
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            chore: bump version to ${{ steps.version.outputs.version }}
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          base: master
+          branch: release-v${{ steps.version.outputs.version }}
+          delete-branch: false
+          title: "🚀 Release v${{ steps.version.outputs.version }}"
+          body: |
+            ## Release v${{ steps.version.outputs.version }}
+
+            This PR contains the version bump for release v${{ steps.version.outputs.version }}.
+
+            **Release Type:** ${{ github.event.inputs.release_type }}
+            ${{ github.event.inputs.preid != '' && format('**Prerelease ID:** {0}', github.event.inputs.preid) || '' }}
+
+            ### Changes
+            - Bumped version to ${{ steps.version.outputs.version }}
+            - Updated package.json and VERSION file
+
+            Please review and merge to complete the release process.
+          draft: false
+          add-paths: |
+            package.json
+            VERSION
+
+      - name: Summary
+        run: |
+          echo "✅ Release draft created successfully"
+          echo "📋 PR Title: 🚀 Release v${{ steps.version.outputs.version }}"
+          echo "🔗 PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
+          echo "📝 Please review and merge the PR to complete the release process"

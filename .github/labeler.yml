@@ -1,0 +1,266 @@
+# =====================
+# 📍 Scope Labels
+# =====================
+
+API:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/api/**'
+
+Gateway:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/gateway/**'
+
+Packages:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'packages/**'
+
+Infrastructure:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'infra/**'
+
+Config:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.config.*'
+    - '**/*.env'
+    - 'apps/**/config/**'
+
+Docs:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'docs/**'
+    - '**/*.md'
+    - 'README.md'
+
+Tests:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.spec.ts'
+    - '**/__tests__/**'
+
+Dependencies:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'package.json'
+    - 'yarn.lock'
+
+# =====================
+# 🎯 Change Type Labels
+# =====================
+
+Feature:
+- head-branch:
+  - '^feat'
+  - '.*feature.*'
+
+Fix:
+- head-branch:
+  - '^fix'
+  - '.*bug.*'
+
+Refactor:
+- head-branch:
+  - '^refactor'
+  - '.*refactor.*'
+
+Chore:
+- head-branch:
+  - '^chore'
+  - '.*chore.*'
+
+# =====================
+# 🚨 Risk / Deployment Labels
+# =====================
+
+Migration:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/migrations/**'
+    - '**/migrate.ts'
+    - '**/*.migration.ts'
+
+Event:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/events/**'
+    - '**/*.event.ts'
+
+Scheduler:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/schedulers/**'
+    - '**/*.scheduler.ts'
+
+Subscriber:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/subscribers/**'
+    - '**/*.subscriber.ts'
+
+Schema:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/schemas/**'
+    - '**/*.schema.ts'
+
+Security:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/auth/**'
+    - '**/guard/**'
+    - '**/authz/**'
+
+Breaking:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'BREAKING_CHANGE.md'
+- head-branch:
+  - '.*breaking.*'
+  - '^breaking'
+
+# =====================
+# ⭐ Feature Labels
+# =====================
+
+CICD:
+- changed-files:
+  - any-glob-to-any-file:
+    - '.github/**'
+
+Scripts:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'scripts/**'
+
+UI/UX:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'packages/ui/**'
+
+Features:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/**'
+
+Services:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/services/**'
+
+GraphQL:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/graphql/**'
+
+Hooks:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/hooks/**'
+
+Components:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/components/**'
+
+Views:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/views/**'
+
+Stores:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/stores/**'
+
+Storybook:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.stories.ts'
+    - '**/*.stories.tsx'
+
+account:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/account/**'
+
+buy-rates:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/buy-rates/**'
+
+client-settlements:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/client-settlements/**'
+
+export-matrix:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/export-matrix/**'
+
+global-modal:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/global-modal/**'
+
+integration:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/integration/**'
+
+maintenance:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/maintenance/**'
+
+manage-subscription:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/manage-subscription/**'
+
+matrix:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/matrix/**'
+
+sell-rates:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/sell-rates/**'
+
+subscription:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'apps/frontend/src/features/subscription/**'
+
+# =====================
+# 🔁 Git Flow Labels
+# =====================
+
+MergeBack:
+- head-branch:
+  - '^sync'
+  - 'sync-.*'
+  - 'merge-.*'
+
+Release:
+- base-branch:
+  - '^master$'
+
+WIP:
+- head-branch:
+  - '^wip'
+  - '.*wip.*'
+
+Beta:
+- head-branch:
+  - '.*-beta.*'
+
+# =====================
+# 🧪 Catch-All
+# =====================
+

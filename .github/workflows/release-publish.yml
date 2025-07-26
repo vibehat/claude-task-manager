@@ -1,0 +1,65 @@
+name: Publish A Release
+
+on:
+  workflow_dispatch:  # still allows manual runs
+  push:
+    branches:
+      - master
+      - develop
+    paths:
+      - VERSION  # only trigger when VERSION file changes
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Read version and branch
+        id: get-version
+        run: |
+          version=$(cat VERSION)
+          echo "version=v$version" >> "$GITHUB_OUTPUT"
+          echo "branch=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate Release Notes (master branch, non-beta only)
+        if: github.ref_name == 'master' && !contains(steps.get-version.outputs.version, '-beta')
+        run: |
+          node ./scripts/release-notes.js
+
+      - name: Read RELEASE_NOTES.md content (master branch, non-beta only)
+        if: github.ref_name == 'master' && !contains(steps.get-version.outputs.version, '-beta')
+        id: notes
+        run: |
+          content=$(cat RELEASE_NOTES.md)
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$content" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create Git Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.get-version.outputs.version }}
+          git push origin ${{ steps.get-version.outputs.version }}
+
+      - name: Create GitHub Release (master branch, non-beta only)
+        if: github.ref_name == 'master' && !contains(steps.get-version.outputs.version, '-beta')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          name: Release ${{ steps.get-version.outputs.version }}
+          body: ${{ env.RELEASE_BODY }}
+          prerelease: false

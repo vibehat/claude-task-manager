@@ -1,0 +1,35 @@
+name: Delete merged branches
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # Every Monday at 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Delete merged branches
+        run: |
+          gh repo set-default $GITHUB_REPOSITORY
+          gh api repos/${{ github.repository }}/branches --paginate --jq '.[].name' | while read branch; do
+            if [[ "$branch" == "master" || "$branch" == "develop" || "$branch" == "dev" ]]; then
+              continue
+            fi
+
+            merged=$(gh pr list --head "$branch" --state merged --json number --jq 'length')
+            if [[ "$merged" -gt 0 ]]; then
+              echo "Deleting merged branch: $branch"
+              gh api -X DELETE repos/${{ github.repository }}/git/refs/heads/$branch
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

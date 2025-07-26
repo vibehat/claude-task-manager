@@ -1,0 +1,152 @@
+name: Claude Task Issuer
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_title:
+        description: "Title for the task (e.g., 'Add user authentication')"
+        required: false
+        type: string
+      task_description:
+        description: "Describe the task Claude should execute"
+        required: false
+        type: string
+      jira_url:
+        description: "Jira ticket URL (alternative to manual task title/description)"
+        required: false
+        type: string
+      panel_title:
+        description: "Optional: Specific panel title to extract from Jira ticket"
+        required: false
+        type: string
+      template:
+        description: "Task template to use (default, feature, bugfix, refactor)"
+        required: false
+        type: choice
+        options:
+          - default
+          - feature
+          - bugfix
+          - refactor
+        default: "default"
+      branch_name:
+        description: "Full branch name (e.g., feat-user-auth, feature-dashboard)"
+        required: false
+        type: string
+        default: "chore-claude-task"
+
+jobs:
+  create-task:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Validate inputs
+        run: |
+          if [ -z "${{ github.event.inputs.jira_url }}" ] && [ -z "${{ github.event.inputs.task_title }}" ]; then
+            echo "Error: Either 'jira_url' or both 'task_title' and 'task_description' must be provided"
+            exit 1
+          fi
+          if [ -z "${{ github.event.inputs.jira_url }}" ] && [ -z "${{ github.event.inputs.task_description }}" ]; then
+            echo "Error: When using manual input, both 'task_title' and 'task_description' are required"
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Generate unique branch name
+        id: branch
+        run: |
+          BRANCH_NAME="${{ github.event.inputs.branch_name }}-${{ github.run_id }}"
+          echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          # Delete branch if it exists
+          git push origin --delete "$BRANCH_NAME" 2>/dev/null || true
+          git branch -D "$BRANCH_NAME" 2>/dev/null || true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Create task.md file
+        run: |
+          # Set environment variables for Jira authentication if using Jira
+          if [ -n "${{ github.event.inputs.jira_url }}" ]; then
+            export JIRA_EMAIL="${{ secrets.JIRA_EMAIL }}"
+            export JIRA_API_TOKEN="${{ secrets.JIRA_API_TOKEN }}"
+            export JIRA_PAT="${{ secrets.JIRA_PAT }}"
+            export JIRA_BEARER_TOKEN="${{ secrets.JIRA_BEARER_TOKEN }}"
+          fi
+          
+          # Build the command based on inputs
+          CMD="node scripts/create-task.js"
+          
+          if [ -n "${{ github.event.inputs.jira_url }}" ]; then
+            CMD="$CMD --jira \"${{ github.event.inputs.jira_url }}\""
+            if [ -n "${{ github.event.inputs.panel_title }}" ]; then
+              CMD="$CMD --panel \"${{ github.event.inputs.panel_title }}\""
+            fi
+          else
+            CMD="$CMD --title \"${{ github.event.inputs.task_title }}\" --description \"${{ github.event.inputs.task_description }}\""
+          fi
+          
+          # Add template parameter
+          CMD="$CMD --template \"${{ github.event.inputs.template }}\""
+          
+          # Execute the command
+          eval "$CMD"
+          
+          # Extract the title from the created task.md for the PR title
+          TASK_TITLE=$(head -n 1 task.md | sed 's/^# //')
+          echo "TASK_TITLE=$TASK_TITLE" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: add task file for Claude execution"
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          branch: ${{ steps.branch.outputs.name }}
+          base: ${{ github.ref_name }}
+          delete-branch: true
+          title: "📋 Claude Planning: ${{ env.TASK_TITLE || github.event.inputs.task_title || 'Task' }}"
+          body: |
+            ## 📋 Claude Planning Task Created
+
+            This pull request contains a task for Claude to create a development plan.
+
+            ${{ github.event.inputs.jira_url && format('**Source:** [Jira Ticket]({0})', github.event.inputs.jira_url) || '' }}
+            ${{ github.event.inputs.panel_title && format('**Panel:** {0}', github.event.inputs.panel_title) || '' }}
+            **Template:** ${{ github.event.inputs.template }}
+
+            **How it works:**
+            1. This workflow (Task Issuer) creates the task.md file with instructions
+            2. Comment on this PR to ask Claude AI to execute the task
+            3. Claude will read task.md and create a comprehensive plan.md file
+            4. Developers can then follow the plan to implement the feature
+
+            **Files created:**
+            - `task.md` - Contains the task description and instructions for Claude
+            - `plan.md` - Will contain the implementation plan (created by Claude when requested)
+
+            **Next steps:**
+            - Comment on this PR with: "@claude please read the task.md file and create the plan.md as instructed"
+
+            ---
+
+            _Ready for Claude to generate the development plan when requested_
+          draft: false
+          add-paths: |
+            task.md
+
+      - name: Output PR Info
+        run: |
+          echo "✅ Claude task PR created!"
+          echo "🔗 PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
