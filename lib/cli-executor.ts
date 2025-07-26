@@ -1,5 +1,6 @@
 import { spawn, ChildProcess } from 'child_process';
 import { EventEmitter } from 'events';
+import { getGlobalErrorHandler, ErrorType, ErrorUtils, TaskMasterError } from './error-handler';
 
 // CLI command execution result interface
 export interface CLIExecutionResult {
@@ -334,6 +335,7 @@ export class TaskMasterCLIExecutor extends EventEmitter {
    private activeProcesses = new Map<string, ChildProcess>();
    private executionHistory: CLIExecutionResult[] = [];
    private readonly maxHistorySize = 100;
+   private errorHandler = getGlobalErrorHandler();
 
    constructor() {
       super();
@@ -341,6 +343,20 @@ export class TaskMasterCLIExecutor extends EventEmitter {
       // Clean up on process exit
       process.on('exit', () => {
          this.killAllProcesses();
+      });
+
+      // Setup error handler integration
+      this.setupErrorHandling();
+   }
+
+   // Setup error handling integration
+   private setupErrorHandling(): void {
+      this.errorHandler.on('errorRecovered', (error: TaskMasterError) => {
+         this.emit('errorRecovered', { error, timestamp: new Date().toISOString() });
+      });
+
+      this.errorHandler.on('errorEscalated', (error: TaskMasterError) => {
+         this.emit('errorEscalated', { error, timestamp: new Date().toISOString() });
       });
    }
 
@@ -404,94 +420,163 @@ export class TaskMasterCLIExecutor extends EventEmitter {
       }
    }
 
-   // Execute Task Master CLI command
+   // Execute Task Master CLI command with enhanced error handling
    async executeCommand(config: CLICommandConfig): Promise<CLIExecutionResult> {
       const startTime = Date.now();
       const executionId = `${config.command}-${startTime}`;
 
-      try {
-         // Validate command
-         this.validateCommand(config.command, config.args);
+      // Use retry mechanism for resilient execution
+      return await this.errorHandler.retryOperation(
+         async () => {
+            try {
+               // Validate command
+               this.validateCommand(config.command, config.args);
 
-         const commandConfig =
-            TASK_MASTER_COMMANDS[config.command as keyof typeof TASK_MASTER_COMMANDS];
-         const timeout = config.timeout || commandConfig.timeout || 30000;
+               const commandConfig =
+                  TASK_MASTER_COMMANDS[config.command as keyof typeof TASK_MASTER_COMMANDS];
+               const timeout = config.timeout || commandConfig.timeout || 30000;
 
-         this.emit('commandStart', { command: config.command, args: config.args });
+               this.emit('commandStart', { command: config.command, args: config.args });
 
-         const result = await this.spawnProcess(
-            {
-               ...config,
-               timeout,
-            },
-            executionId
-         );
+               const result = await this.spawnProcess(
+                  {
+                     ...config,
+                     timeout,
+                  },
+                  executionId
+               );
 
-         // Parse output if configured
-         let parsedOutput = null;
-         let summary = '';
+               // Parse output if configured
+               let parsedOutput = null;
+               let summary = '';
 
-         if (config.parseOutput ?? commandConfig.parseOutput) {
-            if (config.command === 'list') {
-               parsedOutput = OutputParser.parseTaskList(result.stdout);
-            } else if (config.command === 'show') {
-               parsedOutput = OutputParser.parseTaskShow(result.stdout);
-            } else {
-               parsedOutput = OutputParser.parseGeneric(result.stdout);
+               try {
+                  if (config.parseOutput ?? commandConfig.parseOutput) {
+                     if (config.command === 'list') {
+                        parsedOutput = OutputParser.parseTaskList(result.stdout);
+                     } else if (config.command === 'show') {
+                        parsedOutput = OutputParser.parseTaskShow(result.stdout);
+                     } else {
+                        parsedOutput = OutputParser.parseGeneric(result.stdout);
+                     }
+
+                     summary = OutputParser.generateSummary(config.command, result.stdout);
+                  }
+               } catch (parseError) {
+                  // Create parsing error but don't fail the command
+                  const parsingError = this.errorHandler.createError(
+                     ErrorType.JSON_PARSE_ERROR,
+                     `Failed to parse command output: ${parseError.message}`,
+                     { command: config.command, output: result.stdout },
+                     parseError as Error
+                  );
+
+                  await this.errorHandler.handleError(parsingError, true);
+                  // Continue with unparsed output
+               }
+
+               const executionResult: CLIExecutionResult = {
+                  success: result.exitCode === 0,
+                  command: `task-master ${config.command} ${config.args.join(' ')}`,
+                  output: {
+                     stdout: result.stdout,
+                     stderr: result.stderr,
+                     parsed: parsedOutput,
+                     summary,
+                  },
+                  exitCode: result.exitCode,
+                  executionTime: Date.now() - startTime,
+                  timestamp: new Date().toISOString(),
+                  metadata: result.metadata,
+               };
+
+               // Add to history
+               this.addToHistory(executionResult);
+
+               this.emit('commandComplete', executionResult);
+
+               if (result.exitCode !== 0) {
+                  // Create structured CLI execution error
+                  const cliError = this.errorHandler.createError(
+                     this.getErrorTypeFromExitCode(result.exitCode),
+                     `Command failed with exit code ${result.exitCode}`,
+                     {
+                        command: config.command,
+                        args: config.args,
+                        exitCode: result.exitCode,
+                        stderr: result.stderr,
+                        executionId,
+                     }
+                  );
+
+                  throw cliError;
+               }
+
+               return executionResult;
+            } catch (error) {
+               // Handle validation errors and other exceptions
+               if (error instanceof CLIValidationError) {
+                  const validationError = this.errorHandler.createError(
+                     ErrorType.CLI_INVALID_ARGUMENTS,
+                     error.message,
+                     { command: error.command, args: error.args },
+                     error
+                  );
+                  throw validationError;
+               }
+
+               // Handle TaskMaster errors (pass through)
+               if ('type' in error && 'category' in error) {
+                  throw error;
+               }
+
+               // Convert generic errors
+               const genericError = this.errorHandler.createError(
+                  ErrorType.CLI_EXECUTION_FAILED,
+                  error.message || 'Unknown CLI execution error',
+                  { command: config.command, args: config.args, executionId },
+                  error as Error
+               );
+
+               throw genericError;
+            } finally {
+               this.activeProcesses.delete(executionId);
             }
-
-            summary = OutputParser.generateSummary(config.command, result.stdout);
+         },
+         {
+            command: config.command,
+            args: config.args,
+            executionId,
+            timeout: config.timeout,
+         },
+         {
+            maxAttempts: 3,
+            baseDelay: 1000,
+            maxDelay: 10000,
+            retryableErrors: [
+               ErrorType.CLI_TIMEOUT,
+               ErrorType.NETWORK_TIMEOUT,
+               ErrorType.CLI_EXECUTION_FAILED,
+            ],
          }
+      );
+   }
 
-         const executionResult: CLIExecutionResult = {
-            success: result.exitCode === 0,
-            command: `task-master ${config.command} ${config.args.join(' ')}`,
-            output: {
-               stdout: result.stdout,
-               stderr: result.stderr,
-               parsed: parsedOutput,
-               summary,
-            },
-            exitCode: result.exitCode,
-            executionTime: Date.now() - startTime,
-            timestamp: new Date().toISOString(),
-            metadata: result.metadata,
-         };
-
-         // Add to history
-         this.addToHistory(executionResult);
-
-         this.emit('commandComplete', executionResult);
-
-         if (result.exitCode !== 0) {
-            throw new CLIExecutionError(
-               `Command failed with exit code ${result.exitCode}`,
-               executionResult.command,
-               result.exitCode,
-               { stdout: result.stdout, stderr: result.stderr }
-            );
-         }
-
-         return executionResult;
-      } catch (error) {
-         const executionResult: CLIExecutionResult = {
-            success: false,
-            command: `task-master ${config.command} ${config.args.join(' ')}`,
-            output: {
-               stdout: '',
-               stderr: error.message,
-            },
-            exitCode: -1,
-            executionTime: Date.now() - startTime,
-            timestamp: new Date().toISOString(),
-         };
-
-         this.addToHistory(executionResult);
-         this.emit('commandError', { error, result: executionResult });
-
-         throw error;
-      } finally {
-         this.activeProcesses.delete(executionId);
+   // Map exit codes to error types
+   private getErrorTypeFromExitCode(exitCode: number): ErrorType {
+      switch (exitCode) {
+         case 1:
+            return ErrorType.CLI_EXECUTION_FAILED;
+         case 2:
+            return ErrorType.CLI_INVALID_ARGUMENTS;
+         case 126:
+            return ErrorType.CLI_PERMISSION_DENIED;
+         case 127:
+            return ErrorType.CLI_COMMAND_NOT_FOUND;
+         case 130:
+            return ErrorType.CLI_TIMEOUT;
+         default:
+            return ErrorType.CLI_EXECUTION_FAILED;
       }
    }
 
@@ -586,10 +671,33 @@ export class TaskMasterCLIExecutor extends EventEmitter {
             }
          });
 
-         // Handle process errors
+         // Handle process errors with enhanced error handling
          child.on('error', (error) => {
             clearTimeout(timeout);
-            reject(error);
+
+            // Create appropriate TaskMaster error
+            let errorType = ErrorType.CLI_EXECUTION_FAILED;
+            if (error.message.includes('ENOENT')) {
+               errorType = ErrorType.CLI_COMMAND_NOT_FOUND;
+            } else if (error.message.includes('EACCES')) {
+               errorType = ErrorType.CLI_PERMISSION_DENIED;
+            } else if (error.message.includes('ETIMEOUT')) {
+               errorType = ErrorType.CLI_TIMEOUT;
+            }
+
+            const taskMasterError = this.errorHandler.createError(
+               errorType,
+               `Process error: ${error.message}`,
+               {
+                  command: config.command,
+                  args: config.args,
+                  executionId,
+                  processError: error.message,
+               },
+               error
+            );
+
+            reject(taskMasterError);
          });
       });
    }
