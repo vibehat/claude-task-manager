@@ -1,0 +1,53 @@
+{
+	"meta": {
+		"generatedAt": "2025-07-26T01:10:51.871Z",
+		"tasksAnalyzed": 5,
+		"totalTasks": 10,
+		"analysisCount": 5,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 2,
+			"taskTitle": "Implement Task Master CLI Integration Layer",
+			"complexityScore": 9,
+			"recommendedSubtasks": 12,
+			"expansionPrompt": "Break down the CLI integration into granular implementation steps covering API endpoints, file system operations, WebSocket integration, security measures, and error handling with specific technical requirements for each component.",
+			"reasoning": "Extremely complex task involving multiple technologies (Node.js, WebSockets, file system, child processes, security). Already has 10 subtasks but needs 2 more for comprehensive testing integration and documentation. Critical path item with high technical risk."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implement AI Provider Configuration System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Create detailed subtasks for each AI provider integration, secure storage implementation, UI components for configuration, and comprehensive testing across all supported providers.",
+			"reasoning": "High complexity due to multiple AI provider APIs, security requirements for API key storage, and need for robust error handling. Requires deep integration with various AI services and secure credential management."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Develop Multi-Agent Management System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Break down into agent lifecycle management, task distribution algorithms, inter-agent communication protocols, conflict resolution mechanisms, and real-time monitoring systems with specific implementation details.",
+			"reasoning": "Very high complexity involving distributed systems concepts, real-time coordination, and complex algorithmic work for task distribution. Requires sophisticated state management and coordination logic."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Build PRD Parsing and Project Setup Interface",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Create subtasks for file upload handling, AI parsing integration, project wizard flow, template management, and task generation preview with validation steps.",
+			"reasoning": "Moderate-high complexity involving file handling, AI integration, and multi-step wizard UI. Requires careful UX design and robust file processing capabilities."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Implement Real-time Collaboration Features",
+			"complexityScore": 8,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Break down into WebSocket infrastructure, operational transforms for collaborative editing, presence system, activity feeds, notification system, and conflict resolution with real-time synchronization.",
+			"reasoning": "High complexity due to real-time synchronization challenges, operational transforms for collaborative editing, and need for robust conflict resolution. Similar to building features found in Google Docs or Figma."
+		}
+	]
+}

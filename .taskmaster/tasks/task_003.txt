@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Build Core UI Component Library
+# Status: done
+# Dependencies: 1
+# Priority: medium
+# Description: Develop reusable UI components using shadcn/ui and Radix UI with consistent styling and accessibility
+# Details:
+Implement core components: Button, Input, Card, Modal, Dropdown, Table, Form controls. Create task-specific components: TaskCard, TaskList, TaskForm, PriorityBadge, StatusBadge. Implement dark/light theme support with CSS variables. Ensure WCAG 2.1 AA compliance with proper ARIA attributes, keyboard navigation, and focus management. Use Inter font family throughout.
+
+# Test Strategy:
+Component testing with Jest and React Testing Library. Accessibility testing with axe-core. Visual regression testing with Chromatic. Test keyboard navigation and screen reader compatibility.
