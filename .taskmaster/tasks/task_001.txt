@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Setup Next.js 15 Project Foundation
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the Next.js 15 project with App Router, TypeScript, Tailwind CSS 4, and essential development tools
+# Details:
+Create Next.js 15 project using `npx create-next-app@latest` with TypeScript and App Router. Configure Tailwind CSS 4, ESLint, Prettier, and TypeScript strict mode. Set up project structure with app/, components/, lib/, and types/ directories. Install shadcn/ui and Radix UI dependencies. Configure environment variables structure for API keys.
+
+# Test Strategy:
+Verify project builds successfully, TypeScript compiles without errors, Tailwind classes work, and all linting rules pass. Test hot reload functionality.
