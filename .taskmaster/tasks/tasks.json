@@ -16,7 +16,7 @@
         "id": 2,
         "title": "Implement Task Master CLI Integration Layer",
         "description": "Create comprehensive Node.js integration layer with Next.js API routes to interface with .taskmaster directory structure and execute CLI commands programmatically",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           1
         ],
@@ -28,7 +28,7 @@
             "id": 1,
             "title": "Create Next.js API Routes Architecture",
             "description": "Implement /api/tasks, /api/cli-execute, and /api/file-watch endpoints with proper request/response handling",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Build API route structure with TypeScript, implement request validation, error handling middleware, and response formatting. Set up proper HTTP methods and status codes.",
             "testStrategy": ""
@@ -228,7 +228,7 @@
     ],
     "metadata": {
       "created": "2025-07-26T00:47:21.699Z",
-      "updated": "2025-07-26T00:54:53.810Z",
+      "updated": "2025-07-26T01:33:13.568Z",
       "description": "Tasks for master context"
     }
   }
