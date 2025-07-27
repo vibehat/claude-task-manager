@@ -3,7 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../libs/server/generated/prisma"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../libs/server/graphql/generated"
 }
 
 datasource db {
@@ -144,8 +148,8 @@ model User {
   name        String
   email       String    @unique
   avatarUrl   String?
-  status      UserStatus @default(OFFLINE)
-  role        UserRole   @default(MEMBER)
+  status      String @default("OFFLINE") // UserStatus: ONLINE, OFFLINE, AWAY
+  role        String @default("MEMBER") // UserRole: ADMIN, MEMBER, GUEST
   joinedDate  DateTime
   teamIds     String     @default("[]") // JSON array of team IDs for backwards compatibility
 
@@ -171,7 +175,7 @@ model Project {
   icon           String?       // Icon identifier from Lucide or other icon sets
   percentComplete Int          @default(0) // Progress percentage (0-100)
   startDate      DateTime?
-  health         ProjectHealth @default(ON_TRACK)
+  health         String @default("ON_TRACK") // ProjectHealth: NO_UPDATE, OFF_TRACK, ON_TRACK, AT_RISK
   leadId         String?
 
   // Relationships
@@ -254,7 +258,7 @@ model Issue {
   // Task Master integration
   taskId      Int?        // Reference to Task
   subtaskId   String?     // Reference to Subtask
-  issueType   IssueType
+  issueType   String // IssueType: TASK, SUBTASK
 
   // Parent issue for sub-issues
   parentIssueId String?
@@ -360,27 +364,5 @@ model TeamProject {
   @@map("team_projects")
 }
 
-// Enums for Issue model
-enum IssueType {
-  TASK
-  SUBTASK
-}
-
-enum UserStatus {
-  ONLINE
-  OFFLINE
-  AWAY
-}
-
-enum UserRole {
-  ADMIN
-  MEMBER
-  GUEST
-}
-
-enum ProjectHealth {
-  NO_UPDATE
-  OFF_TRACK
-  ON_TRACK
-  AT_RISK
-}
+// Note: SQLite doesn't support enums, so we use strings with comments above
+// Enum values are documented in the field comments above

@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
-import { getGlobalTaskCache } from '../performance/performance-cache';
 
 // Pagination configuration interfaces
 export interface PaginationConfig {
@@ -209,7 +208,7 @@ const DEFAULT_CONFIGS: Record<string, PaginationConfig> = {
 // Main pagination manager class
 export class PaginationManager<T = any> {
    private config: PaginationConfig;
-   private cache = getGlobalTaskCache();
+   private cache: any = null; // Cache disabled due to removed performance module
    private errorHandler = getGlobalErrorHandler();
    private dataSource: string;
    private lastQuery: PaginationRequest | null = null;
@@ -243,23 +242,23 @@ export class PaginationManager<T = any> {
          // Generate cache key
          const cacheKey = this.generateCacheKey(normalizedRequest);
 
-         // Check cache if enabled
-         if (this.config.enableCaching && this.config.cacheTime > 0) {
-            const cachedResult = await this.cache.get<PaginationResponse<T>>(cacheKey);
-            if (cachedResult.hit && cachedResult.value) {
-               // Update metadata for cache hit
-               const response = cachedResult.value;
-               if (response.metadata) {
-                  response.metadata.cacheHit = true;
-                  response.metadata.loadTime = Date.now() - startTime;
-               }
+         // Cache disabled due to removed performance module
+         // if (this.config.enableCaching && this.config.cacheTime > 0) {
+         //    const cachedResult = await this.cache.get<PaginationResponse<T>>(cacheKey);
+         //    if (cachedResult.hit && cachedResult.value) {
+         //       // Update metadata for cache hit
+         //       const response = cachedResult.value;
+         //       if (response.metadata) {
+         //          response.metadata.cacheHit = true;
+         //          response.metadata.loadTime = Date.now() - startTime;
+         //       }
 
-               // Preload adjacent pages in background
-               this.preloadAdjacentPages(normalizedRequest, dataProvider);
+         //       // Preload adjacent pages in background
+         //       this.preloadAdjacentPages(normalizedRequest, dataProvider);
 
-               return response;
-            }
-         }
+         //       return response;
+         //    }
+         // }
 
          // Fetch data from provider
          const queryStartTime = Date.now();
@@ -280,10 +279,10 @@ export class PaginationManager<T = any> {
             }
          );
 
-         // Cache result if enabled
-         if (this.config.enableCaching && this.config.cacheTime > 0) {
-            await this.cache.set(cacheKey, response, this.config.cacheTime);
-         }
+         // Cache disabled due to removed performance module
+         // if (this.config.enableCaching && this.config.cacheTime > 0) {
+         //    await this.cache.set(cacheKey, response, this.config.cacheTime);
+         // }
 
          // Store last query for preloading
          this.lastQuery = normalizedRequest;
@@ -527,19 +526,19 @@ export class PaginationManager<T = any> {
                const nextPageRequest = { ...request, page: request.page + i };
                const cacheKey = this.generateCacheKey(nextPageRequest);
 
-               // Only preload if not already cached
-               const cached = await this.cache.get(cacheKey);
-               if (!cached.hit) {
-                  preloadPromises.push(
-                     this.paginate(nextPageRequest, dataProvider)
-                        .then((result) => {
-                           this.preloadedPages.set(cacheKey, result);
-                        })
-                        .catch(() => {
-                           // Ignore preload errors
-                        })
-                  );
-               }
+               // Cache disabled, always preload
+               // const cached = await this.cache.get(cacheKey);
+               // if (!cached.hit) {
+               preloadPromises.push(
+                  this.paginate(nextPageRequest, dataProvider)
+                     .then((result) => {
+                        this.preloadedPages.set(cacheKey, result);
+                     })
+                     .catch(() => {
+                        // Ignore preload errors
+                     })
+               );
+               // }
             }
 
             // Preload previous pages
@@ -549,19 +548,19 @@ export class PaginationManager<T = any> {
                   const prevPageRequest = { ...request, page: prevPage };
                   const cacheKey = this.generateCacheKey(prevPageRequest);
 
-                  // Only preload if not already cached
-                  const cached = await this.cache.get(cacheKey);
-                  if (!cached.hit) {
-                     preloadPromises.push(
-                        this.paginate(prevPageRequest, dataProvider)
-                           .then((result) => {
-                              this.preloadedPages.set(cacheKey, result);
-                           })
-                           .catch(() => {
-                              // Ignore preload errors
-                           })
-                     );
-                  }
+                  // Cache disabled, always preload
+                  // const cached = await this.cache.get(cacheKey);
+                  // if (!cached.hit) {
+                  preloadPromises.push(
+                     this.paginate(prevPageRequest, dataProvider)
+                        .then((result) => {
+                           this.preloadedPages.set(cacheKey, result);
+                        })
+                        .catch(() => {
+                           // Ignore preload errors
+                        })
+                  );
+                  // }
                }
             }
 
@@ -597,8 +596,9 @@ export class PaginationManager<T = any> {
 
    // Clear cache for this data source
    async clearCache(): Promise<void> {
-      const pattern = new RegExp(`^pagination:.*${this.dataSource}`);
-      await this.cache.deleteByPattern(pattern);
+      // Cache disabled due to removed performance module
+      // const pattern = new RegExp(`^pagination:.*${this.dataSource}`);
+      // await this.cache.deleteByPattern(pattern);
       this.preloadedPages.clear();
    }
 

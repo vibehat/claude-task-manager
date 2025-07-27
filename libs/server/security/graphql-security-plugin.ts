@@ -9,7 +9,6 @@
 import type { ApolloServerPlugin, GraphQLRequestListener } from '@apollo/server';
 import type { BaseContext } from '@apollo/server';
 import type { NextRequest } from 'next/server';
-import { getGlobalRateLimiter } from '../performance/rate-limiter';
 import { getGlobalInputValidator } from '../validation/input-validation-middleware';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
 import { GraphQLError } from 'graphql';
@@ -89,7 +88,6 @@ export function createGraphQLSecurityPlugin(
    config: Partial<GraphQLSecurityConfig> = {}
 ): ApolloServerPlugin<BaseContext> {
    const finalConfig = { ...DEFAULT_SECURITY_CONFIG, ...config };
-   const rateLimiter = getGlobalRateLimiter();
    const inputValidator = getGlobalInputValidator();
    const errorHandler = getGlobalErrorHandler();
 
@@ -118,33 +116,33 @@ export function createGraphQLSecurityPlugin(
                      },
                   };
 
-                  // 1. Rate Limiting Check
-                  if (finalConfig.enableRateLimiting) {
-                     const rateLimitResult = await rateLimiter.checkRateLimit(httpRequest, {
-                        endpoint: '/api/graphql',
-                        operation: operationName || 'unknown',
-                        riskLevel: 'medium',
-                     });
+                  // 1. Rate Limiting Check (disabled due to removed performance module)
+                  // if (finalConfig.enableRateLimiting) {
+                  //    const rateLimitResult = await rateLimiter.checkRateLimit(httpRequest, {
+                  //       endpoint: '/api/graphql',
+                  //       operation: operationName || 'unknown',
+                  //       riskLevel: 'medium',
+                  //    });
 
-                     securityContext.rateLimitInfo = rateLimitResult.info;
+                  //    securityContext.rateLimitInfo = rateLimitResult.info;
 
-                     if (!rateLimitResult.allowed) {
-                        securityContext.securityFlags.blocked = true;
-                        securityContext.securityFlags.reasons.push(
-                           `Rate limit exceeded: ${rateLimitResult.error}`
-                        );
+                  //    if (!rateLimitResult.allowed) {
+                  //       securityContext.securityFlags.blocked = true;
+                  //       securityContext.securityFlags.reasons.push(
+                  //          `Rate limit exceeded: ${rateLimitResult.error}`
+                  //       );
 
-                        throw new GraphQLError(
-                           'Rate limit exceeded. Please slow down your requests.',
-                           {
-                              extensions: {
-                                 code: 'RATE_LIMITED',
-                                 rateLimitInfo: rateLimitResult.info,
-                              },
-                           }
-                        );
-                     }
-                  }
+                  //       throw new GraphQLError(
+                  //          'Rate limit exceeded. Please slow down your requests.',
+                  //          {
+                  //             extensions: {
+                  //                code: 'RATE_LIMITED',
+                  //                rateLimitInfo: rateLimitResult.info,
+                  //             },
+                  //          }
+                  //       );
+                  //    }
+                  // }
 
                   // 2. Input Validation
                   if (finalConfig.enableInputValidation && request.variables) {
@@ -218,26 +216,26 @@ export function createGraphQLSecurityPlugin(
                      securityContext.securityFlags.highRisk = true;
                      securityContext.securityFlags.reasons.push('High-risk operation detected');
 
-                     // Apply stricter rate limiting for high-risk operations
-                     if (finalConfig.enableRateLimiting) {
-                        const strictRateLimitResult = await rateLimiter.checkRateLimit(
-                           httpRequest,
-                           {
-                              endpoint: '/api/graphql',
-                              operation: operationName || 'unknown',
-                              riskLevel: 'high',
-                           }
-                        );
+                     // Apply stricter rate limiting for high-risk operations (disabled due to removed performance module)
+                     // if (finalConfig.enableRateLimiting) {
+                     //    const strictRateLimitResult = await rateLimiter.checkRateLimit(
+                     //       httpRequest,
+                     //       {
+                     //          endpoint: '/api/graphql',
+                     //          operation: operationName || 'unknown',
+                     //          riskLevel: 'high',
+                     //       }
+                     //    );
 
-                        if (!strictRateLimitResult.allowed) {
-                           throw new GraphQLError('High-risk operation rate limit exceeded.', {
-                              extensions: {
-                                 code: 'HIGH_RISK_RATE_LIMITED',
-                                 rateLimitInfo: strictRateLimitResult.info,
-                              },
-                           });
-                        }
-                     }
+                     //    if (!strictRateLimitResult.allowed) {
+                     //       throw new GraphQLError('High-risk operation rate limit exceeded.', {
+                     //          extensions: {
+                     //             code: 'HIGH_RISK_RATE_LIMITED',
+                     //             rateLimitInfo: strictRateLimitResult.info,
+                     //          },
+                     //       });
+                     //    }
+                     // }
                   }
 
                   // 5. Security Audit Logging
@@ -390,18 +388,16 @@ export interface SecurityMetrics {
  * Get security metrics for monitoring dashboard
  */
 export function getSecurityMetrics(): SecurityMetrics {
-   const rateLimiter = getGlobalRateLimiter();
    const inputValidator = getGlobalInputValidator();
 
-   const rateLimitStats = rateLimiter.getStats();
    const validationStats = inputValidator.getValidationStats();
 
    return {
-      totalRequests: rateLimitStats.totalRequests,
-      blockedRequests: rateLimitStats.blockedRequests,
+      totalRequests: 0, // Rate limiter disabled
+      blockedRequests: 0, // Rate limiter disabled
       suspiciousRequests: 0, // Would track this in production
       highRiskRequests: 0, // Would track this in production
-      rateLimitViolations: rateLimitStats.blockedRequests,
+      rateLimitViolations: 0, // Rate limiter disabled
       validationFailures: validationStats.invalidInputs,
       averageProcessingTime: validationStats.averageValidationTime,
    };

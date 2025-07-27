@@ -8,8 +8,8 @@
 
 import fs from 'fs/promises';
 import path from 'path';
-import type { Prisma } from '../../../libs/server/generated/prisma';
-import { PrismaClient } from '../../../libs/server/generated/prisma';
+import type { Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import type { TasksData, Task, Subtask } from '../types/taskmaster';
 import type { TaskMasterSyncOptions, SyncResult } from './types';
 import { TaskMasterSyncError } from './types';

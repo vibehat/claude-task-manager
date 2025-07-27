@@ -4,7 +4,7 @@
  * Provides shared functionality and Prisma integration for all resolvers
  */
 
-import { PrismaClient } from '../../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { TaskMasterDB, TaskMasterSync } from '../../taskmaster';
 import type { TaskType } from '../types/task.types';
 import type { TaskStatus as GraphQLTaskStatus } from '../types/task.types';
@@ -22,6 +22,8 @@ export class BaseResolver {
       this.taskMasterSync = new TaskMasterSync(this.prisma);
       this.context = {
          prisma: this.prisma,
+         taskMasterDB: this.taskMasterDB,
+         taskMasterSync: this.taskMasterSync,
          isAdmin: false,
          userId: null,
       };

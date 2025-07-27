@@ -1,16 +1,18 @@
-// Export TypeGraphQL schema (code-first approach)
-export { createTypeGraphQLSchema } from './schema';
-export { TaskResolver, CLIResolver, IssueResolver, SyncResolver } from './schema';
+/**
+ * GraphQL Module Entry Point
+ *
+ * Exports the main GraphQL schema and related utilities
+ */
 
-// Export PubSub and Topics
+export { createTypeGraphQLSchema } from './schema';
+export { createGraphQLContext } from './context';
 export { pubSub, Topic } from './pubsub';
 
-// Re-export types for external usage
+// Export resolvers
+export { TaskResolver, CLIResolver, IssueResolver, SyncResolver } from './schema';
+
+// Export types
 export * from './types/task.types';
 export * from './types/cli.types';
 export * from './types/issue.types';
 export * from './types/sync.types';
-
-// Re-export helper functions
-export * from './resolvers/shared/helpers';
-export { DateTime, JSON } from './resolvers/shared/scalars';

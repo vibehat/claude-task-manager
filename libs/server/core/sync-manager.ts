@@ -14,12 +14,13 @@ export interface SyncOperation {
    id: string;
    type: 'task_update' | 'task_create' | 'task_delete' | 'status_change' | 'batch_update';
    timestamp: number;
-   source: 'ui' | 'cli' | 'file';
+   source: 'ui' | 'cli' | 'file' | 'websocket';
    data: any;
    rollbackData?: any;
    status: 'pending' | 'executing' | 'completed' | 'failed' | 'rolled_back';
    retryCount: number;
    maxRetries: number;
+   metadata?: any;
 }
 
 // Conflict resolution strategies
@@ -52,6 +53,7 @@ export interface BatchOperation {
    timeout: number;
    status: 'pending' | 'executing' | 'completed' | 'failed' | 'partial';
    results: Map<string, { success: boolean; result?: any; error?: string }>;
+   metadata?: any;
 }
 
 // Sync manager events
@@ -1151,7 +1153,7 @@ export class TaskMasterSyncManager extends EventEmitter {
    async updateTaskStatus(
       taskId: string,
       status: TaskStatus,
-      source: 'ui' | 'websocket' = 'ui'
+      source: 'ui' | 'cli' | 'file' | 'websocket' = 'ui'
    ): Promise<string> {
       const operation: SyncOperation = {
          id: this.generateOperationId(),

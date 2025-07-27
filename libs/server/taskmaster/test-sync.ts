@@ -7,7 +7,7 @@
 
 import { TaskMasterSync } from './sync';
 import { TaskMasterDB } from './database';
-import { PrismaClient } from '../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 
 async function testSync() {
    const prisma = new PrismaClient();

@@ -1,10 +1,32 @@
 export * from './cli-executor-types';
 export * from './cli-command-validator';
 
+import type { EventEmitter } from 'events';
+
+// Type for CLI command config
+interface CLICommandConfig {
+   description: string;
+   args?: string[];
+   required?: string[];
+   timeout?: number;
+   parseOutput?: boolean;
+}
+
+// Type for CLI executor
+interface CLIExecutorInterface extends EventEmitter {
+   executeCommand(...args: any[]): Promise<any>;
+   getHistory(): any[];
+   getActiveProcesses(): any[];
+   getAvailableCommands(): Record<string, CLICommandConfig>;
+   killProcess(id: string): boolean;
+   clearHistory(): void;
+   getExecutionStats(): any;
+}
+
 // Server-only CLI executor exports
 // Use dynamic imports to avoid bundling Node.js modules on client
-let _cliExecutor: unknown = null;
-let _TaskMasterCLIExecutor: unknown = null;
+let _cliExecutor: CLIExecutorInterface | null = null;
+let _TaskMasterCLIExecutor: any = null;
 
 // Client-side stub implementations
 const clientStub = {
@@ -13,7 +35,7 @@ const clientStub = {
    },
    getHistory: () => [],
    getActiveProcesses: () => [],
-   getAvailableCommands: () => ({}),
+   getAvailableCommands: (): Record<string, CLICommandConfig> => ({}),
    killProcess: () => false,
    clearHistory: () => {},
    getExecutionStats: () => ({
@@ -24,6 +46,13 @@ const clientStub = {
       commandFrequency: {},
       recentActivity: [],
    }),
+   // EventEmitter methods
+   on: () => {},
+   off: () => {},
+   emit: () => false,
+   addListener: () => {},
+   removeListener: () => {},
+   removeAllListeners: () => {},
 };
 
 class ClientTaskMasterCLIExecutor {
@@ -49,5 +78,6 @@ const initializeServerModules = () => {
 // Initialize on first load
 initializeServerModules();
 
-export const cliExecutor = _cliExecutor || clientStub;
+export const cliExecutor: CLIExecutorInterface = (_cliExecutor ||
+   clientStub) as CLIExecutorInterface;
 export const TaskMasterCLIExecutor = _TaskMasterCLIExecutor || ClientTaskMasterCLIExecutor;

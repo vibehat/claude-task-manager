@@ -1,4 +1,4 @@
-import { PrismaClient } from '../libs/server/generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

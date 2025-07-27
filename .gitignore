@@ -67,4 +67,4 @@ node_modules/
 # tasks.json
 # tasks/ 
 
-/lib/generated/prisma
+/lib/prisma/generated

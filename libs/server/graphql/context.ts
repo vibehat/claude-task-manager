@@ -4,28 +4,25 @@
  * Provides shared context for all GraphQL resolvers
  */
 
-import { PrismaClient } from '../generated/prisma';
+import { PrismaClient } from '../prisma/generated';
 import { TaskMasterDB, TaskMasterSync } from '../taskmaster';
-import type { DataLoaders } from '../performance/dataloaders';
-import { createDataLoaders } from '../performance/dataloaders';
 
 export interface GraphQLContext {
    prisma: PrismaClient;
    taskMasterDB: TaskMasterDB;
    taskMasterSync: TaskMasterSync;
-   dataloaders: DataLoaders;
+   isAdmin?: boolean;
+   userId?: string | null;
 }
 
 export function createGraphQLContext(): GraphQLContext {
    const prisma = new PrismaClient();
    const taskMasterDB = new TaskMasterDB(prisma);
    const taskMasterSync = new TaskMasterSync(prisma);
-   const dataloaders = createDataLoaders(prisma);
 
    return {
       prisma,
       taskMasterDB,
       taskMasterSync,
-      dataloaders,
    };
 }

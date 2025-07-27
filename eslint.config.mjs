@@ -21,8 +21,9 @@ const eslintConfig = [
          'libs/client/graphql-client/generated.ts',
          'libs/server/types/graphql-generated.ts',
          'prisma/migrations/**/*',
-         'libs/server/generated/prisma/**/*',
-         'scripts/**/*'
+         'libs/server/prisma/generated/**/*',
+         'scripts/**/*',
+         '**/mock-data/**/*'
       ],
    },
    {

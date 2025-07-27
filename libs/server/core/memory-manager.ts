@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
-import { getGlobalPerformanceMonitor } from '../performance/performance-monitor';
 
 // Memory management configuration
 export interface MemoryManagerConfig {
@@ -137,7 +136,6 @@ const DEFAULT_CONFIG: MemoryManagerConfig = {
 export class MemoryManager extends EventEmitter {
    private config: MemoryManagerConfig;
    private errorHandler = getGlobalErrorHandler();
-   private performanceMonitor = getGlobalPerformanceMonitor();
 
    // Monitoring intervals
    private gcMonitorInterval: NodeJS.Timeout | null = null;
@@ -267,10 +265,7 @@ export class MemoryManager extends EventEmitter {
       try {
          // Reset object if reset function provided
          if (pool.reset) {
-            const resetResult = pool.reset(obj);
-            if (resetResult !== undefined) {
-               obj = resetResult;
-            }
+            pool.reset(obj);
          }
 
          pool.available.push(obj);

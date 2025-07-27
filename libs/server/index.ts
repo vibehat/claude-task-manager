@@ -1,23 +1,35 @@
 // Server-side library exports
 
 // Core server functionality
-export * from './core';
-export * from './cli';
-export * from './taskmaster';
+export { TaskMasterSyncManager, TaskMasterFileOperations } from './core';
+export { cliExecutor, TaskMasterCLIExecutor } from './cli';
+export { TaskMasterSync } from './taskmaster';
 
 // GraphQL server
-export * from './graphql';
+export { createTypeGraphQLSchema, createGraphQLContext } from './graphql';
 
-// Services (new preferred way - replaces models)
-export * from './services';
+// Services - disabled temporarily due to type issues
+// export {
+//   TaskService,
+//   UserService,
+//   ProjectService,
+//   IssueService,
+//   LabelService,
+//   SubtaskService,
+// } from './services';
 
 // Server utilities
 export * from './security';
-export * from './performance';
 export * from './validation';
 
 // WebSocket server
 export * from './websocket-server';
 
-// Types
-export * from './types';
+// Types - specific exports to avoid conflicts
+export type {
+   TaskMasterConfig,
+   TasksData,
+   Task as TaskMasterTask,
+   TaskStatus,
+   TaskPriority,
+} from './types/taskmaster';

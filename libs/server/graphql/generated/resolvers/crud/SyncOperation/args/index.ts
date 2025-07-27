@@ -1,0 +1,15 @@
+export { AggregateSyncOperationArgs } from "./AggregateSyncOperationArgs";
+export { CreateManyAndReturnSyncOperationArgs } from "./CreateManyAndReturnSyncOperationArgs";
+export { CreateManySyncOperationArgs } from "./CreateManySyncOperationArgs";
+export { CreateOneSyncOperationArgs } from "./CreateOneSyncOperationArgs";
+export { DeleteManySyncOperationArgs } from "./DeleteManySyncOperationArgs";
+export { DeleteOneSyncOperationArgs } from "./DeleteOneSyncOperationArgs";
+export { FindFirstSyncOperationArgs } from "./FindFirstSyncOperationArgs";
+export { FindFirstSyncOperationOrThrowArgs } from "./FindFirstSyncOperationOrThrowArgs";
+export { FindManySyncOperationArgs } from "./FindManySyncOperationArgs";
+export { FindUniqueSyncOperationArgs } from "./FindUniqueSyncOperationArgs";
+export { FindUniqueSyncOperationOrThrowArgs } from "./FindUniqueSyncOperationOrThrowArgs";
+export { GroupBySyncOperationArgs } from "./GroupBySyncOperationArgs";
+export { UpdateManySyncOperationArgs } from "./UpdateManySyncOperationArgs";
+export { UpdateOneSyncOperationArgs } from "./UpdateOneSyncOperationArgs";
+export { UpsertOneSyncOperationArgs } from "./UpsertOneSyncOperationArgs";

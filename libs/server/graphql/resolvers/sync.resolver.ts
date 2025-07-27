@@ -17,6 +17,9 @@ import {
    BatchUpdateResult,
    SyncOperationPayload,
    SyncOperationSubscriptionFilter,
+   SyncOperationType,
+   SyncOperationStatus,
+   SyncState,
 } from '../types/sync.types';
 import { TaskStatus } from '../types/task.types';
 import { BaseResolver } from './base.resolver';
@@ -41,6 +44,28 @@ const taskMasterSync = new TaskMasterSync();
 
 @Resolver()
 export class SyncResolver extends BaseResolver {
+   // Helper methods to map internal types to GraphQL types
+   private mapInternalTypeToGraphQL(internalType: string): SyncOperationType {
+      const typeMap: Record<string, SyncOperationType> = {
+         task_update: SyncOperationType.TASK_UPDATE,
+         task_create: SyncOperationType.TASK_CREATE,
+         task_delete: SyncOperationType.TASK_DELETE,
+         status_change: SyncOperationType.STATUS_CHANGE,
+         batch_update: SyncOperationType.BATCH_UPDATE,
+      };
+      return typeMap[internalType] || SyncOperationType.TASK_UPDATE;
+   }
+
+   private mapInternalStatusToGraphQL(internalStatus: string): SyncOperationStatus {
+      const statusMap: Record<string, SyncOperationStatus> = {
+         pending: SyncOperationStatus.PENDING,
+         executing: SyncOperationStatus.EXECUTING,
+         completed: SyncOperationStatus.COMPLETED,
+         failed: SyncOperationStatus.FAILED,
+         rolled_back: SyncOperationStatus.CANCELLED,
+      };
+      return statusMap[internalStatus] || SyncOperationStatus.PENDING;
+   }
    @Query(() => SyncStatus)
    async syncStatus(): Promise<SyncStatus> {
       return this.logPerformance('syncStatus', async () => {
@@ -52,16 +77,35 @@ export class SyncResolver extends BaseResolver {
             const pendingOperations = status.operations.filter((op) => op.status === 'pending');
 
             return {
-               state: status.state,
+               state:
+                  status.state === 'syncing'
+                     ? SyncState.SYNCING
+                     : status.state === 'idle'
+                       ? SyncState.IDLE
+                       : SyncState.ERROR,
                queueSize: status.queueSize,
                operations: status.operations.map((op) => ({
-                  ...op,
+                  id: op.id,
+                  type: this.mapInternalTypeToGraphQL(op.type),
+                  status: this.mapInternalStatusToGraphQL(op.status),
                   timestamp: new Date(op.timestamp),
-                  completedAt: op.completedAt ? new Date(op.completedAt) : undefined,
+                  completedAt: undefined, // Internal type doesn't have this field
+                  source: op.source,
+                  taskIds: op.data?.taskId ? [op.data.taskId] : [],
+                  metadata: op.data,
+                  retryCount: op.retryCount,
                })),
                conflicts: status.conflicts.map((conflict) => ({
-                  ...conflict,
-                  timestamp: new Date(conflict.timestamp),
+                  id: conflict.id,
+                  operationType: this.mapInternalTypeToGraphQL(conflict.operationA.type),
+                  taskId: conflict.operationA.data?.taskId || 'unknown',
+                  uiVersion: conflict.operationA.data,
+                  cliVersion: conflict.operationB.data,
+                  timestamp: new Date(
+                     Math.min(conflict.operationA.timestamp, conflict.operationB.timestamp)
+                  ),
+                  resolved: conflict.resolved,
+                  resolution: undefined, // Will be mapped separately if needed
                   resolvedAt: conflict.resolvedAt ? new Date(conflict.resolvedAt) : undefined,
                })),
                optimisticUpdatesCount: Object.keys(status.optimisticUpdates || {}).length,
@@ -76,8 +120,8 @@ export class SyncResolver extends BaseResolver {
    @Query(() => [SyncOperation])
    async syncOperations(
       @Arg('limit', () => Int, { defaultValue: 50 }) limit: number,
-      @Arg('filter', () => String, { nullable: true }) filter?: string,
-      @Arg('orderBy', () => String, { nullable: true }) orderBy?: string
+      @Arg('filter', () => String, { nullable: true }) filterStr?: string,
+      @Arg('orderBy', () => String, { nullable: true }) orderByStr?: string
    ): Promise<SyncOperation[]> {
       return this.logPerformance('syncOperations', async () => {
          try {
@@ -85,55 +129,72 @@ export class SyncResolver extends BaseResolver {
             let operations = [...status.operations];
 
             // Apply filters if provided
-            if (filter) {
-               if (filter.type) {
-                  operations = operations.filter((op) => op.type === filter.type);
-               }
-               if (filter.status) {
-                  operations = operations.filter((op) => op.status === filter.status);
-               }
-               if (filter.source) {
-                  operations = operations.filter((op) => op.source === filter.source);
-               }
-               if (filter.taskId) {
-                  operations = operations.filter(
-                     (op) => op.data && op.data.taskId === filter.taskId
-                  );
-               }
-               if (filter.startDate) {
-                  const startDate = new Date(filter.startDate).getTime();
-                  operations = operations.filter((op) => op.timestamp >= startDate);
-               }
-               if (filter.endDate) {
-                  const endDate = new Date(filter.endDate).getTime();
-                  operations = operations.filter((op) => op.timestamp <= endDate);
+            if (filterStr) {
+               try {
+                  const filter = JSON.parse(filterStr);
+                  if (filter.type) {
+                     operations = operations.filter((op) => op.type === filter.type);
+                  }
+                  if (filter.status) {
+                     operations = operations.filter((op) => op.status === filter.status);
+                  }
+                  if (filter.source) {
+                     operations = operations.filter((op) => op.source === filter.source);
+                  }
+                  if (filter.taskId) {
+                     operations = operations.filter(
+                        (op) => op.data && op.data.taskId === filter.taskId
+                     );
+                  }
+                  if (filter.startDate) {
+                     const startDate = new Date(filter.startDate).getTime();
+                     operations = operations.filter((op) => op.timestamp >= startDate);
+                  }
+                  if (filter.endDate) {
+                     const endDate = new Date(filter.endDate).getTime();
+                     operations = operations.filter((op) => op.timestamp <= endDate);
+                  }
+               } catch (error) {
+                  // Invalid JSON filter, ignore
                }
             }
 
             // Apply ordering
-            if (orderBy) {
-               const field = orderBy.field || 'timestamp';
-               const direction = orderBy.direction || 'desc';
+            if (orderByStr) {
+               try {
+                  const orderBy = JSON.parse(orderByStr);
+                  const field = orderBy.field || 'timestamp';
+                  const direction = orderBy.direction || 'desc';
 
-               operations.sort((a, b) => {
-                  const aValue = a[field as keyof typeof a];
-                  const bValue = b[field as keyof typeof b];
+                  operations.sort((a, b) => {
+                     const aValue = a[field as keyof typeof a];
+                     const bValue = b[field as keyof typeof b];
 
-                  if (direction === 'asc') {
-                     return aValue > bValue ? 1 : -1;
-                  } else {
-                     return aValue < bValue ? 1 : -1;
-                  }
-               });
+                     if (direction === 'asc') {
+                        return aValue > bValue ? 1 : -1;
+                     } else {
+                        return aValue < bValue ? 1 : -1;
+                     }
+                  });
+               } catch (error) {
+                  // Invalid JSON orderBy, use default
+                  operations.sort((a, b) => b.timestamp - a.timestamp);
+               }
             } else {
                // Default: newest first
                operations.sort((a, b) => b.timestamp - a.timestamp);
             }
 
             return operations.slice(0, limit).map((op) => ({
-               ...op,
+               id: op.id,
+               type: this.mapInternalTypeToGraphQL(op.type),
+               status: this.mapInternalStatusToGraphQL(op.status),
                timestamp: new Date(op.timestamp),
-               completedAt: op.completedAt ? new Date(op.completedAt) : undefined,
+               completedAt: undefined, // Internal type doesn't have this field
+               source: op.source,
+               taskIds: op.data?.taskId ? [op.data.taskId] : [],
+               metadata: op.data,
+               retryCount: op.retryCount,
             }));
          } catch (error) {
             this.handleError(error, 'syncOperations query');
@@ -154,9 +215,15 @@ export class SyncResolver extends BaseResolver {
             }
 
             return {
-               ...operation,
+               id: operation.id,
+               type: this.mapInternalTypeToGraphQL(operation.type),
+               status: this.mapInternalStatusToGraphQL(operation.status),
                timestamp: new Date(operation.timestamp),
-               completedAt: operation.completedAt ? new Date(operation.completedAt) : undefined,
+               completedAt: undefined, // Internal type doesn't have this field
+               source: operation.source,
+               taskIds: operation.data?.taskId ? [operation.data.taskId] : [],
+               metadata: operation.data,
+               retryCount: operation.retryCount,
             };
          } catch (error) {
             this.handleError(error, `syncOperation(${id}) query`);
@@ -188,8 +255,16 @@ export class SyncResolver extends BaseResolver {
             });
 
             return conflicts.slice(0, limit).map((conflict) => ({
-               ...conflict,
-               timestamp: new Date(conflict.timestamp),
+               id: conflict.id,
+               operationType: this.mapInternalTypeToGraphQL(conflict.operationA.type),
+               taskId: conflict.operationA.data?.taskId || 'unknown',
+               uiVersion: conflict.operationA.data,
+               cliVersion: conflict.operationB.data,
+               timestamp: new Date(
+                  Math.min(conflict.operationA.timestamp, conflict.operationB.timestamp)
+               ),
+               resolved: conflict.resolved,
+               resolution: undefined, // Will be mapped separately if needed
                resolvedAt: conflict.resolvedAt ? new Date(conflict.resolvedAt) : undefined,
             }));
          } catch (error) {
@@ -271,7 +346,12 @@ export class SyncResolver extends BaseResolver {
                issues,
                recommendations: generateHealthRecommendations(healthStatus, issues),
                uptime: process.uptime(),
-               syncState: status.state,
+               syncState:
+                  status.state === 'syncing'
+                     ? SyncState.SYNCING
+                     : status.state === 'idle'
+                       ? SyncState.IDLE
+                       : SyncState.ERROR,
             };
          } catch (error) {
             this.handleError(error, 'syncHealth query');
@@ -289,7 +369,7 @@ export class SyncResolver extends BaseResolver {
                issues: [`Health check failed: ${error.message}`],
                recommendations: ['Check sync manager status', 'Review error logs'],
                uptime: process.uptime(),
-               syncState: 'error',
+               syncState: SyncState.ERROR,
                error: error.message,
             };
          }
@@ -313,8 +393,8 @@ export class SyncResolver extends BaseResolver {
 
          return {
             id: operationId,
-            type: 'batch_sync' as any,
-            status: 'completed' as any,
+            type: SyncOperationType.BATCH_UPDATE,
+            status: SyncOperationStatus.COMPLETED,
             timestamp: new Date(),
             source: 'api',
             taskIds: [],
@@ -334,12 +414,13 @@ export class SyncResolver extends BaseResolver {
       @Arg('source', { defaultValue: 'ui' }) source: string
    ): Promise<SyncOperation> {
       try {
-         const operationId = await syncManager.updateTaskStatus(taskId, status, source);
+         const validSource = source === 'websocket' ? 'websocket' : 'ui';
+         const operationId = await syncManager.updateTaskStatus(taskId, status, validSource);
 
          return {
             id: operationId,
-            type: 'status_change' as any,
-            status: 'completed' as any,
+            type: SyncOperationType.STATUS_CHANGE,
+            status: SyncOperationStatus.COMPLETED,
             timestamp: new Date(),
             source,
             taskIds: [taskId],
@@ -360,17 +441,15 @@ export class SyncResolver extends BaseResolver {
          // Get current sync status
          const status = syncManager.getSyncStatus();
 
-         // Force stop any current sync operations
+         // Log current sync state
          if (status.state === 'syncing') {
-            console.log('Force stopping current sync operations...');
-            await syncManager.cancelAllOperations();
+            console.log('Current sync operations will be allowed to complete...');
          }
 
-         // Trigger full sync with force flag
+         // Trigger full sync
          const syncResult = await taskMasterSync.syncTasksToDatabase({
-            full: true,
-            force: true,
-            reason: description,
+            incremental: false,
+            validateIntegrity: true,
          });
 
          return syncResult?.success || true;

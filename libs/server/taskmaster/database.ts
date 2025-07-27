@@ -5,7 +5,7 @@
  * Focus on read operations and basic database interaction.
  */
 
-import { PrismaClient } from '../generated/prisma';
+import { PrismaClient } from '../prisma/generated';
 import type { TaskStatus, TaskPriority } from '../types/taskmaster';
 import { Task } from '../types/taskmaster';
 import type {

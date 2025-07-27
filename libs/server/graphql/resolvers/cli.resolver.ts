@@ -4,7 +4,7 @@
  * Code-first GraphQL resolver for CLI queries
  */
 
-import { Resolver, Query, Args, Arg } from 'type-graphql';
+import { Resolver, Query, Args } from 'type-graphql';
 import {
    CLICommand,
    CLIStatus,
@@ -107,7 +107,7 @@ export class CLIResolver extends BaseResolver {
    async cliHistory(@Args() { limit = 50, filter }: CLIHistoryArgs): Promise<CLIHistoryItem[]> {
       return this.logPerformance('cliHistory', async () => {
          try {
-            let history = cliExecutor.getHistory(limit * 2); // Get more for filtering
+            let history = cliExecutor.getHistory(); // Get all history
 
             // Apply filters if provided
             if (filter) {

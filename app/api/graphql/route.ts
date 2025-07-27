@@ -4,11 +4,7 @@ import { createTypeGraphQLSchema } from '@/libs/server/graphql';
 import { createGraphQLContext } from '@/libs/server/graphql/context';
 import type { NextRequest } from 'next/server';
 // import { responseCachePlugin } from '@apollo/server-plugin-response-cache';
-import { initializePerformanceMonitoring } from '@/libs/server/performance/performance-metrics';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from '@apollo/server-plugin-landing-page-graphql-playground';
-
-// Initialize performance monitoring
-initializePerformanceMonitoring();
 
 // Create server with lazy schema initialization to avoid top-level await
 const createServer = async () => {

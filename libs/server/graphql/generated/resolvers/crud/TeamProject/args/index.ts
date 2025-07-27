@@ -1,0 +1,15 @@
+export { AggregateTeamProjectArgs } from "./AggregateTeamProjectArgs";
+export { CreateManyAndReturnTeamProjectArgs } from "./CreateManyAndReturnTeamProjectArgs";
+export { CreateManyTeamProjectArgs } from "./CreateManyTeamProjectArgs";
+export { CreateOneTeamProjectArgs } from "./CreateOneTeamProjectArgs";
+export { DeleteManyTeamProjectArgs } from "./DeleteManyTeamProjectArgs";
+export { DeleteOneTeamProjectArgs } from "./DeleteOneTeamProjectArgs";
+export { FindFirstTeamProjectArgs } from "./FindFirstTeamProjectArgs";
+export { FindFirstTeamProjectOrThrowArgs } from "./FindFirstTeamProjectOrThrowArgs";
+export { FindManyTeamProjectArgs } from "./FindManyTeamProjectArgs";
+export { FindUniqueTeamProjectArgs } from "./FindUniqueTeamProjectArgs";
+export { FindUniqueTeamProjectOrThrowArgs } from "./FindUniqueTeamProjectOrThrowArgs";
+export { GroupByTeamProjectArgs } from "./GroupByTeamProjectArgs";
+export { UpdateManyTeamProjectArgs } from "./UpdateManyTeamProjectArgs";
+export { UpdateOneTeamProjectArgs } from "./UpdateOneTeamProjectArgs";
+export { UpsertOneTeamProjectArgs } from "./UpsertOneTeamProjectArgs";
