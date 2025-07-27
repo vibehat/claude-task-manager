@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+import { useUpdateIssue } from '@/libs/client/hooks/issues/mutations/issues/use-update-issue';
 import type { Status } from '@/mock-data/status';
 import { status as allStatus } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
@@ -26,7 +26,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
 
-   const { updateIssueStatus, filterByStatus } = useIssuesStore();
+   const [updateIssue] = useUpdateIssue();
 
    useEffect(() => {
       setValue(status.id);
@@ -37,10 +37,12 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
       setOpen(false);
 
       if (issueId) {
-         const newStatus = allStatus.find((s) => s.id === statusId);
-         if (newStatus) {
-            updateIssueStatus(issueId, newStatus);
-         }
+         updateIssue({
+            variables: {
+               id: issueId,
+               input: { status: statusId },
+            },
+         });
       }
    };
 
@@ -88,7 +90,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
                               </div>
                               {value === item.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByStatus(item.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}

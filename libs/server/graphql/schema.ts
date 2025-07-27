@@ -9,6 +9,7 @@ import { buildSchema } from 'type-graphql';
 import { DateTimeResolver } from 'graphql-scalars';
 import { GraphQLJSONObject } from 'graphql-type-json';
 import { CLIResolver } from './resolvers/cli.resolver';
+import { IssueResolver } from './resolvers/issue.resolver';
 import {
    // Import generated CRUD resolvers
    UserCrudResolver,
@@ -28,6 +29,7 @@ import {
    IssueCrudResolver,
    SyncOperationCrudResolver,
    SyncConflictCrudResolver,
+   FindManyIssueStatusResolver,
 } from './generated';
 import type { GraphQLSchema } from 'graphql';
 import { pubSub } from './pubsub';
@@ -37,6 +39,7 @@ export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
       resolvers: [
          // Custom resolvers
          CLIResolver,
+         IssueResolver,
          // Generated CRUD resolvers for supporting models
          UserCrudResolver,
          ProjectCrudResolver,
@@ -50,10 +53,11 @@ export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
          IssuePriorityCrudResolver,
          TaskDependencyCrudResolver,
          TaskMasterMetadataCrudResolver,
-         // Generated CRUD resolvers for core models (replacing custom ones)
          TaskCrudResolver,
          SubtaskCrudResolver,
          IssueCrudResolver,
+         FindManyIssueStatusResolver,
+         // Generated CRUD resolvers for core models (replacing custom ones)
          SyncOperationCrudResolver,
          SyncConflictCrudResolver,
       ],

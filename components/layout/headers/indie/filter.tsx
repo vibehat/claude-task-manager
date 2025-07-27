@@ -11,7 +11,7 @@ import {
    CommandSeparator,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filter-store';
 import { status as allStatus } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
@@ -40,8 +40,9 @@ export function Filter(): React.JSX.Element {
 
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
 
-   const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
-      useIssuesStore();
+   // TODO: Replace with GraphQL-based filtering
+   // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
+   //    useIssuesStore();
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -194,7 +195,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByStatus(item.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}
@@ -231,7 +232,7 @@ export function Filter(): React.JSX.Element {
                               <CheckIcon size={16} className="ml-auto" />
                            )}
                            <span className="text-muted-foreground text-xs">
-                              {filterByAssignee(null).length}
+                              {0 /* TODO: Get count from GraphQL */}
                            </span>
                         </CommandItem>
                         {users.map((user) => (
@@ -252,7 +253,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByAssignee(user.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}
@@ -291,7 +292,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByPriority(item.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}
@@ -333,7 +334,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByLabel(label.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}
@@ -372,7 +373,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByProject(project.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}

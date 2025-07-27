@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import type { Project } from '@/mock-data/projects';
 import { projects } from '@/mock-data/projects';
 import { Box, CheckIcon, FolderIcon } from 'lucide-react';
@@ -26,7 +26,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): Re
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | undefined>(project?.id);
 
-   const { filterByProject } = useIssuesStore();
+   // const { filterByProject } = useIssuesStore();
 
    useEffect(() => {
       setValue(project?.id);
@@ -106,7 +106,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): Re
                               </div>
                               {value === project.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByProject(project.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}

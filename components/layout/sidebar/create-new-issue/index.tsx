@@ -10,7 +10,7 @@ import { useState, useEffect, useCallback } from 'react';
 import type { Issue } from '@/mock-data/issues';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/status';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import { useCreateIssueStore } from '@/store/create-issue-store';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,10 +25,12 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 export function CreateNewIssue(): React.JSX.Element {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
-   const { addIssue, getAllIssues } = useIssuesStore();
+   // TODO: Replace with GraphQL mutation hooks
+   // const { addIssue, getAllIssues } = useIssuesStore();
 
    const generateUniqueIdentifier = useCallback(() => {
-      const identifiers = getAllIssues().map((issue) => issue.identifier);
+      // TODO: Fetch existing identifiers from GraphQL
+      const identifiers: string[] = []; // getAllIssues().map((issue) => issue.identifier);
       let identifier = Math.floor(Math.random() * 999)
          .toString()
          .padStart(3, '0');
@@ -38,7 +40,7 @@ export function CreateNewIssue(): React.JSX.Element {
             .padStart(3, '0');
       }
       return identifier;
-   }, [getAllIssues]);
+   }, []); // [getAllIssues]);
 
    const createDefaultData = useCallback((): Issue => {
       const identifier = generateUniqueIdentifier();
@@ -85,7 +87,8 @@ export function CreateNewIssue(): React.JSX.Element {
          return;
       }
       toast.success('Issue created');
-      addIssue(addIssueForm);
+      // TODO: Replace with GraphQL create mutation
+      // addIssue(addIssueForm);
       if (!createMore) {
          closeModal();
       }

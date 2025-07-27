@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import type { Priority } from '@/mock-data/priorities';
 import { priorities } from '@/mock-data/priorities';
 import { CheckIcon } from 'lucide-react';
@@ -26,7 +26,7 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps):
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(priority.id);
 
-   const { filterByPriority } = useIssuesStore();
+   // const { filterByPriority } = useIssuesStore();
 
    useEffect(() => {
       setValue(priority.id);
@@ -89,7 +89,7 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps):
                               </div>
                               {value === item.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByPriority(item.id).length}
+                                 {0 /* TODO: Get count from GraphQL */}
                               </span>
                            </CommandItem>
                         ))}

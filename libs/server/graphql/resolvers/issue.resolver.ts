@@ -1,5 +1,5 @@
 /**
- * Issue Resolver - Minimal Implementation
+ * Issue Resolver - Implementation for issue-related queries
  */
 
 import { Resolver, Query } from 'type-graphql';
