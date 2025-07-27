@@ -13,7 +13,7 @@ export const issueUtils = {
    /**
     * Generate a new issue identifier
     */
-   generateIdentifier: (prefix: string = 'ISS', count: number): string => {
+   generateIdentifier: (prefix = 'ISS', count: number): string => {
       return `${prefix}-${String(count + 1).padStart(3, '0')}`;
    },
 
@@ -101,7 +101,7 @@ export const issueUtils = {
    /**
     * Sort issues by creation date
     */
-   sortByCreated: (issues: Issue[], ascending: boolean = false): Issue[] => {
+   sortByCreated: (issues: Issue[], ascending = false): Issue[] => {
       return [...issues].sort((a, b) => {
          const aTime = new Date(a.createdAt).getTime();
          const bTime = new Date(b.createdAt).getTime();
@@ -112,7 +112,7 @@ export const issueUtils = {
    /**
     * Sort issues by updated date
     */
-   sortByUpdated: (issues: Issue[], ascending: boolean = false): Issue[] => {
+   sortByUpdated: (issues: Issue[], ascending = false): Issue[] => {
       return [...issues].sort((a, b) => {
          const aTime = new Date(a.updatedAt).getTime();
          const bTime = new Date(b.updatedAt).getTime();
@@ -296,7 +296,7 @@ export const cacheUtils = {
    /**
     * Check if cache should be invalidated
     */
-   shouldInvalidateCache: (lastUpdated: string, maxAge: number = 300000): boolean => {
+   shouldInvalidateCache: (lastUpdated: string, maxAge = 300000): boolean => {
       const now = Date.now();
       const updated = new Date(lastUpdated).getTime();
       return now - updated > maxAge;

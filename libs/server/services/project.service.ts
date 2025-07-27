@@ -1,15 +1,12 @@
-import {
+import type {
    Project,
    ProjectWithRelations,
    ProjectHealth,
-   BaseServiceClass,
    BaseService,
    ServiceOptions,
-   ValidationHelper,
-   NotFoundError,
-   ConflictError,
    Prisma,
 } from './types';
+import { BaseServiceClass, ValidationHelper, NotFoundError, ConflictError } from './types';
 
 // Create and Update data types using Prisma
 export type CreateProjectData = Omit<Prisma.ProjectCreateInput, 'issues' | 'lead' | 'teams'> & {

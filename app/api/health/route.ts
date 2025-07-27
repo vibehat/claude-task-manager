@@ -4,12 +4,13 @@
  * Provides health check and basic system status information.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
    try {
       const { searchParams } = new URL(request.url);
-      const format = searchParams.get('format') || 'basic';
+      const format = searchParams.get('format') ?? 'basic';
 
       switch (format) {
          case 'basic':
@@ -93,7 +94,7 @@ export async function GET(request: NextRequest) {
  * HEAD endpoint for lightweight health checks
  * Returns only HTTP status codes without response body
  */
-export async function HEAD() {
+export async function HEAD(): Promise<NextResponse> {
    try {
       // Simple health check - return 200 if service is responsive
       return new NextResponse(null, { status: 200 });
@@ -106,7 +107,7 @@ export async function HEAD() {
 /**
  * POST endpoint for health check with custom parameters
  */
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
    try {
       const body = await request.json();
       const { checks = [] } = body;

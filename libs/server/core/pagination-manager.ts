@@ -26,7 +26,7 @@ export interface FilterOption {
    field: string;
    label: string;
    type: 'select' | 'multiselect' | 'range' | 'search' | 'date' | 'boolean';
-   options?: Array<{ value: any; label: string }>;
+   options?: { value: any; label: string }[];
    defaultValue?: any;
 }
 
@@ -321,7 +321,7 @@ export class PaginationManager<T = any> {
    async virtualizeData(
       data: T[],
       config: VirtualizedConfig,
-      scrollTop: number = 0
+      scrollTop = 0
    ): Promise<VirtualizedResult<T>> {
       try {
          // Validate virtualization config
@@ -681,16 +681,12 @@ export const PaginationUtils = {
    },
 
    // Generate page numbers for pagination UI
-   generatePageNumbers: (
-      currentPage: number,
-      totalPages: number,
-      maxVisible: number = 5
-   ): number[] => {
+   generatePageNumbers: (currentPage: number, totalPages: number, maxVisible = 5): number[] => {
       const pages: number[] = [];
       const half = Math.floor(maxVisible / 2);
 
       let start = Math.max(1, currentPage - half);
-      let end = Math.min(totalPages, start + maxVisible - 1);
+      const end = Math.min(totalPages, start + maxVisible - 1);
 
       // Adjust start if end is at the boundary
       if (end - start + 1 < maxVisible) {

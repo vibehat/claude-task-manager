@@ -139,7 +139,7 @@ export class GraphQLCache {
       size: number;
       maxSize: number;
       hitRate: number;
-      entries: Array<{ key: string; timestamp: number; ttl: number; valid: boolean }>;
+      entries: { key: string; timestamp: number; ttl: number; valid: boolean }[];
    } {
       const entries = Array.from(this.cache.entries()).map(([key, entry]) => ({
          key,
@@ -179,7 +179,8 @@ export const defaultCache = new GraphQLCache({
 /**
  * Cache-enabled GraphQL client wrapper
  */
-import { GraphQLClient, GraphQLResponse } from './client';
+import type { GraphQLResponse } from './client';
+import { GraphQLClient } from './client';
 
 export class CachedGraphQLClient extends GraphQLClient {
    private cache: GraphQLCache;

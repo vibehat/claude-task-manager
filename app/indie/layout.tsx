@@ -10,6 +10,6 @@ interface IndieLayoutPageProps {
    children: React.ReactNode;
 }
 
-export default function IndieLayoutPage({ children }: IndieLayoutPageProps) {
+export default function IndieLayoutPage({ children }: IndieLayoutPageProps): JSX.Element {
    return <IndieLayout>{children}</IndieLayout>;
 }

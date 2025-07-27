@@ -10,7 +10,8 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { status as allStatus, Status } from '@/mock-data/status';
+import type { Status } from '@/mock-data/status';
+import { status as allStatus } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
 import { useId, useState } from 'react';
 
@@ -24,12 +25,12 @@ export function StatusWithPercent({
    status,
    percentComplete,
    onStatusChange,
-}: StatusWithPercentProps) {
+}: StatusWithPercentProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
 
-   const handleStatusChange = (statusId: string) => {
+   const handleStatusChange = (statusId: string): void => {
       setValue(statusId);
       setOpen(false);
 
@@ -49,7 +50,7 @@ export function StatusWithPercent({
                role="combobox"
                aria-expanded={open}
             >
-               {(() => {
+               {((): JSX.Element | null => {
                   const selectedItem = allStatus.find((item) => item.id === value);
                   if (selectedItem) {
                      const Icon = selectedItem.icon;

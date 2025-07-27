@@ -2,7 +2,7 @@
 
 import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from './apollo-client';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface GraphQLProviderProps {
    children: ReactNode;

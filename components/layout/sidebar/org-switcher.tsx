@@ -23,7 +23,7 @@ import { ThemeToggle } from '../theme-toggle';
 import Link from 'next/link';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
-export function OrgSwitcher() {
+export function OrgSwitcher(): JSX.Element {
    return (
       <SidebarMenu>
          <SidebarMenuItem>

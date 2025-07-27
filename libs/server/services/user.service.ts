@@ -1,16 +1,18 @@
-import {
+import type {
    User,
    UserWithRelations,
    UserStatus,
    UserRole,
-   BaseServiceClass,
    BaseService,
    ServiceOptions,
+   Prisma,
+} from './types';
+import {
+   BaseServiceClass,
    ValidationHelper,
    NotFoundError,
    ConflictError,
    JSONHelper,
-   Prisma,
 } from './types';
 
 // Create and Update data types using Prisma

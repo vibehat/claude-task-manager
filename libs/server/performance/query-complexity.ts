@@ -10,7 +10,8 @@ import {
    fieldExtensionsEstimator,
    simpleEstimator,
 } from 'graphql-query-complexity';
-import { ValidationRule, validate, GraphQLError } from 'graphql';
+import type { ValidationRule } from 'graphql';
+import { validate, GraphQLError } from 'graphql';
 import type { BaseContext } from '@apollo/server';
 
 /**
@@ -241,7 +242,7 @@ export class QueryComplexityAnalyzer {
       const errors: string[] = [];
       const recommendations: string[] = [];
       let complexity = 0;
-      let depth = 0;
+      const depth = 0;
 
       try {
          const complexityRule = createComplexityRule({

@@ -1,12 +1,13 @@
 'use client';
 
-import { Issue } from '@/mock-data/issues';
-import { Status } from '@/mock-data/status';
+import type { Issue } from '@/mock-data/issues';
+import type { Status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
 import { useViewStore } from '@/store/view-store';
 import { cn } from '@/libs/client/utils';
 import { Plus } from 'lucide-react';
-import { FC, useRef } from 'react';
+import type { FC } from 'react';
+import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Button } from '../../ui/button';
 import { IssueDragType, IssueGrid } from './issue-grid';
@@ -21,7 +22,7 @@ interface GroupIssuesProps {
    count: number;
 }
 
-export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
+export function GroupIssues({ status, issues, count }: GroupIssuesProps): JSX.Element {
    const { viewType } = useViewStore();
    const isViewTypeGrid = viewType === 'grid';
    const { openModal } = useCreateIssueStore();
@@ -84,19 +85,22 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    );
 }
 
-const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({ issues, status }) => {
+const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
+   issues,
+   status,
+}): JSX.Element => {
    const ref = useRef<HTMLDivElement>(null);
    const { updateIssueStatus } = useIssuesStore();
 
    // Set up drop functionality to accept only issue items.
    const [{ isOver }, drop] = useDrop(() => ({
       accept: IssueDragType,
-      drop(item: Issue, monitor) {
+      drop(item: Issue, monitor): void {
          if (monitor.didDrop() && item.status.id !== status.id) {
             updateIssueStatus(item.id, status);
          }
       },
-      collect: (monitor) => ({
+      collect: (monitor): { isOver: boolean } => ({
          isOver: !!monitor.isOver(),
       }),
    }));
@@ -118,9 +122,9 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({ issues, status
                   transition={{ duration: 0.1 }}
                   className="fixed top-0 left-0 right-0 bottom-0 z-10 flex items-center justify-center pointer-events-none bg-background/90"
                   style={{
-                     width: ref.current?.getBoundingClientRect().width || '100%',
-                     height: ref.current?.getBoundingClientRect().height || '100%',
-                     transform: `translate(${ref.current?.getBoundingClientRect().left || 0}px, ${ref.current?.getBoundingClientRect().top || 0}px)`,
+                     width: ref.current?.getBoundingClientRect().width ?? '100%',
+                     height: ref.current?.getBoundingClientRect().height ?? '100%',
+                     transform: `translate(${ref.current?.getBoundingClientRect().left ?? 0}px, ${ref.current?.getBoundingClientRect().top ?? 0}px)`,
                   }}
                >
                   <div className="bg-background border border-border rounded-md p-3 shadow-md max-w-[90%]">

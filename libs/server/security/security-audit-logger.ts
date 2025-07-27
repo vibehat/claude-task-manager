@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
 import { EventEmitter } from 'events';
 import fs from 'fs/promises';
@@ -173,7 +173,7 @@ interface SecurityMetrics {
    eventsBySeverity: Map<SecuritySeverity, number>;
    eventsLastHour: number;
    eventsLastDay: number;
-   topThreats: Array<{ type: SecurityEventType; count: number }>;
+   topThreats: { type: SecurityEventType; count: number }[];
    blockedIPs: Set<string>;
    suspiciousActivity: Map<string, number>;
 }
@@ -193,7 +193,7 @@ export class SecurityAuditLogger extends EventEmitter {
       // Handle both config types
       if ('sensitiveFields' in config) {
          // Convert test config to internal config
-         const testConfig = config as Partial<AuditLoggerConfig>;
+         const testConfig = config;
          this.config = {
             ...DEFAULT_AUDIT_CONFIG,
             enableConsoleLogging:

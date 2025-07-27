@@ -5,7 +5,8 @@
 'use client';
 
 import { useGraphQLQuery, useGraphQLMutation } from './hooks';
-import { GRAPHQL_OPERATIONS, CreateTaskVariables, UpdateTaskVariables } from './operations';
+import type { CreateTaskVariables, UpdateTaskVariables } from './operations';
+import { GRAPHQL_OPERATIONS } from './operations';
 
 // Task-specific hooks
 export function useTasks() {
@@ -191,13 +192,13 @@ export function useTaskManagement() {
 }
 
 // Polling hooks for real-time updates
-export function useRealtimeIssues(pollInterval: number = 30000) {
+export function useRealtimeIssues(pollInterval = 30000) {
    const query = useGraphQLQuery(GRAPHQL_OPERATIONS.ISSUES.GET_ISSUES, {}, { pollInterval });
 
    return query;
 }
 
-export function useRealtimeTasks(pollInterval: number = 30000) {
+export function useRealtimeTasks(pollInterval = 30000) {
    const query = useGraphQLQuery(GRAPHQL_OPERATIONS.TASKS.GET_TASKS, {}, { pollInterval });
 
    return query;

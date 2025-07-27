@@ -1,15 +1,17 @@
-import {
+import type {
    Issue,
    IssueWithRelations,
    IssueType,
-   BaseServiceClass,
    BaseService,
    ServiceOptions,
+   Prisma,
+} from './types';
+import {
+   BaseServiceClass,
    ValidationHelper,
    NotFoundError,
    ConflictError,
    JSONHelper,
-   Prisma,
 } from './types';
 
 // Create and Update data types using Prisma

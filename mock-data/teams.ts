@@ -1,5 +1,7 @@
-import { Project, projects } from './projects';
-import { User, users } from './users';
+import type { Project } from './projects';
+import { projects } from './projects';
+import type { User } from './users';
+import { users } from './users';
 
 export interface Team {
    id: string;

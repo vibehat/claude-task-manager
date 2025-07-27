@@ -1,14 +1,5 @@
-import {
-   Label,
-   LabelWithRelations,
-   BaseServiceClass,
-   BaseService,
-   ServiceOptions,
-   ValidationHelper,
-   NotFoundError,
-   ConflictError,
-   Prisma,
-} from './types';
+import type { Label, LabelWithRelations, BaseService, ServiceOptions, Prisma } from './types';
+import { BaseServiceClass, ValidationHelper, NotFoundError, ConflictError } from './types';
 
 // Create and Update data types using Prisma
 export type CreateLabelData = Omit<Prisma.LabelCreateInput, 'issues'>;
@@ -302,7 +293,7 @@ export class LabelService
 
    // Statistics
    async getLabelUsageStats(): Promise<
-      Array<{ id: string; name: string; color: string; issueCount: number }>
+      { id: string; name: string; color: string; issueCount: number }[]
    > {
       try {
          const labels = await this.prisma.label.findMany({

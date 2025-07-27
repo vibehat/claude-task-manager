@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
 import { commonValidationSchemas } from '../security/security-middleware';

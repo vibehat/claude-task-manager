@@ -8,7 +8,8 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { statusUserColors, User, users } from '@/mock-data/users';
+import type { User } from '@/mock-data/users';
+import { statusUserColors, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
@@ -17,7 +18,7 @@ interface AssigneeUserProps {
    user: User | null;
 }
 
-export function AssigneeUser({ user }: AssigneeUserProps) {
+export function AssigneeUser({ user }: AssigneeUserProps): JSX.Element {
    const [open, setOpen] = useState(false);
    const [currentAssignee, setCurrentAssignee] = useState<User | null>(user);
 
@@ -25,7 +26,7 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
       setCurrentAssignee(user);
    }, [user]);
 
-   const renderAvatar = () => {
+   const renderAvatar = (): JSX.Element => {
       if (currentAssignee) {
          return (
             <Avatar className="size-6 shrink-0">

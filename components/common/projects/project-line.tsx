@@ -1,4 +1,4 @@
-import { Project } from '@/mock-data/projects';
+import type { Project } from '@/mock-data/projects';
 import { HealthPopover } from './health-popover';
 import { PrioritySelector } from './priority-selector';
 import { LeadSelector } from './lead-selector';
@@ -9,7 +9,7 @@ interface ProjectLineProps {
    project: Project;
 }
 
-export default function ProjectLine({ project }: ProjectLineProps) {
+export default function ProjectLine({ project }: ProjectLineProps): JSX.Element {
    return (
       <div className="w-full flex items-center py-3 px-6 border-b hover:bg-sidebar/50 border-muted-foreground/5 text-sm">
          <div className="w-[60%] sm:w-[70%] xl:w-[46%] flex items-center gap-2">

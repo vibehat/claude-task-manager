@@ -1,4 +1,4 @@
-import { PrismaClient, Project } from '../generated/prisma';
+import type { PrismaClient, Project } from '../generated/prisma';
 import { GraphQLError } from 'graphql';
 
 export interface ProjectWithRelations extends Project {

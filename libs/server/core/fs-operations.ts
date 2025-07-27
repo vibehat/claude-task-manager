@@ -1,12 +1,8 @@
 import { promises as fs } from 'fs';
 import { join, dirname } from 'path';
 import { randomUUID } from 'crypto';
-import {
-   TasksData,
-   validateTasksData,
-   TaskMasterConfig,
-   validateTaskMasterConfig,
-} from '../types/index';
+import type { TasksData, TaskMasterConfig } from '../types/index';
+import { validateTasksData, validateTaskMasterConfig } from '../types/index';
 
 // File operation errors
 export class FileOperationError extends Error {

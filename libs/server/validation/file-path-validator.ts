@@ -266,7 +266,7 @@ export class FilePathValidator {
    async validatePath(
       inputPath: string,
       operation: 'read' | 'write' | 'list' | 'delete' = 'read',
-      ruleType: string = 'taskmaster_read'
+      ruleType = 'taskmaster_read'
    ): Promise<PathValidationResult> {
       this.validationStats.totalValidations++;
 
@@ -681,7 +681,7 @@ export class FilePathValidator {
 
    // Helper method to check if path contains traversal
    private containsTraversal(inputPath: string): boolean {
-      return /\.\./.test(inputPath) || inputPath.includes('~');
+      return inputPath.includes('..') || inputPath.includes('~');
    }
 
    // Get path depth (number of directory levels)
@@ -705,7 +705,7 @@ export class FilePathValidator {
    async isOperationAllowed(
       inputPath: string,
       operation: 'read' | 'write' | 'list' | 'delete',
-      ruleType: string = 'taskmaster_read'
+      ruleType = 'taskmaster_read'
    ): Promise<boolean> {
       const result = await this.validatePath(inputPath, operation, ruleType);
 

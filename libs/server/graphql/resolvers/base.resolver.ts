@@ -6,8 +6,8 @@
 
 import { PrismaClient } from '../../generated/prisma';
 import { TaskMasterDB, TaskMasterSync } from '../../taskmaster';
-import { TaskType } from '../types/task.types';
-import { TaskStatus as GraphQLTaskStatus } from '../types/task.types';
+import type { TaskType } from '../types/task.types';
+import type { TaskStatus as GraphQLTaskStatus } from '../types/task.types';
 
 export class BaseResolver {
    protected prisma: PrismaClient;

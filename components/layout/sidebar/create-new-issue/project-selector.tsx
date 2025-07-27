@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useIssuesStore } from '@/store/issues-store';
-import { Project, projects } from '@/mock-data/projects';
+import type { Project } from '@/mock-data/projects';
+import { projects } from '@/mock-data/projects';
 import { Box, CheckIcon, FolderIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
@@ -20,7 +21,7 @@ interface ProjectSelectorProps {
    onChange: (project: Project | undefined) => void;
 }
 
-export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
+export function ProjectSelector({ project, onChange }: ProjectSelectorProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | undefined>(project?.id);
@@ -31,7 +32,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
       setValue(project?.id);
    }, [project]);
 
-   const handleProjectChange = (projectId: string) => {
+   const handleProjectChange = (projectId: string): void => {
       if (projectId === 'no-project') {
          setValue(undefined);
          onChange(undefined);
@@ -58,7 +59,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps) {
                   aria-expanded={open}
                >
                   {value ? (
-                     (() => {
+                     ((): JSX.Element => {
                         const selectedProject = projects.find((p) => p.id === value);
                         if (selectedProject) {
                            const Icon = selectedProject.icon;

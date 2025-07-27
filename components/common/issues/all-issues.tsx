@@ -6,16 +6,17 @@ import { useIssuesIntegration } from '@/libs/client/hooks/use-issues-integration
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
 import { useFilterStore } from '@/store/filter-store';
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
+import type { FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { GroupIssues } from './group-issues';
 import { SearchIssues } from './search-issues';
 import { CustomDragLayer } from './issue-grid';
 import { cn } from '@/libs/client/utils';
-import { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data/issues';
 
-export default function AllIssues() {
+export default function AllIssues(): JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
    const { hasActiveFilters } = useFilterStore();
@@ -56,7 +57,7 @@ export default function AllIssues() {
    );
 }
 
-const SearchIssuesView = () => (
+const SearchIssuesView = (): JSX.Element => (
    <div className="px-6 mb-6">
       <SearchIssues />
    </div>
@@ -94,8 +95,8 @@ const FilteredIssuesView: FC<{
                <GroupIssues
                   key={statusItem.id}
                   status={statusItem}
-                  issues={filteredIssuesByStatus[statusItem.id] || []}
-                  count={filteredIssuesByStatus[statusItem.id]?.length || 0}
+                  issues={filteredIssuesByStatus[statusItem.id] ?? []}
+                  count={filteredIssuesByStatus[statusItem.id]?.length ?? 0}
                />
             ))}
          </div>
@@ -115,8 +116,8 @@ const GroupIssuesListView: FC<{
                <GroupIssues
                   key={statusItem.id}
                   status={statusItem}
-                  issues={issuesByStatus[statusItem.id] || []}
-                  count={issuesByStatus[statusItem.id]?.length || 0}
+                  issues={issuesByStatus[statusItem.id] ?? []}
+                  count={issuesByStatus[statusItem.id]?.length ?? 0}
                />
             ))}
          </div>

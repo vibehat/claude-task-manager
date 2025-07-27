@@ -2,6 +2,7 @@
 
 import { RiGithubLine } from '@remixicon/react';
 import * as React from 'react';
+import Image from 'next/image';
 
 import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { ModeSwitcher } from '@/components/layout/sidebar/mode-switcher';
@@ -24,7 +25,7 @@ interface IndieSidebarProps extends React.ComponentProps<typeof Sidebar> {
    className?: string;
 }
 
-export function IndieSidebar({ className, ...props }: IndieSidebarProps) {
+export function IndieSidebar({ className, ...props }: IndieSidebarProps): JSX.Element {
    return (
       <Sidebar collapsible="offcanvas" className={className} {...props}>
          <SidebarHeader>
@@ -56,7 +57,12 @@ export function IndieSidebar({ className, ...props }: IndieSidebarProps) {
          <SidebarFooter>
             <div className="w-full flex flex-col gap-2">
                <a className="my-1.5" href="https://vercel.com/oss">
-                  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
+                  <Image
+                     alt="Vercel OSS Program"
+                     src="https://vercel.com/oss/program-badge.svg"
+                     width={120}
+                     height={32}
+                  />
                </a>
                <div className="w-full flex items-center justify-between">
                   <HelpButton />

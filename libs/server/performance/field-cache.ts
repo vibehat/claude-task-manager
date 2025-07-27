@@ -6,13 +6,13 @@
  */
 
 // Redis caching disabled - using disabled stubs
+import type { RedisCache } from './redis-cache-disabled';
 import {
    getRedisCache,
    generateCacheKey,
    serializeForCache,
    deserializeFromCache,
    CACHE_KEY_PATTERNS,
-   RedisCache,
 } from './redis-cache-disabled';
 
 /**
@@ -95,7 +95,7 @@ export class FieldCacheManager {
       operationType: 'single' | 'list' | 'ready' | 'dependencies',
       key: string,
       data: any,
-      ttl: number = 3600
+      ttl = 3600
    ): Promise<void> {
       const cacheKey = this.generateTaskCacheKey(operationType, key);
       await this.cache.set(cacheKey, serializeForCache(data), { ttl });
@@ -141,7 +141,7 @@ export class FieldCacheManager {
       operation: string,
       args: any,
       result: any,
-      ttl: number = 300 // 5 minutes for CLI operations
+      ttl = 300 // 5 minutes for CLI operations
    ): Promise<void> {
       const key = `cli:${operation}:${JSON.stringify(args)}`;
       await this.cache.set(key, serializeForCache(result), { ttl });
@@ -245,7 +245,7 @@ export class ResolverCache {
       queryType: 'single' | 'list' | 'search' | 'ready',
       params: any,
       resolver: () => Promise<T>,
-      complexity: number = 1
+      complexity = 1
    ): Promise<T> {
       const cacheKey = `task:query:${queryType}:${JSON.stringify(params)}`;
       const ttl = this.calculateTTL(queryType, complexity);

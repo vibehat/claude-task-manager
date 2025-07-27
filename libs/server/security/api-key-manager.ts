@@ -420,13 +420,13 @@ export class APIKeyManager {
    /**
     * List all stored API key metadata (without decrypting the keys)
     */
-   listStoredKeys(): Array<{
+   listStoredKeys(): {
       providerId: string;
       keyId: string;
       createdAt: Date;
       lastUsed?: Date;
       metadata?: Record<string, unknown>;
-   }> {
+   }[] {
       const keys = this.getStoredKeys();
       return keys.map((key) => ({
          providerId: key.providerId,
@@ -507,11 +507,11 @@ export class APIKeyManager {
       }
 
       const existingKeys = this.getStoredKeys();
-      const decryptedKeys: Array<{
+      const decryptedKeys: {
          providerId: string;
          apiKey: string;
          metadata?: Record<string, unknown>;
-      }> = [];
+      }[] = [];
 
       // Decrypt all keys with current password
       for (const keyData of existingKeys) {

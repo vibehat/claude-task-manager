@@ -1,6 +1,6 @@
 'use client';
 
-import { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data/issues';
 import { format } from 'date-fns';
 import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
@@ -12,7 +12,13 @@ import { motion } from 'motion/react';
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { IssueContextMenu } from './issue-context-menu';
 
-export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?: boolean }) {
+export function IssueLine({
+   issue,
+   layoutId = false,
+}: {
+   issue: Issue;
+   layoutId?: boolean;
+}): JSX.Element {
    return (
       <ContextMenu>
          <ContextMenuTrigger asChild>

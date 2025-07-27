@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export async function applyCors(req: NextApiRequest, res: NextApiResponse) {
    if (process.env.NODE_ENV === 'development') {

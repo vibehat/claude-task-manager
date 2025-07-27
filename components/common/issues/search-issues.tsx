@@ -5,7 +5,7 @@ import { useSearchStore } from '@/store/search-store';
 import { useEffect, useState } from 'react';
 import { IssueLine } from './issue-line';
 
-export function SearchIssues() {
+export function SearchIssues(): JSX.Element {
    const [searchResults, setSearchResults] = useState<
       ReturnType<typeof useIssuesStore.getState>['issues']
    >([]);

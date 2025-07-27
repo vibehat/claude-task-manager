@@ -6,9 +6,9 @@
  * query depth limiting, and security auditing.
  */
 
-import { ApolloServerPlugin, GraphQLRequestListener } from '@apollo/server';
+import type { ApolloServerPlugin, GraphQLRequestListener } from '@apollo/server';
 import type { BaseContext } from '@apollo/server';
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { getGlobalRateLimiter } from '../performance/rate-limiter';
 import { getGlobalInputValidator } from '../validation/input-validation-middleware';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';

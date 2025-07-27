@@ -162,7 +162,7 @@ export const syncMutations = {
          }
 
          // Apply resolution data if provided
-         let resolutionData = input.resolutionData || {};
+         const resolutionData = input.resolutionData || {};
 
          // For manual resolution, require resolution data
          if (input.resolution === 'manual' && Object.keys(resolutionData).length === 0) {

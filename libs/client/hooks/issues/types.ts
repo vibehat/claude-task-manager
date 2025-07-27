@@ -2,12 +2,12 @@
  * Types and Interfaces for Issues GraphQL Hooks
  */
 
-import { Issue } from '@/mock-data/issues';
-import { LabelInterface } from '@/mock-data/labels';
-import { Priority } from '@/mock-data/priorities';
-import { Project } from '@/mock-data/projects';
-import { Status } from '@/mock-data/status';
-import { User } from '@/mock-data/users';
+import type { Issue } from '@/mock-data/issues';
+import type { LabelInterface } from '@/mock-data/labels';
+import type { Priority } from '@/mock-data/priorities';
+import type { Project } from '@/mock-data/projects';
+import type { Status } from '@/mock-data/status';
+import type { User } from '@/mock-data/users';
 
 export interface FilterOptions {
    status?: string[];

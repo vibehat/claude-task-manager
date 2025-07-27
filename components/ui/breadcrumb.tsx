@@ -4,11 +4,11 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react';
 
 import { cn } from '@/libs/client/utils';
 
-function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
+function Breadcrumb({ ...props }: React.ComponentProps<'nav'>): JSX.Element {
    return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
-function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
+function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>): JSX.Element {
    return (
       <ol
          data-slot="breadcrumb-list"
@@ -21,7 +21,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
    );
 }
 
-function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
+function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>): JSX.Element {
    return (
       <li
          data-slot="breadcrumb-item"
@@ -37,7 +37,7 @@ function BreadcrumbLink({
    ...props
 }: React.ComponentProps<'a'> & {
    asChild?: boolean;
-}) {
+}): JSX.Element {
    const Comp = asChild ? Slot : 'a';
 
    return (
@@ -49,7 +49,7 @@ function BreadcrumbLink({
    );
 }
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
+function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>): JSX.Element {
    return (
       <span
          data-slot="breadcrumb-page"
@@ -62,7 +62,11 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
    );
 }
 
-function BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<'li'>) {
+function BreadcrumbSeparator({
+   children,
+   className,
+   ...props
+}: React.ComponentProps<'li'>): JSX.Element {
    return (
       <li
          data-slot="breadcrumb-separator"
@@ -76,7 +80,7 @@ function BreadcrumbSeparator({ children, className, ...props }: React.ComponentP
    );
 }
 
-function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'>) {
+function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'>): JSX.Element {
    return (
       <span
          data-slot="breadcrumb-ellipsis"

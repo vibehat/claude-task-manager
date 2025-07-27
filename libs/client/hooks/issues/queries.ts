@@ -4,7 +4,8 @@
  * Comprehensive query hooks for fetching issues, users, projects, and labels
  */
 
-import { useQuery, UseQueryOptions, UseQueryResult, gql } from '@apollo/client';
+import type { UseQueryOptions, UseQueryResult } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import type {
    Issue,
    User,

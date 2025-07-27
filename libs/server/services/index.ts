@@ -18,7 +18,7 @@ export { ProjectService } from './project.service';
 export { LabelService } from './label.service';
 
 // Create a service factory for easy instantiation
-import { PrismaClient } from '../generated/prisma';
+import type { PrismaClient } from '../generated/prisma';
 import { TaskService } from './task.service';
 import { SubtaskService } from './subtask.service';
 import { IssueService } from './issue.service';

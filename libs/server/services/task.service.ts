@@ -1,14 +1,5 @@
-import {
-   Task,
-   TaskWithRelations,
-   BaseServiceClass,
-   BaseService,
-   ServiceOptions,
-   ValidationHelper,
-   NotFoundError,
-   ConflictError,
-   Prisma,
-} from './types';
+import type { Task, TaskWithRelations, BaseService, ServiceOptions, Prisma } from './types';
+import { BaseServiceClass, ValidationHelper, NotFoundError, ConflictError } from './types';
 
 // Create and Update data types using Prisma
 export type CreateTaskData = Omit<

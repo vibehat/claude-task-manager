@@ -5,7 +5,7 @@ interface OrgIdPageProps {
    params: Promise<{ orgId: string }>;
 }
 
-export default async function OrgIdPage({ params }: OrgIdPageProps) {
+export default async function OrgIdPage({ params }: OrgIdPageProps): Promise<never> {
    const { orgId } = await params;
    redirect(getDefaultOrgRoute(orgId));
 }

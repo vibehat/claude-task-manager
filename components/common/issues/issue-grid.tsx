@@ -1,10 +1,11 @@
 'use client';
 
-import { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data/issues';
 import { format } from 'date-fns';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
-import { DragSourceMonitor, useDrag, useDragLayer, useDrop } from 'react-dnd';
+import type { DragSourceMonitor } from 'react-dnd';
+import { useDrag, useDragLayer, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
@@ -15,12 +16,12 @@ import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { IssueContextMenu } from './issue-context-menu';
 
 export const IssueDragType = 'ISSUE';
-type IssueGridProps = {
+interface IssueGridProps {
    issue: Issue;
-};
+}
 
 // Custom DragLayer component to render the drag preview
-function IssueDragPreview({ issue }: { issue: Issue }) {
+function IssueDragPreview({ issue }: { issue: Issue }): JSX.Element {
    return (
       <div className="w-full p-3 bg-background rounded-md border border-border/50 overflow-hidden">
          <div className="flex items-center justify-between mb-2">
@@ -49,9 +50,9 @@ function IssueDragPreview({ issue }: { issue: Issue }) {
 }
 
 // Custom DragLayer to show custom preview during drag
-export function CustomDragLayer() {
+export function CustomDragLayer(): JSX.Element | null {
    const { itemType, isDragging, item, currentOffset } = useDragLayer((monitor) => ({
-      item: monitor.getItem() as Issue,
+      item: monitor.getItem(),
       itemType: monitor.getItemType(),
       currentOffset: monitor.getSourceClientOffset(),
       isDragging: monitor.isDragging(),
@@ -74,14 +75,14 @@ export function CustomDragLayer() {
    );
 }
 
-export function IssueGrid({ issue }: IssueGridProps) {
+export function IssueGrid({ issue }: IssueGridProps): JSX.Element {
    const ref = useRef<HTMLDivElement>(null);
 
    // Set up drag functionality.
    const [{ isDragging }, drag, preview] = useDrag(() => ({
       type: IssueDragType,
       item: issue,
-      collect: (monitor: DragSourceMonitor) => ({
+      collect: (monitor: DragSourceMonitor): { isDragging: boolean } => ({
          isDragging: monitor.isDragging(),
       }),
    }));

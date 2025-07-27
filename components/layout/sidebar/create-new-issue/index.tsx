@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { RiEditLine } from '@remixicon/react';
 import { useState, useEffect, useCallback } from 'react';
-import { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data/issues';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
@@ -22,7 +22,7 @@ import { LabelSelector } from './label-selector';
 import { ranks } from '@/mock-data/issues';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
-export function CreateNewIssue() {
+export function CreateNewIssue(): JSX.Element {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
    const { addIssue, getAllIssues } = useIssuesStore();
@@ -47,9 +47,9 @@ export function CreateNewIssue() {
          identifier: `LNUI-${identifier}`,
          title: '',
          description: '',
-         status: defaultStatus || status.find((s) => s.id === 'to-do')!,
+         status: defaultStatus ?? status.find((s) => s.id === 'to-do') ?? status[0],
          assignee: null,
-         priority: priorities.find((p) => p.id === 'no-priority')!,
+         priority: priorities.find((p) => p.id === 'no-priority') ?? priorities[0],
          labels: [],
          createdAt: new Date().toISOString(),
          cycleId: '',
@@ -65,7 +65,7 @@ export function CreateNewIssue() {
       setAddIssueForm(createDefaultData());
    }, [createDefaultData]);
 
-   const createIssue = () => {
+   const createIssue = (): void => {
       if (!addIssueForm.title) {
          toast.error('Title is required');
          return;

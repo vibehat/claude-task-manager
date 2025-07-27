@@ -97,7 +97,7 @@ export class QueryPerformanceTracker {
    /**
     * Start tracking a query
     */
-   startQuery(queryHash: string, operationName?: string, complexity: number = 1): string {
+   startQuery(queryHash: string, operationName?: string, complexity = 1): string {
       const queryId = `${queryHash}-${Date.now()}`;
 
       this.activeQueries.set(queryId, {
@@ -125,8 +125,8 @@ export class QueryPerformanceTracker {
       queryId: string,
       queryHash: string,
       operationName?: string,
-      complexity: number = 1,
-      cacheHit: boolean = false,
+      complexity = 1,
+      cacheHit = false,
       variables?: any,
       error?: string
    ): QueryMetrics {
@@ -168,7 +168,7 @@ export class QueryPerformanceTracker {
    /**
     * Get query performance statistics
     */
-   getQueryStats(timeWindowMs: number = 3600000): {
+   getQueryStats(timeWindowMs = 3600000): {
       totalQueries: number;
       avgDuration: number;
       slowQueries: number;
@@ -295,7 +295,7 @@ export class SystemMetricsCollector {
    /**
     * Start collecting system metrics
     */
-   start(intervalSeconds: number = 30): void {
+   start(intervalSeconds = 30): void {
       if (this.intervalId) {
          console.warn('System metrics collection already started');
          return;
@@ -438,15 +438,15 @@ export function createPerformanceMonitoringPlugin(tracker: QueryPerformanceTrack
                const queryId = tracker.startQuery(queryHash, operationName);
 
                // Store queryId in context for resolver tracking
-               (request as any)._performanceQueryId = queryId;
-               (request as any)._performanceQueryHash = queryHash;
-               (request as any)._performanceOperationName = operationName;
+               request._performanceQueryId = queryId;
+               request._performanceQueryHash = queryHash;
+               request._performanceOperationName = operationName;
             },
 
             willSendResponse({ request, response }: any) {
-               const queryId = (request as any)._performanceQueryId;
-               const queryHash = (request as any)._performanceQueryHash;
-               const operationName = (request as any)._performanceOperationName;
+               const queryId = request._performanceQueryId;
+               const queryHash = request._performanceQueryHash;
+               const operationName = request._performanceOperationName;
 
                if (queryId && queryHash) {
                   const hasError = response.errors && response.errors.length > 0;
@@ -484,7 +484,7 @@ export class PerformanceDashboard {
    /**
     * Get comprehensive performance overview
     */
-   async getPerformanceOverview(timeWindowMs: number = 3600000) {
+   async getPerformanceOverview(timeWindowMs = 3600000) {
       const queryStats = this.queryTracker.getQueryStats(timeWindowMs);
       const currentMetrics = await this.systemCollector.collectMetrics();
       const recentAlerts = await this.getRecentAlerts();
@@ -500,7 +500,7 @@ export class PerformanceDashboard {
    /**
     * Get recent performance alerts
     */
-   async getRecentAlerts(limit: number = 50): Promise<PerformanceAlert[]> {
+   async getRecentAlerts(limit = 50): Promise<PerformanceAlert[]> {
       try {
          // Get alert keys from Redis
          const alertKeys = await this.cache.getClient().keys('performance:alerts:*');
@@ -524,7 +524,7 @@ export class PerformanceDashboard {
    /**
     * Get historical metrics
     */
-   async getHistoricalMetrics(hours: number = 24): Promise<SystemMetrics[]> {
+   async getHistoricalMetrics(hours = 24): Promise<SystemMetrics[]> {
       try {
          const endTime = Math.floor(Date.now() / 60000); // Current minute
          const startTime = endTime - hours * 60; // Hours ago

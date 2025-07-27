@@ -566,7 +566,7 @@ export class MemoryManager extends EventEmitter {
    }
 
    // Register weak reference
-   registerWeakRef<T extends WeakKey>(obj: T, id: string, type: string = 'unknown'): WeakRef<T> {
+   registerWeakRef<T extends WeakKey>(obj: T, id: string, type = 'unknown'): WeakRef<T> {
       if (!this.config.enableWeakReferences) {
          return new WeakRef(obj);
       }
@@ -834,7 +834,7 @@ export const MemoryUtils = {
    },
 
    // Create memory-efficient array
-   createEfficientArray: <T>(initialCapacity: number = 0): T[] => {
+   createEfficientArray: <T>(initialCapacity = 0): T[] => {
       const array: T[] = [];
       if (initialCapacity > 0) {
          array.length = initialCapacity;

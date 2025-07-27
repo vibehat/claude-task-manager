@@ -9,7 +9,7 @@ import {
 import Link from 'next/link';
 import { inboxItems } from '@/mock-data/side-bar-nav';
 
-export function NavInbox() {
+export function NavInbox(): JSX.Element {
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarMenu>

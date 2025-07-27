@@ -10,7 +10,7 @@ export type Incremental<T> =
    | T
    | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
    ID: { input: string; output: string };
    String: { input: string; output: string };
    Boolean: { input: boolean; output: boolean };
@@ -18,30 +18,30 @@ export type Scalars = {
    Float: { input: number; output: number };
    DateTime: { input: string; output: string };
    JSON: { input: any; output: any };
-};
+}
 
 /** Input for batch sync operations */
-export type BatchOperationInput = {
+export interface BatchOperationInput {
    /** Operation data */
    data: Scalars['JSON']['input'];
    /** Target task ID if applicable */
    taskId?: InputMaybe<Scalars['ID']['input']>;
    /** Type of operation */
    type: SyncOperationType;
-};
+}
 
 /** Options for batch operations */
-export type BatchOptionsInput = {
+export interface BatchOptionsInput {
    /** Whether to continue on error */
    continueOnError?: InputMaybe<Scalars['Boolean']['input']>;
    /** Maximum retry attempts */
    maxRetries?: InputMaybe<Scalars['Int']['input']>;
    /** Whether to execute operations in parallel */
    parallel?: InputMaybe<Scalars['Boolean']['input']>;
-};
+}
 
 /** Batch operation result */
-export type BatchResult = {
+export interface BatchResult {
    __typename?: 'BatchResult';
    /** Batch operation ID */
    batchId: Scalars['ID']['output'];
@@ -51,32 +51,32 @@ export type BatchResult = {
    options?: Maybe<Scalars['JSON']['output']>;
    /** Timestamp when batch was created */
    timestamp: Scalars['DateTime']['output'];
-};
+}
 
 /** CLI command connection for paginated CLI queries */
-export type CliCommandConnection = {
+export interface CliCommandConnection {
    __typename?: 'CLICommandConnection';
    /** List of CLI command edges */
-   edges: Array<CliCommandEdge>;
+   edges: CliCommandEdge[];
    /** List of CLI commands (convenience field) */
-   nodes: Array<CliCommandResult>;
+   nodes: CliCommandResult[];
    /** Pagination information */
    pageInfo: PageInfo;
    /** Total count of items (if available) */
    totalCount?: Maybe<Scalars['Int']['output']>;
-};
+}
 
 /** CLI command edge with cursor */
-export type CliCommandEdge = {
+export interface CliCommandEdge {
    __typename?: 'CLICommandEdge';
    /** Cursor for this edge */
    cursor: Scalars['String']['output'];
    /** The CLI command node */
    node: CliCommandResult;
-};
+}
 
 /** CLI command filtering options */
-export type CliCommandFilterInput = {
+export interface CliCommandFilterInput {
    /** Search in command text */
    commandSearch?: InputMaybe<Scalars['String']['input']>;
    /** Filter by execution duration range (milliseconds) */
@@ -84,19 +84,19 @@ export type CliCommandFilterInput = {
    /** Filter by execution date range */
    executedAt?: InputMaybe<DateRangeInput>;
    /** Filter by exit code */
-   exitCode?: InputMaybe<Array<Scalars['Int']['input']>>;
+   exitCode?: InputMaybe<Scalars['Int']['input'][]>;
    /** Filter by command execution status */
-   status?: InputMaybe<Array<CliCommandStatus>>;
+   status?: InputMaybe<CliCommandStatus[]>;
    /** Filter by success/failure */
    successful?: InputMaybe<Scalars['Boolean']['input']>;
    /** Filter commands related to specific task */
    taskId?: InputMaybe<Scalars['ID']['input']>;
-};
+}
 
 /** Input for executing CLI commands */
-export type CliCommandInput = {
+export interface CliCommandInput {
    /** Command arguments */
-   args?: InputMaybe<Array<Scalars['String']['input']>>;
+   args?: InputMaybe<Scalars['String']['input'][]>;
    /** Whether to capture real-time progress */
    captureProgress?: InputMaybe<Scalars['Boolean']['input']>;
    /** Command to execute */
@@ -105,15 +105,15 @@ export type CliCommandInput = {
    parseOutput?: InputMaybe<Scalars['Boolean']['input']>;
    /** Execution timeout in milliseconds */
    timeout?: InputMaybe<Scalars['Int']['input']>;
-};
+}
 
 /** CLI command ordering options */
-export type CliCommandOrderByInput = {
+export interface CliCommandOrderByInput {
    /** Sort direction */
    direction: OrderDirection;
    /** Field to order by */
    field: CliCommandOrderField;
-};
+}
 
 /** CLI command order fields */
 export enum CliCommandOrderField {
@@ -125,10 +125,10 @@ export enum CliCommandOrderField {
 }
 
 /** Represents the result of a CLI command execution */
-export type CliCommandResult = {
+export interface CliCommandResult {
    __typename?: 'CLICommandResult';
    /** Command line arguments */
-   args: Array<Scalars['String']['output']>;
+   args: Scalars['String']['output'][];
    /** The command that was executed */
    command: Scalars['String']['output'];
    /** Execution duration in milliseconds */
@@ -151,7 +151,7 @@ export type CliCommandResult = {
    taskId?: Maybe<Scalars['ID']['output']>;
    /** Timestamp when the command was executed */
    timestamp: Scalars['DateTime']['output'];
-};
+}
 
 /** CLI command execution status */
 export enum CliCommandStatus {
@@ -170,7 +170,7 @@ export enum CliCommandStatus {
 }
 
 /** CLI command error information */
-export type CliError = {
+export interface CliError {
    __typename?: 'CLIError';
    /** Error code */
    code: Scalars['String']['output'];
@@ -180,18 +180,18 @@ export type CliError = {
    message: Scalars['String']['output'];
    /** Stack trace if available */
    stack?: Maybe<Scalars['String']['output']>;
-};
+}
 
 /** CLI execution status information */
-export type CliStatus = {
+export interface CliStatus {
    __typename?: 'CLIStatus';
    /** Number of active CLI processes */
    activeProcesses: Scalars['Int']['output'];
    /** Recent command history */
-   recentCommands: Array<CliCommandResult>;
+   recentCommands: CliCommandResult[];
    /** System information */
    systemInfo: SystemInfo;
-};
+}
 
 /** Conflict resolution strategies */
 export enum ConflictResolution {
@@ -207,33 +207,33 @@ export enum ConflictResolution {
    UserResolve = 'USER_RESOLVE',
 }
 
-export type CreateTaskInput = {
-   dependencies?: InputMaybe<Array<Scalars['ID']['input']>>;
+export interface CreateTaskInput {
+   dependencies?: InputMaybe<Scalars['ID']['input'][]>;
    description: Scalars['String']['input'];
    details?: InputMaybe<Scalars['String']['input']>;
    priority?: InputMaybe<TaskPriority>;
    testStrategy?: InputMaybe<Scalars['String']['input']>;
    title: Scalars['String']['input'];
-};
+}
 
 /** Date range input for filtering by date ranges */
-export type DateRangeInput = {
+export interface DateRangeInput {
    /** End date (inclusive) */
    endDate?: InputMaybe<Scalars['DateTime']['input']>;
    /** Start date (inclusive) */
    startDate?: InputMaybe<Scalars['DateTime']['input']>;
-};
+}
 
 /** Integer range input for numeric filtering */
-export type IntRangeInput = {
+export interface IntRangeInput {
    /** Maximum value (inclusive) */
    max?: InputMaybe<Scalars['Int']['input']>;
    /** Minimum value (inclusive) */
    min?: InputMaybe<Scalars['Int']['input']>;
-};
+}
 
 /** Memory usage statistics */
-export type MemoryUsage = {
+export interface MemoryUsage {
    __typename?: 'MemoryUsage';
    /** External memory in bytes */
    external: Scalars['Float']['output'];
@@ -243,9 +243,9 @@ export type MemoryUsage = {
    heapUsed: Scalars['Float']['output'];
    /** Resident set size in bytes */
    rss: Scalars['Float']['output'];
-};
+}
 
-export type Mutation = {
+export interface Mutation {
    __typename?: 'Mutation';
    /** Clear CLI command history */
    clearCLIHistory: Scalars['Boolean']['output'];
@@ -269,44 +269,44 @@ export type Mutation = {
    updateTask?: Maybe<Task>;
    /** Update task status via sync operation */
    updateTaskStatus: SyncOperation;
-};
+}
 
-export type MutationCreateBatchOperationArgs = {
-   operations: Array<BatchOperationInput>;
+export interface MutationCreateBatchOperationArgs {
+   operations: BatchOperationInput[];
    options?: InputMaybe<BatchOptionsInput>;
-};
+}
 
-export type MutationCreateTaskArgs = {
+export interface MutationCreateTaskArgs {
    input: CreateTaskInput;
-};
+}
 
-export type MutationDeleteTaskArgs = {
+export interface MutationDeleteTaskArgs {
    id: Scalars['ID']['input'];
-};
+}
 
-export type MutationExecuteCliCommandArgs = {
+export interface MutationExecuteCliCommandArgs {
    input: CliCommandInput;
-};
+}
 
-export type MutationKillCliProcessArgs = {
+export interface MutationKillCliProcessArgs {
    processId: Scalars['String']['input'];
-};
+}
 
-export type MutationResolveSyncConflictArgs = {
+export interface MutationResolveSyncConflictArgs {
    conflictId: Scalars['ID']['input'];
    resolution: ConflictResolution;
-};
+}
 
-export type MutationUpdateTaskArgs = {
+export interface MutationUpdateTaskArgs {
    id: Scalars['ID']['input'];
    input: UpdateTaskInput;
-};
+}
 
-export type MutationUpdateTaskStatusArgs = {
+export interface MutationUpdateTaskStatusArgs {
    source?: InputMaybe<Scalars['String']['input']>;
    status: TaskStatus;
    taskId: Scalars['ID']['input'];
-};
+}
 
 /** Sort direction */
 export enum OrderDirection {
@@ -315,7 +315,7 @@ export enum OrderDirection {
 }
 
 /** Page information for cursor-based pagination */
-export type PageInfo = {
+export interface PageInfo {
    __typename?: 'PageInfo';
    /** Cursor pointing to the last edge */
    endCursor?: Maybe<Scalars['String']['output']>;
@@ -325,10 +325,10 @@ export type PageInfo = {
    hasPreviousPage: Scalars['Boolean']['output'];
    /** Cursor pointing to the first edge */
    startCursor?: Maybe<Scalars['String']['output']>;
-};
+}
 
 /** Pagination input with cursor-based pagination support */
-export type PaginationInput = {
+export interface PaginationInput {
    /** Cursor for forward pagination */
    after?: InputMaybe<Scalars['String']['input']>;
    /** Cursor for backward pagination */
@@ -339,9 +339,9 @@ export type PaginationInput = {
    last?: InputMaybe<Scalars['Int']['input']>;
    /** Maximum number of records (safety limit) */
    limit?: InputMaybe<Scalars['Int']['input']>;
-};
+}
 
-export type Query = {
+export interface Query {
    __typename?: 'Query';
    /** Get a specific CLI command result */
    cliCommand?: Maybe<CliCommandResult>;
@@ -371,69 +371,69 @@ export type Query = {
    task?: Maybe<Task>;
    /** Get all tasks with comprehensive filtering, ordering, and pagination */
    tasks: TaskConnection;
-};
+}
 
-export type QueryCliCommandArgs = {
+export interface QueryCliCommandArgs {
    id: Scalars['ID']['input'];
-};
+}
 
-export type QueryCliHistoryArgs = {
+export interface QueryCliHistoryArgs {
    filter?: InputMaybe<CliCommandFilterInput>;
-   orderBy?: InputMaybe<Array<CliCommandOrderByInput>>;
+   orderBy?: InputMaybe<CliCommandOrderByInput[]>;
    pagination?: InputMaybe<PaginationInput>;
-};
+}
 
-export type QueryReadyTasksArgs = {
+export interface QueryReadyTasksArgs {
    filter?: InputMaybe<TaskFilterInput>;
-   orderBy?: InputMaybe<Array<TaskOrderByInput>>;
+   orderBy?: InputMaybe<TaskOrderByInput[]>;
    pagination?: InputMaybe<PaginationInput>;
-};
+}
 
-export type QuerySearchTasksArgs = {
+export interface QuerySearchTasksArgs {
    filter?: InputMaybe<TaskFilterInput>;
-   orderBy?: InputMaybe<Array<TaskOrderByInput>>;
+   orderBy?: InputMaybe<TaskOrderByInput[]>;
    pagination?: InputMaybe<PaginationInput>;
    query: Scalars['String']['input'];
-};
+}
 
-export type QuerySyncConflictsArgs = {
+export interface QuerySyncConflictsArgs {
    filter?: InputMaybe<SyncConflictFilterInput>;
    pagination?: InputMaybe<PaginationInput>;
-};
+}
 
-export type QuerySyncOperationArgs = {
+export interface QuerySyncOperationArgs {
    id: Scalars['ID']['input'];
-};
+}
 
-export type QuerySyncOperationsArgs = {
+export interface QuerySyncOperationsArgs {
    filter?: InputMaybe<SyncOperationFilterInput>;
-   orderBy?: InputMaybe<Array<SyncOperationOrderByInput>>;
+   orderBy?: InputMaybe<SyncOperationOrderByInput[]>;
    pagination?: InputMaybe<PaginationInput>;
-};
+}
 
-export type QueryTaskArgs = {
+export interface QueryTaskArgs {
    id: Scalars['ID']['input'];
-};
+}
 
-export type QueryTasksArgs = {
+export interface QueryTasksArgs {
    filter?: InputMaybe<TaskFilterInput>;
-   orderBy?: InputMaybe<Array<TaskOrderByInput>>;
+   orderBy?: InputMaybe<TaskOrderByInput[]>;
    pagination?: InputMaybe<PaginationInput>;
-};
+}
 
 /** Interface for entities that have status */
-export type Stateful = {
+export interface Stateful {
    /** Current status of the entity */
    status: Scalars['String']['output'];
-};
+}
 
 /** Represents a subtask within a parent task */
-export type Subtask = {
+export interface Subtask {
    __typename?: 'Subtask';
    /** Timestamp when the subtask was created */
    createdAt: Scalars['DateTime']['output'];
    /** List of subtask IDs that this subtask depends on */
-   dependencies: Array<Scalars['String']['output']>;
+   dependencies: Scalars['String']['output'][];
    /** Detailed description of the subtask */
    description: Scalars['String']['output'];
    /** Additional implementation details */
@@ -450,10 +450,10 @@ export type Subtask = {
    title: Scalars['String']['output'];
    /** Timestamp when the subtask was last updated */
    updatedAt: Scalars['DateTime']['output'];
-};
+}
 
 /** Represents a sync conflict that needs resolution */
-export type SyncConflict = {
+export interface SyncConflict {
    __typename?: 'SyncConflict';
    /** CLI/file version of the data */
    cliVersion: Scalars['JSON']['output'];
@@ -473,48 +473,48 @@ export type SyncConflict = {
    timestamp: Scalars['DateTime']['output'];
    /** UI version of the data */
    uiVersion: Scalars['JSON']['output'];
-};
+}
 
 /** Sync conflict connection for paginated conflict queries */
-export type SyncConflictConnection = {
+export interface SyncConflictConnection {
    __typename?: 'SyncConflictConnection';
    /** List of sync conflict edges */
-   edges: Array<SyncConflictEdge>;
+   edges: SyncConflictEdge[];
    /** List of sync conflicts (convenience field) */
-   nodes: Array<SyncConflict>;
+   nodes: SyncConflict[];
    /** Pagination information */
    pageInfo: PageInfo;
    /** Total count of items (if available) */
    totalCount?: Maybe<Scalars['Int']['output']>;
-};
+}
 
 /** Sync conflict edge with cursor */
-export type SyncConflictEdge = {
+export interface SyncConflictEdge {
    __typename?: 'SyncConflictEdge';
    /** Cursor for this edge */
    cursor: Scalars['String']['output'];
    /** The sync conflict node */
    node: SyncConflict;
-};
+}
 
 /** Sync conflict filtering options */
-export type SyncConflictFilterInput = {
+export interface SyncConflictFilterInput {
    /** Filter by conflict detection date range */
    detectedAt?: InputMaybe<DateRangeInput>;
    /** Filter by operation type that caused conflict */
-   operationType?: InputMaybe<Array<SyncOperationType>>;
+   operationType?: InputMaybe<SyncOperationType[]>;
    /** Filter by resolution strategy used */
-   resolution?: InputMaybe<Array<ConflictResolution>>;
+   resolution?: InputMaybe<ConflictResolution[]>;
    /** Filter by conflict resolution status */
    resolved?: InputMaybe<Scalars['Boolean']['input']>;
    /** Filter by resolution date range */
    resolvedAt?: InputMaybe<DateRangeInput>;
    /** Filter by task involved in conflict */
    taskId?: InputMaybe<Scalars['ID']['input']>;
-};
+}
 
 /** Sync operation error information */
-export type SyncError = {
+export interface SyncError {
    __typename?: 'SyncError';
    /** Error code */
    code: Scalars['String']['output'];
@@ -524,10 +524,10 @@ export type SyncError = {
    message: Scalars['String']['output'];
    /** Related operation that caused the error */
    operationId?: Maybe<Scalars['ID']['output']>;
-};
+}
 
 /** Sync health metrics */
-export type SyncHealth = {
+export interface SyncHealth {
    __typename?: 'SyncHealth';
    /** Number of active operations */
    activeOperations: Scalars['Int']['output'];
@@ -541,10 +541,10 @@ export type SyncHealth = {
    syncState: SyncState;
    /** Number of unresolved conflicts */
    unresolvedConflicts: Scalars['Int']['output'];
-};
+}
 
 /** Represents a synchronization operation */
-export type SyncOperation = {
+export interface SyncOperation {
    __typename?: 'SyncOperation';
    /** Operation completion timestamp */
    completedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -561,37 +561,37 @@ export type SyncOperation = {
    /** Current status of the sync operation */
    status: SyncOperationStatus;
    /** List of task IDs affected by this operation */
-   taskIds: Array<Scalars['ID']['output']>;
+   taskIds: Scalars['ID']['output'][];
    /** Timestamp when the operation was created */
    timestamp: Scalars['DateTime']['output'];
    /** Type of synchronization operation */
    type: SyncOperationType;
-};
+}
 
 /** Sync operation connection for paginated sync queries */
-export type SyncOperationConnection = {
+export interface SyncOperationConnection {
    __typename?: 'SyncOperationConnection';
    /** List of sync operation edges */
-   edges: Array<SyncOperationEdge>;
+   edges: SyncOperationEdge[];
    /** List of sync operations (convenience field) */
-   nodes: Array<SyncOperation>;
+   nodes: SyncOperation[];
    /** Pagination information */
    pageInfo: PageInfo;
    /** Total count of items (if available) */
    totalCount?: Maybe<Scalars['Int']['output']>;
-};
+}
 
 /** Sync operation edge with cursor */
-export type SyncOperationEdge = {
+export interface SyncOperationEdge {
    __typename?: 'SyncOperationEdge';
    /** Cursor for this edge */
    cursor: Scalars['String']['output'];
    /** The sync operation node */
    node: SyncOperation;
-};
+}
 
 /** Sync operation filtering options */
-export type SyncOperationFilterInput = {
+export interface SyncOperationFilterInput {
    /** Filter by completion date range */
    completedAt?: InputMaybe<DateRangeInput>;
    /** Filter by creation date range */
@@ -601,22 +601,22 @@ export type SyncOperationFilterInput = {
    /** Filter by retry count range */
    retryCountRange?: InputMaybe<IntRangeInput>;
    /** Filter by operation source */
-   source?: InputMaybe<Array<Scalars['String']['input']>>;
+   source?: InputMaybe<Scalars['String']['input'][]>;
    /** Filter by operation status */
-   status?: InputMaybe<Array<SyncOperationStatus>>;
+   status?: InputMaybe<SyncOperationStatus[]>;
    /** Filter operations affecting specific tasks */
-   taskIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   taskIds?: InputMaybe<Scalars['ID']['input'][]>;
    /** Filter by operation type */
-   type?: InputMaybe<Array<SyncOperationType>>;
-};
+   type?: InputMaybe<SyncOperationType[]>;
+}
 
 /** Sync operation ordering options */
-export type SyncOperationOrderByInput = {
+export interface SyncOperationOrderByInput {
    /** Sort direction */
    direction: OrderDirection;
    /** Field to order by */
    field: SyncOperationOrderField;
-};
+}
 
 /** Sync operation order fields */
 export enum SyncOperationOrderField {
@@ -671,22 +671,22 @@ export enum SyncState {
 }
 
 /** Sync status information */
-export type SyncStatus = {
+export interface SyncStatus {
    __typename?: 'SyncStatus';
    /** Active conflicts */
-   conflicts: Array<SyncConflict>;
+   conflicts: SyncConflict[];
    /** Recent sync operations */
-   operations: Array<SyncOperation>;
+   operations: SyncOperation[];
    /** Optimistic updates count */
    optimisticUpdatesCount: Scalars['Int']['output'];
    /** Number of operations in queue */
    queueSize: Scalars['Int']['output'];
    /** Current sync state */
    state: SyncState;
-};
+}
 
 /** System information */
-export type SystemInfo = {
+export interface SystemInfo {
    __typename?: 'SystemInfo';
    /** Memory usage statistics */
    memoryUsage: MemoryUsage;
@@ -696,17 +696,17 @@ export type SystemInfo = {
    platform: Scalars['String']['output'];
    /** Process uptime in seconds */
    uptime: Scalars['Float']['output'];
-};
+}
 
 /** Represents a task in the Task Master system */
-export type Task = {
+export interface Task {
    __typename?: 'Task';
    /** Complexity score for the task (1-10) */
    complexity?: Maybe<Scalars['Int']['output']>;
    /** Timestamp when the task was created */
    createdAt: Scalars['DateTime']['output'];
    /** List of task IDs that this task depends on */
-   dependencies: Array<Scalars['ID']['output']>;
+   dependencies: Scalars['ID']['output'][];
    /** Detailed description of what needs to be accomplished */
    description: Scalars['String']['output'];
    /** Additional implementation details */
@@ -722,17 +722,17 @@ export type Task = {
    /** Current status of the task */
    status: TaskStatus;
    /** List of subtasks belonging to this task */
-   subtasks: Array<Subtask>;
+   subtasks: Subtask[];
    /** Testing strategy for this task */
    testStrategy?: Maybe<Scalars['String']['output']>;
    /** Human-readable title of the task */
    title: Scalars['String']['output'];
    /** Timestamp when the task was last updated */
    updatedAt: Scalars['DateTime']['output'];
-};
+}
 
 /** A collection of tasks with metadata */
-export type TaskCollection = {
+export interface TaskCollection {
    __typename?: 'TaskCollection';
    /** Number of completed tasks */
    completed: Scalars['Int']['output'];
@@ -745,41 +745,41 @@ export type TaskCollection = {
    /** Overall progress percentage */
    progressPercentage: Scalars['Float']['output'];
    /** List of all tasks in the collection */
-   tasks: Array<Task>;
+   tasks: Task[];
    /** Total number of tasks in the collection */
    total: Scalars['Int']['output'];
-};
+}
 
 /** Task connection for paginated task queries */
-export type TaskConnection = {
+export interface TaskConnection {
    __typename?: 'TaskConnection';
    /** List of task edges */
-   edges: Array<TaskEdge>;
+   edges: TaskEdge[];
    /** List of tasks (convenience field) */
-   nodes: Array<Task>;
+   nodes: Task[];
    /** Pagination information */
    pageInfo: PageInfo;
    /** Total count of items (if available) */
    totalCount?: Maybe<Scalars['Int']['output']>;
-};
+}
 
 /** Task edge with cursor */
-export type TaskEdge = {
+export interface TaskEdge {
    __typename?: 'TaskEdge';
    /** Cursor for this edge */
    cursor: Scalars['String']['output'];
    /** The task node */
    node: Task;
-};
+}
 
 /** Comprehensive task filtering options */
-export type TaskFilterInput = {
+export interface TaskFilterInput {
    /** Filter by complexity score range */
    complexityRange?: InputMaybe<IntRangeInput>;
    /** Filter by creation date range */
    createdAt?: InputMaybe<DateRangeInput>;
    /** Filter tasks that depend on specific task IDs */
-   dependsOn?: InputMaybe<Array<Scalars['ID']['input']>>;
+   dependsOn?: InputMaybe<Scalars['ID']['input'][]>;
    /** Filter tasks that have no dependencies */
    hasNoDependencies?: InputMaybe<Scalars['Boolean']['input']>;
    /** Filter tasks that have subtasks */
@@ -787,19 +787,19 @@ export type TaskFilterInput = {
    /** Filter tasks ready to work on (no blocking dependencies) */
    isReady?: InputMaybe<Scalars['Boolean']['input']>;
    /** Filter by task priority */
-   priority?: InputMaybe<Array<TaskPriority>>;
+   priority?: InputMaybe<TaskPriority[]>;
    /** Filter by progress percentage range */
    progressRange?: InputMaybe<IntRangeInput>;
    /** Search in title and description (case-insensitive) */
    search?: InputMaybe<Scalars['String']['input']>;
    /** Filter by task status */
-   status?: InputMaybe<Array<TaskStatus>>;
+   status?: InputMaybe<TaskStatus[]>;
    /** Filter by last update date range */
    updatedAt?: InputMaybe<DateRangeInput>;
-};
+}
 
 /** Metadata about a collection of tasks */
-export type TaskMetadata = {
+export interface TaskMetadata {
    __typename?: 'TaskMetadata';
    /** Timestamp when the task collection was created */
    created: Scalars['DateTime']['output'];
@@ -807,15 +807,15 @@ export type TaskMetadata = {
    description: Scalars['String']['output'];
    /** Timestamp when the task collection was last updated */
    updated: Scalars['DateTime']['output'];
-};
+}
 
 /** Task ordering options */
-export type TaskOrderByInput = {
+export interface TaskOrderByInput {
    /** Sort direction */
    direction: OrderDirection;
    /** Field to order by */
    field: TaskOrderField;
-};
+}
 
 /** Task order fields */
 export enum TaskOrderField {
@@ -856,32 +856,32 @@ export enum TaskStatus {
 }
 
 /** Represents the complete task data structure */
-export type TasksData = {
+export interface TasksData {
    __typename?: 'TasksData';
    /** The main task collection */
    master: TaskCollection;
-};
+}
 
 /** Interface for entities that have timestamps */
-export type Timestamped = {
+export interface Timestamped {
    /** Timestamp when the entity was created */
    createdAt: Scalars['DateTime']['output'];
    /** Timestamp when the entity was last updated */
    updatedAt: Scalars['DateTime']['output'];
-};
+}
 
-export type UpdateTaskInput = {
-   dependencies?: InputMaybe<Array<Scalars['ID']['input']>>;
+export interface UpdateTaskInput {
+   dependencies?: InputMaybe<Scalars['ID']['input'][]>;
    description?: InputMaybe<Scalars['String']['input']>;
    details?: InputMaybe<Scalars['String']['input']>;
    priority?: InputMaybe<TaskPriority>;
    status?: InputMaybe<TaskStatus>;
    testStrategy?: InputMaybe<Scalars['String']['input']>;
    title?: InputMaybe<Scalars['String']['input']>;
-};
+}
 
 /** Basic user information (placeholder for future expansion) */
-export type User = {
+export interface User {
    __typename?: 'User';
    /** Timestamp when the user was created */
    createdAt: Scalars['DateTime']['output'];
@@ -893,13 +893,13 @@ export type User = {
    name: Scalars['String']['output'];
    /** Timestamp when the user was last updated */
    updatedAt: Scalars['DateTime']['output'];
-};
+}
 
 export type CreateTaskMutationVariables = Types.Exact<{
    input: Types.CreateTaskInput;
 }>;
 
-export type CreateTaskMutationResult = {
+export interface CreateTaskMutationResult {
    __typename?: 'Mutation';
    createTask?: {
       __typename?: 'Task';
@@ -908,20 +908,20 @@ export type CreateTaskMutationResult = {
       description: string;
       status: Types.TaskStatus;
       priority: Types.TaskPriority;
-      dependencies: Array<string>;
+      dependencies: string[];
       details?: string | null;
       testStrategy?: string | null;
       createdAt: string;
       updatedAt: string;
    } | null;
-};
+}
 
 export type UpdateTaskMutationVariables = Types.Exact<{
    id: Types.Scalars['ID']['input'];
    input: Types.UpdateTaskInput;
 }>;
 
-export type UpdateTaskMutationResult = {
+export interface UpdateTaskMutationResult {
    __typename?: 'Mutation';
    updateTask?: {
       __typename?: 'Task';
@@ -930,18 +930,21 @@ export type UpdateTaskMutationResult = {
       description: string;
       status: Types.TaskStatus;
       priority: Types.TaskPriority;
-      dependencies: Array<string>;
+      dependencies: string[];
       details?: string | null;
       testStrategy?: string | null;
       updatedAt: string;
    } | null;
-};
+}
 
 export type DeleteTaskMutationVariables = Types.Exact<{
    id: Types.Scalars['ID']['input'];
 }>;
 
-export type DeleteTaskMutationResult = { __typename?: 'Mutation'; deleteTask: boolean };
+export interface DeleteTaskMutationResult {
+   __typename?: 'Mutation';
+   deleteTask: boolean;
+}
 
 export type UpdateTaskStatusMutationVariables = Types.Exact<{
    taskId: Types.Scalars['ID']['input'];
@@ -949,7 +952,7 @@ export type UpdateTaskStatusMutationVariables = Types.Exact<{
    source?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
-export type UpdateTaskStatusMutationResult = {
+export interface UpdateTaskStatusMutationResult {
    __typename?: 'Mutation';
    updateTaskStatus: {
       __typename?: 'SyncOperation';
@@ -958,23 +961,23 @@ export type UpdateTaskStatusMutationResult = {
       status: Types.SyncOperationStatus;
       timestamp: string;
       source: string;
-      taskIds: Array<string>;
+      taskIds: string[];
       metadata?: any | null;
    };
-};
+}
 
 export type GetAllTasksQueryVariables = Types.Exact<{
    filter?: Types.InputMaybe<Types.TaskFilterInput>;
-   orderBy?: Types.InputMaybe<Array<Types.TaskOrderByInput> | Types.TaskOrderByInput>;
+   orderBy?: Types.InputMaybe<Types.TaskOrderByInput[] | Types.TaskOrderByInput>;
    pagination?: Types.InputMaybe<Types.PaginationInput>;
 }>;
 
-export type GetAllTasksQueryResult = {
+export interface GetAllTasksQueryResult {
    __typename?: 'Query';
    tasks: {
       __typename?: 'TaskConnection';
       totalCount?: number | null;
-      edges: Array<{
+      edges: {
          __typename?: 'TaskEdge';
          cursor: string;
          node: {
@@ -984,7 +987,7 @@ export type GetAllTasksQueryResult = {
             description: string;
             status: Types.TaskStatus;
             priority: Types.TaskPriority;
-            dependencies: Array<string>;
+            dependencies: string[];
             details?: string | null;
             testStrategy?: string | null;
             complexity?: number | null;
@@ -992,27 +995,27 @@ export type GetAllTasksQueryResult = {
             isReady: boolean;
             createdAt: string;
             updatedAt: string;
-            subtasks: Array<{
+            subtasks: {
                __typename?: 'Subtask';
                id: string;
                title: string;
                description: string;
                status: Types.TaskStatus;
-               dependencies: Array<string>;
+               dependencies: string[];
                details?: string | null;
                testStrategy?: string | null;
                createdAt: string;
                updatedAt: string;
-            }>;
+            }[];
          };
-      }>;
-      nodes: Array<{
+      }[];
+      nodes: {
          __typename?: 'Task';
          id: string;
          title: string;
          status: Types.TaskStatus;
          progress: number;
-      }>;
+      }[];
       pageInfo: {
          __typename?: 'PageInfo';
          hasNextPage: boolean;
@@ -1021,13 +1024,13 @@ export type GetAllTasksQueryResult = {
          endCursor?: string | null;
       };
    };
-};
+}
 
 export type GetTaskByIdQueryVariables = Types.Exact<{
    id: Types.Scalars['ID']['input'];
 }>;
 
-export type GetTaskByIdQueryResult = {
+export interface GetTaskByIdQueryResult {
    __typename?: 'Query';
    task?: {
       __typename?: 'Task';
@@ -1036,7 +1039,7 @@ export type GetTaskByIdQueryResult = {
       description: string;
       status: Types.TaskStatus;
       priority: Types.TaskPriority;
-      dependencies: Array<string>;
+      dependencies: string[];
       details?: string | null;
       testStrategy?: string | null;
       complexity?: number | null;
@@ -1044,20 +1047,20 @@ export type GetTaskByIdQueryResult = {
       isReady: boolean;
       createdAt: string;
       updatedAt: string;
-      subtasks: Array<{
+      subtasks: {
          __typename?: 'Subtask';
          id: string;
          title: string;
          description: string;
          status: Types.TaskStatus;
-         dependencies: Array<string>;
+         dependencies: string[];
          details?: string | null;
          testStrategy?: string | null;
          createdAt: string;
          updatedAt: string;
-      }>;
+      }[];
    } | null;
-};
+}
 
 export type SearchTasksQueryVariables = Types.Exact<{
    query: Types.Scalars['String']['input'];
@@ -1065,12 +1068,12 @@ export type SearchTasksQueryVariables = Types.Exact<{
    pagination?: Types.InputMaybe<Types.PaginationInput>;
 }>;
 
-export type SearchTasksQueryResult = {
+export interface SearchTasksQueryResult {
    __typename?: 'Query';
    searchTasks: {
       __typename?: 'TaskConnection';
       totalCount?: number | null;
-      edges: Array<{
+      edges: {
          __typename?: 'TaskEdge';
          cursor: string;
          node: {
@@ -1082,7 +1085,7 @@ export type SearchTasksQueryResult = {
             priority: Types.TaskPriority;
             progress: number;
          };
-      }>;
+      }[];
       pageInfo: {
          __typename?: 'PageInfo';
          hasNextPage: boolean;
@@ -1091,18 +1094,18 @@ export type SearchTasksQueryResult = {
          endCursor?: string | null;
       };
    };
-};
+}
 
 export type GetReadyTasksQueryVariables = Types.Exact<{
    filter?: Types.InputMaybe<Types.TaskFilterInput>;
    pagination?: Types.InputMaybe<Types.PaginationInput>;
 }>;
 
-export type GetReadyTasksQueryResult = {
+export interface GetReadyTasksQueryResult {
    __typename?: 'Query';
    readyTasks: {
       __typename?: 'TaskConnection';
-      edges: Array<{
+      edges: {
          __typename?: 'TaskEdge';
          cursor: string;
          node: {
@@ -1113,9 +1116,9 @@ export type GetReadyTasksQueryResult = {
             status: Types.TaskStatus;
             priority: Types.TaskPriority;
             isReady: boolean;
-            dependencies: Array<string>;
+            dependencies: string[];
          };
-      }>;
+      }[];
       pageInfo: { __typename?: 'PageInfo'; hasNextPage: boolean; hasPreviousPage: boolean };
    };
-};
+}

@@ -544,8 +544,8 @@ export class PerformanceBenchmark extends EventEmitter {
       let totalOperations = 0;
       let successfulOperations = 0;
       let activeOperations = 0;
-      let isRampingUp = true;
-      let isRampingDown = false;
+      const isRampingUp = true;
+      const isRampingDown = false;
 
       const initialMemory = process.memoryUsage().heapUsed;
       let peakMemory = initialMemory;
@@ -705,8 +705,8 @@ export class PerformanceBenchmark extends EventEmitter {
    // Compare benchmark results
    compareBenchmarks(
       testName: string,
-      baselineIndex: number = -2,
-      comparisonIndex: number = -1
+      baselineIndex = -2,
+      comparisonIndex = -1
    ): BenchmarkComparison | null {
       const testResults = this.results.get(testName);
       if (!testResults || testResults.length < 2) {

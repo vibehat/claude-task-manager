@@ -1,21 +1,13 @@
-import { spawn, ChildProcess } from 'child_process';
+import type { ChildProcess } from 'child_process';
+import { spawn } from 'child_process';
 import { EventEmitter } from 'events';
-import {
-   getGlobalErrorHandler,
-   ErrorType,
-   ErrorUtils,
-   TaskMasterError,
-} from '../core/error-handler';
+import type { TaskMasterError } from '../core/error-handler';
+import { getGlobalErrorHandler, ErrorType, ErrorUtils } from '../core/error-handler';
 
 // Import types from separate file
 export * from './cli-executor-types';
-import {
-   CLIExecutionResult,
-   CLICommandConfig,
-   CLIExecutionError,
-   CLITimeoutError,
-   CLIValidationError,
-} from './cli-executor-types';
+import type { CLIExecutionResult, CLICommandConfig } from './cli-executor-types';
+import { CLIExecutionError, CLITimeoutError, CLIValidationError } from './cli-executor-types';
 
 // Task Master CLI command definitions with validation rules
 const TASK_MASTER_COMMANDS = {

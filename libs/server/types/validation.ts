@@ -1,4 +1,11 @@
-import { Task, Subtask, TaskStatus, TaskPriority, TasksData, TaskMasterConfig } from './taskmaster';
+import type {
+   Task,
+   Subtask,
+   TaskStatus,
+   TaskPriority,
+   TasksData,
+   TaskMasterConfig,
+} from './taskmaster';
 
 // Validation schemas using Zod-like pattern (manual implementation)
 export class ValidationError extends Error {

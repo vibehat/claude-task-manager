@@ -1,14 +1,14 @@
 'use client';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Project } from '@/mock-data/projects';
+import type { Project } from '@/mock-data/projects';
 import { Box } from 'lucide-react';
 
 interface ProjectsTooltipProps {
    projects: Project[];
 }
 
-export function ProjectsTooltip({ projects }: ProjectsTooltipProps) {
+export function ProjectsTooltip({ projects }: ProjectsTooltipProps): JSX.Element {
    return (
       <TooltipProvider>
          <Tooltip>

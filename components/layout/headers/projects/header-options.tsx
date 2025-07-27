@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { ListFilter, SlidersHorizontal } from 'lucide-react';
 
-export default function HeaderOptions() {
+export default function HeaderOptions(): JSX.Element {
    return (
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
          <Button size="xs" variant="ghost">

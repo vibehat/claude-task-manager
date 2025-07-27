@@ -76,7 +76,7 @@ export function useIssueSearch(query: string): SearchResult {
 /**
  * Hook for issues organized by status
  */
-export function useIssuesByStatus(statusId?: string, grouped: boolean = false): StatusIssuesResult {
+export function useIssuesByStatus(statusId?: string, grouped = false): StatusIssuesResult {
    const { issues, loading, error } = useIssuesQueryWithCache();
    const { filterByStatus } = useIssueFilters(issues);
    const { issuesByStatus } = useIssueGrouping(issues);

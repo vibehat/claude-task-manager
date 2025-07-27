@@ -8,14 +8,15 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/libs/client/utils';
-import { useViewStore, ViewType } from '@/store/view-store';
+import type { ViewType } from '@/store/view-store';
+import { useViewStore } from '@/store/view-store';
 import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
 import { Filter } from './filter';
 
-export default function HeaderOptions() {
+export default function HeaderOptions(): JSX.Element {
    const { viewType, setViewType } = useViewStore();
 
-   const handleViewChange = (type: ViewType) => {
+   const handleViewChange = (type: ViewType): void => {
       setViewType(type);
    };
 

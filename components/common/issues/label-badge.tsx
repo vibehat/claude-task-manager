@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
-import { LabelInterface } from '@/mock-data/labels';
+import type { LabelInterface } from '@/mock-data/labels';
 
-export function LabelBadge({ label }: { label: LabelInterface[] }) {
+export function LabelBadge({ label }: { label: LabelInterface[] }): JSX.Element {
    return (
       <>
          {label.map((l) => (

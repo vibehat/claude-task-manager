@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
-import { watch, FSWatcher, existsSync, statSync } from 'fs';
+import type { FSWatcher } from 'fs';
+import { watch, existsSync, statSync } from 'fs';
 import { join, basename } from 'path';
 import { TaskMasterFileOperations } from './fs-operations';
 

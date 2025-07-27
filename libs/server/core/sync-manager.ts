@@ -1,15 +1,13 @@
 import { EventEmitter } from 'events';
 import { TaskMasterFileOperations } from './fs-operations';
 import { getGlobalFileWatcher } from './file-watcher';
-import { cliExecutor, CLIExecutionResult } from '../cli';
+import type { CLIExecutionResult } from '../cli';
+import { cliExecutor } from '../cli';
 // GraphQL subscriptions will be used for real-time updates
-import { TasksData, Task, TaskStatus } from '../types/taskmaster';
-import {
-   getGlobalErrorHandler,
-   ErrorType,
-   ErrorUtils,
-   TaskMasterError,
-} from '../core/error-handler';
+import type { TasksData, TaskStatus } from '../types/taskmaster';
+import { Task } from '../types/taskmaster';
+import type { TaskMasterError } from '../core/error-handler';
+import { getGlobalErrorHandler, ErrorType, ErrorUtils } from '../core/error-handler';
 
 // Sync operation types
 export interface SyncOperation {

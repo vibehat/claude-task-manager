@@ -523,7 +523,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
       }
 
       let errorType = ErrorType.UNKNOWN_ERROR;
-      let category = ErrorCategory.SYSTEM;
+      const category = ErrorCategory.SYSTEM;
 
       // Try to infer error type from message
       const message = error.message.toLowerCase();

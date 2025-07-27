@@ -139,7 +139,7 @@ export class TaskMasterPerformanceCache extends EventEmitter {
          let fromDisk = false;
 
          // If not in memory, check disk cache
-         if (!entry && this.diskCache && this.diskCache.has(key)) {
+         if (!entry && this.diskCache?.has(key)) {
             entry = await this.loadFromDisk<T>(key);
             fromDisk = true;
          }
@@ -315,7 +315,7 @@ export class TaskMasterPerformanceCache extends EventEmitter {
             this.stats.totalEntries = this.cache.size;
 
             // Remove from disk cache if enabled
-            if (this.diskCache && this.diskCache.has(key)) {
+            if (this.diskCache?.has(key)) {
                this.diskCache.delete(key);
             }
 
@@ -381,13 +381,13 @@ export class TaskMasterPerformanceCache extends EventEmitter {
 
    // Set multiple values
    async setMultiple<T>(
-      entries: Array<{
+      entries: {
          key: string;
          value: T;
          ttl?: number;
          tags?: string[];
          metadata?: CacheEntry<T>['metadata'];
-      }>
+      }[]
    ): Promise<number> {
       let successCount = 0;
 
@@ -412,7 +412,7 @@ export class TaskMasterPerformanceCache extends EventEmitter {
       let deletedCount = 0;
 
       for (const [key, entry] of this.cache.entries()) {
-         if (entry.tags && entry.tags.includes(tag)) {
+         if (entry.tags?.includes(tag)) {
             await this.delete(key);
             deletedCount++;
          }

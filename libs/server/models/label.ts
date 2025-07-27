@@ -1,4 +1,4 @@
-import { PrismaClient, Label } from '../generated/prisma';
+import type { PrismaClient, Label } from '../generated/prisma';
 import { GraphQLError } from 'graphql';
 
 export interface LabelWithRelations extends Label {

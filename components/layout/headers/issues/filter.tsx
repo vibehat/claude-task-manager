@@ -34,7 +34,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 // Define filter types
 type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'project';
 
-export function Filter() {
+export function Filter(): JSX.Element {
    const [open, setOpen] = useState<boolean>(false);
    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
 

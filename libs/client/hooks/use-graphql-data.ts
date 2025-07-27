@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 class SimpleGraphQLClient {
    private endpoint: string;
 
-   constructor(endpoint: string = '/api/graphql') {
+   constructor(endpoint = '/api/graphql') {
       this.endpoint = endpoint;
    }
 

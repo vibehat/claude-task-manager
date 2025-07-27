@@ -1,7 +1,7 @@
 import { TaskMasterFileOperations } from '../../../core';
 import { TaskMasterDB } from '../../../taskmaster';
 import { transformTask, transformTaskFromDB } from '../shared/helpers';
-import { GraphQLContext } from '../../context';
+import type { GraphQLContext } from '../../context';
 import {
    defaultResolverCache,
    generateCacheKey,

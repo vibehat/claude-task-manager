@@ -2,7 +2,7 @@ import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { typeDefs, resolvers } from '@/libs/server/graphql';
 import { createGraphQLContext } from '@/libs/server/graphql/context';
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 // import { responseCachePlugin } from '@apollo/server-plugin-response-cache';
 import { initializePerformanceMonitoring } from '@/libs/server/performance/performance-metrics';
 import { createGraphQLSecurityPlugin } from '@/libs/server/security/graphql-security-plugin';
@@ -36,10 +36,10 @@ const handler = startServerAndCreateNextHandler(server, {
    },
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<Response> {
    return handler(request);
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<Response> {
    return handler(request);
 }

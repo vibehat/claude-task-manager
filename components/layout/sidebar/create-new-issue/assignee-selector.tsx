@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useIssuesStore } from '@/store/issues-store';
-import { User, users } from '@/mock-data/users';
+import type { User } from '@/mock-data/users';
+import { users } from '@/mock-data/users';
 import { CheckIcon, UserCircle } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -22,18 +23,18 @@ interface AssigneeSelectorProps {
    onChange: (assignee: User | null) => void;
 }
 
-export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) {
+export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string | null>(assignee?.id || null);
+   const [value, setValue] = useState<string | null>(assignee?.id ?? null);
 
    const { filterByAssignee } = useIssuesStore();
 
    useEffect(() => {
-      setValue(assignee?.id || null);
+      setValue(assignee?.id ?? null);
    }, [assignee]);
 
-   const handleAssigneeChange = (userId: string) => {
+   const handleAssigneeChange = (userId: string): void => {
       if (userId === 'unassigned') {
          setValue(null);
          onChange(null);
@@ -60,7 +61,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
                   aria-expanded={open}
                >
                   {value ? (
-                     (() => {
+                     ((): JSX.Element | null => {
                         const selectedUser = users.find((user) => user.id === value);
                         if (selectedUser) {
                            return (

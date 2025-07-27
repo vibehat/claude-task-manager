@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { RiBox3Fill, RiLinkedinFill, RiThreadsFill, RiTwitterXFill } from '@remixicon/react';
 
-export function HelpButton() {
+export function HelpButton(): JSX.Element {
    return (
       <DropdownMenu>
          <DropdownMenuTrigger asChild>

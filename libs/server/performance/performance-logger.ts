@@ -5,7 +5,7 @@
  * formats and levels.
  */
 
-import { QueryMetrics, SystemMetrics, PerformanceAlert } from './performance-metrics';
+import type { QueryMetrics, SystemMetrics, PerformanceAlert } from './performance-metrics';
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -28,11 +28,7 @@ export class PerformanceLogger {
    private enableFileOutput: boolean;
    private logBuffer: PerformanceLogEntry[] = [];
 
-   constructor(
-      logLevel: LogLevel = 'info',
-      enableConsoleOutput: boolean = true,
-      enableFileOutput: boolean = false
-   ) {
+   constructor(logLevel: LogLevel = 'info', enableConsoleOutput = true, enableFileOutput = false) {
       this.logLevel = logLevel;
       this.enableConsoleOutput = enableConsoleOutput;
       this.enableFileOutput = enableFileOutput;
@@ -200,7 +196,7 @@ export class PerformanceLogger {
    /**
     * Get recent log entries
     */
-   getRecentLogs(count: number = 100, level?: LogLevel, type?: string): PerformanceLogEntry[] {
+   getRecentLogs(count = 100, level?: LogLevel, type?: string): PerformanceLogEntry[] {
       let logs = [...this.logBuffer];
 
       if (level) {
@@ -224,7 +220,7 @@ export class PerformanceLogger {
    /**
     * Get performance summary
     */
-   getPerformanceSummary(timeWindowMs: number = 3600000): {
+   getPerformanceSummary(timeWindowMs = 3600000): {
       totalQueries: number;
       slowQueries: number;
       errorQueries: number;

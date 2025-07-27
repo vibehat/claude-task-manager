@@ -1,9 +1,14 @@
 import { LexoRank } from '@/libs/client/utils';
-import { LabelInterface, labels } from './labels';
-import { Priority, priorities } from './priorities';
-import { Project, projects } from './projects';
-import { Status, status } from './status';
-import { User, users } from './users';
+import type { LabelInterface } from './labels';
+import { labels } from './labels';
+import type { Priority } from './priorities';
+import { priorities } from './priorities';
+import type { Project } from './projects';
+import { projects } from './projects';
+import type { Status } from './status';
+import { status } from './status';
+import type { User } from './users';
+import { users } from './users';
 
 export interface Issue {
    id: string;
@@ -484,9 +489,5 @@ export function sortIssuesByPriority(issues: Issue[]): Issue[] {
 
    return issues
       .slice()
-      .sort(
-         (a, b) =>
-            priorityOrder[a.priority.id as keyof typeof priorityOrder] -
-            priorityOrder[b.priority.id as keyof typeof priorityOrder]
-      );
+      .sort((a, b) => priorityOrder[a.priority.id] - priorityOrder[b.priority.id]);
 }

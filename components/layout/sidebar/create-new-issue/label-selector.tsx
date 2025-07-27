@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useIssuesStore } from '@/store/issues-store';
-import { LabelInterface, labels } from '@/mock-data/labels';
+import type { LabelInterface } from '@/mock-data/labels';
+import { labels } from '@/mock-data/labels';
 import { CheckIcon, TagIcon } from 'lucide-react';
 import { useId, useState } from 'react';
 import { cn } from '@/libs/client/utils';
@@ -21,13 +22,13 @@ interface LabelSelectorProps {
    onChange: (labels: LabelInterface[]) => void;
 }
 
-export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps) {
+export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
 
    const { filterByLabel } = useIssuesStore();
 
-   const handleLabelToggle = (label: LabelInterface) => {
+   const handleLabelToggle = (label: LabelInterface): void => {
       const isSelected = selectedLabels.some((l) => l.id === label.id);
       let newLabels: LabelInterface[];
 

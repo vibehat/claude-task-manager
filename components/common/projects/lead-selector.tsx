@@ -10,7 +10,8 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { users, User } from '@/mock-data/users';
+import type { User } from '@/mock-data/users';
+import { users } from '@/mock-data/users';
 import { CheckIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useId, useState } from 'react';
@@ -20,12 +21,12 @@ interface LeadSelectorProps {
    onLeadChange?: (userId: string) => void;
 }
 
-export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps) {
+export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(lead.id);
 
-   const handleLeadChange = (userId: string) => {
+   const handleLeadChange = (userId: string): void => {
       setValue(userId);
       setOpen(false);
 
@@ -46,7 +47,7 @@ export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps) {
                   role="combobox"
                   aria-expanded={open}
                >
-                  {(() => {
+                  {((): JSX.Element => {
                      const selectedUser = users.find((user) => user.id === value);
                      if (selectedUser) {
                         return (

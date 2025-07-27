@@ -14,7 +14,12 @@ interface IndieLayoutProps {
    className?: string;
 }
 
-export function IndieLayout({ children, header, headersNumber = 2, className }: IndieLayoutProps) {
+export function IndieLayout({
+   children,
+   header,
+   headersNumber = 2,
+   className,
+}: IndieLayoutProps): JSX.Element {
    const height = {
       1: 'h-[calc(100svh-40px)] lg:h-[calc(100svh-56px)]',
       2: 'h-[calc(100svh-80px)] lg:h-[calc(100svh-96px)]',
@@ -28,12 +33,7 @@ export function IndieLayout({ children, header, headersNumber = 2, className }: 
             <div className={cn('h-svh overflow-hidden lg:p-2 w-full', className)}>
                <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full">
                   {header}
-                  <div
-                     className={cn(
-                        'overflow-auto w-full',
-                        height[headersNumber as keyof typeof height]
-                     )}
-                  >
+                  <div className={cn('overflow-auto w-full', height[headersNumber])}>
                      {children}
                   </div>
                </div>

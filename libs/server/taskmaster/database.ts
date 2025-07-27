@@ -6,14 +6,15 @@
  */
 
 import { PrismaClient } from '../generated/prisma';
-import { Task, TaskStatus, TaskPriority } from '../types/taskmaster';
-import {
+import type { TaskStatus, TaskPriority } from '../types/taskmaster';
+import { Task } from '../types/taskmaster';
+import type {
    TaskMasterDBOptions,
    TaskQueryFilters,
    TaskOrderBy,
    TaskWithTimestamps,
-   TaskMasterDBError,
 } from './types';
+import { TaskMasterDBError } from './types';
 
 export class TaskMasterDB {
    private prisma: PrismaClient;

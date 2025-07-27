@@ -2,6 +2,7 @@
 
 import { RiGithubLine } from '@remixicon/react';
 import * as React from 'react';
+import Image from 'next/image';
 
 import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
@@ -17,7 +18,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BackToApp } from '@/components/layout/sidebar/back-to-app';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>): JSX.Element {
    const pathname = usePathname();
    const isSettings = pathname.includes('/settings');
    return (
@@ -41,7 +42,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
          <SidebarFooter>
             <div className="w-full flex flex-col gap-2">
                <a className="my-1.5" href="https://vercel.com/oss">
-                  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
+                  <Image
+                     alt="Vercel OSS Program"
+                     src="https://vercel.com/oss/program-badge.svg"
+                     width={120}
+                     height={32}
+                  />
                </a>
                <div className="w-full flex items-center justify-between">
                   <HelpButton />

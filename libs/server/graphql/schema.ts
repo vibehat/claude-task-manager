@@ -7,7 +7,7 @@
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { TaskResolver } from './resolvers/task.resolver';
-import { GraphQLSchema } from 'graphql';
+import type { GraphQLSchema } from 'graphql';
 
 export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
    const schema = await buildSchema({

@@ -7,14 +7,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
 import { RiSlackLine } from '@remixicon/react';
 
-export default function Notifications() {
+export default function Notifications(): JSX.Element {
    const [notifications, setNotifications] = useState({
       teamIssueAdded: false,
       issueCompleted: false,
       issueAddedToTriage: false,
    });
 
-   const handleCheckboxChange = (key: keyof typeof notifications) => {
+   const handleCheckboxChange = (key: keyof typeof notifications): void => {
       setNotifications((prev) => ({
          ...prev,
          [key]: !prev[key],

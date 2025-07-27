@@ -4,15 +4,15 @@
 
 export interface GraphQLResponse<T = any> {
    data?: T;
-   errors?: Array<{
+   errors?: {
       message: string;
-      locations?: Array<{
+      locations?: {
          line: number;
          column: number;
-      }>;
+      }[];
       path?: string[];
       extensions?: Record<string, any>;
-   }>;
+   }[];
    extensions?: Record<string, any>;
 }
 

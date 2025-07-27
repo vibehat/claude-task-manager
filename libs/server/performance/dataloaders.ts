@@ -5,8 +5,8 @@
  */
 
 import * as DataLoader from 'dataloader';
-import { PrismaClient } from '../generated/prisma';
-import { TaskWithTimestamps } from '../taskmaster/types';
+import type { PrismaClient } from '../generated/prisma';
+import type { TaskWithTimestamps } from '../taskmaster/types';
 
 export interface DataLoaders {
    taskById: DataLoader<number, TaskWithTimestamps | null>;

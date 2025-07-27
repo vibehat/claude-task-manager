@@ -1,12 +1,5 @@
-import {
-   PrismaClient,
-   Issue,
-   User,
-   Project,
-   Label,
-   IssueType,
-   IssueLabel,
-} from '../generated/prisma';
+import type { PrismaClient, Issue, User, Project, Label, IssueType } from '../generated/prisma';
+import { IssueLabel } from '../generated/prisma';
 import { GraphQLError } from 'graphql';
 
 export interface IssueWithRelations extends Issue {

@@ -6,7 +6,7 @@
  */
 
 import Redis from 'ioredis';
-import { KeyValueCache } from '@apollo/utils.keyvaluecache';
+import type { KeyValueCache } from '@apollo/utils.keyvaluecache';
 
 /**
  * Redis cache configuration

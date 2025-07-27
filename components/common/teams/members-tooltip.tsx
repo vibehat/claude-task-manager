@@ -2,13 +2,13 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { User } from '@/mock-data/users';
+import type { User } from '@/mock-data/users';
 
 interface MembersTooltipProps {
    members: User[];
 }
 
-export function MembersTooltip({ members }: MembersTooltipProps) {
+export function MembersTooltip({ members }: MembersTooltipProps): JSX.Element {
    const displayedMembers = members.slice(0, 3);
    const remainingCount = members.length - displayedMembers.length;
 

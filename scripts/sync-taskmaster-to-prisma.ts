@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 
 interface TaskMasterData {
    master: {
-      tasks: Array<{
+      tasks: {
          id: number;
          title: string;
          description: string;
@@ -21,7 +21,7 @@ interface TaskMasterData {
          priority: string;
          status: string;
          dependencies?: (number | string)[];
-         subtasks?: Array<{
+         subtasks?: {
             id: number;
             title: string;
             description: string;
@@ -29,8 +29,8 @@ interface TaskMasterData {
             dependencies?: string[];
             details?: string;
             testStrategy?: string;
-         }>;
-      }>;
+         }[];
+      }[];
       metadata: {
          created: string;
          updated: string;
@@ -178,9 +178,7 @@ async function syncToDatabase(force = false) {
       for (const task of tasksData.master.tasks) {
          if (task.dependencies && task.dependencies.length > 0) {
             // Only process numeric dependencies (task-to-task)
-            const numericDependencies = task.dependencies.filter(
-               (dep) => typeof dep === 'number'
-            ) as number[];
+            const numericDependencies = task.dependencies.filter((dep) => typeof dep === 'number');
 
             for (const dependencyId of numericDependencies) {
                await prisma.taskDependency.create({

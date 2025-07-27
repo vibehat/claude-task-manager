@@ -1,5 +1,5 @@
+import type { PrismaClient } from '../generated/prisma';
 import {
-   PrismaClient,
    Task,
    Subtask,
    Issue,
@@ -280,8 +280,8 @@ export interface ProjectFilter {
 export class ServiceError extends Error {
    constructor(
       message: string,
-      public code: string = 'UNKNOWN_ERROR',
-      public statusCode: number = 500
+      public code = 'UNKNOWN_ERROR',
+      public statusCode = 500
    ) {
       super(message);
       this.name = 'ServiceError';

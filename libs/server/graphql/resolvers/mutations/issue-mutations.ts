@@ -1,4 +1,4 @@
-import { GraphQLContext } from '../../context';
+import type { GraphQLContext } from '../../context';
 import { IssueModel, UserModel, ProjectModel, LabelModel } from '../../../models';
 
 export const issueMutations = {

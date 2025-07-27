@@ -5,7 +5,8 @@
  * extending the core Task Master types for database operations.
  */
 
-import { Task, TaskStatus, TaskPriority, TasksData } from '../types/taskmaster';
+import type { Task, TaskStatus, TaskPriority } from '../types/taskmaster';
+import { TasksData } from '../types/taskmaster';
 
 // Database-specific types that extend the core Task Master types
 export interface TaskMasterSyncOptions {

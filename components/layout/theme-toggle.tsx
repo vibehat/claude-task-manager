@@ -11,7 +11,7 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export function ThemeToggle() {
+export function ThemeToggle(): JSX.Element | null {
    const { theme, setTheme } = useTheme();
 
    // To avoid a hydration error caused by mismatched server/client rendering,

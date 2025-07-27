@@ -10,7 +10,8 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { priorities, Priority } from '@/mock-data/priorities';
+import type { Priority } from '@/mock-data/priorities';
+import { priorities } from '@/mock-data/priorities';
 import { CheckIcon } from 'lucide-react';
 import { useId, useState } from 'react';
 
@@ -19,12 +20,15 @@ interface PrioritySelectorProps {
    onPriorityChange?: (priorityId: string) => void;
 }
 
-export function PrioritySelector({ priority, onPriorityChange }: PrioritySelectorProps) {
+export function PrioritySelector({
+   priority,
+   onPriorityChange,
+}: PrioritySelectorProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(priority.id);
 
-   const handlePriorityChange = (priorityId: string) => {
+   const handlePriorityChange = (priorityId: string): void => {
       setValue(priorityId);
       setOpen(false);
 
@@ -45,7 +49,7 @@ export function PrioritySelector({ priority, onPriorityChange }: PrioritySelecto
                   role="combobox"
                   aria-expanded={open}
                >
-                  {(() => {
+                  {((): JSX.Element => {
                      const selectedItem = priorities.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;

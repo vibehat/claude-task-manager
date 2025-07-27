@@ -1,4 +1,4 @@
-import { Task, Subtask, TaskStatus, TaskPriority } from './taskmaster';
+import type { Task, Subtask, TaskStatus, TaskPriority } from './taskmaster';
 
 // Extended interfaces for UI-specific functionality
 export interface TaskWithProgress extends Task {
@@ -110,10 +110,10 @@ export interface BatchOperation {
 export interface BatchOperationResult {
    success: boolean;
    successfulTasks: number[];
-   failedTasks: Array<{
+   failedTasks: {
       taskId: number;
       error: string;
-   }>;
+   }[];
    summary: {
       total: number;
       successful: number;

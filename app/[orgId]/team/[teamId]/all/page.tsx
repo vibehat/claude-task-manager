@@ -2,7 +2,7 @@ import AllIssues from '@/components/common/issues/all-issues';
 import Header from '@/components/layout/headers/issues/header';
 import MainLayout from '@/components/layout/main-layout';
 
-export default function AllIssuesPage() {
+export default function AllIssuesPage(): JSX.Element {
    return (
       <MainLayout header={<Header />}>
          <AllIssues />

@@ -250,7 +250,7 @@ export class CacheMaintenanceScheduler {
    /**
     * Start scheduled cache maintenance
     */
-   start(intervalMinutes: number = 60): void {
+   start(intervalMinutes = 60): void {
       if (this.intervalId) {
          console.warn('Cache maintenance already scheduled');
          return;

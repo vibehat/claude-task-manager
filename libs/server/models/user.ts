@@ -1,4 +1,4 @@
-import { PrismaClient, User, UserStatus, UserRole } from '../generated/prisma';
+import type { PrismaClient, User, UserStatus, UserRole } from '../generated/prisma';
 import { GraphQLError } from 'graphql';
 
 export interface UserWithRelations extends User {

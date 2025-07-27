@@ -1,14 +1,14 @@
-import { Task, Subtask, TaskDependency, PrismaClient } from '../generated/prisma';
-import {
-   BaseModelClass,
+import type { Task, Subtask, TaskDependency } from '../generated/prisma';
+import { PrismaClient } from '../generated/prisma';
+import type {
    ModelOperations,
    BaseFilterOptions,
    OrderByOptions,
    PaginationOptions,
    Status,
    Priority,
-   ValidationHelper,
 } from './types';
+import { BaseModelClass, ValidationHelper } from './types';
 
 // Task with all relations included
 export interface TaskWithRelations extends Task {

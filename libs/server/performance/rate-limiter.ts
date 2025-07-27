@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { getGlobalErrorHandler, ErrorType } from '../core/error-handler';
 import { getGlobalCLIValidator } from '../cli/cli-command-validator';
 
@@ -272,7 +272,7 @@ export class TaskMasterRateLimiter {
    // Check a specific rule
    private async checkRule(request: NextRequest, rule: RateLimitRule): Promise<RateLimitResult> {
       // Skip if rule has skip condition
-      if (rule.skipIf && rule.skipIf(request)) {
+      if (rule.skipIf?.(request)) {
          return {
             allowed: true,
             info: {

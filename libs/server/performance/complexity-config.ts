@@ -4,7 +4,7 @@
  * Loads environment-specific configuration for query complexity analysis
  */
 
-import { QueryComplexityConfig } from './query-complexity';
+import type { QueryComplexityConfig } from './query-complexity';
 import complexityConfig from './complexity-config.json';
 
 type Environment = 'development' | 'production' | 'testing';

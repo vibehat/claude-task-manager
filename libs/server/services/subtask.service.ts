@@ -1,14 +1,10 @@
+import type { Subtask, SubtaskWithRelations, BaseService, ServiceOptions, Prisma } from './types';
 import {
-   Subtask,
-   SubtaskWithRelations,
    BaseServiceClass,
-   BaseService,
-   ServiceOptions,
    ValidationHelper,
    NotFoundError,
    ConflictError,
    JSONHelper,
-   Prisma,
 } from './types';
 
 // Create and Update data types using Prisma

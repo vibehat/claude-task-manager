@@ -139,7 +139,7 @@ export interface APIError {
 export class TaskMasterAPIError extends Error {
    constructor(
       message: string,
-      public statusCode: number = 500
+      public statusCode = 500
    ) {
       super(message);
       this.name = 'TaskMasterAPIError';

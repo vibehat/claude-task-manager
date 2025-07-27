@@ -6,7 +6,8 @@
 
 import { PrismaClient } from '../generated/prisma';
 import { TaskMasterDB, TaskMasterSync } from '../taskmaster';
-import { createDataLoaders, DataLoaders } from '../performance/dataloaders';
+import type { DataLoaders } from '../performance/dataloaders';
+import { createDataLoaders } from '../performance/dataloaders';
 
 export interface GraphQLContext {
    prisma: PrismaClient;

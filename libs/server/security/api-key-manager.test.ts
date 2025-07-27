@@ -253,9 +253,7 @@ describe('APIKeyManager', () => {
 
          // Mock decryption failure for this specific test
          const originalDecrypt = mockCrypto.subtle.decrypt;
-         (mockCrypto.subtle.decrypt as jest.Mock).mockRejectedValueOnce(
-            new Error('Decryption failed')
-         );
+         mockCrypto.subtle.decrypt.mockRejectedValueOnce(new Error('Decryption failed'));
 
          await expect(testManager.getAPIKey('anthropic')).rejects.toThrow(
             'Failed to decrypt API key. Check your master password.'
@@ -332,9 +330,7 @@ describe('APIKeyManager', () => {
 
          // Change password and mock decryption failure
          await keyManager.setMasterPassword('wrong-password');
-         (mockCrypto.subtle.decrypt as jest.Mock).mockRejectedValueOnce(
-            new Error('Invalid password')
-         );
+         mockCrypto.subtle.decrypt.mockRejectedValueOnce(new Error('Invalid password'));
 
          const isValid = await keyManager.validateMasterPassword();
          expect(isValid).toBe(false);
@@ -361,9 +357,7 @@ describe('APIKeyManager', () => {
          await keyManager.storeAPIKey('anthropic', 'test-key');
 
          // Mock decryption failure
-         (mockCrypto.subtle.decrypt as jest.Mock).mockRejectedValueOnce(
-            new Error('Decryption failed')
-         );
+         mockCrypto.subtle.decrypt.mockRejectedValueOnce(new Error('Decryption failed'));
 
          await expect(keyManager.rotateKeys('new-password-456')).rejects.toThrow(
             'Failed to decrypt key for provider anthropic'

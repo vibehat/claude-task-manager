@@ -8,7 +8,7 @@ import { SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import Notifications from './notifications';
 
-export default function HeaderNav() {
+export default function HeaderNav(): JSX.Element {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =
       useSearchStore();
    const searchInputRef = useRef<HTMLInputElement>(null);
@@ -22,7 +22,7 @@ export default function HeaderNav() {
    }, [isSearchOpen]);
 
    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
+      const handleClickOutside = (event: MouseEvent): void => {
          if (
             searchContainerRef.current &&
             !searchContainerRef.current.contains(event.target as Node) &&
@@ -35,7 +35,7 @@ export default function HeaderNav() {
       };
 
       document.addEventListener('mousedown', handleClickOutside);
-      return () => {
+      return (): void => {
          document.removeEventListener('mousedown', handleClickOutside);
       };
    }, [isSearchOpen, closeSearch, searchQuery]);

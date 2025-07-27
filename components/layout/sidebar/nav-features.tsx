@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/sidebar';
 import { featuresItems } from '@/mock-data/side-bar-nav';
 
-export function NavFeatures() {
+export function NavFeatures(): JSX.Element {
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarGroupLabel>Features</SidebarGroupLabel>

@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useIssuesStore } from '@/store/issues-store';
-import { status as allStatus, Status } from '@/mock-data/status';
+import type { Status } from '@/mock-data/status';
+import { status as allStatus } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
@@ -20,7 +21,7 @@ interface StatusSelectorProps {
    issueId: string;
 }
 
-export function StatusSelector({ status, issueId }: StatusSelectorProps) {
+export function StatusSelector({ status, issueId }: StatusSelectorProps): JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
@@ -31,7 +32,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps) {
       setValue(status.id);
    }, [status.id]);
 
-   const handleStatusChange = (statusId: string) => {
+   const handleStatusChange = (statusId: string): void => {
       setValue(statusId);
       setOpen(false);
 
@@ -55,7 +56,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps) {
                   role="combobox"
                   aria-expanded={open}
                >
-                  {(() => {
+                  {((): JSX.Element => {
                      const selectedItem = allStatus.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;

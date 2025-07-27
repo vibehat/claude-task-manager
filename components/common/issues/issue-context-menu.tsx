@@ -47,7 +47,7 @@ interface IssueContextMenuProps {
    issueId?: string;
 }
 
-export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
+export function IssueContextMenu({ issueId }: IssueContextMenuProps): JSX.Element {
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
 
@@ -62,7 +62,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       getIssueById,
    } = useIssuesStore();
 
-   const handleStatusChange = (statusId: string) => {
+   const handleStatusChange = (statusId: string): void => {
       if (!issueId) return;
       const newStatus = status.find((s) => s.id === statusId);
       if (newStatus) {
@@ -71,7 +71,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       }
    };
 
-   const handlePriorityChange = (priorityId: string) => {
+   const handlePriorityChange = (priorityId: string): void => {
       if (!issueId) return;
       const newPriority = priorities.find((p) => p.id === priorityId);
       if (newPriority) {
@@ -80,14 +80,14 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       }
    };
 
-   const handleAssigneeChange = (userId: string | null) => {
+   const handleAssigneeChange = (userId: string | null): void => {
       if (!issueId) return;
-      const newAssignee = userId ? users.find((u) => u.id === userId) || null : null;
+      const newAssignee = userId ? (users.find((u) => u.id === userId) ?? null) : null;
       updateIssueAssignee(issueId, newAssignee);
       toast.success(newAssignee ? `Assigned to ${newAssignee.name}` : 'Unassigned');
    };
 
-   const handleLabelToggle = (labelId: string) => {
+   const handleLabelToggle = (labelId: string): void => {
       if (!issueId) return;
       const issue = getIssueById(issueId);
       const label = labels.find((l) => l.id === labelId);
@@ -105,14 +105,14 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       }
    };
 
-   const handleProjectChange = (projectId: string | null) => {
+   const handleProjectChange = (projectId: string | null): void => {
       if (!issueId) return;
       const newProject = projectId ? projects.find((p) => p.id === projectId) : undefined;
       updateIssueProject(issueId, newProject);
       toast.success(newProject ? `Project set to ${newProject.name}` : 'Project removed');
    };
 
-   const handleSetDueDate = () => {
+   const handleSetDueDate = (): void => {
       if (!issueId) return;
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);
@@ -120,37 +120,37 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       toast.success('Due date set to 7 days from now');
    };
 
-   const handleAddLink = () => {
+   const handleAddLink = (): void => {
       toast.success('Link added');
    };
 
-   const handleMakeCopy = () => {
+   const handleMakeCopy = (): void => {
       toast.success('Issue copied');
    };
 
-   const handleCreateRelated = () => {
+   const handleCreateRelated = (): void => {
       toast.success('Related issue created');
    };
 
-   const handleMarkAs = (type: string) => {
+   const handleMarkAs = (type: string): void => {
       toast.success(`Marked as ${type}`);
    };
 
-   const handleMove = () => {
+   const handleMove = (): void => {
       toast.success('Issue moved');
    };
 
-   const handleSubscribe = () => {
+   const handleSubscribe = (): void => {
       setIsSubscribed(!isSubscribed);
       toast.success(isSubscribed ? 'Unsubscribed from issue' : 'Subscribed to issue');
    };
 
-   const handleFavorite = () => {
+   const handleFavorite = (): void => {
       setIsFavorite(!isFavorite);
       toast.success(isFavorite ? 'Removed from favorites' : 'Added to favorites');
    };
 
-   const handleCopy = () => {
+   const handleCopy = (): void => {
       if (!issueId) return;
       const issue = getIssueById(issueId);
       if (issue) {
@@ -159,7 +159,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
       }
    };
 
-   const handleRemindMe = () => {
+   const handleRemindMe = (): void => {
       toast.success('Reminder set');
    };
 

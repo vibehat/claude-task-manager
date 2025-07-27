@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CircleCheck, CircleX, AlertCircle, HelpCircle, Bell } from 'lucide-react';
-import { Project } from '@/mock-data/projects';
+import type { Project } from '@/mock-data/projects';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/libs/client/utils';
@@ -12,8 +12,8 @@ interface HealthPopoverProps {
    project: Project;
 }
 
-export function HealthPopover({ project }: HealthPopoverProps) {
-   const getHealthIcon = (healthId: string) => {
+export function HealthPopover({ project }: HealthPopoverProps): JSX.Element {
+   const getHealthIcon = (healthId: string): JSX.Element => {
       switch (healthId) {
          case 'on-track':
             return <CircleCheck className="size-4 text-green-500" />;

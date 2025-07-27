@@ -4,7 +4,8 @@
  * Comprehensive mutation hooks for issues, users, projects, and labels
  */
 
-import { useMutation, UseMutationOptions, UseMutationResult, gql } from '@apollo/client';
+import type { UseMutationOptions, UseMutationResult } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import type {
    Issue,
    User,

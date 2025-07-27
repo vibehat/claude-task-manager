@@ -3,7 +3,7 @@
  * Context provided to all GraphQL resolvers
  */
 
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import type { Task, Subtask, TasksData } from './taskmaster';
 
 /**

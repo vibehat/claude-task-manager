@@ -1,4 +1,4 @@
-import { Team } from '@/mock-data/teams';
+import type { Team } from '@/mock-data/teams';
 import { MembersTooltip } from './members-tooltip';
 import { ProjectsTooltip } from './projects-tooltip';
 import { Check } from 'lucide-react';
@@ -8,7 +8,7 @@ interface TeamLineProps {
    team: Team;
 }
 
-export default function TeamLine({ team }: TeamLineProps) {
+export default function TeamLine({ team }: TeamLineProps): JSX.Element {
    return (
       <div className="w-full flex items-center py-3 px-6 border-b hover:bg-sidebar/50 border-muted-foreground/5 text-sm">
          <div className="w-[70%] sm:w-[50%] md:w-[45%] lg:w-[40%] flex items-center gap-2">

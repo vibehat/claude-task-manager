@@ -1,4 +1,6 @@
-import { Status, status } from './status';
+import type { Status } from './status';
+import { status } from './status';
+import type { LucideIcon } from 'lucide-react';
 import {
    Accessibility,
    Bell,
@@ -13,7 +15,6 @@ import {
    LayoutDashboard,
    Loader,
    Lock,
-   LucideIcon,
    Play,
    Settings,
    Shapes,
@@ -22,9 +23,11 @@ import {
    Vault,
    Wallpaper,
 } from 'lucide-react';
-import { RemixiconComponentType } from '@remixicon/react';
-import { User, users } from './users';
-import { Priority, priorities } from './priorities';
+import type { RemixiconComponentType } from '@remixicon/react';
+import type { User } from './users';
+import { users } from './users';
+import type { Priority } from './priorities';
+import { priorities } from './priorities';
 export interface Project {
    id: string;
    name: string;

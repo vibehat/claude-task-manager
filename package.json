@@ -7,6 +7,8 @@
       "build": "next build",
       "start": "next start",
       "lint": "next lint",
+      "eslint": "eslint .",
+      "eslint:fix": "eslint . --fix",
       "typecheck": "tsc --noEmit",
       "typecheck:strict": "tsc --noEmit --strict --noImplicitAny",
       "format": "prettier --write .",
