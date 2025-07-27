@@ -182,6 +182,123 @@ exports.Prisma.SyncConflictScalarFieldEnum = {
    timestamp: 'timestamp',
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+   id: 'id',
+   name: 'name',
+   email: 'email',
+   avatarUrl: 'avatarUrl',
+   status: 'status',
+   role: 'role',
+   joinedDate: 'joinedDate',
+   teamIds: 'teamIds',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.ProjectScalarFieldEnum = {
+   id: 'id',
+   name: 'name',
+   description: 'description',
+   color: 'color',
+   identifier: 'identifier',
+   icon: 'icon',
+   percentComplete: 'percentComplete',
+   startDate: 'startDate',
+   health: 'health',
+   leadId: 'leadId',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.LabelScalarFieldEnum = {
+   id: 'id',
+   name: 'name',
+   color: 'color',
+   description: 'description',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.IssueStatusScalarFieldEnum = {
+   id: 'id',
+   name: 'name',
+   color: 'color',
+   iconName: 'iconName',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.IssuePriorityScalarFieldEnum = {
+   id: 'id',
+   name: 'name',
+   iconName: 'iconName',
+   order: 'order',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.IssueScalarFieldEnum = {
+   id: 'id',
+   identifier: 'identifier',
+   title: 'title',
+   description: 'description',
+   statusId: 'statusId',
+   priorityId: 'priorityId',
+   status: 'status',
+   priority: 'priority',
+   rank: 'rank',
+   cycleId: 'cycleId',
+   dueDate: 'dueDate',
+   taskId: 'taskId',
+   subtaskId: 'subtaskId',
+   issueType: 'issueType',
+   assigneeId: 'assigneeId',
+   projectId: 'projectId',
+   subissues: 'subissues',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.IssueLabelScalarFieldEnum = {
+   id: 'id',
+   issueId: 'issueId',
+   labelId: 'labelId',
+};
+
+exports.Prisma.CycleScalarFieldEnum = {
+   id: 'id',
+   number: 'number',
+   name: 'name',
+   teamId: 'teamId',
+   startDate: 'startDate',
+   endDate: 'endDate',
+   progress: 'progress',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.TeamScalarFieldEnum = {
+   id: 'id',
+   name: 'name',
+   icon: 'icon',
+   joined: 'joined',
+   color: 'color',
+   createdAt: 'createdAt',
+   updatedAt: 'updatedAt',
+};
+
+exports.Prisma.TeamMemberScalarFieldEnum = {
+   id: 'id',
+   teamId: 'teamId',
+   userId: 'userId',
+};
+
+exports.Prisma.TeamProjectScalarFieldEnum = {
+   id: 'id',
+   teamId: 'teamId',
+   projectId: 'projectId',
+};
+
 exports.Prisma.SortOrder = {
    asc: 'asc',
    desc: 'desc',
@@ -191,6 +308,29 @@ exports.Prisma.NullsOrder = {
    first: 'first',
    last: 'last',
 };
+exports.UserStatus = exports.$Enums.UserStatus = {
+   ONLINE: 'ONLINE',
+   OFFLINE: 'OFFLINE',
+   AWAY: 'AWAY',
+};
+
+exports.UserRole = exports.$Enums.UserRole = {
+   ADMIN: 'ADMIN',
+   MEMBER: 'MEMBER',
+   GUEST: 'GUEST',
+};
+
+exports.ProjectHealth = exports.$Enums.ProjectHealth = {
+   NO_UPDATE: 'NO_UPDATE',
+   OFF_TRACK: 'OFF_TRACK',
+   ON_TRACK: 'ON_TRACK',
+   AT_RISK: 'AT_RISK',
+};
+
+exports.IssueType = exports.$Enums.IssueType = {
+   TASK: 'TASK',
+   SUBTASK: 'SUBTASK',
+};
 
 exports.Prisma.ModelName = {
    Task: 'Task',
@@ -199,6 +339,17 @@ exports.Prisma.ModelName = {
    TaskMasterMetadata: 'TaskMasterMetadata',
    SyncOperation: 'SyncOperation',
    SyncConflict: 'SyncConflict',
+   User: 'User',
+   Project: 'Project',
+   Label: 'Label',
+   IssueStatus: 'IssueStatus',
+   IssuePriority: 'IssuePriority',
+   Issue: 'Issue',
+   IssueLabel: 'IssueLabel',
+   Cycle: 'Cycle',
+   Team: 'Team',
+   TeamMember: 'TeamMember',
+   TeamProject: 'TeamProject',
 };
 
 /**

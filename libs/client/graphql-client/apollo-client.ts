@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Task, TaskStatus, TaskPriority } from './generated';
+import { Task, TaskPriority } from './generated';
 
 // GraphQL endpoint
 const httpLink = createHttpLink({
@@ -105,7 +105,7 @@ const cache = new InMemoryCache({
                   if (subtasks.length === 0) return 0;
 
                   const completed = subtasks.filter(
-                     (subtask) => readField('status', subtask) === TaskStatus.Done
+                     (subtask) => readField('status', subtask) === 'done'
                   ).length;
 
                   return Math.round((completed / subtasks.length) * 100);
@@ -129,9 +129,9 @@ const cache = new InMemoryCache({
                               status
                            }
                         `,
-                     });
+                     }) as { status?: string } | null;
 
-                     if (!depTask || depTask.status !== TaskStatus.Done) {
+                     if (!depTask || !depTask.status || depTask.status !== 'done') {
                         return false;
                      }
                   }

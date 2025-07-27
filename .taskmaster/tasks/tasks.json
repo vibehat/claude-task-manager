@@ -66,8 +66,54 @@
             "testStrategy": "Component testing for sidebar rendering, interaction testing for mode switcher, localStorage persistence testing, accessibility testing for navigation",
             "priority": "high",
             "dependencies": [28],
-            "status": "pending",
-            "subtasks": []
+            "status": "done",
+            "subtasks": [
+               {
+                  "id": 1,
+                  "title": "Create IndieSidebar component structure",
+                  "description": "Implement the main IndieSidebar component in /components/layout/sidebar/indie-sidebar.tsx with proper TypeScript interfaces and basic layout structure",
+                  "dependencies": [],
+                  "details": "Create IndieSidebar React component using TypeScript with proper prop interfaces. Implement basic component structure with header, navigation sections, and footer areas. Follow existing sidebar component patterns and ensure proper TypeScript strict mode compliance. Include proper JSX structure for rendering navigation items and mode switcher placement.",
+                  "status": "done",
+                  "testStrategy": "Unit tests for component rendering, TypeScript interface validation, and basic structure verification"
+               },
+               {
+                  "id": 2,
+                  "title": "Build indie sidebar navigation data structure",
+                  "description": "Create navigation data structure in /mock-data/indie-sidebar-nav.ts with Dashboard, Tasks, and Settings sections",
+                  "dependencies": ["29.1"],
+                  "details": "Define TypeScript interfaces for navigation items and sections. Create mock data structure with Dashboard, Tasks, and Settings navigation items including proper icons from Lucide React, routes, and metadata. Ensure data structure is compatible with existing NavItem and NavSection components and follows established patterns.",
+                  "status": "done",
+                  "testStrategy": "Data structure validation testing, TypeScript interface compliance testing, and navigation item completeness verification"
+               },
+               {
+                  "id": 3,
+                  "title": "Implement mode switcher component",
+                  "description": "Create mode switcher using Radix UI Select for toggling between team and individual modes with localStorage persistence",
+                  "dependencies": ["29.1"],
+                  "details": "Build mode switcher component using Radix UI Select with proper TypeScript interfaces. Implement toggle functionality between 'team' and 'individual' modes. Add localStorage integration for mode preference persistence with proper error handling and TypeScript typing. Include visual indicators for current mode and smooth transitions.",
+                  "status": "done",
+                  "testStrategy": "Mode switching functionality testing, localStorage persistence testing, and Radix UI Select interaction testing"
+               },
+               {
+                  "id": 4,
+                  "title": "Integrate navigation components and styling",
+                  "description": "Integrate existing NavItem and NavSection components with indie navigation data and apply consistent styling",
+                  "dependencies": ["29.2", "29.3"],
+                  "details": "Import and configure existing NavItem and NavSection components to work with indie navigation data structure. Apply consistent styling using Tailwind CSS classes matching existing design system. Ensure proper spacing, typography, and visual hierarchy. Handle active states and hover effects consistent with team mode sidebar.",
+                  "status": "done",
+                  "testStrategy": "Component integration testing, visual consistency testing, and interaction state testing"
+               },
+               {
+                  "id": 5,
+                  "title": "Add responsive behavior and accessibility features",
+                  "description": "Implement responsive design and accessibility features for the indie sidebar including keyboard navigation and screen reader support",
+                  "dependencies": ["29.4"],
+                  "details": "Add responsive behavior for mobile and tablet viewports using Tailwind CSS breakpoints. Implement proper ARIA labels, keyboard navigation support, and focus management. Ensure screen reader compatibility and proper semantic HTML structure. Add collapse/expand functionality for mobile devices matching existing sidebar patterns.",
+                  "status": "done",
+                  "testStrategy": "Responsive design testing across devices, accessibility testing with screen readers, and keyboard navigation testing"
+               }
+            ]
          },
          {
             "id": 30,
@@ -160,7 +206,7 @@
       ],
       "metadata": {
          "created": "2025-07-26T00:47:21.699Z",
-         "updated": "2025-07-26T18:00:31.600Z",
+         "updated": "2025-07-26T18:05:32.495Z",
          "description": "Tasks for master context"
       }
    }

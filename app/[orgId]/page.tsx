@@ -1,10 +1,11 @@
 import { redirect } from 'next/navigation';
-import { getDefaultOrgRoute } from '@/lib/config/defaults';
+import { getDefaultOrgRoute } from '@/libs/config/defaults';
 
 interface OrgIdPageProps {
-   params: { orgId: string };
+   params: Promise<{ orgId: string }>;
 }
 
-export default function OrgIdPage({ params }: OrgIdPageProps) {
-   redirect(getDefaultOrgRoute(params.orgId));
+export default async function OrgIdPage({ params }: OrgIdPageProps) {
+   const { orgId } = await params;
+   redirect(getDefaultOrgRoute(orgId));
 }

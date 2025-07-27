@@ -14,7 +14,7 @@ export type DefaultConfig = typeof DEFAULT_CONFIG;
 
 // Helper function to get default route
 export function getDefaultRoute(): string {
-   return `/${DEFAULT_CONFIG.DEFAULT_ORG_ID}/team/${DEFAULT_CONFIG.DEFAULT_TEAM_ID}/${DEFAULT_CONFIG.DEFAULT_VIEW}`;
+   return '/indie';
 }
 
 // Helper function to get org route with default team

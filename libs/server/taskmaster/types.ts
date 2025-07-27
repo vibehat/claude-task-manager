@@ -26,6 +26,8 @@ export interface SyncResult {
    tasksProcessed: number;
    /** Number of subtasks that were created/updated */
    subtasksProcessed: number;
+   /** Number of issues that were created for tasks and subtasks */
+   issuesCreated?: number;
    /** Any errors that occurred during sync */
    errors: string[];
    /** Duration of sync operation in milliseconds */

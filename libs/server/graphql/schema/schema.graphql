@@ -261,7 +261,7 @@ type TaskCollection {
 }
 
 """
-Basic user information (placeholder for future expansion)
+User information for issue assignment and management
 """
 type User {
    """
@@ -280,6 +280,36 @@ type User {
    email: String!
 
    """
+   Avatar URL for the user
+   """
+   avatarUrl: String
+
+   """
+   Current status of the user
+   """
+   status: UserStatus!
+
+   """
+   Role of the user in the system
+   """
+   role: UserRole!
+
+   """
+   Date when the user joined
+   """
+   joinedDate: DateTime!
+
+   """
+   Team IDs the user belongs to
+   """
+   teamIds: [String!]!
+
+   """
+   Issues assigned to this user
+   """
+   assignedIssues: [Issue!]!
+
+   """
    Timestamp when the user was created
    """
    createdAt: DateTime!
@@ -288,6 +318,246 @@ type User {
    Timestamp when the user was last updated
    """
    updatedAt: DateTime!
+}
+
+"""
+Project information for organizing issues
+"""
+type Project {
+   """
+   Unique identifier for the project
+   """
+   id: ID!
+
+   """
+   Display name of the project
+   """
+   name: String!
+
+   """
+   Description of the project
+   """
+   description: String
+
+   """
+   Color associated with the project
+   """
+   color: String
+
+   """
+   Short identifier for the project (e.g., LNUI)
+   """
+   identifier: String
+
+   """
+   Issues belonging to this project
+   """
+   issues: [Issue!]!
+
+   """
+   Timestamp when the project was created
+   """
+   createdAt: DateTime!
+
+   """
+   Timestamp when the project was last updated
+   """
+   updatedAt: DateTime!
+}
+
+"""
+Label information for categorizing issues
+"""
+type Label {
+   """
+   Unique identifier for the label
+   """
+   id: ID!
+
+   """
+   Display name of the label
+   """
+   name: String!
+
+   """
+   Color associated with the label
+   """
+   color: String!
+
+   """
+   Description of the label
+   """
+   description: String
+
+   """
+   Issues that have this label
+   """
+   issues: [Issue!]!
+
+   """
+   Timestamp when the label was created
+   """
+   createdAt: DateTime!
+
+   """
+   Timestamp when the label was last updated
+   """
+   updatedAt: DateTime!
+}
+
+"""
+Issue information - wraps tasks with additional board metadata
+"""
+type Issue {
+   """
+   Unique identifier for the issue
+   """
+   id: ID!
+
+   """
+   Human-readable identifier (e.g., LNUI-101)
+   """
+   identifier: String!
+
+   """
+   Title of the issue
+   """
+   title: String!
+
+   """
+   Description of the issue
+   """
+   description: String!
+
+   """
+   Current status of the issue
+   """
+   status: String!
+
+   """
+   Priority level of the issue
+   """
+   priority: String!
+
+   """
+   Rank for ordering (LexoRank)
+   """
+   rank: String!
+
+   """
+   Sprint/cycle identifier
+   """
+   cycleId: String
+
+   """
+   Due date for the issue
+   """
+   dueDate: DateTime
+
+   """
+   Type of issue (task or subtask)
+   """
+   issueType: IssueType!
+
+   """
+   Associated task ID from Task Master
+   """
+   taskId: Int
+
+   """
+   Associated subtask ID from Task Master
+   """
+   subtaskId: String
+
+   """
+   User assigned to this issue
+   """
+   assignee: User
+
+   """
+   Project this issue belongs to
+   """
+   project: Project
+
+   """
+   Task this issue is linked to
+   """
+   task: Task
+
+   """
+   Labels assigned to this issue
+   """
+   labels: [Label!]!
+
+   """
+   Sub-issue IDs (for parent-child relationships)
+   """
+   subissues: [String!]!
+
+   """
+   Timestamp when the issue was created
+   """
+   createdAt: DateTime!
+
+   """
+   Timestamp when the issue was last updated
+   """
+   updatedAt: DateTime!
+}
+
+"""
+User status enumeration
+"""
+enum UserStatus {
+   """
+   User is online
+   """
+   ONLINE
+
+   """
+   User is offline
+   """
+   OFFLINE
+
+   """
+   User is away
+   """
+   AWAY
+}
+
+"""
+User role enumeration
+"""
+enum UserRole {
+   """
+   Administrator with full access
+   """
+   ADMIN
+
+   """
+   Regular member
+   """
+   MEMBER
+
+   """
+   Guest with limited access
+   """
+   GUEST
+}
+
+"""
+Issue type enumeration
+"""
+enum IssueType {
+   """
+   Issue represents a main task
+   """
+   TASK
+
+   """
+   Issue represents a subtask
+   """
+   SUBTASK
 }
 
 """
@@ -476,6 +746,166 @@ type Query {
    Get sync health metrics
    """
    syncHealth: SyncHealth!
+
+   """
+   Get all issues with comprehensive filtering, ordering, and pagination
+   """
+   issues(
+      """
+      Filter issues by various criteria
+      """
+      filter: IssueFilterInput
+
+      """
+      Order issues by specified field and direction
+      """
+      orderBy: [IssueOrderByInput!]
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): IssueConnection!
+
+   """
+   Get a specific issue by ID
+   """
+   issue(id: ID!): Issue
+
+   """
+   Search issues with text search and filters
+   """
+   searchIssues(
+      """
+      Search query string
+      """
+      query: String!
+
+      """
+      Additional filters to apply
+      """
+      filter: IssueFilterInput
+
+      """
+      Order results
+      """
+      orderBy: [IssueOrderByInput!]
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): IssueConnection!
+
+   """
+   Get issues by project
+   """
+   issuesByProject(
+      """
+      Project ID to filter by
+      """
+      projectId: ID!
+
+      """
+      Additional filters to apply
+      """
+      filter: IssueFilterInput
+
+      """
+      Order results
+      """
+      orderBy: [IssueOrderByInput!]
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): IssueConnection!
+
+   """
+   Get issues assigned to a specific user
+   """
+   issuesByAssignee(
+      """
+      User ID to filter by
+      """
+      assigneeId: ID!
+
+      """
+      Additional filters to apply
+      """
+      filter: IssueFilterInput
+
+      """
+      Order results
+      """
+      orderBy: [IssueOrderByInput!]
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): IssueConnection!
+
+   """
+   Get all users
+   """
+   users(
+      """
+      Filter users by various criteria
+      """
+      filter: UserFilterInput
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): UserConnection!
+
+   """
+   Get a specific user by ID
+   """
+   user(id: ID!): User
+
+   """
+   Get all projects
+   """
+   projects(
+      """
+      Filter projects by various criteria
+      """
+      filter: ProjectFilterInput
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): ProjectConnection!
+
+   """
+   Get a specific project by ID
+   """
+   project(id: ID!): Project
+
+   """
+   Get all labels
+   """
+   labels(
+      """
+      Filter labels by various criteria
+      """
+      filter: LabelFilterInput
+
+      """
+      Pagination parameters
+      """
+      pagination: PaginationInput
+   ): LabelConnection!
+
+   """
+   Get a specific label by ID
+   """
+   label(id: ID!): Label
 }
 
 # Root Mutation Type
@@ -537,6 +967,76 @@ type Mutation {
    Force a manual sync
    """
    forceSync: Boolean!
+
+   """
+   Create a new issue
+   """
+   createIssue(input: CreateIssueInput!): Issue!
+
+   """
+   Update an existing issue
+   """
+   updateIssue(id: ID!, input: UpdateIssueInput!): Issue!
+
+   """
+   Delete an issue
+   """
+   deleteIssue(id: ID!): Boolean!
+
+   """
+   Assign an issue to a user
+   """
+   assignIssue(issueId: ID!, assigneeId: ID!): Issue!
+
+   """
+   Update issue status
+   """
+   updateIssueStatus(issueId: ID!, status: String!): Issue!
+
+   """
+   Create a new user
+   """
+   createUser(input: CreateUserInput!): User!
+
+   """
+   Update an existing user
+   """
+   updateUser(id: ID!, input: UpdateUserInput!): User!
+
+   """
+   Delete a user
+   """
+   deleteUser(id: ID!): Boolean!
+
+   """
+   Create a new project
+   """
+   createProject(input: CreateProjectInput!): Project!
+
+   """
+   Update an existing project
+   """
+   updateProject(id: ID!, input: UpdateProjectInput!): Project!
+
+   """
+   Delete a project
+   """
+   deleteProject(id: ID!): Boolean!
+
+   """
+   Create a new label
+   """
+   createLabel(input: CreateLabelInput!): Label!
+
+   """
+   Update an existing label
+   """
+   updateLabel(id: ID!, input: UpdateLabelInput!): Label!
+
+   """
+   Delete a label
+   """
+   deleteLabel(id: ID!): Boolean!
 }
 
 # Supporting Types for CLI and Sync Operations
@@ -1691,4 +2191,629 @@ input BatchOptionsInput {
    Whether to continue on error
    """
    continueOnError: Boolean = true
+}
+
+# Issue-related Connection Types
+
+"""
+Issue connection for paginated issue queries
+"""
+type IssueConnection {
+   """
+   List of issue edges
+   """
+   edges: [IssueEdge!]!
+
+   """
+   List of issues (convenience field)
+   """
+   nodes: [Issue!]!
+
+   """
+   Pagination information
+   """
+   pageInfo: PageInfo!
+
+   """
+   Total count of items (if available)
+   """
+   totalCount: Int
+}
+
+"""
+Issue edge with cursor
+"""
+type IssueEdge {
+   """
+   The issue node
+   """
+   node: Issue!
+
+   """
+   Cursor for this edge
+   """
+   cursor: String!
+}
+
+"""
+User connection for paginated user queries
+"""
+type UserConnection {
+   """
+   List of user edges
+   """
+   edges: [UserEdge!]!
+
+   """
+   List of users (convenience field)
+   """
+   nodes: [User!]!
+
+   """
+   Pagination information
+   """
+   pageInfo: PageInfo!
+
+   """
+   Total count of items (if available)
+   """
+   totalCount: Int
+}
+
+"""
+User edge with cursor
+"""
+type UserEdge {
+   """
+   The user node
+   """
+   node: User!
+
+   """
+   Cursor for this edge
+   """
+   cursor: String!
+}
+
+"""
+Project connection for paginated project queries
+"""
+type ProjectConnection {
+   """
+   List of project edges
+   """
+   edges: [ProjectEdge!]!
+
+   """
+   List of projects (convenience field)
+   """
+   nodes: [Project!]!
+
+   """
+   Pagination information
+   """
+   pageInfo: PageInfo!
+
+   """
+   Total count of items (if available)
+   """
+   totalCount: Int
+}
+
+"""
+Project edge with cursor
+"""
+type ProjectEdge {
+   """
+   The project node
+   """
+   node: Project!
+
+   """
+   Cursor for this edge
+   """
+   cursor: String!
+}
+
+"""
+Label connection for paginated label queries
+"""
+type LabelConnection {
+   """
+   List of label edges
+   """
+   edges: [LabelEdge!]!
+
+   """
+   List of labels (convenience field)
+   """
+   nodes: [Label!]!
+
+   """
+   Pagination information
+   """
+   pageInfo: PageInfo!
+
+   """
+   Total count of items (if available)
+   """
+   totalCount: Int
+}
+
+"""
+Label edge with cursor
+"""
+type LabelEdge {
+   """
+   The label node
+   """
+   node: Label!
+
+   """
+   Cursor for this edge
+   """
+   cursor: String!
+}
+
+# Issue Input Types
+
+"""
+Input for creating issues
+"""
+input CreateIssueInput {
+   """
+   Human-readable identifier (e.g., LNUI-101)
+   """
+   identifier: String!
+
+   """
+   Title of the issue
+   """
+   title: String!
+
+   """
+   Description of the issue
+   """
+   description: String!
+
+   """
+   Status of the issue
+   """
+   status: String = "to-do"
+
+   """
+   Priority of the issue
+   """
+   priority: String = "medium"
+
+   """
+   Rank for ordering
+   """
+   rank: String!
+
+   """
+   Sprint/cycle identifier
+   """
+   cycleId: String
+
+   """
+   Due date for the issue
+   """
+   dueDate: DateTime
+
+   """
+   Type of issue
+   """
+   issueType: IssueType = TASK
+
+   """
+   Associated task ID
+   """
+   taskId: Int
+
+   """
+   Associated subtask ID
+   """
+   subtaskId: String
+
+   """
+   Assignee ID
+   """
+   assigneeId: ID
+
+   """
+   Project ID
+   """
+   projectId: ID
+
+   """
+   Label IDs to assign
+   """
+   labelIds: [ID!] = []
+
+   """
+   Sub-issue IDs
+   """
+   subissues: [String!] = []
+}
+
+"""
+Input for updating issues
+"""
+input UpdateIssueInput {
+   """
+   Title of the issue
+   """
+   title: String
+
+   """
+   Description of the issue
+   """
+   description: String
+
+   """
+   Status of the issue
+   """
+   status: String
+
+   """
+   Priority of the issue
+   """
+   priority: String
+
+   """
+   Rank for ordering
+   """
+   rank: String
+
+   """
+   Sprint/cycle identifier
+   """
+   cycleId: String
+
+   """
+   Due date for the issue
+   """
+   dueDate: DateTime
+
+   """
+   Assignee ID
+   """
+   assigneeId: ID
+
+   """
+   Project ID
+   """
+   projectId: ID
+
+   """
+   Label IDs to assign
+   """
+   labelIds: [ID!]
+
+   """
+   Sub-issue IDs
+   """
+   subissues: [String!]
+}
+
+"""
+Issue filtering options
+"""
+input IssueFilterInput {
+   """
+   Filter by issue status
+   """
+   status: [String!]
+
+   """
+   Filter by issue priority
+   """
+   priority: [String!]
+
+   """
+   Search in title and description
+   """
+   search: String
+
+   """
+   Filter by creation date range
+   """
+   createdAt: DateRangeInput
+
+   """
+   Filter by last update date range
+   """
+   updatedAt: DateRangeInput
+
+   """
+   Filter by assignee
+   """
+   assigneeId: ID
+
+   """
+   Filter by project
+   """
+   projectId: ID
+
+   """
+   Filter by labels
+   """
+   labelIds: [ID!]
+
+   """
+   Filter by issue type
+   """
+   issueType: IssueType
+
+   """
+   Filter by due date range
+   """
+   dueDate: DateRangeInput
+
+   """
+   Filter by cycle ID
+   """
+   cycleId: String
+
+   """
+   Filter by associated task ID
+   """
+   taskId: Int
+
+   """
+   Filter by associated subtask ID
+   """
+   subtaskId: String
+}
+
+"""
+Issue ordering options
+"""
+input IssueOrderByInput {
+   """
+   Field to order by
+   """
+   field: IssueOrderField!
+
+   """
+   Sort direction
+   """
+   direction: OrderDirection!
+}
+
+"""
+Issue order fields
+"""
+enum IssueOrderField {
+   ID
+   IDENTIFIER
+   TITLE
+   STATUS
+   PRIORITY
+   RANK
+   CREATED_AT
+   UPDATED_AT
+   DUE_DATE
+}
+
+# User Input Types
+
+"""
+Input for creating users
+"""
+input CreateUserInput {
+   """
+   Display name of the user
+   """
+   name: String!
+
+   """
+   Email address of the user
+   """
+   email: String!
+
+   """
+   Avatar URL for the user
+   """
+   avatarUrl: String
+
+   """
+   Status of the user
+   """
+   status: UserStatus = OFFLINE
+
+   """
+   Role of the user
+   """
+   role: UserRole = MEMBER
+
+   """
+   Date when the user joined
+   """
+   joinedDate: DateTime!
+
+   """
+   Team IDs the user belongs to
+   """
+   teamIds: [String!] = []
+}
+
+"""
+Input for updating users
+"""
+input UpdateUserInput {
+   """
+   Display name of the user
+   """
+   name: String
+
+   """
+   Avatar URL for the user
+   """
+   avatarUrl: String
+
+   """
+   Status of the user
+   """
+   status: UserStatus
+
+   """
+   Role of the user
+   """
+   role: UserRole
+
+   """
+   Team IDs the user belongs to
+   """
+   teamIds: [String!]
+}
+
+"""
+User filtering options
+"""
+input UserFilterInput {
+   """
+   Filter by user status
+   """
+   status: [UserStatus!]
+
+   """
+   Filter by user role
+   """
+   role: [UserRole!]
+
+   """
+   Search in name and email
+   """
+   search: String
+
+   """
+   Filter by team IDs
+   """
+   teamIds: [String!]
+}
+
+# Project Input Types
+
+"""
+Input for creating projects
+"""
+input CreateProjectInput {
+   """
+   Display name of the project
+   """
+   name: String!
+
+   """
+   Description of the project
+   """
+   description: String
+
+   """
+   Color associated with the project
+   """
+   color: String
+
+   """
+   Short identifier for the project
+   """
+   identifier: String
+}
+
+"""
+Input for updating projects
+"""
+input UpdateProjectInput {
+   """
+   Display name of the project
+   """
+   name: String
+
+   """
+   Description of the project
+   """
+   description: String
+
+   """
+   Color associated with the project
+   """
+   color: String
+
+   """
+   Short identifier for the project
+   """
+   identifier: String
+}
+
+"""
+Project filtering options
+"""
+input ProjectFilterInput {
+   """
+   Search in name and description
+   """
+   search: String
+
+   """
+   Filter by identifier
+   """
+   identifier: String
+}
+
+# Label Input Types
+
+"""
+Input for creating labels
+"""
+input CreateLabelInput {
+   """
+   Display name of the label
+   """
+   name: String!
+
+   """
+   Color associated with the label
+   """
+   color: String!
+
+   """
+   Description of the label
+   """
+   description: String
+}
+
+"""
+Input for updating labels
+"""
+input UpdateLabelInput {
+   """
+   Display name of the label
+   """
+   name: String
+
+   """
+   Color associated with the label
+   """
+   color: String
+
+   """
+   Description of the label
+   """
+   description: String
+}
+
+"""
+Label filtering options
+"""
+input LabelFilterInput {
+   """
+   Search in name and description
+   """
+   search: String
+
+   """
+   Filter by color
+   """
+   color: String
 }

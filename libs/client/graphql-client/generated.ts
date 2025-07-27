@@ -211,6 +211,62 @@ export enum ConflictResolution {
    UserResolve = 'USER_RESOLVE',
 }
 
+/** Input for creating issues */
+export type CreateIssueInput = {
+   /** Assignee ID */
+   assigneeId?: InputMaybe<Scalars['ID']['input']>;
+   /** Sprint/cycle identifier */
+   cycleId?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the issue */
+   description: Scalars['String']['input'];
+   /** Due date for the issue */
+   dueDate?: InputMaybe<Scalars['DateTime']['input']>;
+   /** Human-readable identifier (e.g., LNUI-101) */
+   identifier: Scalars['String']['input'];
+   /** Type of issue */
+   issueType?: InputMaybe<IssueType>;
+   /** Label IDs to assign */
+   labelIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   /** Priority of the issue */
+   priority?: InputMaybe<Scalars['String']['input']>;
+   /** Project ID */
+   projectId?: InputMaybe<Scalars['ID']['input']>;
+   /** Rank for ordering */
+   rank: Scalars['String']['input'];
+   /** Status of the issue */
+   status?: InputMaybe<Scalars['String']['input']>;
+   /** Sub-issue IDs */
+   subissues?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Associated subtask ID */
+   subtaskId?: InputMaybe<Scalars['String']['input']>;
+   /** Associated task ID */
+   taskId?: InputMaybe<Scalars['Int']['input']>;
+   /** Title of the issue */
+   title: Scalars['String']['input'];
+};
+
+/** Input for creating labels */
+export type CreateLabelInput = {
+   /** Color associated with the label */
+   color: Scalars['String']['input'];
+   /** Description of the label */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the label */
+   name: Scalars['String']['input'];
+};
+
+/** Input for creating projects */
+export type CreateProjectInput = {
+   /** Color associated with the project */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the project */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Short identifier for the project */
+   identifier?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the project */
+   name: Scalars['String']['input'];
+};
+
 export type CreateTaskInput = {
    dependencies?: InputMaybe<Array<Scalars['ID']['input']>>;
    description: Scalars['String']['input'];
@@ -218,6 +274,24 @@ export type CreateTaskInput = {
    priority?: InputMaybe<TaskPriority>;
    testStrategy?: InputMaybe<Scalars['String']['input']>;
    title: Scalars['String']['input'];
+};
+
+/** Input for creating users */
+export type CreateUserInput = {
+   /** Avatar URL for the user */
+   avatarUrl?: InputMaybe<Scalars['String']['input']>;
+   /** Email address of the user */
+   email: Scalars['String']['input'];
+   /** Date when the user joined */
+   joinedDate: Scalars['DateTime']['input'];
+   /** Display name of the user */
+   name: Scalars['String']['input'];
+   /** Role of the user */
+   role?: InputMaybe<UserRole>;
+   /** Status of the user */
+   status?: InputMaybe<UserStatus>;
+   /** Team IDs the user belongs to */
+   teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /** Date range input for filtering by date ranges */
@@ -236,6 +310,179 @@ export type IntRangeInput = {
    min?: InputMaybe<Scalars['Int']['input']>;
 };
 
+/** Issue information - wraps tasks with additional board metadata */
+export type Issue = {
+   __typename?: 'Issue';
+   /** User assigned to this issue */
+   assignee?: Maybe<User>;
+   /** Timestamp when the issue was created */
+   createdAt: Scalars['DateTime']['output'];
+   /** Sprint/cycle identifier */
+   cycleId?: Maybe<Scalars['String']['output']>;
+   /** Description of the issue */
+   description: Scalars['String']['output'];
+   /** Due date for the issue */
+   dueDate?: Maybe<Scalars['DateTime']['output']>;
+   /** Unique identifier for the issue */
+   id: Scalars['ID']['output'];
+   /** Human-readable identifier (e.g., LNUI-101) */
+   identifier: Scalars['String']['output'];
+   /** Type of issue (task or subtask) */
+   issueType: IssueType;
+   /** Labels assigned to this issue */
+   labels: Array<Label>;
+   /** Priority level of the issue */
+   priority: Scalars['String']['output'];
+   /** Project this issue belongs to */
+   project?: Maybe<Project>;
+   /** Rank for ordering (LexoRank) */
+   rank: Scalars['String']['output'];
+   /** Current status of the issue */
+   status: Scalars['String']['output'];
+   /** Sub-issue IDs (for parent-child relationships) */
+   subissues: Array<Scalars['String']['output']>;
+   /** Associated subtask ID from Task Master */
+   subtaskId?: Maybe<Scalars['String']['output']>;
+   /** Task this issue is linked to */
+   task?: Maybe<Task>;
+   /** Associated task ID from Task Master */
+   taskId?: Maybe<Scalars['Int']['output']>;
+   /** Title of the issue */
+   title: Scalars['String']['output'];
+   /** Timestamp when the issue was last updated */
+   updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Issue connection for paginated issue queries */
+export type IssueConnection = {
+   __typename?: 'IssueConnection';
+   /** List of issue edges */
+   edges: Array<IssueEdge>;
+   /** List of issues (convenience field) */
+   nodes: Array<Issue>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Issue edge with cursor */
+export type IssueEdge = {
+   __typename?: 'IssueEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The issue node */
+   node: Issue;
+};
+
+/** Issue filtering options */
+export type IssueFilterInput = {
+   /** Filter by assignee */
+   assigneeId?: InputMaybe<Scalars['ID']['input']>;
+   /** Filter by creation date range */
+   createdAt?: InputMaybe<DateRangeInput>;
+   /** Filter by cycle ID */
+   cycleId?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by due date range */
+   dueDate?: InputMaybe<DateRangeInput>;
+   /** Filter by issue type */
+   issueType?: InputMaybe<IssueType>;
+   /** Filter by labels */
+   labelIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   /** Filter by issue priority */
+   priority?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Filter by project */
+   projectId?: InputMaybe<Scalars['ID']['input']>;
+   /** Search in title and description */
+   search?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by issue status */
+   status?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Filter by associated subtask ID */
+   subtaskId?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by associated task ID */
+   taskId?: InputMaybe<Scalars['Int']['input']>;
+   /** Filter by last update date range */
+   updatedAt?: InputMaybe<DateRangeInput>;
+};
+
+/** Issue ordering options */
+export type IssueOrderByInput = {
+   /** Sort direction */
+   direction: OrderDirection;
+   /** Field to order by */
+   field: IssueOrderField;
+};
+
+/** Issue order fields */
+export enum IssueOrderField {
+   CreatedAt = 'CREATED_AT',
+   DueDate = 'DUE_DATE',
+   Id = 'ID',
+   Identifier = 'IDENTIFIER',
+   Priority = 'PRIORITY',
+   Rank = 'RANK',
+   Status = 'STATUS',
+   Title = 'TITLE',
+   UpdatedAt = 'UPDATED_AT',
+}
+
+/** Issue type enumeration */
+export enum IssueType {
+   /** Issue represents a subtask */
+   Subtask = 'SUBTASK',
+   /** Issue represents a main task */
+   Task = 'TASK',
+}
+
+/** Label information for categorizing issues */
+export type Label = {
+   __typename?: 'Label';
+   /** Color associated with the label */
+   color: Scalars['String']['output'];
+   /** Timestamp when the label was created */
+   createdAt: Scalars['DateTime']['output'];
+   /** Description of the label */
+   description?: Maybe<Scalars['String']['output']>;
+   /** Unique identifier for the label */
+   id: Scalars['ID']['output'];
+   /** Issues that have this label */
+   issues: Array<Issue>;
+   /** Display name of the label */
+   name: Scalars['String']['output'];
+   /** Timestamp when the label was last updated */
+   updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Label connection for paginated label queries */
+export type LabelConnection = {
+   __typename?: 'LabelConnection';
+   /** List of label edges */
+   edges: Array<LabelEdge>;
+   /** List of labels (convenience field) */
+   nodes: Array<Label>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Label edge with cursor */
+export type LabelEdge = {
+   __typename?: 'LabelEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The label node */
+   node: Label;
+};
+
+/** Label filtering options */
+export type LabelFilterInput = {
+   /** Filter by color */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Search in name and description */
+   search?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Memory usage statistics */
 export type MemoryUsage = {
    __typename?: 'MemoryUsage';
@@ -251,14 +498,32 @@ export type MemoryUsage = {
 
 export type Mutation = {
    __typename?: 'Mutation';
+   /** Assign an issue to a user */
+   assignIssue: Issue;
    /** Clear CLI command history */
    clearCLIHistory: Scalars['Boolean']['output'];
    /** Create a batch sync operation */
    createBatchOperation: BatchResult;
+   /** Create a new issue */
+   createIssue: Issue;
+   /** Create a new label */
+   createLabel: Label;
+   /** Create a new project */
+   createProject: Project;
    /** Create a new task */
    createTask?: Maybe<Task>;
+   /** Create a new user */
+   createUser: User;
+   /** Delete an issue */
+   deleteIssue: Scalars['Boolean']['output'];
+   /** Delete a label */
+   deleteLabel: Scalars['Boolean']['output'];
+   /** Delete a project */
+   deleteProject: Scalars['Boolean']['output'];
    /** Delete a task */
    deleteTask: Scalars['Boolean']['output'];
+   /** Delete a user */
+   deleteUser: Scalars['Boolean']['output'];
    /** Execute a CLI command */
    executeCLICommand: CliCommandResult;
    /** Force a manual sync */
@@ -269,10 +534,25 @@ export type Mutation = {
    ping: Scalars['String']['output'];
    /** Resolve a sync conflict */
    resolveSyncConflict: Scalars['Boolean']['output'];
+   /** Update an existing issue */
+   updateIssue: Issue;
+   /** Update issue status */
+   updateIssueStatus: Issue;
+   /** Update an existing label */
+   updateLabel: Label;
+   /** Update an existing project */
+   updateProject: Project;
    /** Update an existing task */
    updateTask?: Maybe<Task>;
    /** Update task status via sync operation */
    updateTaskStatus: SyncOperation;
+   /** Update an existing user */
+   updateUser: User;
+};
+
+export type MutationAssignIssueArgs = {
+   assigneeId: Scalars['ID']['input'];
+   issueId: Scalars['ID']['input'];
 };
 
 export type MutationCreateBatchOperationArgs = {
@@ -280,11 +560,43 @@ export type MutationCreateBatchOperationArgs = {
    options?: InputMaybe<BatchOptionsInput>;
 };
 
+export type MutationCreateIssueArgs = {
+   input: CreateIssueInput;
+};
+
+export type MutationCreateLabelArgs = {
+   input: CreateLabelInput;
+};
+
+export type MutationCreateProjectArgs = {
+   input: CreateProjectInput;
+};
+
 export type MutationCreateTaskArgs = {
    input: CreateTaskInput;
 };
 
+export type MutationCreateUserArgs = {
+   input: CreateUserInput;
+};
+
+export type MutationDeleteIssueArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteLabelArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteProjectArgs = {
+   id: Scalars['ID']['input'];
+};
+
 export type MutationDeleteTaskArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteUserArgs = {
    id: Scalars['ID']['input'];
 };
 
@@ -301,6 +613,26 @@ export type MutationResolveSyncConflictArgs = {
    resolution: ConflictResolution;
 };
 
+export type MutationUpdateIssueArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateIssueInput;
+};
+
+export type MutationUpdateIssueStatusArgs = {
+   issueId: Scalars['ID']['input'];
+   status: Scalars['String']['input'];
+};
+
+export type MutationUpdateLabelArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateLabelInput;
+};
+
+export type MutationUpdateProjectArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateProjectInput;
+};
+
 export type MutationUpdateTaskArgs = {
    id: Scalars['ID']['input'];
    input: UpdateTaskInput;
@@ -310,6 +642,11 @@ export type MutationUpdateTaskStatusArgs = {
    source?: InputMaybe<Scalars['String']['input']>;
    status: TaskStatus;
    taskId: Scalars['ID']['input'];
+};
+
+export type MutationUpdateUserArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateUserInput;
 };
 
 /** Sort direction */
@@ -345,6 +682,57 @@ export type PaginationInput = {
    limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+/** Project information for organizing issues */
+export type Project = {
+   __typename?: 'Project';
+   /** Color associated with the project */
+   color?: Maybe<Scalars['String']['output']>;
+   /** Timestamp when the project was created */
+   createdAt: Scalars['DateTime']['output'];
+   /** Description of the project */
+   description?: Maybe<Scalars['String']['output']>;
+   /** Unique identifier for the project */
+   id: Scalars['ID']['output'];
+   /** Short identifier for the project (e.g., LNUI) */
+   identifier?: Maybe<Scalars['String']['output']>;
+   /** Issues belonging to this project */
+   issues: Array<Issue>;
+   /** Display name of the project */
+   name: Scalars['String']['output'];
+   /** Timestamp when the project was last updated */
+   updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Project connection for paginated project queries */
+export type ProjectConnection = {
+   __typename?: 'ProjectConnection';
+   /** List of project edges */
+   edges: Array<ProjectEdge>;
+   /** List of projects (convenience field) */
+   nodes: Array<Project>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Project edge with cursor */
+export type ProjectEdge = {
+   __typename?: 'ProjectEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The project node */
+   node: Project;
+};
+
+/** Project filtering options */
+export type ProjectFilterInput = {
+   /** Filter by identifier */
+   identifier?: InputMaybe<Scalars['String']['input']>;
+   /** Search in name and description */
+   search?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Query = {
    __typename?: 'Query';
    /** Get a specific CLI command result */
@@ -357,8 +745,26 @@ export type Query = {
    health: Scalars['String']['output'];
    /** Simple hello message */
    hello: Scalars['String']['output'];
+   /** Get a specific issue by ID */
+   issue?: Maybe<Issue>;
+   /** Get all issues with comprehensive filtering, ordering, and pagination */
+   issues: IssueConnection;
+   /** Get issues assigned to a specific user */
+   issuesByAssignee: IssueConnection;
+   /** Get issues by project */
+   issuesByProject: IssueConnection;
+   /** Get a specific label by ID */
+   label?: Maybe<Label>;
+   /** Get all labels */
+   labels: LabelConnection;
+   /** Get a specific project by ID */
+   project?: Maybe<Project>;
+   /** Get all projects */
+   projects: ProjectConnection;
    /** Get tasks ready to work on (no blocking dependencies) */
    readyTasks: TaskConnection;
+   /** Search issues with text search and filters */
+   searchIssues: IssueConnection;
    /** Search tasks with text search and filters */
    searchTasks: TaskConnection;
    /** Get sync conflicts with filtering */
@@ -375,6 +781,10 @@ export type Query = {
    task?: Maybe<Task>;
    /** Get all tasks with comprehensive filtering, ordering, and pagination */
    tasks: TaskConnection;
+   /** Get a specific user by ID */
+   user?: Maybe<User>;
+   /** Get all users */
+   users: UserConnection;
 };
 
 export type QueryCliCommandArgs = {
@@ -387,10 +797,59 @@ export type QueryCliHistoryArgs = {
    pagination?: InputMaybe<PaginationInput>;
 };
 
+export type QueryIssueArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryIssuesArgs = {
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryIssuesByAssigneeArgs = {
+   assigneeId: Scalars['ID']['input'];
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryIssuesByProjectArgs = {
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+   projectId: Scalars['ID']['input'];
+};
+
+export type QueryLabelArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryLabelsArgs = {
+   filter?: InputMaybe<LabelFilterInput>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryProjectArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryProjectsArgs = {
+   filter?: InputMaybe<ProjectFilterInput>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
 export type QueryReadyTasksArgs = {
    filter?: InputMaybe<TaskFilterInput>;
    orderBy?: InputMaybe<Array<TaskOrderByInput>>;
    pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QuerySearchIssuesArgs = {
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+   query: Scalars['String']['input'];
 };
 
 export type QuerySearchTasksArgs = {
@@ -422,6 +881,15 @@ export type QueryTaskArgs = {
 export type QueryTasksArgs = {
    filter?: InputMaybe<TaskFilterInput>;
    orderBy?: InputMaybe<Array<TaskOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryUserArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryUsersArgs = {
+   filter?: InputMaybe<UserFilterInput>;
    pagination?: InputMaybe<PaginationInput>;
 };
 
@@ -874,6 +1342,54 @@ export type Timestamped = {
    updatedAt: Scalars['DateTime']['output'];
 };
 
+/** Input for updating issues */
+export type UpdateIssueInput = {
+   /** Assignee ID */
+   assigneeId?: InputMaybe<Scalars['ID']['input']>;
+   /** Sprint/cycle identifier */
+   cycleId?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the issue */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Due date for the issue */
+   dueDate?: InputMaybe<Scalars['DateTime']['input']>;
+   /** Label IDs to assign */
+   labelIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   /** Priority of the issue */
+   priority?: InputMaybe<Scalars['String']['input']>;
+   /** Project ID */
+   projectId?: InputMaybe<Scalars['ID']['input']>;
+   /** Rank for ordering */
+   rank?: InputMaybe<Scalars['String']['input']>;
+   /** Status of the issue */
+   status?: InputMaybe<Scalars['String']['input']>;
+   /** Sub-issue IDs */
+   subissues?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Title of the issue */
+   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Input for updating labels */
+export type UpdateLabelInput = {
+   /** Color associated with the label */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the label */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the label */
+   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Input for updating projects */
+export type UpdateProjectInput = {
+   /** Color associated with the project */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the project */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Short identifier for the project */
+   identifier?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the project */
+   name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateTaskInput = {
    dependencies?: InputMaybe<Array<Scalars['ID']['input']>>;
    description?: InputMaybe<Scalars['String']['input']>;
@@ -884,20 +1400,100 @@ export type UpdateTaskInput = {
    title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Basic user information (placeholder for future expansion) */
+/** Input for updating users */
+export type UpdateUserInput = {
+   /** Avatar URL for the user */
+   avatarUrl?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the user */
+   name?: InputMaybe<Scalars['String']['input']>;
+   /** Role of the user */
+   role?: InputMaybe<UserRole>;
+   /** Status of the user */
+   status?: InputMaybe<UserStatus>;
+   /** Team IDs the user belongs to */
+   teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** User information for issue assignment and management */
 export type User = {
    __typename?: 'User';
+   /** Issues assigned to this user */
+   assignedIssues: Array<Issue>;
+   /** Avatar URL for the user */
+   avatarUrl?: Maybe<Scalars['String']['output']>;
    /** Timestamp when the user was created */
    createdAt: Scalars['DateTime']['output'];
    /** Email address of the user */
    email: Scalars['String']['output'];
    /** Unique identifier for the user */
    id: Scalars['ID']['output'];
+   /** Date when the user joined */
+   joinedDate: Scalars['DateTime']['output'];
    /** Display name of the user */
    name: Scalars['String']['output'];
+   /** Role of the user in the system */
+   role: UserRole;
+   /** Current status of the user */
+   status: UserStatus;
+   /** Team IDs the user belongs to */
+   teamIds: Array<Scalars['String']['output']>;
    /** Timestamp when the user was last updated */
    updatedAt: Scalars['DateTime']['output'];
 };
+
+/** User connection for paginated user queries */
+export type UserConnection = {
+   __typename?: 'UserConnection';
+   /** List of user edges */
+   edges: Array<UserEdge>;
+   /** List of users (convenience field) */
+   nodes: Array<User>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** User edge with cursor */
+export type UserEdge = {
+   __typename?: 'UserEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The user node */
+   node: User;
+};
+
+/** User filtering options */
+export type UserFilterInput = {
+   /** Filter by user role */
+   role?: InputMaybe<Array<UserRole>>;
+   /** Search in name and email */
+   search?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by user status */
+   status?: InputMaybe<Array<UserStatus>>;
+   /** Filter by team IDs */
+   teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** User role enumeration */
+export enum UserRole {
+   /** Administrator with full access */
+   Admin = 'ADMIN',
+   /** Guest with limited access */
+   Guest = 'GUEST',
+   /** Regular member */
+   Member = 'MEMBER',
+}
+
+/** User status enumeration */
+export enum UserStatus {
+   /** User is away */
+   Away = 'AWAY',
+   /** User is offline */
+   Offline = 'OFFLINE',
+   /** User is online */
+   Online = 'ONLINE',
+}
 
 export type HealthQueryVariables = Exact<{ [key: string]: never }>;
 

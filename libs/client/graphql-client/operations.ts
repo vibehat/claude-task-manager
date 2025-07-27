@@ -112,7 +112,7 @@ export const TASK_OPERATIONS = {
 export const ISSUE_OPERATIONS = {
    // Queries
    GET_ISSUES: `
-    query GetIssues {
+    query GetIssuesBasic {
       issues {
         id
         identifier

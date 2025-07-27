@@ -8,7 +8,7 @@
 
 import fs from 'fs/promises';
 import path from 'path';
-import { PrismaClient } from '../generated/prisma';
+import { PrismaClient, Prisma } from '../../../libs/server/generated/prisma';
 import { TasksData, Task, Subtask } from '../types/taskmaster';
 import { TaskMasterSyncOptions, SyncResult, TaskMasterSyncError } from './types';
 
@@ -31,6 +31,7 @@ export class TaskMasterSync {
          success: false,
          tasksProcessed: 0,
          subtasksProcessed: 0,
+         issuesCreated: 0,
          errors: [],
          duration: 0,
          timestamp: new Date(),
@@ -46,7 +47,7 @@ export class TaskMasterSync {
          }
 
          // Step 3: Sync tasks to database
-         const { tasksProcessed, subtasksProcessed } = await this.performSync(
+         const { tasksProcessed, subtasksProcessed, issuesCreated } = await this.performSync(
             tasksData,
             options.incremental || false
          );
@@ -54,6 +55,7 @@ export class TaskMasterSync {
          result.success = true;
          result.tasksProcessed = tasksProcessed;
          result.subtasksProcessed = subtasksProcessed;
+         result.issuesCreated = issuesCreated;
       } catch (error) {
          const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
          result.errors.push(errorMessage);
@@ -93,7 +95,7 @@ export class TaskMasterSync {
             throw error;
          }
 
-         if ((error as any).code === 'ENOENT') {
+         if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
             throw new TaskMasterSyncError(
                `Tasks file not found: ${targetPath}`,
                'FILE_READ_ERROR',
@@ -167,15 +169,19 @@ export class TaskMasterSync {
    ): Promise<{
       tasksProcessed: number;
       subtasksProcessed: number;
+      issuesCreated: number;
    }> {
       let tasksProcessed = 0;
       let subtasksProcessed = 0;
+      let issuesCreated = 0;
 
       try {
          // Use transaction to ensure data consistency
          await this.prisma.$transaction(async (tx) => {
             // If not incremental, clear existing data
             if (!incremental) {
+               await tx.issueLabel.deleteMany();
+               await tx.issue.deleteMany();
                await tx.subtask.deleteMany();
                await tx.taskDependency.deleteMany();
                await tx.task.deleteMany();
@@ -189,11 +195,19 @@ export class TaskMasterSync {
                await this.syncTask(tx, task);
                tasksProcessed++;
 
+               // Create issue for task
+               await this.createIssueForTask(tx, task);
+               issuesCreated++;
+
                // Sync subtasks
                if (task.subtasks) {
                   for (const subtask of task.subtasks) {
                      await this.syncSubtask(tx, subtask, task.id);
                      subtasksProcessed++;
+
+                     // Create issue for subtask
+                     await this.createIssueForSubtask(tx, subtask, task.id);
+                     issuesCreated++;
                   }
                }
             }
@@ -207,13 +221,16 @@ export class TaskMasterSync {
          throw new TaskMasterSyncError(`Database sync failed: ${error}`, 'DATABASE_ERROR', error);
       }
 
-      return { tasksProcessed, subtasksProcessed };
+      return { tasksProcessed, subtasksProcessed, issuesCreated };
    }
 
    /**
     * Sync task metadata to database
     */
-   private async syncMetadata(tx: any, metadata: TasksData['master']['metadata']): Promise<void> {
+   private async syncMetadata(
+      tx: Prisma.TransactionClient,
+      metadata: TasksData['master']['metadata']
+   ): Promise<void> {
       await tx.taskMasterMetadata.upsert({
          where: { id: 1 }, // Single metadata record
          update: {
@@ -233,7 +250,7 @@ export class TaskMasterSync {
    /**
     * Sync individual task to database
     */
-   private async syncTask(tx: any, task: Task): Promise<void> {
+   private async syncTask(tx: Prisma.TransactionClient, task: Task): Promise<void> {
       await tx.task.upsert({
          where: { id: task.id },
          update: {
@@ -261,7 +278,11 @@ export class TaskMasterSync {
    /**
     * Sync individual subtask to database
     */
-   private async syncSubtask(tx: any, subtask: Subtask, parentId: number): Promise<void> {
+   private async syncSubtask(
+      tx: Prisma.TransactionClient,
+      subtask: Subtask,
+      parentId: number
+   ): Promise<void> {
       const subtaskId = `${parentId}.${subtask.id}`;
 
       await tx.subtask.upsert({
@@ -290,7 +311,7 @@ export class TaskMasterSync {
    /**
     * Sync task dependencies to database
     */
-   private async syncTaskDependencies(tx: any, task: Task): Promise<void> {
+   private async syncTaskDependencies(tx: Prisma.TransactionClient, task: Task): Promise<void> {
       if (!task.dependencies || task.dependencies.length === 0) {
          return;
       }
@@ -309,6 +330,111 @@ export class TaskMasterSync {
             },
          });
       }
+   }
+
+   /**
+    * Create an issue for a task
+    */
+   private async createIssueForTask(tx: Prisma.TransactionClient, task: Task): Promise<void> {
+      const identifier = `TASK-${task.id}`;
+
+      await tx.issue.upsert({
+         where: { identifier },
+         update: {
+            title: task.title,
+            description: task.description,
+            statusId: this.mapTaskStatusToIssueStatus(task.status),
+            priorityId: this.mapTaskPriorityToIssuePriority(task.priority),
+            rank: `t${task.id}`,
+            issueType: 'TASK',
+            taskId: task.id,
+            subtaskId: null,
+            subissues: JSON.stringify([]),
+         },
+         create: {
+            identifier,
+            title: task.title,
+            description: task.description,
+            statusId: this.mapTaskStatusToIssueStatus(task.status),
+            priorityId: this.mapTaskPriorityToIssuePriority(task.priority),
+            rank: `t${task.id}`,
+            issueType: 'TASK',
+            taskId: task.id,
+            subtaskId: null,
+            subissues: JSON.stringify([]),
+         },
+      });
+   }
+
+   /**
+    * Create an issue for a subtask
+    */
+   private async createIssueForSubtask(
+      tx: Prisma.TransactionClient,
+      subtask: Subtask,
+      parentId: number
+   ): Promise<void> {
+      const subtaskId = `${parentId}.${subtask.id}`;
+      const identifier = `SUBTASK-${subtaskId}`;
+
+      await tx.issue.upsert({
+         where: { identifier },
+         update: {
+            title: subtask.title,
+            description: subtask.description,
+            statusId: this.mapTaskStatusToIssueStatus(subtask.status),
+            priorityId: 'medium', // Default priority for subtasks
+            rank: `s${subtaskId.replace('.', '')}`,
+            issueType: 'SUBTASK',
+            taskId: null,
+            subtaskId: subtaskId,
+            subissues: JSON.stringify([]),
+         },
+         create: {
+            identifier,
+            title: subtask.title,
+            description: subtask.description,
+            statusId: this.mapTaskStatusToIssueStatus(subtask.status),
+            priorityId: 'medium', // Default priority for subtasks
+            rank: `s${subtaskId.replace('.', '')}`,
+            issueType: 'SUBTASK',
+            taskId: null,
+            subtaskId: subtaskId,
+            subissues: JSON.stringify([]),
+         },
+      });
+   }
+
+   /**
+    * Map Task Master task status to Issue status
+    */
+   private mapTaskStatusToIssueStatus(taskStatus: string): string {
+      const statusMap: Record<string, string> = {
+         'pending': 'to-do',
+         'in-progress': 'in-progress',
+         'done': 'completed',
+         'completed': 'completed',
+         'deferred': 'backlog',
+         'cancelled': 'backlog', // Map to backlog since cancelled doesn't exist
+         'blocked': 'paused', // Map to paused since blocked doesn't exist
+      };
+
+      return statusMap[taskStatus] || 'to-do';
+   }
+
+   /**
+    * Map Task Master task priority to Issue priority
+    */
+   private mapTaskPriorityToIssuePriority(taskPriority: string): string {
+      const priorityMap: Record<string, string> = {
+         high: 'high',
+         medium: 'medium',
+         low: 'low',
+         critical: 'urgent',
+         urgent: 'urgent',
+      };
+
+      return priorityMap[taskPriority] || 'medium';
    }
 
    /**

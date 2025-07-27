@@ -4,6 +4,7 @@ import * as React from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { CreateIssueModalProvider } from '@/components/common/issues/create-issue-modal-provider';
 import { IndieProjectProvider } from '@/libs/client/contexts/indie-project-context';
+import { IndieSidebar } from '@/components/layout/sidebar/indie-sidebar';
 import { cn } from '@/libs/client/utils';
 
 interface IndieLayoutProps {
@@ -23,6 +24,7 @@ export function IndieLayout({ children, header, headersNumber = 2, className }: 
       <IndieProjectProvider>
          <SidebarProvider>
             <CreateIssueModalProvider />
+            <IndieSidebar />
             <div className={cn('h-svh overflow-hidden lg:p-2 w-full', className)}>
                <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full">
                   {header}

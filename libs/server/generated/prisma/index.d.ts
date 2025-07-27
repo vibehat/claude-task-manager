@@ -41,6 +41,114 @@ export type SyncOperation = $Result.DefaultSelection<Prisma.$SyncOperationPayloa
  *
  */
 export type SyncConflict = $Result.DefaultSelection<Prisma.$SyncConflictPayload>;
+/**
+ * Model User
+ *
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>;
+/**
+ * Model Project
+ *
+ */
+export type Project = $Result.DefaultSelection<Prisma.$ProjectPayload>;
+/**
+ * Model Label
+ *
+ */
+export type Label = $Result.DefaultSelection<Prisma.$LabelPayload>;
+/**
+ * Model IssueStatus
+ *
+ */
+export type IssueStatus = $Result.DefaultSelection<Prisma.$IssueStatusPayload>;
+/**
+ * Model IssuePriority
+ *
+ */
+export type IssuePriority = $Result.DefaultSelection<Prisma.$IssuePriorityPayload>;
+/**
+ * Model Issue
+ *
+ */
+export type Issue = $Result.DefaultSelection<Prisma.$IssuePayload>;
+/**
+ * Model IssueLabel
+ *
+ */
+export type IssueLabel = $Result.DefaultSelection<Prisma.$IssueLabelPayload>;
+/**
+ * Model Cycle
+ *
+ */
+export type Cycle = $Result.DefaultSelection<Prisma.$CyclePayload>;
+/**
+ * Model Team
+ *
+ */
+export type Team = $Result.DefaultSelection<Prisma.$TeamPayload>;
+/**
+ * Model TeamMember
+ *
+ */
+export type TeamMember = $Result.DefaultSelection<Prisma.$TeamMemberPayload>;
+/**
+ * Model TeamProject
+ *
+ */
+export type TeamProject = $Result.DefaultSelection<Prisma.$TeamProjectPayload>;
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+   export const IssueType: {
+      TASK: 'TASK';
+      SUBTASK: 'SUBTASK';
+   };
+
+   export type IssueType = (typeof IssueType)[keyof typeof IssueType];
+
+   export const UserStatus: {
+      ONLINE: 'ONLINE';
+      OFFLINE: 'OFFLINE';
+      AWAY: 'AWAY';
+   };
+
+   export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
+
+   export const UserRole: {
+      ADMIN: 'ADMIN';
+      MEMBER: 'MEMBER';
+      GUEST: 'GUEST';
+   };
+
+   export type UserRole = (typeof UserRole)[keyof typeof UserRole];
+
+   export const ProjectHealth: {
+      NO_UPDATE: 'NO_UPDATE';
+      OFF_TRACK: 'OFF_TRACK';
+      ON_TRACK: 'ON_TRACK';
+      AT_RISK: 'AT_RISK';
+   };
+
+   export type ProjectHealth = (typeof ProjectHealth)[keyof typeof ProjectHealth];
+}
+
+export type IssueType = $Enums.IssueType;
+
+export const IssueType: typeof $Enums.IssueType;
+
+export type UserStatus = $Enums.UserStatus;
+
+export const UserStatus: typeof $Enums.UserStatus;
+
+export type UserRole = $Enums.UserRole;
+
+export const UserRole: typeof $Enums.UserRole;
+
+export type ProjectHealth = $Enums.ProjectHealth;
+
+export const ProjectHealth: typeof $Enums.ProjectHealth;
 
 /**
  * ##  Prisma Client ʲˢ
@@ -255,6 +363,116 @@ export class PrismaClient<
     * ```
     */
    get syncConflict(): Prisma.SyncConflictDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.project`: Exposes CRUD operations for the **Project** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Projects
+    * const projects = await prisma.project.findMany()
+    * ```
+    */
+   get project(): Prisma.ProjectDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.label`: Exposes CRUD operations for the **Label** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Labels
+    * const labels = await prisma.label.findMany()
+    * ```
+    */
+   get label(): Prisma.LabelDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.issueStatus`: Exposes CRUD operations for the **IssueStatus** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IssueStatuses
+    * const issueStatuses = await prisma.issueStatus.findMany()
+    * ```
+    */
+   get issueStatus(): Prisma.IssueStatusDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.issuePriority`: Exposes CRUD operations for the **IssuePriority** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IssuePriorities
+    * const issuePriorities = await prisma.issuePriority.findMany()
+    * ```
+    */
+   get issuePriority(): Prisma.IssuePriorityDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.issue`: Exposes CRUD operations for the **Issue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Issues
+    * const issues = await prisma.issue.findMany()
+    * ```
+    */
+   get issue(): Prisma.IssueDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.issueLabel`: Exposes CRUD operations for the **IssueLabel** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IssueLabels
+    * const issueLabels = await prisma.issueLabel.findMany()
+    * ```
+    */
+   get issueLabel(): Prisma.IssueLabelDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.cycle`: Exposes CRUD operations for the **Cycle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cycles
+    * const cycles = await prisma.cycle.findMany()
+    * ```
+    */
+   get cycle(): Prisma.CycleDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.team`: Exposes CRUD operations for the **Team** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Teams
+    * const teams = await prisma.team.findMany()
+    * ```
+    */
+   get team(): Prisma.TeamDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.teamMember`: Exposes CRUD operations for the **TeamMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TeamMembers
+    * const teamMembers = await prisma.teamMember.findMany()
+    * ```
+    */
+   get teamMember(): Prisma.TeamMemberDelegate<ExtArgs, ClientOptions>;
+
+   /**
+    * `prisma.teamProject`: Exposes CRUD operations for the **TeamProject** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TeamProjects
+    * const teamProjects = await prisma.teamProject.findMany()
+    * ```
+    */
+   get teamProject(): Prisma.TeamProjectDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -695,6 +913,17 @@ export namespace Prisma {
       TaskMasterMetadata: 'TaskMasterMetadata';
       SyncOperation: 'SyncOperation';
       SyncConflict: 'SyncConflict';
+      User: 'User';
+      Project: 'Project';
+      Label: 'Label';
+      IssueStatus: 'IssueStatus';
+      IssuePriority: 'IssuePriority';
+      Issue: 'Issue';
+      IssueLabel: 'IssueLabel';
+      Cycle: 'Cycle';
+      Team: 'Team';
+      TeamMember: 'TeamMember';
+      TeamProject: 'TeamProject';
    };
 
    export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -725,7 +954,18 @@ export namespace Prisma {
             | 'taskDependency'
             | 'taskMasterMetadata'
             | 'syncOperation'
-            | 'syncConflict';
+            | 'syncConflict'
+            | 'user'
+            | 'project'
+            | 'label'
+            | 'issueStatus'
+            | 'issuePriority'
+            | 'issue'
+            | 'issueLabel'
+            | 'cycle'
+            | 'team'
+            | 'teamMember'
+            | 'teamProject';
          txIsolationLevel: Prisma.TransactionIsolationLevel;
       };
       model: {
@@ -1173,6 +1413,820 @@ export namespace Prisma {
                };
             };
          };
+         User: {
+            payload: Prisma.$UserPayload<ExtArgs>;
+            fields: Prisma.UserFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.UserFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>;
+               };
+               findFirst: {
+                  args: Prisma.UserFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>;
+               };
+               findMany: {
+                  args: Prisma.UserFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>[];
+               };
+               create: {
+                  args: Prisma.UserCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>;
+               };
+               createMany: {
+                  args: Prisma.UserCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>[];
+               };
+               delete: {
+                  args: Prisma.UserDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>;
+               };
+               update: {
+                  args: Prisma.UserUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.UserDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.UserUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>[];
+               };
+               upsert: {
+                  args: Prisma.UserUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$UserPayload>;
+               };
+               aggregate: {
+                  args: Prisma.UserAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateUser>;
+               };
+               groupBy: {
+                  args: Prisma.UserGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<UserGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.UserCountArgs<ExtArgs>;
+                  result: $Utils.Optional<UserCountAggregateOutputType> | number;
+               };
+            };
+         };
+         Project: {
+            payload: Prisma.$ProjectPayload<ExtArgs>;
+            fields: Prisma.ProjectFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.ProjectFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.ProjectFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>;
+               };
+               findFirst: {
+                  args: Prisma.ProjectFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.ProjectFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>;
+               };
+               findMany: {
+                  args: Prisma.ProjectFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>[];
+               };
+               create: {
+                  args: Prisma.ProjectCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>;
+               };
+               createMany: {
+                  args: Prisma.ProjectCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.ProjectCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>[];
+               };
+               delete: {
+                  args: Prisma.ProjectDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>;
+               };
+               update: {
+                  args: Prisma.ProjectUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.ProjectDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.ProjectUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.ProjectUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>[];
+               };
+               upsert: {
+                  args: Prisma.ProjectUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$ProjectPayload>;
+               };
+               aggregate: {
+                  args: Prisma.ProjectAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateProject>;
+               };
+               groupBy: {
+                  args: Prisma.ProjectGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<ProjectGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.ProjectCountArgs<ExtArgs>;
+                  result: $Utils.Optional<ProjectCountAggregateOutputType> | number;
+               };
+            };
+         };
+         Label: {
+            payload: Prisma.$LabelPayload<ExtArgs>;
+            fields: Prisma.LabelFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.LabelFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.LabelFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>;
+               };
+               findFirst: {
+                  args: Prisma.LabelFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.LabelFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>;
+               };
+               findMany: {
+                  args: Prisma.LabelFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>[];
+               };
+               create: {
+                  args: Prisma.LabelCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>;
+               };
+               createMany: {
+                  args: Prisma.LabelCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.LabelCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>[];
+               };
+               delete: {
+                  args: Prisma.LabelDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>;
+               };
+               update: {
+                  args: Prisma.LabelUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.LabelDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.LabelUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.LabelUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>[];
+               };
+               upsert: {
+                  args: Prisma.LabelUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$LabelPayload>;
+               };
+               aggregate: {
+                  args: Prisma.LabelAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateLabel>;
+               };
+               groupBy: {
+                  args: Prisma.LabelGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<LabelGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.LabelCountArgs<ExtArgs>;
+                  result: $Utils.Optional<LabelCountAggregateOutputType> | number;
+               };
+            };
+         };
+         IssueStatus: {
+            payload: Prisma.$IssueStatusPayload<ExtArgs>;
+            fields: Prisma.IssueStatusFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.IssueStatusFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.IssueStatusFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>;
+               };
+               findFirst: {
+                  args: Prisma.IssueStatusFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.IssueStatusFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>;
+               };
+               findMany: {
+                  args: Prisma.IssueStatusFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>[];
+               };
+               create: {
+                  args: Prisma.IssueStatusCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>;
+               };
+               createMany: {
+                  args: Prisma.IssueStatusCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.IssueStatusCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>[];
+               };
+               delete: {
+                  args: Prisma.IssueStatusDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>;
+               };
+               update: {
+                  args: Prisma.IssueStatusUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.IssueStatusDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.IssueStatusUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.IssueStatusUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>[];
+               };
+               upsert: {
+                  args: Prisma.IssueStatusUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueStatusPayload>;
+               };
+               aggregate: {
+                  args: Prisma.IssueStatusAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateIssueStatus>;
+               };
+               groupBy: {
+                  args: Prisma.IssueStatusGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<IssueStatusGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.IssueStatusCountArgs<ExtArgs>;
+                  result: $Utils.Optional<IssueStatusCountAggregateOutputType> | number;
+               };
+            };
+         };
+         IssuePriority: {
+            payload: Prisma.$IssuePriorityPayload<ExtArgs>;
+            fields: Prisma.IssuePriorityFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.IssuePriorityFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.IssuePriorityFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>;
+               };
+               findFirst: {
+                  args: Prisma.IssuePriorityFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.IssuePriorityFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>;
+               };
+               findMany: {
+                  args: Prisma.IssuePriorityFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>[];
+               };
+               create: {
+                  args: Prisma.IssuePriorityCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>;
+               };
+               createMany: {
+                  args: Prisma.IssuePriorityCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.IssuePriorityCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>[];
+               };
+               delete: {
+                  args: Prisma.IssuePriorityDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>;
+               };
+               update: {
+                  args: Prisma.IssuePriorityUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.IssuePriorityDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.IssuePriorityUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.IssuePriorityUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>[];
+               };
+               upsert: {
+                  args: Prisma.IssuePriorityUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePriorityPayload>;
+               };
+               aggregate: {
+                  args: Prisma.IssuePriorityAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateIssuePriority>;
+               };
+               groupBy: {
+                  args: Prisma.IssuePriorityGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<IssuePriorityGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.IssuePriorityCountArgs<ExtArgs>;
+                  result: $Utils.Optional<IssuePriorityCountAggregateOutputType> | number;
+               };
+            };
+         };
+         Issue: {
+            payload: Prisma.$IssuePayload<ExtArgs>;
+            fields: Prisma.IssueFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.IssueFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.IssueFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>;
+               };
+               findFirst: {
+                  args: Prisma.IssueFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.IssueFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>;
+               };
+               findMany: {
+                  args: Prisma.IssueFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>[];
+               };
+               create: {
+                  args: Prisma.IssueCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>;
+               };
+               createMany: {
+                  args: Prisma.IssueCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.IssueCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>[];
+               };
+               delete: {
+                  args: Prisma.IssueDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>;
+               };
+               update: {
+                  args: Prisma.IssueUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>;
+               };
+               deleteMany: {
+                  args: Prisma.IssueDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.IssueUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.IssueUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>[];
+               };
+               upsert: {
+                  args: Prisma.IssueUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssuePayload>;
+               };
+               aggregate: {
+                  args: Prisma.IssueAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateIssue>;
+               };
+               groupBy: {
+                  args: Prisma.IssueGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<IssueGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.IssueCountArgs<ExtArgs>;
+                  result: $Utils.Optional<IssueCountAggregateOutputType> | number;
+               };
+            };
+         };
+         IssueLabel: {
+            payload: Prisma.$IssueLabelPayload<ExtArgs>;
+            fields: Prisma.IssueLabelFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.IssueLabelFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.IssueLabelFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>;
+               };
+               findFirst: {
+                  args: Prisma.IssueLabelFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.IssueLabelFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>;
+               };
+               findMany: {
+                  args: Prisma.IssueLabelFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>[];
+               };
+               create: {
+                  args: Prisma.IssueLabelCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>;
+               };
+               createMany: {
+                  args: Prisma.IssueLabelCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.IssueLabelCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>[];
+               };
+               delete: {
+                  args: Prisma.IssueLabelDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>;
+               };
+               update: {
+                  args: Prisma.IssueLabelUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.IssueLabelDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.IssueLabelUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.IssueLabelUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>[];
+               };
+               upsert: {
+                  args: Prisma.IssueLabelUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$IssueLabelPayload>;
+               };
+               aggregate: {
+                  args: Prisma.IssueLabelAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateIssueLabel>;
+               };
+               groupBy: {
+                  args: Prisma.IssueLabelGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<IssueLabelGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.IssueLabelCountArgs<ExtArgs>;
+                  result: $Utils.Optional<IssueLabelCountAggregateOutputType> | number;
+               };
+            };
+         };
+         Cycle: {
+            payload: Prisma.$CyclePayload<ExtArgs>;
+            fields: Prisma.CycleFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.CycleFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.CycleFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>;
+               };
+               findFirst: {
+                  args: Prisma.CycleFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.CycleFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>;
+               };
+               findMany: {
+                  args: Prisma.CycleFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>[];
+               };
+               create: {
+                  args: Prisma.CycleCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>;
+               };
+               createMany: {
+                  args: Prisma.CycleCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.CycleCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>[];
+               };
+               delete: {
+                  args: Prisma.CycleDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>;
+               };
+               update: {
+                  args: Prisma.CycleUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>;
+               };
+               deleteMany: {
+                  args: Prisma.CycleDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.CycleUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.CycleUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>[];
+               };
+               upsert: {
+                  args: Prisma.CycleUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$CyclePayload>;
+               };
+               aggregate: {
+                  args: Prisma.CycleAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateCycle>;
+               };
+               groupBy: {
+                  args: Prisma.CycleGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<CycleGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.CycleCountArgs<ExtArgs>;
+                  result: $Utils.Optional<CycleCountAggregateOutputType> | number;
+               };
+            };
+         };
+         Team: {
+            payload: Prisma.$TeamPayload<ExtArgs>;
+            fields: Prisma.TeamFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.TeamFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.TeamFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>;
+               };
+               findFirst: {
+                  args: Prisma.TeamFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.TeamFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>;
+               };
+               findMany: {
+                  args: Prisma.TeamFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>[];
+               };
+               create: {
+                  args: Prisma.TeamCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>;
+               };
+               createMany: {
+                  args: Prisma.TeamCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.TeamCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>[];
+               };
+               delete: {
+                  args: Prisma.TeamDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>;
+               };
+               update: {
+                  args: Prisma.TeamUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.TeamDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.TeamUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.TeamUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>[];
+               };
+               upsert: {
+                  args: Prisma.TeamUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamPayload>;
+               };
+               aggregate: {
+                  args: Prisma.TeamAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateTeam>;
+               };
+               groupBy: {
+                  args: Prisma.TeamGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<TeamGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.TeamCountArgs<ExtArgs>;
+                  result: $Utils.Optional<TeamCountAggregateOutputType> | number;
+               };
+            };
+         };
+         TeamMember: {
+            payload: Prisma.$TeamMemberPayload<ExtArgs>;
+            fields: Prisma.TeamMemberFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.TeamMemberFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.TeamMemberFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
+               };
+               findFirst: {
+                  args: Prisma.TeamMemberFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.TeamMemberFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
+               };
+               findMany: {
+                  args: Prisma.TeamMemberFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>[];
+               };
+               create: {
+                  args: Prisma.TeamMemberCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
+               };
+               createMany: {
+                  args: Prisma.TeamMemberCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.TeamMemberCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>[];
+               };
+               delete: {
+                  args: Prisma.TeamMemberDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
+               };
+               update: {
+                  args: Prisma.TeamMemberUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.TeamMemberDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.TeamMemberUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.TeamMemberUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>[];
+               };
+               upsert: {
+                  args: Prisma.TeamMemberUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
+               };
+               aggregate: {
+                  args: Prisma.TeamMemberAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateTeamMember>;
+               };
+               groupBy: {
+                  args: Prisma.TeamMemberGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<TeamMemberGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.TeamMemberCountArgs<ExtArgs>;
+                  result: $Utils.Optional<TeamMemberCountAggregateOutputType> | number;
+               };
+            };
+         };
+         TeamProject: {
+            payload: Prisma.$TeamProjectPayload<ExtArgs>;
+            fields: Prisma.TeamProjectFieldRefs;
+            operations: {
+               findUnique: {
+                  args: Prisma.TeamProjectFindUniqueArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload> | null;
+               };
+               findUniqueOrThrow: {
+                  args: Prisma.TeamProjectFindUniqueOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>;
+               };
+               findFirst: {
+                  args: Prisma.TeamProjectFindFirstArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload> | null;
+               };
+               findFirstOrThrow: {
+                  args: Prisma.TeamProjectFindFirstOrThrowArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>;
+               };
+               findMany: {
+                  args: Prisma.TeamProjectFindManyArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>[];
+               };
+               create: {
+                  args: Prisma.TeamProjectCreateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>;
+               };
+               createMany: {
+                  args: Prisma.TeamProjectCreateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               createManyAndReturn: {
+                  args: Prisma.TeamProjectCreateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>[];
+               };
+               delete: {
+                  args: Prisma.TeamProjectDeleteArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>;
+               };
+               update: {
+                  args: Prisma.TeamProjectUpdateArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>;
+               };
+               deleteMany: {
+                  args: Prisma.TeamProjectDeleteManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateMany: {
+                  args: Prisma.TeamProjectUpdateManyArgs<ExtArgs>;
+                  result: BatchPayload;
+               };
+               updateManyAndReturn: {
+                  args: Prisma.TeamProjectUpdateManyAndReturnArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>[];
+               };
+               upsert: {
+                  args: Prisma.TeamProjectUpsertArgs<ExtArgs>;
+                  result: $Utils.PayloadToResult<Prisma.$TeamProjectPayload>;
+               };
+               aggregate: {
+                  args: Prisma.TeamProjectAggregateArgs<ExtArgs>;
+                  result: $Utils.Optional<AggregateTeamProject>;
+               };
+               groupBy: {
+                  args: Prisma.TeamProjectGroupByArgs<ExtArgs>;
+                  result: $Utils.Optional<TeamProjectGroupByOutputType>[];
+               };
+               count: {
+                  args: Prisma.TeamProjectCountArgs<ExtArgs>;
+                  result: $Utils.Optional<TeamProjectCountAggregateOutputType> | number;
+               };
+            };
+         };
       };
    } & {
       other: {
@@ -1267,6 +2321,17 @@ export namespace Prisma {
       taskMasterMetadata?: TaskMasterMetadataOmit;
       syncOperation?: SyncOperationOmit;
       syncConflict?: SyncConflictOmit;
+      user?: UserOmit;
+      project?: ProjectOmit;
+      label?: LabelOmit;
+      issueStatus?: IssueStatusOmit;
+      issuePriority?: IssuePriorityOmit;
+      issue?: IssueOmit;
+      issueLabel?: IssueLabelOmit;
+      cycle?: CycleOmit;
+      team?: TeamOmit;
+      teamMember?: TeamMemberOmit;
+      teamProject?: TeamProjectOmit;
    };
 
    /* Types for Logging */
@@ -1367,6 +2432,7 @@ export namespace Prisma {
       subtasks: number;
       dependencies: number;
       dependents: number;
+      issues: number;
    };
 
    export type TaskCountOutputTypeSelect<
@@ -1375,6 +2441,7 @@ export namespace Prisma {
       subtasks?: boolean | TaskCountOutputTypeCountSubtasksArgs;
       dependencies?: boolean | TaskCountOutputTypeCountDependenciesArgs;
       dependents?: boolean | TaskCountOutputTypeCountDependentsArgs;
+      issues?: boolean | TaskCountOutputTypeCountIssuesArgs;
    };
 
    // Custom InputTypes
@@ -1415,6 +2482,358 @@ export namespace Prisma {
       ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
    > = {
       where?: TaskDependencyWhereInput;
+   };
+
+   /**
+    * TaskCountOutputType without action
+    */
+   export type TaskCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * Count Type UserCountOutputType
+    */
+
+   export type UserCountOutputType = {
+      assignedIssues: number;
+      teams: number;
+      ledProjects: number;
+   };
+
+   export type UserCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      assignedIssues?: boolean | UserCountOutputTypeCountAssignedIssuesArgs;
+      teams?: boolean | UserCountOutputTypeCountTeamsArgs;
+      ledProjects?: boolean | UserCountOutputTypeCountLedProjectsArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * UserCountOutputType without action
+    */
+   export type UserCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the UserCountOutputType
+       */
+      select?: UserCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * UserCountOutputType without action
+    */
+   export type UserCountOutputTypeCountAssignedIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * UserCountOutputType without action
+    */
+   export type UserCountOutputTypeCountTeamsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: TeamMemberWhereInput;
+   };
+
+   /**
+    * UserCountOutputType without action
+    */
+   export type UserCountOutputTypeCountLedProjectsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: ProjectWhereInput;
+   };
+
+   /**
+    * Count Type ProjectCountOutputType
+    */
+
+   export type ProjectCountOutputType = {
+      issues: number;
+      teams: number;
+   };
+
+   export type ProjectCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | ProjectCountOutputTypeCountIssuesArgs;
+      teams?: boolean | ProjectCountOutputTypeCountTeamsArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * ProjectCountOutputType without action
+    */
+   export type ProjectCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the ProjectCountOutputType
+       */
+      select?: ProjectCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * ProjectCountOutputType without action
+    */
+   export type ProjectCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * ProjectCountOutputType without action
+    */
+   export type ProjectCountOutputTypeCountTeamsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: TeamProjectWhereInput;
+   };
+
+   /**
+    * Count Type LabelCountOutputType
+    */
+
+   export type LabelCountOutputType = {
+      issues: number;
+   };
+
+   export type LabelCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | LabelCountOutputTypeCountIssuesArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * LabelCountOutputType without action
+    */
+   export type LabelCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the LabelCountOutputType
+       */
+      select?: LabelCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * LabelCountOutputType without action
+    */
+   export type LabelCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueLabelWhereInput;
+   };
+
+   /**
+    * Count Type IssueStatusCountOutputType
+    */
+
+   export type IssueStatusCountOutputType = {
+      issues: number;
+   };
+
+   export type IssueStatusCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | IssueStatusCountOutputTypeCountIssuesArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * IssueStatusCountOutputType without action
+    */
+   export type IssueStatusCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatusCountOutputType
+       */
+      select?: IssueStatusCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * IssueStatusCountOutputType without action
+    */
+   export type IssueStatusCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * Count Type IssuePriorityCountOutputType
+    */
+
+   export type IssuePriorityCountOutputType = {
+      issues: number;
+   };
+
+   export type IssuePriorityCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | IssuePriorityCountOutputTypeCountIssuesArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * IssuePriorityCountOutputType without action
+    */
+   export type IssuePriorityCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriorityCountOutputType
+       */
+      select?: IssuePriorityCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * IssuePriorityCountOutputType without action
+    */
+   export type IssuePriorityCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * Count Type IssueCountOutputType
+    */
+
+   export type IssueCountOutputType = {
+      labels: number;
+   };
+
+   export type IssueCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      labels?: boolean | IssueCountOutputTypeCountLabelsArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * IssueCountOutputType without action
+    */
+   export type IssueCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueCountOutputType
+       */
+      select?: IssueCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * IssueCountOutputType without action
+    */
+   export type IssueCountOutputTypeCountLabelsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueLabelWhereInput;
+   };
+
+   /**
+    * Count Type CycleCountOutputType
+    */
+
+   export type CycleCountOutputType = {
+      issues: number;
+   };
+
+   export type CycleCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | CycleCountOutputTypeCountIssuesArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * CycleCountOutputType without action
+    */
+   export type CycleCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the CycleCountOutputType
+       */
+      select?: CycleCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * CycleCountOutputType without action
+    */
+   export type CycleCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * Count Type TeamCountOutputType
+    */
+
+   export type TeamCountOutputType = {
+      members: number;
+      projects: number;
+      cycles: number;
+   };
+
+   export type TeamCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      members?: boolean | TeamCountOutputTypeCountMembersArgs;
+      projects?: boolean | TeamCountOutputTypeCountProjectsArgs;
+      cycles?: boolean | TeamCountOutputTypeCountCyclesArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * TeamCountOutputType without action
+    */
+   export type TeamCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamCountOutputType
+       */
+      select?: TeamCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * TeamCountOutputType without action
+    */
+   export type TeamCountOutputTypeCountMembersArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: TeamMemberWhereInput;
+   };
+
+   /**
+    * TeamCountOutputType without action
+    */
+   export type TeamCountOutputTypeCountProjectsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: TeamProjectWhereInput;
+   };
+
+   /**
+    * TeamCountOutputType without action
+    */
+   export type TeamCountOutputTypeCountCyclesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: CycleWhereInput;
    };
 
    /**
@@ -1665,6 +3084,7 @@ export namespace Prisma {
             subtasks?: boolean | Task$subtasksArgs<ExtArgs>;
             dependencies?: boolean | Task$dependenciesArgs<ExtArgs>;
             dependents?: boolean | Task$dependentsArgs<ExtArgs>;
+            issues?: boolean | Task$issuesArgs<ExtArgs>;
             _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>;
          },
          ExtArgs['result']['task']
@@ -1737,6 +3157,7 @@ export namespace Prisma {
       subtasks?: boolean | Task$subtasksArgs<ExtArgs>;
       dependencies?: boolean | Task$dependenciesArgs<ExtArgs>;
       dependents?: boolean | Task$dependentsArgs<ExtArgs>;
+      issues?: boolean | Task$issuesArgs<ExtArgs>;
       _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>;
    };
    export type TaskIncludeCreateManyAndReturn<
@@ -1752,6 +3173,7 @@ export namespace Prisma {
          subtasks: Prisma.$SubtaskPayload<ExtArgs>[];
          dependencies: Prisma.$TaskDependencyPayload<ExtArgs>[];
          dependents: Prisma.$TaskDependencyPayload<ExtArgs>[];
+         issues: Prisma.$IssuePayload<ExtArgs>[];
       };
       scalars: $Extensions.GetPayloadResult<
          {
@@ -2280,6 +3702,11 @@ export namespace Prisma {
            >
          | Null
       >;
+      issues<T extends Task$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Task$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
       /**
        * Attaches callbacks for the resolution and/or rejection of the Promise.
        * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2806,6 +4233,31 @@ export namespace Prisma {
       skip?: number;
       distinct?: TaskDependencyScalarFieldEnum | TaskDependencyScalarFieldEnum[];
    };
+
+   /**
+    * Task.issues
+    */
+   export type Task$issuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Issue
+          */
+         select?: IssueSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Issue
+          */
+         omit?: IssueOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: IssueInclude<ExtArgs> | null;
+         where?: IssueWhereInput;
+         orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+         cursor?: IssueWhereUniqueInput;
+         take?: number;
+         skip?: number;
+         distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+      };
 
    /**
     * Task without action
@@ -9238,6 +10690,14683 @@ export namespace Prisma {
    };
 
    /**
+    * Model User
+    */
+
+   export type AggregateUser = {
+      _count: UserCountAggregateOutputType | null;
+      _min: UserMinAggregateOutputType | null;
+      _max: UserMaxAggregateOutputType | null;
+   };
+
+   export type UserMinAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      email: string | null;
+      avatarUrl: string | null;
+      status: $Enums.UserStatus | null;
+      role: $Enums.UserRole | null;
+      joinedDate: Date | null;
+      teamIds: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type UserMaxAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      email: string | null;
+      avatarUrl: string | null;
+      status: $Enums.UserStatus | null;
+      role: $Enums.UserRole | null;
+      joinedDate: Date | null;
+      teamIds: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type UserCountAggregateOutputType = {
+      id: number;
+      name: number;
+      email: number;
+      avatarUrl: number;
+      status: number;
+      role: number;
+      joinedDate: number;
+      teamIds: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type UserMinAggregateInputType = {
+      id?: true;
+      name?: true;
+      email?: true;
+      avatarUrl?: true;
+      status?: true;
+      role?: true;
+      joinedDate?: true;
+      teamIds?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type UserMaxAggregateInputType = {
+      id?: true;
+      name?: true;
+      email?: true;
+      avatarUrl?: true;
+      status?: true;
+      role?: true;
+      joinedDate?: true;
+      teamIds?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type UserCountAggregateInputType = {
+      id?: true;
+      name?: true;
+      email?: true;
+      avatarUrl?: true;
+      status?: true;
+      role?: true;
+      joinedDate?: true;
+      teamIds?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type UserAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which User to aggregate.
+       */
+      where?: UserWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Users to fetch.
+       */
+      orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: UserWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Users from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Users.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned Users
+       **/
+      _count?: true | UserCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: UserMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: UserMaxAggregateInputType;
+   };
+
+   export type GetUserAggregateType<T extends UserAggregateArgs> = {
+      [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateUser[P]>
+         : GetScalarType<T[P], AggregateUser[P]>;
+   };
+
+   export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         where?: UserWhereInput;
+         orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[];
+         by: UserScalarFieldEnum[] | UserScalarFieldEnum;
+         having?: UserScalarWhereWithAggregatesInput;
+         take?: number;
+         skip?: number;
+         _count?: UserCountAggregateInputType | true;
+         _min?: UserMinAggregateInputType;
+         _max?: UserMaxAggregateInputType;
+      };
+
+   export type UserGroupByOutputType = {
+      id: string;
+      name: string;
+      email: string;
+      avatarUrl: string | null;
+      status: $Enums.UserStatus;
+      role: $Enums.UserRole;
+      joinedDate: Date;
+      teamIds: string;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: UserCountAggregateOutputType | null;
+      _min: UserMinAggregateOutputType | null;
+      _max: UserMaxAggregateOutputType | null;
+   };
+
+   type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<UserGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof UserGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], UserGroupByOutputType[P]>
+               : GetScalarType<T[P], UserGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetSelect<
+         {
+            id?: boolean;
+            name?: boolean;
+            email?: boolean;
+            avatarUrl?: boolean;
+            status?: boolean;
+            role?: boolean;
+            joinedDate?: boolean;
+            teamIds?: boolean;
+            createdAt?: boolean;
+            updatedAt?: boolean;
+            assignedIssues?: boolean | User$assignedIssuesArgs<ExtArgs>;
+            teams?: boolean | User$teamsArgs<ExtArgs>;
+            ledProjects?: boolean | User$ledProjectsArgs<ExtArgs>;
+            _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>;
+         },
+         ExtArgs['result']['user']
+      >;
+
+   export type UserSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         email?: boolean;
+         avatarUrl?: boolean;
+         status?: boolean;
+         role?: boolean;
+         joinedDate?: boolean;
+         teamIds?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['user']
+   >;
+
+   export type UserSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         email?: boolean;
+         avatarUrl?: boolean;
+         status?: boolean;
+         role?: boolean;
+         joinedDate?: boolean;
+         teamIds?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['user']
+   >;
+
+   export type UserSelectScalar = {
+      id?: boolean;
+      name?: boolean;
+      email?: boolean;
+      avatarUrl?: boolean;
+      status?: boolean;
+      role?: boolean;
+      joinedDate?: boolean;
+      teamIds?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         | 'id'
+         | 'name'
+         | 'email'
+         | 'avatarUrl'
+         | 'status'
+         | 'role'
+         | 'joinedDate'
+         | 'teamIds'
+         | 'createdAt'
+         | 'updatedAt',
+         ExtArgs['result']['user']
+      >;
+   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      assignedIssues?: boolean | User$assignedIssuesArgs<ExtArgs>;
+      teams?: boolean | User$teamsArgs<ExtArgs>;
+      ledProjects?: boolean | User$ledProjectsArgs<ExtArgs>;
+      _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type UserIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+   export type UserIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+
+   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      name: 'User';
+      objects: {
+         assignedIssues: Prisma.$IssuePayload<ExtArgs>[];
+         teams: Prisma.$TeamMemberPayload<ExtArgs>[];
+         ledProjects: Prisma.$ProjectPayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            name: string;
+            email: string;
+            avatarUrl: string | null;
+            status: $Enums.UserStatus;
+            role: $Enums.UserRole;
+            joinedDate: Date;
+            teamIds: string;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['user']
+      >;
+      composites: {};
+   };
+
+   type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<
+      Prisma.$UserPayload,
+      S
+   >;
+
+   type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Omit<
+      UserFindManyArgs,
+      'select' | 'include' | 'distinct' | 'omit'
+   > & {
+      select?: UserCountAggregateInputType | true;
+   };
+
+   export interface UserDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User']; meta: { name: 'User' } };
+      /**
+       * Find zero or one User that matches the filter.
+       * @param {UserFindUniqueArgs} args - Arguments to find a User
+       * @example
+       * // Get one User
+       * const user = await prisma.user.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends UserFindUniqueArgs>(
+         args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one User that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+       * @example
+       * // Get one User
+       * const user = await prisma.user.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first User that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserFindFirstArgs} args - Arguments to find a User
+       * @example
+       * // Get one User
+       * const user = await prisma.user.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends UserFindFirstArgs>(
+         args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first User that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+       * @example
+       * // Get one User
+       * const user = await prisma.user.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more Users that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all Users
+       * const users = await prisma.user.findMany()
+       *
+       * // Get first 10 Users
+       * const users = await prisma.user.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends UserFindManyArgs>(
+         args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a User.
+       * @param {UserCreateArgs} args - Arguments to create a User.
+       * @example
+       * // Create one User
+       * const User = await prisma.user.create({
+       *   data: {
+       *     // ... data to create a User
+       *   }
+       * })
+       *
+       */
+      create<T extends UserCreateArgs>(
+         args: SelectSubset<T, UserCreateArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many Users.
+       * @param {UserCreateManyArgs} args - Arguments to create many Users.
+       * @example
+       * // Create many Users
+       * const user = await prisma.user.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends UserCreateManyArgs>(
+         args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many Users and returns the data saved in the database.
+       * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+       * @example
+       * // Create many Users
+       * const user = await prisma.user.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many Users and only return the `id`
+       * const userWithIdOnly = await prisma.user.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends UserCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$UserPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a User.
+       * @param {UserDeleteArgs} args - Arguments to delete one User.
+       * @example
+       * // Delete one User
+       * const User = await prisma.user.delete({
+       *   where: {
+       *     // ... filter to delete one User
+       *   }
+       * })
+       *
+       */
+      delete<T extends UserDeleteArgs>(
+         args: SelectSubset<T, UserDeleteArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one User.
+       * @param {UserUpdateArgs} args - Arguments to update one User.
+       * @example
+       * // Update one User
+       * const user = await prisma.user.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends UserUpdateArgs>(
+         args: SelectSubset<T, UserUpdateArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more Users.
+       * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+       * @example
+       * // Delete a few Users
+       * const { count } = await prisma.user.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends UserDeleteManyArgs>(
+         args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Users.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many Users
+       * const user = await prisma.user.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends UserUpdateManyArgs>(
+         args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Users and returns the data updated in the database.
+       * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+       * @example
+       * // Update many Users
+       * const user = await prisma.user.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more Users and only return the `id`
+       * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$UserPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one User.
+       * @param {UserUpsertArgs} args - Arguments to update or create a User.
+       * @example
+       * // Update or create a User
+       * const user = await prisma.user.upsert({
+       *   create: {
+       *     // ... data to create a User
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the User we want to update
+       *   }
+       * })
+       */
+      upsert<T extends UserUpsertArgs>(
+         args: SelectSubset<T, UserUpsertArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of Users.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserCountArgs} args - Arguments to filter Users to count.
+       * @example
+       * // Count the number of Users
+       * const count = await prisma.user.count({
+       *   where: {
+       *     // ... the filter for the Users we want to count
+       *   }
+       * })
+       **/
+      count<T extends UserCountArgs>(
+         args?: Subset<T, UserCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], UserCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a User.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends UserAggregateArgs>(
+         args: Subset<T, UserAggregateArgs>
+      ): Prisma.PrismaPromise<GetUserAggregateType<T>>;
+
+      /**
+       * Group by User.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {UserGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends UserGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: UserGroupByArgs['orderBy'] }
+            : { orderBy?: UserGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the User model
+       */
+      readonly fields: UserFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for User.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__UserClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      assignedIssues<T extends User$assignedIssuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, User$assignedIssuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      teams<T extends User$teamsArgs<ExtArgs> = {}>(
+         args?: Subset<T, User$teamsArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         | $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+         | Null
+      >;
+      ledProjects<T extends User$ledProjectsArgs<ExtArgs> = {}>(
+         args?: Subset<T, User$ledProjectsArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the User model
+    */
+   interface UserFieldRefs {
+      readonly id: FieldRef<'User', 'String'>;
+      readonly name: FieldRef<'User', 'String'>;
+      readonly email: FieldRef<'User', 'String'>;
+      readonly avatarUrl: FieldRef<'User', 'String'>;
+      readonly status: FieldRef<'User', 'UserStatus'>;
+      readonly role: FieldRef<'User', 'UserRole'>;
+      readonly joinedDate: FieldRef<'User', 'DateTime'>;
+      readonly teamIds: FieldRef<'User', 'String'>;
+      readonly createdAt: FieldRef<'User', 'DateTime'>;
+      readonly updatedAt: FieldRef<'User', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * User findUnique
+    */
+   export type UserFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      /**
+       * Filter, which User to fetch.
+       */
+      where: UserWhereUniqueInput;
+   };
+
+   /**
+    * User findUniqueOrThrow
+    */
+   export type UserFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      /**
+       * Filter, which User to fetch.
+       */
+      where: UserWhereUniqueInput;
+   };
+
+   /**
+    * User findFirst
+    */
+   export type UserFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      /**
+       * Filter, which User to fetch.
+       */
+      where?: UserWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Users to fetch.
+       */
+      orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Users.
+       */
+      cursor?: UserWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Users from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Users.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Users.
+       */
+      distinct?: UserScalarFieldEnum | UserScalarFieldEnum[];
+   };
+
+   /**
+    * User findFirstOrThrow
+    */
+   export type UserFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      /**
+       * Filter, which User to fetch.
+       */
+      where?: UserWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Users to fetch.
+       */
+      orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Users.
+       */
+      cursor?: UserWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Users from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Users.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Users.
+       */
+      distinct?: UserScalarFieldEnum | UserScalarFieldEnum[];
+   };
+
+   /**
+    * User findMany
+    */
+   export type UserFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      /**
+       * Filter, which Users to fetch.
+       */
+      where?: UserWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Users to fetch.
+       */
+      orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing Users.
+       */
+      cursor?: UserWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Users from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Users.
+       */
+      skip?: number;
+      distinct?: UserScalarFieldEnum | UserScalarFieldEnum[];
+   };
+
+   /**
+    * User create
+    */
+   export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the User
+          */
+         select?: UserSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the User
+          */
+         omit?: UserOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: UserInclude<ExtArgs> | null;
+         /**
+          * The data needed to create a User.
+          */
+         data: XOR<UserCreateInput, UserUncheckedCreateInput>;
+      };
+
+   /**
+    * User createMany
+    */
+   export type UserCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many Users.
+       */
+      data: UserCreateManyInput | UserCreateManyInput[];
+   };
+
+   /**
+    * User createManyAndReturn
+    */
+   export type UserCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * The data used to create many Users.
+       */
+      data: UserCreateManyInput | UserCreateManyInput[];
+   };
+
+   /**
+    * User update
+    */
+   export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the User
+          */
+         select?: UserSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the User
+          */
+         omit?: UserOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: UserInclude<ExtArgs> | null;
+         /**
+          * The data needed to update a User.
+          */
+         data: XOR<UserUpdateInput, UserUncheckedUpdateInput>;
+         /**
+          * Choose, which User to update.
+          */
+         where: UserWhereUniqueInput;
+      };
+
+   /**
+    * User updateMany
+    */
+   export type UserUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update Users.
+       */
+      data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>;
+      /**
+       * Filter which Users to update
+       */
+      where?: UserWhereInput;
+      /**
+       * Limit how many Users to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * User updateManyAndReturn
+    */
+   export type UserUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * The data used to update Users.
+       */
+      data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>;
+      /**
+       * Filter which Users to update
+       */
+      where?: UserWhereInput;
+      /**
+       * Limit how many Users to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * User upsert
+    */
+   export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the User
+          */
+         select?: UserSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the User
+          */
+         omit?: UserOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: UserInclude<ExtArgs> | null;
+         /**
+          * The filter to search for the User to update in case it exists.
+          */
+         where: UserWhereUniqueInput;
+         /**
+          * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+          */
+         create: XOR<UserCreateInput, UserUncheckedCreateInput>;
+         /**
+          * In case the User was found with the provided `where` argument, update it with this data.
+          */
+         update: XOR<UserUpdateInput, UserUncheckedUpdateInput>;
+      };
+
+   /**
+    * User delete
+    */
+   export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the User
+          */
+         select?: UserSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the User
+          */
+         omit?: UserOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: UserInclude<ExtArgs> | null;
+         /**
+          * Filter which User to delete.
+          */
+         where: UserWhereUniqueInput;
+      };
+
+   /**
+    * User deleteMany
+    */
+   export type UserDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Users to delete
+       */
+      where?: UserWhereInput;
+      /**
+       * Limit how many Users to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * User.assignedIssues
+    */
+   export type User$assignedIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * User.teams
+    */
+   export type User$teamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the TeamMember
+          */
+         select?: TeamMemberSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the TeamMember
+          */
+         omit?: TeamMemberOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TeamMemberInclude<ExtArgs> | null;
+         where?: TeamMemberWhereInput;
+         orderBy?: TeamMemberOrderByWithRelationInput | TeamMemberOrderByWithRelationInput[];
+         cursor?: TeamMemberWhereUniqueInput;
+         take?: number;
+         skip?: number;
+         distinct?: TeamMemberScalarFieldEnum | TeamMemberScalarFieldEnum[];
+      };
+
+   /**
+    * User.ledProjects
+    */
+   export type User$ledProjectsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      where?: ProjectWhereInput;
+      orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[];
+      cursor?: ProjectWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[];
+   };
+
+   /**
+    * User without action
+    */
+   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the User
+          */
+         select?: UserSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the User
+          */
+         omit?: UserOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: UserInclude<ExtArgs> | null;
+      };
+
+   /**
+    * Model Project
+    */
+
+   export type AggregateProject = {
+      _count: ProjectCountAggregateOutputType | null;
+      _avg: ProjectAvgAggregateOutputType | null;
+      _sum: ProjectSumAggregateOutputType | null;
+      _min: ProjectMinAggregateOutputType | null;
+      _max: ProjectMaxAggregateOutputType | null;
+   };
+
+   export type ProjectAvgAggregateOutputType = {
+      percentComplete: number | null;
+   };
+
+   export type ProjectSumAggregateOutputType = {
+      percentComplete: number | null;
+   };
+
+   export type ProjectMinAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      description: string | null;
+      color: string | null;
+      identifier: string | null;
+      icon: string | null;
+      percentComplete: number | null;
+      startDate: Date | null;
+      health: $Enums.ProjectHealth | null;
+      leadId: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type ProjectMaxAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      description: string | null;
+      color: string | null;
+      identifier: string | null;
+      icon: string | null;
+      percentComplete: number | null;
+      startDate: Date | null;
+      health: $Enums.ProjectHealth | null;
+      leadId: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type ProjectCountAggregateOutputType = {
+      id: number;
+      name: number;
+      description: number;
+      color: number;
+      identifier: number;
+      icon: number;
+      percentComplete: number;
+      startDate: number;
+      health: number;
+      leadId: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type ProjectAvgAggregateInputType = {
+      percentComplete?: true;
+   };
+
+   export type ProjectSumAggregateInputType = {
+      percentComplete?: true;
+   };
+
+   export type ProjectMinAggregateInputType = {
+      id?: true;
+      name?: true;
+      description?: true;
+      color?: true;
+      identifier?: true;
+      icon?: true;
+      percentComplete?: true;
+      startDate?: true;
+      health?: true;
+      leadId?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type ProjectMaxAggregateInputType = {
+      id?: true;
+      name?: true;
+      description?: true;
+      color?: true;
+      identifier?: true;
+      icon?: true;
+      percentComplete?: true;
+      startDate?: true;
+      health?: true;
+      leadId?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type ProjectCountAggregateInputType = {
+      id?: true;
+      name?: true;
+      description?: true;
+      color?: true;
+      identifier?: true;
+      icon?: true;
+      percentComplete?: true;
+      startDate?: true;
+      health?: true;
+      leadId?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type ProjectAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Project to aggregate.
+       */
+      where?: ProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Projects to fetch.
+       */
+      orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: ProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Projects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Projects.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned Projects
+       **/
+      _count?: true | ProjectCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to average
+       **/
+      _avg?: ProjectAvgAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to sum
+       **/
+      _sum?: ProjectSumAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: ProjectMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: ProjectMaxAggregateInputType;
+   };
+
+   export type GetProjectAggregateType<T extends ProjectAggregateArgs> = {
+      [P in keyof T & keyof AggregateProject]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateProject[P]>
+         : GetScalarType<T[P], AggregateProject[P]>;
+   };
+
+   export type ProjectGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: ProjectWhereInput;
+      orderBy?: ProjectOrderByWithAggregationInput | ProjectOrderByWithAggregationInput[];
+      by: ProjectScalarFieldEnum[] | ProjectScalarFieldEnum;
+      having?: ProjectScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: ProjectCountAggregateInputType | true;
+      _avg?: ProjectAvgAggregateInputType;
+      _sum?: ProjectSumAggregateInputType;
+      _min?: ProjectMinAggregateInputType;
+      _max?: ProjectMaxAggregateInputType;
+   };
+
+   export type ProjectGroupByOutputType = {
+      id: string;
+      name: string;
+      description: string | null;
+      color: string | null;
+      identifier: string | null;
+      icon: string | null;
+      percentComplete: number;
+      startDate: Date | null;
+      health: $Enums.ProjectHealth;
+      leadId: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: ProjectCountAggregateOutputType | null;
+      _avg: ProjectAvgAggregateOutputType | null;
+      _sum: ProjectSumAggregateOutputType | null;
+      _min: ProjectMinAggregateOutputType | null;
+      _max: ProjectMaxAggregateOutputType | null;
+   };
+
+   type GetProjectGroupByPayload<T extends ProjectGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<ProjectGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof ProjectGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], ProjectGroupByOutputType[P]>
+               : GetScalarType<T[P], ProjectGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type ProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetSelect<
+         {
+            id?: boolean;
+            name?: boolean;
+            description?: boolean;
+            color?: boolean;
+            identifier?: boolean;
+            icon?: boolean;
+            percentComplete?: boolean;
+            startDate?: boolean;
+            health?: boolean;
+            leadId?: boolean;
+            createdAt?: boolean;
+            updatedAt?: boolean;
+            issues?: boolean | Project$issuesArgs<ExtArgs>;
+            lead?: boolean | Project$leadArgs<ExtArgs>;
+            teams?: boolean | Project$teamsArgs<ExtArgs>;
+            _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>;
+         },
+         ExtArgs['result']['project']
+      >;
+
+   export type ProjectSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         description?: boolean;
+         color?: boolean;
+         identifier?: boolean;
+         icon?: boolean;
+         percentComplete?: boolean;
+         startDate?: boolean;
+         health?: boolean;
+         leadId?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         lead?: boolean | Project$leadArgs<ExtArgs>;
+      },
+      ExtArgs['result']['project']
+   >;
+
+   export type ProjectSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         description?: boolean;
+         color?: boolean;
+         identifier?: boolean;
+         icon?: boolean;
+         percentComplete?: boolean;
+         startDate?: boolean;
+         health?: boolean;
+         leadId?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         lead?: boolean | Project$leadArgs<ExtArgs>;
+      },
+      ExtArgs['result']['project']
+   >;
+
+   export type ProjectSelectScalar = {
+      id?: boolean;
+      name?: boolean;
+      description?: boolean;
+      color?: boolean;
+      identifier?: boolean;
+      icon?: boolean;
+      percentComplete?: boolean;
+      startDate?: boolean;
+      health?: boolean;
+      leadId?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         | 'id'
+         | 'name'
+         | 'description'
+         | 'color'
+         | 'identifier'
+         | 'icon'
+         | 'percentComplete'
+         | 'startDate'
+         | 'health'
+         | 'leadId'
+         | 'createdAt'
+         | 'updatedAt',
+         ExtArgs['result']['project']
+      >;
+   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         issues?: boolean | Project$issuesArgs<ExtArgs>;
+         lead?: boolean | Project$leadArgs<ExtArgs>;
+         teams?: boolean | Project$teamsArgs<ExtArgs>;
+         _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>;
+      };
+   export type ProjectIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      lead?: boolean | Project$leadArgs<ExtArgs>;
+   };
+   export type ProjectIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      lead?: boolean | Project$leadArgs<ExtArgs>;
+   };
+
+   export type $ProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         name: 'Project';
+         objects: {
+            issues: Prisma.$IssuePayload<ExtArgs>[];
+            lead: Prisma.$UserPayload<ExtArgs> | null;
+            teams: Prisma.$TeamProjectPayload<ExtArgs>[];
+         };
+         scalars: $Extensions.GetPayloadResult<
+            {
+               id: string;
+               name: string;
+               description: string | null;
+               color: string | null;
+               identifier: string | null;
+               icon: string | null;
+               percentComplete: number;
+               startDate: Date | null;
+               health: $Enums.ProjectHealth;
+               leadId: string | null;
+               createdAt: Date;
+               updatedAt: Date;
+            },
+            ExtArgs['result']['project']
+         >;
+         composites: {};
+      };
+
+   type ProjectGetPayload<S extends boolean | null | undefined | ProjectDefaultArgs> =
+      $Result.GetResult<Prisma.$ProjectPayload, S>;
+
+   type ProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Omit<
+      ProjectFindManyArgs,
+      'select' | 'include' | 'distinct' | 'omit'
+   > & {
+      select?: ProjectCountAggregateInputType | true;
+   };
+
+   export interface ProjectDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: {
+         types: Prisma.TypeMap<ExtArgs>['model']['Project'];
+         meta: { name: 'Project' };
+      };
+      /**
+       * Find zero or one Project that matches the filter.
+       * @param {ProjectFindUniqueArgs} args - Arguments to find a Project
+       * @example
+       * // Get one Project
+       * const project = await prisma.project.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends ProjectFindUniqueArgs>(
+         args: SelectSubset<T, ProjectFindUniqueArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one Project that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {ProjectFindUniqueOrThrowArgs} args - Arguments to find a Project
+       * @example
+       * // Get one Project
+       * const project = await prisma.project.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends ProjectFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, ProjectFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Project that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectFindFirstArgs} args - Arguments to find a Project
+       * @example
+       * // Get one Project
+       * const project = await prisma.project.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends ProjectFindFirstArgs>(
+         args?: SelectSubset<T, ProjectFindFirstArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'findFirst',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Project that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectFindFirstOrThrowArgs} args - Arguments to find a Project
+       * @example
+       * // Get one Project
+       * const project = await prisma.project.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends ProjectFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, ProjectFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'findFirstOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more Projects that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all Projects
+       * const projects = await prisma.project.findMany()
+       *
+       * // Get first 10 Projects
+       * const projects = await prisma.project.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const projectWithIdOnly = await prisma.project.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends ProjectFindManyArgs>(
+         args?: SelectSubset<T, ProjectFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a Project.
+       * @param {ProjectCreateArgs} args - Arguments to create a Project.
+       * @example
+       * // Create one Project
+       * const Project = await prisma.project.create({
+       *   data: {
+       *     // ... data to create a Project
+       *   }
+       * })
+       *
+       */
+      create<T extends ProjectCreateArgs>(
+         args: SelectSubset<T, ProjectCreateArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many Projects.
+       * @param {ProjectCreateManyArgs} args - Arguments to create many Projects.
+       * @example
+       * // Create many Projects
+       * const project = await prisma.project.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends ProjectCreateManyArgs>(
+         args?: SelectSubset<T, ProjectCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many Projects and returns the data saved in the database.
+       * @param {ProjectCreateManyAndReturnArgs} args - Arguments to create many Projects.
+       * @example
+       * // Create many Projects
+       * const project = await prisma.project.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many Projects and only return the `id`
+       * const projectWithIdOnly = await prisma.project.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends ProjectCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, ProjectCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a Project.
+       * @param {ProjectDeleteArgs} args - Arguments to delete one Project.
+       * @example
+       * // Delete one Project
+       * const Project = await prisma.project.delete({
+       *   where: {
+       *     // ... filter to delete one Project
+       *   }
+       * })
+       *
+       */
+      delete<T extends ProjectDeleteArgs>(
+         args: SelectSubset<T, ProjectDeleteArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one Project.
+       * @param {ProjectUpdateArgs} args - Arguments to update one Project.
+       * @example
+       * // Update one Project
+       * const project = await prisma.project.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends ProjectUpdateArgs>(
+         args: SelectSubset<T, ProjectUpdateArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more Projects.
+       * @param {ProjectDeleteManyArgs} args - Arguments to filter Projects to delete.
+       * @example
+       * // Delete a few Projects
+       * const { count } = await prisma.project.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends ProjectDeleteManyArgs>(
+         args?: SelectSubset<T, ProjectDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Projects.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many Projects
+       * const project = await prisma.project.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends ProjectUpdateManyArgs>(
+         args: SelectSubset<T, ProjectUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Projects and returns the data updated in the database.
+       * @param {ProjectUpdateManyAndReturnArgs} args - Arguments to update many Projects.
+       * @example
+       * // Update many Projects
+       * const project = await prisma.project.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more Projects and only return the `id`
+       * const projectWithIdOnly = await prisma.project.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends ProjectUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, ProjectUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one Project.
+       * @param {ProjectUpsertArgs} args - Arguments to update or create a Project.
+       * @example
+       * // Update or create a Project
+       * const project = await prisma.project.upsert({
+       *   create: {
+       *     // ... data to create a Project
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the Project we want to update
+       *   }
+       * })
+       */
+      upsert<T extends ProjectUpsertArgs>(
+         args: SelectSubset<T, ProjectUpsertArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of Projects.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectCountArgs} args - Arguments to filter Projects to count.
+       * @example
+       * // Count the number of Projects
+       * const count = await prisma.project.count({
+       *   where: {
+       *     // ... the filter for the Projects we want to count
+       *   }
+       * })
+       **/
+      count<T extends ProjectCountArgs>(
+         args?: Subset<T, ProjectCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], ProjectCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a Project.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends ProjectAggregateArgs>(
+         args: Subset<T, ProjectAggregateArgs>
+      ): Prisma.PrismaPromise<GetProjectAggregateType<T>>;
+
+      /**
+       * Group by Project.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {ProjectGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends ProjectGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: ProjectGroupByArgs['orderBy'] }
+            : { orderBy?: ProjectGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, ProjectGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors ? GetProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the Project model
+       */
+      readonly fields: ProjectFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for Project.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__ProjectClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      issues<T extends Project$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Project$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      lead<T extends Project$leadArgs<ExtArgs> = {}>(
+         args?: Subset<T, Project$leadArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<
+            Prisma.$UserPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      teams<T extends Project$teamsArgs<ExtArgs> = {}>(
+         args?: Subset<T, Project$teamsArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         | $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+         | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the Project model
+    */
+   interface ProjectFieldRefs {
+      readonly id: FieldRef<'Project', 'String'>;
+      readonly name: FieldRef<'Project', 'String'>;
+      readonly description: FieldRef<'Project', 'String'>;
+      readonly color: FieldRef<'Project', 'String'>;
+      readonly identifier: FieldRef<'Project', 'String'>;
+      readonly icon: FieldRef<'Project', 'String'>;
+      readonly percentComplete: FieldRef<'Project', 'Int'>;
+      readonly startDate: FieldRef<'Project', 'DateTime'>;
+      readonly health: FieldRef<'Project', 'ProjectHealth'>;
+      readonly leadId: FieldRef<'Project', 'String'>;
+      readonly createdAt: FieldRef<'Project', 'DateTime'>;
+      readonly updatedAt: FieldRef<'Project', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * Project findUnique
+    */
+   export type ProjectFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which Project to fetch.
+       */
+      where: ProjectWhereUniqueInput;
+   };
+
+   /**
+    * Project findUniqueOrThrow
+    */
+   export type ProjectFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which Project to fetch.
+       */
+      where: ProjectWhereUniqueInput;
+   };
+
+   /**
+    * Project findFirst
+    */
+   export type ProjectFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which Project to fetch.
+       */
+      where?: ProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Projects to fetch.
+       */
+      orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Projects.
+       */
+      cursor?: ProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Projects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Projects.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Projects.
+       */
+      distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[];
+   };
+
+   /**
+    * Project findFirstOrThrow
+    */
+   export type ProjectFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which Project to fetch.
+       */
+      where?: ProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Projects to fetch.
+       */
+      orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Projects.
+       */
+      cursor?: ProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Projects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Projects.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Projects.
+       */
+      distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[];
+   };
+
+   /**
+    * Project findMany
+    */
+   export type ProjectFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which Projects to fetch.
+       */
+      where?: ProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Projects to fetch.
+       */
+      orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing Projects.
+       */
+      cursor?: ProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Projects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Projects.
+       */
+      skip?: number;
+      distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[];
+   };
+
+   /**
+    * Project create
+    */
+   export type ProjectCreateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * The data needed to create a Project.
+       */
+      data: XOR<ProjectCreateInput, ProjectUncheckedCreateInput>;
+   };
+
+   /**
+    * Project createMany
+    */
+   export type ProjectCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many Projects.
+       */
+      data: ProjectCreateManyInput | ProjectCreateManyInput[];
+   };
+
+   /**
+    * Project createManyAndReturn
+    */
+   export type ProjectCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * The data used to create many Projects.
+       */
+      data: ProjectCreateManyInput | ProjectCreateManyInput[];
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectIncludeCreateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * Project update
+    */
+   export type ProjectUpdateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * The data needed to update a Project.
+       */
+      data: XOR<ProjectUpdateInput, ProjectUncheckedUpdateInput>;
+      /**
+       * Choose, which Project to update.
+       */
+      where: ProjectWhereUniqueInput;
+   };
+
+   /**
+    * Project updateMany
+    */
+   export type ProjectUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update Projects.
+       */
+      data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyInput>;
+      /**
+       * Filter which Projects to update
+       */
+      where?: ProjectWhereInput;
+      /**
+       * Limit how many Projects to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Project updateManyAndReturn
+    */
+   export type ProjectUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * The data used to update Projects.
+       */
+      data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyInput>;
+      /**
+       * Filter which Projects to update
+       */
+      where?: ProjectWhereInput;
+      /**
+       * Limit how many Projects to update.
+       */
+      limit?: number;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectIncludeUpdateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * Project upsert
+    */
+   export type ProjectUpsertArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * The filter to search for the Project to update in case it exists.
+       */
+      where: ProjectWhereUniqueInput;
+      /**
+       * In case the Project found by the `where` argument doesn't exist, create a new Project with this data.
+       */
+      create: XOR<ProjectCreateInput, ProjectUncheckedCreateInput>;
+      /**
+       * In case the Project was found with the provided `where` argument, update it with this data.
+       */
+      update: XOR<ProjectUpdateInput, ProjectUncheckedUpdateInput>;
+   };
+
+   /**
+    * Project delete
+    */
+   export type ProjectDeleteArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      /**
+       * Filter which Project to delete.
+       */
+      where: ProjectWhereUniqueInput;
+   };
+
+   /**
+    * Project deleteMany
+    */
+   export type ProjectDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Projects to delete
+       */
+      where?: ProjectWhereInput;
+      /**
+       * Limit how many Projects to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Project.issues
+    */
+   export type Project$issuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * Project.lead
+    */
+   export type Project$leadArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      where?: UserWhereInput;
+   };
+
+   /**
+    * Project.teams
+    */
+   export type Project$teamsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      where?: TeamProjectWhereInput;
+      orderBy?: TeamProjectOrderByWithRelationInput | TeamProjectOrderByWithRelationInput[];
+      cursor?: TeamProjectWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: TeamProjectScalarFieldEnum | TeamProjectScalarFieldEnum[];
+   };
+
+   /**
+    * Project without action
+    */
+   export type ProjectDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model Label
+    */
+
+   export type AggregateLabel = {
+      _count: LabelCountAggregateOutputType | null;
+      _min: LabelMinAggregateOutputType | null;
+      _max: LabelMaxAggregateOutputType | null;
+   };
+
+   export type LabelMinAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      color: string | null;
+      description: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type LabelMaxAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      color: string | null;
+      description: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type LabelCountAggregateOutputType = {
+      id: number;
+      name: number;
+      color: number;
+      description: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type LabelMinAggregateInputType = {
+      id?: true;
+      name?: true;
+      color?: true;
+      description?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type LabelMaxAggregateInputType = {
+      id?: true;
+      name?: true;
+      color?: true;
+      description?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type LabelCountAggregateInputType = {
+      id?: true;
+      name?: true;
+      color?: true;
+      description?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type LabelAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Label to aggregate.
+       */
+      where?: LabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Labels to fetch.
+       */
+      orderBy?: LabelOrderByWithRelationInput | LabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: LabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Labels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Labels.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned Labels
+       **/
+      _count?: true | LabelCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: LabelMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: LabelMaxAggregateInputType;
+   };
+
+   export type GetLabelAggregateType<T extends LabelAggregateArgs> = {
+      [P in keyof T & keyof AggregateLabel]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateLabel[P]>
+         : GetScalarType<T[P], AggregateLabel[P]>;
+   };
+
+   export type LabelGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: LabelWhereInput;
+      orderBy?: LabelOrderByWithAggregationInput | LabelOrderByWithAggregationInput[];
+      by: LabelScalarFieldEnum[] | LabelScalarFieldEnum;
+      having?: LabelScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: LabelCountAggregateInputType | true;
+      _min?: LabelMinAggregateInputType;
+      _max?: LabelMaxAggregateInputType;
+   };
+
+   export type LabelGroupByOutputType = {
+      id: string;
+      name: string;
+      color: string;
+      description: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: LabelCountAggregateOutputType | null;
+      _min: LabelMinAggregateOutputType | null;
+      _max: LabelMaxAggregateOutputType | null;
+   };
+
+   type GetLabelGroupByPayload<T extends LabelGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<LabelGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof LabelGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], LabelGroupByOutputType[P]>
+               : GetScalarType<T[P], LabelGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type LabelSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetSelect<
+         {
+            id?: boolean;
+            name?: boolean;
+            color?: boolean;
+            description?: boolean;
+            createdAt?: boolean;
+            updatedAt?: boolean;
+            issues?: boolean | Label$issuesArgs<ExtArgs>;
+            _count?: boolean | LabelCountOutputTypeDefaultArgs<ExtArgs>;
+         },
+         ExtArgs['result']['label']
+      >;
+
+   export type LabelSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         color?: boolean;
+         description?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['label']
+   >;
+
+   export type LabelSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         color?: boolean;
+         description?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['label']
+   >;
+
+   export type LabelSelectScalar = {
+      id?: boolean;
+      name?: boolean;
+      color?: boolean;
+      description?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type LabelOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         'id' | 'name' | 'color' | 'description' | 'createdAt' | 'updatedAt',
+         ExtArgs['result']['label']
+      >;
+   export type LabelInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      issues?: boolean | Label$issuesArgs<ExtArgs>;
+      _count?: boolean | LabelCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type LabelIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+   export type LabelIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+
+   export type $LabelPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      name: 'Label';
+      objects: {
+         issues: Prisma.$IssueLabelPayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            name: string;
+            color: string;
+            description: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['label']
+      >;
+      composites: {};
+   };
+
+   type LabelGetPayload<S extends boolean | null | undefined | LabelDefaultArgs> =
+      $Result.GetResult<Prisma.$LabelPayload, S>;
+
+   type LabelCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Omit<
+      LabelFindManyArgs,
+      'select' | 'include' | 'distinct' | 'omit'
+   > & {
+      select?: LabelCountAggregateInputType | true;
+   };
+
+   export interface LabelDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Label']; meta: { name: 'Label' } };
+      /**
+       * Find zero or one Label that matches the filter.
+       * @param {LabelFindUniqueArgs} args - Arguments to find a Label
+       * @example
+       * // Get one Label
+       * const label = await prisma.label.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends LabelFindUniqueArgs>(
+         args: SelectSubset<T, LabelFindUniqueArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<
+            Prisma.$LabelPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one Label that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {LabelFindUniqueOrThrowArgs} args - Arguments to find a Label
+       * @example
+       * // Get one Label
+       * const label = await prisma.label.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends LabelFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, LabelFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<
+            Prisma.$LabelPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Label that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelFindFirstArgs} args - Arguments to find a Label
+       * @example
+       * // Get one Label
+       * const label = await prisma.label.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends LabelFindFirstArgs>(
+         args?: SelectSubset<T, LabelFindFirstArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Label that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelFindFirstOrThrowArgs} args - Arguments to find a Label
+       * @example
+       * // Get one Label
+       * const label = await prisma.label.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends LabelFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, LabelFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more Labels that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all Labels
+       * const labels = await prisma.label.findMany()
+       *
+       * // Get first 10 Labels
+       * const labels = await prisma.label.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const labelWithIdOnly = await prisma.label.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends LabelFindManyArgs>(
+         args?: SelectSubset<T, LabelFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a Label.
+       * @param {LabelCreateArgs} args - Arguments to create a Label.
+       * @example
+       * // Create one Label
+       * const Label = await prisma.label.create({
+       *   data: {
+       *     // ... data to create a Label
+       *   }
+       * })
+       *
+       */
+      create<T extends LabelCreateArgs>(
+         args: SelectSubset<T, LabelCreateArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many Labels.
+       * @param {LabelCreateManyArgs} args - Arguments to create many Labels.
+       * @example
+       * // Create many Labels
+       * const label = await prisma.label.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends LabelCreateManyArgs>(
+         args?: SelectSubset<T, LabelCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many Labels and returns the data saved in the database.
+       * @param {LabelCreateManyAndReturnArgs} args - Arguments to create many Labels.
+       * @example
+       * // Create many Labels
+       * const label = await prisma.label.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many Labels and only return the `id`
+       * const labelWithIdOnly = await prisma.label.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends LabelCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, LabelCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$LabelPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a Label.
+       * @param {LabelDeleteArgs} args - Arguments to delete one Label.
+       * @example
+       * // Delete one Label
+       * const Label = await prisma.label.delete({
+       *   where: {
+       *     // ... filter to delete one Label
+       *   }
+       * })
+       *
+       */
+      delete<T extends LabelDeleteArgs>(
+         args: SelectSubset<T, LabelDeleteArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one Label.
+       * @param {LabelUpdateArgs} args - Arguments to update one Label.
+       * @example
+       * // Update one Label
+       * const label = await prisma.label.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends LabelUpdateArgs>(
+         args: SelectSubset<T, LabelUpdateArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more Labels.
+       * @param {LabelDeleteManyArgs} args - Arguments to filter Labels to delete.
+       * @example
+       * // Delete a few Labels
+       * const { count } = await prisma.label.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends LabelDeleteManyArgs>(
+         args?: SelectSubset<T, LabelDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Labels.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many Labels
+       * const label = await prisma.label.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends LabelUpdateManyArgs>(
+         args: SelectSubset<T, LabelUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Labels and returns the data updated in the database.
+       * @param {LabelUpdateManyAndReturnArgs} args - Arguments to update many Labels.
+       * @example
+       * // Update many Labels
+       * const label = await prisma.label.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more Labels and only return the `id`
+       * const labelWithIdOnly = await prisma.label.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends LabelUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, LabelUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$LabelPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one Label.
+       * @param {LabelUpsertArgs} args - Arguments to update or create a Label.
+       * @example
+       * // Update or create a Label
+       * const label = await prisma.label.upsert({
+       *   create: {
+       *     // ... data to create a Label
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the Label we want to update
+       *   }
+       * })
+       */
+      upsert<T extends LabelUpsertArgs>(
+         args: SelectSubset<T, LabelUpsertArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         $Result.GetResult<Prisma.$LabelPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of Labels.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelCountArgs} args - Arguments to filter Labels to count.
+       * @example
+       * // Count the number of Labels
+       * const count = await prisma.label.count({
+       *   where: {
+       *     // ... the filter for the Labels we want to count
+       *   }
+       * })
+       **/
+      count<T extends LabelCountArgs>(
+         args?: Subset<T, LabelCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], LabelCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a Label.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends LabelAggregateArgs>(
+         args: Subset<T, LabelAggregateArgs>
+      ): Prisma.PrismaPromise<GetLabelAggregateType<T>>;
+
+      /**
+       * Group by Label.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {LabelGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends LabelGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: LabelGroupByArgs['orderBy'] }
+            : { orderBy?: LabelGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, LabelGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors ? GetLabelGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the Label model
+       */
+      readonly fields: LabelFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for Label.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__LabelClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      issues<T extends Label$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Label$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         | $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+         | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the Label model
+    */
+   interface LabelFieldRefs {
+      readonly id: FieldRef<'Label', 'String'>;
+      readonly name: FieldRef<'Label', 'String'>;
+      readonly color: FieldRef<'Label', 'String'>;
+      readonly description: FieldRef<'Label', 'String'>;
+      readonly createdAt: FieldRef<'Label', 'DateTime'>;
+      readonly updatedAt: FieldRef<'Label', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * Label findUnique
+    */
+   export type LabelFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: LabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which Label to fetch.
+       */
+      where: LabelWhereUniqueInput;
+   };
+
+   /**
+    * Label findUniqueOrThrow
+    */
+   export type LabelFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: LabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which Label to fetch.
+       */
+      where: LabelWhereUniqueInput;
+   };
+
+   /**
+    * Label findFirst
+    */
+   export type LabelFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: LabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which Label to fetch.
+       */
+      where?: LabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Labels to fetch.
+       */
+      orderBy?: LabelOrderByWithRelationInput | LabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Labels.
+       */
+      cursor?: LabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Labels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Labels.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Labels.
+       */
+      distinct?: LabelScalarFieldEnum | LabelScalarFieldEnum[];
+   };
+
+   /**
+    * Label findFirstOrThrow
+    */
+   export type LabelFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: LabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which Label to fetch.
+       */
+      where?: LabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Labels to fetch.
+       */
+      orderBy?: LabelOrderByWithRelationInput | LabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Labels.
+       */
+      cursor?: LabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Labels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Labels.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Labels.
+       */
+      distinct?: LabelScalarFieldEnum | LabelScalarFieldEnum[];
+   };
+
+   /**
+    * Label findMany
+    */
+   export type LabelFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: LabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which Labels to fetch.
+       */
+      where?: LabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Labels to fetch.
+       */
+      orderBy?: LabelOrderByWithRelationInput | LabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing Labels.
+       */
+      cursor?: LabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Labels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Labels.
+       */
+      skip?: number;
+      distinct?: LabelScalarFieldEnum | LabelScalarFieldEnum[];
+   };
+
+   /**
+    * Label create
+    */
+   export type LabelCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Label
+          */
+         select?: LabelSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Label
+          */
+         omit?: LabelOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: LabelInclude<ExtArgs> | null;
+         /**
+          * The data needed to create a Label.
+          */
+         data: XOR<LabelCreateInput, LabelUncheckedCreateInput>;
+      };
+
+   /**
+    * Label createMany
+    */
+   export type LabelCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many Labels.
+       */
+      data: LabelCreateManyInput | LabelCreateManyInput[];
+   };
+
+   /**
+    * Label createManyAndReturn
+    */
+   export type LabelCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * The data used to create many Labels.
+       */
+      data: LabelCreateManyInput | LabelCreateManyInput[];
+   };
+
+   /**
+    * Label update
+    */
+   export type LabelUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Label
+          */
+         select?: LabelSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Label
+          */
+         omit?: LabelOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: LabelInclude<ExtArgs> | null;
+         /**
+          * The data needed to update a Label.
+          */
+         data: XOR<LabelUpdateInput, LabelUncheckedUpdateInput>;
+         /**
+          * Choose, which Label to update.
+          */
+         where: LabelWhereUniqueInput;
+      };
+
+   /**
+    * Label updateMany
+    */
+   export type LabelUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update Labels.
+       */
+      data: XOR<LabelUpdateManyMutationInput, LabelUncheckedUpdateManyInput>;
+      /**
+       * Filter which Labels to update
+       */
+      where?: LabelWhereInput;
+      /**
+       * Limit how many Labels to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Label updateManyAndReturn
+    */
+   export type LabelUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * The data used to update Labels.
+       */
+      data: XOR<LabelUpdateManyMutationInput, LabelUncheckedUpdateManyInput>;
+      /**
+       * Filter which Labels to update
+       */
+      where?: LabelWhereInput;
+      /**
+       * Limit how many Labels to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Label upsert
+    */
+   export type LabelUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Label
+          */
+         select?: LabelSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Label
+          */
+         omit?: LabelOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: LabelInclude<ExtArgs> | null;
+         /**
+          * The filter to search for the Label to update in case it exists.
+          */
+         where: LabelWhereUniqueInput;
+         /**
+          * In case the Label found by the `where` argument doesn't exist, create a new Label with this data.
+          */
+         create: XOR<LabelCreateInput, LabelUncheckedCreateInput>;
+         /**
+          * In case the Label was found with the provided `where` argument, update it with this data.
+          */
+         update: XOR<LabelUpdateInput, LabelUncheckedUpdateInput>;
+      };
+
+   /**
+    * Label delete
+    */
+   export type LabelDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Label
+          */
+         select?: LabelSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Label
+          */
+         omit?: LabelOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: LabelInclude<ExtArgs> | null;
+         /**
+          * Filter which Label to delete.
+          */
+         where: LabelWhereUniqueInput;
+      };
+
+   /**
+    * Label deleteMany
+    */
+   export type LabelDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Labels to delete
+       */
+      where?: LabelWhereInput;
+      /**
+       * Limit how many Labels to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Label.issues
+    */
+   export type Label$issuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      where?: IssueLabelWhereInput;
+      orderBy?: IssueLabelOrderByWithRelationInput | IssueLabelOrderByWithRelationInput[];
+      cursor?: IssueLabelWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueLabelScalarFieldEnum | IssueLabelScalarFieldEnum[];
+   };
+
+   /**
+    * Label without action
+    */
+   export type LabelDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Label
+       */
+      select?: LabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Label
+       */
+      omit?: LabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: LabelInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model IssueStatus
+    */
+
+   export type AggregateIssueStatus = {
+      _count: IssueStatusCountAggregateOutputType | null;
+      _min: IssueStatusMinAggregateOutputType | null;
+      _max: IssueStatusMaxAggregateOutputType | null;
+   };
+
+   export type IssueStatusMinAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      color: string | null;
+      iconName: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type IssueStatusMaxAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      color: string | null;
+      iconName: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type IssueStatusCountAggregateOutputType = {
+      id: number;
+      name: number;
+      color: number;
+      iconName: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type IssueStatusMinAggregateInputType = {
+      id?: true;
+      name?: true;
+      color?: true;
+      iconName?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type IssueStatusMaxAggregateInputType = {
+      id?: true;
+      name?: true;
+      color?: true;
+      iconName?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type IssueStatusCountAggregateInputType = {
+      id?: true;
+      name?: true;
+      color?: true;
+      iconName?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type IssueStatusAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which IssueStatus to aggregate.
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueStatuses to fetch.
+       */
+      orderBy?: IssueStatusOrderByWithRelationInput | IssueStatusOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: IssueStatusWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueStatuses from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueStatuses.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned IssueStatuses
+       **/
+      _count?: true | IssueStatusCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: IssueStatusMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: IssueStatusMaxAggregateInputType;
+   };
+
+   export type GetIssueStatusAggregateType<T extends IssueStatusAggregateArgs> = {
+      [P in keyof T & keyof AggregateIssueStatus]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateIssueStatus[P]>
+         : GetScalarType<T[P], AggregateIssueStatus[P]>;
+   };
+
+   export type IssueStatusGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueStatusWhereInput;
+      orderBy?: IssueStatusOrderByWithAggregationInput | IssueStatusOrderByWithAggregationInput[];
+      by: IssueStatusScalarFieldEnum[] | IssueStatusScalarFieldEnum;
+      having?: IssueStatusScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: IssueStatusCountAggregateInputType | true;
+      _min?: IssueStatusMinAggregateInputType;
+      _max?: IssueStatusMaxAggregateInputType;
+   };
+
+   export type IssueStatusGroupByOutputType = {
+      id: string;
+      name: string;
+      color: string;
+      iconName: string;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: IssueStatusCountAggregateOutputType | null;
+      _min: IssueStatusMinAggregateOutputType | null;
+      _max: IssueStatusMaxAggregateOutputType | null;
+   };
+
+   type GetIssueStatusGroupByPayload<T extends IssueStatusGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<IssueStatusGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof IssueStatusGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], IssueStatusGroupByOutputType[P]>
+               : GetScalarType<T[P], IssueStatusGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type IssueStatusSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         color?: boolean;
+         iconName?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         issues?: boolean | IssueStatus$issuesArgs<ExtArgs>;
+         _count?: boolean | IssueStatusCountOutputTypeDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issueStatus']
+   >;
+
+   export type IssueStatusSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         color?: boolean;
+         iconName?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['issueStatus']
+   >;
+
+   export type IssueStatusSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         color?: boolean;
+         iconName?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['issueStatus']
+   >;
+
+   export type IssueStatusSelectScalar = {
+      id?: boolean;
+      name?: boolean;
+      color?: boolean;
+      iconName?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type IssueStatusOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         'id' | 'name' | 'color' | 'iconName' | 'createdAt' | 'updatedAt',
+         ExtArgs['result']['issueStatus']
+      >;
+   export type IssueStatusInclude<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | IssueStatus$issuesArgs<ExtArgs>;
+      _count?: boolean | IssueStatusCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type IssueStatusIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+   export type IssueStatusIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+
+   export type $IssueStatusPayload<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      name: 'IssueStatus';
+      objects: {
+         issues: Prisma.$IssuePayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            name: string;
+            color: string;
+            iconName: string;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['issueStatus']
+      >;
+      composites: {};
+   };
+
+   type IssueStatusGetPayload<S extends boolean | null | undefined | IssueStatusDefaultArgs> =
+      $Result.GetResult<Prisma.$IssueStatusPayload, S>;
+
+   type IssueStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      Omit<IssueStatusFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+         select?: IssueStatusCountAggregateInputType | true;
+      };
+
+   export interface IssueStatusDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: {
+         types: Prisma.TypeMap<ExtArgs>['model']['IssueStatus'];
+         meta: { name: 'IssueStatus' };
+      };
+      /**
+       * Find zero or one IssueStatus that matches the filter.
+       * @param {IssueStatusFindUniqueArgs} args - Arguments to find a IssueStatus
+       * @example
+       * // Get one IssueStatus
+       * const issueStatus = await prisma.issueStatus.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends IssueStatusFindUniqueArgs>(
+         args: SelectSubset<T, IssueStatusFindUniqueArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one IssueStatus that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {IssueStatusFindUniqueOrThrowArgs} args - Arguments to find a IssueStatus
+       * @example
+       * // Get one IssueStatus
+       * const issueStatus = await prisma.issueStatus.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends IssueStatusFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, IssueStatusFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first IssueStatus that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusFindFirstArgs} args - Arguments to find a IssueStatus
+       * @example
+       * // Get one IssueStatus
+       * const issueStatus = await prisma.issueStatus.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends IssueStatusFindFirstArgs>(
+         args?: SelectSubset<T, IssueStatusFindFirstArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'findFirst',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first IssueStatus that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusFindFirstOrThrowArgs} args - Arguments to find a IssueStatus
+       * @example
+       * // Get one IssueStatus
+       * const issueStatus = await prisma.issueStatus.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends IssueStatusFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, IssueStatusFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'findFirstOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more IssueStatuses that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all IssueStatuses
+       * const issueStatuses = await prisma.issueStatus.findMany()
+       *
+       * // Get first 10 IssueStatuses
+       * const issueStatuses = await prisma.issueStatus.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const issueStatusWithIdOnly = await prisma.issueStatus.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends IssueStatusFindManyArgs>(
+         args?: SelectSubset<T, IssueStatusFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssueStatusPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a IssueStatus.
+       * @param {IssueStatusCreateArgs} args - Arguments to create a IssueStatus.
+       * @example
+       * // Create one IssueStatus
+       * const IssueStatus = await prisma.issueStatus.create({
+       *   data: {
+       *     // ... data to create a IssueStatus
+       *   }
+       * })
+       *
+       */
+      create<T extends IssueStatusCreateArgs>(
+         args: SelectSubset<T, IssueStatusCreateArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<Prisma.$IssueStatusPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many IssueStatuses.
+       * @param {IssueStatusCreateManyArgs} args - Arguments to create many IssueStatuses.
+       * @example
+       * // Create many IssueStatuses
+       * const issueStatus = await prisma.issueStatus.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends IssueStatusCreateManyArgs>(
+         args?: SelectSubset<T, IssueStatusCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many IssueStatuses and returns the data saved in the database.
+       * @param {IssueStatusCreateManyAndReturnArgs} args - Arguments to create many IssueStatuses.
+       * @example
+       * // Create many IssueStatuses
+       * const issueStatus = await prisma.issueStatus.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many IssueStatuses and only return the `id`
+       * const issueStatusWithIdOnly = await prisma.issueStatus.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends IssueStatusCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, IssueStatusCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a IssueStatus.
+       * @param {IssueStatusDeleteArgs} args - Arguments to delete one IssueStatus.
+       * @example
+       * // Delete one IssueStatus
+       * const IssueStatus = await prisma.issueStatus.delete({
+       *   where: {
+       *     // ... filter to delete one IssueStatus
+       *   }
+       * })
+       *
+       */
+      delete<T extends IssueStatusDeleteArgs>(
+         args: SelectSubset<T, IssueStatusDeleteArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<Prisma.$IssueStatusPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one IssueStatus.
+       * @param {IssueStatusUpdateArgs} args - Arguments to update one IssueStatus.
+       * @example
+       * // Update one IssueStatus
+       * const issueStatus = await prisma.issueStatus.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends IssueStatusUpdateArgs>(
+         args: SelectSubset<T, IssueStatusUpdateArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<Prisma.$IssueStatusPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more IssueStatuses.
+       * @param {IssueStatusDeleteManyArgs} args - Arguments to filter IssueStatuses to delete.
+       * @example
+       * // Delete a few IssueStatuses
+       * const { count } = await prisma.issueStatus.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends IssueStatusDeleteManyArgs>(
+         args?: SelectSubset<T, IssueStatusDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more IssueStatuses.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many IssueStatuses
+       * const issueStatus = await prisma.issueStatus.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends IssueStatusUpdateManyArgs>(
+         args: SelectSubset<T, IssueStatusUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more IssueStatuses and returns the data updated in the database.
+       * @param {IssueStatusUpdateManyAndReturnArgs} args - Arguments to update many IssueStatuses.
+       * @example
+       * // Update many IssueStatuses
+       * const issueStatus = await prisma.issueStatus.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more IssueStatuses and only return the `id`
+       * const issueStatusWithIdOnly = await prisma.issueStatus.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends IssueStatusUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, IssueStatusUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one IssueStatus.
+       * @param {IssueStatusUpsertArgs} args - Arguments to update or create a IssueStatus.
+       * @example
+       * // Update or create a IssueStatus
+       * const issueStatus = await prisma.issueStatus.upsert({
+       *   create: {
+       *     // ... data to create a IssueStatus
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the IssueStatus we want to update
+       *   }
+       * })
+       */
+      upsert<T extends IssueStatusUpsertArgs>(
+         args: SelectSubset<T, IssueStatusUpsertArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<Prisma.$IssueStatusPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of IssueStatuses.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusCountArgs} args - Arguments to filter IssueStatuses to count.
+       * @example
+       * // Count the number of IssueStatuses
+       * const count = await prisma.issueStatus.count({
+       *   where: {
+       *     // ... the filter for the IssueStatuses we want to count
+       *   }
+       * })
+       **/
+      count<T extends IssueStatusCountArgs>(
+         args?: Subset<T, IssueStatusCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], IssueStatusCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a IssueStatus.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends IssueStatusAggregateArgs>(
+         args: Subset<T, IssueStatusAggregateArgs>
+      ): Prisma.PrismaPromise<GetIssueStatusAggregateType<T>>;
+
+      /**
+       * Group by IssueStatus.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueStatusGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends IssueStatusGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: IssueStatusGroupByArgs['orderBy'] }
+            : { orderBy?: IssueStatusGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, IssueStatusGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors
+         ? GetIssueStatusGroupByPayload<T>
+         : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the IssueStatus model
+       */
+      readonly fields: IssueStatusFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for IssueStatus.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__IssueStatusClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      issues<T extends IssueStatus$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, IssueStatus$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the IssueStatus model
+    */
+   interface IssueStatusFieldRefs {
+      readonly id: FieldRef<'IssueStatus', 'String'>;
+      readonly name: FieldRef<'IssueStatus', 'String'>;
+      readonly color: FieldRef<'IssueStatus', 'String'>;
+      readonly iconName: FieldRef<'IssueStatus', 'String'>;
+      readonly createdAt: FieldRef<'IssueStatus', 'DateTime'>;
+      readonly updatedAt: FieldRef<'IssueStatus', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * IssueStatus findUnique
+    */
+   export type IssueStatusFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueStatus to fetch.
+       */
+      where: IssueStatusWhereUniqueInput;
+   };
+
+   /**
+    * IssueStatus findUniqueOrThrow
+    */
+   export type IssueStatusFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueStatus to fetch.
+       */
+      where: IssueStatusWhereUniqueInput;
+   };
+
+   /**
+    * IssueStatus findFirst
+    */
+   export type IssueStatusFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueStatus to fetch.
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueStatuses to fetch.
+       */
+      orderBy?: IssueStatusOrderByWithRelationInput | IssueStatusOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for IssueStatuses.
+       */
+      cursor?: IssueStatusWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueStatuses from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueStatuses.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of IssueStatuses.
+       */
+      distinct?: IssueStatusScalarFieldEnum | IssueStatusScalarFieldEnum[];
+   };
+
+   /**
+    * IssueStatus findFirstOrThrow
+    */
+   export type IssueStatusFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueStatus to fetch.
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueStatuses to fetch.
+       */
+      orderBy?: IssueStatusOrderByWithRelationInput | IssueStatusOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for IssueStatuses.
+       */
+      cursor?: IssueStatusWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueStatuses from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueStatuses.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of IssueStatuses.
+       */
+      distinct?: IssueStatusScalarFieldEnum | IssueStatusScalarFieldEnum[];
+   };
+
+   /**
+    * IssueStatus findMany
+    */
+   export type IssueStatusFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueStatuses to fetch.
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueStatuses to fetch.
+       */
+      orderBy?: IssueStatusOrderByWithRelationInput | IssueStatusOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing IssueStatuses.
+       */
+      cursor?: IssueStatusWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueStatuses from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueStatuses.
+       */
+      skip?: number;
+      distinct?: IssueStatusScalarFieldEnum | IssueStatusScalarFieldEnum[];
+   };
+
+   /**
+    * IssueStatus create
+    */
+   export type IssueStatusCreateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * The data needed to create a IssueStatus.
+       */
+      data: XOR<IssueStatusCreateInput, IssueStatusUncheckedCreateInput>;
+   };
+
+   /**
+    * IssueStatus createMany
+    */
+   export type IssueStatusCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many IssueStatuses.
+       */
+      data: IssueStatusCreateManyInput | IssueStatusCreateManyInput[];
+   };
+
+   /**
+    * IssueStatus createManyAndReturn
+    */
+   export type IssueStatusCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * The data used to create many IssueStatuses.
+       */
+      data: IssueStatusCreateManyInput | IssueStatusCreateManyInput[];
+   };
+
+   /**
+    * IssueStatus update
+    */
+   export type IssueStatusUpdateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * The data needed to update a IssueStatus.
+       */
+      data: XOR<IssueStatusUpdateInput, IssueStatusUncheckedUpdateInput>;
+      /**
+       * Choose, which IssueStatus to update.
+       */
+      where: IssueStatusWhereUniqueInput;
+   };
+
+   /**
+    * IssueStatus updateMany
+    */
+   export type IssueStatusUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update IssueStatuses.
+       */
+      data: XOR<IssueStatusUpdateManyMutationInput, IssueStatusUncheckedUpdateManyInput>;
+      /**
+       * Filter which IssueStatuses to update
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * Limit how many IssueStatuses to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssueStatus updateManyAndReturn
+    */
+   export type IssueStatusUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * The data used to update IssueStatuses.
+       */
+      data: XOR<IssueStatusUpdateManyMutationInput, IssueStatusUncheckedUpdateManyInput>;
+      /**
+       * Filter which IssueStatuses to update
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * Limit how many IssueStatuses to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssueStatus upsert
+    */
+   export type IssueStatusUpsertArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * The filter to search for the IssueStatus to update in case it exists.
+       */
+      where: IssueStatusWhereUniqueInput;
+      /**
+       * In case the IssueStatus found by the `where` argument doesn't exist, create a new IssueStatus with this data.
+       */
+      create: XOR<IssueStatusCreateInput, IssueStatusUncheckedCreateInput>;
+      /**
+       * In case the IssueStatus was found with the provided `where` argument, update it with this data.
+       */
+      update: XOR<IssueStatusUpdateInput, IssueStatusUncheckedUpdateInput>;
+   };
+
+   /**
+    * IssueStatus delete
+    */
+   export type IssueStatusDeleteArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      /**
+       * Filter which IssueStatus to delete.
+       */
+      where: IssueStatusWhereUniqueInput;
+   };
+
+   /**
+    * IssueStatus deleteMany
+    */
+   export type IssueStatusDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which IssueStatuses to delete
+       */
+      where?: IssueStatusWhereInput;
+      /**
+       * Limit how many IssueStatuses to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssueStatus.issues
+    */
+   export type IssueStatus$issuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * IssueStatus without action
+    */
+   export type IssueStatusDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model IssuePriority
+    */
+
+   export type AggregateIssuePriority = {
+      _count: IssuePriorityCountAggregateOutputType | null;
+      _avg: IssuePriorityAvgAggregateOutputType | null;
+      _sum: IssuePrioritySumAggregateOutputType | null;
+      _min: IssuePriorityMinAggregateOutputType | null;
+      _max: IssuePriorityMaxAggregateOutputType | null;
+   };
+
+   export type IssuePriorityAvgAggregateOutputType = {
+      order: number | null;
+   };
+
+   export type IssuePrioritySumAggregateOutputType = {
+      order: number | null;
+   };
+
+   export type IssuePriorityMinAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      iconName: string | null;
+      order: number | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type IssuePriorityMaxAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      iconName: string | null;
+      order: number | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type IssuePriorityCountAggregateOutputType = {
+      id: number;
+      name: number;
+      iconName: number;
+      order: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type IssuePriorityAvgAggregateInputType = {
+      order?: true;
+   };
+
+   export type IssuePrioritySumAggregateInputType = {
+      order?: true;
+   };
+
+   export type IssuePriorityMinAggregateInputType = {
+      id?: true;
+      name?: true;
+      iconName?: true;
+      order?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type IssuePriorityMaxAggregateInputType = {
+      id?: true;
+      name?: true;
+      iconName?: true;
+      order?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type IssuePriorityCountAggregateInputType = {
+      id?: true;
+      name?: true;
+      iconName?: true;
+      order?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type IssuePriorityAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which IssuePriority to aggregate.
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssuePriorities to fetch.
+       */
+      orderBy?: IssuePriorityOrderByWithRelationInput | IssuePriorityOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: IssuePriorityWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssuePriorities from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssuePriorities.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned IssuePriorities
+       **/
+      _count?: true | IssuePriorityCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to average
+       **/
+      _avg?: IssuePriorityAvgAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to sum
+       **/
+      _sum?: IssuePrioritySumAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: IssuePriorityMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: IssuePriorityMaxAggregateInputType;
+   };
+
+   export type GetIssuePriorityAggregateType<T extends IssuePriorityAggregateArgs> = {
+      [P in keyof T & keyof AggregateIssuePriority]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateIssuePriority[P]>
+         : GetScalarType<T[P], AggregateIssuePriority[P]>;
+   };
+
+   export type IssuePriorityGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssuePriorityWhereInput;
+      orderBy?:
+         | IssuePriorityOrderByWithAggregationInput
+         | IssuePriorityOrderByWithAggregationInput[];
+      by: IssuePriorityScalarFieldEnum[] | IssuePriorityScalarFieldEnum;
+      having?: IssuePriorityScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: IssuePriorityCountAggregateInputType | true;
+      _avg?: IssuePriorityAvgAggregateInputType;
+      _sum?: IssuePrioritySumAggregateInputType;
+      _min?: IssuePriorityMinAggregateInputType;
+      _max?: IssuePriorityMaxAggregateInputType;
+   };
+
+   export type IssuePriorityGroupByOutputType = {
+      id: string;
+      name: string;
+      iconName: string;
+      order: number;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: IssuePriorityCountAggregateOutputType | null;
+      _avg: IssuePriorityAvgAggregateOutputType | null;
+      _sum: IssuePrioritySumAggregateOutputType | null;
+      _min: IssuePriorityMinAggregateOutputType | null;
+      _max: IssuePriorityMaxAggregateOutputType | null;
+   };
+
+   type GetIssuePriorityGroupByPayload<T extends IssuePriorityGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<IssuePriorityGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof IssuePriorityGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], IssuePriorityGroupByOutputType[P]>
+               : GetScalarType<T[P], IssuePriorityGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type IssuePrioritySelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         iconName?: boolean;
+         order?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         issues?: boolean | IssuePriority$issuesArgs<ExtArgs>;
+         _count?: boolean | IssuePriorityCountOutputTypeDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issuePriority']
+   >;
+
+   export type IssuePrioritySelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         iconName?: boolean;
+         order?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['issuePriority']
+   >;
+
+   export type IssuePrioritySelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         iconName?: boolean;
+         order?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['issuePriority']
+   >;
+
+   export type IssuePrioritySelectScalar = {
+      id?: boolean;
+      name?: boolean;
+      iconName?: boolean;
+      order?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type IssuePriorityOmit<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetOmit<
+      'id' | 'name' | 'iconName' | 'order' | 'createdAt' | 'updatedAt',
+      ExtArgs['result']['issuePriority']
+   >;
+   export type IssuePriorityInclude<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | IssuePriority$issuesArgs<ExtArgs>;
+      _count?: boolean | IssuePriorityCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type IssuePriorityIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+   export type IssuePriorityIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+
+   export type $IssuePriorityPayload<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      name: 'IssuePriority';
+      objects: {
+         issues: Prisma.$IssuePayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            name: string;
+            iconName: string;
+            order: number;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['issuePriority']
+      >;
+      composites: {};
+   };
+
+   type IssuePriorityGetPayload<S extends boolean | null | undefined | IssuePriorityDefaultArgs> =
+      $Result.GetResult<Prisma.$IssuePriorityPayload, S>;
+
+   type IssuePriorityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      Omit<IssuePriorityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+         select?: IssuePriorityCountAggregateInputType | true;
+      };
+
+   export interface IssuePriorityDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: {
+         types: Prisma.TypeMap<ExtArgs>['model']['IssuePriority'];
+         meta: { name: 'IssuePriority' };
+      };
+      /**
+       * Find zero or one IssuePriority that matches the filter.
+       * @param {IssuePriorityFindUniqueArgs} args - Arguments to find a IssuePriority
+       * @example
+       * // Get one IssuePriority
+       * const issuePriority = await prisma.issuePriority.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends IssuePriorityFindUniqueArgs>(
+         args: SelectSubset<T, IssuePriorityFindUniqueArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one IssuePriority that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {IssuePriorityFindUniqueOrThrowArgs} args - Arguments to find a IssuePriority
+       * @example
+       * // Get one IssuePriority
+       * const issuePriority = await prisma.issuePriority.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends IssuePriorityFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, IssuePriorityFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first IssuePriority that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityFindFirstArgs} args - Arguments to find a IssuePriority
+       * @example
+       * // Get one IssuePriority
+       * const issuePriority = await prisma.issuePriority.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends IssuePriorityFindFirstArgs>(
+         args?: SelectSubset<T, IssuePriorityFindFirstArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'findFirst',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first IssuePriority that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityFindFirstOrThrowArgs} args - Arguments to find a IssuePriority
+       * @example
+       * // Get one IssuePriority
+       * const issuePriority = await prisma.issuePriority.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends IssuePriorityFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, IssuePriorityFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'findFirstOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more IssuePriorities that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all IssuePriorities
+       * const issuePriorities = await prisma.issuePriority.findMany()
+       *
+       * // Get first 10 IssuePriorities
+       * const issuePriorities = await prisma.issuePriority.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const issuePriorityWithIdOnly = await prisma.issuePriority.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends IssuePriorityFindManyArgs>(
+         args?: SelectSubset<T, IssuePriorityFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePriorityPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a IssuePriority.
+       * @param {IssuePriorityCreateArgs} args - Arguments to create a IssuePriority.
+       * @example
+       * // Create one IssuePriority
+       * const IssuePriority = await prisma.issuePriority.create({
+       *   data: {
+       *     // ... data to create a IssuePriority
+       *   }
+       * })
+       *
+       */
+      create<T extends IssuePriorityCreateArgs>(
+         args: SelectSubset<T, IssuePriorityCreateArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<Prisma.$IssuePriorityPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many IssuePriorities.
+       * @param {IssuePriorityCreateManyArgs} args - Arguments to create many IssuePriorities.
+       * @example
+       * // Create many IssuePriorities
+       * const issuePriority = await prisma.issuePriority.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends IssuePriorityCreateManyArgs>(
+         args?: SelectSubset<T, IssuePriorityCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many IssuePriorities and returns the data saved in the database.
+       * @param {IssuePriorityCreateManyAndReturnArgs} args - Arguments to create many IssuePriorities.
+       * @example
+       * // Create many IssuePriorities
+       * const issuePriority = await prisma.issuePriority.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many IssuePriorities and only return the `id`
+       * const issuePriorityWithIdOnly = await prisma.issuePriority.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends IssuePriorityCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, IssuePriorityCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a IssuePriority.
+       * @param {IssuePriorityDeleteArgs} args - Arguments to delete one IssuePriority.
+       * @example
+       * // Delete one IssuePriority
+       * const IssuePriority = await prisma.issuePriority.delete({
+       *   where: {
+       *     // ... filter to delete one IssuePriority
+       *   }
+       * })
+       *
+       */
+      delete<T extends IssuePriorityDeleteArgs>(
+         args: SelectSubset<T, IssuePriorityDeleteArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<Prisma.$IssuePriorityPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one IssuePriority.
+       * @param {IssuePriorityUpdateArgs} args - Arguments to update one IssuePriority.
+       * @example
+       * // Update one IssuePriority
+       * const issuePriority = await prisma.issuePriority.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends IssuePriorityUpdateArgs>(
+         args: SelectSubset<T, IssuePriorityUpdateArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<Prisma.$IssuePriorityPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more IssuePriorities.
+       * @param {IssuePriorityDeleteManyArgs} args - Arguments to filter IssuePriorities to delete.
+       * @example
+       * // Delete a few IssuePriorities
+       * const { count } = await prisma.issuePriority.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends IssuePriorityDeleteManyArgs>(
+         args?: SelectSubset<T, IssuePriorityDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more IssuePriorities.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many IssuePriorities
+       * const issuePriority = await prisma.issuePriority.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends IssuePriorityUpdateManyArgs>(
+         args: SelectSubset<T, IssuePriorityUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more IssuePriorities and returns the data updated in the database.
+       * @param {IssuePriorityUpdateManyAndReturnArgs} args - Arguments to update many IssuePriorities.
+       * @example
+       * // Update many IssuePriorities
+       * const issuePriority = await prisma.issuePriority.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more IssuePriorities and only return the `id`
+       * const issuePriorityWithIdOnly = await prisma.issuePriority.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends IssuePriorityUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, IssuePriorityUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one IssuePriority.
+       * @param {IssuePriorityUpsertArgs} args - Arguments to update or create a IssuePriority.
+       * @example
+       * // Update or create a IssuePriority
+       * const issuePriority = await prisma.issuePriority.upsert({
+       *   create: {
+       *     // ... data to create a IssuePriority
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the IssuePriority we want to update
+       *   }
+       * })
+       */
+      upsert<T extends IssuePriorityUpsertArgs>(
+         args: SelectSubset<T, IssuePriorityUpsertArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<Prisma.$IssuePriorityPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of IssuePriorities.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityCountArgs} args - Arguments to filter IssuePriorities to count.
+       * @example
+       * // Count the number of IssuePriorities
+       * const count = await prisma.issuePriority.count({
+       *   where: {
+       *     // ... the filter for the IssuePriorities we want to count
+       *   }
+       * })
+       **/
+      count<T extends IssuePriorityCountArgs>(
+         args?: Subset<T, IssuePriorityCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], IssuePriorityCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a IssuePriority.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends IssuePriorityAggregateArgs>(
+         args: Subset<T, IssuePriorityAggregateArgs>
+      ): Prisma.PrismaPromise<GetIssuePriorityAggregateType<T>>;
+
+      /**
+       * Group by IssuePriority.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssuePriorityGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends IssuePriorityGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: IssuePriorityGroupByArgs['orderBy'] }
+            : { orderBy?: IssuePriorityGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, IssuePriorityGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors
+         ? GetIssuePriorityGroupByPayload<T>
+         : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the IssuePriority model
+       */
+      readonly fields: IssuePriorityFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for IssuePriority.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__IssuePriorityClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      issues<T extends IssuePriority$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, IssuePriority$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the IssuePriority model
+    */
+   interface IssuePriorityFieldRefs {
+      readonly id: FieldRef<'IssuePriority', 'String'>;
+      readonly name: FieldRef<'IssuePriority', 'String'>;
+      readonly iconName: FieldRef<'IssuePriority', 'String'>;
+      readonly order: FieldRef<'IssuePriority', 'Int'>;
+      readonly createdAt: FieldRef<'IssuePriority', 'DateTime'>;
+      readonly updatedAt: FieldRef<'IssuePriority', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * IssuePriority findUnique
+    */
+   export type IssuePriorityFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssuePriority to fetch.
+       */
+      where: IssuePriorityWhereUniqueInput;
+   };
+
+   /**
+    * IssuePriority findUniqueOrThrow
+    */
+   export type IssuePriorityFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssuePriority to fetch.
+       */
+      where: IssuePriorityWhereUniqueInput;
+   };
+
+   /**
+    * IssuePriority findFirst
+    */
+   export type IssuePriorityFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssuePriority to fetch.
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssuePriorities to fetch.
+       */
+      orderBy?: IssuePriorityOrderByWithRelationInput | IssuePriorityOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for IssuePriorities.
+       */
+      cursor?: IssuePriorityWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssuePriorities from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssuePriorities.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of IssuePriorities.
+       */
+      distinct?: IssuePriorityScalarFieldEnum | IssuePriorityScalarFieldEnum[];
+   };
+
+   /**
+    * IssuePriority findFirstOrThrow
+    */
+   export type IssuePriorityFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssuePriority to fetch.
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssuePriorities to fetch.
+       */
+      orderBy?: IssuePriorityOrderByWithRelationInput | IssuePriorityOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for IssuePriorities.
+       */
+      cursor?: IssuePriorityWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssuePriorities from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssuePriorities.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of IssuePriorities.
+       */
+      distinct?: IssuePriorityScalarFieldEnum | IssuePriorityScalarFieldEnum[];
+   };
+
+   /**
+    * IssuePriority findMany
+    */
+   export type IssuePriorityFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssuePriorities to fetch.
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssuePriorities to fetch.
+       */
+      orderBy?: IssuePriorityOrderByWithRelationInput | IssuePriorityOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing IssuePriorities.
+       */
+      cursor?: IssuePriorityWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssuePriorities from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssuePriorities.
+       */
+      skip?: number;
+      distinct?: IssuePriorityScalarFieldEnum | IssuePriorityScalarFieldEnum[];
+   };
+
+   /**
+    * IssuePriority create
+    */
+   export type IssuePriorityCreateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * The data needed to create a IssuePriority.
+       */
+      data: XOR<IssuePriorityCreateInput, IssuePriorityUncheckedCreateInput>;
+   };
+
+   /**
+    * IssuePriority createMany
+    */
+   export type IssuePriorityCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many IssuePriorities.
+       */
+      data: IssuePriorityCreateManyInput | IssuePriorityCreateManyInput[];
+   };
+
+   /**
+    * IssuePriority createManyAndReturn
+    */
+   export type IssuePriorityCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * The data used to create many IssuePriorities.
+       */
+      data: IssuePriorityCreateManyInput | IssuePriorityCreateManyInput[];
+   };
+
+   /**
+    * IssuePriority update
+    */
+   export type IssuePriorityUpdateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * The data needed to update a IssuePriority.
+       */
+      data: XOR<IssuePriorityUpdateInput, IssuePriorityUncheckedUpdateInput>;
+      /**
+       * Choose, which IssuePriority to update.
+       */
+      where: IssuePriorityWhereUniqueInput;
+   };
+
+   /**
+    * IssuePriority updateMany
+    */
+   export type IssuePriorityUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update IssuePriorities.
+       */
+      data: XOR<IssuePriorityUpdateManyMutationInput, IssuePriorityUncheckedUpdateManyInput>;
+      /**
+       * Filter which IssuePriorities to update
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * Limit how many IssuePriorities to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssuePriority updateManyAndReturn
+    */
+   export type IssuePriorityUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * The data used to update IssuePriorities.
+       */
+      data: XOR<IssuePriorityUpdateManyMutationInput, IssuePriorityUncheckedUpdateManyInput>;
+      /**
+       * Filter which IssuePriorities to update
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * Limit how many IssuePriorities to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssuePriority upsert
+    */
+   export type IssuePriorityUpsertArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * The filter to search for the IssuePriority to update in case it exists.
+       */
+      where: IssuePriorityWhereUniqueInput;
+      /**
+       * In case the IssuePriority found by the `where` argument doesn't exist, create a new IssuePriority with this data.
+       */
+      create: XOR<IssuePriorityCreateInput, IssuePriorityUncheckedCreateInput>;
+      /**
+       * In case the IssuePriority was found with the provided `where` argument, update it with this data.
+       */
+      update: XOR<IssuePriorityUpdateInput, IssuePriorityUncheckedUpdateInput>;
+   };
+
+   /**
+    * IssuePriority delete
+    */
+   export type IssuePriorityDeleteArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      /**
+       * Filter which IssuePriority to delete.
+       */
+      where: IssuePriorityWhereUniqueInput;
+   };
+
+   /**
+    * IssuePriority deleteMany
+    */
+   export type IssuePriorityDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which IssuePriorities to delete
+       */
+      where?: IssuePriorityWhereInput;
+      /**
+       * Limit how many IssuePriorities to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssuePriority.issues
+    */
+   export type IssuePriority$issuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * IssuePriority without action
+    */
+   export type IssuePriorityDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model Issue
+    */
+
+   export type AggregateIssue = {
+      _count: IssueCountAggregateOutputType | null;
+      _avg: IssueAvgAggregateOutputType | null;
+      _sum: IssueSumAggregateOutputType | null;
+      _min: IssueMinAggregateOutputType | null;
+      _max: IssueMaxAggregateOutputType | null;
+   };
+
+   export type IssueAvgAggregateOutputType = {
+      taskId: number | null;
+   };
+
+   export type IssueSumAggregateOutputType = {
+      taskId: number | null;
+   };
+
+   export type IssueMinAggregateOutputType = {
+      id: string | null;
+      identifier: string | null;
+      title: string | null;
+      description: string | null;
+      statusId: string | null;
+      priorityId: string | null;
+      status: string | null;
+      priority: string | null;
+      rank: string | null;
+      cycleId: string | null;
+      dueDate: Date | null;
+      taskId: number | null;
+      subtaskId: string | null;
+      issueType: $Enums.IssueType | null;
+      assigneeId: string | null;
+      projectId: string | null;
+      subissues: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type IssueMaxAggregateOutputType = {
+      id: string | null;
+      identifier: string | null;
+      title: string | null;
+      description: string | null;
+      statusId: string | null;
+      priorityId: string | null;
+      status: string | null;
+      priority: string | null;
+      rank: string | null;
+      cycleId: string | null;
+      dueDate: Date | null;
+      taskId: number | null;
+      subtaskId: string | null;
+      issueType: $Enums.IssueType | null;
+      assigneeId: string | null;
+      projectId: string | null;
+      subissues: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type IssueCountAggregateOutputType = {
+      id: number;
+      identifier: number;
+      title: number;
+      description: number;
+      statusId: number;
+      priorityId: number;
+      status: number;
+      priority: number;
+      rank: number;
+      cycleId: number;
+      dueDate: number;
+      taskId: number;
+      subtaskId: number;
+      issueType: number;
+      assigneeId: number;
+      projectId: number;
+      subissues: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type IssueAvgAggregateInputType = {
+      taskId?: true;
+   };
+
+   export type IssueSumAggregateInputType = {
+      taskId?: true;
+   };
+
+   export type IssueMinAggregateInputType = {
+      id?: true;
+      identifier?: true;
+      title?: true;
+      description?: true;
+      statusId?: true;
+      priorityId?: true;
+      status?: true;
+      priority?: true;
+      rank?: true;
+      cycleId?: true;
+      dueDate?: true;
+      taskId?: true;
+      subtaskId?: true;
+      issueType?: true;
+      assigneeId?: true;
+      projectId?: true;
+      subissues?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type IssueMaxAggregateInputType = {
+      id?: true;
+      identifier?: true;
+      title?: true;
+      description?: true;
+      statusId?: true;
+      priorityId?: true;
+      status?: true;
+      priority?: true;
+      rank?: true;
+      cycleId?: true;
+      dueDate?: true;
+      taskId?: true;
+      subtaskId?: true;
+      issueType?: true;
+      assigneeId?: true;
+      projectId?: true;
+      subissues?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type IssueCountAggregateInputType = {
+      id?: true;
+      identifier?: true;
+      title?: true;
+      description?: true;
+      statusId?: true;
+      priorityId?: true;
+      status?: true;
+      priority?: true;
+      rank?: true;
+      cycleId?: true;
+      dueDate?: true;
+      taskId?: true;
+      subtaskId?: true;
+      issueType?: true;
+      assigneeId?: true;
+      projectId?: true;
+      subissues?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type IssueAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Issue to aggregate.
+       */
+      where?: IssueWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Issues to fetch.
+       */
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: IssueWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Issues from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Issues.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned Issues
+       **/
+      _count?: true | IssueCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to average
+       **/
+      _avg?: IssueAvgAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to sum
+       **/
+      _sum?: IssueSumAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: IssueMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: IssueMaxAggregateInputType;
+   };
+
+   export type GetIssueAggregateType<T extends IssueAggregateArgs> = {
+      [P in keyof T & keyof AggregateIssue]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateIssue[P]>
+         : GetScalarType<T[P], AggregateIssue[P]>;
+   };
+
+   export type IssueGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithAggregationInput | IssueOrderByWithAggregationInput[];
+      by: IssueScalarFieldEnum[] | IssueScalarFieldEnum;
+      having?: IssueScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: IssueCountAggregateInputType | true;
+      _avg?: IssueAvgAggregateInputType;
+      _sum?: IssueSumAggregateInputType;
+      _min?: IssueMinAggregateInputType;
+      _max?: IssueMaxAggregateInputType;
+   };
+
+   export type IssueGroupByOutputType = {
+      id: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId: string | null;
+      priorityId: string | null;
+      status: string | null;
+      priority: string | null;
+      rank: string;
+      cycleId: string | null;
+      dueDate: Date | null;
+      taskId: number | null;
+      subtaskId: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId: string | null;
+      projectId: string | null;
+      subissues: string;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: IssueCountAggregateOutputType | null;
+      _avg: IssueAvgAggregateOutputType | null;
+      _sum: IssueSumAggregateOutputType | null;
+      _min: IssueMinAggregateOutputType | null;
+      _max: IssueMaxAggregateOutputType | null;
+   };
+
+   type GetIssueGroupByPayload<T extends IssueGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<IssueGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof IssueGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], IssueGroupByOutputType[P]>
+               : GetScalarType<T[P], IssueGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type IssueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetSelect<
+         {
+            id?: boolean;
+            identifier?: boolean;
+            title?: boolean;
+            description?: boolean;
+            statusId?: boolean;
+            priorityId?: boolean;
+            status?: boolean;
+            priority?: boolean;
+            rank?: boolean;
+            cycleId?: boolean;
+            dueDate?: boolean;
+            taskId?: boolean;
+            subtaskId?: boolean;
+            issueType?: boolean;
+            assigneeId?: boolean;
+            projectId?: boolean;
+            subissues?: boolean;
+            createdAt?: boolean;
+            updatedAt?: boolean;
+            assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
+            project?: boolean | Issue$projectArgs<ExtArgs>;
+            cycle?: boolean | Issue$cycleArgs<ExtArgs>;
+            task?: boolean | Issue$taskArgs<ExtArgs>;
+            issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
+            issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+            labels?: boolean | Issue$labelsArgs<ExtArgs>;
+            _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>;
+         },
+         ExtArgs['result']['issue']
+      >;
+
+   export type IssueSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         identifier?: boolean;
+         title?: boolean;
+         description?: boolean;
+         statusId?: boolean;
+         priorityId?: boolean;
+         status?: boolean;
+         priority?: boolean;
+         rank?: boolean;
+         cycleId?: boolean;
+         dueDate?: boolean;
+         taskId?: boolean;
+         subtaskId?: boolean;
+         issueType?: boolean;
+         assigneeId?: boolean;
+         projectId?: boolean;
+         subissues?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
+         project?: boolean | Issue$projectArgs<ExtArgs>;
+         cycle?: boolean | Issue$cycleArgs<ExtArgs>;
+         task?: boolean | Issue$taskArgs<ExtArgs>;
+         issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
+         issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issue']
+   >;
+
+   export type IssueSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         identifier?: boolean;
+         title?: boolean;
+         description?: boolean;
+         statusId?: boolean;
+         priorityId?: boolean;
+         status?: boolean;
+         priority?: boolean;
+         rank?: boolean;
+         cycleId?: boolean;
+         dueDate?: boolean;
+         taskId?: boolean;
+         subtaskId?: boolean;
+         issueType?: boolean;
+         assigneeId?: boolean;
+         projectId?: boolean;
+         subissues?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
+         project?: boolean | Issue$projectArgs<ExtArgs>;
+         cycle?: boolean | Issue$cycleArgs<ExtArgs>;
+         task?: boolean | Issue$taskArgs<ExtArgs>;
+         issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
+         issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issue']
+   >;
+
+   export type IssueSelectScalar = {
+      id?: boolean;
+      identifier?: boolean;
+      title?: boolean;
+      description?: boolean;
+      statusId?: boolean;
+      priorityId?: boolean;
+      status?: boolean;
+      priority?: boolean;
+      rank?: boolean;
+      cycleId?: boolean;
+      dueDate?: boolean;
+      taskId?: boolean;
+      subtaskId?: boolean;
+      issueType?: boolean;
+      assigneeId?: boolean;
+      projectId?: boolean;
+      subissues?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type IssueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         | 'id'
+         | 'identifier'
+         | 'title'
+         | 'description'
+         | 'statusId'
+         | 'priorityId'
+         | 'status'
+         | 'priority'
+         | 'rank'
+         | 'cycleId'
+         | 'dueDate'
+         | 'taskId'
+         | 'subtaskId'
+         | 'issueType'
+         | 'assigneeId'
+         | 'projectId'
+         | 'subissues'
+         | 'createdAt'
+         | 'updatedAt',
+         ExtArgs['result']['issue']
+      >;
+   export type IssueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
+      project?: boolean | Issue$projectArgs<ExtArgs>;
+      cycle?: boolean | Issue$cycleArgs<ExtArgs>;
+      task?: boolean | Issue$taskArgs<ExtArgs>;
+      issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
+      issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+      labels?: boolean | Issue$labelsArgs<ExtArgs>;
+      _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type IssueIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
+      project?: boolean | Issue$projectArgs<ExtArgs>;
+      cycle?: boolean | Issue$cycleArgs<ExtArgs>;
+      task?: boolean | Issue$taskArgs<ExtArgs>;
+      issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
+      issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+   };
+   export type IssueIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
+      project?: boolean | Issue$projectArgs<ExtArgs>;
+      cycle?: boolean | Issue$cycleArgs<ExtArgs>;
+      task?: boolean | Issue$taskArgs<ExtArgs>;
+      issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
+      issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+   };
+
+   export type $IssuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      name: 'Issue';
+      objects: {
+         assignee: Prisma.$UserPayload<ExtArgs> | null;
+         project: Prisma.$ProjectPayload<ExtArgs> | null;
+         cycle: Prisma.$CyclePayload<ExtArgs> | null;
+         task: Prisma.$TaskPayload<ExtArgs> | null;
+         issueStatus: Prisma.$IssueStatusPayload<ExtArgs> | null;
+         issuePriority: Prisma.$IssuePriorityPayload<ExtArgs> | null;
+         labels: Prisma.$IssueLabelPayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            identifier: string;
+            title: string;
+            description: string;
+            statusId: string | null;
+            priorityId: string | null;
+            status: string | null;
+            priority: string | null;
+            rank: string;
+            cycleId: string | null;
+            dueDate: Date | null;
+            taskId: number | null;
+            subtaskId: string | null;
+            issueType: $Enums.IssueType;
+            assigneeId: string | null;
+            projectId: string | null;
+            subissues: string;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['issue']
+      >;
+      composites: {};
+   };
+
+   type IssueGetPayload<S extends boolean | null | undefined | IssueDefaultArgs> =
+      $Result.GetResult<Prisma.$IssuePayload, S>;
+
+   type IssueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Omit<
+      IssueFindManyArgs,
+      'select' | 'include' | 'distinct' | 'omit'
+   > & {
+      select?: IssueCountAggregateInputType | true;
+   };
+
+   export interface IssueDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Issue']; meta: { name: 'Issue' } };
+      /**
+       * Find zero or one Issue that matches the filter.
+       * @param {IssueFindUniqueArgs} args - Arguments to find a Issue
+       * @example
+       * // Get one Issue
+       * const issue = await prisma.issue.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends IssueFindUniqueArgs>(
+         args: SelectSubset<T, IssueFindUniqueArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<
+            Prisma.$IssuePayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one Issue that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {IssueFindUniqueOrThrowArgs} args - Arguments to find a Issue
+       * @example
+       * // Get one Issue
+       * const issue = await prisma.issue.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends IssueFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, IssueFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<
+            Prisma.$IssuePayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Issue that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueFindFirstArgs} args - Arguments to find a Issue
+       * @example
+       * // Get one Issue
+       * const issue = await prisma.issue.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends IssueFindFirstArgs>(
+         args?: SelectSubset<T, IssueFindFirstArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Issue that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueFindFirstOrThrowArgs} args - Arguments to find a Issue
+       * @example
+       * // Get one Issue
+       * const issue = await prisma.issue.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends IssueFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, IssueFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more Issues that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all Issues
+       * const issues = await prisma.issue.findMany()
+       *
+       * // Get first 10 Issues
+       * const issues = await prisma.issue.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const issueWithIdOnly = await prisma.issue.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends IssueFindManyArgs>(
+         args?: SelectSubset<T, IssueFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a Issue.
+       * @param {IssueCreateArgs} args - Arguments to create a Issue.
+       * @example
+       * // Create one Issue
+       * const Issue = await prisma.issue.create({
+       *   data: {
+       *     // ... data to create a Issue
+       *   }
+       * })
+       *
+       */
+      create<T extends IssueCreateArgs>(
+         args: SelectSubset<T, IssueCreateArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many Issues.
+       * @param {IssueCreateManyArgs} args - Arguments to create many Issues.
+       * @example
+       * // Create many Issues
+       * const issue = await prisma.issue.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends IssueCreateManyArgs>(
+         args?: SelectSubset<T, IssueCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many Issues and returns the data saved in the database.
+       * @param {IssueCreateManyAndReturnArgs} args - Arguments to create many Issues.
+       * @example
+       * // Create many Issues
+       * const issue = await prisma.issue.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many Issues and only return the `id`
+       * const issueWithIdOnly = await prisma.issue.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends IssueCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, IssueCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssuePayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a Issue.
+       * @param {IssueDeleteArgs} args - Arguments to delete one Issue.
+       * @example
+       * // Delete one Issue
+       * const Issue = await prisma.issue.delete({
+       *   where: {
+       *     // ... filter to delete one Issue
+       *   }
+       * })
+       *
+       */
+      delete<T extends IssueDeleteArgs>(
+         args: SelectSubset<T, IssueDeleteArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one Issue.
+       * @param {IssueUpdateArgs} args - Arguments to update one Issue.
+       * @example
+       * // Update one Issue
+       * const issue = await prisma.issue.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends IssueUpdateArgs>(
+         args: SelectSubset<T, IssueUpdateArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more Issues.
+       * @param {IssueDeleteManyArgs} args - Arguments to filter Issues to delete.
+       * @example
+       * // Delete a few Issues
+       * const { count } = await prisma.issue.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends IssueDeleteManyArgs>(
+         args?: SelectSubset<T, IssueDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Issues.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many Issues
+       * const issue = await prisma.issue.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends IssueUpdateManyArgs>(
+         args: SelectSubset<T, IssueUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Issues and returns the data updated in the database.
+       * @param {IssueUpdateManyAndReturnArgs} args - Arguments to update many Issues.
+       * @example
+       * // Update many Issues
+       * const issue = await prisma.issue.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more Issues and only return the `id`
+       * const issueWithIdOnly = await prisma.issue.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends IssueUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, IssueUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssuePayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one Issue.
+       * @param {IssueUpsertArgs} args - Arguments to update or create a Issue.
+       * @example
+       * // Update or create a Issue
+       * const issue = await prisma.issue.upsert({
+       *   create: {
+       *     // ... data to create a Issue
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the Issue we want to update
+       *   }
+       * })
+       */
+      upsert<T extends IssueUpsertArgs>(
+         args: SelectSubset<T, IssueUpsertArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of Issues.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueCountArgs} args - Arguments to filter Issues to count.
+       * @example
+       * // Count the number of Issues
+       * const count = await prisma.issue.count({
+       *   where: {
+       *     // ... the filter for the Issues we want to count
+       *   }
+       * })
+       **/
+      count<T extends IssueCountArgs>(
+         args?: Subset<T, IssueCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], IssueCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a Issue.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends IssueAggregateArgs>(
+         args: Subset<T, IssueAggregateArgs>
+      ): Prisma.PrismaPromise<GetIssueAggregateType<T>>;
+
+      /**
+       * Group by Issue.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends IssueGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: IssueGroupByArgs['orderBy'] }
+            : { orderBy?: IssueGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, IssueGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors ? GetIssueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the Issue model
+       */
+      readonly fields: IssueFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for Issue.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__IssueClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      assignee<T extends Issue$assigneeArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$assigneeArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         $Result.GetResult<
+            Prisma.$UserPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      project<T extends Issue$projectArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$projectArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         $Result.GetResult<
+            Prisma.$ProjectPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      cycle<T extends Issue$cycleArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$cycleArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<
+            Prisma.$CyclePayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      task<T extends Issue$taskArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$taskArgs<ExtArgs>>
+      ): Prisma__TaskClient<
+         $Result.GetResult<
+            Prisma.$TaskPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      issueStatus<T extends Issue$issueStatusArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$issueStatusArgs<ExtArgs>>
+      ): Prisma__IssueStatusClient<
+         $Result.GetResult<
+            Prisma.$IssueStatusPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      issuePriority<T extends Issue$issuePriorityArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$issuePriorityArgs<ExtArgs>>
+      ): Prisma__IssuePriorityClient<
+         $Result.GetResult<
+            Prisma.$IssuePriorityPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      labels<T extends Issue$labelsArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$labelsArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         | $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+         | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the Issue model
+    */
+   interface IssueFieldRefs {
+      readonly id: FieldRef<'Issue', 'String'>;
+      readonly identifier: FieldRef<'Issue', 'String'>;
+      readonly title: FieldRef<'Issue', 'String'>;
+      readonly description: FieldRef<'Issue', 'String'>;
+      readonly statusId: FieldRef<'Issue', 'String'>;
+      readonly priorityId: FieldRef<'Issue', 'String'>;
+      readonly status: FieldRef<'Issue', 'String'>;
+      readonly priority: FieldRef<'Issue', 'String'>;
+      readonly rank: FieldRef<'Issue', 'String'>;
+      readonly cycleId: FieldRef<'Issue', 'String'>;
+      readonly dueDate: FieldRef<'Issue', 'DateTime'>;
+      readonly taskId: FieldRef<'Issue', 'Int'>;
+      readonly subtaskId: FieldRef<'Issue', 'String'>;
+      readonly issueType: FieldRef<'Issue', 'IssueType'>;
+      readonly assigneeId: FieldRef<'Issue', 'String'>;
+      readonly projectId: FieldRef<'Issue', 'String'>;
+      readonly subissues: FieldRef<'Issue', 'String'>;
+      readonly createdAt: FieldRef<'Issue', 'DateTime'>;
+      readonly updatedAt: FieldRef<'Issue', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * Issue findUnique
+    */
+   export type IssueFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      /**
+       * Filter, which Issue to fetch.
+       */
+      where: IssueWhereUniqueInput;
+   };
+
+   /**
+    * Issue findUniqueOrThrow
+    */
+   export type IssueFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      /**
+       * Filter, which Issue to fetch.
+       */
+      where: IssueWhereUniqueInput;
+   };
+
+   /**
+    * Issue findFirst
+    */
+   export type IssueFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      /**
+       * Filter, which Issue to fetch.
+       */
+      where?: IssueWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Issues to fetch.
+       */
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Issues.
+       */
+      cursor?: IssueWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Issues from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Issues.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Issues.
+       */
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * Issue findFirstOrThrow
+    */
+   export type IssueFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      /**
+       * Filter, which Issue to fetch.
+       */
+      where?: IssueWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Issues to fetch.
+       */
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Issues.
+       */
+      cursor?: IssueWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Issues from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Issues.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Issues.
+       */
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * Issue findMany
+    */
+   export type IssueFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      /**
+       * Filter, which Issues to fetch.
+       */
+      where?: IssueWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Issues to fetch.
+       */
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing Issues.
+       */
+      cursor?: IssueWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Issues from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Issues.
+       */
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * Issue create
+    */
+   export type IssueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Issue
+          */
+         select?: IssueSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Issue
+          */
+         omit?: IssueOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: IssueInclude<ExtArgs> | null;
+         /**
+          * The data needed to create a Issue.
+          */
+         data: XOR<IssueCreateInput, IssueUncheckedCreateInput>;
+      };
+
+   /**
+    * Issue createMany
+    */
+   export type IssueCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many Issues.
+       */
+      data: IssueCreateManyInput | IssueCreateManyInput[];
+   };
+
+   /**
+    * Issue createManyAndReturn
+    */
+   export type IssueCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * The data used to create many Issues.
+       */
+      data: IssueCreateManyInput | IssueCreateManyInput[];
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueIncludeCreateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * Issue update
+    */
+   export type IssueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Issue
+          */
+         select?: IssueSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Issue
+          */
+         omit?: IssueOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: IssueInclude<ExtArgs> | null;
+         /**
+          * The data needed to update a Issue.
+          */
+         data: XOR<IssueUpdateInput, IssueUncheckedUpdateInput>;
+         /**
+          * Choose, which Issue to update.
+          */
+         where: IssueWhereUniqueInput;
+      };
+
+   /**
+    * Issue updateMany
+    */
+   export type IssueUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update Issues.
+       */
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyInput>;
+      /**
+       * Filter which Issues to update
+       */
+      where?: IssueWhereInput;
+      /**
+       * Limit how many Issues to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Issue updateManyAndReturn
+    */
+   export type IssueUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * The data used to update Issues.
+       */
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyInput>;
+      /**
+       * Filter which Issues to update
+       */
+      where?: IssueWhereInput;
+      /**
+       * Limit how many Issues to update.
+       */
+      limit?: number;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueIncludeUpdateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * Issue upsert
+    */
+   export type IssueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Issue
+          */
+         select?: IssueSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Issue
+          */
+         omit?: IssueOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: IssueInclude<ExtArgs> | null;
+         /**
+          * The filter to search for the Issue to update in case it exists.
+          */
+         where: IssueWhereUniqueInput;
+         /**
+          * In case the Issue found by the `where` argument doesn't exist, create a new Issue with this data.
+          */
+         create: XOR<IssueCreateInput, IssueUncheckedCreateInput>;
+         /**
+          * In case the Issue was found with the provided `where` argument, update it with this data.
+          */
+         update: XOR<IssueUpdateInput, IssueUncheckedUpdateInput>;
+      };
+
+   /**
+    * Issue delete
+    */
+   export type IssueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Issue
+          */
+         select?: IssueSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Issue
+          */
+         omit?: IssueOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: IssueInclude<ExtArgs> | null;
+         /**
+          * Filter which Issue to delete.
+          */
+         where: IssueWhereUniqueInput;
+      };
+
+   /**
+    * Issue deleteMany
+    */
+   export type IssueDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Issues to delete
+       */
+      where?: IssueWhereInput;
+      /**
+       * Limit how many Issues to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Issue.assignee
+    */
+   export type Issue$assigneeArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the User
+       */
+      select?: UserSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the User
+       */
+      omit?: UserOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: UserInclude<ExtArgs> | null;
+      where?: UserWhereInput;
+   };
+
+   /**
+    * Issue.project
+    */
+   export type Issue$projectArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Project
+       */
+      select?: ProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Project
+       */
+      omit?: ProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: ProjectInclude<ExtArgs> | null;
+      where?: ProjectWhereInput;
+   };
+
+   /**
+    * Issue.cycle
+    */
+   export type Issue$cycleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Cycle
+          */
+         select?: CycleSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Cycle
+          */
+         omit?: CycleOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: CycleInclude<ExtArgs> | null;
+         where?: CycleWhereInput;
+      };
+
+   /**
+    * Issue.task
+    */
+   export type Issue$taskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Task
+          */
+         select?: TaskSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Task
+          */
+         omit?: TaskOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TaskInclude<ExtArgs> | null;
+         where?: TaskWhereInput;
+      };
+
+   /**
+    * Issue.issueStatus
+    */
+   export type Issue$issueStatusArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueStatus
+       */
+      select?: IssueStatusSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueStatus
+       */
+      omit?: IssueStatusOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueStatusInclude<ExtArgs> | null;
+      where?: IssueStatusWhereInput;
+   };
+
+   /**
+    * Issue.issuePriority
+    */
+   export type Issue$issuePriorityArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssuePriority
+       */
+      select?: IssuePrioritySelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssuePriority
+       */
+      omit?: IssuePriorityOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssuePriorityInclude<ExtArgs> | null;
+      where?: IssuePriorityWhereInput;
+   };
+
+   /**
+    * Issue.labels
+    */
+   export type Issue$labelsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      where?: IssueLabelWhereInput;
+      orderBy?: IssueLabelOrderByWithRelationInput | IssueLabelOrderByWithRelationInput[];
+      cursor?: IssueLabelWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueLabelScalarFieldEnum | IssueLabelScalarFieldEnum[];
+   };
+
+   /**
+    * Issue without action
+    */
+   export type IssueDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model IssueLabel
+    */
+
+   export type AggregateIssueLabel = {
+      _count: IssueLabelCountAggregateOutputType | null;
+      _min: IssueLabelMinAggregateOutputType | null;
+      _max: IssueLabelMaxAggregateOutputType | null;
+   };
+
+   export type IssueLabelMinAggregateOutputType = {
+      id: string | null;
+      issueId: string | null;
+      labelId: string | null;
+   };
+
+   export type IssueLabelMaxAggregateOutputType = {
+      id: string | null;
+      issueId: string | null;
+      labelId: string | null;
+   };
+
+   export type IssueLabelCountAggregateOutputType = {
+      id: number;
+      issueId: number;
+      labelId: number;
+      _all: number;
+   };
+
+   export type IssueLabelMinAggregateInputType = {
+      id?: true;
+      issueId?: true;
+      labelId?: true;
+   };
+
+   export type IssueLabelMaxAggregateInputType = {
+      id?: true;
+      issueId?: true;
+      labelId?: true;
+   };
+
+   export type IssueLabelCountAggregateInputType = {
+      id?: true;
+      issueId?: true;
+      labelId?: true;
+      _all?: true;
+   };
+
+   export type IssueLabelAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which IssueLabel to aggregate.
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueLabels to fetch.
+       */
+      orderBy?: IssueLabelOrderByWithRelationInput | IssueLabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: IssueLabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueLabels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueLabels.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned IssueLabels
+       **/
+      _count?: true | IssueLabelCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: IssueLabelMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: IssueLabelMaxAggregateInputType;
+   };
+
+   export type GetIssueLabelAggregateType<T extends IssueLabelAggregateArgs> = {
+      [P in keyof T & keyof AggregateIssueLabel]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateIssueLabel[P]>
+         : GetScalarType<T[P], AggregateIssueLabel[P]>;
+   };
+
+   export type IssueLabelGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueLabelWhereInput;
+      orderBy?: IssueLabelOrderByWithAggregationInput | IssueLabelOrderByWithAggregationInput[];
+      by: IssueLabelScalarFieldEnum[] | IssueLabelScalarFieldEnum;
+      having?: IssueLabelScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: IssueLabelCountAggregateInputType | true;
+      _min?: IssueLabelMinAggregateInputType;
+      _max?: IssueLabelMaxAggregateInputType;
+   };
+
+   export type IssueLabelGroupByOutputType = {
+      id: string;
+      issueId: string;
+      labelId: string;
+      _count: IssueLabelCountAggregateOutputType | null;
+      _min: IssueLabelMinAggregateOutputType | null;
+      _max: IssueLabelMaxAggregateOutputType | null;
+   };
+
+   type GetIssueLabelGroupByPayload<T extends IssueLabelGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<IssueLabelGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof IssueLabelGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], IssueLabelGroupByOutputType[P]>
+               : GetScalarType<T[P], IssueLabelGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type IssueLabelSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         issueId?: boolean;
+         labelId?: boolean;
+         issue?: boolean | IssueDefaultArgs<ExtArgs>;
+         label?: boolean | LabelDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issueLabel']
+   >;
+
+   export type IssueLabelSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         issueId?: boolean;
+         labelId?: boolean;
+         issue?: boolean | IssueDefaultArgs<ExtArgs>;
+         label?: boolean | LabelDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issueLabel']
+   >;
+
+   export type IssueLabelSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         issueId?: boolean;
+         labelId?: boolean;
+         issue?: boolean | IssueDefaultArgs<ExtArgs>;
+         label?: boolean | LabelDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['issueLabel']
+   >;
+
+   export type IssueLabelSelectScalar = {
+      id?: boolean;
+      issueId?: boolean;
+      labelId?: boolean;
+   };
+
+   export type IssueLabelOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<'id' | 'issueId' | 'labelId', ExtArgs['result']['issueLabel']>;
+   export type IssueLabelInclude<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issue?: boolean | IssueDefaultArgs<ExtArgs>;
+      label?: boolean | LabelDefaultArgs<ExtArgs>;
+   };
+   export type IssueLabelIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issue?: boolean | IssueDefaultArgs<ExtArgs>;
+      label?: boolean | LabelDefaultArgs<ExtArgs>;
+   };
+   export type IssueLabelIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issue?: boolean | IssueDefaultArgs<ExtArgs>;
+      label?: boolean | LabelDefaultArgs<ExtArgs>;
+   };
+
+   export type $IssueLabelPayload<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      name: 'IssueLabel';
+      objects: {
+         issue: Prisma.$IssuePayload<ExtArgs>;
+         label: Prisma.$LabelPayload<ExtArgs>;
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            issueId: string;
+            labelId: string;
+         },
+         ExtArgs['result']['issueLabel']
+      >;
+      composites: {};
+   };
+
+   type IssueLabelGetPayload<S extends boolean | null | undefined | IssueLabelDefaultArgs> =
+      $Result.GetResult<Prisma.$IssueLabelPayload, S>;
+
+   type IssueLabelCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      Omit<IssueLabelFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+         select?: IssueLabelCountAggregateInputType | true;
+      };
+
+   export interface IssueLabelDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: {
+         types: Prisma.TypeMap<ExtArgs>['model']['IssueLabel'];
+         meta: { name: 'IssueLabel' };
+      };
+      /**
+       * Find zero or one IssueLabel that matches the filter.
+       * @param {IssueLabelFindUniqueArgs} args - Arguments to find a IssueLabel
+       * @example
+       * // Get one IssueLabel
+       * const issueLabel = await prisma.issueLabel.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends IssueLabelFindUniqueArgs>(
+         args: SelectSubset<T, IssueLabelFindUniqueArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<
+            Prisma.$IssueLabelPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one IssueLabel that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {IssueLabelFindUniqueOrThrowArgs} args - Arguments to find a IssueLabel
+       * @example
+       * // Get one IssueLabel
+       * const issueLabel = await prisma.issueLabel.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends IssueLabelFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, IssueLabelFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<
+            Prisma.$IssueLabelPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first IssueLabel that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelFindFirstArgs} args - Arguments to find a IssueLabel
+       * @example
+       * // Get one IssueLabel
+       * const issueLabel = await prisma.issueLabel.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends IssueLabelFindFirstArgs>(
+         args?: SelectSubset<T, IssueLabelFindFirstArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<
+            Prisma.$IssueLabelPayload<ExtArgs>,
+            T,
+            'findFirst',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first IssueLabel that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelFindFirstOrThrowArgs} args - Arguments to find a IssueLabel
+       * @example
+       * // Get one IssueLabel
+       * const issueLabel = await prisma.issueLabel.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends IssueLabelFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, IssueLabelFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<
+            Prisma.$IssueLabelPayload<ExtArgs>,
+            T,
+            'findFirstOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more IssueLabels that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all IssueLabels
+       * const issueLabels = await prisma.issueLabel.findMany()
+       *
+       * // Get first 10 IssueLabels
+       * const issueLabels = await prisma.issueLabel.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const issueLabelWithIdOnly = await prisma.issueLabel.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends IssueLabelFindManyArgs>(
+         args?: SelectSubset<T, IssueLabelFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a IssueLabel.
+       * @param {IssueLabelCreateArgs} args - Arguments to create a IssueLabel.
+       * @example
+       * // Create one IssueLabel
+       * const IssueLabel = await prisma.issueLabel.create({
+       *   data: {
+       *     // ... data to create a IssueLabel
+       *   }
+       * })
+       *
+       */
+      create<T extends IssueLabelCreateArgs>(
+         args: SelectSubset<T, IssueLabelCreateArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many IssueLabels.
+       * @param {IssueLabelCreateManyArgs} args - Arguments to create many IssueLabels.
+       * @example
+       * // Create many IssueLabels
+       * const issueLabel = await prisma.issueLabel.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends IssueLabelCreateManyArgs>(
+         args?: SelectSubset<T, IssueLabelCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many IssueLabels and returns the data saved in the database.
+       * @param {IssueLabelCreateManyAndReturnArgs} args - Arguments to create many IssueLabels.
+       * @example
+       * // Create many IssueLabels
+       * const issueLabel = await prisma.issueLabel.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many IssueLabels and only return the `id`
+       * const issueLabelWithIdOnly = await prisma.issueLabel.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends IssueLabelCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, IssueLabelCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssueLabelPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a IssueLabel.
+       * @param {IssueLabelDeleteArgs} args - Arguments to delete one IssueLabel.
+       * @example
+       * // Delete one IssueLabel
+       * const IssueLabel = await prisma.issueLabel.delete({
+       *   where: {
+       *     // ... filter to delete one IssueLabel
+       *   }
+       * })
+       *
+       */
+      delete<T extends IssueLabelDeleteArgs>(
+         args: SelectSubset<T, IssueLabelDeleteArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one IssueLabel.
+       * @param {IssueLabelUpdateArgs} args - Arguments to update one IssueLabel.
+       * @example
+       * // Update one IssueLabel
+       * const issueLabel = await prisma.issueLabel.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends IssueLabelUpdateArgs>(
+         args: SelectSubset<T, IssueLabelUpdateArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more IssueLabels.
+       * @param {IssueLabelDeleteManyArgs} args - Arguments to filter IssueLabels to delete.
+       * @example
+       * // Delete a few IssueLabels
+       * const { count } = await prisma.issueLabel.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends IssueLabelDeleteManyArgs>(
+         args?: SelectSubset<T, IssueLabelDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more IssueLabels.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many IssueLabels
+       * const issueLabel = await prisma.issueLabel.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends IssueLabelUpdateManyArgs>(
+         args: SelectSubset<T, IssueLabelUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more IssueLabels and returns the data updated in the database.
+       * @param {IssueLabelUpdateManyAndReturnArgs} args - Arguments to update many IssueLabels.
+       * @example
+       * // Update many IssueLabels
+       * const issueLabel = await prisma.issueLabel.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more IssueLabels and only return the `id`
+       * const issueLabelWithIdOnly = await prisma.issueLabel.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends IssueLabelUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, IssueLabelUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$IssueLabelPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one IssueLabel.
+       * @param {IssueLabelUpsertArgs} args - Arguments to update or create a IssueLabel.
+       * @example
+       * // Update or create a IssueLabel
+       * const issueLabel = await prisma.issueLabel.upsert({
+       *   create: {
+       *     // ... data to create a IssueLabel
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the IssueLabel we want to update
+       *   }
+       * })
+       */
+      upsert<T extends IssueLabelUpsertArgs>(
+         args: SelectSubset<T, IssueLabelUpsertArgs<ExtArgs>>
+      ): Prisma__IssueLabelClient<
+         $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of IssueLabels.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelCountArgs} args - Arguments to filter IssueLabels to count.
+       * @example
+       * // Count the number of IssueLabels
+       * const count = await prisma.issueLabel.count({
+       *   where: {
+       *     // ... the filter for the IssueLabels we want to count
+       *   }
+       * })
+       **/
+      count<T extends IssueLabelCountArgs>(
+         args?: Subset<T, IssueLabelCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], IssueLabelCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a IssueLabel.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends IssueLabelAggregateArgs>(
+         args: Subset<T, IssueLabelAggregateArgs>
+      ): Prisma.PrismaPromise<GetIssueLabelAggregateType<T>>;
+
+      /**
+       * Group by IssueLabel.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {IssueLabelGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends IssueLabelGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: IssueLabelGroupByArgs['orderBy'] }
+            : { orderBy?: IssueLabelGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, IssueLabelGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors
+         ? GetIssueLabelGroupByPayload<T>
+         : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the IssueLabel model
+       */
+      readonly fields: IssueLabelFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for IssueLabel.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__IssueLabelClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      issue<T extends IssueDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, IssueDefaultArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         | $Result.GetResult<
+              Prisma.$IssuePayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      label<T extends LabelDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, LabelDefaultArgs<ExtArgs>>
+      ): Prisma__LabelClient<
+         | $Result.GetResult<
+              Prisma.$LabelPayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the IssueLabel model
+    */
+   interface IssueLabelFieldRefs {
+      readonly id: FieldRef<'IssueLabel', 'String'>;
+      readonly issueId: FieldRef<'IssueLabel', 'String'>;
+      readonly labelId: FieldRef<'IssueLabel', 'String'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * IssueLabel findUnique
+    */
+   export type IssueLabelFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueLabel to fetch.
+       */
+      where: IssueLabelWhereUniqueInput;
+   };
+
+   /**
+    * IssueLabel findUniqueOrThrow
+    */
+   export type IssueLabelFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueLabel to fetch.
+       */
+      where: IssueLabelWhereUniqueInput;
+   };
+
+   /**
+    * IssueLabel findFirst
+    */
+   export type IssueLabelFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueLabel to fetch.
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueLabels to fetch.
+       */
+      orderBy?: IssueLabelOrderByWithRelationInput | IssueLabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for IssueLabels.
+       */
+      cursor?: IssueLabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueLabels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueLabels.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of IssueLabels.
+       */
+      distinct?: IssueLabelScalarFieldEnum | IssueLabelScalarFieldEnum[];
+   };
+
+   /**
+    * IssueLabel findFirstOrThrow
+    */
+   export type IssueLabelFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueLabel to fetch.
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueLabels to fetch.
+       */
+      orderBy?: IssueLabelOrderByWithRelationInput | IssueLabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for IssueLabels.
+       */
+      cursor?: IssueLabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueLabels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueLabels.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of IssueLabels.
+       */
+      distinct?: IssueLabelScalarFieldEnum | IssueLabelScalarFieldEnum[];
+   };
+
+   /**
+    * IssueLabel findMany
+    */
+   export type IssueLabelFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * Filter, which IssueLabels to fetch.
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of IssueLabels to fetch.
+       */
+      orderBy?: IssueLabelOrderByWithRelationInput | IssueLabelOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing IssueLabels.
+       */
+      cursor?: IssueLabelWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` IssueLabels from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` IssueLabels.
+       */
+      skip?: number;
+      distinct?: IssueLabelScalarFieldEnum | IssueLabelScalarFieldEnum[];
+   };
+
+   /**
+    * IssueLabel create
+    */
+   export type IssueLabelCreateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * The data needed to create a IssueLabel.
+       */
+      data: XOR<IssueLabelCreateInput, IssueLabelUncheckedCreateInput>;
+   };
+
+   /**
+    * IssueLabel createMany
+    */
+   export type IssueLabelCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many IssueLabels.
+       */
+      data: IssueLabelCreateManyInput | IssueLabelCreateManyInput[];
+   };
+
+   /**
+    * IssueLabel createManyAndReturn
+    */
+   export type IssueLabelCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * The data used to create many IssueLabels.
+       */
+      data: IssueLabelCreateManyInput | IssueLabelCreateManyInput[];
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelIncludeCreateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * IssueLabel update
+    */
+   export type IssueLabelUpdateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * The data needed to update a IssueLabel.
+       */
+      data: XOR<IssueLabelUpdateInput, IssueLabelUncheckedUpdateInput>;
+      /**
+       * Choose, which IssueLabel to update.
+       */
+      where: IssueLabelWhereUniqueInput;
+   };
+
+   /**
+    * IssueLabel updateMany
+    */
+   export type IssueLabelUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update IssueLabels.
+       */
+      data: XOR<IssueLabelUpdateManyMutationInput, IssueLabelUncheckedUpdateManyInput>;
+      /**
+       * Filter which IssueLabels to update
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * Limit how many IssueLabels to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssueLabel updateManyAndReturn
+    */
+   export type IssueLabelUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * The data used to update IssueLabels.
+       */
+      data: XOR<IssueLabelUpdateManyMutationInput, IssueLabelUncheckedUpdateManyInput>;
+      /**
+       * Filter which IssueLabels to update
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * Limit how many IssueLabels to update.
+       */
+      limit?: number;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelIncludeUpdateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * IssueLabel upsert
+    */
+   export type IssueLabelUpsertArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * The filter to search for the IssueLabel to update in case it exists.
+       */
+      where: IssueLabelWhereUniqueInput;
+      /**
+       * In case the IssueLabel found by the `where` argument doesn't exist, create a new IssueLabel with this data.
+       */
+      create: XOR<IssueLabelCreateInput, IssueLabelUncheckedCreateInput>;
+      /**
+       * In case the IssueLabel was found with the provided `where` argument, update it with this data.
+       */
+      update: XOR<IssueLabelUpdateInput, IssueLabelUncheckedUpdateInput>;
+   };
+
+   /**
+    * IssueLabel delete
+    */
+   export type IssueLabelDeleteArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+      /**
+       * Filter which IssueLabel to delete.
+       */
+      where: IssueLabelWhereUniqueInput;
+   };
+
+   /**
+    * IssueLabel deleteMany
+    */
+   export type IssueLabelDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which IssueLabels to delete
+       */
+      where?: IssueLabelWhereInput;
+      /**
+       * Limit how many IssueLabels to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * IssueLabel without action
+    */
+   export type IssueLabelDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the IssueLabel
+       */
+      select?: IssueLabelSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the IssueLabel
+       */
+      omit?: IssueLabelOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueLabelInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model Cycle
+    */
+
+   export type AggregateCycle = {
+      _count: CycleCountAggregateOutputType | null;
+      _avg: CycleAvgAggregateOutputType | null;
+      _sum: CycleSumAggregateOutputType | null;
+      _min: CycleMinAggregateOutputType | null;
+      _max: CycleMaxAggregateOutputType | null;
+   };
+
+   export type CycleAvgAggregateOutputType = {
+      number: number | null;
+      progress: number | null;
+   };
+
+   export type CycleSumAggregateOutputType = {
+      number: number | null;
+      progress: number | null;
+   };
+
+   export type CycleMinAggregateOutputType = {
+      id: string | null;
+      number: number | null;
+      name: string | null;
+      teamId: string | null;
+      startDate: Date | null;
+      endDate: Date | null;
+      progress: number | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type CycleMaxAggregateOutputType = {
+      id: string | null;
+      number: number | null;
+      name: string | null;
+      teamId: string | null;
+      startDate: Date | null;
+      endDate: Date | null;
+      progress: number | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type CycleCountAggregateOutputType = {
+      id: number;
+      number: number;
+      name: number;
+      teamId: number;
+      startDate: number;
+      endDate: number;
+      progress: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type CycleAvgAggregateInputType = {
+      number?: true;
+      progress?: true;
+   };
+
+   export type CycleSumAggregateInputType = {
+      number?: true;
+      progress?: true;
+   };
+
+   export type CycleMinAggregateInputType = {
+      id?: true;
+      number?: true;
+      name?: true;
+      teamId?: true;
+      startDate?: true;
+      endDate?: true;
+      progress?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type CycleMaxAggregateInputType = {
+      id?: true;
+      number?: true;
+      name?: true;
+      teamId?: true;
+      startDate?: true;
+      endDate?: true;
+      progress?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type CycleCountAggregateInputType = {
+      id?: true;
+      number?: true;
+      name?: true;
+      teamId?: true;
+      startDate?: true;
+      endDate?: true;
+      progress?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type CycleAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Cycle to aggregate.
+       */
+      where?: CycleWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Cycles to fetch.
+       */
+      orderBy?: CycleOrderByWithRelationInput | CycleOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: CycleWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Cycles from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Cycles.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned Cycles
+       **/
+      _count?: true | CycleCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to average
+       **/
+      _avg?: CycleAvgAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to sum
+       **/
+      _sum?: CycleSumAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: CycleMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: CycleMaxAggregateInputType;
+   };
+
+   export type GetCycleAggregateType<T extends CycleAggregateArgs> = {
+      [P in keyof T & keyof AggregateCycle]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateCycle[P]>
+         : GetScalarType<T[P], AggregateCycle[P]>;
+   };
+
+   export type CycleGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: CycleWhereInput;
+      orderBy?: CycleOrderByWithAggregationInput | CycleOrderByWithAggregationInput[];
+      by: CycleScalarFieldEnum[] | CycleScalarFieldEnum;
+      having?: CycleScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: CycleCountAggregateInputType | true;
+      _avg?: CycleAvgAggregateInputType;
+      _sum?: CycleSumAggregateInputType;
+      _min?: CycleMinAggregateInputType;
+      _max?: CycleMaxAggregateInputType;
+   };
+
+   export type CycleGroupByOutputType = {
+      id: string;
+      number: number;
+      name: string;
+      teamId: string;
+      startDate: Date;
+      endDate: Date;
+      progress: number;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: CycleCountAggregateOutputType | null;
+      _avg: CycleAvgAggregateOutputType | null;
+      _sum: CycleSumAggregateOutputType | null;
+      _min: CycleMinAggregateOutputType | null;
+      _max: CycleMaxAggregateOutputType | null;
+   };
+
+   type GetCycleGroupByPayload<T extends CycleGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<CycleGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof CycleGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], CycleGroupByOutputType[P]>
+               : GetScalarType<T[P], CycleGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type CycleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetSelect<
+         {
+            id?: boolean;
+            number?: boolean;
+            name?: boolean;
+            teamId?: boolean;
+            startDate?: boolean;
+            endDate?: boolean;
+            progress?: boolean;
+            createdAt?: boolean;
+            updatedAt?: boolean;
+            team?: boolean | TeamDefaultArgs<ExtArgs>;
+            issues?: boolean | Cycle$issuesArgs<ExtArgs>;
+            _count?: boolean | CycleCountOutputTypeDefaultArgs<ExtArgs>;
+         },
+         ExtArgs['result']['cycle']
+      >;
+
+   export type CycleSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         number?: boolean;
+         name?: boolean;
+         teamId?: boolean;
+         startDate?: boolean;
+         endDate?: boolean;
+         progress?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['cycle']
+   >;
+
+   export type CycleSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         number?: boolean;
+         name?: boolean;
+         teamId?: boolean;
+         startDate?: boolean;
+         endDate?: boolean;
+         progress?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['cycle']
+   >;
+
+   export type CycleSelectScalar = {
+      id?: boolean;
+      number?: boolean;
+      name?: boolean;
+      teamId?: boolean;
+      startDate?: boolean;
+      endDate?: boolean;
+      progress?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type CycleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         | 'id'
+         | 'number'
+         | 'name'
+         | 'teamId'
+         | 'startDate'
+         | 'endDate'
+         | 'progress'
+         | 'createdAt'
+         | 'updatedAt',
+         ExtArgs['result']['cycle']
+      >;
+   export type CycleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      issues?: boolean | Cycle$issuesArgs<ExtArgs>;
+      _count?: boolean | CycleCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type CycleIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+   };
+   export type CycleIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+   };
+
+   export type $CyclePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      name: 'Cycle';
+      objects: {
+         team: Prisma.$TeamPayload<ExtArgs>;
+         issues: Prisma.$IssuePayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            number: number;
+            name: string;
+            teamId: string;
+            startDate: Date;
+            endDate: Date;
+            progress: number;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['cycle']
+      >;
+      composites: {};
+   };
+
+   type CycleGetPayload<S extends boolean | null | undefined | CycleDefaultArgs> =
+      $Result.GetResult<Prisma.$CyclePayload, S>;
+
+   type CycleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Omit<
+      CycleFindManyArgs,
+      'select' | 'include' | 'distinct' | 'omit'
+   > & {
+      select?: CycleCountAggregateInputType | true;
+   };
+
+   export interface CycleDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cycle']; meta: { name: 'Cycle' } };
+      /**
+       * Find zero or one Cycle that matches the filter.
+       * @param {CycleFindUniqueArgs} args - Arguments to find a Cycle
+       * @example
+       * // Get one Cycle
+       * const cycle = await prisma.cycle.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends CycleFindUniqueArgs>(
+         args: SelectSubset<T, CycleFindUniqueArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<
+            Prisma.$CyclePayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one Cycle that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {CycleFindUniqueOrThrowArgs} args - Arguments to find a Cycle
+       * @example
+       * // Get one Cycle
+       * const cycle = await prisma.cycle.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends CycleFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, CycleFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<
+            Prisma.$CyclePayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Cycle that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleFindFirstArgs} args - Arguments to find a Cycle
+       * @example
+       * // Get one Cycle
+       * const cycle = await prisma.cycle.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends CycleFindFirstArgs>(
+         args?: SelectSubset<T, CycleFindFirstArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Cycle that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleFindFirstOrThrowArgs} args - Arguments to find a Cycle
+       * @example
+       * // Get one Cycle
+       * const cycle = await prisma.cycle.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends CycleFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, CycleFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more Cycles that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all Cycles
+       * const cycles = await prisma.cycle.findMany()
+       *
+       * // Get first 10 Cycles
+       * const cycles = await prisma.cycle.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const cycleWithIdOnly = await prisma.cycle.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends CycleFindManyArgs>(
+         args?: SelectSubset<T, CycleFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a Cycle.
+       * @param {CycleCreateArgs} args - Arguments to create a Cycle.
+       * @example
+       * // Create one Cycle
+       * const Cycle = await prisma.cycle.create({
+       *   data: {
+       *     // ... data to create a Cycle
+       *   }
+       * })
+       *
+       */
+      create<T extends CycleCreateArgs>(
+         args: SelectSubset<T, CycleCreateArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many Cycles.
+       * @param {CycleCreateManyArgs} args - Arguments to create many Cycles.
+       * @example
+       * // Create many Cycles
+       * const cycle = await prisma.cycle.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends CycleCreateManyArgs>(
+         args?: SelectSubset<T, CycleCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many Cycles and returns the data saved in the database.
+       * @param {CycleCreateManyAndReturnArgs} args - Arguments to create many Cycles.
+       * @example
+       * // Create many Cycles
+       * const cycle = await prisma.cycle.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many Cycles and only return the `id`
+       * const cycleWithIdOnly = await prisma.cycle.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends CycleCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, CycleCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$CyclePayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a Cycle.
+       * @param {CycleDeleteArgs} args - Arguments to delete one Cycle.
+       * @example
+       * // Delete one Cycle
+       * const Cycle = await prisma.cycle.delete({
+       *   where: {
+       *     // ... filter to delete one Cycle
+       *   }
+       * })
+       *
+       */
+      delete<T extends CycleDeleteArgs>(
+         args: SelectSubset<T, CycleDeleteArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one Cycle.
+       * @param {CycleUpdateArgs} args - Arguments to update one Cycle.
+       * @example
+       * // Update one Cycle
+       * const cycle = await prisma.cycle.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends CycleUpdateArgs>(
+         args: SelectSubset<T, CycleUpdateArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more Cycles.
+       * @param {CycleDeleteManyArgs} args - Arguments to filter Cycles to delete.
+       * @example
+       * // Delete a few Cycles
+       * const { count } = await prisma.cycle.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends CycleDeleteManyArgs>(
+         args?: SelectSubset<T, CycleDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Cycles.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many Cycles
+       * const cycle = await prisma.cycle.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends CycleUpdateManyArgs>(
+         args: SelectSubset<T, CycleUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Cycles and returns the data updated in the database.
+       * @param {CycleUpdateManyAndReturnArgs} args - Arguments to update many Cycles.
+       * @example
+       * // Update many Cycles
+       * const cycle = await prisma.cycle.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more Cycles and only return the `id`
+       * const cycleWithIdOnly = await prisma.cycle.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends CycleUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, CycleUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$CyclePayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one Cycle.
+       * @param {CycleUpsertArgs} args - Arguments to update or create a Cycle.
+       * @example
+       * // Update or create a Cycle
+       * const cycle = await prisma.cycle.upsert({
+       *   create: {
+       *     // ... data to create a Cycle
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the Cycle we want to update
+       *   }
+       * })
+       */
+      upsert<T extends CycleUpsertArgs>(
+         args: SelectSubset<T, CycleUpsertArgs<ExtArgs>>
+      ): Prisma__CycleClient<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of Cycles.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleCountArgs} args - Arguments to filter Cycles to count.
+       * @example
+       * // Count the number of Cycles
+       * const count = await prisma.cycle.count({
+       *   where: {
+       *     // ... the filter for the Cycles we want to count
+       *   }
+       * })
+       **/
+      count<T extends CycleCountArgs>(
+         args?: Subset<T, CycleCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], CycleCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a Cycle.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends CycleAggregateArgs>(
+         args: Subset<T, CycleAggregateArgs>
+      ): Prisma.PrismaPromise<GetCycleAggregateType<T>>;
+
+      /**
+       * Group by Cycle.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {CycleGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends CycleGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: CycleGroupByArgs['orderBy'] }
+            : { orderBy?: CycleGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, CycleGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors ? GetCycleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the Cycle model
+       */
+      readonly fields: CycleFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for Cycle.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__CycleClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      team<T extends TeamDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, TeamDefaultArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         | $Result.GetResult<
+              Prisma.$TeamPayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      issues<T extends Cycle$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Cycle$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the Cycle model
+    */
+   interface CycleFieldRefs {
+      readonly id: FieldRef<'Cycle', 'String'>;
+      readonly number: FieldRef<'Cycle', 'Int'>;
+      readonly name: FieldRef<'Cycle', 'String'>;
+      readonly teamId: FieldRef<'Cycle', 'String'>;
+      readonly startDate: FieldRef<'Cycle', 'DateTime'>;
+      readonly endDate: FieldRef<'Cycle', 'DateTime'>;
+      readonly progress: FieldRef<'Cycle', 'Int'>;
+      readonly createdAt: FieldRef<'Cycle', 'DateTime'>;
+      readonly updatedAt: FieldRef<'Cycle', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * Cycle findUnique
+    */
+   export type CycleFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleInclude<ExtArgs> | null;
+      /**
+       * Filter, which Cycle to fetch.
+       */
+      where: CycleWhereUniqueInput;
+   };
+
+   /**
+    * Cycle findUniqueOrThrow
+    */
+   export type CycleFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleInclude<ExtArgs> | null;
+      /**
+       * Filter, which Cycle to fetch.
+       */
+      where: CycleWhereUniqueInput;
+   };
+
+   /**
+    * Cycle findFirst
+    */
+   export type CycleFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleInclude<ExtArgs> | null;
+      /**
+       * Filter, which Cycle to fetch.
+       */
+      where?: CycleWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Cycles to fetch.
+       */
+      orderBy?: CycleOrderByWithRelationInput | CycleOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Cycles.
+       */
+      cursor?: CycleWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Cycles from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Cycles.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Cycles.
+       */
+      distinct?: CycleScalarFieldEnum | CycleScalarFieldEnum[];
+   };
+
+   /**
+    * Cycle findFirstOrThrow
+    */
+   export type CycleFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleInclude<ExtArgs> | null;
+      /**
+       * Filter, which Cycle to fetch.
+       */
+      where?: CycleWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Cycles to fetch.
+       */
+      orderBy?: CycleOrderByWithRelationInput | CycleOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Cycles.
+       */
+      cursor?: CycleWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Cycles from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Cycles.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Cycles.
+       */
+      distinct?: CycleScalarFieldEnum | CycleScalarFieldEnum[];
+   };
+
+   /**
+    * Cycle findMany
+    */
+   export type CycleFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleInclude<ExtArgs> | null;
+      /**
+       * Filter, which Cycles to fetch.
+       */
+      where?: CycleWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Cycles to fetch.
+       */
+      orderBy?: CycleOrderByWithRelationInput | CycleOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing Cycles.
+       */
+      cursor?: CycleWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Cycles from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Cycles.
+       */
+      skip?: number;
+      distinct?: CycleScalarFieldEnum | CycleScalarFieldEnum[];
+   };
+
+   /**
+    * Cycle create
+    */
+   export type CycleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Cycle
+          */
+         select?: CycleSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Cycle
+          */
+         omit?: CycleOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: CycleInclude<ExtArgs> | null;
+         /**
+          * The data needed to create a Cycle.
+          */
+         data: XOR<CycleCreateInput, CycleUncheckedCreateInput>;
+      };
+
+   /**
+    * Cycle createMany
+    */
+   export type CycleCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many Cycles.
+       */
+      data: CycleCreateManyInput | CycleCreateManyInput[];
+   };
+
+   /**
+    * Cycle createManyAndReturn
+    */
+   export type CycleCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * The data used to create many Cycles.
+       */
+      data: CycleCreateManyInput | CycleCreateManyInput[];
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleIncludeCreateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * Cycle update
+    */
+   export type CycleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Cycle
+          */
+         select?: CycleSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Cycle
+          */
+         omit?: CycleOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: CycleInclude<ExtArgs> | null;
+         /**
+          * The data needed to update a Cycle.
+          */
+         data: XOR<CycleUpdateInput, CycleUncheckedUpdateInput>;
+         /**
+          * Choose, which Cycle to update.
+          */
+         where: CycleWhereUniqueInput;
+      };
+
+   /**
+    * Cycle updateMany
+    */
+   export type CycleUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update Cycles.
+       */
+      data: XOR<CycleUpdateManyMutationInput, CycleUncheckedUpdateManyInput>;
+      /**
+       * Filter which Cycles to update
+       */
+      where?: CycleWhereInput;
+      /**
+       * Limit how many Cycles to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Cycle updateManyAndReturn
+    */
+   export type CycleUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * The data used to update Cycles.
+       */
+      data: XOR<CycleUpdateManyMutationInput, CycleUncheckedUpdateManyInput>;
+      /**
+       * Filter which Cycles to update
+       */
+      where?: CycleWhereInput;
+      /**
+       * Limit how many Cycles to update.
+       */
+      limit?: number;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleIncludeUpdateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * Cycle upsert
+    */
+   export type CycleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Cycle
+          */
+         select?: CycleSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Cycle
+          */
+         omit?: CycleOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: CycleInclude<ExtArgs> | null;
+         /**
+          * The filter to search for the Cycle to update in case it exists.
+          */
+         where: CycleWhereUniqueInput;
+         /**
+          * In case the Cycle found by the `where` argument doesn't exist, create a new Cycle with this data.
+          */
+         create: XOR<CycleCreateInput, CycleUncheckedCreateInput>;
+         /**
+          * In case the Cycle was found with the provided `where` argument, update it with this data.
+          */
+         update: XOR<CycleUpdateInput, CycleUncheckedUpdateInput>;
+      };
+
+   /**
+    * Cycle delete
+    */
+   export type CycleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Cycle
+          */
+         select?: CycleSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Cycle
+          */
+         omit?: CycleOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: CycleInclude<ExtArgs> | null;
+         /**
+          * Filter which Cycle to delete.
+          */
+         where: CycleWhereUniqueInput;
+      };
+
+   /**
+    * Cycle deleteMany
+    */
+   export type CycleDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Cycles to delete
+       */
+      where?: CycleWhereInput;
+      /**
+       * Limit how many Cycles to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Cycle.issues
+    */
+   export type Cycle$issuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
+   };
+
+   /**
+    * Cycle without action
+    */
+   export type CycleDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Cycle
+       */
+      select?: CycleSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Cycle
+       */
+      omit?: CycleOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: CycleInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model Team
+    */
+
+   export type AggregateTeam = {
+      _count: TeamCountAggregateOutputType | null;
+      _min: TeamMinAggregateOutputType | null;
+      _max: TeamMaxAggregateOutputType | null;
+   };
+
+   export type TeamMinAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      icon: string | null;
+      joined: boolean | null;
+      color: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type TeamMaxAggregateOutputType = {
+      id: string | null;
+      name: string | null;
+      icon: string | null;
+      joined: boolean | null;
+      color: string | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+   };
+
+   export type TeamCountAggregateOutputType = {
+      id: number;
+      name: number;
+      icon: number;
+      joined: number;
+      color: number;
+      createdAt: number;
+      updatedAt: number;
+      _all: number;
+   };
+
+   export type TeamMinAggregateInputType = {
+      id?: true;
+      name?: true;
+      icon?: true;
+      joined?: true;
+      color?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type TeamMaxAggregateInputType = {
+      id?: true;
+      name?: true;
+      icon?: true;
+      joined?: true;
+      color?: true;
+      createdAt?: true;
+      updatedAt?: true;
+   };
+
+   export type TeamCountAggregateInputType = {
+      id?: true;
+      name?: true;
+      icon?: true;
+      joined?: true;
+      color?: true;
+      createdAt?: true;
+      updatedAt?: true;
+      _all?: true;
+   };
+
+   export type TeamAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Team to aggregate.
+       */
+      where?: TeamWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Teams to fetch.
+       */
+      orderBy?: TeamOrderByWithRelationInput | TeamOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: TeamWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Teams from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Teams.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned Teams
+       **/
+      _count?: true | TeamCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: TeamMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: TeamMaxAggregateInputType;
+   };
+
+   export type GetTeamAggregateType<T extends TeamAggregateArgs> = {
+      [P in keyof T & keyof AggregateTeam]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateTeam[P]>
+         : GetScalarType<T[P], AggregateTeam[P]>;
+   };
+
+   export type TeamGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         where?: TeamWhereInput;
+         orderBy?: TeamOrderByWithAggregationInput | TeamOrderByWithAggregationInput[];
+         by: TeamScalarFieldEnum[] | TeamScalarFieldEnum;
+         having?: TeamScalarWhereWithAggregatesInput;
+         take?: number;
+         skip?: number;
+         _count?: TeamCountAggregateInputType | true;
+         _min?: TeamMinAggregateInputType;
+         _max?: TeamMaxAggregateInputType;
+      };
+
+   export type TeamGroupByOutputType = {
+      id: string;
+      name: string;
+      icon: string;
+      joined: boolean;
+      color: string;
+      createdAt: Date;
+      updatedAt: Date;
+      _count: TeamCountAggregateOutputType | null;
+      _min: TeamMinAggregateOutputType | null;
+      _max: TeamMaxAggregateOutputType | null;
+   };
+
+   type GetTeamGroupByPayload<T extends TeamGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<TeamGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof TeamGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], TeamGroupByOutputType[P]>
+               : GetScalarType<T[P], TeamGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type TeamSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetSelect<
+         {
+            id?: boolean;
+            name?: boolean;
+            icon?: boolean;
+            joined?: boolean;
+            color?: boolean;
+            createdAt?: boolean;
+            updatedAt?: boolean;
+            members?: boolean | Team$membersArgs<ExtArgs>;
+            projects?: boolean | Team$projectsArgs<ExtArgs>;
+            cycles?: boolean | Team$cyclesArgs<ExtArgs>;
+            _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>;
+         },
+         ExtArgs['result']['team']
+      >;
+
+   export type TeamSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         icon?: boolean;
+         joined?: boolean;
+         color?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['team']
+   >;
+
+   export type TeamSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         name?: boolean;
+         icon?: boolean;
+         joined?: boolean;
+         color?: boolean;
+         createdAt?: boolean;
+         updatedAt?: boolean;
+      },
+      ExtArgs['result']['team']
+   >;
+
+   export type TeamSelectScalar = {
+      id?: boolean;
+      name?: boolean;
+      icon?: boolean;
+      joined?: boolean;
+      color?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+   };
+
+   export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<
+         'id' | 'name' | 'icon' | 'joined' | 'color' | 'createdAt' | 'updatedAt',
+         ExtArgs['result']['team']
+      >;
+   export type TeamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      members?: boolean | Team$membersArgs<ExtArgs>;
+      projects?: boolean | Team$projectsArgs<ExtArgs>;
+      cycles?: boolean | Team$cyclesArgs<ExtArgs>;
+      _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>;
+   };
+   export type TeamIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+   export type TeamIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {};
+
+   export type $TeamPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+      name: 'Team';
+      objects: {
+         members: Prisma.$TeamMemberPayload<ExtArgs>[];
+         projects: Prisma.$TeamProjectPayload<ExtArgs>[];
+         cycles: Prisma.$CyclePayload<ExtArgs>[];
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            name: string;
+            icon: string;
+            joined: boolean;
+            color: string;
+            createdAt: Date;
+            updatedAt: Date;
+         },
+         ExtArgs['result']['team']
+      >;
+      composites: {};
+   };
+
+   type TeamGetPayload<S extends boolean | null | undefined | TeamDefaultArgs> = $Result.GetResult<
+      Prisma.$TeamPayload,
+      S
+   >;
+
+   type TeamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Omit<
+      TeamFindManyArgs,
+      'select' | 'include' | 'distinct' | 'omit'
+   > & {
+      select?: TeamCountAggregateInputType | true;
+   };
+
+   export interface TeamDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Team']; meta: { name: 'Team' } };
+      /**
+       * Find zero or one Team that matches the filter.
+       * @param {TeamFindUniqueArgs} args - Arguments to find a Team
+       * @example
+       * // Get one Team
+       * const team = await prisma.team.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends TeamFindUniqueArgs>(
+         args: SelectSubset<T, TeamFindUniqueArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one Team that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {TeamFindUniqueOrThrowArgs} args - Arguments to find a Team
+       * @example
+       * // Get one Team
+       * const team = await prisma.team.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends TeamFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, TeamFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Team that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamFindFirstArgs} args - Arguments to find a Team
+       * @example
+       * // Get one Team
+       * const team = await prisma.team.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends TeamFindFirstArgs>(
+         args?: SelectSubset<T, TeamFindFirstArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first Team that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamFindFirstOrThrowArgs} args - Arguments to find a Team
+       * @example
+       * // Get one Team
+       * const team = await prisma.team.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends TeamFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, TeamFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more Teams that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all Teams
+       * const teams = await prisma.team.findMany()
+       *
+       * // Get first 10 Teams
+       * const teams = await prisma.team.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const teamWithIdOnly = await prisma.team.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends TeamFindManyArgs>(
+         args?: SelectSubset<T, TeamFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a Team.
+       * @param {TeamCreateArgs} args - Arguments to create a Team.
+       * @example
+       * // Create one Team
+       * const Team = await prisma.team.create({
+       *   data: {
+       *     // ... data to create a Team
+       *   }
+       * })
+       *
+       */
+      create<T extends TeamCreateArgs>(
+         args: SelectSubset<T, TeamCreateArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many Teams.
+       * @param {TeamCreateManyArgs} args - Arguments to create many Teams.
+       * @example
+       * // Create many Teams
+       * const team = await prisma.team.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends TeamCreateManyArgs>(
+         args?: SelectSubset<T, TeamCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many Teams and returns the data saved in the database.
+       * @param {TeamCreateManyAndReturnArgs} args - Arguments to create many Teams.
+       * @example
+       * // Create many Teams
+       * const team = await prisma.team.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many Teams and only return the `id`
+       * const teamWithIdOnly = await prisma.team.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends TeamCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, TeamCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$TeamPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a Team.
+       * @param {TeamDeleteArgs} args - Arguments to delete one Team.
+       * @example
+       * // Delete one Team
+       * const Team = await prisma.team.delete({
+       *   where: {
+       *     // ... filter to delete one Team
+       *   }
+       * })
+       *
+       */
+      delete<T extends TeamDeleteArgs>(
+         args: SelectSubset<T, TeamDeleteArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one Team.
+       * @param {TeamUpdateArgs} args - Arguments to update one Team.
+       * @example
+       * // Update one Team
+       * const team = await prisma.team.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends TeamUpdateArgs>(
+         args: SelectSubset<T, TeamUpdateArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more Teams.
+       * @param {TeamDeleteManyArgs} args - Arguments to filter Teams to delete.
+       * @example
+       * // Delete a few Teams
+       * const { count } = await prisma.team.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends TeamDeleteManyArgs>(
+         args?: SelectSubset<T, TeamDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Teams.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many Teams
+       * const team = await prisma.team.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends TeamUpdateManyArgs>(
+         args: SelectSubset<T, TeamUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more Teams and returns the data updated in the database.
+       * @param {TeamUpdateManyAndReturnArgs} args - Arguments to update many Teams.
+       * @example
+       * // Update many Teams
+       * const team = await prisma.team.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more Teams and only return the `id`
+       * const teamWithIdOnly = await prisma.team.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends TeamUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, TeamUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$TeamPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one Team.
+       * @param {TeamUpsertArgs} args - Arguments to update or create a Team.
+       * @example
+       * // Update or create a Team
+       * const team = await prisma.team.upsert({
+       *   create: {
+       *     // ... data to create a Team
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the Team we want to update
+       *   }
+       * })
+       */
+      upsert<T extends TeamUpsertArgs>(
+         args: SelectSubset<T, TeamUpsertArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         $Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of Teams.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamCountArgs} args - Arguments to filter Teams to count.
+       * @example
+       * // Count the number of Teams
+       * const count = await prisma.team.count({
+       *   where: {
+       *     // ... the filter for the Teams we want to count
+       *   }
+       * })
+       **/
+      count<T extends TeamCountArgs>(
+         args?: Subset<T, TeamCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], TeamCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a Team.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends TeamAggregateArgs>(
+         args: Subset<T, TeamAggregateArgs>
+      ): Prisma.PrismaPromise<GetTeamAggregateType<T>>;
+
+      /**
+       * Group by Team.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends TeamGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: TeamGroupByArgs['orderBy'] }
+            : { orderBy?: TeamGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, TeamGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors ? GetTeamGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the Team model
+       */
+      readonly fields: TeamFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for Team.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__TeamClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      members<T extends Team$membersArgs<ExtArgs> = {}>(
+         args?: Subset<T, Team$membersArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         | $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+         | Null
+      >;
+      projects<T extends Team$projectsArgs<ExtArgs> = {}>(
+         args?: Subset<T, Team$projectsArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         | $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+         | Null
+      >;
+      cycles<T extends Team$cyclesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Team$cyclesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the Team model
+    */
+   interface TeamFieldRefs {
+      readonly id: FieldRef<'Team', 'String'>;
+      readonly name: FieldRef<'Team', 'String'>;
+      readonly icon: FieldRef<'Team', 'String'>;
+      readonly joined: FieldRef<'Team', 'Boolean'>;
+      readonly color: FieldRef<'Team', 'String'>;
+      readonly createdAt: FieldRef<'Team', 'DateTime'>;
+      readonly updatedAt: FieldRef<'Team', 'DateTime'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * Team findUnique
+    */
+   export type TeamFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamInclude<ExtArgs> | null;
+      /**
+       * Filter, which Team to fetch.
+       */
+      where: TeamWhereUniqueInput;
+   };
+
+   /**
+    * Team findUniqueOrThrow
+    */
+   export type TeamFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamInclude<ExtArgs> | null;
+      /**
+       * Filter, which Team to fetch.
+       */
+      where: TeamWhereUniqueInput;
+   };
+
+   /**
+    * Team findFirst
+    */
+   export type TeamFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamInclude<ExtArgs> | null;
+      /**
+       * Filter, which Team to fetch.
+       */
+      where?: TeamWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Teams to fetch.
+       */
+      orderBy?: TeamOrderByWithRelationInput | TeamOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Teams.
+       */
+      cursor?: TeamWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Teams from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Teams.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Teams.
+       */
+      distinct?: TeamScalarFieldEnum | TeamScalarFieldEnum[];
+   };
+
+   /**
+    * Team findFirstOrThrow
+    */
+   export type TeamFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamInclude<ExtArgs> | null;
+      /**
+       * Filter, which Team to fetch.
+       */
+      where?: TeamWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Teams to fetch.
+       */
+      orderBy?: TeamOrderByWithRelationInput | TeamOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for Teams.
+       */
+      cursor?: TeamWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Teams from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Teams.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of Teams.
+       */
+      distinct?: TeamScalarFieldEnum | TeamScalarFieldEnum[];
+   };
+
+   /**
+    * Team findMany
+    */
+   export type TeamFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamInclude<ExtArgs> | null;
+      /**
+       * Filter, which Teams to fetch.
+       */
+      where?: TeamWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of Teams to fetch.
+       */
+      orderBy?: TeamOrderByWithRelationInput | TeamOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing Teams.
+       */
+      cursor?: TeamWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` Teams from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` Teams.
+       */
+      skip?: number;
+      distinct?: TeamScalarFieldEnum | TeamScalarFieldEnum[];
+   };
+
+   /**
+    * Team create
+    */
+   export type TeamCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Team
+          */
+         select?: TeamSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Team
+          */
+         omit?: TeamOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TeamInclude<ExtArgs> | null;
+         /**
+          * The data needed to create a Team.
+          */
+         data: XOR<TeamCreateInput, TeamUncheckedCreateInput>;
+      };
+
+   /**
+    * Team createMany
+    */
+   export type TeamCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many Teams.
+       */
+      data: TeamCreateManyInput | TeamCreateManyInput[];
+   };
+
+   /**
+    * Team createManyAndReturn
+    */
+   export type TeamCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * The data used to create many Teams.
+       */
+      data: TeamCreateManyInput | TeamCreateManyInput[];
+   };
+
+   /**
+    * Team update
+    */
+   export type TeamUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Team
+          */
+         select?: TeamSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Team
+          */
+         omit?: TeamOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TeamInclude<ExtArgs> | null;
+         /**
+          * The data needed to update a Team.
+          */
+         data: XOR<TeamUpdateInput, TeamUncheckedUpdateInput>;
+         /**
+          * Choose, which Team to update.
+          */
+         where: TeamWhereUniqueInput;
+      };
+
+   /**
+    * Team updateMany
+    */
+   export type TeamUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update Teams.
+       */
+      data: XOR<TeamUpdateManyMutationInput, TeamUncheckedUpdateManyInput>;
+      /**
+       * Filter which Teams to update
+       */
+      where?: TeamWhereInput;
+      /**
+       * Limit how many Teams to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Team updateManyAndReturn
+    */
+   export type TeamUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Team
+       */
+      select?: TeamSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Team
+       */
+      omit?: TeamOmit<ExtArgs> | null;
+      /**
+       * The data used to update Teams.
+       */
+      data: XOR<TeamUpdateManyMutationInput, TeamUncheckedUpdateManyInput>;
+      /**
+       * Filter which Teams to update
+       */
+      where?: TeamWhereInput;
+      /**
+       * Limit how many Teams to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Team upsert
+    */
+   export type TeamUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Team
+          */
+         select?: TeamSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Team
+          */
+         omit?: TeamOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TeamInclude<ExtArgs> | null;
+         /**
+          * The filter to search for the Team to update in case it exists.
+          */
+         where: TeamWhereUniqueInput;
+         /**
+          * In case the Team found by the `where` argument doesn't exist, create a new Team with this data.
+          */
+         create: XOR<TeamCreateInput, TeamUncheckedCreateInput>;
+         /**
+          * In case the Team was found with the provided `where` argument, update it with this data.
+          */
+         update: XOR<TeamUpdateInput, TeamUncheckedUpdateInput>;
+      };
+
+   /**
+    * Team delete
+    */
+   export type TeamDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Team
+          */
+         select?: TeamSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Team
+          */
+         omit?: TeamOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TeamInclude<ExtArgs> | null;
+         /**
+          * Filter which Team to delete.
+          */
+         where: TeamWhereUniqueInput;
+      };
+
+   /**
+    * Team deleteMany
+    */
+   export type TeamDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which Teams to delete
+       */
+      where?: TeamWhereInput;
+      /**
+       * Limit how many Teams to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * Team.members
+    */
+   export type Team$membersArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      where?: TeamMemberWhereInput;
+      orderBy?: TeamMemberOrderByWithRelationInput | TeamMemberOrderByWithRelationInput[];
+      cursor?: TeamMemberWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: TeamMemberScalarFieldEnum | TeamMemberScalarFieldEnum[];
+   };
+
+   /**
+    * Team.projects
+    */
+   export type Team$projectsArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      where?: TeamProjectWhereInput;
+      orderBy?: TeamProjectOrderByWithRelationInput | TeamProjectOrderByWithRelationInput[];
+      cursor?: TeamProjectWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: TeamProjectScalarFieldEnum | TeamProjectScalarFieldEnum[];
+   };
+
+   /**
+    * Team.cycles
+    */
+   export type Team$cyclesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Cycle
+          */
+         select?: CycleSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Cycle
+          */
+         omit?: CycleOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: CycleInclude<ExtArgs> | null;
+         where?: CycleWhereInput;
+         orderBy?: CycleOrderByWithRelationInput | CycleOrderByWithRelationInput[];
+         cursor?: CycleWhereUniqueInput;
+         take?: number;
+         skip?: number;
+         distinct?: CycleScalarFieldEnum | CycleScalarFieldEnum[];
+      };
+
+   /**
+    * Team without action
+    */
+   export type TeamDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      {
+         /**
+          * Select specific fields to fetch from the Team
+          */
+         select?: TeamSelect<ExtArgs> | null;
+         /**
+          * Omit specific fields from the Team
+          */
+         omit?: TeamOmit<ExtArgs> | null;
+         /**
+          * Choose, which related nodes to fetch as well
+          */
+         include?: TeamInclude<ExtArgs> | null;
+      };
+
+   /**
+    * Model TeamMember
+    */
+
+   export type AggregateTeamMember = {
+      _count: TeamMemberCountAggregateOutputType | null;
+      _min: TeamMemberMinAggregateOutputType | null;
+      _max: TeamMemberMaxAggregateOutputType | null;
+   };
+
+   export type TeamMemberMinAggregateOutputType = {
+      id: string | null;
+      teamId: string | null;
+      userId: string | null;
+   };
+
+   export type TeamMemberMaxAggregateOutputType = {
+      id: string | null;
+      teamId: string | null;
+      userId: string | null;
+   };
+
+   export type TeamMemberCountAggregateOutputType = {
+      id: number;
+      teamId: number;
+      userId: number;
+      _all: number;
+   };
+
+   export type TeamMemberMinAggregateInputType = {
+      id?: true;
+      teamId?: true;
+      userId?: true;
+   };
+
+   export type TeamMemberMaxAggregateInputType = {
+      id?: true;
+      teamId?: true;
+      userId?: true;
+   };
+
+   export type TeamMemberCountAggregateInputType = {
+      id?: true;
+      teamId?: true;
+      userId?: true;
+      _all?: true;
+   };
+
+   export type TeamMemberAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which TeamMember to aggregate.
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamMembers to fetch.
+       */
+      orderBy?: TeamMemberOrderByWithRelationInput | TeamMemberOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: TeamMemberWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamMembers from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamMembers.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned TeamMembers
+       **/
+      _count?: true | TeamMemberCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: TeamMemberMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: TeamMemberMaxAggregateInputType;
+   };
+
+   export type GetTeamMemberAggregateType<T extends TeamMemberAggregateArgs> = {
+      [P in keyof T & keyof AggregateTeamMember]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateTeamMember[P]>
+         : GetScalarType<T[P], AggregateTeamMember[P]>;
+   };
+
+   export type TeamMemberGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: TeamMemberWhereInput;
+      orderBy?: TeamMemberOrderByWithAggregationInput | TeamMemberOrderByWithAggregationInput[];
+      by: TeamMemberScalarFieldEnum[] | TeamMemberScalarFieldEnum;
+      having?: TeamMemberScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: TeamMemberCountAggregateInputType | true;
+      _min?: TeamMemberMinAggregateInputType;
+      _max?: TeamMemberMaxAggregateInputType;
+   };
+
+   export type TeamMemberGroupByOutputType = {
+      id: string;
+      teamId: string;
+      userId: string;
+      _count: TeamMemberCountAggregateOutputType | null;
+      _min: TeamMemberMinAggregateOutputType | null;
+      _max: TeamMemberMaxAggregateOutputType | null;
+   };
+
+   type GetTeamMemberGroupByPayload<T extends TeamMemberGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<TeamMemberGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof TeamMemberGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], TeamMemberGroupByOutputType[P]>
+               : GetScalarType<T[P], TeamMemberGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type TeamMemberSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         teamId?: boolean;
+         userId?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+         user?: boolean | UserDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['teamMember']
+   >;
+
+   export type TeamMemberSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         teamId?: boolean;
+         userId?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+         user?: boolean | UserDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['teamMember']
+   >;
+
+   export type TeamMemberSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         teamId?: boolean;
+         userId?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+         user?: boolean | UserDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['teamMember']
+   >;
+
+   export type TeamMemberSelectScalar = {
+      id?: boolean;
+      teamId?: boolean;
+      userId?: boolean;
+   };
+
+   export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<'id' | 'teamId' | 'userId', ExtArgs['result']['teamMember']>;
+   export type TeamMemberInclude<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      user?: boolean | UserDefaultArgs<ExtArgs>;
+   };
+   export type TeamMemberIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      user?: boolean | UserDefaultArgs<ExtArgs>;
+   };
+   export type TeamMemberIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      user?: boolean | UserDefaultArgs<ExtArgs>;
+   };
+
+   export type $TeamMemberPayload<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      name: 'TeamMember';
+      objects: {
+         team: Prisma.$TeamPayload<ExtArgs>;
+         user: Prisma.$UserPayload<ExtArgs>;
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            teamId: string;
+            userId: string;
+         },
+         ExtArgs['result']['teamMember']
+      >;
+      composites: {};
+   };
+
+   type TeamMemberGetPayload<S extends boolean | null | undefined | TeamMemberDefaultArgs> =
+      $Result.GetResult<Prisma.$TeamMemberPayload, S>;
+
+   type TeamMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      Omit<TeamMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+         select?: TeamMemberCountAggregateInputType | true;
+      };
+
+   export interface TeamMemberDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: {
+         types: Prisma.TypeMap<ExtArgs>['model']['TeamMember'];
+         meta: { name: 'TeamMember' };
+      };
+      /**
+       * Find zero or one TeamMember that matches the filter.
+       * @param {TeamMemberFindUniqueArgs} args - Arguments to find a TeamMember
+       * @example
+       * // Get one TeamMember
+       * const teamMember = await prisma.teamMember.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends TeamMemberFindUniqueArgs>(
+         args: SelectSubset<T, TeamMemberFindUniqueArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<
+            Prisma.$TeamMemberPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one TeamMember that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {TeamMemberFindUniqueOrThrowArgs} args - Arguments to find a TeamMember
+       * @example
+       * // Get one TeamMember
+       * const teamMember = await prisma.teamMember.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends TeamMemberFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, TeamMemberFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<
+            Prisma.$TeamMemberPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first TeamMember that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberFindFirstArgs} args - Arguments to find a TeamMember
+       * @example
+       * // Get one TeamMember
+       * const teamMember = await prisma.teamMember.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends TeamMemberFindFirstArgs>(
+         args?: SelectSubset<T, TeamMemberFindFirstArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<
+            Prisma.$TeamMemberPayload<ExtArgs>,
+            T,
+            'findFirst',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first TeamMember that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberFindFirstOrThrowArgs} args - Arguments to find a TeamMember
+       * @example
+       * // Get one TeamMember
+       * const teamMember = await prisma.teamMember.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends TeamMemberFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, TeamMemberFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<
+            Prisma.$TeamMemberPayload<ExtArgs>,
+            T,
+            'findFirstOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more TeamMembers that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all TeamMembers
+       * const teamMembers = await prisma.teamMember.findMany()
+       *
+       * // Get first 10 TeamMembers
+       * const teamMembers = await prisma.teamMember.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const teamMemberWithIdOnly = await prisma.teamMember.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends TeamMemberFindManyArgs>(
+         args?: SelectSubset<T, TeamMemberFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a TeamMember.
+       * @param {TeamMemberCreateArgs} args - Arguments to create a TeamMember.
+       * @example
+       * // Create one TeamMember
+       * const TeamMember = await prisma.teamMember.create({
+       *   data: {
+       *     // ... data to create a TeamMember
+       *   }
+       * })
+       *
+       */
+      create<T extends TeamMemberCreateArgs>(
+         args: SelectSubset<T, TeamMemberCreateArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many TeamMembers.
+       * @param {TeamMemberCreateManyArgs} args - Arguments to create many TeamMembers.
+       * @example
+       * // Create many TeamMembers
+       * const teamMember = await prisma.teamMember.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends TeamMemberCreateManyArgs>(
+         args?: SelectSubset<T, TeamMemberCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many TeamMembers and returns the data saved in the database.
+       * @param {TeamMemberCreateManyAndReturnArgs} args - Arguments to create many TeamMembers.
+       * @example
+       * // Create many TeamMembers
+       * const teamMember = await prisma.teamMember.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many TeamMembers and only return the `id`
+       * const teamMemberWithIdOnly = await prisma.teamMember.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends TeamMemberCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, TeamMemberCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$TeamMemberPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a TeamMember.
+       * @param {TeamMemberDeleteArgs} args - Arguments to delete one TeamMember.
+       * @example
+       * // Delete one TeamMember
+       * const TeamMember = await prisma.teamMember.delete({
+       *   where: {
+       *     // ... filter to delete one TeamMember
+       *   }
+       * })
+       *
+       */
+      delete<T extends TeamMemberDeleteArgs>(
+         args: SelectSubset<T, TeamMemberDeleteArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one TeamMember.
+       * @param {TeamMemberUpdateArgs} args - Arguments to update one TeamMember.
+       * @example
+       * // Update one TeamMember
+       * const teamMember = await prisma.teamMember.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends TeamMemberUpdateArgs>(
+         args: SelectSubset<T, TeamMemberUpdateArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more TeamMembers.
+       * @param {TeamMemberDeleteManyArgs} args - Arguments to filter TeamMembers to delete.
+       * @example
+       * // Delete a few TeamMembers
+       * const { count } = await prisma.teamMember.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends TeamMemberDeleteManyArgs>(
+         args?: SelectSubset<T, TeamMemberDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more TeamMembers.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many TeamMembers
+       * const teamMember = await prisma.teamMember.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends TeamMemberUpdateManyArgs>(
+         args: SelectSubset<T, TeamMemberUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more TeamMembers and returns the data updated in the database.
+       * @param {TeamMemberUpdateManyAndReturnArgs} args - Arguments to update many TeamMembers.
+       * @example
+       * // Update many TeamMembers
+       * const teamMember = await prisma.teamMember.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more TeamMembers and only return the `id`
+       * const teamMemberWithIdOnly = await prisma.teamMember.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends TeamMemberUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, TeamMemberUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$TeamMemberPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one TeamMember.
+       * @param {TeamMemberUpsertArgs} args - Arguments to update or create a TeamMember.
+       * @example
+       * // Update or create a TeamMember
+       * const teamMember = await prisma.teamMember.upsert({
+       *   create: {
+       *     // ... data to create a TeamMember
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the TeamMember we want to update
+       *   }
+       * })
+       */
+      upsert<T extends TeamMemberUpsertArgs>(
+         args: SelectSubset<T, TeamMemberUpsertArgs<ExtArgs>>
+      ): Prisma__TeamMemberClient<
+         $Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of TeamMembers.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberCountArgs} args - Arguments to filter TeamMembers to count.
+       * @example
+       * // Count the number of TeamMembers
+       * const count = await prisma.teamMember.count({
+       *   where: {
+       *     // ... the filter for the TeamMembers we want to count
+       *   }
+       * })
+       **/
+      count<T extends TeamMemberCountArgs>(
+         args?: Subset<T, TeamMemberCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], TeamMemberCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a TeamMember.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends TeamMemberAggregateArgs>(
+         args: Subset<T, TeamMemberAggregateArgs>
+      ): Prisma.PrismaPromise<GetTeamMemberAggregateType<T>>;
+
+      /**
+       * Group by TeamMember.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamMemberGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends TeamMemberGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: TeamMemberGroupByArgs['orderBy'] }
+            : { orderBy?: TeamMemberGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, TeamMemberGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors
+         ? GetTeamMemberGroupByPayload<T>
+         : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the TeamMember model
+       */
+      readonly fields: TeamMemberFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for TeamMember.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__TeamMemberClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      team<T extends TeamDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, TeamDefaultArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         | $Result.GetResult<
+              Prisma.$TeamPayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      user<T extends UserDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, UserDefaultArgs<ExtArgs>>
+      ): Prisma__UserClient<
+         | $Result.GetResult<
+              Prisma.$UserPayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the TeamMember model
+    */
+   interface TeamMemberFieldRefs {
+      readonly id: FieldRef<'TeamMember', 'String'>;
+      readonly teamId: FieldRef<'TeamMember', 'String'>;
+      readonly userId: FieldRef<'TeamMember', 'String'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * TeamMember findUnique
+    */
+   export type TeamMemberFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamMember to fetch.
+       */
+      where: TeamMemberWhereUniqueInput;
+   };
+
+   /**
+    * TeamMember findUniqueOrThrow
+    */
+   export type TeamMemberFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamMember to fetch.
+       */
+      where: TeamMemberWhereUniqueInput;
+   };
+
+   /**
+    * TeamMember findFirst
+    */
+   export type TeamMemberFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamMember to fetch.
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamMembers to fetch.
+       */
+      orderBy?: TeamMemberOrderByWithRelationInput | TeamMemberOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for TeamMembers.
+       */
+      cursor?: TeamMemberWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamMembers from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamMembers.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of TeamMembers.
+       */
+      distinct?: TeamMemberScalarFieldEnum | TeamMemberScalarFieldEnum[];
+   };
+
+   /**
+    * TeamMember findFirstOrThrow
+    */
+   export type TeamMemberFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamMember to fetch.
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamMembers to fetch.
+       */
+      orderBy?: TeamMemberOrderByWithRelationInput | TeamMemberOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for TeamMembers.
+       */
+      cursor?: TeamMemberWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamMembers from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamMembers.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of TeamMembers.
+       */
+      distinct?: TeamMemberScalarFieldEnum | TeamMemberScalarFieldEnum[];
+   };
+
+   /**
+    * TeamMember findMany
+    */
+   export type TeamMemberFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamMembers to fetch.
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamMembers to fetch.
+       */
+      orderBy?: TeamMemberOrderByWithRelationInput | TeamMemberOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing TeamMembers.
+       */
+      cursor?: TeamMemberWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamMembers from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamMembers.
+       */
+      skip?: number;
+      distinct?: TeamMemberScalarFieldEnum | TeamMemberScalarFieldEnum[];
+   };
+
+   /**
+    * TeamMember create
+    */
+   export type TeamMemberCreateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * The data needed to create a TeamMember.
+       */
+      data: XOR<TeamMemberCreateInput, TeamMemberUncheckedCreateInput>;
+   };
+
+   /**
+    * TeamMember createMany
+    */
+   export type TeamMemberCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many TeamMembers.
+       */
+      data: TeamMemberCreateManyInput | TeamMemberCreateManyInput[];
+   };
+
+   /**
+    * TeamMember createManyAndReturn
+    */
+   export type TeamMemberCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * The data used to create many TeamMembers.
+       */
+      data: TeamMemberCreateManyInput | TeamMemberCreateManyInput[];
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberIncludeCreateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * TeamMember update
+    */
+   export type TeamMemberUpdateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * The data needed to update a TeamMember.
+       */
+      data: XOR<TeamMemberUpdateInput, TeamMemberUncheckedUpdateInput>;
+      /**
+       * Choose, which TeamMember to update.
+       */
+      where: TeamMemberWhereUniqueInput;
+   };
+
+   /**
+    * TeamMember updateMany
+    */
+   export type TeamMemberUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update TeamMembers.
+       */
+      data: XOR<TeamMemberUpdateManyMutationInput, TeamMemberUncheckedUpdateManyInput>;
+      /**
+       * Filter which TeamMembers to update
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * Limit how many TeamMembers to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * TeamMember updateManyAndReturn
+    */
+   export type TeamMemberUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * The data used to update TeamMembers.
+       */
+      data: XOR<TeamMemberUpdateManyMutationInput, TeamMemberUncheckedUpdateManyInput>;
+      /**
+       * Filter which TeamMembers to update
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * Limit how many TeamMembers to update.
+       */
+      limit?: number;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberIncludeUpdateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * TeamMember upsert
+    */
+   export type TeamMemberUpsertArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * The filter to search for the TeamMember to update in case it exists.
+       */
+      where: TeamMemberWhereUniqueInput;
+      /**
+       * In case the TeamMember found by the `where` argument doesn't exist, create a new TeamMember with this data.
+       */
+      create: XOR<TeamMemberCreateInput, TeamMemberUncheckedCreateInput>;
+      /**
+       * In case the TeamMember was found with the provided `where` argument, update it with this data.
+       */
+      update: XOR<TeamMemberUpdateInput, TeamMemberUncheckedUpdateInput>;
+   };
+
+   /**
+    * TeamMember delete
+    */
+   export type TeamMemberDeleteArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+      /**
+       * Filter which TeamMember to delete.
+       */
+      where: TeamMemberWhereUniqueInput;
+   };
+
+   /**
+    * TeamMember deleteMany
+    */
+   export type TeamMemberDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which TeamMembers to delete
+       */
+      where?: TeamMemberWhereInput;
+      /**
+       * Limit how many TeamMembers to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * TeamMember without action
+    */
+   export type TeamMemberDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamMember
+       */
+      select?: TeamMemberSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamMember
+       */
+      omit?: TeamMemberOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamMemberInclude<ExtArgs> | null;
+   };
+
+   /**
+    * Model TeamProject
+    */
+
+   export type AggregateTeamProject = {
+      _count: TeamProjectCountAggregateOutputType | null;
+      _min: TeamProjectMinAggregateOutputType | null;
+      _max: TeamProjectMaxAggregateOutputType | null;
+   };
+
+   export type TeamProjectMinAggregateOutputType = {
+      id: string | null;
+      teamId: string | null;
+      projectId: string | null;
+   };
+
+   export type TeamProjectMaxAggregateOutputType = {
+      id: string | null;
+      teamId: string | null;
+      projectId: string | null;
+   };
+
+   export type TeamProjectCountAggregateOutputType = {
+      id: number;
+      teamId: number;
+      projectId: number;
+      _all: number;
+   };
+
+   export type TeamProjectMinAggregateInputType = {
+      id?: true;
+      teamId?: true;
+      projectId?: true;
+   };
+
+   export type TeamProjectMaxAggregateInputType = {
+      id?: true;
+      teamId?: true;
+      projectId?: true;
+   };
+
+   export type TeamProjectCountAggregateInputType = {
+      id?: true;
+      teamId?: true;
+      projectId?: true;
+      _all?: true;
+   };
+
+   export type TeamProjectAggregateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which TeamProject to aggregate.
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamProjects to fetch.
+       */
+      orderBy?: TeamProjectOrderByWithRelationInput | TeamProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the start position
+       */
+      cursor?: TeamProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamProjects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamProjects.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Count returned TeamProjects
+       **/
+      _count?: true | TeamProjectCountAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the minimum value
+       **/
+      _min?: TeamProjectMinAggregateInputType;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+       *
+       * Select which fields to find the maximum value
+       **/
+      _max?: TeamProjectMaxAggregateInputType;
+   };
+
+   export type GetTeamProjectAggregateType<T extends TeamProjectAggregateArgs> = {
+      [P in keyof T & keyof AggregateTeamProject]: P extends '_count' | 'count'
+         ? T[P] extends true
+            ? number
+            : GetScalarType<T[P], AggregateTeamProject[P]>
+         : GetScalarType<T[P], AggregateTeamProject[P]>;
+   };
+
+   export type TeamProjectGroupByArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: TeamProjectWhereInput;
+      orderBy?: TeamProjectOrderByWithAggregationInput | TeamProjectOrderByWithAggregationInput[];
+      by: TeamProjectScalarFieldEnum[] | TeamProjectScalarFieldEnum;
+      having?: TeamProjectScalarWhereWithAggregatesInput;
+      take?: number;
+      skip?: number;
+      _count?: TeamProjectCountAggregateInputType | true;
+      _min?: TeamProjectMinAggregateInputType;
+      _max?: TeamProjectMaxAggregateInputType;
+   };
+
+   export type TeamProjectGroupByOutputType = {
+      id: string;
+      teamId: string;
+      projectId: string;
+      _count: TeamProjectCountAggregateOutputType | null;
+      _min: TeamProjectMinAggregateOutputType | null;
+      _max: TeamProjectMaxAggregateOutputType | null;
+   };
+
+   type GetTeamProjectGroupByPayload<T extends TeamProjectGroupByArgs> = Prisma.PrismaPromise<
+      Array<
+         PickEnumerable<TeamProjectGroupByOutputType, T['by']> & {
+            [P in keyof T & keyof TeamProjectGroupByOutputType]: P extends '_count'
+               ? T[P] extends boolean
+                  ? number
+                  : GetScalarType<T[P], TeamProjectGroupByOutputType[P]>
+               : GetScalarType<T[P], TeamProjectGroupByOutputType[P]>;
+         }
+      >
+   >;
+
+   export type TeamProjectSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         teamId?: boolean;
+         projectId?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+         project?: boolean | ProjectDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['teamProject']
+   >;
+
+   export type TeamProjectSelectCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         teamId?: boolean;
+         projectId?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+         project?: boolean | ProjectDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['teamProject']
+   >;
+
+   export type TeamProjectSelectUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = $Extensions.GetSelect<
+      {
+         id?: boolean;
+         teamId?: boolean;
+         projectId?: boolean;
+         team?: boolean | TeamDefaultArgs<ExtArgs>;
+         project?: boolean | ProjectDefaultArgs<ExtArgs>;
+      },
+      ExtArgs['result']['teamProject']
+   >;
+
+   export type TeamProjectSelectScalar = {
+      id?: boolean;
+      teamId?: boolean;
+      projectId?: boolean;
+   };
+
+   export type TeamProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      $Extensions.GetOmit<'id' | 'teamId' | 'projectId', ExtArgs['result']['teamProject']>;
+   export type TeamProjectInclude<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
+   };
+   export type TeamProjectIncludeCreateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
+   };
+   export type TeamProjectIncludeUpdateManyAndReturn<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      team?: boolean | TeamDefaultArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
+   };
+
+   export type $TeamProjectPayload<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      name: 'TeamProject';
+      objects: {
+         team: Prisma.$TeamPayload<ExtArgs>;
+         project: Prisma.$ProjectPayload<ExtArgs>;
+      };
+      scalars: $Extensions.GetPayloadResult<
+         {
+            id: string;
+            teamId: string;
+            projectId: string;
+         },
+         ExtArgs['result']['teamProject']
+      >;
+      composites: {};
+   };
+
+   type TeamProjectGetPayload<S extends boolean | null | undefined | TeamProjectDefaultArgs> =
+      $Result.GetResult<Prisma.$TeamProjectPayload, S>;
+
+   type TeamProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+      Omit<TeamProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+         select?: TeamProjectCountAggregateInputType | true;
+      };
+
+   export interface TeamProjectDelegate<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > {
+      [K: symbol]: {
+         types: Prisma.TypeMap<ExtArgs>['model']['TeamProject'];
+         meta: { name: 'TeamProject' };
+      };
+      /**
+       * Find zero or one TeamProject that matches the filter.
+       * @param {TeamProjectFindUniqueArgs} args - Arguments to find a TeamProject
+       * @example
+       * // Get one TeamProject
+       * const teamProject = await prisma.teamProject.findUnique({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUnique<T extends TeamProjectFindUniqueArgs>(
+         args: SelectSubset<T, TeamProjectFindUniqueArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<
+            Prisma.$TeamProjectPayload<ExtArgs>,
+            T,
+            'findUnique',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find one TeamProject that matches the filter or throw an error with `error.code='P2025'`
+       * if no matches were found.
+       * @param {TeamProjectFindUniqueOrThrowArgs} args - Arguments to find a TeamProject
+       * @example
+       * // Get one TeamProject
+       * const teamProject = await prisma.teamProject.findUniqueOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findUniqueOrThrow<T extends TeamProjectFindUniqueOrThrowArgs>(
+         args: SelectSubset<T, TeamProjectFindUniqueOrThrowArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<
+            Prisma.$TeamProjectPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first TeamProject that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectFindFirstArgs} args - Arguments to find a TeamProject
+       * @example
+       * // Get one TeamProject
+       * const teamProject = await prisma.teamProject.findFirst({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirst<T extends TeamProjectFindFirstArgs>(
+         args?: SelectSubset<T, TeamProjectFindFirstArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<
+            Prisma.$TeamProjectPayload<ExtArgs>,
+            T,
+            'findFirst',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find the first TeamProject that matches the filter or
+       * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectFindFirstOrThrowArgs} args - Arguments to find a TeamProject
+       * @example
+       * // Get one TeamProject
+       * const teamProject = await prisma.teamProject.findFirstOrThrow({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       */
+      findFirstOrThrow<T extends TeamProjectFindFirstOrThrowArgs>(
+         args?: SelectSubset<T, TeamProjectFindFirstOrThrowArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<
+            Prisma.$TeamProjectPayload<ExtArgs>,
+            T,
+            'findFirstOrThrow',
+            GlobalOmitOptions
+         >,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Find zero or more TeamProjects that matches the filter.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+       * @example
+       * // Get all TeamProjects
+       * const teamProjects = await prisma.teamProject.findMany()
+       *
+       * // Get first 10 TeamProjects
+       * const teamProjects = await prisma.teamProject.findMany({ take: 10 })
+       *
+       * // Only select the `id`
+       * const teamProjectWithIdOnly = await prisma.teamProject.findMany({ select: { id: true } })
+       *
+       */
+      findMany<T extends TeamProjectFindManyArgs>(
+         args?: SelectSubset<T, TeamProjectFindManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+      >;
+
+      /**
+       * Create a TeamProject.
+       * @param {TeamProjectCreateArgs} args - Arguments to create a TeamProject.
+       * @example
+       * // Create one TeamProject
+       * const TeamProject = await prisma.teamProject.create({
+       *   data: {
+       *     // ... data to create a TeamProject
+       *   }
+       * })
+       *
+       */
+      create<T extends TeamProjectCreateArgs>(
+         args: SelectSubset<T, TeamProjectCreateArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Create many TeamProjects.
+       * @param {TeamProjectCreateManyArgs} args - Arguments to create many TeamProjects.
+       * @example
+       * // Create many TeamProjects
+       * const teamProject = await prisma.teamProject.createMany({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       */
+      createMany<T extends TeamProjectCreateManyArgs>(
+         args?: SelectSubset<T, TeamProjectCreateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Create many TeamProjects and returns the data saved in the database.
+       * @param {TeamProjectCreateManyAndReturnArgs} args - Arguments to create many TeamProjects.
+       * @example
+       * // Create many TeamProjects
+       * const teamProject = await prisma.teamProject.createManyAndReturn({
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Create many TeamProjects and only return the `id`
+       * const teamProjectWithIdOnly = await prisma.teamProject.createManyAndReturn({
+       *   select: { id: true },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      createManyAndReturn<T extends TeamProjectCreateManyAndReturnArgs>(
+         args?: SelectSubset<T, TeamProjectCreateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$TeamProjectPayload<ExtArgs>,
+            T,
+            'createManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Delete a TeamProject.
+       * @param {TeamProjectDeleteArgs} args - Arguments to delete one TeamProject.
+       * @example
+       * // Delete one TeamProject
+       * const TeamProject = await prisma.teamProject.delete({
+       *   where: {
+       *     // ... filter to delete one TeamProject
+       *   }
+       * })
+       *
+       */
+      delete<T extends TeamProjectDeleteArgs>(
+         args: SelectSubset<T, TeamProjectDeleteArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Update one TeamProject.
+       * @param {TeamProjectUpdateArgs} args - Arguments to update one TeamProject.
+       * @example
+       * // Update one TeamProject
+       * const teamProject = await prisma.teamProject.update({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      update<T extends TeamProjectUpdateArgs>(
+         args: SelectSubset<T, TeamProjectUpdateArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Delete zero or more TeamProjects.
+       * @param {TeamProjectDeleteManyArgs} args - Arguments to filter TeamProjects to delete.
+       * @example
+       * // Delete a few TeamProjects
+       * const { count } = await prisma.teamProject.deleteMany({
+       *   where: {
+       *     // ... provide filter here
+       *   }
+       * })
+       *
+       */
+      deleteMany<T extends TeamProjectDeleteManyArgs>(
+         args?: SelectSubset<T, TeamProjectDeleteManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more TeamProjects.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectUpdateManyArgs} args - Arguments to update one or more rows.
+       * @example
+       * // Update many TeamProjects
+       * const teamProject = await prisma.teamProject.updateMany({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: {
+       *     // ... provide data here
+       *   }
+       * })
+       *
+       */
+      updateMany<T extends TeamProjectUpdateManyArgs>(
+         args: SelectSubset<T, TeamProjectUpdateManyArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<BatchPayload>;
+
+      /**
+       * Update zero or more TeamProjects and returns the data updated in the database.
+       * @param {TeamProjectUpdateManyAndReturnArgs} args - Arguments to update many TeamProjects.
+       * @example
+       * // Update many TeamProjects
+       * const teamProject = await prisma.teamProject.updateManyAndReturn({
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       *
+       * // Update zero or more TeamProjects and only return the `id`
+       * const teamProjectWithIdOnly = await prisma.teamProject.updateManyAndReturn({
+       *   select: { id: true },
+       *   where: {
+       *     // ... provide filter here
+       *   },
+       *   data: [
+       *     // ... provide data here
+       *   ]
+       * })
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       *
+       */
+      updateManyAndReturn<T extends TeamProjectUpdateManyAndReturnArgs>(
+         args: SelectSubset<T, TeamProjectUpdateManyAndReturnArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<
+            Prisma.$TeamProjectPayload<ExtArgs>,
+            T,
+            'updateManyAndReturn',
+            GlobalOmitOptions
+         >
+      >;
+
+      /**
+       * Create or update one TeamProject.
+       * @param {TeamProjectUpsertArgs} args - Arguments to update or create a TeamProject.
+       * @example
+       * // Update or create a TeamProject
+       * const teamProject = await prisma.teamProject.upsert({
+       *   create: {
+       *     // ... data to create a TeamProject
+       *   },
+       *   update: {
+       *     // ... in case it already exists, update
+       *   },
+       *   where: {
+       *     // ... the filter for the TeamProject we want to update
+       *   }
+       * })
+       */
+      upsert<T extends TeamProjectUpsertArgs>(
+         args: SelectSubset<T, TeamProjectUpsertArgs<ExtArgs>>
+      ): Prisma__TeamProjectClient<
+         $Result.GetResult<Prisma.$TeamProjectPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+         never,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+
+      /**
+       * Count the number of TeamProjects.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectCountArgs} args - Arguments to filter TeamProjects to count.
+       * @example
+       * // Count the number of TeamProjects
+       * const count = await prisma.teamProject.count({
+       *   where: {
+       *     // ... the filter for the TeamProjects we want to count
+       *   }
+       * })
+       **/
+      count<T extends TeamProjectCountArgs>(
+         args?: Subset<T, TeamProjectCountArgs>
+      ): Prisma.PrismaPromise<
+         T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+               ? number
+               : GetScalarType<T['select'], TeamProjectCountAggregateOutputType>
+            : number
+      >;
+
+      /**
+       * Allows you to perform aggregations operations on a TeamProject.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+       * @example
+       * // Ordered by age ascending
+       * // Where email contains prisma.io
+       * // Limited to the 10 users
+       * const aggregations = await prisma.user.aggregate({
+       *   _avg: {
+       *     age: true,
+       *   },
+       *   where: {
+       *     email: {
+       *       contains: "prisma.io",
+       *     },
+       *   },
+       *   orderBy: {
+       *     age: "asc",
+       *   },
+       *   take: 10,
+       * })
+       **/
+      aggregate<T extends TeamProjectAggregateArgs>(
+         args: Subset<T, TeamProjectAggregateArgs>
+      ): Prisma.PrismaPromise<GetTeamProjectAggregateType<T>>;
+
+      /**
+       * Group by TeamProject.
+       * Note, that providing `undefined` is treated as the value not being there.
+       * Read more here: https://pris.ly/d/null-undefined
+       * @param {TeamProjectGroupByArgs} args - Group by arguments.
+       * @example
+       * // Group by city, order by createdAt, get count
+       * const result = await prisma.user.groupBy({
+       *   by: ['city', 'createdAt'],
+       *   orderBy: {
+       *     createdAt: true
+       *   },
+       *   _count: {
+       *     _all: true
+       *   },
+       * })
+       *
+       **/
+      groupBy<
+         T extends TeamProjectGroupByArgs,
+         HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
+         OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: TeamProjectGroupByArgs['orderBy'] }
+            : { orderBy?: TeamProjectGroupByArgs['orderBy'] },
+         OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+         ByFields extends MaybeTupleToUnion<T['by']>,
+         ByValid extends Has<ByFields, OrderFields>,
+         HavingFields extends GetHavingFields<T['having']>,
+         HavingValid extends Has<ByFields, HavingFields>,
+         ByEmpty extends T['by'] extends never[] ? True : False,
+         InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+              ? {
+                   [P in HavingFields]: P extends ByFields
+                      ? never
+                      : P extends string
+                        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                        : [Error, 'Field ', P, ` in "having" needs to be provided in "by"`];
+                }[HavingFields]
+              : 'take' extends Keys<T>
+                ? 'orderBy' extends Keys<T>
+                   ? ByValid extends True
+                      ? {}
+                      : {
+                           [P in OrderFields]: P extends ByFields
+                              ? never
+                              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                        }[OrderFields]
+                   : 'Error: If you provide "take", you also need to provide "orderBy"'
+                : 'skip' extends Keys<T>
+                  ? 'orderBy' extends Keys<T>
+                     ? ByValid extends True
+                        ? {}
+                        : {
+                             [P in OrderFields]: P extends ByFields
+                                ? never
+                                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                          }[OrderFields]
+                     : 'Error: If you provide "skip", you also need to provide "orderBy"'
+                  : ByValid extends True
+                    ? {}
+                    : {
+                         [P in OrderFields]: P extends ByFields
+                            ? never
+                            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                      }[OrderFields],
+      >(
+         args: SubsetIntersection<T, TeamProjectGroupByArgs, OrderByArg> & InputErrors
+      ): {} extends InputErrors
+         ? GetTeamProjectGroupByPayload<T>
+         : Prisma.PrismaPromise<InputErrors>;
+      /**
+       * Fields of the TeamProject model
+       */
+      readonly fields: TeamProjectFieldRefs;
+   }
+
+   /**
+    * The delegate class that acts as a "Promise-like" for TeamProject.
+    * Why is this prefixed with `Prisma__`?
+    * Because we want to prevent naming conflicts as mentioned in
+    * https://github.com/prisma/prisma-client-js/issues/707
+    */
+   export interface Prisma__TeamProjectClient<
+      T,
+      Null = never,
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+      GlobalOmitOptions = {},
+   > extends Prisma.PrismaPromise<T> {
+      readonly [Symbol.toStringTag]: 'PrismaPromise';
+      team<T extends TeamDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, TeamDefaultArgs<ExtArgs>>
+      ): Prisma__TeamClient<
+         | $Result.GetResult<
+              Prisma.$TeamPayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      project<T extends ProjectDefaultArgs<ExtArgs> = {}>(
+         args?: Subset<T, ProjectDefaultArgs<ExtArgs>>
+      ): Prisma__ProjectClient<
+         | $Result.GetResult<
+              Prisma.$ProjectPayload<ExtArgs>,
+              T,
+              'findUniqueOrThrow',
+              GlobalOmitOptions
+           >
+         | Null,
+         Null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      /**
+       * Attaches callbacks for the resolution and/or rejection of the Promise.
+       * @param onfulfilled The callback to execute when the Promise is resolved.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of which ever callback is executed.
+       */
+      then<TResult1 = T, TResult2 = never>(
+         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+         onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+      ): $Utils.JsPromise<TResult1 | TResult2>;
+      /**
+       * Attaches a callback for only the rejection of the Promise.
+       * @param onrejected The callback to execute when the Promise is rejected.
+       * @returns A Promise for the completion of the callback.
+       */
+      catch<TResult = never>(
+         onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+      ): $Utils.JsPromise<T | TResult>;
+      /**
+       * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+       * resolved value cannot be modified from the callback.
+       * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+       * @returns A Promise for the completion of the callback.
+       */
+      finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+   }
+
+   /**
+    * Fields of the TeamProject model
+    */
+   interface TeamProjectFieldRefs {
+      readonly id: FieldRef<'TeamProject', 'String'>;
+      readonly teamId: FieldRef<'TeamProject', 'String'>;
+      readonly projectId: FieldRef<'TeamProject', 'String'>;
+   }
+
+   // Custom InputTypes
+   /**
+    * TeamProject findUnique
+    */
+   export type TeamProjectFindUniqueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamProject to fetch.
+       */
+      where: TeamProjectWhereUniqueInput;
+   };
+
+   /**
+    * TeamProject findUniqueOrThrow
+    */
+   export type TeamProjectFindUniqueOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamProject to fetch.
+       */
+      where: TeamProjectWhereUniqueInput;
+   };
+
+   /**
+    * TeamProject findFirst
+    */
+   export type TeamProjectFindFirstArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamProject to fetch.
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamProjects to fetch.
+       */
+      orderBy?: TeamProjectOrderByWithRelationInput | TeamProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for TeamProjects.
+       */
+      cursor?: TeamProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamProjects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamProjects.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of TeamProjects.
+       */
+      distinct?: TeamProjectScalarFieldEnum | TeamProjectScalarFieldEnum[];
+   };
+
+   /**
+    * TeamProject findFirstOrThrow
+    */
+   export type TeamProjectFindFirstOrThrowArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamProject to fetch.
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamProjects to fetch.
+       */
+      orderBy?: TeamProjectOrderByWithRelationInput | TeamProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for searching for TeamProjects.
+       */
+      cursor?: TeamProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamProjects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamProjects.
+       */
+      skip?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+       *
+       * Filter by unique combinations of TeamProjects.
+       */
+      distinct?: TeamProjectScalarFieldEnum | TeamProjectScalarFieldEnum[];
+   };
+
+   /**
+    * TeamProject findMany
+    */
+   export type TeamProjectFindManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * Filter, which TeamProjects to fetch.
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+       *
+       * Determine the order of TeamProjects to fetch.
+       */
+      orderBy?: TeamProjectOrderByWithRelationInput | TeamProjectOrderByWithRelationInput[];
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+       *
+       * Sets the position for listing TeamProjects.
+       */
+      cursor?: TeamProjectWhereUniqueInput;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Take `±n` TeamProjects from the position of the cursor.
+       */
+      take?: number;
+      /**
+       * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+       *
+       * Skip the first `n` TeamProjects.
+       */
+      skip?: number;
+      distinct?: TeamProjectScalarFieldEnum | TeamProjectScalarFieldEnum[];
+   };
+
+   /**
+    * TeamProject create
+    */
+   export type TeamProjectCreateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * The data needed to create a TeamProject.
+       */
+      data: XOR<TeamProjectCreateInput, TeamProjectUncheckedCreateInput>;
+   };
+
+   /**
+    * TeamProject createMany
+    */
+   export type TeamProjectCreateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to create many TeamProjects.
+       */
+      data: TeamProjectCreateManyInput | TeamProjectCreateManyInput[];
+   };
+
+   /**
+    * TeamProject createManyAndReturn
+    */
+   export type TeamProjectCreateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelectCreateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * The data used to create many TeamProjects.
+       */
+      data: TeamProjectCreateManyInput | TeamProjectCreateManyInput[];
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectIncludeCreateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * TeamProject update
+    */
+   export type TeamProjectUpdateArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * The data needed to update a TeamProject.
+       */
+      data: XOR<TeamProjectUpdateInput, TeamProjectUncheckedUpdateInput>;
+      /**
+       * Choose, which TeamProject to update.
+       */
+      where: TeamProjectWhereUniqueInput;
+   };
+
+   /**
+    * TeamProject updateMany
+    */
+   export type TeamProjectUpdateManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * The data used to update TeamProjects.
+       */
+      data: XOR<TeamProjectUpdateManyMutationInput, TeamProjectUncheckedUpdateManyInput>;
+      /**
+       * Filter which TeamProjects to update
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * Limit how many TeamProjects to update.
+       */
+      limit?: number;
+   };
+
+   /**
+    * TeamProject updateManyAndReturn
+    */
+   export type TeamProjectUpdateManyAndReturnArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelectUpdateManyAndReturn<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * The data used to update TeamProjects.
+       */
+      data: XOR<TeamProjectUpdateManyMutationInput, TeamProjectUncheckedUpdateManyInput>;
+      /**
+       * Filter which TeamProjects to update
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * Limit how many TeamProjects to update.
+       */
+      limit?: number;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectIncludeUpdateManyAndReturn<ExtArgs> | null;
+   };
+
+   /**
+    * TeamProject upsert
+    */
+   export type TeamProjectUpsertArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * The filter to search for the TeamProject to update in case it exists.
+       */
+      where: TeamProjectWhereUniqueInput;
+      /**
+       * In case the TeamProject found by the `where` argument doesn't exist, create a new TeamProject with this data.
+       */
+      create: XOR<TeamProjectCreateInput, TeamProjectUncheckedCreateInput>;
+      /**
+       * In case the TeamProject was found with the provided `where` argument, update it with this data.
+       */
+      update: XOR<TeamProjectUpdateInput, TeamProjectUncheckedUpdateInput>;
+   };
+
+   /**
+    * TeamProject delete
+    */
+   export type TeamProjectDeleteArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+      /**
+       * Filter which TeamProject to delete.
+       */
+      where: TeamProjectWhereUniqueInput;
+   };
+
+   /**
+    * TeamProject deleteMany
+    */
+   export type TeamProjectDeleteManyArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Filter which TeamProjects to delete
+       */
+      where?: TeamProjectWhereInput;
+      /**
+       * Limit how many TeamProjects to delete.
+       */
+      limit?: number;
+   };
+
+   /**
+    * TeamProject without action
+    */
+   export type TeamProjectDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the TeamProject
+       */
+      select?: TeamProjectSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the TeamProject
+       */
+      omit?: TeamProjectOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: TeamProjectInclude<ExtArgs> | null;
+   };
+
+   /**
     * Enums
     */
 
@@ -9334,6 +25463,154 @@ export namespace Prisma {
    export type SyncConflictScalarFieldEnum =
       (typeof SyncConflictScalarFieldEnum)[keyof typeof SyncConflictScalarFieldEnum];
 
+   export const UserScalarFieldEnum: {
+      id: 'id';
+      name: 'name';
+      email: 'email';
+      avatarUrl: 'avatarUrl';
+      status: 'status';
+      role: 'role';
+      joinedDate: 'joinedDate';
+      teamIds: 'teamIds';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
+
+   export const ProjectScalarFieldEnum: {
+      id: 'id';
+      name: 'name';
+      description: 'description';
+      color: 'color';
+      identifier: 'identifier';
+      icon: 'icon';
+      percentComplete: 'percentComplete';
+      startDate: 'startDate';
+      health: 'health';
+      leadId: 'leadId';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type ProjectScalarFieldEnum =
+      (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
+
+   export const LabelScalarFieldEnum: {
+      id: 'id';
+      name: 'name';
+      color: 'color';
+      description: 'description';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type LabelScalarFieldEnum =
+      (typeof LabelScalarFieldEnum)[keyof typeof LabelScalarFieldEnum];
+
+   export const IssueStatusScalarFieldEnum: {
+      id: 'id';
+      name: 'name';
+      color: 'color';
+      iconName: 'iconName';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type IssueStatusScalarFieldEnum =
+      (typeof IssueStatusScalarFieldEnum)[keyof typeof IssueStatusScalarFieldEnum];
+
+   export const IssuePriorityScalarFieldEnum: {
+      id: 'id';
+      name: 'name';
+      iconName: 'iconName';
+      order: 'order';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type IssuePriorityScalarFieldEnum =
+      (typeof IssuePriorityScalarFieldEnum)[keyof typeof IssuePriorityScalarFieldEnum];
+
+   export const IssueScalarFieldEnum: {
+      id: 'id';
+      identifier: 'identifier';
+      title: 'title';
+      description: 'description';
+      statusId: 'statusId';
+      priorityId: 'priorityId';
+      status: 'status';
+      priority: 'priority';
+      rank: 'rank';
+      cycleId: 'cycleId';
+      dueDate: 'dueDate';
+      taskId: 'taskId';
+      subtaskId: 'subtaskId';
+      issueType: 'issueType';
+      assigneeId: 'assigneeId';
+      projectId: 'projectId';
+      subissues: 'subissues';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type IssueScalarFieldEnum =
+      (typeof IssueScalarFieldEnum)[keyof typeof IssueScalarFieldEnum];
+
+   export const IssueLabelScalarFieldEnum: {
+      id: 'id';
+      issueId: 'issueId';
+      labelId: 'labelId';
+   };
+
+   export type IssueLabelScalarFieldEnum =
+      (typeof IssueLabelScalarFieldEnum)[keyof typeof IssueLabelScalarFieldEnum];
+
+   export const CycleScalarFieldEnum: {
+      id: 'id';
+      number: 'number';
+      name: 'name';
+      teamId: 'teamId';
+      startDate: 'startDate';
+      endDate: 'endDate';
+      progress: 'progress';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type CycleScalarFieldEnum =
+      (typeof CycleScalarFieldEnum)[keyof typeof CycleScalarFieldEnum];
+
+   export const TeamScalarFieldEnum: {
+      id: 'id';
+      name: 'name';
+      icon: 'icon';
+      joined: 'joined';
+      color: 'color';
+      createdAt: 'createdAt';
+      updatedAt: 'updatedAt';
+   };
+
+   export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum];
+
+   export const TeamMemberScalarFieldEnum: {
+      id: 'id';
+      teamId: 'teamId';
+      userId: 'userId';
+   };
+
+   export type TeamMemberScalarFieldEnum =
+      (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
+
+   export const TeamProjectScalarFieldEnum: {
+      id: 'id';
+      teamId: 'teamId';
+      projectId: 'projectId';
+   };
+
+   export type TeamProjectScalarFieldEnum =
+      (typeof TeamProjectScalarFieldEnum)[keyof typeof TeamProjectScalarFieldEnum];
+
    export const SortOrder: {
       asc: 'asc';
       desc: 'desc';
@@ -9373,6 +25650,38 @@ export namespace Prisma {
    export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>;
 
    /**
+    * Reference to a field of type 'UserStatus'
+    */
+   export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
+      $PrismaModel,
+      'UserStatus'
+   >;
+
+   /**
+    * Reference to a field of type 'UserRole'
+    */
+   export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<
+      $PrismaModel,
+      'UserRole'
+   >;
+
+   /**
+    * Reference to a field of type 'ProjectHealth'
+    */
+   export type EnumProjectHealthFieldRefInput<$PrismaModel> = FieldRefInputType<
+      $PrismaModel,
+      'ProjectHealth'
+   >;
+
+   /**
+    * Reference to a field of type 'IssueType'
+    */
+   export type EnumIssueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
+      $PrismaModel,
+      'IssueType'
+   >;
+
+   /**
     * Reference to a field of type 'Float'
     */
    export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>;
@@ -9398,6 +25707,7 @@ export namespace Prisma {
       subtasks?: SubtaskListRelationFilter;
       dependencies?: TaskDependencyListRelationFilter;
       dependents?: TaskDependencyListRelationFilter;
+      issues?: IssueListRelationFilter;
    };
 
    export type TaskOrderByWithRelationInput = {
@@ -9414,6 +25724,7 @@ export namespace Prisma {
       subtasks?: SubtaskOrderByRelationAggregateInput;
       dependencies?: TaskDependencyOrderByRelationAggregateInput;
       dependents?: TaskDependencyOrderByRelationAggregateInput;
+      issues?: IssueOrderByRelationAggregateInput;
    };
 
    export type TaskWhereUniqueInput = Prisma.AtLeast<
@@ -9434,6 +25745,7 @@ export namespace Prisma {
          subtasks?: SubtaskListRelationFilter;
          dependencies?: TaskDependencyListRelationFilter;
          dependents?: TaskDependencyListRelationFilter;
+         issues?: IssueListRelationFilter;
       },
       'id'
    >;
@@ -9861,6 +26173,858 @@ export namespace Prisma {
       timestamp?: DateTimeWithAggregatesFilter<'SyncConflict'> | Date | string;
    };
 
+   export type UserWhereInput = {
+      AND?: UserWhereInput | UserWhereInput[];
+      OR?: UserWhereInput[];
+      NOT?: UserWhereInput | UserWhereInput[];
+      id?: StringFilter<'User'> | string;
+      name?: StringFilter<'User'> | string;
+      email?: StringFilter<'User'> | string;
+      avatarUrl?: StringNullableFilter<'User'> | string | null;
+      status?: EnumUserStatusFilter<'User'> | $Enums.UserStatus;
+      role?: EnumUserRoleFilter<'User'> | $Enums.UserRole;
+      joinedDate?: DateTimeFilter<'User'> | Date | string;
+      teamIds?: StringFilter<'User'> | string;
+      createdAt?: DateTimeFilter<'User'> | Date | string;
+      updatedAt?: DateTimeFilter<'User'> | Date | string;
+      assignedIssues?: IssueListRelationFilter;
+      teams?: TeamMemberListRelationFilter;
+      ledProjects?: ProjectListRelationFilter;
+   };
+
+   export type UserOrderByWithRelationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      email?: SortOrder;
+      avatarUrl?: SortOrderInput | SortOrder;
+      status?: SortOrder;
+      role?: SortOrder;
+      joinedDate?: SortOrder;
+      teamIds?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      assignedIssues?: IssueOrderByRelationAggregateInput;
+      teams?: TeamMemberOrderByRelationAggregateInput;
+      ledProjects?: ProjectOrderByRelationAggregateInput;
+   };
+
+   export type UserWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         email?: string;
+         AND?: UserWhereInput | UserWhereInput[];
+         OR?: UserWhereInput[];
+         NOT?: UserWhereInput | UserWhereInput[];
+         name?: StringFilter<'User'> | string;
+         avatarUrl?: StringNullableFilter<'User'> | string | null;
+         status?: EnumUserStatusFilter<'User'> | $Enums.UserStatus;
+         role?: EnumUserRoleFilter<'User'> | $Enums.UserRole;
+         joinedDate?: DateTimeFilter<'User'> | Date | string;
+         teamIds?: StringFilter<'User'> | string;
+         createdAt?: DateTimeFilter<'User'> | Date | string;
+         updatedAt?: DateTimeFilter<'User'> | Date | string;
+         assignedIssues?: IssueListRelationFilter;
+         teams?: TeamMemberListRelationFilter;
+         ledProjects?: ProjectListRelationFilter;
+      },
+      'id' | 'email'
+   >;
+
+   export type UserOrderByWithAggregationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      email?: SortOrder;
+      avatarUrl?: SortOrderInput | SortOrder;
+      status?: SortOrder;
+      role?: SortOrder;
+      joinedDate?: SortOrder;
+      teamIds?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: UserCountOrderByAggregateInput;
+      _max?: UserMaxOrderByAggregateInput;
+      _min?: UserMinOrderByAggregateInput;
+   };
+
+   export type UserScalarWhereWithAggregatesInput = {
+      AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[];
+      OR?: UserScalarWhereWithAggregatesInput[];
+      NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'User'> | string;
+      name?: StringWithAggregatesFilter<'User'> | string;
+      email?: StringWithAggregatesFilter<'User'> | string;
+      avatarUrl?: StringNullableWithAggregatesFilter<'User'> | string | null;
+      status?: EnumUserStatusWithAggregatesFilter<'User'> | $Enums.UserStatus;
+      role?: EnumUserRoleWithAggregatesFilter<'User'> | $Enums.UserRole;
+      joinedDate?: DateTimeWithAggregatesFilter<'User'> | Date | string;
+      teamIds?: StringWithAggregatesFilter<'User'> | string;
+      createdAt?: DateTimeWithAggregatesFilter<'User'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'User'> | Date | string;
+   };
+
+   export type ProjectWhereInput = {
+      AND?: ProjectWhereInput | ProjectWhereInput[];
+      OR?: ProjectWhereInput[];
+      NOT?: ProjectWhereInput | ProjectWhereInput[];
+      id?: StringFilter<'Project'> | string;
+      name?: StringFilter<'Project'> | string;
+      description?: StringNullableFilter<'Project'> | string | null;
+      color?: StringNullableFilter<'Project'> | string | null;
+      identifier?: StringNullableFilter<'Project'> | string | null;
+      icon?: StringNullableFilter<'Project'> | string | null;
+      percentComplete?: IntFilter<'Project'> | number;
+      startDate?: DateTimeNullableFilter<'Project'> | Date | string | null;
+      health?: EnumProjectHealthFilter<'Project'> | $Enums.ProjectHealth;
+      leadId?: StringNullableFilter<'Project'> | string | null;
+      createdAt?: DateTimeFilter<'Project'> | Date | string;
+      updatedAt?: DateTimeFilter<'Project'> | Date | string;
+      issues?: IssueListRelationFilter;
+      lead?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
+      teams?: TeamProjectListRelationFilter;
+   };
+
+   export type ProjectOrderByWithRelationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      description?: SortOrderInput | SortOrder;
+      color?: SortOrderInput | SortOrder;
+      identifier?: SortOrderInput | SortOrder;
+      icon?: SortOrderInput | SortOrder;
+      percentComplete?: SortOrder;
+      startDate?: SortOrderInput | SortOrder;
+      health?: SortOrder;
+      leadId?: SortOrderInput | SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      issues?: IssueOrderByRelationAggregateInput;
+      lead?: UserOrderByWithRelationInput;
+      teams?: TeamProjectOrderByRelationAggregateInput;
+   };
+
+   export type ProjectWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         AND?: ProjectWhereInput | ProjectWhereInput[];
+         OR?: ProjectWhereInput[];
+         NOT?: ProjectWhereInput | ProjectWhereInput[];
+         name?: StringFilter<'Project'> | string;
+         description?: StringNullableFilter<'Project'> | string | null;
+         color?: StringNullableFilter<'Project'> | string | null;
+         identifier?: StringNullableFilter<'Project'> | string | null;
+         icon?: StringNullableFilter<'Project'> | string | null;
+         percentComplete?: IntFilter<'Project'> | number;
+         startDate?: DateTimeNullableFilter<'Project'> | Date | string | null;
+         health?: EnumProjectHealthFilter<'Project'> | $Enums.ProjectHealth;
+         leadId?: StringNullableFilter<'Project'> | string | null;
+         createdAt?: DateTimeFilter<'Project'> | Date | string;
+         updatedAt?: DateTimeFilter<'Project'> | Date | string;
+         issues?: IssueListRelationFilter;
+         lead?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
+         teams?: TeamProjectListRelationFilter;
+      },
+      'id'
+   >;
+
+   export type ProjectOrderByWithAggregationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      description?: SortOrderInput | SortOrder;
+      color?: SortOrderInput | SortOrder;
+      identifier?: SortOrderInput | SortOrder;
+      icon?: SortOrderInput | SortOrder;
+      percentComplete?: SortOrder;
+      startDate?: SortOrderInput | SortOrder;
+      health?: SortOrder;
+      leadId?: SortOrderInput | SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: ProjectCountOrderByAggregateInput;
+      _avg?: ProjectAvgOrderByAggregateInput;
+      _max?: ProjectMaxOrderByAggregateInput;
+      _min?: ProjectMinOrderByAggregateInput;
+      _sum?: ProjectSumOrderByAggregateInput;
+   };
+
+   export type ProjectScalarWhereWithAggregatesInput = {
+      AND?: ProjectScalarWhereWithAggregatesInput | ProjectScalarWhereWithAggregatesInput[];
+      OR?: ProjectScalarWhereWithAggregatesInput[];
+      NOT?: ProjectScalarWhereWithAggregatesInput | ProjectScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'Project'> | string;
+      name?: StringWithAggregatesFilter<'Project'> | string;
+      description?: StringNullableWithAggregatesFilter<'Project'> | string | null;
+      color?: StringNullableWithAggregatesFilter<'Project'> | string | null;
+      identifier?: StringNullableWithAggregatesFilter<'Project'> | string | null;
+      icon?: StringNullableWithAggregatesFilter<'Project'> | string | null;
+      percentComplete?: IntWithAggregatesFilter<'Project'> | number;
+      startDate?: DateTimeNullableWithAggregatesFilter<'Project'> | Date | string | null;
+      health?: EnumProjectHealthWithAggregatesFilter<'Project'> | $Enums.ProjectHealth;
+      leadId?: StringNullableWithAggregatesFilter<'Project'> | string | null;
+      createdAt?: DateTimeWithAggregatesFilter<'Project'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'Project'> | Date | string;
+   };
+
+   export type LabelWhereInput = {
+      AND?: LabelWhereInput | LabelWhereInput[];
+      OR?: LabelWhereInput[];
+      NOT?: LabelWhereInput | LabelWhereInput[];
+      id?: StringFilter<'Label'> | string;
+      name?: StringFilter<'Label'> | string;
+      color?: StringFilter<'Label'> | string;
+      description?: StringNullableFilter<'Label'> | string | null;
+      createdAt?: DateTimeFilter<'Label'> | Date | string;
+      updatedAt?: DateTimeFilter<'Label'> | Date | string;
+      issues?: IssueLabelListRelationFilter;
+   };
+
+   export type LabelOrderByWithRelationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      description?: SortOrderInput | SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      issues?: IssueLabelOrderByRelationAggregateInput;
+   };
+
+   export type LabelWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         AND?: LabelWhereInput | LabelWhereInput[];
+         OR?: LabelWhereInput[];
+         NOT?: LabelWhereInput | LabelWhereInput[];
+         name?: StringFilter<'Label'> | string;
+         color?: StringFilter<'Label'> | string;
+         description?: StringNullableFilter<'Label'> | string | null;
+         createdAt?: DateTimeFilter<'Label'> | Date | string;
+         updatedAt?: DateTimeFilter<'Label'> | Date | string;
+         issues?: IssueLabelListRelationFilter;
+      },
+      'id'
+   >;
+
+   export type LabelOrderByWithAggregationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      description?: SortOrderInput | SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: LabelCountOrderByAggregateInput;
+      _max?: LabelMaxOrderByAggregateInput;
+      _min?: LabelMinOrderByAggregateInput;
+   };
+
+   export type LabelScalarWhereWithAggregatesInput = {
+      AND?: LabelScalarWhereWithAggregatesInput | LabelScalarWhereWithAggregatesInput[];
+      OR?: LabelScalarWhereWithAggregatesInput[];
+      NOT?: LabelScalarWhereWithAggregatesInput | LabelScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'Label'> | string;
+      name?: StringWithAggregatesFilter<'Label'> | string;
+      color?: StringWithAggregatesFilter<'Label'> | string;
+      description?: StringNullableWithAggregatesFilter<'Label'> | string | null;
+      createdAt?: DateTimeWithAggregatesFilter<'Label'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'Label'> | Date | string;
+   };
+
+   export type IssueStatusWhereInput = {
+      AND?: IssueStatusWhereInput | IssueStatusWhereInput[];
+      OR?: IssueStatusWhereInput[];
+      NOT?: IssueStatusWhereInput | IssueStatusWhereInput[];
+      id?: StringFilter<'IssueStatus'> | string;
+      name?: StringFilter<'IssueStatus'> | string;
+      color?: StringFilter<'IssueStatus'> | string;
+      iconName?: StringFilter<'IssueStatus'> | string;
+      createdAt?: DateTimeFilter<'IssueStatus'> | Date | string;
+      updatedAt?: DateTimeFilter<'IssueStatus'> | Date | string;
+      issues?: IssueListRelationFilter;
+   };
+
+   export type IssueStatusOrderByWithRelationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      iconName?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      issues?: IssueOrderByRelationAggregateInput;
+   };
+
+   export type IssueStatusWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         AND?: IssueStatusWhereInput | IssueStatusWhereInput[];
+         OR?: IssueStatusWhereInput[];
+         NOT?: IssueStatusWhereInput | IssueStatusWhereInput[];
+         name?: StringFilter<'IssueStatus'> | string;
+         color?: StringFilter<'IssueStatus'> | string;
+         iconName?: StringFilter<'IssueStatus'> | string;
+         createdAt?: DateTimeFilter<'IssueStatus'> | Date | string;
+         updatedAt?: DateTimeFilter<'IssueStatus'> | Date | string;
+         issues?: IssueListRelationFilter;
+      },
+      'id'
+   >;
+
+   export type IssueStatusOrderByWithAggregationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      iconName?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: IssueStatusCountOrderByAggregateInput;
+      _max?: IssueStatusMaxOrderByAggregateInput;
+      _min?: IssueStatusMinOrderByAggregateInput;
+   };
+
+   export type IssueStatusScalarWhereWithAggregatesInput = {
+      AND?: IssueStatusScalarWhereWithAggregatesInput | IssueStatusScalarWhereWithAggregatesInput[];
+      OR?: IssueStatusScalarWhereWithAggregatesInput[];
+      NOT?: IssueStatusScalarWhereWithAggregatesInput | IssueStatusScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'IssueStatus'> | string;
+      name?: StringWithAggregatesFilter<'IssueStatus'> | string;
+      color?: StringWithAggregatesFilter<'IssueStatus'> | string;
+      iconName?: StringWithAggregatesFilter<'IssueStatus'> | string;
+      createdAt?: DateTimeWithAggregatesFilter<'IssueStatus'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'IssueStatus'> | Date | string;
+   };
+
+   export type IssuePriorityWhereInput = {
+      AND?: IssuePriorityWhereInput | IssuePriorityWhereInput[];
+      OR?: IssuePriorityWhereInput[];
+      NOT?: IssuePriorityWhereInput | IssuePriorityWhereInput[];
+      id?: StringFilter<'IssuePriority'> | string;
+      name?: StringFilter<'IssuePriority'> | string;
+      iconName?: StringFilter<'IssuePriority'> | string;
+      order?: IntFilter<'IssuePriority'> | number;
+      createdAt?: DateTimeFilter<'IssuePriority'> | Date | string;
+      updatedAt?: DateTimeFilter<'IssuePriority'> | Date | string;
+      issues?: IssueListRelationFilter;
+   };
+
+   export type IssuePriorityOrderByWithRelationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      iconName?: SortOrder;
+      order?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      issues?: IssueOrderByRelationAggregateInput;
+   };
+
+   export type IssuePriorityWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         AND?: IssuePriorityWhereInput | IssuePriorityWhereInput[];
+         OR?: IssuePriorityWhereInput[];
+         NOT?: IssuePriorityWhereInput | IssuePriorityWhereInput[];
+         name?: StringFilter<'IssuePriority'> | string;
+         iconName?: StringFilter<'IssuePriority'> | string;
+         order?: IntFilter<'IssuePriority'> | number;
+         createdAt?: DateTimeFilter<'IssuePriority'> | Date | string;
+         updatedAt?: DateTimeFilter<'IssuePriority'> | Date | string;
+         issues?: IssueListRelationFilter;
+      },
+      'id'
+   >;
+
+   export type IssuePriorityOrderByWithAggregationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      iconName?: SortOrder;
+      order?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: IssuePriorityCountOrderByAggregateInput;
+      _avg?: IssuePriorityAvgOrderByAggregateInput;
+      _max?: IssuePriorityMaxOrderByAggregateInput;
+      _min?: IssuePriorityMinOrderByAggregateInput;
+      _sum?: IssuePrioritySumOrderByAggregateInput;
+   };
+
+   export type IssuePriorityScalarWhereWithAggregatesInput = {
+      AND?:
+         | IssuePriorityScalarWhereWithAggregatesInput
+         | IssuePriorityScalarWhereWithAggregatesInput[];
+      OR?: IssuePriorityScalarWhereWithAggregatesInput[];
+      NOT?:
+         | IssuePriorityScalarWhereWithAggregatesInput
+         | IssuePriorityScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'IssuePriority'> | string;
+      name?: StringWithAggregatesFilter<'IssuePriority'> | string;
+      iconName?: StringWithAggregatesFilter<'IssuePriority'> | string;
+      order?: IntWithAggregatesFilter<'IssuePriority'> | number;
+      createdAt?: DateTimeWithAggregatesFilter<'IssuePriority'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'IssuePriority'> | Date | string;
+   };
+
+   export type IssueWhereInput = {
+      AND?: IssueWhereInput | IssueWhereInput[];
+      OR?: IssueWhereInput[];
+      NOT?: IssueWhereInput | IssueWhereInput[];
+      id?: StringFilter<'Issue'> | string;
+      identifier?: StringFilter<'Issue'> | string;
+      title?: StringFilter<'Issue'> | string;
+      description?: StringFilter<'Issue'> | string;
+      statusId?: StringNullableFilter<'Issue'> | string | null;
+      priorityId?: StringNullableFilter<'Issue'> | string | null;
+      status?: StringNullableFilter<'Issue'> | string | null;
+      priority?: StringNullableFilter<'Issue'> | string | null;
+      rank?: StringFilter<'Issue'> | string;
+      cycleId?: StringNullableFilter<'Issue'> | string | null;
+      dueDate?: DateTimeNullableFilter<'Issue'> | Date | string | null;
+      taskId?: IntNullableFilter<'Issue'> | number | null;
+      subtaskId?: StringNullableFilter<'Issue'> | string | null;
+      issueType?: EnumIssueTypeFilter<'Issue'> | $Enums.IssueType;
+      assigneeId?: StringNullableFilter<'Issue'> | string | null;
+      projectId?: StringNullableFilter<'Issue'> | string | null;
+      subissues?: StringFilter<'Issue'> | string;
+      createdAt?: DateTimeFilter<'Issue'> | Date | string;
+      updatedAt?: DateTimeFilter<'Issue'> | Date | string;
+      assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
+      project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null;
+      cycle?: XOR<CycleNullableScalarRelationFilter, CycleWhereInput> | null;
+      task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null;
+      issueStatus?: XOR<IssueStatusNullableScalarRelationFilter, IssueStatusWhereInput> | null;
+      issuePriority?: XOR<
+         IssuePriorityNullableScalarRelationFilter,
+         IssuePriorityWhereInput
+      > | null;
+      labels?: IssueLabelListRelationFilter;
+   };
+
+   export type IssueOrderByWithRelationInput = {
+      id?: SortOrder;
+      identifier?: SortOrder;
+      title?: SortOrder;
+      description?: SortOrder;
+      statusId?: SortOrderInput | SortOrder;
+      priorityId?: SortOrderInput | SortOrder;
+      status?: SortOrderInput | SortOrder;
+      priority?: SortOrderInput | SortOrder;
+      rank?: SortOrder;
+      cycleId?: SortOrderInput | SortOrder;
+      dueDate?: SortOrderInput | SortOrder;
+      taskId?: SortOrderInput | SortOrder;
+      subtaskId?: SortOrderInput | SortOrder;
+      issueType?: SortOrder;
+      assigneeId?: SortOrderInput | SortOrder;
+      projectId?: SortOrderInput | SortOrder;
+      subissues?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      assignee?: UserOrderByWithRelationInput;
+      project?: ProjectOrderByWithRelationInput;
+      cycle?: CycleOrderByWithRelationInput;
+      task?: TaskOrderByWithRelationInput;
+      issueStatus?: IssueStatusOrderByWithRelationInput;
+      issuePriority?: IssuePriorityOrderByWithRelationInput;
+      labels?: IssueLabelOrderByRelationAggregateInput;
+   };
+
+   export type IssueWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         identifier?: string;
+         AND?: IssueWhereInput | IssueWhereInput[];
+         OR?: IssueWhereInput[];
+         NOT?: IssueWhereInput | IssueWhereInput[];
+         title?: StringFilter<'Issue'> | string;
+         description?: StringFilter<'Issue'> | string;
+         statusId?: StringNullableFilter<'Issue'> | string | null;
+         priorityId?: StringNullableFilter<'Issue'> | string | null;
+         status?: StringNullableFilter<'Issue'> | string | null;
+         priority?: StringNullableFilter<'Issue'> | string | null;
+         rank?: StringFilter<'Issue'> | string;
+         cycleId?: StringNullableFilter<'Issue'> | string | null;
+         dueDate?: DateTimeNullableFilter<'Issue'> | Date | string | null;
+         taskId?: IntNullableFilter<'Issue'> | number | null;
+         subtaskId?: StringNullableFilter<'Issue'> | string | null;
+         issueType?: EnumIssueTypeFilter<'Issue'> | $Enums.IssueType;
+         assigneeId?: StringNullableFilter<'Issue'> | string | null;
+         projectId?: StringNullableFilter<'Issue'> | string | null;
+         subissues?: StringFilter<'Issue'> | string;
+         createdAt?: DateTimeFilter<'Issue'> | Date | string;
+         updatedAt?: DateTimeFilter<'Issue'> | Date | string;
+         assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
+         project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null;
+         cycle?: XOR<CycleNullableScalarRelationFilter, CycleWhereInput> | null;
+         task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null;
+         issueStatus?: XOR<IssueStatusNullableScalarRelationFilter, IssueStatusWhereInput> | null;
+         issuePriority?: XOR<
+            IssuePriorityNullableScalarRelationFilter,
+            IssuePriorityWhereInput
+         > | null;
+         labels?: IssueLabelListRelationFilter;
+      },
+      'id' | 'identifier'
+   >;
+
+   export type IssueOrderByWithAggregationInput = {
+      id?: SortOrder;
+      identifier?: SortOrder;
+      title?: SortOrder;
+      description?: SortOrder;
+      statusId?: SortOrderInput | SortOrder;
+      priorityId?: SortOrderInput | SortOrder;
+      status?: SortOrderInput | SortOrder;
+      priority?: SortOrderInput | SortOrder;
+      rank?: SortOrder;
+      cycleId?: SortOrderInput | SortOrder;
+      dueDate?: SortOrderInput | SortOrder;
+      taskId?: SortOrderInput | SortOrder;
+      subtaskId?: SortOrderInput | SortOrder;
+      issueType?: SortOrder;
+      assigneeId?: SortOrderInput | SortOrder;
+      projectId?: SortOrderInput | SortOrder;
+      subissues?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: IssueCountOrderByAggregateInput;
+      _avg?: IssueAvgOrderByAggregateInput;
+      _max?: IssueMaxOrderByAggregateInput;
+      _min?: IssueMinOrderByAggregateInput;
+      _sum?: IssueSumOrderByAggregateInput;
+   };
+
+   export type IssueScalarWhereWithAggregatesInput = {
+      AND?: IssueScalarWhereWithAggregatesInput | IssueScalarWhereWithAggregatesInput[];
+      OR?: IssueScalarWhereWithAggregatesInput[];
+      NOT?: IssueScalarWhereWithAggregatesInput | IssueScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'Issue'> | string;
+      identifier?: StringWithAggregatesFilter<'Issue'> | string;
+      title?: StringWithAggregatesFilter<'Issue'> | string;
+      description?: StringWithAggregatesFilter<'Issue'> | string;
+      statusId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      priorityId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      status?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      priority?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      rank?: StringWithAggregatesFilter<'Issue'> | string;
+      cycleId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      dueDate?: DateTimeNullableWithAggregatesFilter<'Issue'> | Date | string | null;
+      taskId?: IntNullableWithAggregatesFilter<'Issue'> | number | null;
+      subtaskId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      issueType?: EnumIssueTypeWithAggregatesFilter<'Issue'> | $Enums.IssueType;
+      assigneeId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      projectId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
+      subissues?: StringWithAggregatesFilter<'Issue'> | string;
+      createdAt?: DateTimeWithAggregatesFilter<'Issue'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'Issue'> | Date | string;
+   };
+
+   export type IssueLabelWhereInput = {
+      AND?: IssueLabelWhereInput | IssueLabelWhereInput[];
+      OR?: IssueLabelWhereInput[];
+      NOT?: IssueLabelWhereInput | IssueLabelWhereInput[];
+      id?: StringFilter<'IssueLabel'> | string;
+      issueId?: StringFilter<'IssueLabel'> | string;
+      labelId?: StringFilter<'IssueLabel'> | string;
+      issue?: XOR<IssueScalarRelationFilter, IssueWhereInput>;
+      label?: XOR<LabelScalarRelationFilter, LabelWhereInput>;
+   };
+
+   export type IssueLabelOrderByWithRelationInput = {
+      id?: SortOrder;
+      issueId?: SortOrder;
+      labelId?: SortOrder;
+      issue?: IssueOrderByWithRelationInput;
+      label?: LabelOrderByWithRelationInput;
+   };
+
+   export type IssueLabelWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         issueId_labelId?: IssueLabelIssueIdLabelIdCompoundUniqueInput;
+         AND?: IssueLabelWhereInput | IssueLabelWhereInput[];
+         OR?: IssueLabelWhereInput[];
+         NOT?: IssueLabelWhereInput | IssueLabelWhereInput[];
+         issueId?: StringFilter<'IssueLabel'> | string;
+         labelId?: StringFilter<'IssueLabel'> | string;
+         issue?: XOR<IssueScalarRelationFilter, IssueWhereInput>;
+         label?: XOR<LabelScalarRelationFilter, LabelWhereInput>;
+      },
+      'id' | 'issueId_labelId'
+   >;
+
+   export type IssueLabelOrderByWithAggregationInput = {
+      id?: SortOrder;
+      issueId?: SortOrder;
+      labelId?: SortOrder;
+      _count?: IssueLabelCountOrderByAggregateInput;
+      _max?: IssueLabelMaxOrderByAggregateInput;
+      _min?: IssueLabelMinOrderByAggregateInput;
+   };
+
+   export type IssueLabelScalarWhereWithAggregatesInput = {
+      AND?: IssueLabelScalarWhereWithAggregatesInput | IssueLabelScalarWhereWithAggregatesInput[];
+      OR?: IssueLabelScalarWhereWithAggregatesInput[];
+      NOT?: IssueLabelScalarWhereWithAggregatesInput | IssueLabelScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'IssueLabel'> | string;
+      issueId?: StringWithAggregatesFilter<'IssueLabel'> | string;
+      labelId?: StringWithAggregatesFilter<'IssueLabel'> | string;
+   };
+
+   export type CycleWhereInput = {
+      AND?: CycleWhereInput | CycleWhereInput[];
+      OR?: CycleWhereInput[];
+      NOT?: CycleWhereInput | CycleWhereInput[];
+      id?: StringFilter<'Cycle'> | string;
+      number?: IntFilter<'Cycle'> | number;
+      name?: StringFilter<'Cycle'> | string;
+      teamId?: StringFilter<'Cycle'> | string;
+      startDate?: DateTimeFilter<'Cycle'> | Date | string;
+      endDate?: DateTimeFilter<'Cycle'> | Date | string;
+      progress?: IntFilter<'Cycle'> | number;
+      createdAt?: DateTimeFilter<'Cycle'> | Date | string;
+      updatedAt?: DateTimeFilter<'Cycle'> | Date | string;
+      team?: XOR<TeamScalarRelationFilter, TeamWhereInput>;
+      issues?: IssueListRelationFilter;
+   };
+
+   export type CycleOrderByWithRelationInput = {
+      id?: SortOrder;
+      number?: SortOrder;
+      name?: SortOrder;
+      teamId?: SortOrder;
+      startDate?: SortOrder;
+      endDate?: SortOrder;
+      progress?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      team?: TeamOrderByWithRelationInput;
+      issues?: IssueOrderByRelationAggregateInput;
+   };
+
+   export type CycleWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         AND?: CycleWhereInput | CycleWhereInput[];
+         OR?: CycleWhereInput[];
+         NOT?: CycleWhereInput | CycleWhereInput[];
+         number?: IntFilter<'Cycle'> | number;
+         name?: StringFilter<'Cycle'> | string;
+         teamId?: StringFilter<'Cycle'> | string;
+         startDate?: DateTimeFilter<'Cycle'> | Date | string;
+         endDate?: DateTimeFilter<'Cycle'> | Date | string;
+         progress?: IntFilter<'Cycle'> | number;
+         createdAt?: DateTimeFilter<'Cycle'> | Date | string;
+         updatedAt?: DateTimeFilter<'Cycle'> | Date | string;
+         team?: XOR<TeamScalarRelationFilter, TeamWhereInput>;
+         issues?: IssueListRelationFilter;
+      },
+      'id'
+   >;
+
+   export type CycleOrderByWithAggregationInput = {
+      id?: SortOrder;
+      number?: SortOrder;
+      name?: SortOrder;
+      teamId?: SortOrder;
+      startDate?: SortOrder;
+      endDate?: SortOrder;
+      progress?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: CycleCountOrderByAggregateInput;
+      _avg?: CycleAvgOrderByAggregateInput;
+      _max?: CycleMaxOrderByAggregateInput;
+      _min?: CycleMinOrderByAggregateInput;
+      _sum?: CycleSumOrderByAggregateInput;
+   };
+
+   export type CycleScalarWhereWithAggregatesInput = {
+      AND?: CycleScalarWhereWithAggregatesInput | CycleScalarWhereWithAggregatesInput[];
+      OR?: CycleScalarWhereWithAggregatesInput[];
+      NOT?: CycleScalarWhereWithAggregatesInput | CycleScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'Cycle'> | string;
+      number?: IntWithAggregatesFilter<'Cycle'> | number;
+      name?: StringWithAggregatesFilter<'Cycle'> | string;
+      teamId?: StringWithAggregatesFilter<'Cycle'> | string;
+      startDate?: DateTimeWithAggregatesFilter<'Cycle'> | Date | string;
+      endDate?: DateTimeWithAggregatesFilter<'Cycle'> | Date | string;
+      progress?: IntWithAggregatesFilter<'Cycle'> | number;
+      createdAt?: DateTimeWithAggregatesFilter<'Cycle'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'Cycle'> | Date | string;
+   };
+
+   export type TeamWhereInput = {
+      AND?: TeamWhereInput | TeamWhereInput[];
+      OR?: TeamWhereInput[];
+      NOT?: TeamWhereInput | TeamWhereInput[];
+      id?: StringFilter<'Team'> | string;
+      name?: StringFilter<'Team'> | string;
+      icon?: StringFilter<'Team'> | string;
+      joined?: BoolFilter<'Team'> | boolean;
+      color?: StringFilter<'Team'> | string;
+      createdAt?: DateTimeFilter<'Team'> | Date | string;
+      updatedAt?: DateTimeFilter<'Team'> | Date | string;
+      members?: TeamMemberListRelationFilter;
+      projects?: TeamProjectListRelationFilter;
+      cycles?: CycleListRelationFilter;
+   };
+
+   export type TeamOrderByWithRelationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      icon?: SortOrder;
+      joined?: SortOrder;
+      color?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      members?: TeamMemberOrderByRelationAggregateInput;
+      projects?: TeamProjectOrderByRelationAggregateInput;
+      cycles?: CycleOrderByRelationAggregateInput;
+   };
+
+   export type TeamWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         AND?: TeamWhereInput | TeamWhereInput[];
+         OR?: TeamWhereInput[];
+         NOT?: TeamWhereInput | TeamWhereInput[];
+         name?: StringFilter<'Team'> | string;
+         icon?: StringFilter<'Team'> | string;
+         joined?: BoolFilter<'Team'> | boolean;
+         color?: StringFilter<'Team'> | string;
+         createdAt?: DateTimeFilter<'Team'> | Date | string;
+         updatedAt?: DateTimeFilter<'Team'> | Date | string;
+         members?: TeamMemberListRelationFilter;
+         projects?: TeamProjectListRelationFilter;
+         cycles?: CycleListRelationFilter;
+      },
+      'id'
+   >;
+
+   export type TeamOrderByWithAggregationInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      icon?: SortOrder;
+      joined?: SortOrder;
+      color?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+      _count?: TeamCountOrderByAggregateInput;
+      _max?: TeamMaxOrderByAggregateInput;
+      _min?: TeamMinOrderByAggregateInput;
+   };
+
+   export type TeamScalarWhereWithAggregatesInput = {
+      AND?: TeamScalarWhereWithAggregatesInput | TeamScalarWhereWithAggregatesInput[];
+      OR?: TeamScalarWhereWithAggregatesInput[];
+      NOT?: TeamScalarWhereWithAggregatesInput | TeamScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'Team'> | string;
+      name?: StringWithAggregatesFilter<'Team'> | string;
+      icon?: StringWithAggregatesFilter<'Team'> | string;
+      joined?: BoolWithAggregatesFilter<'Team'> | boolean;
+      color?: StringWithAggregatesFilter<'Team'> | string;
+      createdAt?: DateTimeWithAggregatesFilter<'Team'> | Date | string;
+      updatedAt?: DateTimeWithAggregatesFilter<'Team'> | Date | string;
+   };
+
+   export type TeamMemberWhereInput = {
+      AND?: TeamMemberWhereInput | TeamMemberWhereInput[];
+      OR?: TeamMemberWhereInput[];
+      NOT?: TeamMemberWhereInput | TeamMemberWhereInput[];
+      id?: StringFilter<'TeamMember'> | string;
+      teamId?: StringFilter<'TeamMember'> | string;
+      userId?: StringFilter<'TeamMember'> | string;
+      team?: XOR<TeamScalarRelationFilter, TeamWhereInput>;
+      user?: XOR<UserScalarRelationFilter, UserWhereInput>;
+   };
+
+   export type TeamMemberOrderByWithRelationInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      userId?: SortOrder;
+      team?: TeamOrderByWithRelationInput;
+      user?: UserOrderByWithRelationInput;
+   };
+
+   export type TeamMemberWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         teamId_userId?: TeamMemberTeamIdUserIdCompoundUniqueInput;
+         AND?: TeamMemberWhereInput | TeamMemberWhereInput[];
+         OR?: TeamMemberWhereInput[];
+         NOT?: TeamMemberWhereInput | TeamMemberWhereInput[];
+         teamId?: StringFilter<'TeamMember'> | string;
+         userId?: StringFilter<'TeamMember'> | string;
+         team?: XOR<TeamScalarRelationFilter, TeamWhereInput>;
+         user?: XOR<UserScalarRelationFilter, UserWhereInput>;
+      },
+      'id' | 'teamId_userId'
+   >;
+
+   export type TeamMemberOrderByWithAggregationInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      userId?: SortOrder;
+      _count?: TeamMemberCountOrderByAggregateInput;
+      _max?: TeamMemberMaxOrderByAggregateInput;
+      _min?: TeamMemberMinOrderByAggregateInput;
+   };
+
+   export type TeamMemberScalarWhereWithAggregatesInput = {
+      AND?: TeamMemberScalarWhereWithAggregatesInput | TeamMemberScalarWhereWithAggregatesInput[];
+      OR?: TeamMemberScalarWhereWithAggregatesInput[];
+      NOT?: TeamMemberScalarWhereWithAggregatesInput | TeamMemberScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'TeamMember'> | string;
+      teamId?: StringWithAggregatesFilter<'TeamMember'> | string;
+      userId?: StringWithAggregatesFilter<'TeamMember'> | string;
+   };
+
+   export type TeamProjectWhereInput = {
+      AND?: TeamProjectWhereInput | TeamProjectWhereInput[];
+      OR?: TeamProjectWhereInput[];
+      NOT?: TeamProjectWhereInput | TeamProjectWhereInput[];
+      id?: StringFilter<'TeamProject'> | string;
+      teamId?: StringFilter<'TeamProject'> | string;
+      projectId?: StringFilter<'TeamProject'> | string;
+      team?: XOR<TeamScalarRelationFilter, TeamWhereInput>;
+      project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
+   };
+
+   export type TeamProjectOrderByWithRelationInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      projectId?: SortOrder;
+      team?: TeamOrderByWithRelationInput;
+      project?: ProjectOrderByWithRelationInput;
+   };
+
+   export type TeamProjectWhereUniqueInput = Prisma.AtLeast<
+      {
+         id?: string;
+         teamId_projectId?: TeamProjectTeamIdProjectIdCompoundUniqueInput;
+         AND?: TeamProjectWhereInput | TeamProjectWhereInput[];
+         OR?: TeamProjectWhereInput[];
+         NOT?: TeamProjectWhereInput | TeamProjectWhereInput[];
+         teamId?: StringFilter<'TeamProject'> | string;
+         projectId?: StringFilter<'TeamProject'> | string;
+         team?: XOR<TeamScalarRelationFilter, TeamWhereInput>;
+         project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
+      },
+      'id' | 'teamId_projectId'
+   >;
+
+   export type TeamProjectOrderByWithAggregationInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      projectId?: SortOrder;
+      _count?: TeamProjectCountOrderByAggregateInput;
+      _max?: TeamProjectMaxOrderByAggregateInput;
+      _min?: TeamProjectMinOrderByAggregateInput;
+   };
+
+   export type TeamProjectScalarWhereWithAggregatesInput = {
+      AND?: TeamProjectScalarWhereWithAggregatesInput | TeamProjectScalarWhereWithAggregatesInput[];
+      OR?: TeamProjectScalarWhereWithAggregatesInput[];
+      NOT?: TeamProjectScalarWhereWithAggregatesInput | TeamProjectScalarWhereWithAggregatesInput[];
+      id?: StringWithAggregatesFilter<'TeamProject'> | string;
+      teamId?: StringWithAggregatesFilter<'TeamProject'> | string;
+      projectId?: StringWithAggregatesFilter<'TeamProject'> | string;
+   };
+
    export type TaskCreateInput = {
       id: number;
       title: string;
@@ -9875,6 +27039,7 @@ export namespace Prisma {
       subtasks?: SubtaskCreateNestedManyWithoutParentTaskInput;
       dependencies?: TaskDependencyCreateNestedManyWithoutTaskInput;
       dependents?: TaskDependencyCreateNestedManyWithoutDependsOnInput;
+      issues?: IssueCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskUncheckedCreateInput = {
@@ -9891,6 +27056,7 @@ export namespace Prisma {
       subtasks?: SubtaskUncheckedCreateNestedManyWithoutParentTaskInput;
       dependencies?: TaskDependencyUncheckedCreateNestedManyWithoutTaskInput;
       dependents?: TaskDependencyUncheckedCreateNestedManyWithoutDependsOnInput;
+      issues?: IssueUncheckedCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskUpdateInput = {
@@ -9907,6 +27073,7 @@ export namespace Prisma {
       subtasks?: SubtaskUpdateManyWithoutParentTaskNestedInput;
       dependencies?: TaskDependencyUpdateManyWithoutTaskNestedInput;
       dependents?: TaskDependencyUpdateManyWithoutDependsOnNestedInput;
+      issues?: IssueUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskUncheckedUpdateInput = {
@@ -9923,6 +27090,7 @@ export namespace Prisma {
       subtasks?: SubtaskUncheckedUpdateManyWithoutParentTaskNestedInput;
       dependencies?: TaskDependencyUncheckedUpdateManyWithoutTaskNestedInput;
       dependents?: TaskDependencyUncheckedUpdateManyWithoutDependsOnNestedInput;
+      issues?: IssueUncheckedUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskCreateManyInput = {
@@ -10347,6 +27515,863 @@ export namespace Prisma {
       timestamp?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
 
+   export type UserCreateInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignedIssues?: IssueCreateNestedManyWithoutAssigneeInput;
+      teams?: TeamMemberCreateNestedManyWithoutUserInput;
+      ledProjects?: ProjectCreateNestedManyWithoutLeadInput;
+   };
+
+   export type UserUncheckedCreateInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignedIssues?: IssueUncheckedCreateNestedManyWithoutAssigneeInput;
+      teams?: TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+      ledProjects?: ProjectUncheckedCreateNestedManyWithoutLeadInput;
+   };
+
+   export type UserUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignedIssues?: IssueUpdateManyWithoutAssigneeNestedInput;
+      teams?: TeamMemberUpdateManyWithoutUserNestedInput;
+      ledProjects?: ProjectUpdateManyWithoutLeadNestedInput;
+   };
+
+   export type UserUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignedIssues?: IssueUncheckedUpdateManyWithoutAssigneeNestedInput;
+      teams?: TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+      ledProjects?: ProjectUncheckedUpdateManyWithoutLeadNestedInput;
+   };
+
+   export type UserCreateManyInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type UserUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type UserUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type ProjectCreateInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutProjectInput;
+      lead?: UserCreateNestedOneWithoutLedProjectsInput;
+      teams?: TeamProjectCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectUncheckedCreateInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      leadId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutProjectInput;
+      teams?: TeamProjectUncheckedCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutProjectNestedInput;
+      lead?: UserUpdateOneWithoutLedProjectsNestedInput;
+      teams?: TeamProjectUpdateManyWithoutProjectNestedInput;
+   };
+
+   export type ProjectUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      leadId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutProjectNestedInput;
+      teams?: TeamProjectUncheckedUpdateManyWithoutProjectNestedInput;
+   };
+
+   export type ProjectCreateManyInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      leadId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type ProjectUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type ProjectUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      leadId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type LabelCreateInput = {
+      id?: string;
+      name: string;
+      color: string;
+      description?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueLabelCreateNestedManyWithoutLabelInput;
+   };
+
+   export type LabelUncheckedCreateInput = {
+      id?: string;
+      name: string;
+      color: string;
+      description?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueLabelUncheckedCreateNestedManyWithoutLabelInput;
+   };
+
+   export type LabelUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueLabelUpdateManyWithoutLabelNestedInput;
+   };
+
+   export type LabelUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueLabelUncheckedUpdateManyWithoutLabelNestedInput;
+   };
+
+   export type LabelCreateManyInput = {
+      id?: string;
+      name: string;
+      color: string;
+      description?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type LabelUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type LabelUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueStatusCreateInput = {
+      id: string;
+      name: string;
+      color: string;
+      iconName: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutIssueStatusInput;
+   };
+
+   export type IssueStatusUncheckedCreateInput = {
+      id: string;
+      name: string;
+      color: string;
+      iconName: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutIssueStatusInput;
+   };
+
+   export type IssueStatusUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutIssueStatusNestedInput;
+   };
+
+   export type IssueStatusUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutIssueStatusNestedInput;
+   };
+
+   export type IssueStatusCreateManyInput = {
+      id: string;
+      name: string;
+      color: string;
+      iconName: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueStatusUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueStatusUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssuePriorityCreateInput = {
+      id: string;
+      name: string;
+      iconName: string;
+      order: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutIssuePriorityInput;
+   };
+
+   export type IssuePriorityUncheckedCreateInput = {
+      id: string;
+      name: string;
+      iconName: string;
+      order: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutIssuePriorityInput;
+   };
+
+   export type IssuePriorityUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      order?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutIssuePriorityNestedInput;
+   };
+
+   export type IssuePriorityUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      order?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutIssuePriorityNestedInput;
+   };
+
+   export type IssuePriorityCreateManyInput = {
+      id: string;
+      name: string;
+      iconName: string;
+      order: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssuePriorityUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      order?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssuePriorityUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      order?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueCreateInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueCreateManyInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueLabelCreateInput = {
+      id?: string;
+      issue: IssueCreateNestedOneWithoutLabelsInput;
+      label: LabelCreateNestedOneWithoutIssuesInput;
+   };
+
+   export type IssueLabelUncheckedCreateInput = {
+      id?: string;
+      issueId: string;
+      labelId: string;
+   };
+
+   export type IssueLabelUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      issue?: IssueUpdateOneRequiredWithoutLabelsNestedInput;
+      label?: LabelUpdateOneRequiredWithoutIssuesNestedInput;
+   };
+
+   export type IssueLabelUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      issueId?: StringFieldUpdateOperationsInput | string;
+      labelId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueLabelCreateManyInput = {
+      id?: string;
+      issueId: string;
+      labelId: string;
+   };
+
+   export type IssueLabelUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueLabelUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      issueId?: StringFieldUpdateOperationsInput | string;
+      labelId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type CycleCreateInput = {
+      id?: string;
+      number: number;
+      name: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      team: TeamCreateNestedOneWithoutCyclesInput;
+      issues?: IssueCreateNestedManyWithoutCycleInput;
+   };
+
+   export type CycleUncheckedCreateInput = {
+      id?: string;
+      number: number;
+      name: string;
+      teamId: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutCycleInput;
+   };
+
+   export type CycleUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      team?: TeamUpdateOneRequiredWithoutCyclesNestedInput;
+      issues?: IssueUpdateManyWithoutCycleNestedInput;
+   };
+
+   export type CycleUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutCycleNestedInput;
+   };
+
+   export type CycleCreateManyInput = {
+      id?: string;
+      number: number;
+      name: string;
+      teamId: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type CycleUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type CycleUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamCreateInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      members?: TeamMemberCreateNestedManyWithoutTeamInput;
+      projects?: TeamProjectCreateNestedManyWithoutTeamInput;
+      cycles?: CycleCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamUncheckedCreateInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput;
+      projects?: TeamProjectUncheckedCreateNestedManyWithoutTeamInput;
+      cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      members?: TeamMemberUpdateManyWithoutTeamNestedInput;
+      projects?: TeamProjectUpdateManyWithoutTeamNestedInput;
+      cycles?: CycleUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type TeamUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput;
+      projects?: TeamProjectUncheckedUpdateManyWithoutTeamNestedInput;
+      cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type TeamCreateManyInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type TeamUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamMemberCreateInput = {
+      id?: string;
+      team: TeamCreateNestedOneWithoutMembersInput;
+      user: UserCreateNestedOneWithoutTeamsInput;
+   };
+
+   export type TeamMemberUncheckedCreateInput = {
+      id?: string;
+      teamId: string;
+      userId: string;
+   };
+
+   export type TeamMemberUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      team?: TeamUpdateOneRequiredWithoutMembersNestedInput;
+      user?: UserUpdateOneRequiredWithoutTeamsNestedInput;
+   };
+
+   export type TeamMemberUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      userId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamMemberCreateManyInput = {
+      id?: string;
+      teamId: string;
+      userId: string;
+   };
+
+   export type TeamMemberUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamMemberUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      userId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamProjectCreateInput = {
+      id?: string;
+      team: TeamCreateNestedOneWithoutProjectsInput;
+      project: ProjectCreateNestedOneWithoutTeamsInput;
+   };
+
+   export type TeamProjectUncheckedCreateInput = {
+      id?: string;
+      teamId: string;
+      projectId: string;
+   };
+
+   export type TeamProjectUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      team?: TeamUpdateOneRequiredWithoutProjectsNestedInput;
+      project?: ProjectUpdateOneRequiredWithoutTeamsNestedInput;
+   };
+
+   export type TeamProjectUncheckedUpdateInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      projectId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamProjectCreateManyInput = {
+      id?: string;
+      teamId: string;
+      projectId: string;
+   };
+
+   export type TeamProjectUpdateManyMutationInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamProjectUncheckedUpdateManyInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      projectId?: StringFieldUpdateOperationsInput | string;
+   };
+
    export type IntFilter<$PrismaModel = never> = {
       equals?: number | IntFieldRefInput<$PrismaModel>;
       in?: number[];
@@ -10420,6 +28445,12 @@ export namespace Prisma {
       none?: TaskDependencyWhereInput;
    };
 
+   export type IssueListRelationFilter = {
+      every?: IssueWhereInput;
+      some?: IssueWhereInput;
+      none?: IssueWhereInput;
+   };
+
    export type SortOrderInput = {
       sort: SortOrder;
       nulls?: NullsOrder;
@@ -10430,6 +28461,10 @@ export namespace Prisma {
    };
 
    export type TaskDependencyOrderByRelationAggregateInput = {
+      _count?: SortOrder;
+   };
+
+   export type IssueOrderByRelationAggregateInput = {
       _count?: SortOrder;
    };
 
@@ -10816,6 +28851,579 @@ export namespace Prisma {
       _max?: NestedBoolFilter<$PrismaModel>;
    };
 
+   export type EnumUserStatusFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserStatus[];
+      notIn?: $Enums.UserStatus[];
+      not?: NestedEnumUserStatusFilter<$PrismaModel> | $Enums.UserStatus;
+   };
+
+   export type EnumUserRoleFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserRole[];
+      notIn?: $Enums.UserRole[];
+      not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole;
+   };
+
+   export type TeamMemberListRelationFilter = {
+      every?: TeamMemberWhereInput;
+      some?: TeamMemberWhereInput;
+      none?: TeamMemberWhereInput;
+   };
+
+   export type ProjectListRelationFilter = {
+      every?: ProjectWhereInput;
+      some?: ProjectWhereInput;
+      none?: ProjectWhereInput;
+   };
+
+   export type TeamMemberOrderByRelationAggregateInput = {
+      _count?: SortOrder;
+   };
+
+   export type ProjectOrderByRelationAggregateInput = {
+      _count?: SortOrder;
+   };
+
+   export type UserCountOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      email?: SortOrder;
+      avatarUrl?: SortOrder;
+      status?: SortOrder;
+      role?: SortOrder;
+      joinedDate?: SortOrder;
+      teamIds?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type UserMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      email?: SortOrder;
+      avatarUrl?: SortOrder;
+      status?: SortOrder;
+      role?: SortOrder;
+      joinedDate?: SortOrder;
+      teamIds?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type UserMinOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      email?: SortOrder;
+      avatarUrl?: SortOrder;
+      status?: SortOrder;
+      role?: SortOrder;
+      joinedDate?: SortOrder;
+      teamIds?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type EnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserStatus[];
+      notIn?: $Enums.UserStatus[];
+      not?: NestedEnumUserStatusWithAggregatesFilter<$PrismaModel> | $Enums.UserStatus;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumUserStatusFilter<$PrismaModel>;
+      _max?: NestedEnumUserStatusFilter<$PrismaModel>;
+   };
+
+   export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserRole[];
+      notIn?: $Enums.UserRole[];
+      not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumUserRoleFilter<$PrismaModel>;
+      _max?: NestedEnumUserRoleFilter<$PrismaModel>;
+   };
+
+   export type EnumProjectHealthFilter<$PrismaModel = never> = {
+      equals?: $Enums.ProjectHealth | EnumProjectHealthFieldRefInput<$PrismaModel>;
+      in?: $Enums.ProjectHealth[];
+      notIn?: $Enums.ProjectHealth[];
+      not?: NestedEnumProjectHealthFilter<$PrismaModel> | $Enums.ProjectHealth;
+   };
+
+   export type UserNullableScalarRelationFilter = {
+      is?: UserWhereInput | null;
+      isNot?: UserWhereInput | null;
+   };
+
+   export type TeamProjectListRelationFilter = {
+      every?: TeamProjectWhereInput;
+      some?: TeamProjectWhereInput;
+      none?: TeamProjectWhereInput;
+   };
+
+   export type TeamProjectOrderByRelationAggregateInput = {
+      _count?: SortOrder;
+   };
+
+   export type ProjectCountOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      description?: SortOrder;
+      color?: SortOrder;
+      identifier?: SortOrder;
+      icon?: SortOrder;
+      percentComplete?: SortOrder;
+      startDate?: SortOrder;
+      health?: SortOrder;
+      leadId?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type ProjectAvgOrderByAggregateInput = {
+      percentComplete?: SortOrder;
+   };
+
+   export type ProjectMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      description?: SortOrder;
+      color?: SortOrder;
+      identifier?: SortOrder;
+      icon?: SortOrder;
+      percentComplete?: SortOrder;
+      startDate?: SortOrder;
+      health?: SortOrder;
+      leadId?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type ProjectMinOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      description?: SortOrder;
+      color?: SortOrder;
+      identifier?: SortOrder;
+      icon?: SortOrder;
+      percentComplete?: SortOrder;
+      startDate?: SortOrder;
+      health?: SortOrder;
+      leadId?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type ProjectSumOrderByAggregateInput = {
+      percentComplete?: SortOrder;
+   };
+
+   export type EnumProjectHealthWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.ProjectHealth | EnumProjectHealthFieldRefInput<$PrismaModel>;
+      in?: $Enums.ProjectHealth[];
+      notIn?: $Enums.ProjectHealth[];
+      not?: NestedEnumProjectHealthWithAggregatesFilter<$PrismaModel> | $Enums.ProjectHealth;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumProjectHealthFilter<$PrismaModel>;
+      _max?: NestedEnumProjectHealthFilter<$PrismaModel>;
+   };
+
+   export type IssueLabelListRelationFilter = {
+      every?: IssueLabelWhereInput;
+      some?: IssueLabelWhereInput;
+      none?: IssueLabelWhereInput;
+   };
+
+   export type IssueLabelOrderByRelationAggregateInput = {
+      _count?: SortOrder;
+   };
+
+   export type LabelCountOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      description?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type LabelMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      description?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type LabelMinOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      description?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssueStatusCountOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      iconName?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssueStatusMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      iconName?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssueStatusMinOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      color?: SortOrder;
+      iconName?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssuePriorityCountOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      iconName?: SortOrder;
+      order?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssuePriorityAvgOrderByAggregateInput = {
+      order?: SortOrder;
+   };
+
+   export type IssuePriorityMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      iconName?: SortOrder;
+      order?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssuePriorityMinOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      iconName?: SortOrder;
+      order?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssuePrioritySumOrderByAggregateInput = {
+      order?: SortOrder;
+   };
+
+   export type EnumIssueTypeFilter<$PrismaModel = never> = {
+      equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>;
+      in?: $Enums.IssueType[];
+      notIn?: $Enums.IssueType[];
+      not?: NestedEnumIssueTypeFilter<$PrismaModel> | $Enums.IssueType;
+   };
+
+   export type ProjectNullableScalarRelationFilter = {
+      is?: ProjectWhereInput | null;
+      isNot?: ProjectWhereInput | null;
+   };
+
+   export type CycleNullableScalarRelationFilter = {
+      is?: CycleWhereInput | null;
+      isNot?: CycleWhereInput | null;
+   };
+
+   export type TaskNullableScalarRelationFilter = {
+      is?: TaskWhereInput | null;
+      isNot?: TaskWhereInput | null;
+   };
+
+   export type IssueStatusNullableScalarRelationFilter = {
+      is?: IssueStatusWhereInput | null;
+      isNot?: IssueStatusWhereInput | null;
+   };
+
+   export type IssuePriorityNullableScalarRelationFilter = {
+      is?: IssuePriorityWhereInput | null;
+      isNot?: IssuePriorityWhereInput | null;
+   };
+
+   export type IssueCountOrderByAggregateInput = {
+      id?: SortOrder;
+      identifier?: SortOrder;
+      title?: SortOrder;
+      description?: SortOrder;
+      statusId?: SortOrder;
+      priorityId?: SortOrder;
+      status?: SortOrder;
+      priority?: SortOrder;
+      rank?: SortOrder;
+      cycleId?: SortOrder;
+      dueDate?: SortOrder;
+      taskId?: SortOrder;
+      subtaskId?: SortOrder;
+      issueType?: SortOrder;
+      assigneeId?: SortOrder;
+      projectId?: SortOrder;
+      subissues?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssueAvgOrderByAggregateInput = {
+      taskId?: SortOrder;
+   };
+
+   export type IssueMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      identifier?: SortOrder;
+      title?: SortOrder;
+      description?: SortOrder;
+      statusId?: SortOrder;
+      priorityId?: SortOrder;
+      status?: SortOrder;
+      priority?: SortOrder;
+      rank?: SortOrder;
+      cycleId?: SortOrder;
+      dueDate?: SortOrder;
+      taskId?: SortOrder;
+      subtaskId?: SortOrder;
+      issueType?: SortOrder;
+      assigneeId?: SortOrder;
+      projectId?: SortOrder;
+      subissues?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssueMinOrderByAggregateInput = {
+      id?: SortOrder;
+      identifier?: SortOrder;
+      title?: SortOrder;
+      description?: SortOrder;
+      statusId?: SortOrder;
+      priorityId?: SortOrder;
+      status?: SortOrder;
+      priority?: SortOrder;
+      rank?: SortOrder;
+      cycleId?: SortOrder;
+      dueDate?: SortOrder;
+      taskId?: SortOrder;
+      subtaskId?: SortOrder;
+      issueType?: SortOrder;
+      assigneeId?: SortOrder;
+      projectId?: SortOrder;
+      subissues?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type IssueSumOrderByAggregateInput = {
+      taskId?: SortOrder;
+   };
+
+   export type EnumIssueTypeWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>;
+      in?: $Enums.IssueType[];
+      notIn?: $Enums.IssueType[];
+      not?: NestedEnumIssueTypeWithAggregatesFilter<$PrismaModel> | $Enums.IssueType;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumIssueTypeFilter<$PrismaModel>;
+      _max?: NestedEnumIssueTypeFilter<$PrismaModel>;
+   };
+
+   export type IssueScalarRelationFilter = {
+      is?: IssueWhereInput;
+      isNot?: IssueWhereInput;
+   };
+
+   export type LabelScalarRelationFilter = {
+      is?: LabelWhereInput;
+      isNot?: LabelWhereInput;
+   };
+
+   export type IssueLabelIssueIdLabelIdCompoundUniqueInput = {
+      issueId: string;
+      labelId: string;
+   };
+
+   export type IssueLabelCountOrderByAggregateInput = {
+      id?: SortOrder;
+      issueId?: SortOrder;
+      labelId?: SortOrder;
+   };
+
+   export type IssueLabelMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      issueId?: SortOrder;
+      labelId?: SortOrder;
+   };
+
+   export type IssueLabelMinOrderByAggregateInput = {
+      id?: SortOrder;
+      issueId?: SortOrder;
+      labelId?: SortOrder;
+   };
+
+   export type TeamScalarRelationFilter = {
+      is?: TeamWhereInput;
+      isNot?: TeamWhereInput;
+   };
+
+   export type CycleCountOrderByAggregateInput = {
+      id?: SortOrder;
+      number?: SortOrder;
+      name?: SortOrder;
+      teamId?: SortOrder;
+      startDate?: SortOrder;
+      endDate?: SortOrder;
+      progress?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type CycleAvgOrderByAggregateInput = {
+      number?: SortOrder;
+      progress?: SortOrder;
+   };
+
+   export type CycleMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      number?: SortOrder;
+      name?: SortOrder;
+      teamId?: SortOrder;
+      startDate?: SortOrder;
+      endDate?: SortOrder;
+      progress?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type CycleMinOrderByAggregateInput = {
+      id?: SortOrder;
+      number?: SortOrder;
+      name?: SortOrder;
+      teamId?: SortOrder;
+      startDate?: SortOrder;
+      endDate?: SortOrder;
+      progress?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type CycleSumOrderByAggregateInput = {
+      number?: SortOrder;
+      progress?: SortOrder;
+   };
+
+   export type CycleListRelationFilter = {
+      every?: CycleWhereInput;
+      some?: CycleWhereInput;
+      none?: CycleWhereInput;
+   };
+
+   export type CycleOrderByRelationAggregateInput = {
+      _count?: SortOrder;
+   };
+
+   export type TeamCountOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      icon?: SortOrder;
+      joined?: SortOrder;
+      color?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type TeamMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      icon?: SortOrder;
+      joined?: SortOrder;
+      color?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type TeamMinOrderByAggregateInput = {
+      id?: SortOrder;
+      name?: SortOrder;
+      icon?: SortOrder;
+      joined?: SortOrder;
+      color?: SortOrder;
+      createdAt?: SortOrder;
+      updatedAt?: SortOrder;
+   };
+
+   export type UserScalarRelationFilter = {
+      is?: UserWhereInput;
+      isNot?: UserWhereInput;
+   };
+
+   export type TeamMemberTeamIdUserIdCompoundUniqueInput = {
+      teamId: string;
+      userId: string;
+   };
+
+   export type TeamMemberCountOrderByAggregateInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      userId?: SortOrder;
+   };
+
+   export type TeamMemberMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      userId?: SortOrder;
+   };
+
+   export type TeamMemberMinOrderByAggregateInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      userId?: SortOrder;
+   };
+
+   export type ProjectScalarRelationFilter = {
+      is?: ProjectWhereInput;
+      isNot?: ProjectWhereInput;
+   };
+
+   export type TeamProjectTeamIdProjectIdCompoundUniqueInput = {
+      teamId: string;
+      projectId: string;
+   };
+
+   export type TeamProjectCountOrderByAggregateInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      projectId?: SortOrder;
+   };
+
+   export type TeamProjectMaxOrderByAggregateInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      projectId?: SortOrder;
+   };
+
+   export type TeamProjectMinOrderByAggregateInput = {
+      id?: SortOrder;
+      teamId?: SortOrder;
+      projectId?: SortOrder;
+   };
+
    export type SubtaskCreateNestedManyWithoutParentTaskInput = {
       create?:
          | XOR<SubtaskCreateWithoutParentTaskInput, SubtaskUncheckedCreateWithoutParentTaskInput>
@@ -10855,6 +29463,18 @@ export namespace Prisma {
       connect?: TaskDependencyWhereUniqueInput | TaskDependencyWhereUniqueInput[];
    };
 
+   export type IssueCreateNestedManyWithoutTaskInput = {
+      create?:
+         | XOR<IssueCreateWithoutTaskInput, IssueUncheckedCreateWithoutTaskInput>
+         | IssueCreateWithoutTaskInput[]
+         | IssueUncheckedCreateWithoutTaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutTaskInput
+         | IssueCreateOrConnectWithoutTaskInput[];
+      createMany?: IssueCreateManyTaskInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
    export type SubtaskUncheckedCreateNestedManyWithoutParentTaskInput = {
       create?:
          | XOR<SubtaskCreateWithoutParentTaskInput, SubtaskUncheckedCreateWithoutParentTaskInput>
@@ -10892,6 +29512,18 @@ export namespace Prisma {
          | TaskDependencyCreateOrConnectWithoutDependsOnInput[];
       createMany?: TaskDependencyCreateManyDependsOnInputEnvelope;
       connect?: TaskDependencyWhereUniqueInput | TaskDependencyWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutTaskInput = {
+      create?:
+         | XOR<IssueCreateWithoutTaskInput, IssueUncheckedCreateWithoutTaskInput>
+         | IssueCreateWithoutTaskInput[]
+         | IssueUncheckedCreateWithoutTaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutTaskInput
+         | IssueCreateOrConnectWithoutTaskInput[];
+      createMany?: IssueCreateManyTaskInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
    };
 
    export type IntFieldUpdateOperationsInput = {
@@ -11000,6 +29632,31 @@ export namespace Prisma {
       deleteMany?: TaskDependencyScalarWhereInput | TaskDependencyScalarWhereInput[];
    };
 
+   export type IssueUpdateManyWithoutTaskNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutTaskInput, IssueUncheckedCreateWithoutTaskInput>
+         | IssueCreateWithoutTaskInput[]
+         | IssueUncheckedCreateWithoutTaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutTaskInput
+         | IssueCreateOrConnectWithoutTaskInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutTaskInput
+         | IssueUpsertWithWhereUniqueWithoutTaskInput[];
+      createMany?: IssueCreateManyTaskInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutTaskInput
+         | IssueUpdateWithWhereUniqueWithoutTaskInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutTaskInput
+         | IssueUpdateManyWithWhereWithoutTaskInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
    export type SubtaskUncheckedUpdateManyWithoutParentTaskNestedInput = {
       create?:
          | XOR<SubtaskCreateWithoutParentTaskInput, SubtaskUncheckedCreateWithoutParentTaskInput>
@@ -11078,6 +29735,31 @@ export namespace Prisma {
       deleteMany?: TaskDependencyScalarWhereInput | TaskDependencyScalarWhereInput[];
    };
 
+   export type IssueUncheckedUpdateManyWithoutTaskNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutTaskInput, IssueUncheckedCreateWithoutTaskInput>
+         | IssueCreateWithoutTaskInput[]
+         | IssueUncheckedCreateWithoutTaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutTaskInput
+         | IssueCreateOrConnectWithoutTaskInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutTaskInput
+         | IssueUpsertWithWhereUniqueWithoutTaskInput[];
+      createMany?: IssueCreateManyTaskInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutTaskInput
+         | IssueUpdateWithWhereUniqueWithoutTaskInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutTaskInput
+         | IssueUpdateManyWithWhereWithoutTaskInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
    export type TaskCreateNestedOneWithoutSubtasksInput = {
       create?: XOR<TaskCreateWithoutSubtasksInput, TaskUncheckedCreateWithoutSubtasksInput>;
       connectOrCreate?: TaskCreateOrConnectWithoutSubtasksInput;
@@ -11135,6 +29817,1263 @@ export namespace Prisma {
 
    export type BoolFieldUpdateOperationsInput = {
       set?: boolean;
+   };
+
+   export type IssueCreateNestedManyWithoutAssigneeInput = {
+      create?:
+         | XOR<IssueCreateWithoutAssigneeInput, IssueUncheckedCreateWithoutAssigneeInput>
+         | IssueCreateWithoutAssigneeInput[]
+         | IssueUncheckedCreateWithoutAssigneeInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutAssigneeInput
+         | IssueCreateOrConnectWithoutAssigneeInput[];
+      createMany?: IssueCreateManyAssigneeInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type TeamMemberCreateNestedManyWithoutUserInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput>
+         | TeamMemberCreateWithoutUserInput[]
+         | TeamMemberUncheckedCreateWithoutUserInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutUserInput
+         | TeamMemberCreateOrConnectWithoutUserInput[];
+      createMany?: TeamMemberCreateManyUserInputEnvelope;
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+   };
+
+   export type ProjectCreateNestedManyWithoutLeadInput = {
+      create?:
+         | XOR<ProjectCreateWithoutLeadInput, ProjectUncheckedCreateWithoutLeadInput>
+         | ProjectCreateWithoutLeadInput[]
+         | ProjectUncheckedCreateWithoutLeadInput[];
+      connectOrCreate?:
+         | ProjectCreateOrConnectWithoutLeadInput
+         | ProjectCreateOrConnectWithoutLeadInput[];
+      createMany?: ProjectCreateManyLeadInputEnvelope;
+      connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutAssigneeInput = {
+      create?:
+         | XOR<IssueCreateWithoutAssigneeInput, IssueUncheckedCreateWithoutAssigneeInput>
+         | IssueCreateWithoutAssigneeInput[]
+         | IssueUncheckedCreateWithoutAssigneeInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutAssigneeInput
+         | IssueCreateOrConnectWithoutAssigneeInput[];
+      createMany?: IssueCreateManyAssigneeInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type TeamMemberUncheckedCreateNestedManyWithoutUserInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput>
+         | TeamMemberCreateWithoutUserInput[]
+         | TeamMemberUncheckedCreateWithoutUserInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutUserInput
+         | TeamMemberCreateOrConnectWithoutUserInput[];
+      createMany?: TeamMemberCreateManyUserInputEnvelope;
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+   };
+
+   export type ProjectUncheckedCreateNestedManyWithoutLeadInput = {
+      create?:
+         | XOR<ProjectCreateWithoutLeadInput, ProjectUncheckedCreateWithoutLeadInput>
+         | ProjectCreateWithoutLeadInput[]
+         | ProjectUncheckedCreateWithoutLeadInput[];
+      connectOrCreate?:
+         | ProjectCreateOrConnectWithoutLeadInput
+         | ProjectCreateOrConnectWithoutLeadInput[];
+      createMany?: ProjectCreateManyLeadInputEnvelope;
+      connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+   };
+
+   export type EnumUserStatusFieldUpdateOperationsInput = {
+      set?: $Enums.UserStatus;
+   };
+
+   export type EnumUserRoleFieldUpdateOperationsInput = {
+      set?: $Enums.UserRole;
+   };
+
+   export type IssueUpdateManyWithoutAssigneeNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutAssigneeInput, IssueUncheckedCreateWithoutAssigneeInput>
+         | IssueCreateWithoutAssigneeInput[]
+         | IssueUncheckedCreateWithoutAssigneeInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutAssigneeInput
+         | IssueCreateOrConnectWithoutAssigneeInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutAssigneeInput
+         | IssueUpsertWithWhereUniqueWithoutAssigneeInput[];
+      createMany?: IssueCreateManyAssigneeInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutAssigneeInput
+         | IssueUpdateWithWhereUniqueWithoutAssigneeInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutAssigneeInput
+         | IssueUpdateManyWithWhereWithoutAssigneeInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type TeamMemberUpdateManyWithoutUserNestedInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput>
+         | TeamMemberCreateWithoutUserInput[]
+         | TeamMemberUncheckedCreateWithoutUserInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutUserInput
+         | TeamMemberCreateOrConnectWithoutUserInput[];
+      upsert?:
+         | TeamMemberUpsertWithWhereUniqueWithoutUserInput
+         | TeamMemberUpsertWithWhereUniqueWithoutUserInput[];
+      createMany?: TeamMemberCreateManyUserInputEnvelope;
+      set?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      disconnect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      delete?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      update?:
+         | TeamMemberUpdateWithWhereUniqueWithoutUserInput
+         | TeamMemberUpdateWithWhereUniqueWithoutUserInput[];
+      updateMany?:
+         | TeamMemberUpdateManyWithWhereWithoutUserInput
+         | TeamMemberUpdateManyWithWhereWithoutUserInput[];
+      deleteMany?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[];
+   };
+
+   export type ProjectUpdateManyWithoutLeadNestedInput = {
+      create?:
+         | XOR<ProjectCreateWithoutLeadInput, ProjectUncheckedCreateWithoutLeadInput>
+         | ProjectCreateWithoutLeadInput[]
+         | ProjectUncheckedCreateWithoutLeadInput[];
+      connectOrCreate?:
+         | ProjectCreateOrConnectWithoutLeadInput
+         | ProjectCreateOrConnectWithoutLeadInput[];
+      upsert?:
+         | ProjectUpsertWithWhereUniqueWithoutLeadInput
+         | ProjectUpsertWithWhereUniqueWithoutLeadInput[];
+      createMany?: ProjectCreateManyLeadInputEnvelope;
+      set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      update?:
+         | ProjectUpdateWithWhereUniqueWithoutLeadInput
+         | ProjectUpdateWithWhereUniqueWithoutLeadInput[];
+      updateMany?:
+         | ProjectUpdateManyWithWhereWithoutLeadInput
+         | ProjectUpdateManyWithWhereWithoutLeadInput[];
+      deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutAssigneeNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutAssigneeInput, IssueUncheckedCreateWithoutAssigneeInput>
+         | IssueCreateWithoutAssigneeInput[]
+         | IssueUncheckedCreateWithoutAssigneeInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutAssigneeInput
+         | IssueCreateOrConnectWithoutAssigneeInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutAssigneeInput
+         | IssueUpsertWithWhereUniqueWithoutAssigneeInput[];
+      createMany?: IssueCreateManyAssigneeInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutAssigneeInput
+         | IssueUpdateWithWhereUniqueWithoutAssigneeInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutAssigneeInput
+         | IssueUpdateManyWithWhereWithoutAssigneeInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type TeamMemberUncheckedUpdateManyWithoutUserNestedInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput>
+         | TeamMemberCreateWithoutUserInput[]
+         | TeamMemberUncheckedCreateWithoutUserInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutUserInput
+         | TeamMemberCreateOrConnectWithoutUserInput[];
+      upsert?:
+         | TeamMemberUpsertWithWhereUniqueWithoutUserInput
+         | TeamMemberUpsertWithWhereUniqueWithoutUserInput[];
+      createMany?: TeamMemberCreateManyUserInputEnvelope;
+      set?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      disconnect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      delete?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      update?:
+         | TeamMemberUpdateWithWhereUniqueWithoutUserInput
+         | TeamMemberUpdateWithWhereUniqueWithoutUserInput[];
+      updateMany?:
+         | TeamMemberUpdateManyWithWhereWithoutUserInput
+         | TeamMemberUpdateManyWithWhereWithoutUserInput[];
+      deleteMany?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[];
+   };
+
+   export type ProjectUncheckedUpdateManyWithoutLeadNestedInput = {
+      create?:
+         | XOR<ProjectCreateWithoutLeadInput, ProjectUncheckedCreateWithoutLeadInput>
+         | ProjectCreateWithoutLeadInput[]
+         | ProjectUncheckedCreateWithoutLeadInput[];
+      connectOrCreate?:
+         | ProjectCreateOrConnectWithoutLeadInput
+         | ProjectCreateOrConnectWithoutLeadInput[];
+      upsert?:
+         | ProjectUpsertWithWhereUniqueWithoutLeadInput
+         | ProjectUpsertWithWhereUniqueWithoutLeadInput[];
+      createMany?: ProjectCreateManyLeadInputEnvelope;
+      set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+      update?:
+         | ProjectUpdateWithWhereUniqueWithoutLeadInput
+         | ProjectUpdateWithWhereUniqueWithoutLeadInput[];
+      updateMany?:
+         | ProjectUpdateManyWithWhereWithoutLeadInput
+         | ProjectUpdateManyWithWhereWithoutLeadInput[];
+      deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+   };
+
+   export type IssueCreateNestedManyWithoutProjectInput = {
+      create?:
+         | XOR<IssueCreateWithoutProjectInput, IssueUncheckedCreateWithoutProjectInput>
+         | IssueCreateWithoutProjectInput[]
+         | IssueUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutProjectInput
+         | IssueCreateOrConnectWithoutProjectInput[];
+      createMany?: IssueCreateManyProjectInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type UserCreateNestedOneWithoutLedProjectsInput = {
+      create?: XOR<UserCreateWithoutLedProjectsInput, UserUncheckedCreateWithoutLedProjectsInput>;
+      connectOrCreate?: UserCreateOrConnectWithoutLedProjectsInput;
+      connect?: UserWhereUniqueInput;
+   };
+
+   export type TeamProjectCreateNestedManyWithoutProjectInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutProjectInput, TeamProjectUncheckedCreateWithoutProjectInput>
+         | TeamProjectCreateWithoutProjectInput[]
+         | TeamProjectUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutProjectInput
+         | TeamProjectCreateOrConnectWithoutProjectInput[];
+      createMany?: TeamProjectCreateManyProjectInputEnvelope;
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutProjectInput = {
+      create?:
+         | XOR<IssueCreateWithoutProjectInput, IssueUncheckedCreateWithoutProjectInput>
+         | IssueCreateWithoutProjectInput[]
+         | IssueUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutProjectInput
+         | IssueCreateOrConnectWithoutProjectInput[];
+      createMany?: IssueCreateManyProjectInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type TeamProjectUncheckedCreateNestedManyWithoutProjectInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutProjectInput, TeamProjectUncheckedCreateWithoutProjectInput>
+         | TeamProjectCreateWithoutProjectInput[]
+         | TeamProjectUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutProjectInput
+         | TeamProjectCreateOrConnectWithoutProjectInput[];
+      createMany?: TeamProjectCreateManyProjectInputEnvelope;
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+   };
+
+   export type EnumProjectHealthFieldUpdateOperationsInput = {
+      set?: $Enums.ProjectHealth;
+   };
+
+   export type IssueUpdateManyWithoutProjectNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutProjectInput, IssueUncheckedCreateWithoutProjectInput>
+         | IssueCreateWithoutProjectInput[]
+         | IssueUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutProjectInput
+         | IssueCreateOrConnectWithoutProjectInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutProjectInput
+         | IssueUpsertWithWhereUniqueWithoutProjectInput[];
+      createMany?: IssueCreateManyProjectInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutProjectInput
+         | IssueUpdateWithWhereUniqueWithoutProjectInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutProjectInput
+         | IssueUpdateManyWithWhereWithoutProjectInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type UserUpdateOneWithoutLedProjectsNestedInput = {
+      create?: XOR<UserCreateWithoutLedProjectsInput, UserUncheckedCreateWithoutLedProjectsInput>;
+      connectOrCreate?: UserCreateOrConnectWithoutLedProjectsInput;
+      upsert?: UserUpsertWithoutLedProjectsInput;
+      disconnect?: UserWhereInput | boolean;
+      delete?: UserWhereInput | boolean;
+      connect?: UserWhereUniqueInput;
+      update?: XOR<
+         XOR<UserUpdateToOneWithWhereWithoutLedProjectsInput, UserUpdateWithoutLedProjectsInput>,
+         UserUncheckedUpdateWithoutLedProjectsInput
+      >;
+   };
+
+   export type TeamProjectUpdateManyWithoutProjectNestedInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutProjectInput, TeamProjectUncheckedCreateWithoutProjectInput>
+         | TeamProjectCreateWithoutProjectInput[]
+         | TeamProjectUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutProjectInput
+         | TeamProjectCreateOrConnectWithoutProjectInput[];
+      upsert?:
+         | TeamProjectUpsertWithWhereUniqueWithoutProjectInput
+         | TeamProjectUpsertWithWhereUniqueWithoutProjectInput[];
+      createMany?: TeamProjectCreateManyProjectInputEnvelope;
+      set?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      disconnect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      delete?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      update?:
+         | TeamProjectUpdateWithWhereUniqueWithoutProjectInput
+         | TeamProjectUpdateWithWhereUniqueWithoutProjectInput[];
+      updateMany?:
+         | TeamProjectUpdateManyWithWhereWithoutProjectInput
+         | TeamProjectUpdateManyWithWhereWithoutProjectInput[];
+      deleteMany?: TeamProjectScalarWhereInput | TeamProjectScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutProjectNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutProjectInput, IssueUncheckedCreateWithoutProjectInput>
+         | IssueCreateWithoutProjectInput[]
+         | IssueUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutProjectInput
+         | IssueCreateOrConnectWithoutProjectInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutProjectInput
+         | IssueUpsertWithWhereUniqueWithoutProjectInput[];
+      createMany?: IssueCreateManyProjectInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutProjectInput
+         | IssueUpdateWithWhereUniqueWithoutProjectInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutProjectInput
+         | IssueUpdateManyWithWhereWithoutProjectInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type TeamProjectUncheckedUpdateManyWithoutProjectNestedInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutProjectInput, TeamProjectUncheckedCreateWithoutProjectInput>
+         | TeamProjectCreateWithoutProjectInput[]
+         | TeamProjectUncheckedCreateWithoutProjectInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutProjectInput
+         | TeamProjectCreateOrConnectWithoutProjectInput[];
+      upsert?:
+         | TeamProjectUpsertWithWhereUniqueWithoutProjectInput
+         | TeamProjectUpsertWithWhereUniqueWithoutProjectInput[];
+      createMany?: TeamProjectCreateManyProjectInputEnvelope;
+      set?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      disconnect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      delete?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      update?:
+         | TeamProjectUpdateWithWhereUniqueWithoutProjectInput
+         | TeamProjectUpdateWithWhereUniqueWithoutProjectInput[];
+      updateMany?:
+         | TeamProjectUpdateManyWithWhereWithoutProjectInput
+         | TeamProjectUpdateManyWithWhereWithoutProjectInput[];
+      deleteMany?: TeamProjectScalarWhereInput | TeamProjectScalarWhereInput[];
+   };
+
+   export type IssueLabelCreateNestedManyWithoutLabelInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutLabelInput, IssueLabelUncheckedCreateWithoutLabelInput>
+         | IssueLabelCreateWithoutLabelInput[]
+         | IssueLabelUncheckedCreateWithoutLabelInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutLabelInput
+         | IssueLabelCreateOrConnectWithoutLabelInput[];
+      createMany?: IssueLabelCreateManyLabelInputEnvelope;
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+   };
+
+   export type IssueLabelUncheckedCreateNestedManyWithoutLabelInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutLabelInput, IssueLabelUncheckedCreateWithoutLabelInput>
+         | IssueLabelCreateWithoutLabelInput[]
+         | IssueLabelUncheckedCreateWithoutLabelInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutLabelInput
+         | IssueLabelCreateOrConnectWithoutLabelInput[];
+      createMany?: IssueLabelCreateManyLabelInputEnvelope;
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+   };
+
+   export type IssueLabelUpdateManyWithoutLabelNestedInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutLabelInput, IssueLabelUncheckedCreateWithoutLabelInput>
+         | IssueLabelCreateWithoutLabelInput[]
+         | IssueLabelUncheckedCreateWithoutLabelInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutLabelInput
+         | IssueLabelCreateOrConnectWithoutLabelInput[];
+      upsert?:
+         | IssueLabelUpsertWithWhereUniqueWithoutLabelInput
+         | IssueLabelUpsertWithWhereUniqueWithoutLabelInput[];
+      createMany?: IssueLabelCreateManyLabelInputEnvelope;
+      set?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      disconnect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      delete?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      update?:
+         | IssueLabelUpdateWithWhereUniqueWithoutLabelInput
+         | IssueLabelUpdateWithWhereUniqueWithoutLabelInput[];
+      updateMany?:
+         | IssueLabelUpdateManyWithWhereWithoutLabelInput
+         | IssueLabelUpdateManyWithWhereWithoutLabelInput[];
+      deleteMany?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+   };
+
+   export type IssueLabelUncheckedUpdateManyWithoutLabelNestedInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutLabelInput, IssueLabelUncheckedCreateWithoutLabelInput>
+         | IssueLabelCreateWithoutLabelInput[]
+         | IssueLabelUncheckedCreateWithoutLabelInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutLabelInput
+         | IssueLabelCreateOrConnectWithoutLabelInput[];
+      upsert?:
+         | IssueLabelUpsertWithWhereUniqueWithoutLabelInput
+         | IssueLabelUpsertWithWhereUniqueWithoutLabelInput[];
+      createMany?: IssueLabelCreateManyLabelInputEnvelope;
+      set?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      disconnect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      delete?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      update?:
+         | IssueLabelUpdateWithWhereUniqueWithoutLabelInput
+         | IssueLabelUpdateWithWhereUniqueWithoutLabelInput[];
+      updateMany?:
+         | IssueLabelUpdateManyWithWhereWithoutLabelInput
+         | IssueLabelUpdateManyWithWhereWithoutLabelInput[];
+      deleteMany?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+   };
+
+   export type IssueCreateNestedManyWithoutIssueStatusInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssueStatusInput, IssueUncheckedCreateWithoutIssueStatusInput>
+         | IssueCreateWithoutIssueStatusInput[]
+         | IssueUncheckedCreateWithoutIssueStatusInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssueStatusInput
+         | IssueCreateOrConnectWithoutIssueStatusInput[];
+      createMany?: IssueCreateManyIssueStatusInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutIssueStatusInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssueStatusInput, IssueUncheckedCreateWithoutIssueStatusInput>
+         | IssueCreateWithoutIssueStatusInput[]
+         | IssueUncheckedCreateWithoutIssueStatusInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssueStatusInput
+         | IssueCreateOrConnectWithoutIssueStatusInput[];
+      createMany?: IssueCreateManyIssueStatusInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type IssueUpdateManyWithoutIssueStatusNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssueStatusInput, IssueUncheckedCreateWithoutIssueStatusInput>
+         | IssueCreateWithoutIssueStatusInput[]
+         | IssueUncheckedCreateWithoutIssueStatusInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssueStatusInput
+         | IssueCreateOrConnectWithoutIssueStatusInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutIssueStatusInput
+         | IssueUpsertWithWhereUniqueWithoutIssueStatusInput[];
+      createMany?: IssueCreateManyIssueStatusInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutIssueStatusInput
+         | IssueUpdateWithWhereUniqueWithoutIssueStatusInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutIssueStatusInput
+         | IssueUpdateManyWithWhereWithoutIssueStatusInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutIssueStatusNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssueStatusInput, IssueUncheckedCreateWithoutIssueStatusInput>
+         | IssueCreateWithoutIssueStatusInput[]
+         | IssueUncheckedCreateWithoutIssueStatusInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssueStatusInput
+         | IssueCreateOrConnectWithoutIssueStatusInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutIssueStatusInput
+         | IssueUpsertWithWhereUniqueWithoutIssueStatusInput[];
+      createMany?: IssueCreateManyIssueStatusInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutIssueStatusInput
+         | IssueUpdateWithWhereUniqueWithoutIssueStatusInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutIssueStatusInput
+         | IssueUpdateManyWithWhereWithoutIssueStatusInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type IssueCreateNestedManyWithoutIssuePriorityInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssuePriorityInput, IssueUncheckedCreateWithoutIssuePriorityInput>
+         | IssueCreateWithoutIssuePriorityInput[]
+         | IssueUncheckedCreateWithoutIssuePriorityInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssuePriorityInput
+         | IssueCreateOrConnectWithoutIssuePriorityInput[];
+      createMany?: IssueCreateManyIssuePriorityInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutIssuePriorityInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssuePriorityInput, IssueUncheckedCreateWithoutIssuePriorityInput>
+         | IssueCreateWithoutIssuePriorityInput[]
+         | IssueUncheckedCreateWithoutIssuePriorityInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssuePriorityInput
+         | IssueCreateOrConnectWithoutIssuePriorityInput[];
+      createMany?: IssueCreateManyIssuePriorityInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type IssueUpdateManyWithoutIssuePriorityNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssuePriorityInput, IssueUncheckedCreateWithoutIssuePriorityInput>
+         | IssueCreateWithoutIssuePriorityInput[]
+         | IssueUncheckedCreateWithoutIssuePriorityInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssuePriorityInput
+         | IssueCreateOrConnectWithoutIssuePriorityInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutIssuePriorityInput
+         | IssueUpsertWithWhereUniqueWithoutIssuePriorityInput[];
+      createMany?: IssueCreateManyIssuePriorityInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutIssuePriorityInput
+         | IssueUpdateWithWhereUniqueWithoutIssuePriorityInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutIssuePriorityInput
+         | IssueUpdateManyWithWhereWithoutIssuePriorityInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutIssuePriorityNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutIssuePriorityInput, IssueUncheckedCreateWithoutIssuePriorityInput>
+         | IssueCreateWithoutIssuePriorityInput[]
+         | IssueUncheckedCreateWithoutIssuePriorityInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutIssuePriorityInput
+         | IssueCreateOrConnectWithoutIssuePriorityInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutIssuePriorityInput
+         | IssueUpsertWithWhereUniqueWithoutIssuePriorityInput[];
+      createMany?: IssueCreateManyIssuePriorityInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutIssuePriorityInput
+         | IssueUpdateWithWhereUniqueWithoutIssuePriorityInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutIssuePriorityInput
+         | IssueUpdateManyWithWhereWithoutIssuePriorityInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type UserCreateNestedOneWithoutAssignedIssuesInput = {
+      create?: XOR<
+         UserCreateWithoutAssignedIssuesInput,
+         UserUncheckedCreateWithoutAssignedIssuesInput
+      >;
+      connectOrCreate?: UserCreateOrConnectWithoutAssignedIssuesInput;
+      connect?: UserWhereUniqueInput;
+   };
+
+   export type ProjectCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<ProjectCreateWithoutIssuesInput, ProjectUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: ProjectCreateOrConnectWithoutIssuesInput;
+      connect?: ProjectWhereUniqueInput;
+   };
+
+   export type CycleCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<CycleCreateWithoutIssuesInput, CycleUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: CycleCreateOrConnectWithoutIssuesInput;
+      connect?: CycleWhereUniqueInput;
+   };
+
+   export type TaskCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<TaskCreateWithoutIssuesInput, TaskUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: TaskCreateOrConnectWithoutIssuesInput;
+      connect?: TaskWhereUniqueInput;
+   };
+
+   export type IssueStatusCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<
+         IssueStatusCreateWithoutIssuesInput,
+         IssueStatusUncheckedCreateWithoutIssuesInput
+      >;
+      connectOrCreate?: IssueStatusCreateOrConnectWithoutIssuesInput;
+      connect?: IssueStatusWhereUniqueInput;
+   };
+
+   export type IssuePriorityCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<
+         IssuePriorityCreateWithoutIssuesInput,
+         IssuePriorityUncheckedCreateWithoutIssuesInput
+      >;
+      connectOrCreate?: IssuePriorityCreateOrConnectWithoutIssuesInput;
+      connect?: IssuePriorityWhereUniqueInput;
+   };
+
+   export type IssueLabelCreateNestedManyWithoutIssueInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>
+         | IssueLabelCreateWithoutIssueInput[]
+         | IssueLabelUncheckedCreateWithoutIssueInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutIssueInput
+         | IssueLabelCreateOrConnectWithoutIssueInput[];
+      createMany?: IssueLabelCreateManyIssueInputEnvelope;
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+   };
+
+   export type IssueLabelUncheckedCreateNestedManyWithoutIssueInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>
+         | IssueLabelCreateWithoutIssueInput[]
+         | IssueLabelUncheckedCreateWithoutIssueInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutIssueInput
+         | IssueLabelCreateOrConnectWithoutIssueInput[];
+      createMany?: IssueLabelCreateManyIssueInputEnvelope;
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+   };
+
+   export type EnumIssueTypeFieldUpdateOperationsInput = {
+      set?: $Enums.IssueType;
+   };
+
+   export type UserUpdateOneWithoutAssignedIssuesNestedInput = {
+      create?: XOR<
+         UserCreateWithoutAssignedIssuesInput,
+         UserUncheckedCreateWithoutAssignedIssuesInput
+      >;
+      connectOrCreate?: UserCreateOrConnectWithoutAssignedIssuesInput;
+      upsert?: UserUpsertWithoutAssignedIssuesInput;
+      disconnect?: UserWhereInput | boolean;
+      delete?: UserWhereInput | boolean;
+      connect?: UserWhereUniqueInput;
+      update?: XOR<
+         XOR<
+            UserUpdateToOneWithWhereWithoutAssignedIssuesInput,
+            UserUpdateWithoutAssignedIssuesInput
+         >,
+         UserUncheckedUpdateWithoutAssignedIssuesInput
+      >;
+   };
+
+   export type ProjectUpdateOneWithoutIssuesNestedInput = {
+      create?: XOR<ProjectCreateWithoutIssuesInput, ProjectUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: ProjectCreateOrConnectWithoutIssuesInput;
+      upsert?: ProjectUpsertWithoutIssuesInput;
+      disconnect?: ProjectWhereInput | boolean;
+      delete?: ProjectWhereInput | boolean;
+      connect?: ProjectWhereUniqueInput;
+      update?: XOR<
+         XOR<ProjectUpdateToOneWithWhereWithoutIssuesInput, ProjectUpdateWithoutIssuesInput>,
+         ProjectUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type CycleUpdateOneWithoutIssuesNestedInput = {
+      create?: XOR<CycleCreateWithoutIssuesInput, CycleUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: CycleCreateOrConnectWithoutIssuesInput;
+      upsert?: CycleUpsertWithoutIssuesInput;
+      disconnect?: CycleWhereInput | boolean;
+      delete?: CycleWhereInput | boolean;
+      connect?: CycleWhereUniqueInput;
+      update?: XOR<
+         XOR<CycleUpdateToOneWithWhereWithoutIssuesInput, CycleUpdateWithoutIssuesInput>,
+         CycleUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type TaskUpdateOneWithoutIssuesNestedInput = {
+      create?: XOR<TaskCreateWithoutIssuesInput, TaskUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: TaskCreateOrConnectWithoutIssuesInput;
+      upsert?: TaskUpsertWithoutIssuesInput;
+      disconnect?: TaskWhereInput | boolean;
+      delete?: TaskWhereInput | boolean;
+      connect?: TaskWhereUniqueInput;
+      update?: XOR<
+         XOR<TaskUpdateToOneWithWhereWithoutIssuesInput, TaskUpdateWithoutIssuesInput>,
+         TaskUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type IssueStatusUpdateOneWithoutIssuesNestedInput = {
+      create?: XOR<
+         IssueStatusCreateWithoutIssuesInput,
+         IssueStatusUncheckedCreateWithoutIssuesInput
+      >;
+      connectOrCreate?: IssueStatusCreateOrConnectWithoutIssuesInput;
+      upsert?: IssueStatusUpsertWithoutIssuesInput;
+      disconnect?: IssueStatusWhereInput | boolean;
+      delete?: IssueStatusWhereInput | boolean;
+      connect?: IssueStatusWhereUniqueInput;
+      update?: XOR<
+         XOR<
+            IssueStatusUpdateToOneWithWhereWithoutIssuesInput,
+            IssueStatusUpdateWithoutIssuesInput
+         >,
+         IssueStatusUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type IssuePriorityUpdateOneWithoutIssuesNestedInput = {
+      create?: XOR<
+         IssuePriorityCreateWithoutIssuesInput,
+         IssuePriorityUncheckedCreateWithoutIssuesInput
+      >;
+      connectOrCreate?: IssuePriorityCreateOrConnectWithoutIssuesInput;
+      upsert?: IssuePriorityUpsertWithoutIssuesInput;
+      disconnect?: IssuePriorityWhereInput | boolean;
+      delete?: IssuePriorityWhereInput | boolean;
+      connect?: IssuePriorityWhereUniqueInput;
+      update?: XOR<
+         XOR<
+            IssuePriorityUpdateToOneWithWhereWithoutIssuesInput,
+            IssuePriorityUpdateWithoutIssuesInput
+         >,
+         IssuePriorityUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type IssueLabelUpdateManyWithoutIssueNestedInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>
+         | IssueLabelCreateWithoutIssueInput[]
+         | IssueLabelUncheckedCreateWithoutIssueInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutIssueInput
+         | IssueLabelCreateOrConnectWithoutIssueInput[];
+      upsert?:
+         | IssueLabelUpsertWithWhereUniqueWithoutIssueInput
+         | IssueLabelUpsertWithWhereUniqueWithoutIssueInput[];
+      createMany?: IssueLabelCreateManyIssueInputEnvelope;
+      set?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      disconnect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      delete?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      update?:
+         | IssueLabelUpdateWithWhereUniqueWithoutIssueInput
+         | IssueLabelUpdateWithWhereUniqueWithoutIssueInput[];
+      updateMany?:
+         | IssueLabelUpdateManyWithWhereWithoutIssueInput
+         | IssueLabelUpdateManyWithWhereWithoutIssueInput[];
+      deleteMany?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+   };
+
+   export type IssueLabelUncheckedUpdateManyWithoutIssueNestedInput = {
+      create?:
+         | XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>
+         | IssueLabelCreateWithoutIssueInput[]
+         | IssueLabelUncheckedCreateWithoutIssueInput[];
+      connectOrCreate?:
+         | IssueLabelCreateOrConnectWithoutIssueInput
+         | IssueLabelCreateOrConnectWithoutIssueInput[];
+      upsert?:
+         | IssueLabelUpsertWithWhereUniqueWithoutIssueInput
+         | IssueLabelUpsertWithWhereUniqueWithoutIssueInput[];
+      createMany?: IssueLabelCreateManyIssueInputEnvelope;
+      set?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      disconnect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      delete?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+      update?:
+         | IssueLabelUpdateWithWhereUniqueWithoutIssueInput
+         | IssueLabelUpdateWithWhereUniqueWithoutIssueInput[];
+      updateMany?:
+         | IssueLabelUpdateManyWithWhereWithoutIssueInput
+         | IssueLabelUpdateManyWithWhereWithoutIssueInput[];
+      deleteMany?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+   };
+
+   export type IssueCreateNestedOneWithoutLabelsInput = {
+      create?: XOR<IssueCreateWithoutLabelsInput, IssueUncheckedCreateWithoutLabelsInput>;
+      connectOrCreate?: IssueCreateOrConnectWithoutLabelsInput;
+      connect?: IssueWhereUniqueInput;
+   };
+
+   export type LabelCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<LabelCreateWithoutIssuesInput, LabelUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: LabelCreateOrConnectWithoutIssuesInput;
+      connect?: LabelWhereUniqueInput;
+   };
+
+   export type IssueUpdateOneRequiredWithoutLabelsNestedInput = {
+      create?: XOR<IssueCreateWithoutLabelsInput, IssueUncheckedCreateWithoutLabelsInput>;
+      connectOrCreate?: IssueCreateOrConnectWithoutLabelsInput;
+      upsert?: IssueUpsertWithoutLabelsInput;
+      connect?: IssueWhereUniqueInput;
+      update?: XOR<
+         XOR<IssueUpdateToOneWithWhereWithoutLabelsInput, IssueUpdateWithoutLabelsInput>,
+         IssueUncheckedUpdateWithoutLabelsInput
+      >;
+   };
+
+   export type LabelUpdateOneRequiredWithoutIssuesNestedInput = {
+      create?: XOR<LabelCreateWithoutIssuesInput, LabelUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: LabelCreateOrConnectWithoutIssuesInput;
+      upsert?: LabelUpsertWithoutIssuesInput;
+      connect?: LabelWhereUniqueInput;
+      update?: XOR<
+         XOR<LabelUpdateToOneWithWhereWithoutIssuesInput, LabelUpdateWithoutIssuesInput>,
+         LabelUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type TeamCreateNestedOneWithoutCyclesInput = {
+      create?: XOR<TeamCreateWithoutCyclesInput, TeamUncheckedCreateWithoutCyclesInput>;
+      connectOrCreate?: TeamCreateOrConnectWithoutCyclesInput;
+      connect?: TeamWhereUniqueInput;
+   };
+
+   export type IssueCreateNestedManyWithoutCycleInput = {
+      create?:
+         | XOR<IssueCreateWithoutCycleInput, IssueUncheckedCreateWithoutCycleInput>
+         | IssueCreateWithoutCycleInput[]
+         | IssueUncheckedCreateWithoutCycleInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutCycleInput
+         | IssueCreateOrConnectWithoutCycleInput[];
+      createMany?: IssueCreateManyCycleInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutCycleInput = {
+      create?:
+         | XOR<IssueCreateWithoutCycleInput, IssueUncheckedCreateWithoutCycleInput>
+         | IssueCreateWithoutCycleInput[]
+         | IssueUncheckedCreateWithoutCycleInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutCycleInput
+         | IssueCreateOrConnectWithoutCycleInput[];
+      createMany?: IssueCreateManyCycleInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type TeamUpdateOneRequiredWithoutCyclesNestedInput = {
+      create?: XOR<TeamCreateWithoutCyclesInput, TeamUncheckedCreateWithoutCyclesInput>;
+      connectOrCreate?: TeamCreateOrConnectWithoutCyclesInput;
+      upsert?: TeamUpsertWithoutCyclesInput;
+      connect?: TeamWhereUniqueInput;
+      update?: XOR<
+         XOR<TeamUpdateToOneWithWhereWithoutCyclesInput, TeamUpdateWithoutCyclesInput>,
+         TeamUncheckedUpdateWithoutCyclesInput
+      >;
+   };
+
+   export type IssueUpdateManyWithoutCycleNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutCycleInput, IssueUncheckedCreateWithoutCycleInput>
+         | IssueCreateWithoutCycleInput[]
+         | IssueUncheckedCreateWithoutCycleInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutCycleInput
+         | IssueCreateOrConnectWithoutCycleInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutCycleInput
+         | IssueUpsertWithWhereUniqueWithoutCycleInput[];
+      createMany?: IssueCreateManyCycleInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutCycleInput
+         | IssueUpdateWithWhereUniqueWithoutCycleInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutCycleInput
+         | IssueUpdateManyWithWhereWithoutCycleInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutCycleNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutCycleInput, IssueUncheckedCreateWithoutCycleInput>
+         | IssueCreateWithoutCycleInput[]
+         | IssueUncheckedCreateWithoutCycleInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutCycleInput
+         | IssueCreateOrConnectWithoutCycleInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutCycleInput
+         | IssueUpsertWithWhereUniqueWithoutCycleInput[];
+      createMany?: IssueCreateManyCycleInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutCycleInput
+         | IssueUpdateWithWhereUniqueWithoutCycleInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutCycleInput
+         | IssueUpdateManyWithWhereWithoutCycleInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type TeamMemberCreateNestedManyWithoutTeamInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput>
+         | TeamMemberCreateWithoutTeamInput[]
+         | TeamMemberUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutTeamInput
+         | TeamMemberCreateOrConnectWithoutTeamInput[];
+      createMany?: TeamMemberCreateManyTeamInputEnvelope;
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+   };
+
+   export type TeamProjectCreateNestedManyWithoutTeamInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutTeamInput, TeamProjectUncheckedCreateWithoutTeamInput>
+         | TeamProjectCreateWithoutTeamInput[]
+         | TeamProjectUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutTeamInput
+         | TeamProjectCreateOrConnectWithoutTeamInput[];
+      createMany?: TeamProjectCreateManyTeamInputEnvelope;
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+   };
+
+   export type CycleCreateNestedManyWithoutTeamInput = {
+      create?:
+         | XOR<CycleCreateWithoutTeamInput, CycleUncheckedCreateWithoutTeamInput>
+         | CycleCreateWithoutTeamInput[]
+         | CycleUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | CycleCreateOrConnectWithoutTeamInput
+         | CycleCreateOrConnectWithoutTeamInput[];
+      createMany?: CycleCreateManyTeamInputEnvelope;
+      connect?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+   };
+
+   export type TeamMemberUncheckedCreateNestedManyWithoutTeamInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput>
+         | TeamMemberCreateWithoutTeamInput[]
+         | TeamMemberUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutTeamInput
+         | TeamMemberCreateOrConnectWithoutTeamInput[];
+      createMany?: TeamMemberCreateManyTeamInputEnvelope;
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+   };
+
+   export type TeamProjectUncheckedCreateNestedManyWithoutTeamInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutTeamInput, TeamProjectUncheckedCreateWithoutTeamInput>
+         | TeamProjectCreateWithoutTeamInput[]
+         | TeamProjectUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutTeamInput
+         | TeamProjectCreateOrConnectWithoutTeamInput[];
+      createMany?: TeamProjectCreateManyTeamInputEnvelope;
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+   };
+
+   export type CycleUncheckedCreateNestedManyWithoutTeamInput = {
+      create?:
+         | XOR<CycleCreateWithoutTeamInput, CycleUncheckedCreateWithoutTeamInput>
+         | CycleCreateWithoutTeamInput[]
+         | CycleUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | CycleCreateOrConnectWithoutTeamInput
+         | CycleCreateOrConnectWithoutTeamInput[];
+      createMany?: CycleCreateManyTeamInputEnvelope;
+      connect?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+   };
+
+   export type TeamMemberUpdateManyWithoutTeamNestedInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput>
+         | TeamMemberCreateWithoutTeamInput[]
+         | TeamMemberUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutTeamInput
+         | TeamMemberCreateOrConnectWithoutTeamInput[];
+      upsert?:
+         | TeamMemberUpsertWithWhereUniqueWithoutTeamInput
+         | TeamMemberUpsertWithWhereUniqueWithoutTeamInput[];
+      createMany?: TeamMemberCreateManyTeamInputEnvelope;
+      set?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      disconnect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      delete?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      update?:
+         | TeamMemberUpdateWithWhereUniqueWithoutTeamInput
+         | TeamMemberUpdateWithWhereUniqueWithoutTeamInput[];
+      updateMany?:
+         | TeamMemberUpdateManyWithWhereWithoutTeamInput
+         | TeamMemberUpdateManyWithWhereWithoutTeamInput[];
+      deleteMany?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[];
+   };
+
+   export type TeamProjectUpdateManyWithoutTeamNestedInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutTeamInput, TeamProjectUncheckedCreateWithoutTeamInput>
+         | TeamProjectCreateWithoutTeamInput[]
+         | TeamProjectUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutTeamInput
+         | TeamProjectCreateOrConnectWithoutTeamInput[];
+      upsert?:
+         | TeamProjectUpsertWithWhereUniqueWithoutTeamInput
+         | TeamProjectUpsertWithWhereUniqueWithoutTeamInput[];
+      createMany?: TeamProjectCreateManyTeamInputEnvelope;
+      set?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      disconnect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      delete?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      update?:
+         | TeamProjectUpdateWithWhereUniqueWithoutTeamInput
+         | TeamProjectUpdateWithWhereUniqueWithoutTeamInput[];
+      updateMany?:
+         | TeamProjectUpdateManyWithWhereWithoutTeamInput
+         | TeamProjectUpdateManyWithWhereWithoutTeamInput[];
+      deleteMany?: TeamProjectScalarWhereInput | TeamProjectScalarWhereInput[];
+   };
+
+   export type CycleUpdateManyWithoutTeamNestedInput = {
+      create?:
+         | XOR<CycleCreateWithoutTeamInput, CycleUncheckedCreateWithoutTeamInput>
+         | CycleCreateWithoutTeamInput[]
+         | CycleUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | CycleCreateOrConnectWithoutTeamInput
+         | CycleCreateOrConnectWithoutTeamInput[];
+      upsert?:
+         | CycleUpsertWithWhereUniqueWithoutTeamInput
+         | CycleUpsertWithWhereUniqueWithoutTeamInput[];
+      createMany?: CycleCreateManyTeamInputEnvelope;
+      set?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      disconnect?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      delete?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      connect?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      update?:
+         | CycleUpdateWithWhereUniqueWithoutTeamInput
+         | CycleUpdateWithWhereUniqueWithoutTeamInput[];
+      updateMany?:
+         | CycleUpdateManyWithWhereWithoutTeamInput
+         | CycleUpdateManyWithWhereWithoutTeamInput[];
+      deleteMany?: CycleScalarWhereInput | CycleScalarWhereInput[];
+   };
+
+   export type TeamMemberUncheckedUpdateManyWithoutTeamNestedInput = {
+      create?:
+         | XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput>
+         | TeamMemberCreateWithoutTeamInput[]
+         | TeamMemberUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamMemberCreateOrConnectWithoutTeamInput
+         | TeamMemberCreateOrConnectWithoutTeamInput[];
+      upsert?:
+         | TeamMemberUpsertWithWhereUniqueWithoutTeamInput
+         | TeamMemberUpsertWithWhereUniqueWithoutTeamInput[];
+      createMany?: TeamMemberCreateManyTeamInputEnvelope;
+      set?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      disconnect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      delete?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[];
+      update?:
+         | TeamMemberUpdateWithWhereUniqueWithoutTeamInput
+         | TeamMemberUpdateWithWhereUniqueWithoutTeamInput[];
+      updateMany?:
+         | TeamMemberUpdateManyWithWhereWithoutTeamInput
+         | TeamMemberUpdateManyWithWhereWithoutTeamInput[];
+      deleteMany?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[];
+   };
+
+   export type TeamProjectUncheckedUpdateManyWithoutTeamNestedInput = {
+      create?:
+         | XOR<TeamProjectCreateWithoutTeamInput, TeamProjectUncheckedCreateWithoutTeamInput>
+         | TeamProjectCreateWithoutTeamInput[]
+         | TeamProjectUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | TeamProjectCreateOrConnectWithoutTeamInput
+         | TeamProjectCreateOrConnectWithoutTeamInput[];
+      upsert?:
+         | TeamProjectUpsertWithWhereUniqueWithoutTeamInput
+         | TeamProjectUpsertWithWhereUniqueWithoutTeamInput[];
+      createMany?: TeamProjectCreateManyTeamInputEnvelope;
+      set?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      disconnect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      delete?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      connect?: TeamProjectWhereUniqueInput | TeamProjectWhereUniqueInput[];
+      update?:
+         | TeamProjectUpdateWithWhereUniqueWithoutTeamInput
+         | TeamProjectUpdateWithWhereUniqueWithoutTeamInput[];
+      updateMany?:
+         | TeamProjectUpdateManyWithWhereWithoutTeamInput
+         | TeamProjectUpdateManyWithWhereWithoutTeamInput[];
+      deleteMany?: TeamProjectScalarWhereInput | TeamProjectScalarWhereInput[];
+   };
+
+   export type CycleUncheckedUpdateManyWithoutTeamNestedInput = {
+      create?:
+         | XOR<CycleCreateWithoutTeamInput, CycleUncheckedCreateWithoutTeamInput>
+         | CycleCreateWithoutTeamInput[]
+         | CycleUncheckedCreateWithoutTeamInput[];
+      connectOrCreate?:
+         | CycleCreateOrConnectWithoutTeamInput
+         | CycleCreateOrConnectWithoutTeamInput[];
+      upsert?:
+         | CycleUpsertWithWhereUniqueWithoutTeamInput
+         | CycleUpsertWithWhereUniqueWithoutTeamInput[];
+      createMany?: CycleCreateManyTeamInputEnvelope;
+      set?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      disconnect?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      delete?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      connect?: CycleWhereUniqueInput | CycleWhereUniqueInput[];
+      update?:
+         | CycleUpdateWithWhereUniqueWithoutTeamInput
+         | CycleUpdateWithWhereUniqueWithoutTeamInput[];
+      updateMany?:
+         | CycleUpdateManyWithWhereWithoutTeamInput
+         | CycleUpdateManyWithWhereWithoutTeamInput[];
+      deleteMany?: CycleScalarWhereInput | CycleScalarWhereInput[];
+   };
+
+   export type TeamCreateNestedOneWithoutMembersInput = {
+      create?: XOR<TeamCreateWithoutMembersInput, TeamUncheckedCreateWithoutMembersInput>;
+      connectOrCreate?: TeamCreateOrConnectWithoutMembersInput;
+      connect?: TeamWhereUniqueInput;
+   };
+
+   export type UserCreateNestedOneWithoutTeamsInput = {
+      create?: XOR<UserCreateWithoutTeamsInput, UserUncheckedCreateWithoutTeamsInput>;
+      connectOrCreate?: UserCreateOrConnectWithoutTeamsInput;
+      connect?: UserWhereUniqueInput;
+   };
+
+   export type TeamUpdateOneRequiredWithoutMembersNestedInput = {
+      create?: XOR<TeamCreateWithoutMembersInput, TeamUncheckedCreateWithoutMembersInput>;
+      connectOrCreate?: TeamCreateOrConnectWithoutMembersInput;
+      upsert?: TeamUpsertWithoutMembersInput;
+      connect?: TeamWhereUniqueInput;
+      update?: XOR<
+         XOR<TeamUpdateToOneWithWhereWithoutMembersInput, TeamUpdateWithoutMembersInput>,
+         TeamUncheckedUpdateWithoutMembersInput
+      >;
+   };
+
+   export type UserUpdateOneRequiredWithoutTeamsNestedInput = {
+      create?: XOR<UserCreateWithoutTeamsInput, UserUncheckedCreateWithoutTeamsInput>;
+      connectOrCreate?: UserCreateOrConnectWithoutTeamsInput;
+      upsert?: UserUpsertWithoutTeamsInput;
+      connect?: UserWhereUniqueInput;
+      update?: XOR<
+         XOR<UserUpdateToOneWithWhereWithoutTeamsInput, UserUpdateWithoutTeamsInput>,
+         UserUncheckedUpdateWithoutTeamsInput
+      >;
+   };
+
+   export type TeamCreateNestedOneWithoutProjectsInput = {
+      create?: XOR<TeamCreateWithoutProjectsInput, TeamUncheckedCreateWithoutProjectsInput>;
+      connectOrCreate?: TeamCreateOrConnectWithoutProjectsInput;
+      connect?: TeamWhereUniqueInput;
+   };
+
+   export type ProjectCreateNestedOneWithoutTeamsInput = {
+      create?: XOR<ProjectCreateWithoutTeamsInput, ProjectUncheckedCreateWithoutTeamsInput>;
+      connectOrCreate?: ProjectCreateOrConnectWithoutTeamsInput;
+      connect?: ProjectWhereUniqueInput;
+   };
+
+   export type TeamUpdateOneRequiredWithoutProjectsNestedInput = {
+      create?: XOR<TeamCreateWithoutProjectsInput, TeamUncheckedCreateWithoutProjectsInput>;
+      connectOrCreate?: TeamCreateOrConnectWithoutProjectsInput;
+      upsert?: TeamUpsertWithoutProjectsInput;
+      connect?: TeamWhereUniqueInput;
+      update?: XOR<
+         XOR<TeamUpdateToOneWithWhereWithoutProjectsInput, TeamUpdateWithoutProjectsInput>,
+         TeamUncheckedUpdateWithoutProjectsInput
+      >;
+   };
+
+   export type ProjectUpdateOneRequiredWithoutTeamsNestedInput = {
+      create?: XOR<ProjectCreateWithoutTeamsInput, ProjectUncheckedCreateWithoutTeamsInput>;
+      connectOrCreate?: ProjectCreateOrConnectWithoutTeamsInput;
+      upsert?: ProjectUpsertWithoutTeamsInput;
+      connect?: ProjectWhereUniqueInput;
+      update?: XOR<
+         XOR<ProjectUpdateToOneWithWhereWithoutTeamsInput, ProjectUpdateWithoutTeamsInput>,
+         ProjectUncheckedUpdateWithoutTeamsInput
+      >;
    };
 
    export type NestedIntFilter<$PrismaModel = never> = {
@@ -11338,6 +31277,74 @@ export namespace Prisma {
       _max?: NestedBoolFilter<$PrismaModel>;
    };
 
+   export type NestedEnumUserStatusFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserStatus[];
+      notIn?: $Enums.UserStatus[];
+      not?: NestedEnumUserStatusFilter<$PrismaModel> | $Enums.UserStatus;
+   };
+
+   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserRole[];
+      notIn?: $Enums.UserRole[];
+      not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole;
+   };
+
+   export type NestedEnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserStatus[];
+      notIn?: $Enums.UserStatus[];
+      not?: NestedEnumUserStatusWithAggregatesFilter<$PrismaModel> | $Enums.UserStatus;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumUserStatusFilter<$PrismaModel>;
+      _max?: NestedEnumUserStatusFilter<$PrismaModel>;
+   };
+
+   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>;
+      in?: $Enums.UserRole[];
+      notIn?: $Enums.UserRole[];
+      not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumUserRoleFilter<$PrismaModel>;
+      _max?: NestedEnumUserRoleFilter<$PrismaModel>;
+   };
+
+   export type NestedEnumProjectHealthFilter<$PrismaModel = never> = {
+      equals?: $Enums.ProjectHealth | EnumProjectHealthFieldRefInput<$PrismaModel>;
+      in?: $Enums.ProjectHealth[];
+      notIn?: $Enums.ProjectHealth[];
+      not?: NestedEnumProjectHealthFilter<$PrismaModel> | $Enums.ProjectHealth;
+   };
+
+   export type NestedEnumProjectHealthWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.ProjectHealth | EnumProjectHealthFieldRefInput<$PrismaModel>;
+      in?: $Enums.ProjectHealth[];
+      notIn?: $Enums.ProjectHealth[];
+      not?: NestedEnumProjectHealthWithAggregatesFilter<$PrismaModel> | $Enums.ProjectHealth;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumProjectHealthFilter<$PrismaModel>;
+      _max?: NestedEnumProjectHealthFilter<$PrismaModel>;
+   };
+
+   export type NestedEnumIssueTypeFilter<$PrismaModel = never> = {
+      equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>;
+      in?: $Enums.IssueType[];
+      notIn?: $Enums.IssueType[];
+      not?: NestedEnumIssueTypeFilter<$PrismaModel> | $Enums.IssueType;
+   };
+
+   export type NestedEnumIssueTypeWithAggregatesFilter<$PrismaModel = never> = {
+      equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>;
+      in?: $Enums.IssueType[];
+      notIn?: $Enums.IssueType[];
+      not?: NestedEnumIssueTypeWithAggregatesFilter<$PrismaModel> | $Enums.IssueType;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumIssueTypeFilter<$PrismaModel>;
+      _max?: NestedEnumIssueTypeFilter<$PrismaModel>;
+   };
+
    export type SubtaskCreateWithoutParentTaskInput = {
       id: string;
       title: string;
@@ -11418,6 +31425,59 @@ export namespace Prisma {
 
    export type TaskDependencyCreateManyDependsOnInputEnvelope = {
       data: TaskDependencyCreateManyDependsOnInput | TaskDependencyCreateManyDependsOnInput[];
+   };
+
+   export type IssueCreateWithoutTaskInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutTaskInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutTaskInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutTaskInput, IssueUncheckedCreateWithoutTaskInput>;
+   };
+
+   export type IssueCreateManyTaskInputEnvelope = {
+      data: IssueCreateManyTaskInput | IssueCreateManyTaskInput[];
    };
 
    export type SubtaskUpsertWithWhereUniqueWithoutParentTaskInput = {
@@ -11524,6 +31584,47 @@ export namespace Prisma {
       >;
    };
 
+   export type IssueUpsertWithWhereUniqueWithoutTaskInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutTaskInput, IssueUncheckedUpdateWithoutTaskInput>;
+      create: XOR<IssueCreateWithoutTaskInput, IssueUncheckedCreateWithoutTaskInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutTaskInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutTaskInput, IssueUncheckedUpdateWithoutTaskInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutTaskInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutTaskInput>;
+   };
+
+   export type IssueScalarWhereInput = {
+      AND?: IssueScalarWhereInput | IssueScalarWhereInput[];
+      OR?: IssueScalarWhereInput[];
+      NOT?: IssueScalarWhereInput | IssueScalarWhereInput[];
+      id?: StringFilter<'Issue'> | string;
+      identifier?: StringFilter<'Issue'> | string;
+      title?: StringFilter<'Issue'> | string;
+      description?: StringFilter<'Issue'> | string;
+      statusId?: StringNullableFilter<'Issue'> | string | null;
+      priorityId?: StringNullableFilter<'Issue'> | string | null;
+      status?: StringNullableFilter<'Issue'> | string | null;
+      priority?: StringNullableFilter<'Issue'> | string | null;
+      rank?: StringFilter<'Issue'> | string;
+      cycleId?: StringNullableFilter<'Issue'> | string | null;
+      dueDate?: DateTimeNullableFilter<'Issue'> | Date | string | null;
+      taskId?: IntNullableFilter<'Issue'> | number | null;
+      subtaskId?: StringNullableFilter<'Issue'> | string | null;
+      issueType?: EnumIssueTypeFilter<'Issue'> | $Enums.IssueType;
+      assigneeId?: StringNullableFilter<'Issue'> | string | null;
+      projectId?: StringNullableFilter<'Issue'> | string | null;
+      subissues?: StringFilter<'Issue'> | string;
+      createdAt?: DateTimeFilter<'Issue'> | Date | string;
+      updatedAt?: DateTimeFilter<'Issue'> | Date | string;
+   };
+
    export type TaskCreateWithoutSubtasksInput = {
       id: number;
       title: string;
@@ -11537,6 +31638,7 @@ export namespace Prisma {
       updatedAt?: Date | string;
       dependencies?: TaskDependencyCreateNestedManyWithoutTaskInput;
       dependents?: TaskDependencyCreateNestedManyWithoutDependsOnInput;
+      issues?: IssueCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskUncheckedCreateWithoutSubtasksInput = {
@@ -11552,6 +31654,7 @@ export namespace Prisma {
       updatedAt?: Date | string;
       dependencies?: TaskDependencyUncheckedCreateNestedManyWithoutTaskInput;
       dependents?: TaskDependencyUncheckedCreateNestedManyWithoutDependsOnInput;
+      issues?: IssueUncheckedCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskCreateOrConnectWithoutSubtasksInput = {
@@ -11583,6 +31686,7 @@ export namespace Prisma {
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       dependencies?: TaskDependencyUpdateManyWithoutTaskNestedInput;
       dependents?: TaskDependencyUpdateManyWithoutDependsOnNestedInput;
+      issues?: IssueUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskUncheckedUpdateWithoutSubtasksInput = {
@@ -11598,6 +31702,7 @@ export namespace Prisma {
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       dependencies?: TaskDependencyUncheckedUpdateManyWithoutTaskNestedInput;
       dependents?: TaskDependencyUncheckedUpdateManyWithoutDependsOnNestedInput;
+      issues?: IssueUncheckedUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskCreateWithoutDependenciesInput = {
@@ -11613,6 +31718,7 @@ export namespace Prisma {
       updatedAt?: Date | string;
       subtasks?: SubtaskCreateNestedManyWithoutParentTaskInput;
       dependents?: TaskDependencyCreateNestedManyWithoutDependsOnInput;
+      issues?: IssueCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskUncheckedCreateWithoutDependenciesInput = {
@@ -11628,6 +31734,7 @@ export namespace Prisma {
       updatedAt?: Date | string;
       subtasks?: SubtaskUncheckedCreateNestedManyWithoutParentTaskInput;
       dependents?: TaskDependencyUncheckedCreateNestedManyWithoutDependsOnInput;
+      issues?: IssueUncheckedCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskCreateOrConnectWithoutDependenciesInput = {
@@ -11648,6 +31755,7 @@ export namespace Prisma {
       updatedAt?: Date | string;
       subtasks?: SubtaskCreateNestedManyWithoutParentTaskInput;
       dependencies?: TaskDependencyCreateNestedManyWithoutTaskInput;
+      issues?: IssueCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskUncheckedCreateWithoutDependentsInput = {
@@ -11663,6 +31771,7 @@ export namespace Prisma {
       updatedAt?: Date | string;
       subtasks?: SubtaskUncheckedCreateNestedManyWithoutParentTaskInput;
       dependencies?: TaskDependencyUncheckedCreateNestedManyWithoutTaskInput;
+      issues?: IssueUncheckedCreateNestedManyWithoutTaskInput;
    };
 
    export type TaskCreateOrConnectWithoutDependentsInput = {
@@ -11694,6 +31803,7 @@ export namespace Prisma {
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       subtasks?: SubtaskUpdateManyWithoutParentTaskNestedInput;
       dependents?: TaskDependencyUpdateManyWithoutDependsOnNestedInput;
+      issues?: IssueUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskUncheckedUpdateWithoutDependenciesInput = {
@@ -11709,6 +31819,7 @@ export namespace Prisma {
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       subtasks?: SubtaskUncheckedUpdateManyWithoutParentTaskNestedInput;
       dependents?: TaskDependencyUncheckedUpdateManyWithoutDependsOnNestedInput;
+      issues?: IssueUncheckedUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskUpsertWithoutDependentsInput = {
@@ -11735,6 +31846,7 @@ export namespace Prisma {
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       subtasks?: SubtaskUpdateManyWithoutParentTaskNestedInput;
       dependencies?: TaskDependencyUpdateManyWithoutTaskNestedInput;
+      issues?: IssueUpdateManyWithoutTaskNestedInput;
    };
 
    export type TaskUncheckedUpdateWithoutDependentsInput = {
@@ -11750,6 +31862,1772 @@ export namespace Prisma {
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       subtasks?: SubtaskUncheckedUpdateManyWithoutParentTaskNestedInput;
       dependencies?: TaskDependencyUncheckedUpdateManyWithoutTaskNestedInput;
+      issues?: IssueUncheckedUpdateManyWithoutTaskNestedInput;
+   };
+
+   export type IssueCreateWithoutAssigneeInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutAssigneeInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutAssigneeInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutAssigneeInput, IssueUncheckedCreateWithoutAssigneeInput>;
+   };
+
+   export type IssueCreateManyAssigneeInputEnvelope = {
+      data: IssueCreateManyAssigneeInput | IssueCreateManyAssigneeInput[];
+   };
+
+   export type TeamMemberCreateWithoutUserInput = {
+      id?: string;
+      team: TeamCreateNestedOneWithoutMembersInput;
+   };
+
+   export type TeamMemberUncheckedCreateWithoutUserInput = {
+      id?: string;
+      teamId: string;
+   };
+
+   export type TeamMemberCreateOrConnectWithoutUserInput = {
+      where: TeamMemberWhereUniqueInput;
+      create: XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput>;
+   };
+
+   export type TeamMemberCreateManyUserInputEnvelope = {
+      data: TeamMemberCreateManyUserInput | TeamMemberCreateManyUserInput[];
+   };
+
+   export type ProjectCreateWithoutLeadInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutProjectInput;
+      teams?: TeamProjectCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectUncheckedCreateWithoutLeadInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutProjectInput;
+      teams?: TeamProjectUncheckedCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectCreateOrConnectWithoutLeadInput = {
+      where: ProjectWhereUniqueInput;
+      create: XOR<ProjectCreateWithoutLeadInput, ProjectUncheckedCreateWithoutLeadInput>;
+   };
+
+   export type ProjectCreateManyLeadInputEnvelope = {
+      data: ProjectCreateManyLeadInput | ProjectCreateManyLeadInput[];
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutAssigneeInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutAssigneeInput, IssueUncheckedUpdateWithoutAssigneeInput>;
+      create: XOR<IssueCreateWithoutAssigneeInput, IssueUncheckedCreateWithoutAssigneeInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutAssigneeInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutAssigneeInput, IssueUncheckedUpdateWithoutAssigneeInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutAssigneeInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutAssigneeInput>;
+   };
+
+   export type TeamMemberUpsertWithWhereUniqueWithoutUserInput = {
+      where: TeamMemberWhereUniqueInput;
+      update: XOR<TeamMemberUpdateWithoutUserInput, TeamMemberUncheckedUpdateWithoutUserInput>;
+      create: XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput>;
+   };
+
+   export type TeamMemberUpdateWithWhereUniqueWithoutUserInput = {
+      where: TeamMemberWhereUniqueInput;
+      data: XOR<TeamMemberUpdateWithoutUserInput, TeamMemberUncheckedUpdateWithoutUserInput>;
+   };
+
+   export type TeamMemberUpdateManyWithWhereWithoutUserInput = {
+      where: TeamMemberScalarWhereInput;
+      data: XOR<TeamMemberUpdateManyMutationInput, TeamMemberUncheckedUpdateManyWithoutUserInput>;
+   };
+
+   export type TeamMemberScalarWhereInput = {
+      AND?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[];
+      OR?: TeamMemberScalarWhereInput[];
+      NOT?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[];
+      id?: StringFilter<'TeamMember'> | string;
+      teamId?: StringFilter<'TeamMember'> | string;
+      userId?: StringFilter<'TeamMember'> | string;
+   };
+
+   export type ProjectUpsertWithWhereUniqueWithoutLeadInput = {
+      where: ProjectWhereUniqueInput;
+      update: XOR<ProjectUpdateWithoutLeadInput, ProjectUncheckedUpdateWithoutLeadInput>;
+      create: XOR<ProjectCreateWithoutLeadInput, ProjectUncheckedCreateWithoutLeadInput>;
+   };
+
+   export type ProjectUpdateWithWhereUniqueWithoutLeadInput = {
+      where: ProjectWhereUniqueInput;
+      data: XOR<ProjectUpdateWithoutLeadInput, ProjectUncheckedUpdateWithoutLeadInput>;
+   };
+
+   export type ProjectUpdateManyWithWhereWithoutLeadInput = {
+      where: ProjectScalarWhereInput;
+      data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutLeadInput>;
+   };
+
+   export type ProjectScalarWhereInput = {
+      AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+      OR?: ProjectScalarWhereInput[];
+      NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+      id?: StringFilter<'Project'> | string;
+      name?: StringFilter<'Project'> | string;
+      description?: StringNullableFilter<'Project'> | string | null;
+      color?: StringNullableFilter<'Project'> | string | null;
+      identifier?: StringNullableFilter<'Project'> | string | null;
+      icon?: StringNullableFilter<'Project'> | string | null;
+      percentComplete?: IntFilter<'Project'> | number;
+      startDate?: DateTimeNullableFilter<'Project'> | Date | string | null;
+      health?: EnumProjectHealthFilter<'Project'> | $Enums.ProjectHealth;
+      leadId?: StringNullableFilter<'Project'> | string | null;
+      createdAt?: DateTimeFilter<'Project'> | Date | string;
+      updatedAt?: DateTimeFilter<'Project'> | Date | string;
+   };
+
+   export type IssueCreateWithoutProjectInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutProjectInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutProjectInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutProjectInput, IssueUncheckedCreateWithoutProjectInput>;
+   };
+
+   export type IssueCreateManyProjectInputEnvelope = {
+      data: IssueCreateManyProjectInput | IssueCreateManyProjectInput[];
+   };
+
+   export type UserCreateWithoutLedProjectsInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignedIssues?: IssueCreateNestedManyWithoutAssigneeInput;
+      teams?: TeamMemberCreateNestedManyWithoutUserInput;
+   };
+
+   export type UserUncheckedCreateWithoutLedProjectsInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignedIssues?: IssueUncheckedCreateNestedManyWithoutAssigneeInput;
+      teams?: TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+   };
+
+   export type UserCreateOrConnectWithoutLedProjectsInput = {
+      where: UserWhereUniqueInput;
+      create: XOR<UserCreateWithoutLedProjectsInput, UserUncheckedCreateWithoutLedProjectsInput>;
+   };
+
+   export type TeamProjectCreateWithoutProjectInput = {
+      id?: string;
+      team: TeamCreateNestedOneWithoutProjectsInput;
+   };
+
+   export type TeamProjectUncheckedCreateWithoutProjectInput = {
+      id?: string;
+      teamId: string;
+   };
+
+   export type TeamProjectCreateOrConnectWithoutProjectInput = {
+      where: TeamProjectWhereUniqueInput;
+      create: XOR<
+         TeamProjectCreateWithoutProjectInput,
+         TeamProjectUncheckedCreateWithoutProjectInput
+      >;
+   };
+
+   export type TeamProjectCreateManyProjectInputEnvelope = {
+      data: TeamProjectCreateManyProjectInput | TeamProjectCreateManyProjectInput[];
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutProjectInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutProjectInput, IssueUncheckedUpdateWithoutProjectInput>;
+      create: XOR<IssueCreateWithoutProjectInput, IssueUncheckedCreateWithoutProjectInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutProjectInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutProjectInput, IssueUncheckedUpdateWithoutProjectInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutProjectInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutProjectInput>;
+   };
+
+   export type UserUpsertWithoutLedProjectsInput = {
+      update: XOR<UserUpdateWithoutLedProjectsInput, UserUncheckedUpdateWithoutLedProjectsInput>;
+      create: XOR<UserCreateWithoutLedProjectsInput, UserUncheckedCreateWithoutLedProjectsInput>;
+      where?: UserWhereInput;
+   };
+
+   export type UserUpdateToOneWithWhereWithoutLedProjectsInput = {
+      where?: UserWhereInput;
+      data: XOR<UserUpdateWithoutLedProjectsInput, UserUncheckedUpdateWithoutLedProjectsInput>;
+   };
+
+   export type UserUpdateWithoutLedProjectsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignedIssues?: IssueUpdateManyWithoutAssigneeNestedInput;
+      teams?: TeamMemberUpdateManyWithoutUserNestedInput;
+   };
+
+   export type UserUncheckedUpdateWithoutLedProjectsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignedIssues?: IssueUncheckedUpdateManyWithoutAssigneeNestedInput;
+      teams?: TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+   };
+
+   export type TeamProjectUpsertWithWhereUniqueWithoutProjectInput = {
+      where: TeamProjectWhereUniqueInput;
+      update: XOR<
+         TeamProjectUpdateWithoutProjectInput,
+         TeamProjectUncheckedUpdateWithoutProjectInput
+      >;
+      create: XOR<
+         TeamProjectCreateWithoutProjectInput,
+         TeamProjectUncheckedCreateWithoutProjectInput
+      >;
+   };
+
+   export type TeamProjectUpdateWithWhereUniqueWithoutProjectInput = {
+      where: TeamProjectWhereUniqueInput;
+      data: XOR<
+         TeamProjectUpdateWithoutProjectInput,
+         TeamProjectUncheckedUpdateWithoutProjectInput
+      >;
+   };
+
+   export type TeamProjectUpdateManyWithWhereWithoutProjectInput = {
+      where: TeamProjectScalarWhereInput;
+      data: XOR<
+         TeamProjectUpdateManyMutationInput,
+         TeamProjectUncheckedUpdateManyWithoutProjectInput
+      >;
+   };
+
+   export type TeamProjectScalarWhereInput = {
+      AND?: TeamProjectScalarWhereInput | TeamProjectScalarWhereInput[];
+      OR?: TeamProjectScalarWhereInput[];
+      NOT?: TeamProjectScalarWhereInput | TeamProjectScalarWhereInput[];
+      id?: StringFilter<'TeamProject'> | string;
+      teamId?: StringFilter<'TeamProject'> | string;
+      projectId?: StringFilter<'TeamProject'> | string;
+   };
+
+   export type IssueLabelCreateWithoutLabelInput = {
+      id?: string;
+      issue: IssueCreateNestedOneWithoutLabelsInput;
+   };
+
+   export type IssueLabelUncheckedCreateWithoutLabelInput = {
+      id?: string;
+      issueId: string;
+   };
+
+   export type IssueLabelCreateOrConnectWithoutLabelInput = {
+      where: IssueLabelWhereUniqueInput;
+      create: XOR<IssueLabelCreateWithoutLabelInput, IssueLabelUncheckedCreateWithoutLabelInput>;
+   };
+
+   export type IssueLabelCreateManyLabelInputEnvelope = {
+      data: IssueLabelCreateManyLabelInput | IssueLabelCreateManyLabelInput[];
+   };
+
+   export type IssueLabelUpsertWithWhereUniqueWithoutLabelInput = {
+      where: IssueLabelWhereUniqueInput;
+      update: XOR<IssueLabelUpdateWithoutLabelInput, IssueLabelUncheckedUpdateWithoutLabelInput>;
+      create: XOR<IssueLabelCreateWithoutLabelInput, IssueLabelUncheckedCreateWithoutLabelInput>;
+   };
+
+   export type IssueLabelUpdateWithWhereUniqueWithoutLabelInput = {
+      where: IssueLabelWhereUniqueInput;
+      data: XOR<IssueLabelUpdateWithoutLabelInput, IssueLabelUncheckedUpdateWithoutLabelInput>;
+   };
+
+   export type IssueLabelUpdateManyWithWhereWithoutLabelInput = {
+      where: IssueLabelScalarWhereInput;
+      data: XOR<IssueLabelUpdateManyMutationInput, IssueLabelUncheckedUpdateManyWithoutLabelInput>;
+   };
+
+   export type IssueLabelScalarWhereInput = {
+      AND?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+      OR?: IssueLabelScalarWhereInput[];
+      NOT?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+      id?: StringFilter<'IssueLabel'> | string;
+      issueId?: StringFilter<'IssueLabel'> | string;
+      labelId?: StringFilter<'IssueLabel'> | string;
+   };
+
+   export type IssueCreateWithoutIssueStatusInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutIssueStatusInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutIssueStatusInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutIssueStatusInput, IssueUncheckedCreateWithoutIssueStatusInput>;
+   };
+
+   export type IssueCreateManyIssueStatusInputEnvelope = {
+      data: IssueCreateManyIssueStatusInput | IssueCreateManyIssueStatusInput[];
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutIssueStatusInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutIssueStatusInput, IssueUncheckedUpdateWithoutIssueStatusInput>;
+      create: XOR<IssueCreateWithoutIssueStatusInput, IssueUncheckedCreateWithoutIssueStatusInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutIssueStatusInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutIssueStatusInput, IssueUncheckedUpdateWithoutIssueStatusInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutIssueStatusInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutIssueStatusInput>;
+   };
+
+   export type IssueCreateWithoutIssuePriorityInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutIssuePriorityInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutIssuePriorityInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<
+         IssueCreateWithoutIssuePriorityInput,
+         IssueUncheckedCreateWithoutIssuePriorityInput
+      >;
+   };
+
+   export type IssueCreateManyIssuePriorityInputEnvelope = {
+      data: IssueCreateManyIssuePriorityInput | IssueCreateManyIssuePriorityInput[];
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutIssuePriorityInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<
+         IssueUpdateWithoutIssuePriorityInput,
+         IssueUncheckedUpdateWithoutIssuePriorityInput
+      >;
+      create: XOR<
+         IssueCreateWithoutIssuePriorityInput,
+         IssueUncheckedCreateWithoutIssuePriorityInput
+      >;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutIssuePriorityInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<
+         IssueUpdateWithoutIssuePriorityInput,
+         IssueUncheckedUpdateWithoutIssuePriorityInput
+      >;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutIssuePriorityInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutIssuePriorityInput>;
+   };
+
+   export type UserCreateWithoutAssignedIssuesInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      teams?: TeamMemberCreateNestedManyWithoutUserInput;
+      ledProjects?: ProjectCreateNestedManyWithoutLeadInput;
+   };
+
+   export type UserUncheckedCreateWithoutAssignedIssuesInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      teams?: TeamMemberUncheckedCreateNestedManyWithoutUserInput;
+      ledProjects?: ProjectUncheckedCreateNestedManyWithoutLeadInput;
+   };
+
+   export type UserCreateOrConnectWithoutAssignedIssuesInput = {
+      where: UserWhereUniqueInput;
+      create: XOR<
+         UserCreateWithoutAssignedIssuesInput,
+         UserUncheckedCreateWithoutAssignedIssuesInput
+      >;
+   };
+
+   export type ProjectCreateWithoutIssuesInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      lead?: UserCreateNestedOneWithoutLedProjectsInput;
+      teams?: TeamProjectCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectUncheckedCreateWithoutIssuesInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      leadId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      teams?: TeamProjectUncheckedCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectCreateOrConnectWithoutIssuesInput = {
+      where: ProjectWhereUniqueInput;
+      create: XOR<ProjectCreateWithoutIssuesInput, ProjectUncheckedCreateWithoutIssuesInput>;
+   };
+
+   export type CycleCreateWithoutIssuesInput = {
+      id?: string;
+      number: number;
+      name: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      team: TeamCreateNestedOneWithoutCyclesInput;
+   };
+
+   export type CycleUncheckedCreateWithoutIssuesInput = {
+      id?: string;
+      number: number;
+      name: string;
+      teamId: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type CycleCreateOrConnectWithoutIssuesInput = {
+      where: CycleWhereUniqueInput;
+      create: XOR<CycleCreateWithoutIssuesInput, CycleUncheckedCreateWithoutIssuesInput>;
+   };
+
+   export type TaskCreateWithoutIssuesInput = {
+      id: number;
+      title: string;
+      description: string;
+      details?: string | null;
+      testStrategy?: string | null;
+      priority: string;
+      status: string;
+      complexity?: number | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      subtasks?: SubtaskCreateNestedManyWithoutParentTaskInput;
+      dependencies?: TaskDependencyCreateNestedManyWithoutTaskInput;
+      dependents?: TaskDependencyCreateNestedManyWithoutDependsOnInput;
+   };
+
+   export type TaskUncheckedCreateWithoutIssuesInput = {
+      id: number;
+      title: string;
+      description: string;
+      details?: string | null;
+      testStrategy?: string | null;
+      priority: string;
+      status: string;
+      complexity?: number | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      subtasks?: SubtaskUncheckedCreateNestedManyWithoutParentTaskInput;
+      dependencies?: TaskDependencyUncheckedCreateNestedManyWithoutTaskInput;
+      dependents?: TaskDependencyUncheckedCreateNestedManyWithoutDependsOnInput;
+   };
+
+   export type TaskCreateOrConnectWithoutIssuesInput = {
+      where: TaskWhereUniqueInput;
+      create: XOR<TaskCreateWithoutIssuesInput, TaskUncheckedCreateWithoutIssuesInput>;
+   };
+
+   export type IssueStatusCreateWithoutIssuesInput = {
+      id: string;
+      name: string;
+      color: string;
+      iconName: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueStatusUncheckedCreateWithoutIssuesInput = {
+      id: string;
+      name: string;
+      color: string;
+      iconName: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueStatusCreateOrConnectWithoutIssuesInput = {
+      where: IssueStatusWhereUniqueInput;
+      create: XOR<
+         IssueStatusCreateWithoutIssuesInput,
+         IssueStatusUncheckedCreateWithoutIssuesInput
+      >;
+   };
+
+   export type IssuePriorityCreateWithoutIssuesInput = {
+      id: string;
+      name: string;
+      iconName: string;
+      order: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssuePriorityUncheckedCreateWithoutIssuesInput = {
+      id: string;
+      name: string;
+      iconName: string;
+      order: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssuePriorityCreateOrConnectWithoutIssuesInput = {
+      where: IssuePriorityWhereUniqueInput;
+      create: XOR<
+         IssuePriorityCreateWithoutIssuesInput,
+         IssuePriorityUncheckedCreateWithoutIssuesInput
+      >;
+   };
+
+   export type IssueLabelCreateWithoutIssueInput = {
+      id?: string;
+      label: LabelCreateNestedOneWithoutIssuesInput;
+   };
+
+   export type IssueLabelUncheckedCreateWithoutIssueInput = {
+      id?: string;
+      labelId: string;
+   };
+
+   export type IssueLabelCreateOrConnectWithoutIssueInput = {
+      where: IssueLabelWhereUniqueInput;
+      create: XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>;
+   };
+
+   export type IssueLabelCreateManyIssueInputEnvelope = {
+      data: IssueLabelCreateManyIssueInput | IssueLabelCreateManyIssueInput[];
+   };
+
+   export type UserUpsertWithoutAssignedIssuesInput = {
+      update: XOR<
+         UserUpdateWithoutAssignedIssuesInput,
+         UserUncheckedUpdateWithoutAssignedIssuesInput
+      >;
+      create: XOR<
+         UserCreateWithoutAssignedIssuesInput,
+         UserUncheckedCreateWithoutAssignedIssuesInput
+      >;
+      where?: UserWhereInput;
+   };
+
+   export type UserUpdateToOneWithWhereWithoutAssignedIssuesInput = {
+      where?: UserWhereInput;
+      data: XOR<
+         UserUpdateWithoutAssignedIssuesInput,
+         UserUncheckedUpdateWithoutAssignedIssuesInput
+      >;
+   };
+
+   export type UserUpdateWithoutAssignedIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teams?: TeamMemberUpdateManyWithoutUserNestedInput;
+      ledProjects?: ProjectUpdateManyWithoutLeadNestedInput;
+   };
+
+   export type UserUncheckedUpdateWithoutAssignedIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teams?: TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
+      ledProjects?: ProjectUncheckedUpdateManyWithoutLeadNestedInput;
+   };
+
+   export type ProjectUpsertWithoutIssuesInput = {
+      update: XOR<ProjectUpdateWithoutIssuesInput, ProjectUncheckedUpdateWithoutIssuesInput>;
+      create: XOR<ProjectCreateWithoutIssuesInput, ProjectUncheckedCreateWithoutIssuesInput>;
+      where?: ProjectWhereInput;
+   };
+
+   export type ProjectUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: ProjectWhereInput;
+      data: XOR<ProjectUpdateWithoutIssuesInput, ProjectUncheckedUpdateWithoutIssuesInput>;
+   };
+
+   export type ProjectUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      lead?: UserUpdateOneWithoutLedProjectsNestedInput;
+      teams?: TeamProjectUpdateManyWithoutProjectNestedInput;
+   };
+
+   export type ProjectUncheckedUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      leadId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teams?: TeamProjectUncheckedUpdateManyWithoutProjectNestedInput;
+   };
+
+   export type CycleUpsertWithoutIssuesInput = {
+      update: XOR<CycleUpdateWithoutIssuesInput, CycleUncheckedUpdateWithoutIssuesInput>;
+      create: XOR<CycleCreateWithoutIssuesInput, CycleUncheckedCreateWithoutIssuesInput>;
+      where?: CycleWhereInput;
+   };
+
+   export type CycleUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: CycleWhereInput;
+      data: XOR<CycleUpdateWithoutIssuesInput, CycleUncheckedUpdateWithoutIssuesInput>;
+   };
+
+   export type CycleUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      team?: TeamUpdateOneRequiredWithoutCyclesNestedInput;
+   };
+
+   export type CycleUncheckedUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TaskUpsertWithoutIssuesInput = {
+      update: XOR<TaskUpdateWithoutIssuesInput, TaskUncheckedUpdateWithoutIssuesInput>;
+      create: XOR<TaskCreateWithoutIssuesInput, TaskUncheckedCreateWithoutIssuesInput>;
+      where?: TaskWhereInput;
+   };
+
+   export type TaskUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: TaskWhereInput;
+      data: XOR<TaskUpdateWithoutIssuesInput, TaskUncheckedUpdateWithoutIssuesInput>;
+   };
+
+   export type TaskUpdateWithoutIssuesInput = {
+      id?: IntFieldUpdateOperationsInput | number;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      details?: NullableStringFieldUpdateOperationsInput | string | null;
+      testStrategy?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: StringFieldUpdateOperationsInput | string;
+      status?: StringFieldUpdateOperationsInput | string;
+      complexity?: NullableIntFieldUpdateOperationsInput | number | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      subtasks?: SubtaskUpdateManyWithoutParentTaskNestedInput;
+      dependencies?: TaskDependencyUpdateManyWithoutTaskNestedInput;
+      dependents?: TaskDependencyUpdateManyWithoutDependsOnNestedInput;
+   };
+
+   export type TaskUncheckedUpdateWithoutIssuesInput = {
+      id?: IntFieldUpdateOperationsInput | number;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      details?: NullableStringFieldUpdateOperationsInput | string | null;
+      testStrategy?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: StringFieldUpdateOperationsInput | string;
+      status?: StringFieldUpdateOperationsInput | string;
+      complexity?: NullableIntFieldUpdateOperationsInput | number | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      subtasks?: SubtaskUncheckedUpdateManyWithoutParentTaskNestedInput;
+      dependencies?: TaskDependencyUncheckedUpdateManyWithoutTaskNestedInput;
+      dependents?: TaskDependencyUncheckedUpdateManyWithoutDependsOnNestedInput;
+   };
+
+   export type IssueStatusUpsertWithoutIssuesInput = {
+      update: XOR<
+         IssueStatusUpdateWithoutIssuesInput,
+         IssueStatusUncheckedUpdateWithoutIssuesInput
+      >;
+      create: XOR<
+         IssueStatusCreateWithoutIssuesInput,
+         IssueStatusUncheckedCreateWithoutIssuesInput
+      >;
+      where?: IssueStatusWhereInput;
+   };
+
+   export type IssueStatusUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: IssueStatusWhereInput;
+      data: XOR<IssueStatusUpdateWithoutIssuesInput, IssueStatusUncheckedUpdateWithoutIssuesInput>;
+   };
+
+   export type IssueStatusUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueStatusUncheckedUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssuePriorityUpsertWithoutIssuesInput = {
+      update: XOR<
+         IssuePriorityUpdateWithoutIssuesInput,
+         IssuePriorityUncheckedUpdateWithoutIssuesInput
+      >;
+      create: XOR<
+         IssuePriorityCreateWithoutIssuesInput,
+         IssuePriorityUncheckedCreateWithoutIssuesInput
+      >;
+      where?: IssuePriorityWhereInput;
+   };
+
+   export type IssuePriorityUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: IssuePriorityWhereInput;
+      data: XOR<
+         IssuePriorityUpdateWithoutIssuesInput,
+         IssuePriorityUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type IssuePriorityUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      order?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssuePriorityUncheckedUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      iconName?: StringFieldUpdateOperationsInput | string;
+      order?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueLabelUpsertWithWhereUniqueWithoutIssueInput = {
+      where: IssueLabelWhereUniqueInput;
+      update: XOR<IssueLabelUpdateWithoutIssueInput, IssueLabelUncheckedUpdateWithoutIssueInput>;
+      create: XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>;
+   };
+
+   export type IssueLabelUpdateWithWhereUniqueWithoutIssueInput = {
+      where: IssueLabelWhereUniqueInput;
+      data: XOR<IssueLabelUpdateWithoutIssueInput, IssueLabelUncheckedUpdateWithoutIssueInput>;
+   };
+
+   export type IssueLabelUpdateManyWithWhereWithoutIssueInput = {
+      where: IssueLabelScalarWhereInput;
+      data: XOR<IssueLabelUpdateManyMutationInput, IssueLabelUncheckedUpdateManyWithoutIssueInput>;
+   };
+
+   export type IssueCreateWithoutLabelsInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+   };
+
+   export type IssueUncheckedCreateWithoutLabelsInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueCreateOrConnectWithoutLabelsInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutLabelsInput, IssueUncheckedCreateWithoutLabelsInput>;
+   };
+
+   export type LabelCreateWithoutIssuesInput = {
+      id?: string;
+      name: string;
+      color: string;
+      description?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type LabelUncheckedCreateWithoutIssuesInput = {
+      id?: string;
+      name: string;
+      color: string;
+      description?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type LabelCreateOrConnectWithoutIssuesInput = {
+      where: LabelWhereUniqueInput;
+      create: XOR<LabelCreateWithoutIssuesInput, LabelUncheckedCreateWithoutIssuesInput>;
+   };
+
+   export type IssueUpsertWithoutLabelsInput = {
+      update: XOR<IssueUpdateWithoutLabelsInput, IssueUncheckedUpdateWithoutLabelsInput>;
+      create: XOR<IssueCreateWithoutLabelsInput, IssueUncheckedCreateWithoutLabelsInput>;
+      where?: IssueWhereInput;
+   };
+
+   export type IssueUpdateToOneWithWhereWithoutLabelsInput = {
+      where?: IssueWhereInput;
+      data: XOR<IssueUpdateWithoutLabelsInput, IssueUncheckedUpdateWithoutLabelsInput>;
+   };
+
+   export type IssueUpdateWithoutLabelsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutLabelsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type LabelUpsertWithoutIssuesInput = {
+      update: XOR<LabelUpdateWithoutIssuesInput, LabelUncheckedUpdateWithoutIssuesInput>;
+      create: XOR<LabelCreateWithoutIssuesInput, LabelUncheckedCreateWithoutIssuesInput>;
+      where?: LabelWhereInput;
+   };
+
+   export type LabelUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: LabelWhereInput;
+      data: XOR<LabelUpdateWithoutIssuesInput, LabelUncheckedUpdateWithoutIssuesInput>;
+   };
+
+   export type LabelUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type LabelUncheckedUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      color?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamCreateWithoutCyclesInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      members?: TeamMemberCreateNestedManyWithoutTeamInput;
+      projects?: TeamProjectCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamUncheckedCreateWithoutCyclesInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput;
+      projects?: TeamProjectUncheckedCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamCreateOrConnectWithoutCyclesInput = {
+      where: TeamWhereUniqueInput;
+      create: XOR<TeamCreateWithoutCyclesInput, TeamUncheckedCreateWithoutCyclesInput>;
+   };
+
+   export type IssueCreateWithoutCycleInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutCycleInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutCycleInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutCycleInput, IssueUncheckedCreateWithoutCycleInput>;
+   };
+
+   export type IssueCreateManyCycleInputEnvelope = {
+      data: IssueCreateManyCycleInput | IssueCreateManyCycleInput[];
+   };
+
+   export type TeamUpsertWithoutCyclesInput = {
+      update: XOR<TeamUpdateWithoutCyclesInput, TeamUncheckedUpdateWithoutCyclesInput>;
+      create: XOR<TeamCreateWithoutCyclesInput, TeamUncheckedCreateWithoutCyclesInput>;
+      where?: TeamWhereInput;
+   };
+
+   export type TeamUpdateToOneWithWhereWithoutCyclesInput = {
+      where?: TeamWhereInput;
+      data: XOR<TeamUpdateWithoutCyclesInput, TeamUncheckedUpdateWithoutCyclesInput>;
+   };
+
+   export type TeamUpdateWithoutCyclesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      members?: TeamMemberUpdateManyWithoutTeamNestedInput;
+      projects?: TeamProjectUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type TeamUncheckedUpdateWithoutCyclesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput;
+      projects?: TeamProjectUncheckedUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutCycleInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutCycleInput, IssueUncheckedUpdateWithoutCycleInput>;
+      create: XOR<IssueCreateWithoutCycleInput, IssueUncheckedCreateWithoutCycleInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutCycleInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutCycleInput, IssueUncheckedUpdateWithoutCycleInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutCycleInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutCycleInput>;
+   };
+
+   export type TeamMemberCreateWithoutTeamInput = {
+      id?: string;
+      user: UserCreateNestedOneWithoutTeamsInput;
+   };
+
+   export type TeamMemberUncheckedCreateWithoutTeamInput = {
+      id?: string;
+      userId: string;
+   };
+
+   export type TeamMemberCreateOrConnectWithoutTeamInput = {
+      where: TeamMemberWhereUniqueInput;
+      create: XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput>;
+   };
+
+   export type TeamMemberCreateManyTeamInputEnvelope = {
+      data: TeamMemberCreateManyTeamInput | TeamMemberCreateManyTeamInput[];
+   };
+
+   export type TeamProjectCreateWithoutTeamInput = {
+      id?: string;
+      project: ProjectCreateNestedOneWithoutTeamsInput;
+   };
+
+   export type TeamProjectUncheckedCreateWithoutTeamInput = {
+      id?: string;
+      projectId: string;
+   };
+
+   export type TeamProjectCreateOrConnectWithoutTeamInput = {
+      where: TeamProjectWhereUniqueInput;
+      create: XOR<TeamProjectCreateWithoutTeamInput, TeamProjectUncheckedCreateWithoutTeamInput>;
+   };
+
+   export type TeamProjectCreateManyTeamInputEnvelope = {
+      data: TeamProjectCreateManyTeamInput | TeamProjectCreateManyTeamInput[];
+   };
+
+   export type CycleCreateWithoutTeamInput = {
+      id?: string;
+      number: number;
+      name: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutCycleInput;
+   };
+
+   export type CycleUncheckedCreateWithoutTeamInput = {
+      id?: string;
+      number: number;
+      name: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutCycleInput;
+   };
+
+   export type CycleCreateOrConnectWithoutTeamInput = {
+      where: CycleWhereUniqueInput;
+      create: XOR<CycleCreateWithoutTeamInput, CycleUncheckedCreateWithoutTeamInput>;
+   };
+
+   export type CycleCreateManyTeamInputEnvelope = {
+      data: CycleCreateManyTeamInput | CycleCreateManyTeamInput[];
+   };
+
+   export type TeamMemberUpsertWithWhereUniqueWithoutTeamInput = {
+      where: TeamMemberWhereUniqueInput;
+      update: XOR<TeamMemberUpdateWithoutTeamInput, TeamMemberUncheckedUpdateWithoutTeamInput>;
+      create: XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput>;
+   };
+
+   export type TeamMemberUpdateWithWhereUniqueWithoutTeamInput = {
+      where: TeamMemberWhereUniqueInput;
+      data: XOR<TeamMemberUpdateWithoutTeamInput, TeamMemberUncheckedUpdateWithoutTeamInput>;
+   };
+
+   export type TeamMemberUpdateManyWithWhereWithoutTeamInput = {
+      where: TeamMemberScalarWhereInput;
+      data: XOR<TeamMemberUpdateManyMutationInput, TeamMemberUncheckedUpdateManyWithoutTeamInput>;
+   };
+
+   export type TeamProjectUpsertWithWhereUniqueWithoutTeamInput = {
+      where: TeamProjectWhereUniqueInput;
+      update: XOR<TeamProjectUpdateWithoutTeamInput, TeamProjectUncheckedUpdateWithoutTeamInput>;
+      create: XOR<TeamProjectCreateWithoutTeamInput, TeamProjectUncheckedCreateWithoutTeamInput>;
+   };
+
+   export type TeamProjectUpdateWithWhereUniqueWithoutTeamInput = {
+      where: TeamProjectWhereUniqueInput;
+      data: XOR<TeamProjectUpdateWithoutTeamInput, TeamProjectUncheckedUpdateWithoutTeamInput>;
+   };
+
+   export type TeamProjectUpdateManyWithWhereWithoutTeamInput = {
+      where: TeamProjectScalarWhereInput;
+      data: XOR<TeamProjectUpdateManyMutationInput, TeamProjectUncheckedUpdateManyWithoutTeamInput>;
+   };
+
+   export type CycleUpsertWithWhereUniqueWithoutTeamInput = {
+      where: CycleWhereUniqueInput;
+      update: XOR<CycleUpdateWithoutTeamInput, CycleUncheckedUpdateWithoutTeamInput>;
+      create: XOR<CycleCreateWithoutTeamInput, CycleUncheckedCreateWithoutTeamInput>;
+   };
+
+   export type CycleUpdateWithWhereUniqueWithoutTeamInput = {
+      where: CycleWhereUniqueInput;
+      data: XOR<CycleUpdateWithoutTeamInput, CycleUncheckedUpdateWithoutTeamInput>;
+   };
+
+   export type CycleUpdateManyWithWhereWithoutTeamInput = {
+      where: CycleScalarWhereInput;
+      data: XOR<CycleUpdateManyMutationInput, CycleUncheckedUpdateManyWithoutTeamInput>;
+   };
+
+   export type CycleScalarWhereInput = {
+      AND?: CycleScalarWhereInput | CycleScalarWhereInput[];
+      OR?: CycleScalarWhereInput[];
+      NOT?: CycleScalarWhereInput | CycleScalarWhereInput[];
+      id?: StringFilter<'Cycle'> | string;
+      number?: IntFilter<'Cycle'> | number;
+      name?: StringFilter<'Cycle'> | string;
+      teamId?: StringFilter<'Cycle'> | string;
+      startDate?: DateTimeFilter<'Cycle'> | Date | string;
+      endDate?: DateTimeFilter<'Cycle'> | Date | string;
+      progress?: IntFilter<'Cycle'> | number;
+      createdAt?: DateTimeFilter<'Cycle'> | Date | string;
+      updatedAt?: DateTimeFilter<'Cycle'> | Date | string;
+   };
+
+   export type TeamCreateWithoutMembersInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      projects?: TeamProjectCreateNestedManyWithoutTeamInput;
+      cycles?: CycleCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamUncheckedCreateWithoutMembersInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      projects?: TeamProjectUncheckedCreateNestedManyWithoutTeamInput;
+      cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamCreateOrConnectWithoutMembersInput = {
+      where: TeamWhereUniqueInput;
+      create: XOR<TeamCreateWithoutMembersInput, TeamUncheckedCreateWithoutMembersInput>;
+   };
+
+   export type UserCreateWithoutTeamsInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignedIssues?: IssueCreateNestedManyWithoutAssigneeInput;
+      ledProjects?: ProjectCreateNestedManyWithoutLeadInput;
+   };
+
+   export type UserUncheckedCreateWithoutTeamsInput = {
+      id?: string;
+      name: string;
+      email: string;
+      avatarUrl?: string | null;
+      status?: $Enums.UserStatus;
+      role?: $Enums.UserRole;
+      joinedDate: Date | string;
+      teamIds?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignedIssues?: IssueUncheckedCreateNestedManyWithoutAssigneeInput;
+      ledProjects?: ProjectUncheckedCreateNestedManyWithoutLeadInput;
+   };
+
+   export type UserCreateOrConnectWithoutTeamsInput = {
+      where: UserWhereUniqueInput;
+      create: XOR<UserCreateWithoutTeamsInput, UserUncheckedCreateWithoutTeamsInput>;
+   };
+
+   export type TeamUpsertWithoutMembersInput = {
+      update: XOR<TeamUpdateWithoutMembersInput, TeamUncheckedUpdateWithoutMembersInput>;
+      create: XOR<TeamCreateWithoutMembersInput, TeamUncheckedCreateWithoutMembersInput>;
+      where?: TeamWhereInput;
+   };
+
+   export type TeamUpdateToOneWithWhereWithoutMembersInput = {
+      where?: TeamWhereInput;
+      data: XOR<TeamUpdateWithoutMembersInput, TeamUncheckedUpdateWithoutMembersInput>;
+   };
+
+   export type TeamUpdateWithoutMembersInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      projects?: TeamProjectUpdateManyWithoutTeamNestedInput;
+      cycles?: CycleUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type TeamUncheckedUpdateWithoutMembersInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      projects?: TeamProjectUncheckedUpdateManyWithoutTeamNestedInput;
+      cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type UserUpsertWithoutTeamsInput = {
+      update: XOR<UserUpdateWithoutTeamsInput, UserUncheckedUpdateWithoutTeamsInput>;
+      create: XOR<UserCreateWithoutTeamsInput, UserUncheckedCreateWithoutTeamsInput>;
+      where?: UserWhereInput;
+   };
+
+   export type UserUpdateToOneWithWhereWithoutTeamsInput = {
+      where?: UserWhereInput;
+      data: XOR<UserUpdateWithoutTeamsInput, UserUncheckedUpdateWithoutTeamsInput>;
+   };
+
+   export type UserUpdateWithoutTeamsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignedIssues?: IssueUpdateManyWithoutAssigneeNestedInput;
+      ledProjects?: ProjectUpdateManyWithoutLeadNestedInput;
+   };
+
+   export type UserUncheckedUpdateWithoutTeamsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      email?: StringFieldUpdateOperationsInput | string;
+      avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+      role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+      joinedDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      teamIds?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignedIssues?: IssueUncheckedUpdateManyWithoutAssigneeNestedInput;
+      ledProjects?: ProjectUncheckedUpdateManyWithoutLeadNestedInput;
+   };
+
+   export type TeamCreateWithoutProjectsInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      members?: TeamMemberCreateNestedManyWithoutTeamInput;
+      cycles?: CycleCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamUncheckedCreateWithoutProjectsInput = {
+      id?: string;
+      name: string;
+      icon: string;
+      joined?: boolean;
+      color: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput;
+      cycles?: CycleUncheckedCreateNestedManyWithoutTeamInput;
+   };
+
+   export type TeamCreateOrConnectWithoutProjectsInput = {
+      where: TeamWhereUniqueInput;
+      create: XOR<TeamCreateWithoutProjectsInput, TeamUncheckedCreateWithoutProjectsInput>;
+   };
+
+   export type ProjectCreateWithoutTeamsInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutProjectInput;
+      lead?: UserCreateNestedOneWithoutLedProjectsInput;
+   };
+
+   export type ProjectUncheckedCreateWithoutTeamsInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      leadId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutProjectInput;
+   };
+
+   export type ProjectCreateOrConnectWithoutTeamsInput = {
+      where: ProjectWhereUniqueInput;
+      create: XOR<ProjectCreateWithoutTeamsInput, ProjectUncheckedCreateWithoutTeamsInput>;
+   };
+
+   export type TeamUpsertWithoutProjectsInput = {
+      update: XOR<TeamUpdateWithoutProjectsInput, TeamUncheckedUpdateWithoutProjectsInput>;
+      create: XOR<TeamCreateWithoutProjectsInput, TeamUncheckedCreateWithoutProjectsInput>;
+      where?: TeamWhereInput;
+   };
+
+   export type TeamUpdateToOneWithWhereWithoutProjectsInput = {
+      where?: TeamWhereInput;
+      data: XOR<TeamUpdateWithoutProjectsInput, TeamUncheckedUpdateWithoutProjectsInput>;
+   };
+
+   export type TeamUpdateWithoutProjectsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      members?: TeamMemberUpdateManyWithoutTeamNestedInput;
+      cycles?: CycleUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type TeamUncheckedUpdateWithoutProjectsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      icon?: StringFieldUpdateOperationsInput | string;
+      joined?: BoolFieldUpdateOperationsInput | boolean;
+      color?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput;
+      cycles?: CycleUncheckedUpdateManyWithoutTeamNestedInput;
+   };
+
+   export type ProjectUpsertWithoutTeamsInput = {
+      update: XOR<ProjectUpdateWithoutTeamsInput, ProjectUncheckedUpdateWithoutTeamsInput>;
+      create: XOR<ProjectCreateWithoutTeamsInput, ProjectUncheckedCreateWithoutTeamsInput>;
+      where?: ProjectWhereInput;
+   };
+
+   export type ProjectUpdateToOneWithWhereWithoutTeamsInput = {
+      where?: ProjectWhereInput;
+      data: XOR<ProjectUpdateWithoutTeamsInput, ProjectUncheckedUpdateWithoutTeamsInput>;
+   };
+
+   export type ProjectUpdateWithoutTeamsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutProjectNestedInput;
+      lead?: UserUpdateOneWithoutLedProjectsNestedInput;
+   };
+
+   export type ProjectUncheckedUpdateWithoutTeamsInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      leadId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutProjectNestedInput;
    };
 
    export type SubtaskCreateManyParentTaskInput = {
@@ -11774,6 +33652,27 @@ export namespace Prisma {
       id?: number;
       taskId: number;
       createdAt?: Date | string;
+   };
+
+   export type IssueCreateManyTaskInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
    };
 
    export type SubtaskUpdateWithoutParentTaskInput = {
@@ -11844,6 +33743,727 @@ export namespace Prisma {
       id?: IntFieldUpdateOperationsInput | number;
       taskId?: IntFieldUpdateOperationsInput | number;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueUpdateWithoutTaskInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutTaskInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutTaskInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueCreateManyAssigneeInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type TeamMemberCreateManyUserInput = {
+      id?: string;
+      teamId: string;
+   };
+
+   export type ProjectCreateManyLeadInput = {
+      id?: string;
+      name: string;
+      description?: string | null;
+      color?: string | null;
+      identifier?: string | null;
+      icon?: string | null;
+      percentComplete?: number;
+      startDate?: Date | string | null;
+      health?: $Enums.ProjectHealth;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueUpdateWithoutAssigneeInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutAssigneeInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutAssigneeInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamMemberUpdateWithoutUserInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      team?: TeamUpdateOneRequiredWithoutMembersNestedInput;
+   };
+
+   export type TeamMemberUncheckedUpdateWithoutUserInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamMemberUncheckedUpdateManyWithoutUserInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type ProjectUpdateWithoutLeadInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutProjectNestedInput;
+      teams?: TeamProjectUpdateManyWithoutProjectNestedInput;
+   };
+
+   export type ProjectUncheckedUpdateWithoutLeadInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutProjectNestedInput;
+      teams?: TeamProjectUncheckedUpdateManyWithoutProjectNestedInput;
+   };
+
+   export type ProjectUncheckedUpdateManyWithoutLeadInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      name?: StringFieldUpdateOperationsInput | string;
+      description?: NullableStringFieldUpdateOperationsInput | string | null;
+      color?: NullableStringFieldUpdateOperationsInput | string | null;
+      identifier?: NullableStringFieldUpdateOperationsInput | string | null;
+      icon?: NullableStringFieldUpdateOperationsInput | string | null;
+      percentComplete?: IntFieldUpdateOperationsInput | number;
+      startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      health?: EnumProjectHealthFieldUpdateOperationsInput | $Enums.ProjectHealth;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueCreateManyProjectInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type TeamProjectCreateManyProjectInput = {
+      id?: string;
+      teamId: string;
+   };
+
+   export type IssueUpdateWithoutProjectInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutProjectInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutProjectInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamProjectUpdateWithoutProjectInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      team?: TeamUpdateOneRequiredWithoutProjectsNestedInput;
+   };
+
+   export type TeamProjectUncheckedUpdateWithoutProjectInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamProjectUncheckedUpdateManyWithoutProjectInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      teamId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueLabelCreateManyLabelInput = {
+      id?: string;
+      issueId: string;
+   };
+
+   export type IssueLabelUpdateWithoutLabelInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      issue?: IssueUpdateOneRequiredWithoutLabelsNestedInput;
+   };
+
+   export type IssueLabelUncheckedUpdateWithoutLabelInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      issueId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueLabelUncheckedUpdateManyWithoutLabelInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      issueId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueCreateManyIssueStatusInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueUpdateWithoutIssueStatusInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutIssueStatusInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutIssueStatusInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueCreateManyIssuePriorityInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueUpdateWithoutIssuePriorityInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutIssuePriorityInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutIssuePriorityInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueLabelCreateManyIssueInput = {
+      id?: string;
+      labelId: string;
+   };
+
+   export type IssueLabelUpdateWithoutIssueInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      label?: LabelUpdateOneRequiredWithoutIssuesNestedInput;
+   };
+
+   export type IssueLabelUncheckedUpdateWithoutIssueInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      labelId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueLabelUncheckedUpdateManyWithoutIssueInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      labelId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type IssueCreateManyCycleInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      subissues?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueUpdateWithoutCycleInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutCycleInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutCycleInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type TeamMemberCreateManyTeamInput = {
+      id?: string;
+      userId: string;
+   };
+
+   export type TeamProjectCreateManyTeamInput = {
+      id?: string;
+      projectId: string;
+   };
+
+   export type CycleCreateManyTeamInput = {
+      id?: string;
+      number: number;
+      name: string;
+      startDate: Date | string;
+      endDate: Date | string;
+      progress?: number;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type TeamMemberUpdateWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      user?: UserUpdateOneRequiredWithoutTeamsNestedInput;
+   };
+
+   export type TeamMemberUncheckedUpdateWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      userId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamMemberUncheckedUpdateManyWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      userId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamProjectUpdateWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      project?: ProjectUpdateOneRequiredWithoutTeamsNestedInput;
+   };
+
+   export type TeamProjectUncheckedUpdateWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      projectId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type TeamProjectUncheckedUpdateManyWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      projectId?: StringFieldUpdateOperationsInput | string;
+   };
+
+   export type CycleUpdateWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutCycleNestedInput;
+   };
+
+   export type CycleUncheckedUpdateWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutCycleNestedInput;
+   };
+
+   export type CycleUncheckedUpdateManyWithoutTeamInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      number?: IntFieldUpdateOperationsInput | number;
+      name?: StringFieldUpdateOperationsInput | string;
+      startDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      endDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+      progress?: IntFieldUpdateOperationsInput | number;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
 
    /**

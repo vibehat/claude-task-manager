@@ -5,6 +5,7 @@
  * with automatic cache invalidation and performance tracking.
  */
 
+// Redis caching disabled - using disabled stubs
 import {
    getRedisCache,
    generateCacheKey,
@@ -12,7 +13,7 @@ import {
    deserializeFromCache,
    CACHE_KEY_PATTERNS,
    RedisCache,
-} from './redis-cache';
+} from './redis-cache-disabled';
 
 /**
  * Cache configuration for field-level caching

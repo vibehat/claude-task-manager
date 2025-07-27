@@ -15,7 +15,7 @@ import { User, users } from '@/mock-data/users';
 import { CheckIcon, UserCircle } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DEFAULT_CONFIG } from '@/lib/config/defaults';
+import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
 interface AssigneeSelectorProps {
    assignee: User | null;

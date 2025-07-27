@@ -6,7 +6,7 @@
  */
 
 import { performance } from 'perf_hooks';
-import { getRedisCache } from './redis-cache';
+import { getRedisCache } from './redis-cache-disabled'; // Using disabled Redis stubs
 
 /**
  * Performance metric types

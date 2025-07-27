@@ -15,6 +15,12 @@
       "incremental": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
+
+      // Strict type checking for 'any' types
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUncheckedIndexedAccess": true,
       "plugins": [
          {
             "name": "next"

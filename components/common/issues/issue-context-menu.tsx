@@ -41,7 +41,7 @@ import { users } from '@/mock-data/users';
 import { labels } from '@/mock-data/labels';
 import { projects } from '@/mock-data/projects';
 import { toast } from 'sonner';
-import { DEFAULT_CONFIG } from '@/lib/config/defaults';
+import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
 interface IssueContextMenuProps {
    issueId?: string;

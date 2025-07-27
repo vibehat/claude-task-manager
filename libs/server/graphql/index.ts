@@ -1,6 +1,5 @@
 export { resolvers } from './resolvers/index';
 export { default as typeDefs } from './schema/index';
-export { createTypeGraphQLSchema } from './schema/index';
 
 // Re-export specific resolver groups for flexibility
 export { queries } from './resolvers/queries/index';

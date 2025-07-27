@@ -5,7 +5,8 @@
  * or external operations.
  */
 
-import { createCacheInvalidationManager, getRedisCache } from './redis-cache';
+// Redis caching disabled - using disabled stubs
+import { createCacheInvalidationManager, getRedisCache } from './redis-cache-disabled';
 import { FieldCacheManager } from './field-cache';
 
 /**

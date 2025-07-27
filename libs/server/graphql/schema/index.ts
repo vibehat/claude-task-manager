@@ -283,6 +283,7 @@ const typeDefs = gql`
       # Task queries
       tasks: [Task!]!
       task(id: ID!): Task
+      readyTasks(limit: Int = 20): [Task!]!
 
       # CLI queries
       cliStatus: CLIStatus!

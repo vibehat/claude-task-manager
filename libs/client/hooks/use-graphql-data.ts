@@ -107,7 +107,7 @@ export function useGraphQLMutation<T, V = Record<string, any>>(mutation: string)
 // Pre-built hooks for common queries
 export function useIssues() {
    return useGraphQLQuery(`
-    query GetIssues {
+    query GetIssuesSimple {
       issues {
         id
         identifier

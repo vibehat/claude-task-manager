@@ -1,15 +1,10 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { typeDefs, resolvers } from '@/libs/server/graphql';
-import { createQueryComplexityPlugin } from '@/libs/server/performance/query-complexity';
-import { getComplexityConfigWithOverrides } from '@/libs/server/performance/complexity-config';
-import { responseCachePlugin } from '@apollo/server-plugin-response-cache';
-import { getRedisCache } from '@/libs/server/performance/redis-cache';
-import {
-   createPerformanceMonitoringPlugin,
-   defaultQueryTracker,
-   initializePerformanceMonitoring,
-} from '@/libs/server/performance/performance-metrics';
+import { createGraphQLContext } from '@/libs/server/graphql/context';
+import { NextRequest } from 'next/server';
+// import { responseCachePlugin } from '@apollo/server-plugin-response-cache';
+import { initializePerformanceMonitoring } from '@/libs/server/performance/performance-metrics';
 import { createGraphQLSecurityPlugin } from '@/libs/server/security/graphql-security-plugin';
 
 // Initialize performance monitoring
@@ -32,24 +27,19 @@ const server = new ApolloServer({
          blockSuspiciousQueries: true,
          auditSensitiveOperations: true,
       }),
-
-      // Query complexity analysis and depth limiting
-      createQueryComplexityPlugin(getComplexityConfigWithOverrides()),
-
-      // Response caching with Redis
-      responseCachePlugin({
-         cache: getRedisCache(),
-         sessionId: (requestContext) => {
-            // Use user-specific caching if authentication is added later
-            return requestContext.request.http?.headers.get('x-user-id') || 'anonymous';
-         },
-      }),
-
-      // Performance monitoring and metrics collection
-      createPerformanceMonitoringPlugin(defaultQueryTracker),
    ],
 });
 
-const handler = startServerAndCreateNextHandler(server);
+const handler = startServerAndCreateNextHandler(server, {
+   context: async () => {
+      return createGraphQLContext();
+   },
+});
 
-export { handler as GET, handler as POST };
+export async function GET(request: NextRequest) {
+   return handler(request);
+}
+
+export async function POST(request: NextRequest) {
+   return handler(request);
+}

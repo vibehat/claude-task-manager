@@ -11,7 +11,7 @@ import {
 import { statusUserColors, User, users } from '@/mock-data/users';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { DEFAULT_CONFIG } from '@/lib/config/defaults';
+import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
 interface AssigneeUserProps {
    user: User | null;

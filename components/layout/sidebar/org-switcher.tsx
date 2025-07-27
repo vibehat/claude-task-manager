@@ -21,7 +21,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui
 import { CreateNewIssue } from './create-new-issue';
 import { ThemeToggle } from '../theme-toggle';
 import Link from 'next/link';
-import { DEFAULT_CONFIG } from '@/lib/config/defaults';
+import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
 export function OrgSwitcher() {
    return (

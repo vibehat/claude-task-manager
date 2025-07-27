@@ -54,6 +54,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from '@/components/layout/theme-provider';
+import { GraphQLProvider } from '@/libs/client/graphql-client';
 
 export default function RootLayout({
    children,
@@ -66,10 +67,12 @@ export default function RootLayout({
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
          </head>
          <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-               {children}
-               <Toaster />
-            </ThemeProvider>
+            <GraphQLProvider>
+               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                  {children}
+                  <Toaster />
+               </ThemeProvider>
+            </GraphQLProvider>
          </body>
       </html>
    );

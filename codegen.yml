@@ -47,7 +47,7 @@ generates:
 
    # Generated types for GraphQL operations with Apollo Client hooks (client-side)
    ./libs/client/graphql-client/generated.ts:
-      documents: './libs/client/gql/**/*.graphql'
+      documents: './libs/client/gql/{tasks,system}.graphql'
       plugins:
          - 'typescript'
          - 'typescript-operations'

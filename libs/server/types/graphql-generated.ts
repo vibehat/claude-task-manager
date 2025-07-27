@@ -205,6 +205,62 @@ export type ConflictResolution =
    /** Require manual user resolution */
    | 'USER_RESOLVE';
 
+/** Input for creating issues */
+export type CreateIssueInput = {
+   /** Assignee ID */
+   assigneeId?: InputMaybe<Scalars['ID']['input']>;
+   /** Sprint/cycle identifier */
+   cycleId?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the issue */
+   description: Scalars['String']['input'];
+   /** Due date for the issue */
+   dueDate?: InputMaybe<Scalars['DateTime']['input']>;
+   /** Human-readable identifier (e.g., LNUI-101) */
+   identifier: Scalars['String']['input'];
+   /** Type of issue */
+   issueType?: InputMaybe<IssueType>;
+   /** Label IDs to assign */
+   labelIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   /** Priority of the issue */
+   priority?: InputMaybe<Scalars['String']['input']>;
+   /** Project ID */
+   projectId?: InputMaybe<Scalars['ID']['input']>;
+   /** Rank for ordering */
+   rank: Scalars['String']['input'];
+   /** Status of the issue */
+   status?: InputMaybe<Scalars['String']['input']>;
+   /** Sub-issue IDs */
+   subissues?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Associated subtask ID */
+   subtaskId?: InputMaybe<Scalars['String']['input']>;
+   /** Associated task ID */
+   taskId?: InputMaybe<Scalars['Int']['input']>;
+   /** Title of the issue */
+   title: Scalars['String']['input'];
+};
+
+/** Input for creating labels */
+export type CreateLabelInput = {
+   /** Color associated with the label */
+   color: Scalars['String']['input'];
+   /** Description of the label */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the label */
+   name: Scalars['String']['input'];
+};
+
+/** Input for creating projects */
+export type CreateProjectInput = {
+   /** Color associated with the project */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the project */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Short identifier for the project */
+   identifier?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the project */
+   name: Scalars['String']['input'];
+};
+
 export type CreateTaskInput = {
    dependencies?: InputMaybe<Array<Scalars['ID']['input']>>;
    description: Scalars['String']['input'];
@@ -212,6 +268,24 @@ export type CreateTaskInput = {
    priority?: InputMaybe<TaskPriority>;
    testStrategy?: InputMaybe<Scalars['String']['input']>;
    title: Scalars['String']['input'];
+};
+
+/** Input for creating users */
+export type CreateUserInput = {
+   /** Avatar URL for the user */
+   avatarUrl?: InputMaybe<Scalars['String']['input']>;
+   /** Email address of the user */
+   email: Scalars['String']['input'];
+   /** Date when the user joined */
+   joinedDate: Scalars['DateTime']['input'];
+   /** Display name of the user */
+   name: Scalars['String']['input'];
+   /** Role of the user */
+   role?: InputMaybe<UserRole>;
+   /** Status of the user */
+   status?: InputMaybe<UserStatus>;
+   /** Team IDs the user belongs to */
+   teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /** Date range input for filtering by date ranges */
@@ -230,6 +304,177 @@ export type IntRangeInput = {
    min?: InputMaybe<Scalars['Int']['input']>;
 };
 
+/** Issue information - wraps tasks with additional board metadata */
+export type Issue = {
+   __typename?: 'Issue';
+   /** User assigned to this issue */
+   assignee?: Maybe<User>;
+   /** Timestamp when the issue was created */
+   createdAt: Scalars['DateTime']['output'];
+   /** Sprint/cycle identifier */
+   cycleId?: Maybe<Scalars['String']['output']>;
+   /** Description of the issue */
+   description: Scalars['String']['output'];
+   /** Due date for the issue */
+   dueDate?: Maybe<Scalars['DateTime']['output']>;
+   /** Unique identifier for the issue */
+   id: Scalars['ID']['output'];
+   /** Human-readable identifier (e.g., LNUI-101) */
+   identifier: Scalars['String']['output'];
+   /** Type of issue (task or subtask) */
+   issueType: IssueType;
+   /** Labels assigned to this issue */
+   labels: Array<Label>;
+   /** Priority level of the issue */
+   priority: Scalars['String']['output'];
+   /** Project this issue belongs to */
+   project?: Maybe<Project>;
+   /** Rank for ordering (LexoRank) */
+   rank: Scalars['String']['output'];
+   /** Current status of the issue */
+   status: Scalars['String']['output'];
+   /** Sub-issue IDs (for parent-child relationships) */
+   subissues: Array<Scalars['String']['output']>;
+   /** Associated subtask ID from Task Master */
+   subtaskId?: Maybe<Scalars['String']['output']>;
+   /** Task this issue is linked to */
+   task?: Maybe<Task>;
+   /** Associated task ID from Task Master */
+   taskId?: Maybe<Scalars['Int']['output']>;
+   /** Title of the issue */
+   title: Scalars['String']['output'];
+   /** Timestamp when the issue was last updated */
+   updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Issue connection for paginated issue queries */
+export type IssueConnection = {
+   __typename?: 'IssueConnection';
+   /** List of issue edges */
+   edges: Array<IssueEdge>;
+   /** List of issues (convenience field) */
+   nodes: Array<Issue>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Issue edge with cursor */
+export type IssueEdge = {
+   __typename?: 'IssueEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The issue node */
+   node: Issue;
+};
+
+/** Issue filtering options */
+export type IssueFilterInput = {
+   /** Filter by assignee */
+   assigneeId?: InputMaybe<Scalars['ID']['input']>;
+   /** Filter by creation date range */
+   createdAt?: InputMaybe<DateRangeInput>;
+   /** Filter by cycle ID */
+   cycleId?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by due date range */
+   dueDate?: InputMaybe<DateRangeInput>;
+   /** Filter by issue type */
+   issueType?: InputMaybe<IssueType>;
+   /** Filter by labels */
+   labelIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   /** Filter by issue priority */
+   priority?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Filter by project */
+   projectId?: InputMaybe<Scalars['ID']['input']>;
+   /** Search in title and description */
+   search?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by issue status */
+   status?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Filter by associated subtask ID */
+   subtaskId?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by associated task ID */
+   taskId?: InputMaybe<Scalars['Int']['input']>;
+   /** Filter by last update date range */
+   updatedAt?: InputMaybe<DateRangeInput>;
+};
+
+/** Issue ordering options */
+export type IssueOrderByInput = {
+   /** Sort direction */
+   direction: OrderDirection;
+   /** Field to order by */
+   field: IssueOrderField;
+};
+
+/** Issue order fields */
+export type IssueOrderField =
+   | 'CREATED_AT'
+   | 'DUE_DATE'
+   | 'ID'
+   | 'IDENTIFIER'
+   | 'PRIORITY'
+   | 'RANK'
+   | 'STATUS'
+   | 'TITLE'
+   | 'UPDATED_AT';
+
+/** Issue type enumeration */
+export type IssueType =
+   /** Issue represents a subtask */
+   | 'SUBTASK'
+   /** Issue represents a main task */
+   | 'TASK';
+
+/** Label information for categorizing issues */
+export type Label = {
+   __typename?: 'Label';
+   /** Color associated with the label */
+   color: Scalars['String']['output'];
+   /** Timestamp when the label was created */
+   createdAt: Scalars['DateTime']['output'];
+   /** Description of the label */
+   description?: Maybe<Scalars['String']['output']>;
+   /** Unique identifier for the label */
+   id: Scalars['ID']['output'];
+   /** Issues that have this label */
+   issues: Array<Issue>;
+   /** Display name of the label */
+   name: Scalars['String']['output'];
+   /** Timestamp when the label was last updated */
+   updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Label connection for paginated label queries */
+export type LabelConnection = {
+   __typename?: 'LabelConnection';
+   /** List of label edges */
+   edges: Array<LabelEdge>;
+   /** List of labels (convenience field) */
+   nodes: Array<Label>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Label edge with cursor */
+export type LabelEdge = {
+   __typename?: 'LabelEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The label node */
+   node: Label;
+};
+
+/** Label filtering options */
+export type LabelFilterInput = {
+   /** Filter by color */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Search in name and description */
+   search?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Memory usage statistics */
 export type MemoryUsage = {
    __typename?: 'MemoryUsage';
@@ -245,14 +490,32 @@ export type MemoryUsage = {
 
 export type Mutation = {
    __typename?: 'Mutation';
+   /** Assign an issue to a user */
+   assignIssue: Issue;
    /** Clear CLI command history */
    clearCLIHistory: Scalars['Boolean']['output'];
    /** Create a batch sync operation */
    createBatchOperation: BatchResult;
+   /** Create a new issue */
+   createIssue: Issue;
+   /** Create a new label */
+   createLabel: Label;
+   /** Create a new project */
+   createProject: Project;
    /** Create a new task */
    createTask?: Maybe<Task>;
+   /** Create a new user */
+   createUser: User;
+   /** Delete an issue */
+   deleteIssue: Scalars['Boolean']['output'];
+   /** Delete a label */
+   deleteLabel: Scalars['Boolean']['output'];
+   /** Delete a project */
+   deleteProject: Scalars['Boolean']['output'];
    /** Delete a task */
    deleteTask: Scalars['Boolean']['output'];
+   /** Delete a user */
+   deleteUser: Scalars['Boolean']['output'];
    /** Execute a CLI command */
    executeCLICommand: CliCommandResult;
    /** Force a manual sync */
@@ -263,10 +526,25 @@ export type Mutation = {
    ping: Scalars['String']['output'];
    /** Resolve a sync conflict */
    resolveSyncConflict: Scalars['Boolean']['output'];
+   /** Update an existing issue */
+   updateIssue: Issue;
+   /** Update issue status */
+   updateIssueStatus: Issue;
+   /** Update an existing label */
+   updateLabel: Label;
+   /** Update an existing project */
+   updateProject: Project;
    /** Update an existing task */
    updateTask?: Maybe<Task>;
    /** Update task status via sync operation */
    updateTaskStatus: SyncOperation;
+   /** Update an existing user */
+   updateUser: User;
+};
+
+export type MutationAssignIssueArgs = {
+   assigneeId: Scalars['ID']['input'];
+   issueId: Scalars['ID']['input'];
 };
 
 export type MutationCreateBatchOperationArgs = {
@@ -274,11 +552,43 @@ export type MutationCreateBatchOperationArgs = {
    options?: InputMaybe<BatchOptionsInput>;
 };
 
+export type MutationCreateIssueArgs = {
+   input: CreateIssueInput;
+};
+
+export type MutationCreateLabelArgs = {
+   input: CreateLabelInput;
+};
+
+export type MutationCreateProjectArgs = {
+   input: CreateProjectInput;
+};
+
 export type MutationCreateTaskArgs = {
    input: CreateTaskInput;
 };
 
+export type MutationCreateUserArgs = {
+   input: CreateUserInput;
+};
+
+export type MutationDeleteIssueArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteLabelArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteProjectArgs = {
+   id: Scalars['ID']['input'];
+};
+
 export type MutationDeleteTaskArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteUserArgs = {
    id: Scalars['ID']['input'];
 };
 
@@ -295,6 +605,26 @@ export type MutationResolveSyncConflictArgs = {
    resolution: ConflictResolution;
 };
 
+export type MutationUpdateIssueArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateIssueInput;
+};
+
+export type MutationUpdateIssueStatusArgs = {
+   issueId: Scalars['ID']['input'];
+   status: Scalars['String']['input'];
+};
+
+export type MutationUpdateLabelArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateLabelInput;
+};
+
+export type MutationUpdateProjectArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateProjectInput;
+};
+
 export type MutationUpdateTaskArgs = {
    id: Scalars['ID']['input'];
    input: UpdateTaskInput;
@@ -304,6 +634,11 @@ export type MutationUpdateTaskStatusArgs = {
    source?: InputMaybe<Scalars['String']['input']>;
    status: TaskStatus;
    taskId: Scalars['ID']['input'];
+};
+
+export type MutationUpdateUserArgs = {
+   id: Scalars['ID']['input'];
+   input: UpdateUserInput;
 };
 
 /** Sort direction */
@@ -336,6 +671,57 @@ export type PaginationInput = {
    limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+/** Project information for organizing issues */
+export type Project = {
+   __typename?: 'Project';
+   /** Color associated with the project */
+   color?: Maybe<Scalars['String']['output']>;
+   /** Timestamp when the project was created */
+   createdAt: Scalars['DateTime']['output'];
+   /** Description of the project */
+   description?: Maybe<Scalars['String']['output']>;
+   /** Unique identifier for the project */
+   id: Scalars['ID']['output'];
+   /** Short identifier for the project (e.g., LNUI) */
+   identifier?: Maybe<Scalars['String']['output']>;
+   /** Issues belonging to this project */
+   issues: Array<Issue>;
+   /** Display name of the project */
+   name: Scalars['String']['output'];
+   /** Timestamp when the project was last updated */
+   updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Project connection for paginated project queries */
+export type ProjectConnection = {
+   __typename?: 'ProjectConnection';
+   /** List of project edges */
+   edges: Array<ProjectEdge>;
+   /** List of projects (convenience field) */
+   nodes: Array<Project>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Project edge with cursor */
+export type ProjectEdge = {
+   __typename?: 'ProjectEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The project node */
+   node: Project;
+};
+
+/** Project filtering options */
+export type ProjectFilterInput = {
+   /** Filter by identifier */
+   identifier?: InputMaybe<Scalars['String']['input']>;
+   /** Search in name and description */
+   search?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Query = {
    __typename?: 'Query';
    /** Get a specific CLI command result */
@@ -348,8 +734,26 @@ export type Query = {
    health: Scalars['String']['output'];
    /** Simple hello message */
    hello: Scalars['String']['output'];
+   /** Get a specific issue by ID */
+   issue?: Maybe<Issue>;
+   /** Get all issues with comprehensive filtering, ordering, and pagination */
+   issues: IssueConnection;
+   /** Get issues assigned to a specific user */
+   issuesByAssignee: IssueConnection;
+   /** Get issues by project */
+   issuesByProject: IssueConnection;
+   /** Get a specific label by ID */
+   label?: Maybe<Label>;
+   /** Get all labels */
+   labels: LabelConnection;
+   /** Get a specific project by ID */
+   project?: Maybe<Project>;
+   /** Get all projects */
+   projects: ProjectConnection;
    /** Get tasks ready to work on (no blocking dependencies) */
    readyTasks: TaskConnection;
+   /** Search issues with text search and filters */
+   searchIssues: IssueConnection;
    /** Search tasks with text search and filters */
    searchTasks: TaskConnection;
    /** Get sync conflicts with filtering */
@@ -366,6 +770,10 @@ export type Query = {
    task?: Maybe<Task>;
    /** Get all tasks with comprehensive filtering, ordering, and pagination */
    tasks: TaskConnection;
+   /** Get a specific user by ID */
+   user?: Maybe<User>;
+   /** Get all users */
+   users: UserConnection;
 };
 
 export type QueryCliCommandArgs = {
@@ -378,10 +786,59 @@ export type QueryCliHistoryArgs = {
    pagination?: InputMaybe<PaginationInput>;
 };
 
+export type QueryIssueArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryIssuesArgs = {
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryIssuesByAssigneeArgs = {
+   assigneeId: Scalars['ID']['input'];
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryIssuesByProjectArgs = {
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+   projectId: Scalars['ID']['input'];
+};
+
+export type QueryLabelArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryLabelsArgs = {
+   filter?: InputMaybe<LabelFilterInput>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryProjectArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryProjectsArgs = {
+   filter?: InputMaybe<ProjectFilterInput>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
 export type QueryReadyTasksArgs = {
    filter?: InputMaybe<TaskFilterInput>;
    orderBy?: InputMaybe<Array<TaskOrderByInput>>;
    pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QuerySearchIssuesArgs = {
+   filter?: InputMaybe<IssueFilterInput>;
+   orderBy?: InputMaybe<Array<IssueOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+   query: Scalars['String']['input'];
 };
 
 export type QuerySearchTasksArgs = {
@@ -413,6 +870,15 @@ export type QueryTaskArgs = {
 export type QueryTasksArgs = {
    filter?: InputMaybe<TaskFilterInput>;
    orderBy?: InputMaybe<Array<TaskOrderByInput>>;
+   pagination?: InputMaybe<PaginationInput>;
+};
+
+export type QueryUserArgs = {
+   id: Scalars['ID']['input'];
+};
+
+export type QueryUsersArgs = {
+   filter?: InputMaybe<UserFilterInput>;
    pagination?: InputMaybe<PaginationInput>;
 };
 
@@ -858,6 +1324,54 @@ export type Timestamped = {
    updatedAt: Scalars['DateTime']['output'];
 };
 
+/** Input for updating issues */
+export type UpdateIssueInput = {
+   /** Assignee ID */
+   assigneeId?: InputMaybe<Scalars['ID']['input']>;
+   /** Sprint/cycle identifier */
+   cycleId?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the issue */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Due date for the issue */
+   dueDate?: InputMaybe<Scalars['DateTime']['input']>;
+   /** Label IDs to assign */
+   labelIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+   /** Priority of the issue */
+   priority?: InputMaybe<Scalars['String']['input']>;
+   /** Project ID */
+   projectId?: InputMaybe<Scalars['ID']['input']>;
+   /** Rank for ordering */
+   rank?: InputMaybe<Scalars['String']['input']>;
+   /** Status of the issue */
+   status?: InputMaybe<Scalars['String']['input']>;
+   /** Sub-issue IDs */
+   subissues?: InputMaybe<Array<Scalars['String']['input']>>;
+   /** Title of the issue */
+   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Input for updating labels */
+export type UpdateLabelInput = {
+   /** Color associated with the label */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the label */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the label */
+   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Input for updating projects */
+export type UpdateProjectInput = {
+   /** Color associated with the project */
+   color?: InputMaybe<Scalars['String']['input']>;
+   /** Description of the project */
+   description?: InputMaybe<Scalars['String']['input']>;
+   /** Short identifier for the project */
+   identifier?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the project */
+   name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateTaskInput = {
    dependencies?: InputMaybe<Array<Scalars['ID']['input']>>;
    description?: InputMaybe<Scalars['String']['input']>;
@@ -868,20 +1382,98 @@ export type UpdateTaskInput = {
    title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Basic user information (placeholder for future expansion) */
+/** Input for updating users */
+export type UpdateUserInput = {
+   /** Avatar URL for the user */
+   avatarUrl?: InputMaybe<Scalars['String']['input']>;
+   /** Display name of the user */
+   name?: InputMaybe<Scalars['String']['input']>;
+   /** Role of the user */
+   role?: InputMaybe<UserRole>;
+   /** Status of the user */
+   status?: InputMaybe<UserStatus>;
+   /** Team IDs the user belongs to */
+   teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** User information for issue assignment and management */
 export type User = {
    __typename?: 'User';
+   /** Issues assigned to this user */
+   assignedIssues: Array<Issue>;
+   /** Avatar URL for the user */
+   avatarUrl?: Maybe<Scalars['String']['output']>;
    /** Timestamp when the user was created */
    createdAt: Scalars['DateTime']['output'];
    /** Email address of the user */
    email: Scalars['String']['output'];
    /** Unique identifier for the user */
    id: Scalars['ID']['output'];
+   /** Date when the user joined */
+   joinedDate: Scalars['DateTime']['output'];
    /** Display name of the user */
    name: Scalars['String']['output'];
+   /** Role of the user in the system */
+   role: UserRole;
+   /** Current status of the user */
+   status: UserStatus;
+   /** Team IDs the user belongs to */
+   teamIds: Array<Scalars['String']['output']>;
    /** Timestamp when the user was last updated */
    updatedAt: Scalars['DateTime']['output'];
 };
+
+/** User connection for paginated user queries */
+export type UserConnection = {
+   __typename?: 'UserConnection';
+   /** List of user edges */
+   edges: Array<UserEdge>;
+   /** List of users (convenience field) */
+   nodes: Array<User>;
+   /** Pagination information */
+   pageInfo: PageInfo;
+   /** Total count of items (if available) */
+   totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** User edge with cursor */
+export type UserEdge = {
+   __typename?: 'UserEdge';
+   /** Cursor for this edge */
+   cursor: Scalars['String']['output'];
+   /** The user node */
+   node: User;
+};
+
+/** User filtering options */
+export type UserFilterInput = {
+   /** Filter by user role */
+   role?: InputMaybe<Array<UserRole>>;
+   /** Search in name and email */
+   search?: InputMaybe<Scalars['String']['input']>;
+   /** Filter by user status */
+   status?: InputMaybe<Array<UserStatus>>;
+   /** Filter by team IDs */
+   teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** User role enumeration */
+export type UserRole =
+   /** Administrator with full access */
+   | 'ADMIN'
+   /** Guest with limited access */
+   | 'GUEST'
+   /** Regular member */
+   | 'MEMBER';
+
+/** User status enumeration */
+export type UserStatus =
+   /** User is away */
+   | 'AWAY'
+   /** User is offline */
+   | 'OFFLINE'
+   /** User is online */
+   | 'ONLINE';
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
@@ -1006,19 +1598,78 @@ export type ResolversTypes = ResolversObject<{
       >
    >;
    ConflictResolution: ResolverTypeWrapper<Partial<ConflictResolution>>;
+   CreateIssueInput: ResolverTypeWrapper<Partial<CreateIssueInput>>;
+   CreateLabelInput: ResolverTypeWrapper<Partial<CreateLabelInput>>;
+   CreateProjectInput: ResolverTypeWrapper<Partial<CreateProjectInput>>;
    CreateTaskInput: ResolverTypeWrapper<Partial<CreateTaskInput>>;
+   CreateUserInput: ResolverTypeWrapper<Partial<CreateUserInput>>;
    DateRangeInput: ResolverTypeWrapper<Partial<DateRangeInput>>;
    DateTime: ResolverTypeWrapper<Partial<Scalars['DateTime']['output']>>;
    Float: ResolverTypeWrapper<Partial<Scalars['Float']['output']>>;
    ID: ResolverTypeWrapper<Partial<Scalars['ID']['output']>>;
    Int: ResolverTypeWrapper<Partial<Scalars['Int']['output']>>;
    IntRangeInput: ResolverTypeWrapper<Partial<IntRangeInput>>;
+   Issue: ResolverTypeWrapper<
+      Partial<
+         Omit<Issue, 'assignee' | 'labels' | 'project' | 'task'> & {
+            assignee?: Maybe<ResolversTypes['User']>;
+            labels: Array<ResolversTypes['Label']>;
+            project?: Maybe<ResolversTypes['Project']>;
+            task?: Maybe<ResolversTypes['Task']>;
+         }
+      >
+   >;
+   IssueConnection: ResolverTypeWrapper<
+      Partial<
+         Omit<IssueConnection, 'edges' | 'nodes'> & {
+            edges: Array<ResolversTypes['IssueEdge']>;
+            nodes: Array<ResolversTypes['Issue']>;
+         }
+      >
+   >;
+   IssueEdge: ResolverTypeWrapper<
+      Partial<Omit<IssueEdge, 'node'> & { node: ResolversTypes['Issue'] }>
+   >;
+   IssueFilterInput: ResolverTypeWrapper<Partial<IssueFilterInput>>;
+   IssueOrderByInput: ResolverTypeWrapper<Partial<IssueOrderByInput>>;
+   IssueOrderField: ResolverTypeWrapper<Partial<IssueOrderField>>;
+   IssueType: ResolverTypeWrapper<Partial<IssueType>>;
    JSON: ResolverTypeWrapper<Partial<Scalars['JSON']['output']>>;
+   Label: ResolverTypeWrapper<
+      Partial<Omit<Label, 'issues'> & { issues: Array<ResolversTypes['Issue']> }>
+   >;
+   LabelConnection: ResolverTypeWrapper<
+      Partial<
+         Omit<LabelConnection, 'edges' | 'nodes'> & {
+            edges: Array<ResolversTypes['LabelEdge']>;
+            nodes: Array<ResolversTypes['Label']>;
+         }
+      >
+   >;
+   LabelEdge: ResolverTypeWrapper<
+      Partial<Omit<LabelEdge, 'node'> & { node: ResolversTypes['Label'] }>
+   >;
+   LabelFilterInput: ResolverTypeWrapper<Partial<LabelFilterInput>>;
    MemoryUsage: ResolverTypeWrapper<Partial<MemoryUsage>>;
    Mutation: ResolverTypeWrapper<{}>;
    OrderDirection: ResolverTypeWrapper<Partial<OrderDirection>>;
    PageInfo: ResolverTypeWrapper<Partial<PageInfo>>;
    PaginationInput: ResolverTypeWrapper<Partial<PaginationInput>>;
+   Project: ResolverTypeWrapper<
+      Partial<Omit<Project, 'issues'> & { issues: Array<ResolversTypes['Issue']> }>
+   >;
+   ProjectConnection: ResolverTypeWrapper<
+      Partial<
+         Omit<ProjectConnection, 'edges' | 'nodes'> & {
+            edges: Array<ResolversTypes['ProjectEdge']>;
+            nodes: Array<ResolversTypes['Project']>;
+         }
+      >
+   >;
+   ProjectEdge: ResolverTypeWrapper<
+      Partial<Omit<ProjectEdge, 'node'> & { node: ResolversTypes['Project'] }>
+   >;
+   ProjectFilterInput: ResolverTypeWrapper<Partial<ProjectFilterInput>>;
    Query: ResolverTypeWrapper<{}>;
    Stateful: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Stateful']>;
    String: ResolverTypeWrapper<Partial<Scalars['String']['output']>>;
@@ -1063,8 +1714,28 @@ export type ResolversTypes = ResolversObject<{
    TaskStatus: ResolverTypeWrapper<Partial<TaskStatus>>;
    TasksData: ResolverTypeWrapper<TasksData>;
    Timestamped: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Timestamped']>;
+   UpdateIssueInput: ResolverTypeWrapper<Partial<UpdateIssueInput>>;
+   UpdateLabelInput: ResolverTypeWrapper<Partial<UpdateLabelInput>>;
+   UpdateProjectInput: ResolverTypeWrapper<Partial<UpdateProjectInput>>;
    UpdateTaskInput: ResolverTypeWrapper<Partial<UpdateTaskInput>>;
-   User: ResolverTypeWrapper<Partial<User>>;
+   UpdateUserInput: ResolverTypeWrapper<Partial<UpdateUserInput>>;
+   User: ResolverTypeWrapper<
+      Partial<Omit<User, 'assignedIssues'> & { assignedIssues: Array<ResolversTypes['Issue']> }>
+   >;
+   UserConnection: ResolverTypeWrapper<
+      Partial<
+         Omit<UserConnection, 'edges' | 'nodes'> & {
+            edges: Array<ResolversTypes['UserEdge']>;
+            nodes: Array<ResolversTypes['User']>;
+         }
+      >
+   >;
+   UserEdge: ResolverTypeWrapper<
+      Partial<Omit<UserEdge, 'node'> & { node: ResolversTypes['User'] }>
+   >;
+   UserFilterInput: ResolverTypeWrapper<Partial<UserFilterInput>>;
+   UserRole: ResolverTypeWrapper<Partial<UserRole>>;
+   UserStatus: ResolverTypeWrapper<Partial<UserStatus>>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1092,18 +1763,57 @@ export type ResolversParentTypes = ResolversObject<{
          recentCommands: Array<ResolversParentTypes['CLICommandResult']>;
       }
    >;
+   CreateIssueInput: Partial<CreateIssueInput>;
+   CreateLabelInput: Partial<CreateLabelInput>;
+   CreateProjectInput: Partial<CreateProjectInput>;
    CreateTaskInput: Partial<CreateTaskInput>;
+   CreateUserInput: Partial<CreateUserInput>;
    DateRangeInput: Partial<DateRangeInput>;
    DateTime: Partial<Scalars['DateTime']['output']>;
    Float: Partial<Scalars['Float']['output']>;
    ID: Partial<Scalars['ID']['output']>;
    Int: Partial<Scalars['Int']['output']>;
    IntRangeInput: Partial<IntRangeInput>;
+   Issue: Partial<
+      Omit<Issue, 'assignee' | 'labels' | 'project' | 'task'> & {
+         assignee?: Maybe<ResolversParentTypes['User']>;
+         labels: Array<ResolversParentTypes['Label']>;
+         project?: Maybe<ResolversParentTypes['Project']>;
+         task?: Maybe<ResolversParentTypes['Task']>;
+      }
+   >;
+   IssueConnection: Partial<
+      Omit<IssueConnection, 'edges' | 'nodes'> & {
+         edges: Array<ResolversParentTypes['IssueEdge']>;
+         nodes: Array<ResolversParentTypes['Issue']>;
+      }
+   >;
+   IssueEdge: Partial<Omit<IssueEdge, 'node'> & { node: ResolversParentTypes['Issue'] }>;
+   IssueFilterInput: Partial<IssueFilterInput>;
+   IssueOrderByInput: Partial<IssueOrderByInput>;
    JSON: Partial<Scalars['JSON']['output']>;
+   Label: Partial<Omit<Label, 'issues'> & { issues: Array<ResolversParentTypes['Issue']> }>;
+   LabelConnection: Partial<
+      Omit<LabelConnection, 'edges' | 'nodes'> & {
+         edges: Array<ResolversParentTypes['LabelEdge']>;
+         nodes: Array<ResolversParentTypes['Label']>;
+      }
+   >;
+   LabelEdge: Partial<Omit<LabelEdge, 'node'> & { node: ResolversParentTypes['Label'] }>;
+   LabelFilterInput: Partial<LabelFilterInput>;
    MemoryUsage: Partial<MemoryUsage>;
    Mutation: {};
    PageInfo: Partial<PageInfo>;
    PaginationInput: Partial<PaginationInput>;
+   Project: Partial<Omit<Project, 'issues'> & { issues: Array<ResolversParentTypes['Issue']> }>;
+   ProjectConnection: Partial<
+      Omit<ProjectConnection, 'edges' | 'nodes'> & {
+         edges: Array<ResolversParentTypes['ProjectEdge']>;
+         nodes: Array<ResolversParentTypes['Project']>;
+      }
+   >;
+   ProjectEdge: Partial<Omit<ProjectEdge, 'node'> & { node: ResolversParentTypes['Project'] }>;
+   ProjectFilterInput: Partial<ProjectFilterInput>;
    Query: {};
    Stateful: ResolversInterfaceTypes<ResolversParentTypes>['Stateful'];
    String: Partial<Scalars['String']['output']>;
@@ -1137,8 +1847,22 @@ export type ResolversParentTypes = ResolversObject<{
    TaskOrderByInput: Partial<TaskOrderByInput>;
    TasksData: TasksData;
    Timestamped: ResolversInterfaceTypes<ResolversParentTypes>['Timestamped'];
+   UpdateIssueInput: Partial<UpdateIssueInput>;
+   UpdateLabelInput: Partial<UpdateLabelInput>;
+   UpdateProjectInput: Partial<UpdateProjectInput>;
    UpdateTaskInput: Partial<UpdateTaskInput>;
-   User: Partial<User>;
+   UpdateUserInput: Partial<UpdateUserInput>;
+   User: Partial<
+      Omit<User, 'assignedIssues'> & { assignedIssues: Array<ResolversParentTypes['Issue']> }
+   >;
+   UserConnection: Partial<
+      Omit<UserConnection, 'edges' | 'nodes'> & {
+         edges: Array<ResolversParentTypes['UserEdge']>;
+         nodes: Array<ResolversParentTypes['User']>;
+      }
+   >;
+   UserEdge: Partial<Omit<UserEdge, 'node'> & { node: ResolversParentTypes['User'] }>;
+   UserFilterInput: Partial<UserFilterInput>;
 }>;
 
 export type BatchResultResolvers<
@@ -1220,9 +1944,91 @@ export interface DateTimeScalarConfig
    name: 'DateTime';
 }
 
+export type IssueResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['Issue'] = ResolversParentTypes['Issue'],
+> = ResolversObject<{
+   assignee?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   cycleId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   dueDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+   identifier?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   issueType?: Resolver<ResolversTypes['IssueType'], ParentType, ContextType>;
+   labels?: Resolver<Array<ResolversTypes['Label']>, ParentType, ContextType>;
+   priority?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType>;
+   rank?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   subissues?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+   subtaskId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   task?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType>;
+   taskId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type IssueConnectionResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends
+      ResolversParentTypes['IssueConnection'] = ResolversParentTypes['IssueConnection'],
+> = ResolversObject<{
+   edges?: Resolver<Array<ResolversTypes['IssueEdge']>, ParentType, ContextType>;
+   nodes?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType>;
+   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+   totalCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type IssueEdgeResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['IssueEdge'] = ResolversParentTypes['IssueEdge'],
+> = ResolversObject<{
+   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   node?: Resolver<ResolversTypes['Issue'], ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
    name: 'JSON';
 }
+
+export type LabelResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['Label'] = ResolversParentTypes['Label'],
+> = ResolversObject<{
+   color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+   issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType>;
+   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type LabelConnectionResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends
+      ResolversParentTypes['LabelConnection'] = ResolversParentTypes['LabelConnection'],
+> = ResolversObject<{
+   edges?: Resolver<Array<ResolversTypes['LabelEdge']>, ParentType, ContextType>;
+   nodes?: Resolver<Array<ResolversTypes['Label']>, ParentType, ContextType>;
+   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+   totalCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type LabelEdgeResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['LabelEdge'] = ResolversParentTypes['LabelEdge'],
+> = ResolversObject<{
+   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   node?: Resolver<ResolversTypes['Label'], ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export type MemoryUsageResolvers<
    ContextType = GraphQLContext,
@@ -1239,6 +2045,12 @@ export type MutationResolvers<
    ContextType = GraphQLContext,
    ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = ResolversObject<{
+   assignIssue?: Resolver<
+      ResolversTypes['Issue'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationAssignIssueArgs, 'assigneeId' | 'issueId'>
+   >;
    clearCLIHistory?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
    createBatchOperation?: Resolver<
       ResolversTypes['BatchResult'],
@@ -1246,17 +2058,65 @@ export type MutationResolvers<
       ContextType,
       RequireFields<MutationCreateBatchOperationArgs, 'operations'>
    >;
+   createIssue?: Resolver<
+      ResolversTypes['Issue'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationCreateIssueArgs, 'input'>
+   >;
+   createLabel?: Resolver<
+      ResolversTypes['Label'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationCreateLabelArgs, 'input'>
+   >;
+   createProject?: Resolver<
+      ResolversTypes['Project'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationCreateProjectArgs, 'input'>
+   >;
    createTask?: Resolver<
       Maybe<ResolversTypes['Task']>,
       ParentType,
       ContextType,
       RequireFields<MutationCreateTaskArgs, 'input'>
    >;
+   createUser?: Resolver<
+      ResolversTypes['User'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationCreateUserArgs, 'input'>
+   >;
+   deleteIssue?: Resolver<
+      ResolversTypes['Boolean'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationDeleteIssueArgs, 'id'>
+   >;
+   deleteLabel?: Resolver<
+      ResolversTypes['Boolean'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationDeleteLabelArgs, 'id'>
+   >;
+   deleteProject?: Resolver<
+      ResolversTypes['Boolean'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationDeleteProjectArgs, 'id'>
+   >;
    deleteTask?: Resolver<
       ResolversTypes['Boolean'],
       ParentType,
       ContextType,
       RequireFields<MutationDeleteTaskArgs, 'id'>
+   >;
+   deleteUser?: Resolver<
+      ResolversTypes['Boolean'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationDeleteUserArgs, 'id'>
    >;
    executeCLICommand?: Resolver<
       ResolversTypes['CLICommandResult'],
@@ -1278,6 +2138,30 @@ export type MutationResolvers<
       ContextType,
       RequireFields<MutationResolveSyncConflictArgs, 'conflictId' | 'resolution'>
    >;
+   updateIssue?: Resolver<
+      ResolversTypes['Issue'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationUpdateIssueArgs, 'id' | 'input'>
+   >;
+   updateIssueStatus?: Resolver<
+      ResolversTypes['Issue'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationUpdateIssueStatusArgs, 'issueId' | 'status'>
+   >;
+   updateLabel?: Resolver<
+      ResolversTypes['Label'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationUpdateLabelArgs, 'id' | 'input'>
+   >;
+   updateProject?: Resolver<
+      ResolversTypes['Project'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationUpdateProjectArgs, 'id' | 'input'>
+   >;
    updateTask?: Resolver<
       Maybe<ResolversTypes['Task']>,
       ParentType,
@@ -1290,6 +2174,12 @@ export type MutationResolvers<
       ContextType,
       RequireFields<MutationUpdateTaskStatusArgs, 'source' | 'status' | 'taskId'>
    >;
+   updateUser?: Resolver<
+      ResolversTypes['User'],
+      ParentType,
+      ContextType,
+      RequireFields<MutationUpdateUserArgs, 'id' | 'input'>
+   >;
 }>;
 
 export type PageInfoResolvers<
@@ -1300,6 +2190,42 @@ export type PageInfoResolvers<
    hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
    hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
    startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProjectResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['Project'] = ResolversParentTypes['Project'],
+> = ResolversObject<{
+   color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+   identifier?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+   issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType>;
+   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProjectConnectionResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends
+      ResolversParentTypes['ProjectConnection'] = ResolversParentTypes['ProjectConnection'],
+> = ResolversObject<{
+   edges?: Resolver<Array<ResolversTypes['ProjectEdge']>, ParentType, ContextType>;
+   nodes?: Resolver<Array<ResolversTypes['Project']>, ParentType, ContextType>;
+   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+   totalCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProjectEdgeResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['ProjectEdge'] = ResolversParentTypes['ProjectEdge'],
+> = ResolversObject<{
+   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   node?: Resolver<ResolversTypes['Project'], ParentType, ContextType>;
    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1322,11 +2248,65 @@ export type QueryResolvers<
    cliStatus?: Resolver<ResolversTypes['CLIStatus'], ParentType, ContextType>;
    health?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
    hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   issue?: Resolver<
+      Maybe<ResolversTypes['Issue']>,
+      ParentType,
+      ContextType,
+      RequireFields<QueryIssueArgs, 'id'>
+   >;
+   issues?: Resolver<
+      ResolversTypes['IssueConnection'],
+      ParentType,
+      ContextType,
+      Partial<QueryIssuesArgs>
+   >;
+   issuesByAssignee?: Resolver<
+      ResolversTypes['IssueConnection'],
+      ParentType,
+      ContextType,
+      RequireFields<QueryIssuesByAssigneeArgs, 'assigneeId'>
+   >;
+   issuesByProject?: Resolver<
+      ResolversTypes['IssueConnection'],
+      ParentType,
+      ContextType,
+      RequireFields<QueryIssuesByProjectArgs, 'projectId'>
+   >;
+   label?: Resolver<
+      Maybe<ResolversTypes['Label']>,
+      ParentType,
+      ContextType,
+      RequireFields<QueryLabelArgs, 'id'>
+   >;
+   labels?: Resolver<
+      ResolversTypes['LabelConnection'],
+      ParentType,
+      ContextType,
+      Partial<QueryLabelsArgs>
+   >;
+   project?: Resolver<
+      Maybe<ResolversTypes['Project']>,
+      ParentType,
+      ContextType,
+      RequireFields<QueryProjectArgs, 'id'>
+   >;
+   projects?: Resolver<
+      ResolversTypes['ProjectConnection'],
+      ParentType,
+      ContextType,
+      Partial<QueryProjectsArgs>
+   >;
    readyTasks?: Resolver<
       ResolversTypes['TaskConnection'],
       ParentType,
       ContextType,
       Partial<QueryReadyTasksArgs>
+   >;
+   searchIssues?: Resolver<
+      ResolversTypes['IssueConnection'],
+      ParentType,
+      ContextType,
+      RequireFields<QuerySearchIssuesArgs, 'query'>
    >;
    searchTasks?: Resolver<
       ResolversTypes['TaskConnection'],
@@ -1365,6 +2345,18 @@ export type QueryResolvers<
       ParentType,
       ContextType,
       Partial<QueryTasksArgs>
+   >;
+   user?: Resolver<
+      Maybe<ResolversTypes['User']>,
+      ParentType,
+      ContextType,
+      RequireFields<QueryUserArgs, 'id'>
+   >;
+   users?: Resolver<
+      ResolversTypes['UserConnection'],
+      ParentType,
+      ContextType,
+      Partial<QueryUsersArgs>
    >;
 }>;
 
@@ -1605,11 +2597,38 @@ export type UserResolvers<
    ContextType = GraphQLContext,
    ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
 > = ResolversObject<{
+   assignedIssues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType>;
+   avatarUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
    createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
    email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
    id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+   joinedDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   role?: Resolver<ResolversTypes['UserRole'], ParentType, ContextType>;
+   status?: Resolver<ResolversTypes['UserStatus'], ParentType, ContextType>;
+   teamIds?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
    updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserConnectionResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends
+      ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection'],
+> = ResolversObject<{
+   edges?: Resolver<Array<ResolversTypes['UserEdge']>, ParentType, ContextType>;
+   nodes?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+   totalCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserEdgeResolvers<
+   ContextType = GraphQLContext,
+   ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge'],
+> = ResolversObject<{
+   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+   node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1621,10 +2640,19 @@ export type Resolvers<ContextType = GraphQLContext> = ResolversObject<{
    CLIError?: CliErrorResolvers<ContextType>;
    CLIStatus?: CliStatusResolvers<ContextType>;
    DateTime?: GraphQLScalarType;
+   Issue?: IssueResolvers<ContextType>;
+   IssueConnection?: IssueConnectionResolvers<ContextType>;
+   IssueEdge?: IssueEdgeResolvers<ContextType>;
    JSON?: GraphQLScalarType;
+   Label?: LabelResolvers<ContextType>;
+   LabelConnection?: LabelConnectionResolvers<ContextType>;
+   LabelEdge?: LabelEdgeResolvers<ContextType>;
    MemoryUsage?: MemoryUsageResolvers<ContextType>;
    Mutation?: MutationResolvers<ContextType>;
    PageInfo?: PageInfoResolvers<ContextType>;
+   Project?: ProjectResolvers<ContextType>;
+   ProjectConnection?: ProjectConnectionResolvers<ContextType>;
+   ProjectEdge?: ProjectEdgeResolvers<ContextType>;
    Query?: QueryResolvers<ContextType>;
    Stateful?: StatefulResolvers<ContextType>;
    Subtask?: SubtaskResolvers<ContextType>;
@@ -1646,4 +2674,6 @@ export type Resolvers<ContextType = GraphQLContext> = ResolversObject<{
    TasksData?: TasksDataResolvers<ContextType>;
    Timestamped?: TimestampedResolvers<ContextType>;
    User?: UserResolvers<ContextType>;
+   UserConnection?: UserConnectionResolvers<ContextType>;
+   UserEdge?: UserEdgeResolvers<ContextType>;
 }>;
