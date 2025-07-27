@@ -5,7 +5,7 @@
  */
 
 import { TaskMasterSync, TaskMasterDB } from './index';
-import { PrismaClient } from '../prisma/generated';
+import { PrismaClient } from '@prisma/client';
 
 async function example() {
    // Initialize Prisma client

@@ -5,7 +5,7 @@
  */
 
 import { useMemo } from 'react';
-import { groupIssuesByStatus } from '@/mock-data-2/issues';
+import { groupIssuesByStatus } from '@/mock-data/issues';
 import type { Issue, LabelInterface, FilterOptions } from './types';
 
 /**

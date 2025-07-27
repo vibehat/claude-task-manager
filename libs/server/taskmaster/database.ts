@@ -5,9 +5,9 @@
  * Focus on read operations and basic database interaction.
  */
 
-import { PrismaClient } from '../prisma/generated';
+import { PrismaClient } from '@prisma/client';
 import type { TaskStatus, TaskPriority } from '../types/taskmaster';
-import { Task } from '../types/taskmaster';
+
 import type {
    TaskMasterDBOptions,
    TaskQueryFilters,
@@ -319,6 +319,7 @@ export class TaskMasterDB {
       try {
          await this.prisma.$queryRaw`SELECT 1`;
          return true;
+         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
          return false;
       }

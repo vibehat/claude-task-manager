@@ -14,7 +14,7 @@ import { GroupIssues } from './group-issues';
 import { SearchIssues } from './search-issues';
 import { CustomDragLayer } from './issue-grid';
 import { cn } from '@/libs/client/utils';
-import type { Issue } from '@/mock-data-2/issues';
+import type { Issue } from '@/mock-data/issues';
 
 export default function AllIssues(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();

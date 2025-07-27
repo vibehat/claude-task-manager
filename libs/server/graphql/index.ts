@@ -8,9 +8,6 @@ export { createTypeGraphQLSchema } from './schema';
 export { createGraphQLContext } from './context';
 export { pubSub, Topic } from './pubsub';
 
-// Export resolvers
-export { TaskResolver, CLIResolver, IssueResolver, SyncResolver } from './schema';
-
 // Export types
 export * from './types/task.types';
 export * from './types/cli.types';

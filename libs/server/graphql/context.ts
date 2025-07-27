@@ -4,7 +4,7 @@
  * Provides shared context for all GraphQL resolvers
  */
 
-import { PrismaClient } from '../prisma/generated';
+import { PrismaClient } from '@prisma/client';
 import { TaskMasterDB, TaskMasterSync } from '../taskmaster';
 
 export interface GraphQLContext {

@@ -1,6 +1,6 @@
 'use client';
 
-import type { Issue } from '@/mock-data-2/issues';
+import type { Issue } from '@/mock-data/issues';
 import type { Status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
 import { useViewStore } from '@/store/view-store';
@@ -13,7 +13,7 @@ import { Button } from '../../ui/button';
 import { IssueDragType, IssueGrid } from './issue-grid';
 import { IssueLine } from './issue-line';
 import { useCreateIssueStore } from '@/store/create-issue-store';
-import { sortIssuesByPriority } from '@/mock-data-2/issues';
+import { sortIssuesByPriority } from '@/mock-data/issues';
 import { AnimatePresence, motion } from 'motion/react';
 
 interface GroupIssuesProps {

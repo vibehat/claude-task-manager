@@ -265,8 +265,8 @@ export class APIKeyManager {
    /**
     * Convert ArrayBuffer to Base64 string
     */
-   private arrayBufferToBase64(buffer: ArrayBuffer): string {
-      const bytes = new Uint8Array(buffer);
+   private arrayBufferToBase64(buffer: ArrayBuffer | Uint8Array): string {
+      const bytes = buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer);
       let binary = '';
       for (let i = 0; i < bytes.byteLength; i++) {
          binary += String.fromCharCode(bytes[i]);
@@ -313,7 +313,7 @@ export class APIKeyManager {
          salt: this.arrayBufferToBase64(salt),
          iv,
          createdAt: new Date(),
-         metadata: metadata as Record<string, unknown>,
+         metadata: metadata ? (metadata as unknown as Record<string, unknown>) : undefined,
       };
 
       // Get existing keys
@@ -526,6 +526,7 @@ export class APIKeyManager {
                apiKey: decryptedKey,
                metadata: keyData.metadata,
             });
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
          } catch (error) {
             throw new Error(`Failed to decrypt key for provider ${keyData.providerId}`);
          }
@@ -537,7 +538,7 @@ export class APIKeyManager {
 
       // Re-encrypt all keys with new password
       for (const { providerId, apiKey, metadata } of decryptedKeys) {
-         await this.storeAPIKey(providerId, apiKey, metadata as APIKeyMetadata);
+         await this.storeAPIKey(providerId, apiKey, metadata as unknown as APIKeyMetadata);
       }
 
       logger.log('Keys rotated', {
