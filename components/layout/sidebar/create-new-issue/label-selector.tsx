@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import type { LabelInterface } from '@/mock-data/labels';
 import { labels } from '@/mock-data/labels';
 import { CheckIcon, TagIcon } from 'lucide-react';
@@ -26,7 +26,7 @@ export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps):
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
 
-   const { filterByLabel } = useIssuesStore();
+   // const { filterByLabel } = useIssuesStore();
 
    const handleLabelToggle = (label: LabelInterface): void => {
       const isSelected = selectedLabels.some((l) => l.id === label.id);
@@ -97,7 +97,7 @@ export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps):
                                  </div>
                                  {isSelected && <CheckIcon size={16} className="ml-auto" />}
                                  <span className="text-muted-foreground text-xs">
-                                    {filterByLabel(label.id).length}
+                                    {0 /* TODO: Get count from GraphQL */}
                                  </span>
                               </CommandItem>
                            );

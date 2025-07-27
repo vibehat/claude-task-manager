@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useIssuesStore } from '@/store/issues-store';
+import { useIssues } from '@/libs/client/hooks/issues/queries/issues/use-issues';
 import { Badge } from '@/components/ui/badge';
 import {
    CalendarIcon,
@@ -14,11 +14,11 @@ import {
 } from 'lucide-react';
 import { useMemo } from 'react';
 import Link from 'next/link';
-import Header from '@/components/layout/headers/indie-dashboard/header';
 import { IndieLayout } from '@/components/layout/indie-layout';
 
 export default function IndieDashboardPage(): React.JSX.Element {
-   const { issues } = useIssuesStore();
+   const { data } = useIssues();
+   const issues = useMemo(() => data?.issues?.nodes || [], [data?.issues?.nodes]);
 
    // Calculate task statistics
    const taskStats = useMemo(() => {
@@ -39,7 +39,7 @@ export default function IndieDashboardPage(): React.JSX.Element {
    }, [issues]);
 
    return (
-      <IndieLayout header={<Header />}>
+      <IndieLayout>
          <div className="p-6 space-y-6">
             {/* Header */}
             <div className="flex items-center justify-between">

@@ -34,7 +34,7 @@ import {
    Clipboard,
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import { status } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 import { users } from '@/mock-data/users';
@@ -51,22 +51,24 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
 
-   const {
-      updateIssueStatus,
-      updateIssuePriority,
-      updateIssueAssignee,
-      addIssueLabel,
-      removeIssueLabel,
-      updateIssueProject,
-      updateIssue,
-      getIssueById,
-   } = useIssuesStore();
+   // TODO: Replace with mutation hooks
+   // const {
+   //    updateIssueStatus,
+   //    updateIssuePriority,
+   //    updateIssueAssignee,
+   //    addIssueLabel,
+   //    removeIssueLabel,
+   //    updateIssueProject,
+   //    updateIssue,
+   //    getIssueById,
+   // } = useIssuesStore();
 
    const handleStatusChange = (statusId: string): void => {
       if (!issueId) return;
       const newStatus = status.find((s) => s.id === statusId);
       if (newStatus) {
-         updateIssueStatus(issueId, newStatus);
+         // TODO: Implement with mutation hook
+         // updateIssueStatus(issueId, newStatus);
          toast.success(`Status updated to ${newStatus.name}`);
       }
    };
@@ -75,7 +77,8 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
       if (!issueId) return;
       const newPriority = priorities.find((p) => p.id === priorityId);
       if (newPriority) {
-         updateIssuePriority(issueId, newPriority);
+         // TODO: Implement with mutation hook
+         // updateIssuePriority(issueId, newPriority);
          toast.success(`Priority updated to ${newPriority.name}`);
       }
    };
@@ -83,32 +86,36 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
    const handleAssigneeChange = (userId: string | null): void => {
       if (!issueId) return;
       const newAssignee = userId ? (users.find((u) => u.id === userId) ?? null) : null;
-      updateIssueAssignee(issueId, newAssignee);
+      // TODO: Implement with mutation hook
+      // updateIssueAssignee(issueId, newAssignee);
       toast.success(newAssignee ? `Assigned to ${newAssignee.name}` : 'Unassigned');
    };
 
    const handleLabelToggle = (labelId: string): void => {
       if (!issueId) return;
-      const issue = getIssueById(issueId);
+      // TODO: Implement with mutation hook and issue fetch
+      // const issue = getIssueById(issueId);
       const label = labels.find((l) => l.id === labelId);
 
-      if (!issue || !label) return;
+      if (!label) return;
 
-      const hasLabel = issue.labels.some((l) => l.id === labelId);
+      // TODO: Get current issue labels and implement toggle logic
+      // const hasLabel = issue.labels.some((l) => l.id === labelId);
 
-      if (hasLabel) {
-         removeIssueLabel(issueId, labelId);
-         toast.success(`Removed label: ${label.name}`);
-      } else {
-         addIssueLabel(issueId, label);
-         toast.success(`Added label: ${label.name}`);
-      }
+      // if (hasLabel) {
+      //    removeIssueLabel(issueId, labelId);
+      //    toast.success(`Removed label: ${label.name}`);
+      // } else {
+      //    addIssueLabel(issueId, label);
+      toast.success(`Added label: ${label.name}`);
+      // }
    };
 
    const handleProjectChange = (projectId: string | null): void => {
       if (!issueId) return;
       const newProject = projectId ? projects.find((p) => p.id === projectId) : undefined;
-      updateIssueProject(issueId, newProject);
+      // TODO: Implement with mutation hook
+      // updateIssueProject(issueId, newProject);
       toast.success(newProject ? `Project set to ${newProject.name}` : 'Project removed');
    };
 
@@ -116,7 +123,8 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
       if (!issueId) return;
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);
-      updateIssue(issueId, { dueDate: dueDate.toISOString() });
+      // TODO: Implement with mutation hook
+      // updateIssue(issueId, { dueDate: dueDate.toISOString() });
       toast.success('Due date set to 7 days from now');
    };
 
@@ -152,11 +160,12 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
 
    const handleCopy = (): void => {
       if (!issueId) return;
-      const issue = getIssueById(issueId);
-      if (issue) {
-         navigator.clipboard.writeText(issue.title);
-         toast.success('Copied to clipboard');
-      }
+      // TODO: Implement with issue fetch
+      // const issue = getIssueById(issueId);
+      // if (issue) {
+      //    navigator.clipboard.writeText(issue.title);
+      toast.success('Copied to clipboard');
+      // }
    };
 
    const handleRemindMe = (): void => {

@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+// import { useIssuesStore } from '@/store/issues-store';
 import type { User } from '@/mock-data/users';
 import { users } from '@/mock-data/users';
 import { CheckIcon, UserCircle } from 'lucide-react';
@@ -28,7 +28,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps):
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | null>(assignee?.id ?? null);
 
-   const { filterByAssignee } = useIssuesStore();
+   // const { filterByAssignee } = useIssuesStore();
 
    useEffect(() => {
       setValue(assignee?.id ?? null);
@@ -104,7 +104,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps):
                            </div>
                            {value === null && <CheckIcon size={16} className="ml-auto" />}
                            <span className="text-muted-foreground text-xs">
-                              {filterByAssignee(null).length}
+                              {0 /* TODO: Get count from GraphQL */}
                            </span>
                         </CommandItem>
                         {users
@@ -125,7 +125,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps):
                                  </div>
                                  {value === user.id && <CheckIcon size={16} className="ml-auto" />}
                                  <span className="text-muted-foreground text-xs">
-                                    {filterByAssignee(user.id).length}
+                                    {0 /* TODO: Get count from GraphQL */}
                                  </span>
                               </CommandItem>
                            ))}

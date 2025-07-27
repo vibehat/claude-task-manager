@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
    DropdownMenu,
@@ -13,7 +14,7 @@ import { useViewStore } from '@/store/view-store';
 import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
 import { Filter } from './filter';
 
-export default function HeaderOptions(): React.JSX.Element {
+export default function TasksOptions(): React.JSX.Element {
    const { viewType, setViewType } = useViewStore();
 
    const handleViewChange = (type: ViewType): void => {
@@ -21,7 +22,7 @@ export default function HeaderOptions(): React.JSX.Element {
    };
 
    return (
-      <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
+      <>
          <Filter />
          <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -56,6 +57,6 @@ export default function HeaderOptions(): React.JSX.Element {
                </DropdownMenuItem>
             </DropdownMenuContent>
          </DropdownMenu>
-      </div>
+      </>
    );
 }
