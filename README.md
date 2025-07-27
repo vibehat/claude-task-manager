@@ -235,6 +235,7 @@ Built on top of Radix UI primitives with custom styling:
 ### Vercel (Recommended)
 
 1. **Connect your repository**
+
    - Import your GitHub repository to Vercel
    - Configure environment variables in the Vercel dashboard
 

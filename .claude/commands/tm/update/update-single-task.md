@@ -51,12 +51,14 @@ task-master update-task --id=<id> --prompt="<context>"
 The AI:
 
 1. **Understands Context**
+
    - Reads current task state
    - Identifies update intent
    - Maintains consistency
    - Preserves important info
 
 2. **Applies Changes**
+
    - Updates relevant fields
    - Keeps style consistent
    - Adds without removing
@@ -90,12 +92,14 @@ Suggestion: Also update task #6 (API Gateway) for consistency?
 ## Smart Features
 
 1. **Incremental Updates**
+
    - Adds without overwriting
    - Preserves work history
    - Tracks what changed
    - Shows diff view
 
 2. **Consistency Checks**
+
    - Related task alignment
    - Subtask compatibility
    - Dependency validity

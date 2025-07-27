@@ -90,7 +90,7 @@ export function useGraphQLMutation<T, V = Record<string, any>>(mutation: string)
       try {
          setLoading(true);
          setError(null);
-         const result = await graphqlClient.query<T>(mutation, variables);
+         const result = await graphqlClient.query<T>(mutation, variables as Record<string, any>);
          return result;
       } catch (err) {
          const error = err instanceof Error ? err : new Error('Unknown error');

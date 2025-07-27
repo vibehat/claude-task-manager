@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/sidebar';
 import { accountItems } from '@/mock-data/side-bar-nav';
 
-export function NavAccount(): JSX.Element {
+export function NavAccount(): React.JSX.Element {
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarGroupLabel>Account</SidebarGroupLabel>

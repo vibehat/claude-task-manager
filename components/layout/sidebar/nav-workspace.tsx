@@ -20,7 +20,7 @@ import Link from 'next/link';
 import { workspaceItems } from '@/mock-data/side-bar-nav';
 import { RiPresentationLine } from '@remixicon/react';
 
-export function NavWorkspace(): JSX.Element {
+export function NavWorkspace(): React.JSX.Element {
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
          <SidebarGroupLabel>Workspace</SidebarGroupLabel>

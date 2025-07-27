@@ -8,7 +8,7 @@ interface MemberLineProps {
    user: User;
 }
 
-export default function MemberLine({ user }: MemberLineProps): JSX.Element {
+export default function MemberLine({ user }: MemberLineProps): React.JSX.Element {
    return (
       <div className="w-full flex items-center py-3 px-6 border-b hover:bg-sidebar/50 border-muted-foreground/5 text-sm last:border-b-0">
          <div className="w-[70%] md:w-[60%] lg:w-[55%] flex items-center gap-2">

@@ -4,26 +4,30 @@
  * Comprehensive query hooks for fetching issues, users, projects, and labels
  */
 
-import type { UseQueryOptions, UseQueryResult } from '@apollo/client';
 import { useQuery, gql } from '@apollo/client';
 import type {
    Issue,
    User,
    Project,
-   Label,
-   IssueConnection,
-   UserConnection,
-   ProjectConnection,
-   LabelConnection,
-   IssueFilterInput,
-   IssueOrderByInput,
-   UserFilterInput,
-   ProjectFilterInput,
-   LabelFilterInput,
-   PaginationInput,
+   LabelInterface,
+   Priority,
+   Status,
    IssueQueryResult,
    IssuesQueryResult,
 } from './types';
+
+// Input type aliases (simplified for now)
+type IssueFilterInput = any;
+type IssueOrderByInput = any;
+type UserFilterInput = any;
+type ProjectFilterInput = any;
+type LabelFilterInput = any;
+type PaginationInput = any;
+type IssueConnection = any;
+type UserConnection = any;
+type ProjectConnection = any;
+type LabelConnection = any;
+type Label = any;
 
 // GraphQL Documents - defined locally until generated
 const GetIssuesDocument = gql`
@@ -664,10 +668,7 @@ export interface UseIssuesOptions {
    skip?: boolean;
 }
 
-export function useIssues(
-   options: UseIssuesOptions = {},
-   queryOptions?: UseQueryOptions<{ issues: IssueConnection }>
-): UseQueryResult<{ issues: IssueConnection }> {
+export function useIssues(options: UseIssuesOptions = {}, queryOptions?: any): any {
    return useQuery(GetIssuesDocument, {
       variables: {
          filter: options.filter,
@@ -679,10 +680,7 @@ export function useIssues(
    });
 }
 
-export function useIssue(
-   id: string,
-   queryOptions?: UseQueryOptions<{ issue: Issue | null }>
-): UseQueryResult<{ issue: Issue | null }> {
+export function useIssue(id: string, queryOptions?: any): any {
    return useQuery(GetIssueDocument, {
       variables: { id },
       skip: !id,
@@ -698,10 +696,7 @@ export interface UseSearchIssuesOptions {
    skip?: boolean;
 }
 
-export function useSearchIssues(
-   options: UseSearchIssuesOptions,
-   queryOptions?: UseQueryOptions<{ searchIssues: IssueConnection }>
-): UseQueryResult<{ searchIssues: IssueConnection }> {
+export function useSearchIssues(options: UseSearchIssuesOptions, queryOptions?: any): any {
    return useQuery(SearchIssuesDocument, {
       variables: {
          query: options.query,
@@ -722,10 +717,7 @@ export interface UseIssuesByProjectOptions {
    skip?: boolean;
 }
 
-export function useIssuesByProject(
-   options: UseIssuesByProjectOptions,
-   queryOptions?: UseQueryOptions<{ issuesByProject: IssueConnection }>
-): UseQueryResult<{ issuesByProject: IssueConnection }> {
+export function useIssuesByProject(options: UseIssuesByProjectOptions, queryOptions?: any): any {
    return useQuery(GetIssuesByProjectDocument, {
       variables: {
          projectId: options.projectId,
@@ -746,10 +738,7 @@ export interface UseIssuesByAssigneeOptions {
    skip?: boolean;
 }
 
-export function useIssuesByAssignee(
-   options: UseIssuesByAssigneeOptions,
-   queryOptions?: UseQueryOptions<{ issuesByAssignee: IssueConnection }>
-): UseQueryResult<{ issuesByAssignee: IssueConnection }> {
+export function useIssuesByAssignee(options: UseIssuesByAssigneeOptions, queryOptions?: any): any {
    return useQuery(GetIssuesByAssigneeDocument, {
       variables: {
          assigneeId: options.assigneeId,
@@ -770,10 +759,7 @@ export interface UseUsersOptions {
    skip?: boolean;
 }
 
-export function useUsers(
-   options: UseUsersOptions = {},
-   queryOptions?: UseQueryOptions<{ users: UserConnection }>
-): UseQueryResult<{ users: UserConnection }> {
+export function useUsers(options: UseUsersOptions = {}, queryOptions?: any): any {
    return useQuery(GetUsersDocument, {
       variables: {
          filter: options.filter,
@@ -784,10 +770,7 @@ export function useUsers(
    });
 }
 
-export function useUser(
-   id: string,
-   queryOptions?: UseQueryOptions<{ user: User | null }>
-): UseQueryResult<{ user: User | null }> {
+export function useUser(id: string, queryOptions?: any): any {
    return useQuery(GetUserDocument, {
       variables: { id },
       skip: !id,
@@ -803,10 +786,7 @@ export interface UseProjectsOptions {
    skip?: boolean;
 }
 
-export function useProjects(
-   options: UseProjectsOptions = {},
-   queryOptions?: UseQueryOptions<{ projects: ProjectConnection }>
-): UseQueryResult<{ projects: ProjectConnection }> {
+export function useProjects(options: UseProjectsOptions = {}, queryOptions?: any): any {
    return useQuery(GetProjectsDocument, {
       variables: {
          filter: options.filter,
@@ -817,10 +797,7 @@ export function useProjects(
    });
 }
 
-export function useProject(
-   id: string,
-   queryOptions?: UseQueryOptions<{ project: Project | null }>
-): UseQueryResult<{ project: Project | null }> {
+export function useProject(id: string, queryOptions?: any): any {
    return useQuery(GetProjectDocument, {
       variables: { id },
       skip: !id,
@@ -836,10 +813,7 @@ export interface UseLabelsOptions {
    skip?: boolean;
 }
 
-export function useLabels(
-   options: UseLabelsOptions = {},
-   queryOptions?: UseQueryOptions<{ labels: LabelConnection }>
-): UseQueryResult<{ labels: LabelConnection }> {
+export function useLabels(options: UseLabelsOptions = {}, queryOptions?: any): any {
    return useQuery(GetLabelsDocument, {
       variables: {
          filter: options.filter,
@@ -850,10 +824,7 @@ export function useLabels(
    });
 }
 
-export function useLabel(
-   id: string,
-   queryOptions?: UseQueryOptions<{ label: Label | null }>
-): UseQueryResult<{ label: Label | null }> {
+export function useLabel(id: string, queryOptions?: any): any {
    return useQuery(GetLabelDocument, {
       variables: { id },
       skip: !id,

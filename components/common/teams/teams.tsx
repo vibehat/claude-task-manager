@@ -3,7 +3,7 @@
 import { teams } from '@/mock-data/teams';
 import TeamLine from './team-line';
 
-export default function Teams(): JSX.Element {
+export default function Teams(): React.JSX.Element {
    return (
       <div className="w-full">
          <div className="bg-container px-6 py-1.5 text-sm flex items-center text-muted-foreground border-b sticky top-0 z-10">

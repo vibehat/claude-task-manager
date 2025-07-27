@@ -5,7 +5,7 @@ import { useSearchStore } from '@/store/search-store';
 import { useEffect, useState } from 'react';
 import { IssueLine } from './issue-line';
 
-export function SearchIssues(): JSX.Element {
+export function SearchIssues(): React.JSX.Element {
    const [searchResults, setSearchResults] = useState<
       ReturnType<typeof useIssuesStore.getState>['issues']
    >([]);
@@ -23,7 +23,7 @@ export function SearchIssues(): JSX.Element {
    }, [searchQuery, searchIssues]);
 
    if (!isSearchOpen) {
-      return null;
+      return <></>;
    }
 
    return (

@@ -15,7 +15,11 @@ interface ModeSwitcherProps {
 
 const STORAGE_KEY = 'app-mode-preference';
 
-export function ModeSwitcher({ value, onValueChange, className }: ModeSwitcherProps): JSX.Element {
+export function ModeSwitcher({
+   value,
+   onValueChange,
+   className,
+}: ModeSwitcherProps): React.JSX.Element {
    const [mode, setMode] = React.useState<Mode>('individual');
 
    React.useEffect(() => {

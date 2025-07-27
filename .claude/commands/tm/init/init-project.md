@@ -7,6 +7,7 @@ Parse arguments to determine initialization preferences.
 ## Initialization Process
 
 1. **Parse Arguments**
+
    - PRD file path (if provided)
    - Project name
    - Auto-confirm flag (-y)

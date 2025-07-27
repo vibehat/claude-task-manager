@@ -8,7 +8,7 @@ interface MembersTooltipProps {
    members: User[];
 }
 
-export function MembersTooltip({ members }: MembersTooltipProps): JSX.Element {
+export function MembersTooltip({ members }: MembersTooltipProps): React.JSX.Element {
    const displayedMembers = members.slice(0, 3);
    const remainingCount = members.length - displayedMembers.length;
 

@@ -21,7 +21,7 @@ interface StatusSelectorProps {
    issueId: string;
 }
 
-export function StatusSelector({ status, issueId }: StatusSelectorProps): JSX.Element {
+export function StatusSelector({ status, issueId }: StatusSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
@@ -56,13 +56,13 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): JSX.El
                   role="combobox"
                   aria-expanded={open}
                >
-                  {((): JSX.Element => {
+                  {((): React.JSX.Element => {
                      const selectedItem = allStatus.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;
                         return <Icon />;
                      }
-                     return null;
+                     return <></>;
                   })()}
                </Button>
             </PopoverTrigger>

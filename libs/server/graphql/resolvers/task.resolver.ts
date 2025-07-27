@@ -19,7 +19,6 @@ import {
    TaskStatus as GraphQLTaskStatus,
 } from '../types/task.types';
 import { BaseResolver } from './base.resolver';
-import { TaskWithTimestamps } from '../../taskmaster/types';
 
 @Resolver(() => TaskType)
 export class TaskResolver extends BaseResolver {
@@ -243,7 +242,7 @@ export class TaskResolver extends BaseResolver {
     * Field resolver for subtasks
     */
    @FieldResolver(() => [SubtaskType])
-   async subtasks(@Root() task: TaskWithTimestamps): Promise<SubtaskType[]> {
+   async subtasks(@Root() task: TaskType): Promise<SubtaskType[]> {
       try {
          if (task.subtasks && task.subtasks.length > 0) {
             // Return already loaded subtasks

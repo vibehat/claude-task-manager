@@ -22,11 +22,13 @@ Only expands tasks that:
 ## Expansion Process
 
 1. **Analysis Phase**
+
    - Identify expansion candidates
    - Group related tasks
    - Plan expansion strategy
 
 2. **Batch Processing**
+
    - Expand tasks in logical order
    - Maintain consistency
    - Preserve relationships

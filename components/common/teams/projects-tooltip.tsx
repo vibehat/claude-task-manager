@@ -8,7 +8,7 @@ interface ProjectsTooltipProps {
    projects: Project[];
 }
 
-export function ProjectsTooltip({ projects }: ProjectsTooltipProps): JSX.Element {
+export function ProjectsTooltip({ projects }: ProjectsTooltipProps): React.JSX.Element {
    return (
       <TooltipProvider>
          <Tooltip>

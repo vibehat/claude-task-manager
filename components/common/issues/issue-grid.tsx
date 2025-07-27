@@ -21,7 +21,7 @@ interface IssueGridProps {
 }
 
 // Custom DragLayer component to render the drag preview
-function IssueDragPreview({ issue }: { issue: Issue }): JSX.Element {
+function IssueDragPreview({ issue }: { issue: Issue }): React.JSX.Element {
    return (
       <div className="w-full p-3 bg-background rounded-md border border-border/50 overflow-hidden">
          <div className="flex items-center justify-between mb-2">
@@ -50,7 +50,7 @@ function IssueDragPreview({ issue }: { issue: Issue }): JSX.Element {
 }
 
 // Custom DragLayer to show custom preview during drag
-export function CustomDragLayer(): JSX.Element | null {
+export function CustomDragLayer(): React.JSX.Element | null {
    const { itemType, isDragging, item, currentOffset } = useDragLayer((monitor) => ({
       item: monitor.getItem(),
       itemType: monitor.getItemType(),
@@ -59,7 +59,7 @@ export function CustomDragLayer(): JSX.Element | null {
    }));
 
    if (!isDragging || itemType !== IssueDragType || !currentOffset) {
-      return null;
+      return <></>;
    }
 
    return (
@@ -75,7 +75,7 @@ export function CustomDragLayer(): JSX.Element | null {
    );
 }
 
-export function IssueGrid({ issue }: IssueGridProps): JSX.Element {
+export function IssueGrid({ issue }: IssueGridProps): React.JSX.Element {
    const ref = useRef<HTMLDivElement>(null);
 
    // Set up drag functionality.

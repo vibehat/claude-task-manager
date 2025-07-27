@@ -176,9 +176,10 @@ export class EnhancedFileWatcher extends EventEmitter {
          this.watchers.set(path, watcher);
          // console.log(`Started watching: ${path}`);
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          this.emit('watcherError', {
             path,
-            error: error.message,
+            error: errorMessage,
             timestamp: new Date(),
          });
       }
@@ -275,7 +276,9 @@ export class EnhancedFileWatcher extends EventEmitter {
                      event.content = await TaskMasterFileOperations.readConfig();
                   }
                } catch (parseError) {
-                  event.error = `JSON parse error: ${parseError.message}`;
+                  const errorMessage =
+                     parseError instanceof Error ? parseError.message : String(parseError);
+                  event.error = `JSON parse error: ${errorMessage}`;
                }
             }
 
@@ -288,7 +291,11 @@ export class EnhancedFileWatcher extends EventEmitter {
                      await TaskMasterFileOperations.readConfig(); // Validation happens here
                   }
                } catch (validationError) {
-                  event.error = `Validation error: ${validationError.message}`;
+                  const errorMessage =
+                     validationError instanceof Error
+                        ? validationError.message
+                        : String(validationError);
+                  event.error = `Validation error: ${errorMessage}`;
                   event.type = 'error';
                }
             }
@@ -311,12 +318,13 @@ export class EnhancedFileWatcher extends EventEmitter {
          // Log change for debugging
          console.log(`File ${eventType}: ${filepath} (${changeCount} changes)`);
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          this.emit('error', {
             type: 'error',
             filename: filepath ? basename(filepath) : 'unknown',
             filepath: filepath || 'unknown',
             timestamp: new Date(),
-            error: error.message,
+            error: errorMessage,
          });
       }
    }

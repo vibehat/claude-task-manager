@@ -34,11 +34,13 @@ task-master add-subtask --parent=<id> --task-id=<existing-id>
 ## Smart Features
 
 1. **Automatic Subtask Generation**
+
    - If title contains "and" or commas, create multiple
    - Suggest common subtask patterns
    - Inherit parent's context
 
 2. **Intelligent Defaults**
+
    - Priority based on parent
    - Appropriate time estimates
    - Logical dependencies between subtasks

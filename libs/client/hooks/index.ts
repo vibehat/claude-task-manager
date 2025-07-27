@@ -7,9 +7,18 @@
 // Issues management (modular GraphQL hooks)
 export * from './issues';
 
-// Other hooks
-export { useGraphQLData } from './use-graphql-data';
+// GraphQL hooks
+export {
+   useGraphQLQuery,
+   useGraphQLMutation,
+   useIssues,
+   useUsers,
+   useProjects,
+   useStatuses,
+   usePriorities,
+   useLabels,
+   useTeams,
+} from './use-graphql-data';
 
-// Legacy hooks (deprecated - use issues module instead)
-export { useIssuesStore } from './use-issues-graphql';
+// Integration hooks
 export { useIssuesIntegration } from './use-issues-integration';

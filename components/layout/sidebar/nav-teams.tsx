@@ -36,7 +36,7 @@ import { teams } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
 import { DEFAULT_CONFIG, getTeamRoute } from '@/libs/config/defaults';
 
-export function NavTeams(): JSX.Element {
+export function NavTeams(): React.JSX.Element {
    const joinedTeams = teams.filter((t) => t.joined);
    return (
       <SidebarGroup>

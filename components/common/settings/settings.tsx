@@ -172,7 +172,7 @@ const integrations: Integration[] = [
    },
 ];
 
-const FeatureCard = ({ feature }: { feature: Feature }): JSX.Element => {
+const FeatureCard = ({ feature }: { feature: Feature }): React.JSX.Element => {
    return (
       <div className="bg-card rounded-lg border p-5 flex flex-col h-full">
          <div className="flex items-start gap-4 mb-3">
@@ -200,7 +200,7 @@ const FeatureCard = ({ feature }: { feature: Feature }): JSX.Element => {
    );
 };
 
-const IntegrationCard = ({ integration }: { integration: Integration }): JSX.Element => {
+const IntegrationCard = ({ integration }: { integration: Integration }): React.JSX.Element => {
    return (
       <div className="flex items-start gap-4 mb-3">
          <div className="text-card-foreground">{integration.icon}</div>
@@ -217,7 +217,7 @@ const IntegrationCard = ({ integration }: { integration: Integration }): JSX.Ele
    );
 };
 
-const GuideCard = ({ guide }: { guide: Guide }): JSX.Element => {
+const GuideCard = ({ guide }: { guide: Guide }): React.JSX.Element => {
    return (
       <div className="bg-card rounded-lg border p-5 flex items-start gap-3">
          <div className="shrink-0">{guide.icon}</div>
@@ -232,7 +232,7 @@ const GuideCard = ({ guide }: { guide: Guide }): JSX.Element => {
    );
 };
 
-export default function Settings(): JSX.Element {
+export default function Settings(): React.JSX.Element {
    return (
       <div className="w-full max-w-7xl mx-auto px-8 py-8">
          <div className="mb-10">

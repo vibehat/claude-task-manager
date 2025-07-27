@@ -4,7 +4,7 @@
  * This is a standalone script version of what Task 24.4 will implement as a service
  */
 
-import { PrismaClient } from '../lib/generated/prisma';
+import { PrismaClient } from '../libs/server/generated/prisma';
 import { readFileSync, watch } from 'fs';
 import { join } from 'path';
 

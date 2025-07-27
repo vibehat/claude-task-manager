@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/libs/client/utils';
 
-function Card({ className, ...props }: React.ComponentProps<'div'>): JSX.Element {
+function Card({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
    return (
       <div
          data-slot="card"
@@ -15,7 +15,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>): JSX.Element
    );
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<'div'>): JSX.Element {
+function CardHeader({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
    return (
       <div
          data-slot="card-header"
@@ -25,7 +25,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>): JSX.E
    );
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<'div'>): JSX.Element {
+function CardTitle({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
    return (
       <div
          data-slot="card-title"
@@ -35,7 +35,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'div'>): JSX.El
    );
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<'div'>): JSX.Element {
+function CardDescription({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
    return (
       <div
          data-slot="card-description"
@@ -45,11 +45,11 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>): 
    );
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<'div'>): JSX.Element {
+function CardContent({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
    return <div data-slot="card-content" className={cn('px-6', className)} {...props} />;
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<'div'>): JSX.Element {
+function CardFooter({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
    return (
       <div data-slot="card-footer" className={cn('flex items-center px-6', className)} {...props} />
    );

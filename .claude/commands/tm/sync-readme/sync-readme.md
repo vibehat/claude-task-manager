@@ -61,12 +61,14 @@ Organized by status or priority:
 ## Smart Features
 
 1. **Intelligent Grouping**
+
    - By feature area
    - By sprint/milestone
    - By assigned developer
    - By priority
 
 2. **Progress Tracking**
+
    - Overall completion
    - Sprint velocity
    - Burndown indication

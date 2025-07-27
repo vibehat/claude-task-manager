@@ -13,7 +13,7 @@ import {
 import { teams } from '@/mock-data/teams';
 import { Button } from '@/components/ui/button';
 
-export function NavTeamsSettings(): JSX.Element {
+export function NavTeamsSettings(): React.JSX.Element {
    const joinedTeams = teams.filter((t) => t.joined);
    return (
       <SidebarGroup>

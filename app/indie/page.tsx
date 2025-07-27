@@ -1,11 +1,5 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import AllIssues from '@/components/common/issues/all-issues';
-
-export default function IndiePage(): JSX.Element {
-   return (
-      <div className="h-full">
-         <AllIssues />
-      </div>
-   );
+export default function IndiePage(): never {
+   redirect('/indie/dashboard');
 }

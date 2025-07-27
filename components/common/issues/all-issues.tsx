@@ -16,7 +16,7 @@ import { CustomDragLayer } from './issue-grid';
 import { cn } from '@/libs/client/utils';
 import type { Issue } from '@/mock-data/issues';
 
-export default function AllIssues(): JSX.Element {
+export default function AllIssues(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
    const { hasActiveFilters } = useFilterStore();
@@ -57,7 +57,7 @@ export default function AllIssues(): JSX.Element {
    );
 }
 
-const SearchIssuesView = (): JSX.Element => (
+const SearchIssuesView = (): React.JSX.Element => (
    <div className="px-6 mb-6">
       <SearchIssues />
    </div>

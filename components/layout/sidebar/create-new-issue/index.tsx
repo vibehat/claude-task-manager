@@ -22,7 +22,7 @@ import { LabelSelector } from './label-selector';
 import { ranks } from '@/mock-data/issues';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
-export function CreateNewIssue(): JSX.Element {
+export function CreateNewIssue(): React.JSX.Element {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
    const { addIssue, getAllIssues } = useIssuesStore();
@@ -40,22 +40,36 @@ export function CreateNewIssue(): JSX.Element {
       return identifier;
    }, [getAllIssues]);
 
-   const createDefaultData = useCallback(() => {
+   const createDefaultData = useCallback((): Issue => {
       const identifier = generateUniqueIdentifier();
+      const defaultStatusValue = defaultStatus ?? status.find((s) => s.id === 'to-do') ?? status[0];
+      const defaultPriority = priorities.find((p) => p.id === 'no-priority') ?? priorities[0];
+      const defaultRank = ranks[ranks.length - 1];
+
+      if (!defaultStatusValue) {
+         throw new Error('No default status available');
+      }
+      if (!defaultPriority) {
+         throw new Error('No default priority available');
+      }
+      if (!defaultRank) {
+         throw new Error('No default rank available');
+      }
+
       return {
          id: uuidv4(),
          identifier: `LNUI-${identifier}`,
          title: '',
          description: '',
-         status: defaultStatus ?? status.find((s) => s.id === 'to-do') ?? status[0],
+         status: defaultStatusValue,
          assignee: null,
-         priority: priorities.find((p) => p.id === 'no-priority') ?? priorities[0],
+         priority: defaultPriority,
          labels: [],
          createdAt: new Date().toISOString(),
          cycleId: '',
          project: undefined,
          subissues: [],
-         rank: ranks[ranks.length - 1],
+         rank: defaultRank,
       };
    }, [defaultStatus, generateUniqueIdentifier]);
 

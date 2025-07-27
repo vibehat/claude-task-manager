@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTasks } from '../graphql-client';
+// import { useTasks } from '../graphql-client';
 import { useIssuesStore } from '@/store/issues-store';
 
 /**
@@ -10,9 +10,18 @@ import { useIssuesStore } from '@/store/issues-store';
  *
  * Note: This is a transition hook that maps GraphQL Task data to the existing
  * Issues store interface for backward compatibility.
+ *
+ * TEMPORARY: GraphQL integration disabled due to schema mismatch
  */
 export function useIssuesIntegration() {
-   const { tasks, loading, error, refetch } = useTasks();
+   // Temporarily disable GraphQL integration
+   const { tasks, loading, error, refetch } = {
+      tasks: [],
+      loading: false,
+      error: null,
+      refetch: async () => {},
+   };
+
    const {
       initializeFromGraphQL,
       setLoading,
@@ -23,34 +32,11 @@ export function useIssuesIntegration() {
       error: storeError,
    } = useIssuesStore();
 
-   // Sync GraphQL data with store
+   // Initialize with empty data for now
    useEffect(() => {
-      if (loading) {
-         setLoading(true);
-      } else if (error) {
-         setError(error);
-      } else if (tasks) {
-         // Transform tasks to issues format for backward compatibility
-         const transformedIssues = tasks.map((task) => ({
-            id: task.id,
-            identifier: `TASK-${task.id}`,
-            title: task.title,
-            description: task.description,
-            status: { id: task.status.toLowerCase(), name: task.status },
-            priority: { id: task.priority.toLowerCase(), name: task.priority },
-            labels: [],
-            assignee: null,
-            project: null,
-            subissues: [],
-            createdAt: task.createdAt,
-            updatedAt: task.updatedAt,
-            dueDate: null,
-            rank: task.id.toString(),
-         }));
-
-         initializeFromGraphQL({ issues: transformedIssues });
-      }
-   }, [tasks, loading, error, initializeFromGraphQL, setLoading, setError]);
+      setLoading(false);
+      // Note: Store will use mock data by default when not initialized from GraphQL
+   }, [setLoading]);
 
    // Return store state for components to use
    return {

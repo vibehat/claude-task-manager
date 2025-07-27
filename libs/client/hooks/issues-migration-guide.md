@@ -313,11 +313,13 @@ const OPTIMIZED_ISSUES_QUERY = gql`
 ### Common Issues
 
 1. **Cache not updating after mutations**
+
    - Ensure proper cache update functions in mutations
    - Use `refetchQueries` as fallback
    - Check Apollo DevTools for cache state
 
 2. **Loading states not working**
+
    - Verify Apollo Client network status
    - Use `notifyOnNetworkStatusChange: true` in queries
    - Handle `networkStatus` for different loading states

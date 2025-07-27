@@ -8,7 +8,7 @@ import { SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import Notifications from './notifications';
 
-export default function HeaderNav(): JSX.Element {
+export default function HeaderNav(): React.JSX.Element {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =
       useSearchStore();
    const searchInputRef = useRef<HTMLInputElement>(null);

@@ -11,7 +11,7 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export function ThemeToggle(): JSX.Element | null {
+export function ThemeToggle(): React.JSX.Element | null {
    const { theme, setTheme } = useTheme();
 
    // To avoid a hydration error caused by mismatched server/client rendering,
@@ -23,7 +23,7 @@ export function ThemeToggle(): JSX.Element | null {
       setMounted(true);
    }, []);
 
-   if (!mounted) return null;
+   if (!mounted) return <></>;
 
    return (
       <DropdownMenu>

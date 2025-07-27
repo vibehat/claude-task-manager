@@ -1,8 +1,9 @@
+import React from 'react';
 import MainLayout from '@/components/layout/main-layout';
 import Settings from '@/components/common/settings/settings';
 import Header from '@/components/layout/headers/settings/header';
 
-export default function SettingsPage(): JSX.Element {
+export default function SettingsPage(): React.JSX.Element {
    return (
       <MainLayout header={<Header />} headersNumber={1}>
          <Settings />

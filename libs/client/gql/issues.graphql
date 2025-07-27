@@ -1,350 +1,384 @@
 # Issue Operations
 
 fragment IssueFragment on Issue {
-  id
-  identifier
-  title
-  description
-  status
-  priority
-  rank
-  cycleId
-  dueDate
-  issueType
-  taskId
-  subtaskId
-  subissues
-  createdAt
-  updatedAt
-  assignee {
-    id
-    name
-    email
-    avatarUrl
-    status
-    role
-  }
-  project {
-    id
-    name
-    description
-    color
-    identifier
-  }
-  labels {
-    id
-    name
-    color
-    description
-  }
-  task {
-    id
-    title
-    status
-    priority
-  }
+   id
+   identifier
+   title
+   description
+   status
+   priority
+   rank
+   cycleId
+   dueDate
+   issueType
+   taskId
+   subtaskId
+   subIssues {
+      id
+      identifier
+      title
+      status
+   }
+   createdAt
+   updatedAt
+   assignee {
+      id
+      name
+      email
+      avatarUrl
+      status
+      role
+   }
+   project {
+      id
+      name
+      description
+      color
+      identifier
+   }
+   labels {
+      id
+      name
+      color
+      description
+   }
+   task {
+      id
+      title
+      status
+      priority
+   }
 }
 
 fragment UserFragment on User {
-  id
-  name
-  email
-  avatarUrl
-  status
-  role
-  joinedDate
-  teamIds
-  createdAt
-  updatedAt
+   id
+   name
+   email
+   avatarUrl
+   status
+   role
+   joinedDate
+   teamIds
+   createdAt
+   updatedAt
 }
 
 fragment ProjectFragment on Project {
-  id
-  name
-  description
-  color
-  identifier
-  createdAt
-  updatedAt
+   id
+   name
+   description
+   color
+   identifier
+   createdAt
+   updatedAt
 }
 
 fragment LabelFragment on Label {
-  id
-  name
-  color
-  description
-  createdAt
-  updatedAt
+   id
+   name
+   color
+   description
+   createdAt
+   updatedAt
 }
 
 # Issue Queries
 
-query GetIssues($filter: IssueFilterInput, $orderBy: [IssueOrderByInput!], $pagination: PaginationInput) {
-  issues(filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-    edges {
-      node {
-        ...IssueFragment
+query GetIssues(
+   $filter: IssueFilterInput
+   $orderBy: [IssueOrderByInput!]
+   $pagination: PaginationInput
+) {
+   issues(filter: $filter, orderBy: $orderBy, pagination: $pagination) {
+      edges {
+         node {
+            ...IssueFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...IssueFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...IssueFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
 query GetIssue($id: ID!) {
-  issue(id: $id) {
-    ...IssueFragment
-  }
+   issue(id: $id) {
+      ...IssueFragment
+   }
 }
 
-query SearchIssues($query: String!, $filter: IssueFilterInput, $orderBy: [IssueOrderByInput!], $pagination: PaginationInput) {
-  searchIssues(query: $query, filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-    edges {
-      node {
-        ...IssueFragment
+query SearchIssues(
+   $query: String!
+   $filter: IssueFilterInput
+   $orderBy: [IssueOrderByInput!]
+   $pagination: PaginationInput
+) {
+   searchIssues(query: $query, filter: $filter, orderBy: $orderBy, pagination: $pagination) {
+      edges {
+         node {
+            ...IssueFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...IssueFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...IssueFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
-query GetIssuesByProject($projectId: ID!, $filter: IssueFilterInput, $orderBy: [IssueOrderByInput!], $pagination: PaginationInput) {
-  issuesByProject(projectId: $projectId, filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-    edges {
-      node {
-        ...IssueFragment
+query GetIssuesByProject(
+   $projectId: ID!
+   $filter: IssueFilterInput
+   $orderBy: [IssueOrderByInput!]
+   $pagination: PaginationInput
+) {
+   issuesByProject(
+      projectId: $projectId
+      filter: $filter
+      orderBy: $orderBy
+      pagination: $pagination
+   ) {
+      edges {
+         node {
+            ...IssueFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...IssueFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...IssueFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
-query GetIssuesByAssignee($assigneeId: ID!, $filter: IssueFilterInput, $orderBy: [IssueOrderByInput!], $pagination: PaginationInput) {
-  issuesByAssignee(assigneeId: $assigneeId, filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-    edges {
-      node {
-        ...IssueFragment
+query GetIssuesByAssignee(
+   $assigneeId: ID!
+   $filter: IssueFilterInput
+   $orderBy: [IssueOrderByInput!]
+   $pagination: PaginationInput
+) {
+   issuesByAssignee(
+      assigneeId: $assigneeId
+      filter: $filter
+      orderBy: $orderBy
+      pagination: $pagination
+   ) {
+      edges {
+         node {
+            ...IssueFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...IssueFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...IssueFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
 # User Queries
 
 query GetUsers($filter: UserFilterInput, $pagination: PaginationInput) {
-  users(filter: $filter, pagination: $pagination) {
-    edges {
-      node {
-        ...UserFragment
+   users(filter: $filter, pagination: $pagination) {
+      edges {
+         node {
+            ...UserFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...UserFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...UserFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
 query GetUser($id: ID!) {
-  user(id: $id) {
-    ...UserFragment
-    assignedIssues {
-      ...IssueFragment
-    }
-  }
+   user(id: $id) {
+      ...UserFragment
+      assignedIssues {
+         ...IssueFragment
+      }
+   }
 }
 
 # Project Queries
 
 query GetProjects($filter: ProjectFilterInput, $pagination: PaginationInput) {
-  projects(filter: $filter, pagination: $pagination) {
-    edges {
-      node {
-        ...ProjectFragment
+   projects(filter: $filter, pagination: $pagination) {
+      edges {
+         node {
+            ...ProjectFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...ProjectFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...ProjectFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
 query GetProject($id: ID!) {
-  project(id: $id) {
-    ...ProjectFragment
-    issues {
-      ...IssueFragment
-    }
-  }
+   project(id: $id) {
+      ...ProjectFragment
+      issues {
+         ...IssueFragment
+      }
+   }
 }
 
 # Label Queries
 
 query GetLabels($filter: LabelFilterInput, $pagination: PaginationInput) {
-  labels(filter: $filter, pagination: $pagination) {
-    edges {
-      node {
-        ...LabelFragment
+   labels(filter: $filter, pagination: $pagination) {
+      edges {
+         node {
+            ...LabelFragment
+         }
+         cursor
       }
-      cursor
-    }
-    nodes {
-      ...LabelFragment
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-  }
+      nodes {
+         ...LabelFragment
+      }
+      pageInfo {
+         hasNextPage
+         hasPreviousPage
+         startCursor
+         endCursor
+      }
+      totalCount
+   }
 }
 
 query GetLabel($id: ID!) {
-  label(id: $id) {
-    ...LabelFragment
-    issues {
-      ...IssueFragment
-    }
-  }
+   label(id: $id) {
+      ...LabelFragment
+      issues {
+         ...IssueFragment
+      }
+   }
 }
 
 # Issue Mutations
 
 mutation CreateIssue($input: CreateIssueInput!) {
-  createIssue(input: $input) {
-    ...IssueFragment
-  }
+   createIssue(input: $input) {
+      ...IssueFragment
+   }
 }
 
 mutation UpdateIssue($id: ID!, $input: UpdateIssueInput!) {
-  updateIssue(id: $id, input: $input) {
-    ...IssueFragment
-  }
+   updateIssue(id: $id, input: $input) {
+      ...IssueFragment
+   }
 }
 
 mutation DeleteIssue($id: ID!) {
-  deleteIssue(id: $id)
+   deleteIssue(id: $id)
 }
 
 mutation AssignIssue($issueId: ID!, $assigneeId: ID!) {
-  assignIssue(issueId: $issueId, assigneeId: $assigneeId) {
-    ...IssueFragment
-  }
+   assignIssue(issueId: $issueId, assigneeId: $assigneeId) {
+      ...IssueFragment
+   }
 }
 
 mutation UpdateIssueStatus($issueId: ID!, $status: String!) {
-  updateIssueStatus(issueId: $issueId, status: $status) {
-    ...IssueFragment
-  }
+   updateIssueStatus(issueId: $issueId, status: $status) {
+      ...IssueFragment
+   }
 }
 
 # User Mutations
 
 mutation CreateUser($input: CreateUserInput!) {
-  createUser(input: $input) {
-    ...UserFragment
-  }
+   createUser(input: $input) {
+      ...UserFragment
+   }
 }
 
 mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
-  updateUser(id: $id, input: $input) {
-    ...UserFragment
-  }
+   updateUser(id: $id, input: $input) {
+      ...UserFragment
+   }
 }
 
 mutation DeleteUser($id: ID!) {
-  deleteUser(id: $id)
+   deleteUser(id: $id)
 }
 
 # Project Mutations
 
 mutation CreateProject($input: CreateProjectInput!) {
-  createProject(input: $input) {
-    ...ProjectFragment
-  }
+   createProject(input: $input) {
+      ...ProjectFragment
+   }
 }
 
 mutation UpdateProject($id: ID!, $input: UpdateProjectInput!) {
-  updateProject(id: $id, input: $input) {
-    ...ProjectFragment
-  }
+   updateProject(id: $id, input: $input) {
+      ...ProjectFragment
+   }
 }
 
 mutation DeleteProject($id: ID!) {
-  deleteProject(id: $id)
+   deleteProject(id: $id)
 }
 
 # Label Mutations
 
 mutation CreateLabel($input: CreateLabelInput!) {
-  createLabel(input: $input) {
-    ...LabelFragment
-  }
+   createLabel(input: $input) {
+      ...LabelFragment
+   }
 }
 
 mutation UpdateLabel($id: ID!, $input: UpdateLabelInput!) {
-  updateLabel(id: $id, input: $input) {
-    ...LabelFragment
-  }
+   updateLabel(id: $id, input: $input) {
+      ...LabelFragment
+   }
 }
 
 mutation DeleteLabel($id: ID!) {
-  deleteLabel(id: $id)
+   deleteLabel(id: $id)
 }

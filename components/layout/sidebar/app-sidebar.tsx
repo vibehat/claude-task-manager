@@ -18,7 +18,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BackToApp } from '@/components/layout/sidebar/back-to-app';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>): JSX.Element {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>): React.JSX.Element {
    const pathname = usePathname();
    const isSettings = pathname.includes('/settings');
    return (

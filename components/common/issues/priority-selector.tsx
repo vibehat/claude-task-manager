@@ -21,7 +21,7 @@ interface PrioritySelectorProps {
    issueId?: string;
 }
 
-export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): JSX.Element {
+export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(priority.id);
@@ -56,13 +56,13 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
                   role="combobox"
                   aria-expanded={open}
                >
-                  {((): JSX.Element => {
+                  {((): React.JSX.Element => {
                      const selectedItem = priorities.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;
                         return <Icon className="text-muted-foreground size-4" />;
                      }
-                     return null;
+                     return <></>;
                   })()}
                </Button>
             </PopoverTrigger>

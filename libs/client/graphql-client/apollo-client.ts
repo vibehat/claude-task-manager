@@ -132,7 +132,11 @@ const cache = new InMemoryCache({
                         `,
                      });
 
-                     if (!depTask?.status || depTask.status !== 'done') {
+                     if (
+                        !depTask ||
+                        !(depTask as any)?.status ||
+                        (depTask as any).status !== 'done'
+                     ) {
                         return false;
                      }
                   }

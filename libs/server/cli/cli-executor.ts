@@ -185,7 +185,11 @@ class OutputParser {
          for (const line of lines) {
             if (line.includes('Task #')) {
                if (currentTask) tasks.push(currentTask);
-               currentTask = { id: line.match(/Task #(\d+)/)?.[1] };
+               currentTask = {
+                  id: line.match(/Task #(\d+)/)?.[1],
+                  title: undefined,
+                  status: undefined,
+               } as any;
             } else if (currentTask && line.includes('Title:')) {
                currentTask.title = line.split('Title:')[1]?.trim();
             } else if (currentTask && line.includes('Status:')) {
@@ -320,7 +324,7 @@ export class TaskMasterCLIExecutor extends EventEmitter {
       const commandConfig = TASK_MASTER_COMMANDS[command as keyof typeof TASK_MASTER_COMMANDS];
 
       // Check required arguments
-      if (commandConfig.required) {
+      if ('required' in commandConfig && commandConfig.required) {
          for (const requiredArg of commandConfig.required) {
             const hasRequiredArg = args.some((arg) => arg.startsWith(requiredArg));
             if (!hasRequiredArg) {
@@ -434,12 +438,13 @@ export class TaskMasterCLIExecutor extends EventEmitter {
          return executionResult;
       } catch (error) {
          // Handle error without error handler
+         const errorMessage = error instanceof Error ? error.message : String(error);
          const executionResult: CLIExecutionResult = {
             success: false,
             command: `task-master ${config.command} ${config.args.join(' ')}`,
             output: {
                stdout: '',
-               stderr: error.message || 'Unknown error',
+               stderr: errorMessage || 'Unknown error',
                parsed: null,
                summary: '',
             },
@@ -509,9 +514,11 @@ export class TaskMasterCLIExecutor extends EventEmitter {
                } catch (parseError) {
                   // Create parsing error but don't fail the command
                   if (this.errorHandler && typeof this.errorHandler.createError === 'function') {
+                     const errorMessage =
+                        parseError instanceof Error ? parseError.message : String(parseError);
                      const parsingError = this.errorHandler.createError(
                         ErrorType.JSON_PARSE_ERROR,
-                        `Failed to parse command output: ${parseError.message}`,
+                        `Failed to parse command output: ${errorMessage}`,
                         { command: config.command, output: result.stdout },
                         parseError as Error
                      );
@@ -586,15 +593,17 @@ export class TaskMasterCLIExecutor extends EventEmitter {
                }
 
                // Handle TaskMaster errors (pass through)
-               if ('type' in error && 'category' in error) {
+               if (error && typeof error === 'object' && 'type' in error && 'category' in error) {
                   throw error;
                }
 
                // Convert generic errors
                if (this.errorHandler && typeof this.errorHandler.createError === 'function') {
+                  const errorMessage =
+                     error instanceof Error ? error.message : 'Unknown CLI execution error';
                   const genericError = this.errorHandler.createError(
                      ErrorType.CLI_EXECUTION_FAILED,
-                     error.message || 'Unknown CLI execution error',
+                     errorMessage,
                      { command: config.command, args: config.args, executionId },
                      error as Error
                   );
@@ -851,7 +860,9 @@ export class TaskMasterCLIExecutor extends EventEmitter {
          // Count command frequency
          for (const result of this.executionHistory) {
             const command = result.command.split(' ')[1]; // Extract command name
-            stats.commandFrequency[command] = (stats.commandFrequency[command] || 0) + 1;
+            if (command) {
+               stats.commandFrequency[command] = (stats.commandFrequency[command] || 0) + 1;
+            }
          }
       }
 

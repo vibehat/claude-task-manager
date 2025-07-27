@@ -259,7 +259,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
    // Retry operation with exponential backoff
    async retryOperation<T>(
       operation: () => Promise<T>,
-      context: any,
+      _context: any,
       config?: Partial<RetryConfig>
    ): Promise<T> {
       const retryConfig = { ...this.defaultRetryConfig, ...config };
@@ -271,7 +271,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
          } catch (error) {
             lastError = error as Error;
 
-            const taskMasterError = this.convertToTaskMasterError(error);
+            const taskMasterError = this.convertToTaskMasterError(error as Error);
             taskMasterError.retryCount = attempt - 1;
 
             if (attempt === retryConfig.maxAttempts) {
@@ -351,35 +351,35 @@ export class TaskMasterErrorHandler extends EventEmitter {
 
    // Generate user-friendly error messages
    private generateUserMessage(type: ErrorType, technicalMessage: string, context: any): string {
-      const userMessages: Record<ErrorType, (msg: string, ctx: any) => string> = {
-         [ErrorType.CLI_COMMAND_NOT_FOUND]: (msg, ctx) =>
+      const userMessages: Partial<Record<ErrorType, (msg: string, ctx: any) => string>> = {
+         [ErrorType.CLI_COMMAND_NOT_FOUND]: (_msg, _ctx) =>
             `Task Master CLI command not found. Please ensure Task Master is installed and accessible.`,
 
-         [ErrorType.CLI_TIMEOUT]: (msg, ctx) =>
+         [ErrorType.CLI_TIMEOUT]: (_msg, _ctx) =>
             `Command took too long to complete. This might be due to a large task list or system load.`,
 
-         [ErrorType.FILE_NOT_FOUND]: (msg, ctx) =>
+         [ErrorType.FILE_NOT_FOUND]: (_msg, ctx) =>
             `Required file not found: ${ctx.filePath || 'unknown'}. The file may have been moved or deleted.`,
 
-         [ErrorType.FILE_PERMISSION_DENIED]: (msg, ctx) =>
+         [ErrorType.FILE_PERMISSION_DENIED]: (_msg, ctx) =>
             `Permission denied accessing file: ${ctx.filePath || 'unknown'}. Please check file permissions.`,
 
-         [ErrorType.SYNC_CONFLICT]: (msg, ctx) =>
+         [ErrorType.SYNC_CONFLICT]: (_msg, _ctx) =>
             `Multiple changes detected for the same task. Please resolve the conflict or try again.`,
 
-         [ErrorType.NETWORK_TIMEOUT]: (msg, ctx) =>
+         [ErrorType.NETWORK_TIMEOUT]: (_msg, _ctx) =>
             `Network request timed out. Please check your internet connection and try again.`,
 
-         [ErrorType.JSON_PARSE_ERROR]: (msg, ctx) =>
+         [ErrorType.JSON_PARSE_ERROR]: (_msg, _ctx) =>
             `Invalid data format detected. The file may be corrupted or in an unexpected format.`,
 
-         [ErrorType.VALIDATION_REQUIRED_FIELD]: (msg, ctx) =>
+         [ErrorType.VALIDATION_REQUIRED_FIELD]: (_msg, ctx) =>
             `Required field missing: ${ctx.field || 'unknown'}. Please provide all required information.`,
 
-         [ErrorType.WEBSOCKET_CONNECTION_FAILED]: (msg, ctx) =>
+         [ErrorType.WEBSOCKET_CONNECTION_FAILED]: (_msg, _ctx) =>
             `Real-time connection failed. Features may work with reduced functionality.`,
 
-         [ErrorType.MEMORY_EXHAUSTED]: (msg, ctx) =>
+         [ErrorType.MEMORY_EXHAUSTED]: (_msg, _ctx) =>
             `System is running low on memory. Please close other applications and try again.`,
       };
 
@@ -392,8 +392,8 @@ export class TaskMasterErrorHandler extends EventEmitter {
    }
 
    // Generate suggested actions for errors
-   private generateSuggestedActions(type: ErrorType, context: any): string[] {
-      const actionMap: Record<ErrorType, string[]> = {
+   private generateSuggestedActions(type: ErrorType, _context: any): string[] {
+      const actionMap: Partial<Record<ErrorType, string[]>> = {
          [ErrorType.CLI_COMMAND_NOT_FOUND]: [
             'Install Task Master CLI: npm install -g task-master-ai',
             'Verify Task Master is in your PATH',
@@ -448,7 +448,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
          description: 'Retry CLI operation with increased timeout',
          priority: 10,
          applicable: (error) => error.retryCount < 2,
-         execute: async (error, context) => {
+         execute: async (_error, context) => {
             context.timeout = (context.timeout || 30000) * 2;
             return true; // Signal to retry
          },
@@ -460,7 +460,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
          description: 'Wait for file lock to be released',
          priority: 10,
          applicable: (error) => error.retryCount < 3,
-         execute: async (error, context) => {
+         execute: async (_error, _context) => {
             await new Promise((resolve) => setTimeout(resolve, 1000 + Math.random() * 2000));
             return true;
          },
@@ -472,7 +472,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
          description: 'Attempt to reconnect WebSocket',
          priority: 10,
          applicable: (error) => error.retryCount < 5,
-         execute: async (error, context) => {
+         execute: async (_error, _context) => {
             // This would be handled by the WebSocket client
             return true;
          },
@@ -483,8 +483,8 @@ export class TaskMasterErrorHandler extends EventEmitter {
          name: 'AutoResolveConflict',
          description: 'Automatically resolve sync conflict using last-write-wins',
          priority: 5,
-         applicable: (error) => context.autoResolve !== false,
-         execute: async (error, context) => {
+         applicable: (error) => error.context?.autoResolve !== false,
+         execute: async (_error, _context) => {
             // This would delegate to the sync manager
             return true;
          },
@@ -505,7 +505,7 @@ export class TaskMasterErrorHandler extends EventEmitter {
 
    // Get max retries for error type
    private getMaxRetries(type: ErrorType): number {
-      const typeSpecificRetries: Record<ErrorType, number> = {
+      const typeSpecificRetries: Partial<Record<ErrorType, number>> = {
          [ErrorType.CLI_TIMEOUT]: 2,
          [ErrorType.FILE_LOCK_FAILED]: 5,
          [ErrorType.NETWORK_TIMEOUT]: 3,
@@ -519,11 +519,10 @@ export class TaskMasterErrorHandler extends EventEmitter {
    // Convert generic error to TaskMasterError
    private convertToTaskMasterError(error: Error): TaskMasterError {
       if ('type' in error && 'category' in error) {
-         return error as TaskMasterError;
+         return error as unknown as TaskMasterError;
       }
 
       let errorType = ErrorType.UNKNOWN_ERROR;
-      const category = ErrorCategory.SYSTEM;
 
       // Try to infer error type from message
       const message = error.message.toLowerCase();

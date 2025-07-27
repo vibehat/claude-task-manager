@@ -12,7 +12,7 @@ interface DatePickerProps {
    onDateChange?: (date: Date | undefined) => void;
 }
 
-export function DatePicker({ date, onDateChange }: DatePickerProps): JSX.Element {
+export function DatePicker({ date, onDateChange }: DatePickerProps): React.JSX.Element {
    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(date);
    const [open, setOpen] = React.useState<boolean>(false);
 

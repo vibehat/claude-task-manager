@@ -252,9 +252,9 @@ exports.Prisma.IssueScalarFieldEnum = {
    taskId: 'taskId',
    subtaskId: 'subtaskId',
    issueType: 'issueType',
+   parentIssueId: 'parentIssueId',
    assigneeId: 'assigneeId',
    projectId: 'projectId',
-   subissues: 'subissues',
    createdAt: 'createdAt',
    updatedAt: 'updatedAt',
 };

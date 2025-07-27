@@ -25,7 +25,7 @@ interface IndieSidebarProps extends React.ComponentProps<typeof Sidebar> {
    className?: string;
 }
 
-export function IndieSidebar({ className, ...props }: IndieSidebarProps): JSX.Element {
+export function IndieSidebar({ className, ...props }: IndieSidebarProps): React.JSX.Element {
    return (
       <Sidebar collapsible="offcanvas" className={className} {...props}>
          <SidebarHeader>

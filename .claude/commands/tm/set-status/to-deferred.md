@@ -25,11 +25,13 @@ task-master set-status --id=$ARGUMENTS --status=deferred
 When deferring:
 
 1. **Document Reason**
+
    - Capture why it's being deferred
    - Set reactivation criteria
    - Note any partial work completed
 
 2. **Impact Analysis**
+
    - Check dependent tasks
    - Update project timeline
    - Notify affected stakeholders

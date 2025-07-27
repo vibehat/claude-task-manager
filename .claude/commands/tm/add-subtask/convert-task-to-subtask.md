@@ -24,6 +24,7 @@ task-master add-subtask --parent=<parent-id> --task-id=<task-to-convert>
 ## Pre-Conversion Checks
 
 1. **Validation**
+
    - Both tasks exist and are valid
    - No circular parent relationships
    - Task isn't already a subtask

@@ -13,11 +13,13 @@ task-master models --setup
 ## Setup Process
 
 1. **Environment Check**
+
    - Detect existing API keys
    - Show current configuration
    - Identify missing providers
 
 2. **Provider Selection**
+
    - Choose main provider (required)
    - Select research provider (recommended)
    - Configure fallback (optional)

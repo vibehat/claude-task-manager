@@ -2494,6 +2494,42 @@ export namespace Prisma {
    };
 
    /**
+    * Count Type SubtaskCountOutputType
+    */
+
+   export type SubtaskCountOutputType = {
+      issues: number;
+   };
+
+   export type SubtaskCountOutputTypeSelect<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      issues?: boolean | SubtaskCountOutputTypeCountIssuesArgs;
+   };
+
+   // Custom InputTypes
+   /**
+    * SubtaskCountOutputType without action
+    */
+   export type SubtaskCountOutputTypeDefaultArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the SubtaskCountOutputType
+       */
+      select?: SubtaskCountOutputTypeSelect<ExtArgs> | null;
+   };
+
+   /**
+    * SubtaskCountOutputType without action
+    */
+   export type SubtaskCountOutputTypeCountIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
+   };
+
+   /**
     * Count Type UserCountOutputType
     */
 
@@ -2712,12 +2748,14 @@ export namespace Prisma {
 
    export type IssueCountOutputType = {
       labels: number;
+      subIssues: number;
    };
 
    export type IssueCountOutputTypeSelect<
       ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
    > = {
       labels?: boolean | IssueCountOutputTypeCountLabelsArgs;
+      subIssues?: boolean | IssueCountOutputTypeCountSubIssuesArgs;
    };
 
    // Custom InputTypes
@@ -2740,6 +2778,15 @@ export namespace Prisma {
       ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
    > = {
       where?: IssueLabelWhereInput;
+   };
+
+   /**
+    * IssueCountOutputType without action
+    */
+   export type IssueCountOutputTypeCountSubIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      where?: IssueWhereInput;
    };
 
    /**
@@ -4517,6 +4564,8 @@ export namespace Prisma {
             createdAt?: boolean;
             updatedAt?: boolean;
             parentTask?: boolean | TaskDefaultArgs<ExtArgs>;
+            issues?: boolean | Subtask$issuesArgs<ExtArgs>;
+            _count?: boolean | SubtaskCountOutputTypeDefaultArgs<ExtArgs>;
          },
          ExtArgs['result']['subtask']
       >;
@@ -4589,6 +4638,8 @@ export namespace Prisma {
    export type SubtaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
       {
          parentTask?: boolean | TaskDefaultArgs<ExtArgs>;
+         issues?: boolean | Subtask$issuesArgs<ExtArgs>;
+         _count?: boolean | SubtaskCountOutputTypeDefaultArgs<ExtArgs>;
       };
    export type SubtaskIncludeCreateManyAndReturn<
       ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
@@ -4606,6 +4657,7 @@ export namespace Prisma {
          name: 'Subtask';
          objects: {
             parentTask: Prisma.$TaskPayload<ExtArgs>;
+            issues: Prisma.$IssuePayload<ExtArgs>[];
          };
          scalars: $Extensions.GetPayloadResult<
             {
@@ -5142,6 +5194,11 @@ export namespace Prisma {
          ExtArgs,
          GlobalOmitOptions
       >;
+      issues<T extends Subtask$issuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Subtask$issuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
+      >;
       /**
        * Attaches callbacks for the resolution and/or rejection of the Promise.
        * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5601,6 +5658,32 @@ export namespace Prisma {
        * Limit how many Subtasks to delete.
        */
       limit?: number;
+   };
+
+   /**
+    * Subtask.issues
+    */
+   export type Subtask$issuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
    };
 
    /**
@@ -17333,9 +17416,9 @@ export namespace Prisma {
       taskId: number | null;
       subtaskId: string | null;
       issueType: $Enums.IssueType | null;
+      parentIssueId: string | null;
       assigneeId: string | null;
       projectId: string | null;
-      subissues: string | null;
       createdAt: Date | null;
       updatedAt: Date | null;
    };
@@ -17355,9 +17438,9 @@ export namespace Prisma {
       taskId: number | null;
       subtaskId: string | null;
       issueType: $Enums.IssueType | null;
+      parentIssueId: string | null;
       assigneeId: string | null;
       projectId: string | null;
-      subissues: string | null;
       createdAt: Date | null;
       updatedAt: Date | null;
    };
@@ -17377,9 +17460,9 @@ export namespace Prisma {
       taskId: number;
       subtaskId: number;
       issueType: number;
+      parentIssueId: number;
       assigneeId: number;
       projectId: number;
-      subissues: number;
       createdAt: number;
       updatedAt: number;
       _all: number;
@@ -17408,9 +17491,9 @@ export namespace Prisma {
       taskId?: true;
       subtaskId?: true;
       issueType?: true;
+      parentIssueId?: true;
       assigneeId?: true;
       projectId?: true;
-      subissues?: true;
       createdAt?: true;
       updatedAt?: true;
    };
@@ -17430,9 +17513,9 @@ export namespace Prisma {
       taskId?: true;
       subtaskId?: true;
       issueType?: true;
+      parentIssueId?: true;
       assigneeId?: true;
       projectId?: true;
-      subissues?: true;
       createdAt?: true;
       updatedAt?: true;
    };
@@ -17452,9 +17535,9 @@ export namespace Prisma {
       taskId?: true;
       subtaskId?: true;
       issueType?: true;
+      parentIssueId?: true;
       assigneeId?: true;
       projectId?: true;
-      subissues?: true;
       createdAt?: true;
       updatedAt?: true;
       _all?: true;
@@ -17562,9 +17645,9 @@ export namespace Prisma {
       taskId: number | null;
       subtaskId: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId: string | null;
       assigneeId: string | null;
       projectId: string | null;
-      subissues: string;
       createdAt: Date;
       updatedAt: Date;
       _count: IssueCountAggregateOutputType | null;
@@ -17603,18 +17686,21 @@ export namespace Prisma {
             taskId?: boolean;
             subtaskId?: boolean;
             issueType?: boolean;
+            parentIssueId?: boolean;
             assigneeId?: boolean;
             projectId?: boolean;
-            subissues?: boolean;
             createdAt?: boolean;
             updatedAt?: boolean;
             assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
             project?: boolean | Issue$projectArgs<ExtArgs>;
             cycle?: boolean | Issue$cycleArgs<ExtArgs>;
             task?: boolean | Issue$taskArgs<ExtArgs>;
+            subtask?: boolean | Issue$subtaskArgs<ExtArgs>;
             issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
             issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
             labels?: boolean | Issue$labelsArgs<ExtArgs>;
+            parentIssue?: boolean | Issue$parentIssueArgs<ExtArgs>;
+            subIssues?: boolean | Issue$subIssuesArgs<ExtArgs>;
             _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>;
          },
          ExtArgs['result']['issue']
@@ -17638,17 +17724,19 @@ export namespace Prisma {
          taskId?: boolean;
          subtaskId?: boolean;
          issueType?: boolean;
+         parentIssueId?: boolean;
          assigneeId?: boolean;
          projectId?: boolean;
-         subissues?: boolean;
          createdAt?: boolean;
          updatedAt?: boolean;
          assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
          project?: boolean | Issue$projectArgs<ExtArgs>;
          cycle?: boolean | Issue$cycleArgs<ExtArgs>;
          task?: boolean | Issue$taskArgs<ExtArgs>;
+         subtask?: boolean | Issue$subtaskArgs<ExtArgs>;
          issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
          issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+         parentIssue?: boolean | Issue$parentIssueArgs<ExtArgs>;
       },
       ExtArgs['result']['issue']
    >;
@@ -17671,17 +17759,19 @@ export namespace Prisma {
          taskId?: boolean;
          subtaskId?: boolean;
          issueType?: boolean;
+         parentIssueId?: boolean;
          assigneeId?: boolean;
          projectId?: boolean;
-         subissues?: boolean;
          createdAt?: boolean;
          updatedAt?: boolean;
          assignee?: boolean | Issue$assigneeArgs<ExtArgs>;
          project?: boolean | Issue$projectArgs<ExtArgs>;
          cycle?: boolean | Issue$cycleArgs<ExtArgs>;
          task?: boolean | Issue$taskArgs<ExtArgs>;
+         subtask?: boolean | Issue$subtaskArgs<ExtArgs>;
          issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
          issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+         parentIssue?: boolean | Issue$parentIssueArgs<ExtArgs>;
       },
       ExtArgs['result']['issue']
    >;
@@ -17701,9 +17791,9 @@ export namespace Prisma {
       taskId?: boolean;
       subtaskId?: boolean;
       issueType?: boolean;
+      parentIssueId?: boolean;
       assigneeId?: boolean;
       projectId?: boolean;
-      subissues?: boolean;
       createdAt?: boolean;
       updatedAt?: boolean;
    };
@@ -17724,9 +17814,9 @@ export namespace Prisma {
          | 'taskId'
          | 'subtaskId'
          | 'issueType'
+         | 'parentIssueId'
          | 'assigneeId'
          | 'projectId'
-         | 'subissues'
          | 'createdAt'
          | 'updatedAt',
          ExtArgs['result']['issue']
@@ -17736,9 +17826,12 @@ export namespace Prisma {
       project?: boolean | Issue$projectArgs<ExtArgs>;
       cycle?: boolean | Issue$cycleArgs<ExtArgs>;
       task?: boolean | Issue$taskArgs<ExtArgs>;
+      subtask?: boolean | Issue$subtaskArgs<ExtArgs>;
       issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
       issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
       labels?: boolean | Issue$labelsArgs<ExtArgs>;
+      parentIssue?: boolean | Issue$parentIssueArgs<ExtArgs>;
+      subIssues?: boolean | Issue$subIssuesArgs<ExtArgs>;
       _count?: boolean | IssueCountOutputTypeDefaultArgs<ExtArgs>;
    };
    export type IssueIncludeCreateManyAndReturn<
@@ -17748,8 +17841,10 @@ export namespace Prisma {
       project?: boolean | Issue$projectArgs<ExtArgs>;
       cycle?: boolean | Issue$cycleArgs<ExtArgs>;
       task?: boolean | Issue$taskArgs<ExtArgs>;
+      subtask?: boolean | Issue$subtaskArgs<ExtArgs>;
       issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
       issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+      parentIssue?: boolean | Issue$parentIssueArgs<ExtArgs>;
    };
    export type IssueIncludeUpdateManyAndReturn<
       ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
@@ -17758,8 +17853,10 @@ export namespace Prisma {
       project?: boolean | Issue$projectArgs<ExtArgs>;
       cycle?: boolean | Issue$cycleArgs<ExtArgs>;
       task?: boolean | Issue$taskArgs<ExtArgs>;
+      subtask?: boolean | Issue$subtaskArgs<ExtArgs>;
       issueStatus?: boolean | Issue$issueStatusArgs<ExtArgs>;
       issuePriority?: boolean | Issue$issuePriorityArgs<ExtArgs>;
+      parentIssue?: boolean | Issue$parentIssueArgs<ExtArgs>;
    };
 
    export type $IssuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17769,9 +17866,12 @@ export namespace Prisma {
          project: Prisma.$ProjectPayload<ExtArgs> | null;
          cycle: Prisma.$CyclePayload<ExtArgs> | null;
          task: Prisma.$TaskPayload<ExtArgs> | null;
+         subtask: Prisma.$SubtaskPayload<ExtArgs> | null;
          issueStatus: Prisma.$IssueStatusPayload<ExtArgs> | null;
          issuePriority: Prisma.$IssuePriorityPayload<ExtArgs> | null;
          labels: Prisma.$IssueLabelPayload<ExtArgs>[];
+         parentIssue: Prisma.$IssuePayload<ExtArgs> | null;
+         subIssues: Prisma.$IssuePayload<ExtArgs>[];
       };
       scalars: $Extensions.GetPayloadResult<
          {
@@ -17789,9 +17889,9 @@ export namespace Prisma {
             taskId: number | null;
             subtaskId: string | null;
             issueType: $Enums.IssueType;
+            parentIssueId: string | null;
             assigneeId: string | null;
             projectId: string | null;
-            subissues: string;
             createdAt: Date;
             updatedAt: Date;
          },
@@ -18342,6 +18442,19 @@ export namespace Prisma {
          ExtArgs,
          GlobalOmitOptions
       >;
+      subtask<T extends Issue$subtaskArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$subtaskArgs<ExtArgs>>
+      ): Prisma__SubtaskClient<
+         $Result.GetResult<
+            Prisma.$SubtaskPayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
       issueStatus<T extends Issue$issueStatusArgs<ExtArgs> = {}>(
          args?: Subset<T, Issue$issueStatusArgs<ExtArgs>>
       ): Prisma__IssueStatusClient<
@@ -18373,6 +18486,24 @@ export namespace Prisma {
       ): Prisma.PrismaPromise<
          | $Result.GetResult<Prisma.$IssueLabelPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
          | Null
+      >;
+      parentIssue<T extends Issue$parentIssueArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$parentIssueArgs<ExtArgs>>
+      ): Prisma__IssueClient<
+         $Result.GetResult<
+            Prisma.$IssuePayload<ExtArgs>,
+            T,
+            'findUniqueOrThrow',
+            GlobalOmitOptions
+         > | null,
+         null,
+         ExtArgs,
+         GlobalOmitOptions
+      >;
+      subIssues<T extends Issue$subIssuesArgs<ExtArgs> = {}>(
+         args?: Subset<T, Issue$subIssuesArgs<ExtArgs>>
+      ): Prisma.PrismaPromise<
+         $Result.GetResult<Prisma.$IssuePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null
       >;
       /**
        * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -18419,9 +18550,9 @@ export namespace Prisma {
       readonly taskId: FieldRef<'Issue', 'Int'>;
       readonly subtaskId: FieldRef<'Issue', 'String'>;
       readonly issueType: FieldRef<'Issue', 'IssueType'>;
+      readonly parentIssueId: FieldRef<'Issue', 'String'>;
       readonly assigneeId: FieldRef<'Issue', 'String'>;
       readonly projectId: FieldRef<'Issue', 'String'>;
-      readonly subissues: FieldRef<'Issue', 'String'>;
       readonly createdAt: FieldRef<'Issue', 'DateTime'>;
       readonly updatedAt: FieldRef<'Issue', 'DateTime'>;
    }
@@ -18923,6 +19054,27 @@ export namespace Prisma {
       };
 
    /**
+    * Issue.subtask
+    */
+   export type Issue$subtaskArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Subtask
+       */
+      select?: SubtaskSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Subtask
+       */
+      omit?: SubtaskOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: SubtaskInclude<ExtArgs> | null;
+      where?: SubtaskWhereInput;
+   };
+
+   /**
     * Issue.issueStatus
     */
    export type Issue$issueStatusArgs<
@@ -18988,6 +19140,53 @@ export namespace Prisma {
       take?: number;
       skip?: number;
       distinct?: IssueLabelScalarFieldEnum | IssueLabelScalarFieldEnum[];
+   };
+
+   /**
+    * Issue.parentIssue
+    */
+   export type Issue$parentIssueArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+   };
+
+   /**
+    * Issue.subIssues
+    */
+   export type Issue$subIssuesArgs<
+      ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+   > = {
+      /**
+       * Select specific fields to fetch from the Issue
+       */
+      select?: IssueSelect<ExtArgs> | null;
+      /**
+       * Omit specific fields from the Issue
+       */
+      omit?: IssueOmit<ExtArgs> | null;
+      /**
+       * Choose, which related nodes to fetch as well
+       */
+      include?: IssueInclude<ExtArgs> | null;
+      where?: IssueWhereInput;
+      orderBy?: IssueOrderByWithRelationInput | IssueOrderByWithRelationInput[];
+      cursor?: IssueWhereUniqueInput;
+      take?: number;
+      skip?: number;
+      distinct?: IssueScalarFieldEnum | IssueScalarFieldEnum[];
    };
 
    /**
@@ -25547,9 +25746,9 @@ export namespace Prisma {
       taskId: 'taskId';
       subtaskId: 'subtaskId';
       issueType: 'issueType';
+      parentIssueId: 'parentIssueId';
       assigneeId: 'assigneeId';
       projectId: 'projectId';
-      subissues: 'subissues';
       createdAt: 'createdAt';
       updatedAt: 'updatedAt';
    };
@@ -25799,6 +25998,7 @@ export namespace Prisma {
       createdAt?: DateTimeFilter<'Subtask'> | Date | string;
       updatedAt?: DateTimeFilter<'Subtask'> | Date | string;
       parentTask?: XOR<TaskScalarRelationFilter, TaskWhereInput>;
+      issues?: IssueListRelationFilter;
    };
 
    export type SubtaskOrderByWithRelationInput = {
@@ -25813,6 +26013,7 @@ export namespace Prisma {
       createdAt?: SortOrder;
       updatedAt?: SortOrder;
       parentTask?: TaskOrderByWithRelationInput;
+      issues?: IssueOrderByRelationAggregateInput;
    };
 
    export type SubtaskWhereUniqueInput = Prisma.AtLeast<
@@ -25831,6 +26032,7 @@ export namespace Prisma {
          createdAt?: DateTimeFilter<'Subtask'> | Date | string;
          updatedAt?: DateTimeFilter<'Subtask'> | Date | string;
          parentTask?: XOR<TaskScalarRelationFilter, TaskWhereInput>;
+         issues?: IssueListRelationFilter;
       },
       'id'
    >;
@@ -26576,21 +26778,24 @@ export namespace Prisma {
       taskId?: IntNullableFilter<'Issue'> | number | null;
       subtaskId?: StringNullableFilter<'Issue'> | string | null;
       issueType?: EnumIssueTypeFilter<'Issue'> | $Enums.IssueType;
+      parentIssueId?: StringNullableFilter<'Issue'> | string | null;
       assigneeId?: StringNullableFilter<'Issue'> | string | null;
       projectId?: StringNullableFilter<'Issue'> | string | null;
-      subissues?: StringFilter<'Issue'> | string;
       createdAt?: DateTimeFilter<'Issue'> | Date | string;
       updatedAt?: DateTimeFilter<'Issue'> | Date | string;
       assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
       project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null;
       cycle?: XOR<CycleNullableScalarRelationFilter, CycleWhereInput> | null;
       task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null;
+      subtask?: XOR<SubtaskNullableScalarRelationFilter, SubtaskWhereInput> | null;
       issueStatus?: XOR<IssueStatusNullableScalarRelationFilter, IssueStatusWhereInput> | null;
       issuePriority?: XOR<
          IssuePriorityNullableScalarRelationFilter,
          IssuePriorityWhereInput
       > | null;
       labels?: IssueLabelListRelationFilter;
+      parentIssue?: XOR<IssueNullableScalarRelationFilter, IssueWhereInput> | null;
+      subIssues?: IssueListRelationFilter;
    };
 
    export type IssueOrderByWithRelationInput = {
@@ -26608,18 +26813,21 @@ export namespace Prisma {
       taskId?: SortOrderInput | SortOrder;
       subtaskId?: SortOrderInput | SortOrder;
       issueType?: SortOrder;
+      parentIssueId?: SortOrderInput | SortOrder;
       assigneeId?: SortOrderInput | SortOrder;
       projectId?: SortOrderInput | SortOrder;
-      subissues?: SortOrder;
       createdAt?: SortOrder;
       updatedAt?: SortOrder;
       assignee?: UserOrderByWithRelationInput;
       project?: ProjectOrderByWithRelationInput;
       cycle?: CycleOrderByWithRelationInput;
       task?: TaskOrderByWithRelationInput;
+      subtask?: SubtaskOrderByWithRelationInput;
       issueStatus?: IssueStatusOrderByWithRelationInput;
       issuePriority?: IssuePriorityOrderByWithRelationInput;
       labels?: IssueLabelOrderByRelationAggregateInput;
+      parentIssue?: IssueOrderByWithRelationInput;
+      subIssues?: IssueOrderByRelationAggregateInput;
    };
 
    export type IssueWhereUniqueInput = Prisma.AtLeast<
@@ -26641,21 +26849,24 @@ export namespace Prisma {
          taskId?: IntNullableFilter<'Issue'> | number | null;
          subtaskId?: StringNullableFilter<'Issue'> | string | null;
          issueType?: EnumIssueTypeFilter<'Issue'> | $Enums.IssueType;
+         parentIssueId?: StringNullableFilter<'Issue'> | string | null;
          assigneeId?: StringNullableFilter<'Issue'> | string | null;
          projectId?: StringNullableFilter<'Issue'> | string | null;
-         subissues?: StringFilter<'Issue'> | string;
          createdAt?: DateTimeFilter<'Issue'> | Date | string;
          updatedAt?: DateTimeFilter<'Issue'> | Date | string;
          assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
          project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null;
          cycle?: XOR<CycleNullableScalarRelationFilter, CycleWhereInput> | null;
          task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null;
+         subtask?: XOR<SubtaskNullableScalarRelationFilter, SubtaskWhereInput> | null;
          issueStatus?: XOR<IssueStatusNullableScalarRelationFilter, IssueStatusWhereInput> | null;
          issuePriority?: XOR<
             IssuePriorityNullableScalarRelationFilter,
             IssuePriorityWhereInput
          > | null;
          labels?: IssueLabelListRelationFilter;
+         parentIssue?: XOR<IssueNullableScalarRelationFilter, IssueWhereInput> | null;
+         subIssues?: IssueListRelationFilter;
       },
       'id' | 'identifier'
    >;
@@ -26675,9 +26886,9 @@ export namespace Prisma {
       taskId?: SortOrderInput | SortOrder;
       subtaskId?: SortOrderInput | SortOrder;
       issueType?: SortOrder;
+      parentIssueId?: SortOrderInput | SortOrder;
       assigneeId?: SortOrderInput | SortOrder;
       projectId?: SortOrderInput | SortOrder;
-      subissues?: SortOrder;
       createdAt?: SortOrder;
       updatedAt?: SortOrder;
       _count?: IssueCountOrderByAggregateInput;
@@ -26705,9 +26916,9 @@ export namespace Prisma {
       taskId?: IntNullableWithAggregatesFilter<'Issue'> | number | null;
       subtaskId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
       issueType?: EnumIssueTypeWithAggregatesFilter<'Issue'> | $Enums.IssueType;
+      parentIssueId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
       assigneeId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
       projectId?: StringNullableWithAggregatesFilter<'Issue'> | string | null;
-      subissues?: StringWithAggregatesFilter<'Issue'> | string;
       createdAt?: DateTimeWithAggregatesFilter<'Issue'> | Date | string;
       updatedAt?: DateTimeWithAggregatesFilter<'Issue'> | Date | string;
    };
@@ -27143,6 +27354,7 @@ export namespace Prisma {
       createdAt?: Date | string;
       updatedAt?: Date | string;
       parentTask: TaskCreateNestedOneWithoutSubtasksInput;
+      issues?: IssueCreateNestedManyWithoutSubtaskInput;
    };
 
    export type SubtaskUncheckedCreateInput = {
@@ -27156,6 +27368,7 @@ export namespace Prisma {
       dependencies?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutSubtaskInput;
    };
 
    export type SubtaskUpdateInput = {
@@ -27169,6 +27382,7 @@ export namespace Prisma {
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       parentTask?: TaskUpdateOneRequiredWithoutSubtasksNestedInput;
+      issues?: IssueUpdateManyWithoutSubtaskNestedInput;
    };
 
    export type SubtaskUncheckedUpdateInput = {
@@ -27182,6 +27396,7 @@ export namespace Prisma {
       dependencies?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutSubtaskNestedInput;
    };
 
    export type SubtaskCreateManyInput = {
@@ -27940,18 +28155,19 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateInput = {
@@ -27969,12 +28185,13 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUpdateInput = {
@@ -27986,18 +28203,19 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateInput = {
@@ -28015,12 +28233,13 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueCreateManyInput = {
@@ -28038,9 +28257,9 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -28054,9 +28273,7 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -28076,9 +28293,9 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -29150,6 +29367,11 @@ export namespace Prisma {
       isNot?: TaskWhereInput | null;
    };
 
+   export type SubtaskNullableScalarRelationFilter = {
+      is?: SubtaskWhereInput | null;
+      isNot?: SubtaskWhereInput | null;
+   };
+
    export type IssueStatusNullableScalarRelationFilter = {
       is?: IssueStatusWhereInput | null;
       isNot?: IssueStatusWhereInput | null;
@@ -29158,6 +29380,11 @@ export namespace Prisma {
    export type IssuePriorityNullableScalarRelationFilter = {
       is?: IssuePriorityWhereInput | null;
       isNot?: IssuePriorityWhereInput | null;
+   };
+
+   export type IssueNullableScalarRelationFilter = {
+      is?: IssueWhereInput | null;
+      isNot?: IssueWhereInput | null;
    };
 
    export type IssueCountOrderByAggregateInput = {
@@ -29175,9 +29402,9 @@ export namespace Prisma {
       taskId?: SortOrder;
       subtaskId?: SortOrder;
       issueType?: SortOrder;
+      parentIssueId?: SortOrder;
       assigneeId?: SortOrder;
       projectId?: SortOrder;
-      subissues?: SortOrder;
       createdAt?: SortOrder;
       updatedAt?: SortOrder;
    };
@@ -29201,9 +29428,9 @@ export namespace Prisma {
       taskId?: SortOrder;
       subtaskId?: SortOrder;
       issueType?: SortOrder;
+      parentIssueId?: SortOrder;
       assigneeId?: SortOrder;
       projectId?: SortOrder;
-      subissues?: SortOrder;
       createdAt?: SortOrder;
       updatedAt?: SortOrder;
    };
@@ -29223,9 +29450,9 @@ export namespace Prisma {
       taskId?: SortOrder;
       subtaskId?: SortOrder;
       issueType?: SortOrder;
+      parentIssueId?: SortOrder;
       assigneeId?: SortOrder;
       projectId?: SortOrder;
-      subissues?: SortOrder;
       createdAt?: SortOrder;
       updatedAt?: SortOrder;
    };
@@ -29766,6 +29993,30 @@ export namespace Prisma {
       connect?: TaskWhereUniqueInput;
    };
 
+   export type IssueCreateNestedManyWithoutSubtaskInput = {
+      create?:
+         | XOR<IssueCreateWithoutSubtaskInput, IssueUncheckedCreateWithoutSubtaskInput>
+         | IssueCreateWithoutSubtaskInput[]
+         | IssueUncheckedCreateWithoutSubtaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutSubtaskInput
+         | IssueCreateOrConnectWithoutSubtaskInput[];
+      createMany?: IssueCreateManySubtaskInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutSubtaskInput = {
+      create?:
+         | XOR<IssueCreateWithoutSubtaskInput, IssueUncheckedCreateWithoutSubtaskInput>
+         | IssueCreateWithoutSubtaskInput[]
+         | IssueUncheckedCreateWithoutSubtaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutSubtaskInput
+         | IssueCreateOrConnectWithoutSubtaskInput[];
+      createMany?: IssueCreateManySubtaskInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
    export type TaskUpdateOneRequiredWithoutSubtasksNestedInput = {
       create?: XOR<TaskCreateWithoutSubtasksInput, TaskUncheckedCreateWithoutSubtasksInput>;
       connectOrCreate?: TaskCreateOrConnectWithoutSubtasksInput;
@@ -29775,6 +30026,56 @@ export namespace Prisma {
          XOR<TaskUpdateToOneWithWhereWithoutSubtasksInput, TaskUpdateWithoutSubtasksInput>,
          TaskUncheckedUpdateWithoutSubtasksInput
       >;
+   };
+
+   export type IssueUpdateManyWithoutSubtaskNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutSubtaskInput, IssueUncheckedCreateWithoutSubtaskInput>
+         | IssueCreateWithoutSubtaskInput[]
+         | IssueUncheckedCreateWithoutSubtaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutSubtaskInput
+         | IssueCreateOrConnectWithoutSubtaskInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutSubtaskInput
+         | IssueUpsertWithWhereUniqueWithoutSubtaskInput[];
+      createMany?: IssueCreateManySubtaskInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutSubtaskInput
+         | IssueUpdateWithWhereUniqueWithoutSubtaskInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutSubtaskInput
+         | IssueUpdateManyWithWhereWithoutSubtaskInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutSubtaskNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutSubtaskInput, IssueUncheckedCreateWithoutSubtaskInput>
+         | IssueCreateWithoutSubtaskInput[]
+         | IssueUncheckedCreateWithoutSubtaskInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutSubtaskInput
+         | IssueCreateOrConnectWithoutSubtaskInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutSubtaskInput
+         | IssueUpsertWithWhereUniqueWithoutSubtaskInput[];
+      createMany?: IssueCreateManySubtaskInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutSubtaskInput
+         | IssueUpdateWithWhereUniqueWithoutSubtaskInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutSubtaskInput
+         | IssueUpdateManyWithWhereWithoutSubtaskInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
    };
 
    export type TaskCreateNestedOneWithoutDependenciesInput = {
@@ -30469,6 +30770,12 @@ export namespace Prisma {
       connect?: TaskWhereUniqueInput;
    };
 
+   export type SubtaskCreateNestedOneWithoutIssuesInput = {
+      create?: XOR<SubtaskCreateWithoutIssuesInput, SubtaskUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: SubtaskCreateOrConnectWithoutIssuesInput;
+      connect?: SubtaskWhereUniqueInput;
+   };
+
    export type IssueStatusCreateNestedOneWithoutIssuesInput = {
       create?: XOR<
          IssueStatusCreateWithoutIssuesInput,
@@ -30499,6 +30806,24 @@ export namespace Prisma {
       connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
    };
 
+   export type IssueCreateNestedOneWithoutSubIssuesInput = {
+      create?: XOR<IssueCreateWithoutSubIssuesInput, IssueUncheckedCreateWithoutSubIssuesInput>;
+      connectOrCreate?: IssueCreateOrConnectWithoutSubIssuesInput;
+      connect?: IssueWhereUniqueInput;
+   };
+
+   export type IssueCreateNestedManyWithoutParentIssueInput = {
+      create?:
+         | XOR<IssueCreateWithoutParentIssueInput, IssueUncheckedCreateWithoutParentIssueInput>
+         | IssueCreateWithoutParentIssueInput[]
+         | IssueUncheckedCreateWithoutParentIssueInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutParentIssueInput
+         | IssueCreateOrConnectWithoutParentIssueInput[];
+      createMany?: IssueCreateManyParentIssueInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+   };
+
    export type IssueLabelUncheckedCreateNestedManyWithoutIssueInput = {
       create?:
          | XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>
@@ -30509,6 +30834,18 @@ export namespace Prisma {
          | IssueLabelCreateOrConnectWithoutIssueInput[];
       createMany?: IssueLabelCreateManyIssueInputEnvelope;
       connect?: IssueLabelWhereUniqueInput | IssueLabelWhereUniqueInput[];
+   };
+
+   export type IssueUncheckedCreateNestedManyWithoutParentIssueInput = {
+      create?:
+         | XOR<IssueCreateWithoutParentIssueInput, IssueUncheckedCreateWithoutParentIssueInput>
+         | IssueCreateWithoutParentIssueInput[]
+         | IssueUncheckedCreateWithoutParentIssueInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutParentIssueInput
+         | IssueCreateOrConnectWithoutParentIssueInput[];
+      createMany?: IssueCreateManyParentIssueInputEnvelope;
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
    };
 
    export type EnumIssueTypeFieldUpdateOperationsInput = {
@@ -30570,6 +30907,19 @@ export namespace Prisma {
       update?: XOR<
          XOR<TaskUpdateToOneWithWhereWithoutIssuesInput, TaskUpdateWithoutIssuesInput>,
          TaskUncheckedUpdateWithoutIssuesInput
+      >;
+   };
+
+   export type SubtaskUpdateOneWithoutIssuesNestedInput = {
+      create?: XOR<SubtaskCreateWithoutIssuesInput, SubtaskUncheckedCreateWithoutIssuesInput>;
+      connectOrCreate?: SubtaskCreateOrConnectWithoutIssuesInput;
+      upsert?: SubtaskUpsertWithoutIssuesInput;
+      disconnect?: SubtaskWhereInput | boolean;
+      delete?: SubtaskWhereInput | boolean;
+      connect?: SubtaskWhereUniqueInput;
+      update?: XOR<
+         XOR<SubtaskUpdateToOneWithWhereWithoutIssuesInput, SubtaskUpdateWithoutIssuesInput>,
+         SubtaskUncheckedUpdateWithoutIssuesInput
       >;
    };
 
@@ -30636,6 +30986,44 @@ export namespace Prisma {
       deleteMany?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
    };
 
+   export type IssueUpdateOneWithoutSubIssuesNestedInput = {
+      create?: XOR<IssueCreateWithoutSubIssuesInput, IssueUncheckedCreateWithoutSubIssuesInput>;
+      connectOrCreate?: IssueCreateOrConnectWithoutSubIssuesInput;
+      upsert?: IssueUpsertWithoutSubIssuesInput;
+      disconnect?: IssueWhereInput | boolean;
+      delete?: IssueWhereInput | boolean;
+      connect?: IssueWhereUniqueInput;
+      update?: XOR<
+         XOR<IssueUpdateToOneWithWhereWithoutSubIssuesInput, IssueUpdateWithoutSubIssuesInput>,
+         IssueUncheckedUpdateWithoutSubIssuesInput
+      >;
+   };
+
+   export type IssueUpdateManyWithoutParentIssueNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutParentIssueInput, IssueUncheckedCreateWithoutParentIssueInput>
+         | IssueCreateWithoutParentIssueInput[]
+         | IssueUncheckedCreateWithoutParentIssueInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutParentIssueInput
+         | IssueCreateOrConnectWithoutParentIssueInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutParentIssueInput
+         | IssueUpsertWithWhereUniqueWithoutParentIssueInput[];
+      createMany?: IssueCreateManyParentIssueInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutParentIssueInput
+         | IssueUpdateWithWhereUniqueWithoutParentIssueInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutParentIssueInput
+         | IssueUpdateManyWithWhereWithoutParentIssueInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
+   };
+
    export type IssueLabelUncheckedUpdateManyWithoutIssueNestedInput = {
       create?:
          | XOR<IssueLabelCreateWithoutIssueInput, IssueLabelUncheckedCreateWithoutIssueInput>
@@ -30659,6 +31047,31 @@ export namespace Prisma {
          | IssueLabelUpdateManyWithWhereWithoutIssueInput
          | IssueLabelUpdateManyWithWhereWithoutIssueInput[];
       deleteMany?: IssueLabelScalarWhereInput | IssueLabelScalarWhereInput[];
+   };
+
+   export type IssueUncheckedUpdateManyWithoutParentIssueNestedInput = {
+      create?:
+         | XOR<IssueCreateWithoutParentIssueInput, IssueUncheckedCreateWithoutParentIssueInput>
+         | IssueCreateWithoutParentIssueInput[]
+         | IssueUncheckedCreateWithoutParentIssueInput[];
+      connectOrCreate?:
+         | IssueCreateOrConnectWithoutParentIssueInput
+         | IssueCreateOrConnectWithoutParentIssueInput[];
+      upsert?:
+         | IssueUpsertWithWhereUniqueWithoutParentIssueInput
+         | IssueUpsertWithWhereUniqueWithoutParentIssueInput[];
+      createMany?: IssueCreateManyParentIssueInputEnvelope;
+      set?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      disconnect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      delete?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      connect?: IssueWhereUniqueInput | IssueWhereUniqueInput[];
+      update?:
+         | IssueUpdateWithWhereUniqueWithoutParentIssueInput
+         | IssueUpdateWithWhereUniqueWithoutParentIssueInput[];
+      updateMany?:
+         | IssueUpdateManyWithWhereWithoutParentIssueInput
+         | IssueUpdateManyWithWhereWithoutParentIssueInput[];
+      deleteMany?: IssueScalarWhereInput | IssueScalarWhereInput[];
    };
 
    export type IssueCreateNestedOneWithoutLabelsInput = {
@@ -31355,6 +31768,7 @@ export namespace Prisma {
       dependencies?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
+      issues?: IssueCreateNestedManyWithoutSubtaskInput;
    };
 
    export type SubtaskUncheckedCreateWithoutParentTaskInput = {
@@ -31367,6 +31781,7 @@ export namespace Prisma {
       dependencies?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
+      issues?: IssueUncheckedCreateNestedManyWithoutSubtaskInput;
    };
 
    export type SubtaskCreateOrConnectWithoutParentTaskInput = {
@@ -31436,17 +31851,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutTaskInput = {
@@ -31463,12 +31879,13 @@ export namespace Prisma {
       dueDate?: Date | string | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutTaskInput = {
@@ -31618,9 +32035,9 @@ export namespace Prisma {
       taskId?: IntNullableFilter<'Issue'> | number | null;
       subtaskId?: StringNullableFilter<'Issue'> | string | null;
       issueType?: EnumIssueTypeFilter<'Issue'> | $Enums.IssueType;
+      parentIssueId?: StringNullableFilter<'Issue'> | string | null;
       assigneeId?: StringNullableFilter<'Issue'> | string | null;
       projectId?: StringNullableFilter<'Issue'> | string | null;
-      subissues?: StringFilter<'Issue'> | string;
       createdAt?: DateTimeFilter<'Issue'> | Date | string;
       updatedAt?: DateTimeFilter<'Issue'> | Date | string;
    };
@@ -31660,6 +32077,61 @@ export namespace Prisma {
    export type TaskCreateOrConnectWithoutSubtasksInput = {
       where: TaskWhereUniqueInput;
       create: XOR<TaskCreateWithoutSubtasksInput, TaskUncheckedCreateWithoutSubtasksInput>;
+   };
+
+   export type IssueCreateWithoutSubtaskInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      issueType: $Enums.IssueType;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutSubtaskInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutSubtaskInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutSubtaskInput, IssueUncheckedCreateWithoutSubtaskInput>;
+   };
+
+   export type IssueCreateManySubtaskInputEnvelope = {
+      data: IssueCreateManySubtaskInput | IssueCreateManySubtaskInput[];
    };
 
    export type TaskUpsertWithoutSubtasksInput = {
@@ -31703,6 +32175,22 @@ export namespace Prisma {
       dependencies?: TaskDependencyUncheckedUpdateManyWithoutTaskNestedInput;
       dependents?: TaskDependencyUncheckedUpdateManyWithoutDependsOnNestedInput;
       issues?: IssueUncheckedUpdateManyWithoutTaskNestedInput;
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutSubtaskInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutSubtaskInput, IssueUncheckedUpdateWithoutSubtaskInput>;
+      create: XOR<IssueCreateWithoutSubtaskInput, IssueUncheckedCreateWithoutSubtaskInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutSubtaskInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutSubtaskInput, IssueUncheckedUpdateWithoutSubtaskInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutSubtaskInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutSubtaskInput>;
    };
 
    export type TaskCreateWithoutDependenciesInput = {
@@ -31874,17 +32362,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutAssigneeInput = {
@@ -31902,11 +32391,12 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutAssigneeInput = {
@@ -32062,17 +32552,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutProjectInput = {
@@ -32090,11 +32581,12 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutProjectInput = {
@@ -32310,17 +32802,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutIssueStatusInput = {
@@ -32337,12 +32830,13 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutIssueStatusInput = {
@@ -32379,17 +32873,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutIssuePriorityInput = {
@@ -32406,12 +32901,13 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutIssuePriorityInput = {
@@ -32592,6 +33088,37 @@ export namespace Prisma {
       create: XOR<TaskCreateWithoutIssuesInput, TaskUncheckedCreateWithoutIssuesInput>;
    };
 
+   export type SubtaskCreateWithoutIssuesInput = {
+      id: string;
+      title: string;
+      description: string;
+      details?: string | null;
+      testStrategy?: string | null;
+      status: string;
+      dependencies?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      parentTask: TaskCreateNestedOneWithoutSubtasksInput;
+   };
+
+   export type SubtaskUncheckedCreateWithoutIssuesInput = {
+      id: string;
+      title: string;
+      description: string;
+      details?: string | null;
+      testStrategy?: string | null;
+      status: string;
+      parentId: number;
+      dependencies?: string;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type SubtaskCreateOrConnectWithoutIssuesInput = {
+      where: SubtaskWhereUniqueInput;
+      create: XOR<SubtaskCreateWithoutIssuesInput, SubtaskUncheckedCreateWithoutIssuesInput>;
+   };
+
    export type IssueStatusCreateWithoutIssuesInput = {
       id: string;
       name: string;
@@ -32661,6 +33188,112 @@ export namespace Prisma {
 
    export type IssueLabelCreateManyIssueInputEnvelope = {
       data: IssueLabelCreateManyIssueInput | IssueLabelCreateManyIssueInput[];
+   };
+
+   export type IssueCreateWithoutSubIssuesInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      issueType: $Enums.IssueType;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+   };
+
+   export type IssueUncheckedCreateWithoutSubIssuesInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutSubIssuesInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutSubIssuesInput, IssueUncheckedCreateWithoutSubIssuesInput>;
+   };
+
+   export type IssueCreateWithoutParentIssueInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      dueDate?: Date | string | null;
+      issueType: $Enums.IssueType;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
+      project?: ProjectCreateNestedOneWithoutIssuesInput;
+      cycle?: CycleCreateNestedOneWithoutIssuesInput;
+      task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
+      issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
+      issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
+   };
+
+   export type IssueUncheckedCreateWithoutParentIssueInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+      labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
+   };
+
+   export type IssueCreateOrConnectWithoutParentIssueInput = {
+      where: IssueWhereUniqueInput;
+      create: XOR<IssueCreateWithoutParentIssueInput, IssueUncheckedCreateWithoutParentIssueInput>;
+   };
+
+   export type IssueCreateManyParentIssueInputEnvelope = {
+      data: IssueCreateManyParentIssueInput | IssueCreateManyParentIssueInput[];
    };
 
    export type UserUpsertWithoutAssignedIssuesInput = {
@@ -32834,6 +33467,43 @@ export namespace Prisma {
       dependents?: TaskDependencyUncheckedUpdateManyWithoutDependsOnNestedInput;
    };
 
+   export type SubtaskUpsertWithoutIssuesInput = {
+      update: XOR<SubtaskUpdateWithoutIssuesInput, SubtaskUncheckedUpdateWithoutIssuesInput>;
+      create: XOR<SubtaskCreateWithoutIssuesInput, SubtaskUncheckedCreateWithoutIssuesInput>;
+      where?: SubtaskWhereInput;
+   };
+
+   export type SubtaskUpdateToOneWithWhereWithoutIssuesInput = {
+      where?: SubtaskWhereInput;
+      data: XOR<SubtaskUpdateWithoutIssuesInput, SubtaskUncheckedUpdateWithoutIssuesInput>;
+   };
+
+   export type SubtaskUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      details?: NullableStringFieldUpdateOperationsInput | string | null;
+      testStrategy?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: StringFieldUpdateOperationsInput | string;
+      dependencies?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      parentTask?: TaskUpdateOneRequiredWithoutSubtasksNestedInput;
+   };
+
+   export type SubtaskUncheckedUpdateWithoutIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      details?: NullableStringFieldUpdateOperationsInput | string | null;
+      testStrategy?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: StringFieldUpdateOperationsInput | string;
+      parentId?: IntFieldUpdateOperationsInput | number;
+      dependencies?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
    export type IssueStatusUpsertWithoutIssuesInput = {
       update: XOR<
          IssueStatusUpdateWithoutIssuesInput,
@@ -32923,6 +33593,79 @@ export namespace Prisma {
       data: XOR<IssueLabelUpdateManyMutationInput, IssueLabelUncheckedUpdateManyWithoutIssueInput>;
    };
 
+   export type IssueUpsertWithoutSubIssuesInput = {
+      update: XOR<IssueUpdateWithoutSubIssuesInput, IssueUncheckedUpdateWithoutSubIssuesInput>;
+      create: XOR<IssueCreateWithoutSubIssuesInput, IssueUncheckedCreateWithoutSubIssuesInput>;
+      where?: IssueWhereInput;
+   };
+
+   export type IssueUpdateToOneWithWhereWithoutSubIssuesInput = {
+      where?: IssueWhereInput;
+      data: XOR<IssueUpdateWithoutSubIssuesInput, IssueUncheckedUpdateWithoutSubIssuesInput>;
+   };
+
+   export type IssueUpdateWithoutSubIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutSubIssuesInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+   };
+
+   export type IssueUpsertWithWhereUniqueWithoutParentIssueInput = {
+      where: IssueWhereUniqueInput;
+      update: XOR<IssueUpdateWithoutParentIssueInput, IssueUncheckedUpdateWithoutParentIssueInput>;
+      create: XOR<IssueCreateWithoutParentIssueInput, IssueUncheckedCreateWithoutParentIssueInput>;
+   };
+
+   export type IssueUpdateWithWhereUniqueWithoutParentIssueInput = {
+      where: IssueWhereUniqueInput;
+      data: XOR<IssueUpdateWithoutParentIssueInput, IssueUncheckedUpdateWithoutParentIssueInput>;
+   };
+
+   export type IssueUpdateManyWithWhereWithoutParentIssueInput = {
+      where: IssueScalarWhereInput;
+      data: XOR<IssueUpdateManyMutationInput, IssueUncheckedUpdateManyWithoutParentIssueInput>;
+   };
+
    export type IssueCreateWithoutLabelsInput = {
       id?: string;
       identifier: string;
@@ -32932,17 +33675,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       cycle?: CycleCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutLabelsInput = {
@@ -32960,11 +33704,12 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutLabelsInput = {
@@ -33015,17 +33760,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutLabelsInput = {
@@ -33043,11 +33789,12 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type LabelUpsertWithoutIssuesInput = {
@@ -33117,17 +33864,18 @@ export namespace Prisma {
       priority?: string | null;
       rank: string;
       dueDate?: Date | string | null;
-      subtaskId?: string | null;
       issueType: $Enums.IssueType;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       assignee?: UserCreateNestedOneWithoutAssignedIssuesInput;
       project?: ProjectCreateNestedOneWithoutIssuesInput;
       task?: TaskCreateNestedOneWithoutIssuesInput;
+      subtask?: SubtaskCreateNestedOneWithoutIssuesInput;
       issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput;
       issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput;
       labels?: IssueLabelCreateNestedManyWithoutIssueInput;
+      parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput;
+      subIssues?: IssueCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueUncheckedCreateWithoutCycleInput = {
@@ -33144,12 +33892,13 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
       labels?: IssueLabelUncheckedCreateNestedManyWithoutIssueInput;
+      subIssues?: IssueUncheckedCreateNestedManyWithoutParentIssueInput;
    };
 
    export type IssueCreateOrConnectWithoutCycleInput = {
@@ -33668,9 +34417,9 @@ export namespace Prisma {
       dueDate?: Date | string | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -33685,6 +34434,7 @@ export namespace Prisma {
       dependencies?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUpdateManyWithoutSubtaskNestedInput;
    };
 
    export type SubtaskUncheckedUpdateWithoutParentTaskInput = {
@@ -33697,6 +34447,7 @@ export namespace Prisma {
       dependencies?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      issues?: IssueUncheckedUpdateManyWithoutSubtaskNestedInput;
    };
 
    export type SubtaskUncheckedUpdateManyWithoutParentTaskInput = {
@@ -33754,17 +34505,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutTaskInput = {
@@ -33781,12 +34533,13 @@ export namespace Prisma {
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateManyWithoutTaskInput = {
@@ -33803,9 +34556,97 @@ export namespace Prisma {
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
+   export type IssueCreateManySubtaskInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
+   };
+
+   export type IssueUpdateWithoutSubtaskInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutSubtaskInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutSubtaskInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -33825,8 +34666,8 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -33859,17 +34700,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutAssigneeInput = {
@@ -33887,11 +34729,12 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateManyWithoutAssigneeInput = {
@@ -33909,8 +34752,8 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -33991,8 +34834,8 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -34011,17 +34854,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutProjectInput = {
@@ -34039,11 +34883,12 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateManyWithoutProjectInput = {
@@ -34061,8 +34906,8 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -34116,9 +34961,9 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -34132,17 +34977,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutIssueStatusInput = {
@@ -34159,12 +35005,13 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateManyWithoutIssueStatusInput = {
@@ -34181,9 +35028,9 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -34202,9 +35049,9 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -34218,17 +35065,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       cycle?: CycleUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutIssuePriorityInput = {
@@ -34245,12 +35093,13 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateManyWithoutIssuePriorityInput = {
@@ -34267,9 +35116,9 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };
@@ -34277,6 +35126,27 @@ export namespace Prisma {
    export type IssueLabelCreateManyIssueInput = {
       id?: string;
       labelId: string;
+   };
+
+   export type IssueCreateManyParentIssueInput = {
+      id?: string;
+      identifier: string;
+      title: string;
+      description: string;
+      statusId?: string | null;
+      priorityId?: string | null;
+      status?: string | null;
+      priority?: string | null;
+      rank: string;
+      cycleId?: string | null;
+      dueDate?: Date | string | null;
+      taskId?: number | null;
+      subtaskId?: string | null;
+      issueType: $Enums.IssueType;
+      assigneeId?: string | null;
+      projectId?: string | null;
+      createdAt?: Date | string;
+      updatedAt?: Date | string;
    };
 
    export type IssueLabelUpdateWithoutIssueInput = {
@@ -34294,6 +35164,73 @@ export namespace Prisma {
       labelId?: StringFieldUpdateOperationsInput | string;
    };
 
+   export type IssueUpdateWithoutParentIssueInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
+      project?: ProjectUpdateOneWithoutIssuesNestedInput;
+      cycle?: CycleUpdateOneWithoutIssuesNestedInput;
+      task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
+      issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
+      issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
+      labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateWithoutParentIssueInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
+   };
+
+   export type IssueUncheckedUpdateManyWithoutParentIssueInput = {
+      id?: StringFieldUpdateOperationsInput | string;
+      identifier?: StringFieldUpdateOperationsInput | string;
+      title?: StringFieldUpdateOperationsInput | string;
+      description?: StringFieldUpdateOperationsInput | string;
+      statusId?: NullableStringFieldUpdateOperationsInput | string | null;
+      priorityId?: NullableStringFieldUpdateOperationsInput | string | null;
+      status?: NullableStringFieldUpdateOperationsInput | string | null;
+      priority?: NullableStringFieldUpdateOperationsInput | string | null;
+      rank?: StringFieldUpdateOperationsInput | string;
+      cycleId?: NullableStringFieldUpdateOperationsInput | string | null;
+      dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+      taskId?: NullableIntFieldUpdateOperationsInput | number | null;
+      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
+      issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+      projectId?: NullableStringFieldUpdateOperationsInput | string | null;
+      createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+   };
+
    export type IssueCreateManyCycleInput = {
       id?: string;
       identifier: string;
@@ -34308,9 +35245,9 @@ export namespace Prisma {
       taskId?: number | null;
       subtaskId?: string | null;
       issueType: $Enums.IssueType;
+      parentIssueId?: string | null;
       assigneeId?: string | null;
       projectId?: string | null;
-      subissues?: string;
       createdAt?: Date | string;
       updatedAt?: Date | string;
    };
@@ -34324,17 +35261,18 @@ export namespace Prisma {
       priority?: NullableStringFieldUpdateOperationsInput | string | null;
       rank?: StringFieldUpdateOperationsInput | string;
       dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-      subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       assignee?: UserUpdateOneWithoutAssignedIssuesNestedInput;
       project?: ProjectUpdateOneWithoutIssuesNestedInput;
       task?: TaskUpdateOneWithoutIssuesNestedInput;
+      subtask?: SubtaskUpdateOneWithoutIssuesNestedInput;
       issueStatus?: IssueStatusUpdateOneWithoutIssuesNestedInput;
       issuePriority?: IssuePriorityUpdateOneWithoutIssuesNestedInput;
       labels?: IssueLabelUpdateManyWithoutIssueNestedInput;
+      parentIssue?: IssueUpdateOneWithoutSubIssuesNestedInput;
+      subIssues?: IssueUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateWithoutCycleInput = {
@@ -34351,12 +35289,13 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       labels?: IssueLabelUncheckedUpdateManyWithoutIssueNestedInput;
+      subIssues?: IssueUncheckedUpdateManyWithoutParentIssueNestedInput;
    };
 
    export type IssueUncheckedUpdateManyWithoutCycleInput = {
@@ -34373,9 +35312,9 @@ export namespace Prisma {
       taskId?: NullableIntFieldUpdateOperationsInput | number | null;
       subtaskId?: NullableStringFieldUpdateOperationsInput | string | null;
       issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType;
+      parentIssueId?: NullableStringFieldUpdateOperationsInput | string | null;
       assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
       projectId?: NullableStringFieldUpdateOperationsInput | string | null;
-      subissues?: StringFieldUpdateOperationsInput | string;
       createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
       updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
    };

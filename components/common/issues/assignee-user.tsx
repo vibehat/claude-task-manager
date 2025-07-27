@@ -18,7 +18,7 @@ interface AssigneeUserProps {
    user: User | null;
 }
 
-export function AssigneeUser({ user }: AssigneeUserProps): JSX.Element {
+export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
    const [open, setOpen] = useState(false);
    const [currentAssignee, setCurrentAssignee] = useState<User | null>(user);
 
@@ -26,7 +26,7 @@ export function AssigneeUser({ user }: AssigneeUserProps): JSX.Element {
       setCurrentAssignee(user);
    }, [user]);
 
-   const renderAvatar = (): JSX.Element => {
+   const renderAvatar = (): React.JSX.Element => {
       if (currentAssignee) {
          return (
             <Avatar className="size-6 shrink-0">

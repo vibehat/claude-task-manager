@@ -198,7 +198,7 @@ export class TaskMasterSync {
                tasksProcessed++;
 
                // Create issue for task
-               await this.createIssueForTask(tx, task);
+               const taskIssue = await this.createIssueForTask(tx, task);
                issuesCreated++;
 
                // Sync subtasks
@@ -207,8 +207,8 @@ export class TaskMasterSync {
                      await this.syncSubtask(tx, subtask, task.id);
                      subtasksProcessed++;
 
-                     // Create issue for subtask
-                     await this.createIssueForSubtask(tx, subtask, task.id);
+                     // Create issue for subtask with parent relationship
+                     await this.createIssueForSubtask(tx, subtask, task.id, taskIssue.id);
                      issuesCreated++;
                   }
                }
@@ -337,10 +337,13 @@ export class TaskMasterSync {
    /**
     * Create an issue for a task
     */
-   private async createIssueForTask(tx: Prisma.TransactionClient, task: Task): Promise<void> {
+   private async createIssueForTask(
+      tx: Prisma.TransactionClient,
+      task: Task
+   ): Promise<{ id: string }> {
       const identifier = `TASK-${task.id}`;
 
-      await tx.issue.upsert({
+      return await tx.issue.upsert({
          where: { identifier },
          update: {
             title: task.title,
@@ -351,7 +354,7 @@ export class TaskMasterSync {
             issueType: 'TASK',
             taskId: task.id,
             subtaskId: null,
-            subissues: JSON.stringify([]),
+            parentIssueId: null,
          },
          create: {
             identifier,
@@ -363,8 +366,9 @@ export class TaskMasterSync {
             issueType: 'TASK',
             taskId: task.id,
             subtaskId: null,
-            subissues: JSON.stringify([]),
+            parentIssueId: null,
          },
+         select: { id: true },
       });
    }
 
@@ -374,9 +378,10 @@ export class TaskMasterSync {
    private async createIssueForSubtask(
       tx: Prisma.TransactionClient,
       subtask: Subtask,
-      parentId: number
+      parentTaskId: number,
+      parentIssueId: string
    ): Promise<void> {
-      const subtaskId = `${parentId}.${subtask.id}`;
+      const subtaskId = `${parentTaskId}.${subtask.id}`;
       const identifier = `SUBTASK-${subtaskId}`;
 
       await tx.issue.upsert({
@@ -388,9 +393,9 @@ export class TaskMasterSync {
             priorityId: 'medium', // Default priority for subtasks
             rank: `s${subtaskId.replace('.', '')}`,
             issueType: 'SUBTASK',
-            taskId: null,
+            taskId: parentTaskId, // Keep reference to parent task
             subtaskId: subtaskId,
-            subissues: JSON.stringify([]),
+            parentIssueId: parentIssueId, // Link to parent issue
          },
          create: {
             identifier,
@@ -400,9 +405,9 @@ export class TaskMasterSync {
             priorityId: 'medium', // Default priority for subtasks
             rank: `s${subtaskId.replace('.', '')}`,
             issueType: 'SUBTASK',
-            taskId: null,
+            taskId: parentTaskId, // Keep reference to parent task
             subtaskId: subtaskId,
-            subissues: JSON.stringify([]),
+            parentIssueId: parentIssueId, // Link to parent issue
          },
       });
    }

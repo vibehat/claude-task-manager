@@ -32,6 +32,7 @@ task-master remove-subtask --id=<parentId.subtaskId> --convert
 ## Pre-Removal Checks
 
 1. **Validate Subtask**
+
    - Verify subtask exists
    - Check completion status
    - Review dependencies

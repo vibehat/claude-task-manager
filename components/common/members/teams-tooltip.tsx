@@ -6,7 +6,7 @@ interface TeamsTooltipProps {
    teamIds: string[];
 }
 
-export function TeamsTooltip({ teamIds }: TeamsTooltipProps): JSX.Element {
+export function TeamsTooltip({ teamIds }: TeamsTooltipProps): React.JSX.Element {
    return (
       <Tooltip delayDuration={0}>
          <TooltipTrigger className="flex items-center gap-0.5 truncate">

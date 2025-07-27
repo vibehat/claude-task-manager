@@ -12,8 +12,8 @@ interface HealthPopoverProps {
    project: Project;
 }
 
-export function HealthPopover({ project }: HealthPopoverProps): JSX.Element {
-   const getHealthIcon = (healthId: string): JSX.Element => {
+export function HealthPopover({ project }: HealthPopoverProps): React.JSX.Element {
+   const getHealthIcon = (healthId: string): React.JSX.Element => {
       switch (healthId) {
          case 'on-track':
             return <CircleCheck className="size-4 text-green-500" />;

@@ -3,7 +3,7 @@
 import { projects } from '@/mock-data/projects';
 import ProjectLine from '@/components/common/projects/project-line';
 
-export default function Projects(): JSX.Element {
+export default function Projects(): React.JSX.Element {
    return (
       <div className="w-full">
          <div className="bg-container px-6 py-1.5 text-sm flex items-center text-muted-foreground border-b sticky top-0 z-10">

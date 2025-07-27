@@ -4,25 +4,18 @@
  * Comprehensive mutation hooks for issues, users, projects, and labels
  */
 
-import type { UseMutationOptions, UseMutationResult } from '@apollo/client';
 import { useMutation, gql } from '@apollo/client';
-import type {
-   Issue,
-   User,
-   Project,
-   Label,
-   CreateIssueInput,
-   UpdateIssueInput,
-   CreateUserInput,
-   UpdateUserInput,
-   CreateProjectInput,
-   UpdateProjectInput,
-   CreateLabelInput,
-   UpdateLabelInput,
-   LabelInterface,
-   Priority,
-   Status,
-} from './types';
+import type { Issue, User, Project, LabelInterface, Priority, Status } from './types';
+
+// Input type aliases (simplified for now)
+type CreateIssueInput = Partial<Issue>;
+type UpdateIssueInput = Partial<Issue>;
+type CreateUserInput = Partial<User>;
+type UpdateUserInput = Partial<User>;
+type CreateProjectInput = Partial<Project>;
+type UpdateProjectInput = Partial<Project>;
+type CreateLabelInput = Partial<LabelInterface>;
+type UpdateLabelInput = Partial<LabelInterface>;
 
 // GraphQL Documents - defined locally until generated
 const CreateIssueDocument = gql`
@@ -311,9 +304,7 @@ const DeleteLabelDocument = gql`
 
 // Issue Mutation Hooks
 
-export function useCreateIssue(
-   options?: UseMutationOptions<{ createIssue: Issue }, { input: CreateIssueInput }>
-): UseMutationResult<{ createIssue: Issue }, { input: CreateIssueInput }> {
+export function useCreateIssue(options?: any) {
    return useMutation(CreateIssueDocument, {
       update: (cache, { data }) => {
          if (data?.createIssue) {
@@ -378,9 +369,7 @@ export function useCreateIssue(
    });
 }
 
-export function useUpdateIssue(
-   options?: UseMutationOptions<{ updateIssue: Issue }, { id: string; input: UpdateIssueInput }>
-): UseMutationResult<{ updateIssue: Issue }, { id: string; input: UpdateIssueInput }> {
+export function useUpdateIssue(options?: any) {
    return useMutation(UpdateIssueDocument, {
       update: (cache, { data }) => {
          if (data?.updateIssue) {
@@ -435,9 +424,7 @@ export function useUpdateIssue(
    });
 }
 
-export function useDeleteIssue(
-   options?: UseMutationOptions<{ deleteIssue: boolean }, { id: string }>
-): UseMutationResult<{ deleteIssue: boolean }, { id: string }> {
+export function useDeleteIssue(options?: any) {
    return useMutation(DeleteIssueDocument, {
       update: (cache, { data }, { variables }) => {
          if (data?.deleteIssue && variables?.id) {
@@ -450,78 +437,53 @@ export function useDeleteIssue(
    });
 }
 
-export function useAssignIssue(
-   options?: UseMutationOptions<{ assignIssue: Issue }, { issueId: string; assigneeId: string }>
-): UseMutationResult<{ assignIssue: Issue }, { issueId: string; assigneeId: string }> {
+export function useAssignIssue(options?: any) {
    return useMutation(AssignIssueDocument, options);
 }
 
-export function useUpdateIssueStatus(
-   options?: UseMutationOptions<{ updateIssueStatus: Issue }, { issueId: string; status: string }>
-): UseMutationResult<{ updateIssueStatus: Issue }, { issueId: string; status: string }> {
+export function useUpdateIssueStatus(options?: any) {
    return useMutation(UpdateIssueStatusDocument, options);
 }
 
 // User Mutation Hooks
 
-export function useCreateUser(
-   options?: UseMutationOptions<{ createUser: User }, { input: CreateUserInput }>
-): UseMutationResult<{ createUser: User }, { input: CreateUserInput }> {
+export function useCreateUser(options?: any) {
    return useMutation(CreateUserDocument, options);
 }
 
-export function useUpdateUser(
-   options?: UseMutationOptions<{ updateUser: User }, { id: string; input: UpdateUserInput }>
-): UseMutationResult<{ updateUser: User }, { id: string; input: UpdateUserInput }> {
+export function useUpdateUser(options?: any) {
    return useMutation(UpdateUserDocument, options);
 }
 
-export function useDeleteUser(
-   options?: UseMutationOptions<{ deleteUser: boolean }, { id: string }>
-): UseMutationResult<{ deleteUser: boolean }, { id: string }> {
+export function useDeleteUser(options?: any) {
    return useMutation(DeleteUserDocument, options);
 }
 
 // Project Mutation Hooks
 
-export function useCreateProject(
-   options?: UseMutationOptions<{ createProject: Project }, { input: CreateProjectInput }>
-): UseMutationResult<{ createProject: Project }, { input: CreateProjectInput }> {
+export function useCreateProject(options?: any) {
    return useMutation(CreateProjectDocument, options);
 }
 
-export function useUpdateProject(
-   options?: UseMutationOptions<
-      { updateProject: Project },
-      { id: string; input: UpdateProjectInput }
-   >
-): UseMutationResult<{ updateProject: Project }, { id: string; input: UpdateProjectInput }> {
+export function useUpdateProject(options?: any) {
    return useMutation(UpdateProjectDocument, options);
 }
 
-export function useDeleteProject(
-   options?: UseMutationOptions<{ deleteProject: boolean }, { id: string }>
-): UseMutationResult<{ deleteProject: boolean }, { id: string }> {
+export function useDeleteProject(options?: any) {
    return useMutation(DeleteProjectDocument, options);
 }
 
 // Label Mutation Hooks
 
-export function useCreateLabel(
-   options?: UseMutationOptions<{ createLabel: Label }, { input: CreateLabelInput }>
-): UseMutationResult<{ createLabel: Label }, { input: CreateLabelInput }> {
+export function useCreateLabel(options?: any) {
    return useMutation(CreateLabelDocument, options);
 }
 
-export function useUpdateLabel(
-   options?: UseMutationOptions<{ updateLabel: Label }, { id: string; input: UpdateLabelInput }>
-): UseMutationResult<{ updateLabel: Label }, { id: string; input: UpdateLabelInput }> {
+export function useUpdateLabel(options?: any) {
    return useMutation(UpdateLabelDocument, options);
 }
 
-export function useDeleteLabel(
-   options?: UseMutationOptions<{ deleteLabel: boolean }, { id: string }>
-): UseMutationResult<{ deleteLabel: boolean }, { id: string }> {
+export function useDeleteLabel(options?: any) {
    return useMutation(DeleteLabelDocument, options);
 }
 
@@ -586,10 +548,10 @@ export function useIssueUpdateHelpers(getIssueById: (id: string) => Issue | unde
    const [assignIssueMutation] = useAssignIssue();
    const [updateIssueMutation] = useUpdateIssue();
 
-   const updateIssueStatus = async (issueId: string, status: string) => {
+   const updateIssueStatus = async (issueId: string, newStatus: Status) => {
       try {
          const result = await updateIssueStatusMutation({
-            variables: { issueId, status },
+            variables: { issueId, status: newStatus.id },
          });
          return result.data?.updateIssueStatus;
       } catch (error) {
@@ -598,10 +560,10 @@ export function useIssueUpdateHelpers(getIssueById: (id: string) => Issue | unde
       }
    };
 
-   const updateIssuePriority = async (issueId: string, priority: string) => {
+   const updateIssuePriority = async (issueId: string, newPriority: Priority) => {
       try {
          const result = await updateIssueMutation({
-            variables: { id: issueId, input: { priority } },
+            variables: { id: issueId, input: { priority: newPriority.id } },
          });
          return result.data?.updateIssue;
       } catch (error) {
@@ -610,10 +572,10 @@ export function useIssueUpdateHelpers(getIssueById: (id: string) => Issue | unde
       }
    };
 
-   const updateIssueAssignee = async (issueId: string, assigneeId: string) => {
+   const updateIssueAssignee = async (issueId: string, newAssignee: User | null) => {
       try {
          const result = await assignIssueMutation({
-            variables: { issueId, assigneeId },
+            variables: { issueId, assigneeId: newAssignee?.id || '' },
          });
          return result.data?.assignIssue;
       } catch (error) {
@@ -622,11 +584,11 @@ export function useIssueUpdateHelpers(getIssueById: (id: string) => Issue | unde
       }
    };
 
-   const addIssueLabel = async (issueId: string, labelIds: string[]) => {
+   const addIssueLabel = async (issueId: string, label: LabelInterface) => {
       const issue = getIssueById(issueId);
       if (issue) {
          const currentLabelIds = issue.labels?.map((l) => l.id) || [];
-         const updatedLabelIds = [...new Set([...currentLabelIds, ...labelIds])];
+         const updatedLabelIds = [...new Set([...currentLabelIds, label.id])];
          try {
             const result = await updateIssueMutation({
                variables: { id: issueId, input: { labelIds: updatedLabelIds } },
@@ -656,10 +618,10 @@ export function useIssueUpdateHelpers(getIssueById: (id: string) => Issue | unde
       }
    };
 
-   const updateIssueProject = async (issueId: string, projectId: string | null) => {
+   const updateIssueProject = async (issueId: string, newProject: Project | undefined) => {
       try {
          const result = await updateIssueMutation({
-            variables: { id: issueId, input: { projectId } },
+            variables: { id: issueId, input: { projectId: newProject?.id || null } },
          });
          return result.data?.updateIssue;
       } catch (error) {

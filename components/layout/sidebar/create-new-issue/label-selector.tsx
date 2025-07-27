@@ -22,7 +22,7 @@ interface LabelSelectorProps {
    onChange: (labels: LabelInterface[]) => void;
 }
 
-export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps): JSX.Element {
+export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
 

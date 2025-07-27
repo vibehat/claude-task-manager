@@ -190,6 +190,7 @@ Before creating any release, ensure:
 #### **Step 4: Review & Test**
 
 1. **Review Release Notes**
+
    - Check auto-generated release notes in `RELEASE_NOTES.md`
    - Edit and refine as necessary
    - Ensure all features and fixes are documented

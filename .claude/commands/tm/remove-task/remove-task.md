@@ -24,12 +24,14 @@ task-master remove-task --id=<id> [-y]
 ## Pre-Removal Analysis
 
 1. **Task Details**
+
    - Current status
    - Work completed
    - Time invested
    - Associated data
 
 2. **Relationship Check**
+
    - Tasks that depend on this
    - Dependencies this task has
    - Subtasks that will be removed

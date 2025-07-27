@@ -21,7 +21,7 @@ interface LeadSelectorProps {
    onLeadChange?: (userId: string) => void;
 }
 
-export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps): JSX.Element {
+export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(lead.id);
@@ -47,7 +47,7 @@ export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps): JSX.Ele
                   role="combobox"
                   aria-expanded={open}
                >
-                  {((): JSX.Element => {
+                  {((): React.JSX.Element => {
                      const selectedUser = users.find((user) => user.id === value);
                      if (selectedUser) {
                         return (
@@ -63,7 +63,7 @@ export function LeadSelector({ lead, onLeadChange }: LeadSelectorProps): JSX.Ele
                            </>
                         );
                      }
-                     return null;
+                     return <></>;
                   })()}
                </Button>
             </PopoverTrigger>

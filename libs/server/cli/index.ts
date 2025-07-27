@@ -40,7 +40,8 @@ const initializeServerModules = () => {
          _cliExecutor = serverModule.cliExecutor;
          _TaskMasterCLIExecutor = serverModule.TaskMasterCLIExecutor;
       } catch (error) {
-         console.warn('Server CLI executor not available:', error.message);
+         const errorMessage = error instanceof Error ? error.message : String(error);
+         console.warn('Server CLI executor not available:', errorMessage);
       }
    }
 };

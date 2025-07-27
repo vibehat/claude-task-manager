@@ -133,46 +133,55 @@ Create comprehensive Node.js integration layer with Next.js API routes to interf
 #### Subtasks Breakdown (0/10 Complete)
 
 1. **Create Next.js API Routes Architecture** (📋 Pending)
+
    - Implement `/api/tasks`, `/api/cli-execute`, `/api/file-watch`
    - Request validation and error handling middleware
    - Response formatting with proper HTTP status codes
 
 2. **Implement TypeScript Interfaces** (📋 Pending)
+
    - Define Task, Project, Config, Status interfaces
    - Validation schemas and type guards
    - Support nested subtask structures
 
 3. **Build File System Operations Layer** (📋 Pending)
+
    - Safe read/write operations for `.taskmaster/tasks/tasks.json`
    - Atomic file operations with locking
    - JSON parsing with validation and error recovery
 
 4. **Integrate CLI Command Execution** (📋 Pending)
+
    - child_process wrapper with timeout handling
    - Error parsing and response formatting
    - Command sanitization and security validation
 
 5. **Implement File System Watcher** (📋 Pending)
+
    - Real-time monitoring with chokidar
    - Debouncing and change detection
    - Efficient UI update triggering
 
 6. **Build WebSocket Connection Layer** (📋 Pending)
+
    - WebSocket server with Socket.io or native WebSockets
    - Connection management and message routing
    - Multiple client connection support
 
 7. **Implement Bidirectional Sync Logic** (📋 Pending)
+
    - Synchronization between UI state and CLI files
    - Optimistic updates with rollback capabilities
    - Conflict resolution for concurrent modifications
 
 8. **Add Comprehensive Error Handling** (📋 Pending)
+
    - Error classification system
    - User-friendly error messages and retry mechanisms
    - CLI timeout and permission error handling
 
 9. **Build Security and Validation Layer** (📋 Pending)
+
    - Security middleware for API routes
    - CLI command allowlist validation
    - File path sanitization and rate limiting

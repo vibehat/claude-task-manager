@@ -1,9 +1,15 @@
-export { resolvers } from './resolvers/index';
-export { default as typeDefs } from './schema/index';
+// Export TypeGraphQL schema (code-first approach)
+export { createTypeGraphQLSchema } from './schema';
+export { TaskResolver, CLIResolver, IssueResolver, SyncResolver } from './schema';
 
-// Re-export specific resolver groups for flexibility
-export { queries } from './resolvers/queries/index';
-export { mutations } from './resolvers/mutations/index';
+// Export PubSub and Topics
+export { pubSub, Topic } from './pubsub';
+
+// Re-export types for external usage
+export * from './types/task.types';
+export * from './types/cli.types';
+export * from './types/issue.types';
+export * from './types/sync.types';
 
 // Re-export helper functions
 export * from './resolvers/shared/helpers';

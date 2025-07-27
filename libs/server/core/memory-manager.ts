@@ -267,7 +267,10 @@ export class MemoryManager extends EventEmitter {
       try {
          // Reset object if reset function provided
          if (pool.reset) {
-            obj = pool.reset(obj);
+            const resetResult = pool.reset(obj);
+            if (resetResult !== undefined) {
+               obj = resetResult;
+            }
          }
 
          pool.available.push(obj);
@@ -349,9 +352,10 @@ export class MemoryManager extends EventEmitter {
             this.gcHistory = this.gcHistory.slice(-100);
          }
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          const gcError = this.errorHandler.createError(
-            ErrorType.SYSTEM_ERROR,
-            `Garbage collection failed: ${error.message}`,
+            ErrorType.UNKNOWN_ERROR,
+            `Garbage collection failed: ${errorMessage}`,
             { component: 'MemoryManager' },
             error as Error
          );
@@ -454,8 +458,8 @@ export class MemoryManager extends EventEmitter {
       // Note: This is a simplified implementation
       // In a real scenario, you'd track timer creation/cleanup
 
-      const activeHandles = process._getActiveHandles();
-      const activeRequests = process._getActiveRequests();
+      const activeHandles = (process as any)._getActiveHandles();
+      const activeRequests = (process as any)._getActiveRequests();
 
       if (activeHandles.length > 100 || activeRequests.length > 50) {
          const leak: MemoryLeak = {
@@ -635,7 +639,9 @@ export class MemoryManager extends EventEmitter {
             totalTime: this.gcTotalTime,
             averageTime: this.gcCount > 0 ? this.gcTotalTime / this.gcCount : 0,
             lastGC:
-               this.gcHistory.length > 0 ? this.gcHistory[this.gcHistory.length - 1].timestamp : 0,
+               this.gcHistory.length > 0
+                  ? this.gcHistory[this.gcHistory.length - 1]?.timestamp || 0
+                  : 0,
          },
          objectPools: this.getPoolStats(),
          leaks: [...this.detectedLeaks],

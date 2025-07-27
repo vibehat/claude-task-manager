@@ -21,7 +21,7 @@ interface ProjectSelectorProps {
    onChange: (project: Project | undefined) => void;
 }
 
-export function ProjectSelector({ project, onChange }: ProjectSelectorProps): JSX.Element {
+export function ProjectSelector({ project, onChange }: ProjectSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | undefined>(project?.id);
@@ -59,7 +59,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): JS
                   aria-expanded={open}
                >
                   {value ? (
-                     ((): JSX.Element => {
+                     ((): React.JSX.Element => {
                         const selectedProject = projects.find((p) => p.id === value);
                         if (selectedProject) {
                            const Icon = selectedProject.icon;

@@ -13,11 +13,13 @@ task-master models
 ## Information Displayed
 
 1. **Main Provider**
+
    - Model ID and name
    - API key status (configured/missing)
    - Usage: Primary task generation
 
 2. **Research Provider**
+
    - Model ID and name
    - API key status
    - Usage: Enhanced research mode

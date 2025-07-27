@@ -7,10 +7,12 @@
 **Ask yourself:**
 
 1. **Is this core business logic?** (calculations, data transformations, validation)
+
    - ✅ **YES** → Add 3-5 simple tests
    - ❌ **NO** → Skip or minimal testing
 
 2. **Is this integration/external?** (APIs, databases, file systems)
+
    - ✅ **YES** → Test only the interface, mock externals
    - ❌ **NO** → Test business logic
 
@@ -27,6 +29,7 @@
    ```
 
 2. **Fill in the blanks:**
+
    - Replace `[MODULE NAME]` with your module name
    - Import your module
    - Add 3-5 simple tests

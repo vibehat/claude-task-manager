@@ -21,7 +21,7 @@ interface StatusSelectorProps {
    onChange: (status: Status) => void;
 }
 
-export function StatusSelector({ status, onChange }: StatusSelectorProps): JSX.Element {
+export function StatusSelector({ status, onChange }: StatusSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
@@ -54,13 +54,13 @@ export function StatusSelector({ status, onChange }: StatusSelectorProps): JSX.E
                   role="combobox"
                   aria-expanded={open}
                >
-                  {((): JSX.Element | null => {
+                  {((): React.JSX.Element | null => {
                      const selectedItem = allStatus.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;
                         return <Icon />;
                      }
-                     return null;
+                     return <></>;
                   })()}
                   <span>{value ? allStatus.find((s) => s.id === value)?.name : 'To do'}</span>
                </Button>

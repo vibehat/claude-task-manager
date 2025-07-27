@@ -220,7 +220,7 @@ export class PaginationManager<T = any> {
       this.config = {
          ...(DEFAULT_CONFIGS[dataSource] || DEFAULT_CONFIGS.tasks),
          ...config,
-      };
+      } as PaginationConfig;
    }
 
    // Main pagination method
@@ -293,9 +293,10 @@ export class PaginationManager<T = any> {
 
          return response;
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          const paginationError = this.errorHandler.createError(
             ErrorType.VALIDATION_SCHEMA_MISMATCH,
-            `Pagination error: ${error.message}`,
+            `Pagination error: ${errorMessage}`,
             {
                dataSource: this.dataSource,
                request: request,

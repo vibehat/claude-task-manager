@@ -25,7 +25,7 @@ export function StatusWithPercent({
    status,
    percentComplete,
    onStatusChange,
-}: StatusWithPercentProps): JSX.Element {
+}: StatusWithPercentProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
@@ -50,13 +50,13 @@ export function StatusWithPercent({
                role="combobox"
                aria-expanded={open}
             >
-               {((): JSX.Element | null => {
+               {((): React.JSX.Element | null => {
                   const selectedItem = allStatus.find((item) => item.id === value);
                   if (selectedItem) {
                      const Icon = selectedItem.icon;
                      return <Icon />;
                   }
-                  return null;
+                  return <></>;
                })()}
                <span className="text-xs font-medium mt-[1px]">{percentComplete}%</span>
             </Button>

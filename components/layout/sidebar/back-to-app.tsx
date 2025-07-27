@@ -3,7 +3,7 @@ import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 
-export function BackToApp(): JSX.Element {
+export function BackToApp(): React.JSX.Element {
    return (
       <div className="w-full flex items-center justify-between gap-2">
          <Button className="w-fit" size="xs" variant="outline" asChild>

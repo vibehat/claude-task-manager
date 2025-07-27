@@ -54,12 +54,14 @@ For complex tasks:
 ## Smart Analysis Features
 
 1. **Pattern Recognition**
+
    - Similar task comparisons
    - Historical complexity accuracy
    - Team velocity consideration
    - Technology stack factors
 
 2. **Contextual Factors**
+
    - Team expertise
    - Available resources
    - Timeline constraints

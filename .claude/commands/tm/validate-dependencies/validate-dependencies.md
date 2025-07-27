@@ -13,16 +13,19 @@ task-master validate-dependencies
 ## Validation Checks
 
 1. **Circular Dependencies**
+
    - A depends on B, B depends on A
    - Complex circular chains
    - Self-dependencies
 
 2. **Missing Dependencies**
+
    - References to non-existent tasks
    - Deleted task references
    - Invalid task IDs
 
 3. **Logical Issues**
+
    - Completed tasks depending on pending
    - Cancelled tasks in dependency chains
    - Impossible sequences

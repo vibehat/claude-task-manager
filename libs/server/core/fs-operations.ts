@@ -117,8 +117,9 @@ export class BackupManager {
          await this.cleanupOldBackups(filePath);
          return backupPath;
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to create backup: ${error.message}`,
+            `Failed to create backup: ${errorMessage}`,
             'createBackup',
             filePath,
             error as Error
@@ -130,8 +131,9 @@ export class BackupManager {
       try {
          await fs.copyFile(backupPath, originalPath);
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to restore backup: ${error.message}`,
+            `Failed to restore backup: ${errorMessage}`,
             'restoreBackup',
             originalPath,
             error as Error
@@ -150,8 +152,9 @@ export class BackupManager {
             .map((file) => ({
                name: file,
                path: join(dir, file),
-               time: file.split('.backup.')[1],
+               time: file.split('.backup.')[1] || '',
             }))
+            .filter((backup) => backup.time) // Remove entries with empty time
             .sort((a, b) => b.time.localeCompare(a.time)); // Sort by newest first
 
          // Remove excess backups
@@ -189,8 +192,9 @@ export class SafeFileOperations {
       try {
          await fs.mkdir(dirPath, { recursive: true });
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to create directory: ${error.message}`,
+            `Failed to create directory: ${errorMessage}`,
             'ensureDirectory',
             dirPath,
             error as Error
@@ -211,8 +215,9 @@ export class SafeFileOperations {
       try {
          return await fs.stat(filePath);
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to get file stats: ${error.message}`,
+            `Failed to get file stats: ${errorMessage}`,
             'getFileStats',
             filePath,
             error as Error
@@ -234,8 +239,9 @@ export class SafeFileOperations {
 
          return data;
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to read JSON file: ${error.message}`,
+            `Failed to read JSON file: ${errorMessage}`,
             'readJSON',
             filePath,
             error as Error
@@ -290,7 +296,9 @@ export class SafeFileOperations {
             if (backupPath) {
                await BackupManager.restoreBackup(filePath, backupPath);
             }
-            throw new Error(`Write verification failed: ${verifyError.message}`);
+            const errorMessage =
+               verifyError instanceof Error ? verifyError.message : String(verifyError);
+            throw new Error(`Write verification failed: ${errorMessage}`);
          }
 
          // Atomic move from temp to final location
@@ -305,8 +313,9 @@ export class SafeFileOperations {
             }
          }
 
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to write JSON file: ${error.message}`,
+            `Failed to write JSON file: ${errorMessage}`,
             'writeJSON',
             filePath,
             error as Error
@@ -325,8 +334,9 @@ export class SafeFileOperations {
          await this.ensureDirectory(dirname(destination));
          await fs.copyFile(source, destination);
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to copy file: ${error.message}`,
+            `Failed to copy file: ${errorMessage}`,
             'copyFile',
             source,
             error as Error
@@ -352,8 +362,9 @@ export class SafeFileOperations {
 
          await fs.unlink(filePath);
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          throw new FileOperationError(
-            `Failed to delete file: ${error.message}`,
+            `Failed to delete file: ${errorMessage}`,
             'deleteFile',
             filePath,
             error as Error
@@ -394,7 +405,9 @@ export class TaskMasterFileOperations {
 
                return backupData;
             } catch (backupError) {
-               console.warn(`Failed to read backup ${backupPath}:`, backupError.message);
+               const errorMessage =
+                  backupError instanceof Error ? backupError.message : String(backupError);
+               console.warn(`Failed to read backup ${backupPath}:`, errorMessage);
                continue;
             }
          }
@@ -475,6 +488,7 @@ export class TaskMasterFileOperations {
                autoExpand: false,
                research: true,
             },
+            apiKeys: {},
          };
 
          await this.writeConfig(defaultConfig);

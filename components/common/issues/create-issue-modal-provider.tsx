@@ -2,7 +2,7 @@
 
 import { CreateNewIssue } from '@/components/layout/sidebar/create-new-issue';
 
-export function CreateIssueModalProvider(): JSX.Element {
+export function CreateIssueModalProvider(): React.JSX.Element {
    return (
       <div className="hidden">
          <CreateNewIssue />

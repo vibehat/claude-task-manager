@@ -50,12 +50,14 @@ AI analyzes the update context and:
 ## Smart Features
 
 1. **Scope Detection**
+
    - Find natural task groupings
    - Identify related features
    - Stop at logical boundaries
    - Avoid over-updating
 
 2. **Consistency Maintenance**
+
    - Keep naming conventions
    - Preserve relationships
    - Update cross-references

@@ -51,6 +51,9 @@ model Subtask {
   // Subtask dependencies (array stored as JSON)
   dependencies String  @default("[]") // JSON array of subtask IDs
   
+  // Relationships with issues
+  issues       Issue[]
+  
   // Timestamps
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -253,6 +256,9 @@ model Issue {
   subtaskId   String?     // Reference to Subtask
   issueType   IssueType
 
+  // Parent issue for sub-issues
+  parentIssueId String?
+  
   // Relationships
   assigneeId  String?
   assignee    User?         @relation("IssueAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
@@ -260,10 +266,12 @@ model Issue {
   project     Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
   cycle       Cycle?        @relation(fields: [cycleId], references: [id], onDelete: SetNull)
   task        Task?         @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  subtask     Subtask?      @relation(fields: [subtaskId], references: [id], onDelete: SetNull)
   issueStatus    IssueStatus?   @relation(fields: [statusId], references: [id], onDelete: Restrict)
   issuePriority  IssuePriority? @relation(fields: [priorityId], references: [id], onDelete: Restrict)
   labels      IssueLabel[]
-  subissues   String        @default("[]") // JSON array of issue IDs that are subissues
+  parentIssue Issue?        @relation("IssueSubIssues", fields: [parentIssueId], references: [id], onDelete: SetNull)
+  subIssues   Issue[]       @relation("IssueSubIssues")
 
   // Timestamps
   createdAt   DateTime      @default(now())

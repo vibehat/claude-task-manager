@@ -16,7 +16,7 @@ export function useIssueManagement(issueId: string): SingleIssueManagementResult
    const { issue, loading, error, refetch, fromCache } = useIssueQueryWithCache(issueId);
 
    // Mutation functions for this specific issue
-   const { updateIssue, deleteIssue } = useSingleIssueMutations(issueId, issue || undefined);
+   const { updateIssue, deleteIssue } = useSingleIssueMutations(issueId);
 
    return {
       issue,

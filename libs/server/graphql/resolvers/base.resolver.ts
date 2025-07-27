@@ -8,16 +8,23 @@ import { PrismaClient } from '../../generated/prisma';
 import { TaskMasterDB, TaskMasterSync } from '../../taskmaster';
 import type { TaskType } from '../types/task.types';
 import type { TaskStatus as GraphQLTaskStatus } from '../types/task.types';
+import type { GraphQLContext } from '../context';
 
 export class BaseResolver {
    protected prisma: PrismaClient;
    protected taskMasterDB: TaskMasterDB;
    protected taskMasterSync: TaskMasterSync;
+   protected context: GraphQLContext;
 
    constructor() {
       this.prisma = new PrismaClient();
       this.taskMasterDB = new TaskMasterDB(this.prisma);
       this.taskMasterSync = new TaskMasterSync(this.prisma);
+      this.context = {
+         prisma: this.prisma,
+         isAdmin: false,
+         userId: null,
+      };
    }
 
    /**

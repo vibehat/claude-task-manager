@@ -17,6 +17,7 @@ task-master clear-subtasks --id=<task-id>
 ## Pre-Clear Analysis
 
 1. **Subtask Summary**
+
    - Number of subtasks
    - Completion status of each
    - Work already done

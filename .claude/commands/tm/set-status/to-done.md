@@ -22,11 +22,13 @@ task-master set-status --id=$ARGUMENTS --status=done
 ## Post-Completion Actions
 
 1. **Update Dependencies**
+
    - Identify newly unblocked tasks
    - Update sprint progress
    - Recalculate project timeline
 
 2. **Documentation**
+
    - Generate completion summary
    - Update CLAUDE.md with learnings
    - Log implementation approach

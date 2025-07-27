@@ -7,19 +7,15 @@ import {
    useGetTasksQuery,
    useGetTaskQuery,
    useGetReadyTasksQuery,
-   useCreateTaskMutation,
-   useUpdateTaskMutation,
-   useDeleteTaskMutation,
-   useUpdateTaskStatusMutation,
-   useHealthQuery,
-   useHelloQuery,
+   useGetTasksConnectionQuery,
+   useSearchTasksQuery,
+   useGetTaskStatsQuery,
    type GetTasksQueryVariables,
    type GetTaskQueryVariables,
    type GetReadyTasksQueryVariables,
-   type CreateTaskMutationVariables,
-   type UpdateTaskMutationVariables,
-   type DeleteTaskMutationVariables,
-   type UpdateTaskStatusMutationVariables,
+   type GetTasksConnectionQueryVariables,
+   type SearchTasksQueryVariables,
+   type GetTaskStatsQueryVariables,
 } from './generated';
 import { cacheHelpers } from './apollo-client';
 
@@ -37,19 +33,16 @@ export function useTasks(variables?: GetTasksQueryVariables) {
 
    return {
       ...result,
-      tasks: result.data?.tasks?.nodes || [],
-      connection: result.data?.tasks,
-      hasNextPage: result.data?.tasks?.pageInfo?.hasNextPage || false,
-      hasPreviousPage: result.data?.tasks?.pageInfo?.hasPreviousPage || false,
+      tasks: result.data?.tasks || [],
    };
 }
 
 /**
  * Enhanced single task query hook
  */
-export function useTask(taskId: string) {
+export function useTask(taskId: number, options?: any) {
    const result = useGetTaskQuery({
-      variables: { id: taskId },
+      variables: { id: taskId, options },
       errorPolicy: 'all',
       skip: !taskId,
    });
@@ -72,41 +65,56 @@ export function useReadyTasks(variables?: GetReadyTasksQueryVariables) {
 
    return {
       ...result,
-      tasks: result.data?.readyTasks?.nodes || [],
-      connection: result.data?.readyTasks,
-      hasNextPage: result.data?.readyTasks?.pageInfo?.hasNextPage || false,
-      hasPreviousPage: result.data?.readyTasks?.pageInfo?.hasPreviousPage || false,
+      tasks: result.data?.readyTasks || [],
    };
 }
 
 /**
- * System health check hook
+ * Enhanced tasks connection query hook with pagination
  */
-export function useHealth() {
-   const result = useHealthQuery({
+export function useTasksConnection(variables?: GetTasksConnectionQueryVariables) {
+   const result = useGetTasksConnectionQuery({
+      variables,
       errorPolicy: 'all',
-      // Poll every 30 seconds for health status
-      pollInterval: 30000,
+      notifyOnNetworkStatusChange: true,
    });
 
    return {
       ...result,
-      isHealthy: result.data?.health === 'OK',
-      health: result.data?.health,
+      tasks: result.data?.tasksConnection?.edges?.map((edge) => edge.node) || [],
+      connection: result.data?.tasksConnection,
+      hasNextPage: result.data?.tasksConnection?.pageInfo?.hasNextPage || false,
+      hasPreviousPage: result.data?.tasksConnection?.pageInfo?.hasPreviousPage || false,
    };
 }
 
 /**
- * Hello query hook for testing
+ * Search tasks hook
  */
-export function useHello() {
-   const result = useHelloQuery({
+export function useSearchTasks(searchText: string, options?: any) {
+   const result = useSearchTasksQuery({
+      variables: { searchText, options },
+      errorPolicy: 'all',
+      skip: !searchText,
+   });
+
+   return {
+      ...result,
+      tasks: result.data?.searchTasks || [],
+   };
+}
+
+/**
+ * Task statistics hook
+ */
+export function useTaskStats() {
+   const result = useGetTaskStatsQuery({
       errorPolicy: 'all',
    });
 
    return {
       ...result,
-      message: result.data?.hello,
+      stats: result.data?.taskStats,
    };
 }
 
@@ -115,9 +123,9 @@ export function useHello() {
 /**
  * Hook for managing task lists with pagination
  */
-export function useTaskList(initialFilters?: GetTasksQueryVariables) {
+export function useTaskList(initialFilters?: GetTasksConnectionQueryVariables) {
    const { data, loading, error, fetchMore, refetch, tasks, connection, hasNextPage } =
-      useTasks(initialFilters);
+      useTasksConnection(initialFilters);
 
    const loadMore = useCallback(async () => {
       if (!hasNextPage || loading) return;

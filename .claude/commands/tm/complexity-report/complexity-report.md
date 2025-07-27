@@ -80,11 +80,13 @@ Low Risk   | #78(8)       | [15 tasks]
 When viewing report:
 
 1. **Quick Actions**
+
    - Press 'e' to expand a task
    - Press 'd' for task details
    - Press 'r' to refresh analysis
 
 2. **Filtering**
+
    - View by complexity level
    - Filter by risk factors
    - Show only actionable items

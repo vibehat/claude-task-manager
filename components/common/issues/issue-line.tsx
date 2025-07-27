@@ -18,7 +18,7 @@ export function IssueLine({
 }: {
    issue: Issue;
    layoutId?: boolean;
-}): JSX.Element {
+}): React.JSX.Element {
    return (
       <ContextMenu>
          <ContextMenuTrigger asChild>

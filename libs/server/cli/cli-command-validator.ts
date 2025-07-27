@@ -455,9 +455,10 @@ export class CLICommandValidator {
          };
       } catch (error) {
          // Handle validation errors
+         const errorMessage = error instanceof Error ? error.message : String(error);
          const validationError = this.errorHandler.createError(
             ErrorType.VALIDATION_SCHEMA_MISMATCH,
-            `CLI command validation error: ${error.message}`,
+            `CLI command validation error: ${errorMessage}`,
             {
                command: originalCommand,
                args: originalArgs,
@@ -472,7 +473,7 @@ export class CLICommandValidator {
 
          return {
             valid: false,
-            errors: [`Validation error: ${error.message}`],
+            errors: [`Validation error: ${errorMessage}`],
             riskLevel: 'high',
             metadata: {
                sanitized: false,
@@ -611,7 +612,7 @@ export class CLICommandValidator {
       for (let i = 0; i < args.length; i++) {
          const arg = args[i];
 
-         if (arg.startsWith('--')) {
+         if (arg && arg.startsWith('--')) {
             const key = arg.substring(2);
 
             // Check if argument is allowed
@@ -622,8 +623,9 @@ export class CLICommandValidator {
             }
 
             // Handle boolean flags
-            if (i + 1 < args.length && !args[i + 1].startsWith('--')) {
-               const value = args[i + 1];
+            const nextArg = args[i + 1];
+            if (i + 1 < args.length && nextArg && !nextArg.startsWith('--')) {
+               const value = nextArg;
                parsedArgs[key] = value;
                normalizedArgs.push(arg, value);
                i++; // Skip the value in next iteration
@@ -675,11 +677,12 @@ export class CLICommandValidator {
          for (let i = 0; i < args.length; i++) {
             const arg = args[i];
 
-            if (arg.startsWith('--')) {
+            if (arg && arg.startsWith('--')) {
                const key = arg.substring(2);
 
-               if (i + 1 < args.length && !args[i + 1].startsWith('--')) {
-                  let value: any = args[i + 1];
+               const nextArg2 = args[i + 1];
+               if (i + 1 < args.length && nextArg2 && !nextArg2.startsWith('--')) {
+                  let value: any = nextArg2;
 
                   // Try to parse as number or boolean
                   if (value === 'true') value = true;
@@ -705,9 +708,10 @@ export class CLICommandValidator {
 
          return { valid: true };
       } catch (error) {
+         const errorMessage = error instanceof Error ? error.message : String(error);
          return {
             valid: false,
-            errors: [`Schema validation error: ${error.message}`],
+            errors: [`Schema validation error: ${errorMessage}`],
          };
       }
    }

@@ -22,7 +22,7 @@ interface GroupIssuesProps {
    count: number;
 }
 
-export function GroupIssues({ status, issues, count }: GroupIssuesProps): JSX.Element {
+export function GroupIssues({ status, issues, count }: GroupIssuesProps): React.JSX.Element {
    const { viewType } = useViewStore();
    const isViewTypeGrid = viewType === 'grid';
    const { openModal } = useCreateIssueStore();
@@ -88,7 +88,7 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps): JSX.El
 const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
    issues,
    status,
-}): JSX.Element => {
+}): React.JSX.Element => {
    const ref = useRef<HTMLDivElement>(null);
    const { updateIssueStatus } = useIssuesStore();
 

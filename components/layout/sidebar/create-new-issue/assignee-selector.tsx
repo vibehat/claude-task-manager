@@ -23,7 +23,7 @@ interface AssigneeSelectorProps {
    onChange: (assignee: User | null) => void;
 }
 
-export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps): JSX.Element {
+export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | null>(assignee?.id ?? null);
@@ -61,7 +61,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps):
                   aria-expanded={open}
                >
                   {value ? (
-                     ((): JSX.Element | null => {
+                     ((): React.JSX.Element | null => {
                         const selectedUser = users.find((user) => user.id === value);
                         if (selectedUser) {
                            return (

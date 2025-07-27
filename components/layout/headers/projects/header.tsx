@@ -1,7 +1,7 @@
 import HeaderNav from './header-nav';
 import HeaderOptions from './header-options';
 
-export default function Header(): JSX.Element {
+export default function Header(): React.JSX.Element {
    return (
       <div className="w-full flex flex-col items-center">
          <HeaderNav />

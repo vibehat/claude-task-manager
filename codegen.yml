@@ -2,7 +2,7 @@
 # Generates TypeScript types from GraphQL schema for Task Master application
 
 overwrite: true
-schema: './libs/server/graphql/schema/schema.graphql'
+schema: './libs/server/graphql/generated-schema.graphql'
 
 generates:
    # Generated TypeScript types for schema types (server-side)
@@ -63,15 +63,19 @@ generates:
          withHOC: false
          withMutationFn: true
          withRefetchFn: true
-         
+         withResultType: false
+
          # Operation result types
          operationResultSuffix: 'Result'
          dedupeOperationSuffix: true
          omitOperationSuffix: false
 
+         # Apollo result types suffix
+         resultTypeSuffix: 'HookResult'
+
          # Variable types
          variablesSuffix: 'Variables'
-         
+
          # Apollo Client specific
          apolloReactCommonImportFrom: '@apollo/client'
          apolloReactHooksImportFrom: '@apollo/client'

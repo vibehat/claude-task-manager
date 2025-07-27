@@ -36,11 +36,13 @@ task-master fix-dependencies
 ## Fix Process
 
 1. **Analysis Phase**
+
    - Run validation check
    - Categorize issues by type
    - Determine fix strategy
 
 2. **Execution Phase**
+
    - Apply automatic fixes
    - Log all changes made
    - Preserve task relationships

@@ -47,7 +47,7 @@ interface IssueContextMenuProps {
    issueId?: string;
 }
 
-export function IssueContextMenu({ issueId }: IssueContextMenuProps): JSX.Element {
+export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.Element {
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
 

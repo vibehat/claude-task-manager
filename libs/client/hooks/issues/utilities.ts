@@ -26,7 +26,6 @@ export const issueUtils = {
          description: '',
          rank: new Date().toISOString(),
          createdAt: new Date().toISOString(),
-         updatedAt: new Date().toISOString(),
          ...partial,
       };
    },
@@ -114,8 +113,8 @@ export const issueUtils = {
     */
    sortByUpdated: (issues: Issue[], ascending = false): Issue[] => {
       return [...issues].sort((a, b) => {
-         const aTime = new Date(a.updatedAt).getTime();
-         const bTime = new Date(b.updatedAt).getTime();
+         const aTime = new Date(a.createdAt).getTime();
+         const bTime = new Date(b.createdAt).getTime();
          return ascending ? aTime - bTime : bTime - aTime;
       });
    },
@@ -162,7 +161,7 @@ export const filterUtils = {
          }
       });
 
-      const assignees = Array.from(assigneeMap.values());
+      const assignees: (User | null)[] = Array.from(assigneeMap.values());
       if (hasUnassigned) {
          assignees.push(null);
       }
@@ -198,7 +197,7 @@ export const filterUtils = {
          }
       });
 
-      const projects = Array.from(projectMap.values());
+      const projects: (Project | null)[] = Array.from(projectMap.values());
       if (hasNoProject) {
          projects.push(null);
       }

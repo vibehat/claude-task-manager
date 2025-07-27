@@ -4,7 +4,7 @@
  */
 
 import type { NextRequest } from 'next/server';
-import type { Task, Subtask, TasksData } from './taskmaster';
+import type { Task } from './taskmaster';
 
 /**
  * GraphQL execution context provided to all resolvers

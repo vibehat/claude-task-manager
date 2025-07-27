@@ -3,7 +3,7 @@
 import { users } from '@/mock-data/users';
 import MemberLine from './member-line';
 
-export default function Members(): JSX.Element {
+export default function Members(): React.JSX.Element {
    return (
       <div className="w-full">
          <div className="bg-container px-6 py-1.5 text-sm flex items-center text-muted-foreground border-b sticky top-0 z-10">

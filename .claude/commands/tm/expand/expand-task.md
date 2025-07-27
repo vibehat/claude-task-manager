@@ -15,12 +15,14 @@ task-master expand --id=$ARGUMENTS
 ## Expansion Process
 
 1. **Task Analysis**
+
    - Review task complexity
    - Identify components
    - Detect technical challenges
    - Estimate time requirements
 
 2. **Subtask Generation**
+
    - Create 3-7 subtasks typically
    - Each subtask 1-4 hours
    - Logical implementation order
