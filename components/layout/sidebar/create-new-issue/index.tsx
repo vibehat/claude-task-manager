@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { RiEditLine } from '@remixicon/react';
 import { useState, useEffect, useCallback } from 'react';
-import type { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data-2/issues';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/status';
 import { useIssuesStore } from '@/store/issues-store';
@@ -19,7 +19,7 @@ import { PrioritySelector } from './priority-selector';
 import { AssigneeSelector } from './assignee-selector';
 import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
-import { ranks } from '@/mock-data/issues';
+import { ranks } from '@/mock-data-2/issues';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
 export function CreateNewIssue(): React.JSX.Element {

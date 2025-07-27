@@ -2,7 +2,7 @@
  * Types and Interfaces for Issues GraphQL Hooks
  */
 
-import type { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data-2/issues';
 import type { LabelInterface } from '@/mock-data/labels';
 import type { Priority } from '@/mock-data/priorities';
 import type { Project } from '@/mock-data/projects';

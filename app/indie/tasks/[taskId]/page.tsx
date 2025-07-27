@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, FlagIcon, TagIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { Issue } from '@/mock-data/issues';
+import type { Issue } from '@/mock-data-2/issues';
 
 export default function TaskDetailPage(): React.JSX.Element {
    const params = useParams();
