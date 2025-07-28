@@ -1,7 +1,16 @@
 {
-   "name": "circle",
+   "name": "claude-task-manager",
    "version": "0.1.0",
    "private": true,
+   "author": "minhlucvan",
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/minhlucvan/claude-task-manager.git"
+   },
+   "bugs": {
+      "url": "https://github.com/minhlucvan/claude-task-manager/issues"
+   },
+   "homepage": "https://github.com/minhlucvan/claude-task-manager#readme",
    "scripts": {
       "dev": "next dev --turbopack",
       "build": "next build",

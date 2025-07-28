@@ -1,7 +1,7 @@
-# Claude Task Master UI
+# claude-task-manager
 
 <div align="center">
-  <img src="public/images/icon.svg" alt="Claude Task Master UI" width="120" height="120" />
+  <img src="public/images/icon.svg" alt="claude-task-manager" width="120" height="120" />
   
   **A Professional Web Interface for Claude Task Master**
   
@@ -16,7 +16,7 @@
 
 ## 🎯 Overview
 
-Claude Task Master UI is a comprehensive web interface that brings all the power of [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) into a beautiful, intuitive dashboard. Built with modern web technologies and inspired by Linear's clean design patterns, this interface makes AI-powered task management accessible and efficient.
+claude-task-manager is a comprehensive web interface that brings all the power of [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) into a beautiful, intuitive dashboard. Built with modern web technologies and inspired by Linear's clean design patterns, this interface makes AI-powered task management accessible and efficient.
 
 ### ✨ Key Features
 
@@ -44,8 +44,8 @@ Claude Task Master UI is a comprehensive web interface that brings all the power
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/claude-task-master-ui.git
-   cd claude-task-master-ui
+   git clone https://github.com/minhlucvan/claude-task-manager.git
+   cd claude-task-manager
    ```
 
 2. **Install dependencies**
@@ -102,7 +102,7 @@ Claude Task Master UI is a comprehensive web interface that brings all the power
 ### Project Structure
 
 ```
-claude-task-master-ui/
+claude-task-manager/
 ├── app/                    # Next.js 15 App Router
 │   ├── [projectId]/      # Project-scoped pages
 │   │   ├── dashboard/     # Project dashboard interface
@@ -310,10 +310,10 @@ pnpm format       # Format code with Prettier
 
 ## 🤝 Community & Support
 
-- **GitHub Issues**: [Report bugs and request features](https://github.com/your-username/claude-task-master-ui/issues)
-- **Discussions**: [Join community discussions](https://github.com/your-username/claude-task-master-ui/discussions)
+- **GitHub Issues**: [Report bugs and request features](https://github.com/minhlucvan/claude-task-manager/issues)
+- **Discussions**: [Join community discussions](https://github.com/minhlucvan/claude-task-manager/discussions)
 - **Discord**: [Join our Discord server](https://discord.gg/your-server)
-- **Documentation**: [Full documentation site](https://claude-task-master-ui.vercel.app/docs)
+- **Documentation**: [Full documentation site](https://claude-task-manager.vercel.app/docs)
 
 ## 📊 Roadmap
 
@@ -362,14 +362,14 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 <div align="center">
   <p>Built with ❤️ for the AI-powered development community</p>
   
-  **[⭐ Star this project](https://github.com/your-username/claude-task-master-ui)** if you find it useful!
+  **[⭐ Star this project](https://github.com/minhlucvan/claude-task-manager)** if you find it useful!
 </div>
 
 <!-- TASKMASTER_EXPORT_START -->
 
 > 🎯 **Taskmaster Export** - 2025-07-26 15:41:29 UTC
 > 📋 Export: without subtasks • Status filter: none
-> 🔗 Powered by [Task Master](https://task-master.dev?utm_source=github-readme&utm_medium=readme-export&utm_campaign=claude-task-master-ui&utm_content=task-export-link)
+> 🔗 Powered by [Task Master](https://task-master.dev?utm_source=github-readme&utm_medium=readme-export&utm_campaign=claude-task-manager&utm_content=task-export-link)
 
 | Project Dashboard |                          |
 | :---------------- | :----------------------- |
