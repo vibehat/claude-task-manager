@@ -178,77 +178,6 @@ export type BoolWithAggregatesFilter = {
   not?: InputMaybe<NestedBoolWithAggregatesFilter>;
 };
 
-export type CliCommand = {
-  __typename?: 'CLICommand';
-  args: Array<Scalars['String']['output']>;
-  category: Scalars['String']['output'];
-  description: Scalars['String']['output'];
-  examples?: Maybe<Array<Scalars['String']['output']>>;
-  name: Scalars['String']['output'];
-  parseOutput: Scalars['Boolean']['output'];
-  requiredArgs: Array<Scalars['String']['output']>;
-  timeout: Scalars['Float']['output'];
-};
-
-export type CliExecutionStats = {
-  __typename?: 'CLIExecutionStats';
-  averageExecutionTime: Scalars['Float']['output'];
-  commandFrequency: Scalars['String']['output'];
-  failedExecutions: Scalars['Float']['output'];
-  successRate: Scalars['Float']['output'];
-  successfulExecutions: Scalars['Float']['output'];
-  totalExecutions: Scalars['Float']['output'];
-};
-
-export type CliHistoryFilter = {
-  command?: InputMaybe<Scalars['String']['input']>;
-  endDate?: InputMaybe<Scalars['DateTime']['input']>;
-  startDate?: InputMaybe<Scalars['DateTime']['input']>;
-  success?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type CliHistoryItem = {
-  __typename?: 'CLIHistoryItem';
-  args: Scalars['String']['output'];
-  command: Scalars['String']['output'];
-  error?: Maybe<Scalars['String']['output']>;
-  executionTime: Scalars['Float']['output'];
-  id: Scalars['ID']['output'];
-  output: Scalars['String']['output'];
-  success: Scalars['Boolean']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type CliProcess = {
-  __typename?: 'CLIProcess';
-  id: Scalars['ID']['output'];
-  startTime: Scalars['String']['output'];
-  status: Scalars['String']['output'];
-};
-
-export type CliStatus = {
-  __typename?: 'CLIStatus';
-  activeProcessCount: Scalars['Float']['output'];
-  activeProcesses: Array<CliProcess>;
-  error?: Maybe<Scalars['String']['output']>;
-  executionStats: CliExecutionStats;
-  isHealthy: Scalars['Boolean']['output'];
-  recentCommands: Array<CliHistoryItem>;
-  systemInfo: CliSystemInfo;
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type CliSystemInfo = {
-  __typename?: 'CLISystemInfo';
-  architecture: Scalars['String']['output'];
-  cwd: Scalars['String']['output'];
-  memoryUsage: Scalars['String']['output'];
-  nodeVersion: Scalars['String']['output'];
-  pid: Scalars['Float']['output'];
-  platform: Scalars['String']['output'];
-  uptime: Scalars['Float']['output'];
-};
-
 export type CreateManyAndReturnCycle = {
   __typename?: 'CreateManyAndReturnCycle';
   createdAt: Scalars['DateTime']['output'];
@@ -522,12 +451,24 @@ export type Cycle = {
   createdAt: Scalars['DateTime']['output'];
   endDate: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   number: Scalars['Int']['output'];
   progress: Scalars['Int']['output'];
   startDate: Scalars['DateTime']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type CycleIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type CycleAvgAggregate = {
@@ -1083,25 +1024,95 @@ export type IntWithAggregatesFilter = {
 export type Issue = {
   __typename?: 'Issue';
   _count?: Maybe<IssueCount>;
+  assignee?: Maybe<User>;
   assigneeId?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  cycle?: Maybe<Cycle>;
   cycleId?: Maybe<Scalars['String']['output']>;
   description: Scalars['String']['output'];
   dueDate?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['String']['output'];
   identifier: Scalars['String']['output'];
+  issuePriority?: Maybe<IssuePriority>;
+  issueStatus?: Maybe<IssueStatus>;
   issueType: Scalars['String']['output'];
+  labels: Array<IssueLabel>;
+  parentIssue?: Maybe<Issue>;
   parentIssueId?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Scalars['String']['output']>;
   priorityId?: Maybe<Scalars['String']['output']>;
+  project?: Maybe<Project>;
   projectId?: Maybe<Scalars['String']['output']>;
   rank: Scalars['String']['output'];
   status?: Maybe<Scalars['String']['output']>;
   statusId?: Maybe<Scalars['String']['output']>;
+  subIssues: Array<Issue>;
+  subtask?: Maybe<Subtask>;
   subtaskId?: Maybe<Scalars['String']['output']>;
+  task?: Maybe<Task>;
   taskId?: Maybe<Scalars['Int']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssueAssigneeArgs = {
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type IssueCycleArgs = {
+  where?: InputMaybe<CycleWhereInput>;
+};
+
+
+export type IssueIssuePriorityArgs = {
+  where?: InputMaybe<IssuePriorityWhereInput>;
+};
+
+
+export type IssueIssueStatusArgs = {
+  where?: InputMaybe<IssueStatusWhereInput>;
+};
+
+
+export type IssueLabelsArgs = {
+  cursor?: InputMaybe<IssueLabelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueLabelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueLabelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueLabelWhereInput>;
+};
+
+
+export type IssueParentIssueArgs = {
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type IssueProjectArgs = {
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+
+export type IssueSubIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type IssueSubtaskArgs = {
+  where?: InputMaybe<SubtaskWhereInput>;
+};
+
+
+export type IssueTaskArgs = {
+  where?: InputMaybe<TaskWhereInput>;
 };
 
 export type IssueAvgAggregate = {
@@ -1800,7 +1811,9 @@ export type IssueGroupBy = {
 export type IssueLabel = {
   __typename?: 'IssueLabel';
   id: Scalars['String']['output'];
+  issue: Issue;
   issueId: Scalars['String']['output'];
+  label: Label;
   labelId: Scalars['String']['output'];
 };
 
@@ -2247,9 +2260,20 @@ export type IssuePriority = {
   createdAt: Scalars['DateTime']['output'];
   iconName: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   order: Scalars['Int']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssuePriorityIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type IssuePriorityAvgAggregate = {
@@ -2594,6 +2618,15 @@ export type IssueScalarWhereWithAggregatesInput = {
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
 };
 
+export type IssueStats = {
+  __typename?: 'IssueStats';
+  completed: Scalars['Int']['output'];
+  completionRate: Scalars['Int']['output'];
+  inProgress: Scalars['Int']['output'];
+  pending: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
 export type IssueStatus = {
   __typename?: 'IssueStatus';
   _count?: Maybe<IssueStatusCount>;
@@ -2601,8 +2634,19 @@ export type IssueStatus = {
   createdAt: Scalars['DateTime']['output'];
   iconName: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssueStatusIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type IssueStatusCount = {
@@ -3482,8 +3526,19 @@ export type Label = {
   createdAt: Scalars['DateTime']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  issues: Array<IssueLabel>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type LabelIssuesArgs = {
+  cursor?: InputMaybe<IssueLabelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueLabelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueLabelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueLabelWhereInput>;
 };
 
 export type LabelCount = {
@@ -4847,11 +4902,39 @@ export type Project = {
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   identifier?: Maybe<Scalars['String']['output']>;
+  issues: Array<Issue>;
+  lead?: Maybe<User>;
   leadId?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   percentComplete: Scalars['Int']['output'];
   startDate?: Maybe<Scalars['DateTime']['output']>;
+  teams: Array<TeamProject>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type ProjectIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type ProjectLeadArgs = {
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type ProjectTeamsArgs = {
+  cursor?: InputMaybe<TeamProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamProjectWhereInput>;
 };
 
 export type ProjectAvgAggregate = {
@@ -5454,10 +5537,6 @@ export type Query = {
   aggregateTeamMember: AggregateTeamMember;
   aggregateTeamProject: AggregateTeamProject;
   aggregateUser: AggregateUser;
-  availableCommands: Array<CliCommand>;
-  cliCommand?: Maybe<CliCommand>;
-  cliHistory: Array<CliHistoryItem>;
-  cliStatus: CliStatus;
   cycle?: Maybe<Cycle>;
   cycles: Array<Cycle>;
   findFirstCycle?: Maybe<Cycle>;
@@ -5539,6 +5618,7 @@ export type Query = {
   issueStatus?: Maybe<IssueStatus>;
   issueStatuses: Array<IssueStatus>;
   issues: Array<Issue>;
+  issuesStats: IssueStats;
   label?: Maybe<Label>;
   labels: Array<Label>;
   project?: Maybe<Project>;
@@ -5714,17 +5794,6 @@ export type QueryAggregateUserArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserWhereInput>;
-};
-
-
-export type QueryCliCommandArgs = {
-  name: Scalars['String']['input'];
-};
-
-
-export type QueryCliHistoryArgs = {
-  filter?: InputMaybe<CliHistoryFilter>;
-  limit?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
@@ -6661,11 +6730,23 @@ export type Subtask = {
   description: Scalars['String']['output'];
   details?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   parentId: Scalars['Int']['output'];
+  parentTask: Task;
   status: Scalars['String']['output'];
   testStrategy?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type SubtaskIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type SubtaskAvgAggregate = {
@@ -7716,14 +7797,58 @@ export type Task = {
   _count?: Maybe<TaskCount>;
   complexity?: Maybe<Scalars['Int']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  dependencies: Array<TaskDependency>;
+  dependents: Array<TaskDependency>;
   description: Scalars['String']['output'];
   details?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
+  issues: Array<Issue>;
   priority: Scalars['String']['output'];
   status: Scalars['String']['output'];
+  subtasks: Array<Subtask>;
   testStrategy?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type TaskDependenciesArgs = {
+  cursor?: InputMaybe<TaskDependencyWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TaskDependencyScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TaskDependencyOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TaskDependencyWhereInput>;
+};
+
+
+export type TaskDependentsArgs = {
+  cursor?: InputMaybe<TaskDependencyWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TaskDependencyScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TaskDependencyOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TaskDependencyWhereInput>;
+};
+
+
+export type TaskIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type TaskSubtasksArgs = {
+  cursor?: InputMaybe<SubtaskWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SubtaskScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SubtaskOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SubtaskWhereInput>;
 };
 
 export type TaskAvgAggregate = {
@@ -7934,8 +8059,10 @@ export type TaskCreateWithoutSubtasksInput = {
 export type TaskDependency = {
   __typename?: 'TaskDependency';
   createdAt: Scalars['DateTime']['output'];
+  dependsOn: Task;
   dependsOnId: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  task: Task;
   taskId: Scalars['Int']['output'];
 };
 
@@ -8800,11 +8927,44 @@ export type Team = {
   _count?: Maybe<TeamCount>;
   color: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
+  cycles: Array<Cycle>;
   icon: Scalars['String']['output'];
   id: Scalars['String']['output'];
   joined: Scalars['Boolean']['output'];
+  members: Array<TeamMember>;
   name: Scalars['String']['output'];
+  projects: Array<TeamProject>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type TeamCyclesArgs = {
+  cursor?: InputMaybe<CycleWhereUniqueInput>;
+  distinct?: InputMaybe<Array<CycleScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<CycleOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CycleWhereInput>;
+};
+
+
+export type TeamMembersArgs = {
+  cursor?: InputMaybe<TeamMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamMemberWhereInput>;
+};
+
+
+export type TeamProjectsArgs = {
+  cursor?: InputMaybe<TeamProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamProjectWhereInput>;
 };
 
 export type TeamCount = {
@@ -8981,7 +9141,9 @@ export type TeamMaxOrderByAggregateInput = {
 export type TeamMember = {
   __typename?: 'TeamMember';
   id: Scalars['String']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
+  user: User;
   userId: Scalars['String']['output'];
 };
 
@@ -9308,7 +9470,9 @@ export type TeamOrderByWithRelationInput = {
 export type TeamProject = {
   __typename?: 'TeamProject';
   id: Scalars['String']['output'];
+  project: Project;
   projectId: Scalars['String']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
 };
 
@@ -9764,16 +9928,49 @@ export type TeamWhereUniqueInput = {
 export type User = {
   __typename?: 'User';
   _count?: Maybe<UserCount>;
+  assignedIssues: Array<Issue>;
   avatarUrl?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   joinedDate: Scalars['DateTime']['output'];
+  ledProjects: Array<Project>;
   name: Scalars['String']['output'];
   role: Scalars['String']['output'];
   status: Scalars['String']['output'];
   teamIds: Scalars['String']['output'];
+  teams: Array<TeamMember>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type UserAssignedIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type UserLedProjectsArgs = {
+  cursor?: InputMaybe<ProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+
+export type UserTeamsArgs = {
+  cursor?: InputMaybe<TeamMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamMemberWhereInput>;
 };
 
 export type UserCount = {
@@ -10261,7 +10458,7 @@ export type CreateIssueMutationVariables = Exact<{
 }>;
 
 
-export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } };
+export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } };
 
 export type DeleteIssueMutationVariables = Exact<{
   where: IssueWhereUniqueInput;
@@ -10288,7 +10485,7 @@ export type GetIssueQueryVariables = Exact<{
 }>;
 
 
-export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
 
 export type GetIssuesByStatusQueryVariables = Exact<{
   status: Scalars['String']['input'];
@@ -10298,7 +10495,12 @@ export type GetIssuesByStatusQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesByStatusQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesByStatusQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
+
+export type GetIssuesStatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIssuesStatsQuery = { __typename?: 'Query', issuesStats: { __typename?: 'IssueStats', total: number, completed: number, inProgress: number, pending: number, completionRate: number } };
 
 export type GetIssuesQueryVariables = Exact<{
   where?: InputMaybe<IssueWhereInput>;
@@ -10308,7 +10510,7 @@ export type GetIssuesQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
 
 export type GetIssuesDetailedQueryVariables = Exact<{
   where?: InputMaybe<IssueWhereInput>;
@@ -10318,7 +10520,7 @@ export type GetIssuesDetailedQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesDetailedQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesDetailedQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
 
 export type GetLabelsQueryVariables = Exact<{
   where?: InputMaybe<LabelWhereInput>;
@@ -10365,7 +10567,7 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, role: string, status: string, createdAt: string, updatedAt: string } | null };
 
-export type IssueCoreFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string };
+export type IssueCoreFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null };
 
 export type SearchIssuesQueryVariables = Exact<{
   search: Scalars['String']['input'];
@@ -10376,7 +10578,7 @@ export type SearchIssuesQueryVariables = Exact<{
 }>;
 
 
-export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
 
 export type UpdateIssueMutationVariables = Exact<{
   where: IssueWhereUniqueInput;
@@ -10384,7 +10586,7 @@ export type UpdateIssueMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
 
 export type UpdateIssueStatusMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10392,7 +10594,7 @@ export type UpdateIssueStatusMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueStatusMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type UpdateIssueStatusMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
 
 export type UpdateIssuePriorityMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10400,7 +10602,7 @@ export type UpdateIssuePriorityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssuePriorityMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type UpdateIssuePriorityMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
 
 export type UpdateIssueAssigneeMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10408,7 +10610,7 @@ export type UpdateIssueAssigneeMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
 
 export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
 
@@ -10424,6 +10626,18 @@ export const IssueCoreFragmentDoc = gql`
   cycleId
   dueDate
   issueType
+  issueStatus {
+    id
+    name
+    color
+    iconName
+  }
+  issuePriority {
+    id
+    name
+    iconName
+    order
+  }
   taskId
   subtaskId
   assigneeId
@@ -10725,6 +10939,49 @@ export type GetIssuesByStatusQueryHookResult = ReturnType<typeof useGetIssuesByS
 export type GetIssuesByStatusLazyQueryHookResult = ReturnType<typeof useGetIssuesByStatusLazyQuery>;
 export type GetIssuesByStatusSuspenseQueryHookResult = ReturnType<typeof useGetIssuesByStatusSuspenseQuery>;
 export type GetIssuesByStatusQueryResult = Apollo.QueryResult<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables>;
+export const GetIssuesStatsDocument = gql`
+    query GetIssuesStats {
+  issuesStats {
+    total
+    completed
+    inProgress
+    pending
+    completionRate
+  }
+}
+    `;
+
+/**
+ * __useGetIssuesStatsQuery__
+ *
+ * To run a query within a React component, call `useGetIssuesStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssuesStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIssuesStatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetIssuesStatsQuery(baseOptions?: Apollo.QueryHookOptions<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>(GetIssuesStatsDocument, options);
+      }
+export function useGetIssuesStatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>(GetIssuesStatsDocument, options);
+        }
+export function useGetIssuesStatsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>(GetIssuesStatsDocument, options);
+        }
+export type GetIssuesStatsQueryHookResult = ReturnType<typeof useGetIssuesStatsQuery>;
+export type GetIssuesStatsLazyQueryHookResult = ReturnType<typeof useGetIssuesStatsLazyQuery>;
+export type GetIssuesStatsSuspenseQueryHookResult = ReturnType<typeof useGetIssuesStatsSuspenseQuery>;
+export type GetIssuesStatsQueryResult = Apollo.QueryResult<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>;
 export const GetIssuesDocument = gql`
     query GetIssues($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
   issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {

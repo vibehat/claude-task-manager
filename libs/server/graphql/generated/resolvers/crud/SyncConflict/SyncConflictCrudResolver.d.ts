@@ -1,0 +1,38 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateSyncConflictArgs } from "./args/AggregateSyncConflictArgs";
+import { CreateManyAndReturnSyncConflictArgs } from "./args/CreateManyAndReturnSyncConflictArgs";
+import { CreateManySyncConflictArgs } from "./args/CreateManySyncConflictArgs";
+import { CreateOneSyncConflictArgs } from "./args/CreateOneSyncConflictArgs";
+import { DeleteManySyncConflictArgs } from "./args/DeleteManySyncConflictArgs";
+import { DeleteOneSyncConflictArgs } from "./args/DeleteOneSyncConflictArgs";
+import { FindFirstSyncConflictArgs } from "./args/FindFirstSyncConflictArgs";
+import { FindFirstSyncConflictOrThrowArgs } from "./args/FindFirstSyncConflictOrThrowArgs";
+import { FindManySyncConflictArgs } from "./args/FindManySyncConflictArgs";
+import { FindUniqueSyncConflictArgs } from "./args/FindUniqueSyncConflictArgs";
+import { FindUniqueSyncConflictOrThrowArgs } from "./args/FindUniqueSyncConflictOrThrowArgs";
+import { GroupBySyncConflictArgs } from "./args/GroupBySyncConflictArgs";
+import { UpdateManySyncConflictArgs } from "./args/UpdateManySyncConflictArgs";
+import { UpdateOneSyncConflictArgs } from "./args/UpdateOneSyncConflictArgs";
+import { UpsertOneSyncConflictArgs } from "./args/UpsertOneSyncConflictArgs";
+import { SyncConflict } from "../../../models/SyncConflict";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateSyncConflict } from "../../outputs/AggregateSyncConflict";
+import { CreateManyAndReturnSyncConflict } from "../../outputs/CreateManyAndReturnSyncConflict";
+import { SyncConflictGroupBy } from "../../outputs/SyncConflictGroupBy";
+export declare class SyncConflictCrudResolver {
+    aggregateSyncConflict(ctx: any, info: GraphQLResolveInfo, args: AggregateSyncConflictArgs): Promise<AggregateSyncConflict>;
+    createManySyncConflict(ctx: any, info: GraphQLResolveInfo, args: CreateManySyncConflictArgs): Promise<AffectedRowsOutput>;
+    createManyAndReturnSyncConflict(ctx: any, info: GraphQLResolveInfo, args: CreateManyAndReturnSyncConflictArgs): Promise<CreateManyAndReturnSyncConflict[]>;
+    createOneSyncConflict(ctx: any, info: GraphQLResolveInfo, args: CreateOneSyncConflictArgs): Promise<SyncConflict>;
+    deleteManySyncConflict(ctx: any, info: GraphQLResolveInfo, args: DeleteManySyncConflictArgs): Promise<AffectedRowsOutput>;
+    deleteOneSyncConflict(ctx: any, info: GraphQLResolveInfo, args: DeleteOneSyncConflictArgs): Promise<SyncConflict | null>;
+    findFirstSyncConflict(ctx: any, info: GraphQLResolveInfo, args: FindFirstSyncConflictArgs): Promise<SyncConflict | null>;
+    findFirstSyncConflictOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstSyncConflictOrThrowArgs): Promise<SyncConflict | null>;
+    syncConflicts(ctx: any, info: GraphQLResolveInfo, args: FindManySyncConflictArgs): Promise<SyncConflict[]>;
+    syncConflict(ctx: any, info: GraphQLResolveInfo, args: FindUniqueSyncConflictArgs): Promise<SyncConflict | null>;
+    getSyncConflict(ctx: any, info: GraphQLResolveInfo, args: FindUniqueSyncConflictOrThrowArgs): Promise<SyncConflict | null>;
+    groupBySyncConflict(ctx: any, info: GraphQLResolveInfo, args: GroupBySyncConflictArgs): Promise<SyncConflictGroupBy[]>;
+    updateManySyncConflict(ctx: any, info: GraphQLResolveInfo, args: UpdateManySyncConflictArgs): Promise<AffectedRowsOutput>;
+    updateOneSyncConflict(ctx: any, info: GraphQLResolveInfo, args: UpdateOneSyncConflictArgs): Promise<SyncConflict | null>;
+    upsertOneSyncConflict(ctx: any, info: GraphQLResolveInfo, args: UpsertOneSyncConflictArgs): Promise<SyncConflict>;
+}

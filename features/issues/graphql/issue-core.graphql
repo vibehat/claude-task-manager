@@ -9,6 +9,18 @@ fragment IssueCore on Issue {
    cycleId
    dueDate
    issueType
+   issueStatus {
+      id
+      name
+      color
+      iconName
+   }
+   issuePriority {
+      id
+      name
+      iconName
+      order
+   }
    taskId
    subtaskId
    assigneeId

@@ -2,7 +2,11 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useIssues } from '@/features/issues/hooks/queries/use-issues';
+import {
+   useGetIssuesQuery,
+   useGetIssuesStatsQuery,
+   SortOrder,
+} from '@/libs/client/graphql-client/generated';
 import { Badge } from '@/components/ui/badge';
 import {
    CalendarIcon,
@@ -13,30 +17,37 @@ import {
    TrendingUpIcon,
 } from 'lucide-react';
 import { useMemo } from 'react';
+import { useEdges } from '@/hooks/use-edges';
 import Link from 'next/link';
 import { IndieLayout } from '@/components/layout/indie-layout';
 
 export default function IndieDashboardPage(): React.JSX.Element {
-   const { data } = useIssues();
-   const issues = useMemo(() => data?.issues?.nodes || [], [data?.issues?.nodes]);
+   const { data } = useGetIssuesQuery({
+      variables: {
+         take: 5,
+         orderBy: {
+            createdAt: SortOrder.Desc,
+         },
+      },
+   });
+   const { data: statsData, loading: statsLoading } = useGetIssuesStatsQuery();
+   const recentIssues = useEdges(data?.issues);
 
-   // Calculate task statistics
+   // Use stats from GraphQL resolver or fallback to calculated stats
    const taskStats = useMemo(() => {
-      const total = issues.length;
-      const completed = issues.filter((issue) => issue.status.id === 'done').length;
-      const inProgress = issues.filter((issue) => issue.status.id === 'in-progress').length;
-      const pending = issues.filter((issue) => issue.status.id === 'todo').length;
-      const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+      const issuesStats = statsData?.issuesStats;
+
+      // Fallback calculation if stats query fails
+      const {
+         total = 0,
+         completed = 0,
+         inProgress = 0,
+         pending = 0,
+         completionRate = 0,
+      } = issuesStats || {};
 
       return { total, completed, inProgress, pending, completionRate };
-   }, [issues]);
-
-   // Get recent tasks (last 5 updated)
-   const recentTasks = useMemo(() => {
-      return [...issues]
-         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-         .slice(0, 5);
-   }, [issues]);
+   }, [statsData]);
 
    return (
       <IndieLayout>
@@ -72,7 +83,9 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <CircleIcon className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">{taskStats.total}</div>
+                     <div className="text-2xl font-bold">
+                        {statsLoading ? '...' : taskStats.total}
+                     </div>
                      <p className="text-xs text-muted-foreground">All your tasks</p>
                   </CardContent>
                </Card>
@@ -83,9 +96,11 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <CheckCircleIcon className="h-4 w-4 text-green-600" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">{taskStats.completed}</div>
+                     <div className="text-2xl font-bold">
+                        {statsLoading ? '...' : taskStats.completed}
+                     </div>
                      <p className="text-xs text-muted-foreground">
-                        {taskStats.completionRate}% completion rate
+                        {statsLoading ? '...' : `${taskStats.completionRate}% completion rate`}
                      </p>
                   </CardContent>
                </Card>
@@ -96,7 +111,9 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <ClockIcon className="h-4 w-4 text-blue-600" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">{taskStats.inProgress}</div>
+                     <div className="text-2xl font-bold">
+                        {statsLoading ? '...' : taskStats.inProgress}
+                     </div>
                      <p className="text-xs text-muted-foreground">Currently working on</p>
                   </CardContent>
                </Card>
@@ -107,7 +124,9 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <TrendingUpIcon className="h-4 w-4 text-orange-600" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">{taskStats.pending}</div>
+                     <div className="text-2xl font-bold">
+                        {statsLoading ? '...' : taskStats.pending}
+                     </div>
                      <p className="text-xs text-muted-foreground">Ready to start</p>
                   </CardContent>
                </Card>
@@ -121,29 +140,29 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <CardDescription>Your most recently created tasks</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                     {recentTasks.length > 0 ? (
-                        recentTasks.map((task) => (
-                           <div key={task.id} className="flex items-center justify-between">
+                     {recentIssues.length > 0 ? (
+                        recentIssues.map((issue) => (
+                           <div key={issue.id} className="flex items-center justify-between">
                               <div className="flex items-center space-x-3">
                                  <div
                                     className={`w-2 h-2 rounded-full ${
-                                       task.status.id === 'done'
+                                       issue.status === 'done'
                                           ? 'bg-green-500'
-                                          : task.status.id === 'in-progress'
+                                          : issue.status === 'in-progress'
                                             ? 'bg-blue-500'
                                             : 'bg-gray-400'
                                     }`}
                                  />
                                  <div>
-                                    <p className="text-sm font-medium">{task.title}</p>
+                                    <p className="text-sm font-medium">{issue.title}</p>
                                     <p className="text-xs text-muted-foreground">
-                                       {task.identifier}
+                                       {issue.identifier}
                                     </p>
                                  </div>
                               </div>
                               <div className="flex items-center space-x-2">
-                                 <Badge variant="secondary">{task.status.name}</Badge>
-                                 <Badge variant="outline">{task.priority.name}</Badge>
+                                 <Badge variant="secondary">{issue.status}</Badge>
+                                 <Badge variant="outline">{issue.priority}</Badge>
                               </div>
                            </div>
                         ))

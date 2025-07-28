@@ -1,0 +1,31 @@
+import { CycleCreateNestedOneWithoutIssuesInput } from "../inputs/CycleCreateNestedOneWithoutIssuesInput";
+import { IssueCreateNestedManyWithoutParentIssueInput } from "../inputs/IssueCreateNestedManyWithoutParentIssueInput";
+import { IssueCreateNestedOneWithoutSubIssuesInput } from "../inputs/IssueCreateNestedOneWithoutSubIssuesInput";
+import { IssueLabelCreateNestedManyWithoutIssueInput } from "../inputs/IssueLabelCreateNestedManyWithoutIssueInput";
+import { IssuePriorityCreateNestedOneWithoutIssuesInput } from "../inputs/IssuePriorityCreateNestedOneWithoutIssuesInput";
+import { IssueStatusCreateNestedOneWithoutIssuesInput } from "../inputs/IssueStatusCreateNestedOneWithoutIssuesInput";
+import { SubtaskCreateNestedOneWithoutIssuesInput } from "../inputs/SubtaskCreateNestedOneWithoutIssuesInput";
+import { TaskCreateNestedOneWithoutIssuesInput } from "../inputs/TaskCreateNestedOneWithoutIssuesInput";
+import { UserCreateNestedOneWithoutAssignedIssuesInput } from "../inputs/UserCreateNestedOneWithoutAssignedIssuesInput";
+export declare class IssueCreateWithoutProjectInput {
+    id?: string | undefined;
+    identifier: string;
+    title: string;
+    description: string;
+    status?: string | undefined;
+    priority?: string | undefined;
+    rank: string;
+    dueDate?: Date | undefined;
+    issueType: string;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    assignee?: UserCreateNestedOneWithoutAssignedIssuesInput | undefined;
+    cycle?: CycleCreateNestedOneWithoutIssuesInput | undefined;
+    task?: TaskCreateNestedOneWithoutIssuesInput | undefined;
+    subtask?: SubtaskCreateNestedOneWithoutIssuesInput | undefined;
+    issueStatus?: IssueStatusCreateNestedOneWithoutIssuesInput | undefined;
+    issuePriority?: IssuePriorityCreateNestedOneWithoutIssuesInput | undefined;
+    labels?: IssueLabelCreateNestedManyWithoutIssueInput | undefined;
+    parentIssue?: IssueCreateNestedOneWithoutSubIssuesInput | undefined;
+    subIssues?: IssueCreateNestedManyWithoutParentIssueInput | undefined;
+}

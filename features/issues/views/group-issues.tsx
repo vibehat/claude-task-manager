@@ -15,6 +15,7 @@ import { IssueDragType, IssueGrid } from '../items/issue-grid';
 import { IssueLine } from '../items/issue-line';
 import { useCreateIssueStore } from '@/store/create-issue-store';
 import { sortIssuesByPriority } from '@/mock-data/issues';
+import { useEdges } from '@/hooks/use-edges';
 import { AnimatePresence, motion } from 'motion/react';
 import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
 
@@ -34,7 +35,7 @@ function GroupIssues({ status, additionalFilter }: GroupIssuesProps): React.JSX.
       filter: additionalFilter,
    });
 
-   const issues = data?.issues?.nodes || [];
+   const issues = useEdges(data?.issues);
    const count = data?.issues?.totalCount || 0;
    const sortedIssues = sortIssuesByPriority(issues);
 

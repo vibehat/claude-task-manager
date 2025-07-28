@@ -1,0 +1,38 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateIssueArgs } from "./args/AggregateIssueArgs";
+import { CreateManyAndReturnIssueArgs } from "./args/CreateManyAndReturnIssueArgs";
+import { CreateManyIssueArgs } from "./args/CreateManyIssueArgs";
+import { CreateOneIssueArgs } from "./args/CreateOneIssueArgs";
+import { DeleteManyIssueArgs } from "./args/DeleteManyIssueArgs";
+import { DeleteOneIssueArgs } from "./args/DeleteOneIssueArgs";
+import { FindFirstIssueArgs } from "./args/FindFirstIssueArgs";
+import { FindFirstIssueOrThrowArgs } from "./args/FindFirstIssueOrThrowArgs";
+import { FindManyIssueArgs } from "./args/FindManyIssueArgs";
+import { FindUniqueIssueArgs } from "./args/FindUniqueIssueArgs";
+import { FindUniqueIssueOrThrowArgs } from "./args/FindUniqueIssueOrThrowArgs";
+import { GroupByIssueArgs } from "./args/GroupByIssueArgs";
+import { UpdateManyIssueArgs } from "./args/UpdateManyIssueArgs";
+import { UpdateOneIssueArgs } from "./args/UpdateOneIssueArgs";
+import { UpsertOneIssueArgs } from "./args/UpsertOneIssueArgs";
+import { Issue } from "../../../models/Issue";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateIssue } from "../../outputs/AggregateIssue";
+import { CreateManyAndReturnIssue } from "../../outputs/CreateManyAndReturnIssue";
+import { IssueGroupBy } from "../../outputs/IssueGroupBy";
+export declare class IssueCrudResolver {
+    aggregateIssue(ctx: any, info: GraphQLResolveInfo, args: AggregateIssueArgs): Promise<AggregateIssue>;
+    createManyIssue(ctx: any, info: GraphQLResolveInfo, args: CreateManyIssueArgs): Promise<AffectedRowsOutput>;
+    createManyAndReturnIssue(ctx: any, info: GraphQLResolveInfo, args: CreateManyAndReturnIssueArgs): Promise<CreateManyAndReturnIssue[]>;
+    createOneIssue(ctx: any, info: GraphQLResolveInfo, args: CreateOneIssueArgs): Promise<Issue>;
+    deleteManyIssue(ctx: any, info: GraphQLResolveInfo, args: DeleteManyIssueArgs): Promise<AffectedRowsOutput>;
+    deleteOneIssue(ctx: any, info: GraphQLResolveInfo, args: DeleteOneIssueArgs): Promise<Issue | null>;
+    findFirstIssue(ctx: any, info: GraphQLResolveInfo, args: FindFirstIssueArgs): Promise<Issue | null>;
+    findFirstIssueOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstIssueOrThrowArgs): Promise<Issue | null>;
+    issues(ctx: any, info: GraphQLResolveInfo, args: FindManyIssueArgs): Promise<Issue[]>;
+    issue(ctx: any, info: GraphQLResolveInfo, args: FindUniqueIssueArgs): Promise<Issue | null>;
+    getIssue(ctx: any, info: GraphQLResolveInfo, args: FindUniqueIssueOrThrowArgs): Promise<Issue | null>;
+    groupByIssue(ctx: any, info: GraphQLResolveInfo, args: GroupByIssueArgs): Promise<IssueGroupBy[]>;
+    updateManyIssue(ctx: any, info: GraphQLResolveInfo, args: UpdateManyIssueArgs): Promise<AffectedRowsOutput>;
+    updateOneIssue(ctx: any, info: GraphQLResolveInfo, args: UpdateOneIssueArgs): Promise<Issue | null>;
+    upsertOneIssue(ctx: any, info: GraphQLResolveInfo, args: UpsertOneIssueArgs): Promise<Issue>;
+}

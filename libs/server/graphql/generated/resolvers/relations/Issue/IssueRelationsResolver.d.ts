@@ -1,0 +1,32 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { Cycle } from "../../../models/Cycle";
+import { Issue } from "../../../models/Issue";
+import { IssueLabel } from "../../../models/IssueLabel";
+import { IssuePriority } from "../../../models/IssuePriority";
+import { IssueStatus } from "../../../models/IssueStatus";
+import { Project } from "../../../models/Project";
+import { Subtask } from "../../../models/Subtask";
+import { Task } from "../../../models/Task";
+import { User } from "../../../models/User";
+import { IssueAssigneeArgs } from "./args/IssueAssigneeArgs";
+import { IssueCycleArgs } from "./args/IssueCycleArgs";
+import { IssueIssuePriorityArgs } from "./args/IssueIssuePriorityArgs";
+import { IssueIssueStatusArgs } from "./args/IssueIssueStatusArgs";
+import { IssueLabelsArgs } from "./args/IssueLabelsArgs";
+import { IssueParentIssueArgs } from "./args/IssueParentIssueArgs";
+import { IssueProjectArgs } from "./args/IssueProjectArgs";
+import { IssueSubIssuesArgs } from "./args/IssueSubIssuesArgs";
+import { IssueSubtaskArgs } from "./args/IssueSubtaskArgs";
+import { IssueTaskArgs } from "./args/IssueTaskArgs";
+export declare class IssueRelationsResolver {
+    assignee(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueAssigneeArgs): Promise<User | null>;
+    project(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueProjectArgs): Promise<Project | null>;
+    cycle(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueCycleArgs): Promise<Cycle | null>;
+    task(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueTaskArgs): Promise<Task | null>;
+    subtask(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueSubtaskArgs): Promise<Subtask | null>;
+    issueStatus(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueIssueStatusArgs): Promise<IssueStatus | null>;
+    issuePriority(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueIssuePriorityArgs): Promise<IssuePriority | null>;
+    labels(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueLabelsArgs): Promise<IssueLabel[]>;
+    parentIssue(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueParentIssueArgs): Promise<Issue | null>;
+    subIssues(issue: Issue, ctx: any, info: GraphQLResolveInfo, args: IssueSubIssuesArgs): Promise<Issue[]>;
+}

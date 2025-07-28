@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { IndieLayout } from '@/components/layout/indie-layout';
-import { useIssues } from '@/features/issues/hooks/queries/use-issues';
+import { useGetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -12,18 +12,20 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Issue } from '@/mock-data/issues';
 import { useMemo } from 'react';
+import { useEdges } from '@/hooks/use-edges';
 
 export default function TaskDetailPage(): React.JSX.Element {
    const params = useParams();
    const taskId = params?.taskId as string;
 
    // Fetch all issues using GraphQL
-   const { data, loading, error } = useIssues();
+   const { data, loading, error } = useGetIssuesQuery();
 
    // Find the task by ID from the fetched issues
+   const issues = useEdges(data?.issues);
    const task = useMemo(() => {
-      return data?.issues?.nodes?.find((issue: Issue) => issue.id === taskId);
-   }, [data?.issues?.nodes, taskId]);
+      return issues.find((issue: Issue) => issue.id === taskId);
+   }, [issues, taskId]);
 
    if (loading) {
       return (

@@ -6,10 +6,10 @@ import { ObjectType, Field, ID, InputType, ArgsType } from 'type-graphql';
 
 @ObjectType()
 export class CLICommand {
-   @Field()
+   @Field(() => String)
    name!: string;
 
-   @Field()
+   @Field(() => String)
    description!: string;
 
    @Field(() => [String])
@@ -18,13 +18,13 @@ export class CLICommand {
    @Field(() => [String])
    requiredArgs!: string[];
 
-   @Field()
+   @Field(() => Number)
    timeout!: number;
 
-   @Field()
+   @Field(() => Boolean)
    parseOutput!: boolean;
 
-   @Field()
+   @Field(() => String)
    category!: string;
 
    @Field(() => [String], { nullable: true })
@@ -36,31 +36,31 @@ export class CLIProcess {
    @Field(() => ID)
    id!: string;
 
-   @Field()
+   @Field(() => String)
    status!: string;
 
-   @Field()
+   @Field(() => String)
    startTime!: string;
 }
 
 @ObjectType()
 export class CLIExecutionStats {
-   @Field()
+   @Field(() => Number)
    totalExecutions!: number;
 
-   @Field()
+   @Field(() => Number)
    successfulExecutions!: number;
 
-   @Field()
+   @Field(() => Number)
    failedExecutions!: number;
 
-   @Field()
+   @Field(() => Number)
    successRate!: number;
 
-   @Field()
+   @Field(() => Number)
    averageExecutionTime!: number;
 
-   @Field()
+   @Field(() => String)
    commandFrequency!: string; // JSON string for now
 }
 
@@ -69,58 +69,58 @@ export class CLIHistoryItem {
    @Field(() => ID)
    id!: string;
 
-   @Field()
+   @Field(() => String)
    command!: string;
 
-   @Field()
+   @Field(() => String)
    args!: string;
 
-   @Field()
+   @Field(() => Boolean)
    success!: boolean;
 
-   @Field()
+   @Field(() => String)
    output!: string;
 
-   @Field({ nullable: true })
+   @Field(() => String, { nullable: true })
    error?: string;
 
-   @Field()
+   @Field(() => Number)
    executionTime!: number;
 
-   @Field()
+   @Field(() => Date)
    timestamp!: Date;
 }
 
 @ObjectType()
 export class CLISystemInfo {
-   @Field()
+   @Field(() => String)
    nodeVersion!: string;
 
-   @Field()
+   @Field(() => String)
    platform!: string;
 
-   @Field()
+   @Field(() => String)
    architecture!: string;
 
-   @Field()
+   @Field(() => String)
    memoryUsage!: string; // JSON string for now
 
-   @Field()
+   @Field(() => Number)
    uptime!: number;
 
-   @Field()
+   @Field(() => String)
    cwd!: string;
 
-   @Field()
+   @Field(() => Number)
    pid!: number;
 }
 
 @ObjectType()
 export class CLIStatus {
-   @Field()
+   @Field(() => Boolean)
    isHealthy!: boolean;
 
-   @Field()
+   @Field(() => Number)
    activeProcessCount!: number;
 
    @Field(() => [CLIProcess])
@@ -135,39 +135,39 @@ export class CLIStatus {
    @Field(() => CLISystemInfo)
    systemInfo!: CLISystemInfo;
 
-   @Field()
+   @Field(() => Date)
    timestamp!: Date;
 
-   @Field({ nullable: true })
+   @Field(() => String, { nullable: true })
    error?: string;
 }
 
 @InputType()
 export class CLIHistoryFilter {
-   @Field({ nullable: true })
+   @Field(() => String, { nullable: true })
    command?: string;
 
-   @Field({ nullable: true })
+   @Field(() => Boolean, { nullable: true })
    success?: boolean;
 
-   @Field({ nullable: true })
+   @Field(() => Date, { nullable: true })
    startDate?: Date;
 
-   @Field({ nullable: true })
+   @Field(() => Date, { nullable: true })
    endDate?: Date;
 }
 
 @ArgsType()
 export class CLIHistoryArgs {
-   @Field({ nullable: true, defaultValue: 50 })
+   @Field(() => Number, { nullable: true, defaultValue: 50 })
    limit?: number;
 
-   @Field({ nullable: true })
+   @Field(() => CLIHistoryFilter, { nullable: true })
    filter?: CLIHistoryFilter;
 }
 
 @ArgsType()
 export class CLICommandArgs {
-   @Field()
+   @Field(() => String)
    name!: string;
 }

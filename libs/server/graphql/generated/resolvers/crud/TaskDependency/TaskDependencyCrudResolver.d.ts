@@ -1,0 +1,38 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateTaskDependencyArgs } from "./args/AggregateTaskDependencyArgs";
+import { CreateManyAndReturnTaskDependencyArgs } from "./args/CreateManyAndReturnTaskDependencyArgs";
+import { CreateManyTaskDependencyArgs } from "./args/CreateManyTaskDependencyArgs";
+import { CreateOneTaskDependencyArgs } from "./args/CreateOneTaskDependencyArgs";
+import { DeleteManyTaskDependencyArgs } from "./args/DeleteManyTaskDependencyArgs";
+import { DeleteOneTaskDependencyArgs } from "./args/DeleteOneTaskDependencyArgs";
+import { FindFirstTaskDependencyArgs } from "./args/FindFirstTaskDependencyArgs";
+import { FindFirstTaskDependencyOrThrowArgs } from "./args/FindFirstTaskDependencyOrThrowArgs";
+import { FindManyTaskDependencyArgs } from "./args/FindManyTaskDependencyArgs";
+import { FindUniqueTaskDependencyArgs } from "./args/FindUniqueTaskDependencyArgs";
+import { FindUniqueTaskDependencyOrThrowArgs } from "./args/FindUniqueTaskDependencyOrThrowArgs";
+import { GroupByTaskDependencyArgs } from "./args/GroupByTaskDependencyArgs";
+import { UpdateManyTaskDependencyArgs } from "./args/UpdateManyTaskDependencyArgs";
+import { UpdateOneTaskDependencyArgs } from "./args/UpdateOneTaskDependencyArgs";
+import { UpsertOneTaskDependencyArgs } from "./args/UpsertOneTaskDependencyArgs";
+import { TaskDependency } from "../../../models/TaskDependency";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateTaskDependency } from "../../outputs/AggregateTaskDependency";
+import { CreateManyAndReturnTaskDependency } from "../../outputs/CreateManyAndReturnTaskDependency";
+import { TaskDependencyGroupBy } from "../../outputs/TaskDependencyGroupBy";
+export declare class TaskDependencyCrudResolver {
+    aggregateTaskDependency(ctx: any, info: GraphQLResolveInfo, args: AggregateTaskDependencyArgs): Promise<AggregateTaskDependency>;
+    createManyTaskDependency(ctx: any, info: GraphQLResolveInfo, args: CreateManyTaskDependencyArgs): Promise<AffectedRowsOutput>;
+    createManyAndReturnTaskDependency(ctx: any, info: GraphQLResolveInfo, args: CreateManyAndReturnTaskDependencyArgs): Promise<CreateManyAndReturnTaskDependency[]>;
+    createOneTaskDependency(ctx: any, info: GraphQLResolveInfo, args: CreateOneTaskDependencyArgs): Promise<TaskDependency>;
+    deleteManyTaskDependency(ctx: any, info: GraphQLResolveInfo, args: DeleteManyTaskDependencyArgs): Promise<AffectedRowsOutput>;
+    deleteOneTaskDependency(ctx: any, info: GraphQLResolveInfo, args: DeleteOneTaskDependencyArgs): Promise<TaskDependency | null>;
+    findFirstTaskDependency(ctx: any, info: GraphQLResolveInfo, args: FindFirstTaskDependencyArgs): Promise<TaskDependency | null>;
+    findFirstTaskDependencyOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstTaskDependencyOrThrowArgs): Promise<TaskDependency | null>;
+    taskDependencies(ctx: any, info: GraphQLResolveInfo, args: FindManyTaskDependencyArgs): Promise<TaskDependency[]>;
+    taskDependency(ctx: any, info: GraphQLResolveInfo, args: FindUniqueTaskDependencyArgs): Promise<TaskDependency | null>;
+    getTaskDependency(ctx: any, info: GraphQLResolveInfo, args: FindUniqueTaskDependencyOrThrowArgs): Promise<TaskDependency | null>;
+    groupByTaskDependency(ctx: any, info: GraphQLResolveInfo, args: GroupByTaskDependencyArgs): Promise<TaskDependencyGroupBy[]>;
+    updateManyTaskDependency(ctx: any, info: GraphQLResolveInfo, args: UpdateManyTaskDependencyArgs): Promise<AffectedRowsOutput>;
+    updateOneTaskDependency(ctx: any, info: GraphQLResolveInfo, args: UpdateOneTaskDependencyArgs): Promise<TaskDependency | null>;
+    upsertOneTaskDependency(ctx: any, info: GraphQLResolveInfo, args: UpsertOneTaskDependencyArgs): Promise<TaskDependency>;
+}

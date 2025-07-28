@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateManyAndReturnTaskMasterMetadataArgs = void 0;
+const tslib_1 = require("tslib");
+const TypeGraphQL = tslib_1.__importStar(require("type-graphql"));
+const TaskMasterMetadataCreateManyInput_1 = require("../../../inputs/TaskMasterMetadataCreateManyInput");
+let CreateManyAndReturnTaskMasterMetadataArgs = class CreateManyAndReturnTaskMasterMetadataArgs {
+};
+exports.CreateManyAndReturnTaskMasterMetadataArgs = CreateManyAndReturnTaskMasterMetadataArgs;
+tslib_1.__decorate([
+    TypeGraphQL.Field(_type => [TaskMasterMetadataCreateManyInput_1.TaskMasterMetadataCreateManyInput], {
+        nullable: false
+    }),
+    tslib_1.__metadata("design:type", Array)
+], CreateManyAndReturnTaskMasterMetadataArgs.prototype, "data", void 0);
+exports.CreateManyAndReturnTaskMasterMetadataArgs = CreateManyAndReturnTaskMasterMetadataArgs = tslib_1.__decorate([
+    TypeGraphQL.ArgsType()
+], CreateManyAndReturnTaskMasterMetadataArgs);
