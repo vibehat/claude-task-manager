@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import { useFilterStore } from '@/store/filter-store';
 import { useMemo } from 'react';
 import { GroupIssues } from './group-issues';
-import type { IssueFilterInput } from '@/libs/client/hooks/issues/queries/issues/use-issues';
+import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
 
 interface AllIssuesListViewProps {
    statuses: Status[];

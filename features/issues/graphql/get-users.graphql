@@ -1,0 +1,30 @@
+query GetUsers(
+  $where: UserWhereInput
+  $orderBy: [UserOrderByWithRelationInput!]
+  $skip: Int
+  $take: Int
+) {
+  users(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    id
+    name
+    email
+    avatarUrl
+    role
+    isActive
+    createdAt
+    updatedAt
+  }
+}
+
+query GetUser($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    name
+    email
+    avatarUrl
+    role
+    isActive
+    createdAt
+    updatedAt
+  }
+}

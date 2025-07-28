@@ -1,0 +1,13 @@
+query GetPriorities(
+  $where: IssuePriorityWhereInput
+  $orderBy: [IssuePriorityOrderByWithRelationInput!]
+) {
+  issuePriorities(where: $where, orderBy: $orderBy) {
+    id
+    name
+    value
+    description
+    color
+    icon
+  }
+}

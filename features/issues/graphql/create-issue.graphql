@@ -1,0 +1,7 @@
+#import "issue-details.graphql"
+
+mutation CreateIssue($data: IssueCreateInput!) {
+  createOneIssue(data: $data) {
+    ...IssueDetails
+  }
+}

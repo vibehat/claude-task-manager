@@ -38,6 +38,8 @@
       "libs/client/**/*.tsx",
       "libs/server/**/*.ts",
       "libs/server/**/*.tsx",
+      "features/**/*.ts",
+      "features/**/*.tsx",
       "hooks/**/*.ts",
       "store/**/*.ts",
       ".next/types/**/*.ts"
@@ -50,13 +52,8 @@
       "**/*.spec.ts",
       "__tests__",
       "scripts",
-      "mock-data",
       "**/mock-data/**/*",
       "prisma/seed.ts",
-      "prisma/migrations",
-      "**/graphql-generated.ts",
-      "libs/client/graphql-client/generated.ts",
-      "libs/server/types/graphql-generated.ts",
-      "libs/server/generated"
+      "prisma/migrations"
    ]
 }

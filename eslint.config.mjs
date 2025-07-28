@@ -57,8 +57,8 @@ const eslintConfig = [
          '@typescript-eslint/prefer-nullish-coalescing': 'off',
          '@typescript-eslint/no-unnecessary-type-assertion': 'off',
          '@typescript-eslint/no-empty-interface': 'off',
-         '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-         '@typescript-eslint/array-type': ['error', { default: 'array' }],
+         '@typescript-eslint/consistent-type-definitions': 'off',
+         '@typescript-eslint/array-type': "off",
 
          // Import and module rules
          '@typescript-eslint/consistent-type-imports': [

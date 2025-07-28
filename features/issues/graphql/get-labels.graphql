@@ -1,0 +1,15 @@
+query GetLabels(
+  $where: LabelWhereInput
+  $orderBy: [LabelOrderByWithRelationInput!]
+  $skip: Int
+  $take: Int
+) {
+  labels(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    id
+    name
+    color
+    description
+    createdAt
+    updatedAt
+  }
+}

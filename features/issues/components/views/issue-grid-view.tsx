@@ -9,7 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { GroupIssues } from './group-issues';
 import { CustomDragLayer } from '../items/issue-grid';
 import { cn } from '@/libs/client/utils';
-import type { IssueFilterInput } from '@/libs/client/hooks/issues/queries/issues/use-issues';
+import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
 
 interface AllIssuesGridViewProps {
    statuses: Status[];
