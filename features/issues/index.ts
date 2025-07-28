@@ -1,5 +1,6 @@
 // Export components
 export { CreateIssueModalProvider } from './components/forms/create-issue-modal-provider';
+export { default as AllIssues } from './views/all-issues/all-issues';
 
 // Export hooks
 export { useIssues } from './hooks/queries/use-issues';

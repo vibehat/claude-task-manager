@@ -17,20 +17,21 @@ import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
-   status: Status;
+   status: Status | string;
    issueId: string;
 }
 
 export function StatusSelector({ status, issueId }: StatusSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string>(status.id);
+   const statusId = typeof status === 'string' ? status : status.id;
+   const [value, setValue] = useState<string>(statusId);
 
    const [updateIssue] = useUpdateIssue();
 
    useEffect(() => {
-      setValue(status.id);
-   }, [status.id]);
+      setValue(statusId);
+   }, [statusId]);
 
    const handleStatusChange = (statusId: string): void => {
       setValue(statusId);

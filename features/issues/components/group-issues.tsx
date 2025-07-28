@@ -10,11 +10,11 @@ import { Plus } from 'lucide-react';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
-import { Button } from '@/components/ui/button';
-import { IssueDragType, IssueGrid } from '../items/issue-grid';
-import { IssueLine } from '../items/issue-line';
+import { Button } from '../../ui/button';
+import { IssueDragType, IssueGrid } from './issue-grid';
+import { IssueLine } from './issue-line';
 import { useCreateIssueStore } from '@/store/create-issue-store';
-import { sortIssuesByPriority } from '@/mock-data/issues';
+import { useSortIssuesByPriority } from '@/features/issues/hooks/use-sort-issues-by-priority';
 import { useEdges } from '@/hooks/use-edges';
 import { AnimatePresence, motion } from 'motion/react';
 import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
@@ -24,7 +24,7 @@ interface GroupIssuesProps {
    additionalFilter?: Omit<IssueFilterInput, 'status'>;
 }
 
-function GroupIssues({ status, additionalFilter }: GroupIssuesProps): React.JSX.Element {
+export function GroupIssues({ status, additionalFilter }: GroupIssuesProps): React.JSX.Element {
    const { viewType } = useViewStore();
    const isViewTypeGrid = viewType === 'grid';
    const { openModal } = useCreateIssueStore();
@@ -37,7 +37,7 @@ function GroupIssues({ status, additionalFilter }: GroupIssuesProps): React.JSX.
 
    const issues = useEdges(data?.issues);
    const count = data?.issues?.totalCount || 0;
-   const sortedIssues = sortIssuesByPriority(issues);
+   const sortedIssues = useSortIssuesByPriority(issues);
 
    // Show loading state for this status
    if (loading) {
@@ -202,7 +202,7 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
    }));
    drop(ref);
 
-   const sortedIssues = sortIssuesByPriority(issues);
+   const sortedIssues = useSortIssuesByPriority(issues);
 
    return (
       <div
@@ -235,6 +235,3 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
       </div>
    );
 };
-
-export { GroupIssues };
-export default GroupIssues;

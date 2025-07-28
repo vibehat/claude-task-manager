@@ -17,20 +17,21 @@ import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
-   priority: Priority;
+   priority: Priority | string;
    issueId?: string;
 }
 
 export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string>(priority.id);
+   const priorityId = typeof priority === 'string' ? priority : priority.id;
+   const [value, setValue] = useState<string>(priorityId);
 
    const [updateIssue] = useUpdateIssue();
 
    useEffect(() => {
-      setValue(priority.id);
-   }, [priority.id]);
+      setValue(priorityId);
+   }, [priorityId]);
 
    const handlePriorityChange = (priorityId: string): void => {
       setValue(priorityId);

@@ -62,7 +62,7 @@ const eslintConfig = [
 
          // Import and module rules
          '@typescript-eslint/consistent-type-imports': [
-            'error',
+            'warn',
             {
                prefer: 'type-imports',
                disallowTypeAnnotations: false,

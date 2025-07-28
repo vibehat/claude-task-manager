@@ -4,20 +4,16 @@ import type { Status } from '@/mock-data/status';
 import type { FC } from 'react';
 import { useFilterStore } from '@/store/filter-store';
 import { useMemo } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { GroupIssues } from './group-issues';
-import { CustomDragLayer } from '../items/issue-grid';
-import { cn } from '@/libs/client/utils';
+import { GroupIssuesList } from './group-issues-list';
 import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
 
-interface AllIssuesGridViewProps {
+interface IssueListViewProps {
    statuses: Status[];
    loading?: boolean;
    error?: Error | null;
 }
 
-const AllIssuesGridView: FC<AllIssuesGridViewProps> = ({ statuses, loading, error }) => {
+const IssueListView: FC<IssueListViewProps> = ({ statuses, loading, error }) => {
    const { filters, hasActiveFilters } = useFilterStore();
 
    // Convert filter store format to GraphQL filter format
@@ -25,7 +21,6 @@ const AllIssuesGridView: FC<AllIssuesGridViewProps> = ({ statuses, loading, erro
       if (!hasActiveFilters()) return undefined;
 
       return {
-         priority: filters.priority.length > 0 ? filters.priority : undefined,
          assigneeId: filters.assignee.length > 0 ? filters.assignee : undefined,
          projectId: filters.project.length > 0 ? filters.project : undefined,
          labelIds: filters.labels.length > 0 ? filters.labels : undefined,
@@ -49,17 +44,12 @@ const AllIssuesGridView: FC<AllIssuesGridViewProps> = ({ statuses, loading, erro
    }
 
    return (
-      <div className={cn('w-full h-full overflow-x-auto')}>
-         <DndProvider backend={HTML5Backend}>
-            <CustomDragLayer />
-            <div className={cn('flex h-full gap-3 px-2 py-2 min-w-max')}>
-               {statuses.map((status) => (
-                  <GroupIssues key={status.id} status={status} additionalFilter={graphqlFilter} />
-               ))}
-            </div>
-         </DndProvider>
+      <div className="w-full h-full">
+         {statuses.map((status) => (
+            <GroupIssuesList key={status.id} status={status} additionalFilter={graphqlFilter} />
+         ))}
       </div>
    );
 };
 
-export default AllIssuesGridView;
+export default IssueListView;

@@ -3,66 +3,51 @@
 import type { Issue } from '@/mock-data/issues';
 import type { Status } from '@/mock-data/status';
 import { useUpdateIssue } from '@/features/issues/hooks/mutations/issues/use-update-issue';
-import { useIssuesByStatus } from '@/features/issues/hooks/queries/use-issues-by-status';
-import { useViewStore } from '@/store/view-store';
-import { cn } from '@/libs/client/utils';
 import { Plus } from 'lucide-react';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
-import { Button } from '../../ui/button';
-import { IssueDragType, IssueGrid } from './issue-grid';
-import { IssueLine } from './issue-line';
+import { Button } from '@/components/ui/button';
 import { useCreateIssueStore } from '@/store/create-issue-store';
-import { sortIssuesByPriority } from '@/mock-data/issues';
+import { useSortIssuesByPriority } from '@/features/issues/hooks/use-sort-issues-by-priority';
 import { useEdges } from '@/hooks/use-edges';
 import { AnimatePresence, motion } from 'motion/react';
-import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
+import type { IssueWhereInput } from '@/libs/client/graphql-client/generated';
+import { useGetIssuesQuery } from '@/libs/client/graphql-client/generated';
+import IssueGrid, { IssueDragType } from '../../components/items/issue-grid';
 
-interface GroupIssuesProps {
+interface GroupIssuesGridProps {
    status: Status;
-   additionalFilter?: Omit<IssueFilterInput, 'status'>;
+   additionalFilter?: IssueWhereInput;
 }
 
-export function GroupIssues({ status, additionalFilter }: GroupIssuesProps): React.JSX.Element {
-   const { viewType } = useViewStore();
-   const isViewTypeGrid = viewType === 'grid';
+function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): React.JSX.Element {
    const { openModal } = useCreateIssueStore();
 
    // Fetch issues for this specific status
-   const { data, loading, error } = useIssuesByStatus({
-      statusId: status.id,
-      filter: additionalFilter,
+   const { data, loading, error } = useGetIssuesQuery({
+      variables: {
+         where: {
+            statusId: {
+               equals: status.id,
+            },
+            ...additionalFilter,
+         },
+      },
    });
 
    const issues = useEdges(data?.issues);
-   const count = data?.issues?.totalCount || 0;
-   const sortedIssues = sortIssuesByPriority(issues);
+   const count = data?.issues?.length;
 
    // Show loading state for this status
    if (loading) {
       return (
-         <div
-            className={cn(
-               'bg-container',
-               isViewTypeGrid
-                  ? 'overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col'
-                  : ''
-            )}
-         >
-            <div
-               className={cn(
-                  'sticky top-0 z-10 bg-container w-full',
-                  isViewTypeGrid ? 'rounded-t-md h-[50px]' : 'h-10'
-               )}
-            >
+         <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
+            <div className="sticky top-0 z-10 bg-container w-full rounded-t-md h-[50px]">
                <div
-                  className={cn(
-                     'w-full h-full flex items-center justify-between',
-                     isViewTypeGrid ? 'px-3' : 'px-6'
-                  )}
+                  className="w-full h-full flex items-center justify-between px-3"
                   style={{
-                     backgroundColor: isViewTypeGrid ? `${status.color}10` : `${status.color}08`,
+                     backgroundColor: `${status.color}10`,
                   }}
                >
                   <div className="flex items-center gap-2">
@@ -82,27 +67,12 @@ export function GroupIssues({ status, additionalFilter }: GroupIssuesProps): Rea
    // Show error state for this status
    if (error) {
       return (
-         <div
-            className={cn(
-               'bg-container',
-               isViewTypeGrid
-                  ? 'overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col'
-                  : ''
-            )}
-         >
-            <div
-               className={cn(
-                  'sticky top-0 z-10 bg-container w-full',
-                  isViewTypeGrid ? 'rounded-t-md h-[50px]' : 'h-10'
-               )}
-            >
+         <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
+            <div className="sticky top-0 z-10 bg-container w-full rounded-t-md h-[50px]">
                <div
-                  className={cn(
-                     'w-full h-full flex items-center justify-between',
-                     isViewTypeGrid ? 'px-3' : 'px-6'
-                  )}
+                  className="w-full h-full flex items-center justify-between px-3"
                   style={{
-                     backgroundColor: isViewTypeGrid ? `${status.color}10` : `${status.color}08`,
+                     backgroundColor: `${status.color}10`,
                   }}
                >
                   <div className="flex items-center gap-2">
@@ -120,27 +90,12 @@ export function GroupIssues({ status, additionalFilter }: GroupIssuesProps): Rea
    }
 
    return (
-      <div
-         className={cn(
-            'bg-container',
-            isViewTypeGrid
-               ? 'overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col'
-               : ''
-         )}
-      >
-         <div
-            className={cn(
-               'sticky top-0 z-10 bg-container w-full',
-               isViewTypeGrid ? 'rounded-t-md h-[50px]' : 'h-10'
-            )}
-         >
+      <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
+         <div className="sticky top-0 z-10 bg-container w-full rounded-t-md h-[50px]">
             <div
-               className={cn(
-                  'w-full h-full flex items-center justify-between',
-                  isViewTypeGrid ? 'px-3' : 'px-6'
-               )}
+               className="w-full h-full flex items-center justify-between px-3"
                style={{
-                  backgroundColor: isViewTypeGrid ? `${status.color}10` : `${status.color}08`,
+                  backgroundColor: `${status.color}10`,
                }}
             >
                <div className="flex items-center gap-2">
@@ -163,15 +118,7 @@ export function GroupIssues({ status, additionalFilter }: GroupIssuesProps): Rea
             </div>
          </div>
 
-         {viewType === 'list' ? (
-            <div className="space-y-0">
-               {sortedIssues.map((issue) => (
-                  <IssueLine key={issue.id} issue={issue} layoutId={true} />
-               ))}
-            </div>
-         ) : (
-            <IssueGridList issues={issues} status={status} />
-         )}
+         <IssueGridList issues={issues} status={status} />
       </div>
    );
 }
@@ -202,7 +149,7 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
    }));
    drop(ref);
 
-   const sortedIssues = sortIssuesByPriority(issues);
+   const sortedIssues = useSortIssuesByPriority(issues);
 
    return (
       <div
@@ -235,3 +182,6 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
       </div>
    );
 };
+
+export { GroupIssuesGrid };
+export default GroupIssuesGrid;

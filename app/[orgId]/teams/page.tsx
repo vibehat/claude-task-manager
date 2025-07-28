@@ -1,4 +1,4 @@
-import Teams from '@/components/common/teams/teams';
+import Teams from '@/features/teams/views/teams';
 import Header from '@/components/layout/headers/teams/header';
 import MainLayout from '@/components/layout/main-layout';
 

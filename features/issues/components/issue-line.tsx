@@ -1,12 +1,12 @@
 'use client';
 
-import type { Issue } from '@/mock-data/issues';
 import { format } from 'date-fns';
 import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
 import { PrioritySelector } from './priority-selector';
 import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
+import type { Issue } from '@/libs/server/graphql/generated';
 import { motion } from 'motion/react';
 
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';

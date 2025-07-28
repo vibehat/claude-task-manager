@@ -1,12 +1,13 @@
 'use client';
 
-import { useDisplayIssueStatuses } from '@/libs/client/hooks/issues/queries/reference/use-display-issue-statuses';
-import { useSearchStore } from '@/store/search-store';
-import { useViewStore } from '@/store/view-store';
+import { useGetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
+import { useSearchStore } from '../../store/search-store';
+import { useViewStore } from '../../store/view-store';
 import { SearchIssues } from './search-issues';
-import { AllIssuesListView } from './all-issues-list-view';
-import { AllIssuesGridView } from './all-issues-grid-view';
+import { IssueListView } from '../issues-list';
+import { IssueGridView } from '../issues-grid';
 import { cn } from '@/libs/client/utils';
+import { useEdges } from '@/hooks/use-edges';
 
 export default function AllIssues(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
@@ -17,12 +18,12 @@ export default function AllIssues(): React.JSX.Element {
       data: statusesData,
       loading: statusesLoading,
       error: statusesError,
-   } = useDisplayIssueStatuses();
+   } = useGetIssueStatusesQuery();
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
 
-   const statuses = statusesData?.issueStatuses?.nodes || [];
+   const statuses = useEdges(statusesData.issueStatuses);
 
    // Show loading state while fetching statuses
    if (statusesLoading) {
@@ -49,9 +50,9 @@ export default function AllIssues(): React.JSX.Element {
          {isSearching ? (
             <SearchIssuesView />
          ) : isViewTypeGrid ? (
-            <AllIssuesGridView statuses={statuses} />
+            <IssueGridView statuses={statuses} />
          ) : (
-            <AllIssuesListView statuses={statuses} />
+            <IssueListView statuses={statuses} />
          )}
       </div>
    );
