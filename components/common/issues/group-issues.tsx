@@ -2,8 +2,8 @@
 
 import type { Issue } from '@/mock-data/issues';
 import type { Status } from '@/mock-data/status';
-import { useUpdateIssue } from '@/libs/client/hooks/issues/mutations/issues/use-update-issue';
-import { useIssuesByStatus } from '@/libs/client/hooks/issues/queries/issues/use-issues-by-status';
+import { useUpdateIssue } from '@/features/issues/hooks/mutations/issues/use-update-issue';
+import { useIssuesByStatus } from '@/features/issues/hooks/queries/use-issues-by-status';
 import { useViewStore } from '@/store/view-store';
 import { cn } from '@/libs/client/utils';
 import { Plus } from 'lucide-react';
@@ -16,7 +16,7 @@ import { IssueLine } from './issue-line';
 import { useCreateIssueStore } from '@/store/create-issue-store';
 import { sortIssuesByPriority } from '@/mock-data/issues';
 import { AnimatePresence, motion } from 'motion/react';
-import type { IssueFilterInput } from '@/libs/client/hooks/issues/queries/issues/use-issues';
+import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
 
 interface GroupIssuesProps {
    status: Status;

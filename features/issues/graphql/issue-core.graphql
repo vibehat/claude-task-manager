@@ -1,0 +1,18 @@
+fragment IssueCore on Issue {
+  id
+  identifier
+  title
+  description
+  status
+  priority
+  rank
+  cycleId
+  dueDate
+  issueType
+  taskId
+  subtaskId
+  assigneeId
+  projectId
+  createdAt
+  updatedAt
+}

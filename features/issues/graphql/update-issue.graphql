@@ -1,0 +1,26 @@
+#import "issue-details.graphql"
+#import "issue-core.graphql"
+
+mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
+  updateOneIssue(where: $where, data: $data) {
+    ...IssueDetails
+  }
+}
+
+mutation UpdateIssueStatus($id: String!, $status: String!) {
+  updateOneIssue(where: { id: $id }, data: { status: { set: $status } }) {
+    ...IssueCore
+  }
+}
+
+mutation UpdateIssuePriority($id: String!, $priorityId: String!) {
+  updateOneIssue(where: { id: $id }, data: { priorityId: { set: $priorityId } }) {
+    ...IssueCore
+  }
+}
+
+mutation UpdateIssueAssignee($id: String!, $assigneeId: String) {
+  updateOneIssue(where: { id: $id }, data: { assigneeId: { set: $assigneeId } }) {
+    ...IssueCore
+  }
+}

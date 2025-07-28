@@ -11,8 +11,8 @@ export { apolloClient as client, apolloClient, cacheHelpers } from './apollo-cli
 // Generated types and hooks
 export * from './generated';
 
-// Enhanced hooks with better UX
-export * from './hooks';
+// Enhanced hooks with better UX (comment out for now until we create the hooks)
+// export * from './hooks';
 
 // Re-export Apollo Client utilities for convenience
 export {

@@ -1,0 +1,7 @@
+#import "issue-details.graphql"
+
+query GetIssue($where: IssueWhereUniqueInput!) {
+  issue(where: $where) {
+    ...IssueDetails
+  }
+}

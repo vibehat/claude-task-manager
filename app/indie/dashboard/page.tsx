@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useIssues } from '@/libs/client/hooks/issues/queries/issues/use-issues';
+import { useIssues } from '@/features/issues/hooks/queries/use-issues';
 import { Badge } from '@/components/ui/badge';
 import {
    CalendarIcon,

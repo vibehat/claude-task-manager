@@ -2,90 +2,55 @@
 # Generates TypeScript types from GraphQL schema for Task Master application
 
 overwrite: true
-schema: './libs/server/graphql/generated-schema.graphql'
+schema: './schema.graphql'
 
 generates:
-   # Generated TypeScript types for schema types (server-side)
+   # Server-side types
    ./libs/server/types/graphql-generated.ts:
       plugins:
          - 'typescript'
          - 'typescript-resolvers'
       config:
-         # Basic TypeScript configuration
          scalars:
             DateTime: string
             JSON: any
-
-         # Generate resolver types with proper context
          contextType: '../graphql/context#GraphQLContext'
-
-         # Enable helpful type generation features
          useIndexSignature: true
          enumsAsTypes: true
          constEnums: true
-
-         # Resolver signature configuration
          defaultMapper: 'Partial<{T}>'
          mappers:
-            Task: '../taskmaster#Task'
-            Subtask: '../taskmaster#Subtask'
-            TasksData: '../taskmaster#TasksData'
-            CLICommandResult: '../types#CLIExecuteResponse'
-
-         # Additional configuration
          maybeValue: 'T | null | undefined'
          inputMaybeValue: 'T | null | undefined'
-
-         # Skip generating types for Node modules
          skipTypename: false
          nonOptionalTypename: false
-
-         # Generate helper types
          withHooks: false
          withComponent: false
          withHOC: false
 
-   # Generated types for GraphQL operations with Apollo Client hooks (client-side)
-   ./libs/client/graphql-client/generated.ts:
-      documents: './libs/client/gql/{tasks,system}.graphql'
+   # ✅ Client-side types and hooks
+   ./libs/client/graphql-client/generated/index.ts:
+      documents: 
+         - 'libs/client/**/*.{ts,tsx}'
+         - 'features/**/graphql/**/*.{ts,tsx}'  # Include feature GraphQL documents
+         - '!libs/client/graphql-client/generated/**'  # Exclude generated files
       plugins:
          - 'typescript'
          - 'typescript-operations'
          - 'typescript-react-apollo'
       config:
+         withHooks: true
+         withHOC: false
+         withComponent: false
          scalars:
             DateTime: string
             JSON: any
-
-         # Apollo Client configuration
-         withHooks: true
-         withComponent: false
-         withHOC: false
-         withMutationFn: true
-         withRefetchFn: true
-         withResultType: false
-
-         # Operation result types
-         operationResultSuffix: 'Result'
-         dedupeOperationSuffix: true
-         omitOperationSuffix: false
-
-         # Apollo result types suffix
-         resultTypeSuffix: 'HookResult'
-
-         # Variable types
-         variablesSuffix: 'Variables'
-
-         # Apollo Client specific
-         apolloReactCommonImportFrom: '@apollo/client'
-         apolloReactHooksImportFrom: '@apollo/client'
 
 hooks:
    afterAllFileWrite:
       - prettier --write
 
 config:
-   # Global scalar mappings
    scalars:
       DateTime:
          input: string

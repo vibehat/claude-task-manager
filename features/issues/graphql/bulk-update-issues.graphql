@@ -1,0 +1,5 @@
+mutation BulkUpdateIssues($where: IssueWhereInput!, $data: IssueUpdateManyMutationInput!) {
+  updateManyIssue(where: $where, data: $data) {
+    count
+  }
+}

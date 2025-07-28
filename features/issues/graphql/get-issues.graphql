@@ -1,0 +1,24 @@
+#import "issue-core.graphql"
+#import "issue-details.graphql"
+
+query GetIssues(
+  $where: IssueWhereInput
+  $orderBy: [IssueOrderByWithRelationInput!]
+  $skip: Int
+  $take: Int
+) {
+  issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    ...IssueCore
+  }
+}
+
+query GetIssuesDetailed(
+  $where: IssueWhereInput
+  $orderBy: [IssueOrderByWithRelationInput!]
+  $skip: Int
+  $take: Int
+) {
+  issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    ...IssueDetails
+  }
+}

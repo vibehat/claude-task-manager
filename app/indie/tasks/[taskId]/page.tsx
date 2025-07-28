@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { IndieLayout } from '@/components/layout/indie-layout';
-import { useIssues } from '@/libs/client/hooks/issues/queries/issues/use-issues';
+import { useIssues } from '@/features/issues/hooks/queries/use-issues';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

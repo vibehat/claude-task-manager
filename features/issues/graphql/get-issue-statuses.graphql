@@ -1,0 +1,24 @@
+query GetIssueStatuses(
+  $where: IssueStatusWhereInput
+  $orderBy: [IssueStatusOrderByWithRelationInput!]
+) {
+  issueStatuses(where: $where, orderBy: $orderBy) {
+    id
+    name
+    color
+    description
+    position
+    isCompleted
+  }
+}
+
+query GetDisplayIssueStatuses {
+  issueStatuses(orderBy: [{ position: asc }]) {
+    id
+    name
+    color
+    description
+    position
+    isCompleted
+  }
+}
