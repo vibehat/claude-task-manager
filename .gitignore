@@ -68,3 +68,7 @@ node_modules/
 # tasks/ 
 
 /lib/prisma/generated
+
+# package manager
+# npm
+package-lock.json

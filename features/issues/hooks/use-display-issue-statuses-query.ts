@@ -7,9 +7,9 @@
 
 import { useMemo } from 'react';
 import { mapStatusWithIcon } from '@/libs/client/utils/status-icons';
-import { useIssueStatusesQuery, type UseIssueStatusesOptions } from './use-issue-statuses-query';
+import { useGetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
 
-export type UseDisplayIssueStatusesOptions = UseIssueStatusesOptions;
+export type UseDisplayIssueStatusesOptions = any;
 
 /**
  * Hook to fetch all available issue statuses with display icons
@@ -33,17 +33,17 @@ export type UseDisplayIssueStatusesOptions = UseIssueStatusesOptions;
  * ```
  */
 export function useDisplayIssueStatuses(options: UseDisplayIssueStatusesOptions = {}) {
-   const queryResult = useIssueStatusesQuery(options);
+   const queryResult = useGetIssueStatusesQuery(options);
 
    // Transform the data to include icon components
    const transformedData = useMemo(() => {
-      if (!queryResult.data?.issueStatuses?.nodes) return queryResult.data;
+      if (!queryResult.data?.issueStatuses) return queryResult.data;
 
       return {
          ...queryResult.data,
          issueStatuses: {
             ...queryResult.data.issueStatuses,
-            nodes: queryResult.data.issueStatuses.nodes.map(mapStatusWithIcon),
+            nodes: queryResult.data.issueStatuses.map(mapStatusWithIcon),
          },
       };
    }, [queryResult.data]);

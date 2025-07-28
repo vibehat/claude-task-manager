@@ -1,35 +1,4 @@
 #import "issue-core.graphql"
 
 fragment IssueDetails on Issue {
-  ...IssueCore
-  assignee {
-    id
-    name
-    email
-    avatarUrl
-  }
-  project {
-    id
-    name
-    identifier
-    color
-    icon
-  }
-  labels {
-    id
-    name
-    color
-    description
-  }
-  parentIssue {
-    id
-    identifier
-    title
-  }
-  subIssues {
-    id
-    identifier
-    title
-    status
-  }
-}
+   ...IssueCore

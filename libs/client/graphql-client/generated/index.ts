@@ -10248,25 +10248,50 @@ export type UserWhereUniqueInput = {
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
-export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
-
-export type UpdateIssueMutationVariables = Exact<{
-  where: IssueWhereUniqueInput;
-  data: IssueUpdateInput;
+export type BulkUpdateIssuesMutationVariables = Exact<{
+  where: IssueWhereInput;
+  data: IssueUpdateManyMutationInput;
 }>;
 
 
-export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type BulkUpdateIssuesMutation = { __typename?: 'Mutation', updateManyIssue: { __typename?: 'AffectedRowsOutput', count: number } };
+
+export type CreateIssueMutationVariables = Exact<{
+  data: IssueCreateInput;
+}>;
+
+
+export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } };
+
+export type DeleteIssueMutationVariables = Exact<{
+  where: IssueWhereUniqueInput;
+}>;
+
+
+export type DeleteIssueMutation = { __typename?: 'Mutation', deleteOneIssue?: { __typename?: 'Issue', id: string, identifier: string } | null };
+
+export type GetIssueStatusesQueryVariables = Exact<{
+  where?: InputMaybe<IssueStatusWhereInput>;
+  orderBy?: InputMaybe<Array<IssueStatusOrderByWithRelationInput> | IssueStatusOrderByWithRelationInput>;
+}>;
+
+
+export type GetIssueStatusesQuery = { __typename?: 'Query', issueStatuses: Array<{ __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string, createdAt: string, updatedAt: string }> };
+
+export type GetDisplayIssueStatusesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDisplayIssueStatusesQuery = { __typename?: 'Query', issueStatuses: Array<{ __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string, createdAt: string, updatedAt: string }> };
 
 export type GetIssueQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  where: IssueWhereUniqueInput;
 }>;
 
 
 export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
 
 export type GetIssuesByStatusQueryVariables = Exact<{
-  where?: InputMaybe<IssueWhereInput>;
+  status: Scalars['String']['input'];
   orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput> | IssueOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -10285,7 +10310,7 @@ export type GetIssuesQueryVariables = Exact<{
 
 export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
 
-export type SearchIssuesQueryVariables = Exact<{
+export type GetIssuesDetailedQueryVariables = Exact<{
   where?: InputMaybe<IssueWhereInput>;
   orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput> | IssueOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -10293,28 +10318,25 @@ export type SearchIssuesQueryVariables = Exact<{
 }>;
 
 
-export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesDetailedQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
 
-export type GetIssueStatusesQueryVariables = Exact<{
-  where?: InputMaybe<IssueStatusWhereInput>;
-  orderBy?: InputMaybe<Array<IssueStatusOrderByWithRelationInput> | IssueStatusOrderByWithRelationInput>;
-  cursor?: InputMaybe<IssueStatusWhereUniqueInput>;
-  take?: InputMaybe<Scalars['Int']['input']>;
+export type GetLabelsQueryVariables = Exact<{
+  where?: InputMaybe<LabelWhereInput>;
+  orderBy?: InputMaybe<Array<LabelOrderByWithRelationInput> | LabelOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetIssueStatusesQuery = { __typename?: 'Query', issueStatuses: Array<{ __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string, createdAt: string, updatedAt: string }> };
+export type GetLabelsQuery = { __typename?: 'Query', labels: Array<{ __typename?: 'Label', id: string, name: string, color: string, description?: string | null, createdAt: string, updatedAt: string }> };
 
 export type GetPrioritiesQueryVariables = Exact<{
   where?: InputMaybe<IssuePriorityWhereInput>;
   orderBy?: InputMaybe<Array<IssuePriorityOrderByWithRelationInput> | IssuePriorityOrderByWithRelationInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  take?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetPrioritiesQuery = { __typename?: 'Query', issuePriorities: Array<{ __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number, createdAt: string, updatedAt: string }> };
+export type GetPrioritiesQuery = { __typename?: 'Query', issuePriorities: Array<{ __typename?: 'IssuePriority', id: string, name: string, order: number, iconName: string, createdAt: string, updatedAt: string }> };
 
 export type GetProjectsQueryVariables = Exact<{
   where?: InputMaybe<ProjectWhereInput>;
@@ -10324,14 +10346,7 @@ export type GetProjectsQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, color?: string | null, identifier?: string | null, createdAt: string, updatedAt: string }> };
-
-export type GetUserQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, status: string, role: string, joinedDate: string, createdAt: string, updatedAt: string } | null };
+export type GetProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, identifier?: string | null, description?: string | null, color?: string | null, icon?: string | null, leadId?: string | null, health: string, percentComplete: number, startDate?: string | null, createdAt: string, updatedAt: string }> };
 
 export type GetUsersQueryVariables = Exact<{
   where?: InputMaybe<UserWhereInput>;
@@ -10341,8 +10356,82 @@ export type GetUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, status: string, role: string, joinedDate: string, createdAt: string, updatedAt: string }> };
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, role: string, status: string, createdAt: string, updatedAt: string }> };
 
+export type GetUserQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, role: string, status: string, createdAt: string, updatedAt: string } | null };
+
+export type IssueCoreFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string };
+
+export type SearchIssuesQueryVariables = Exact<{
+  search: Scalars['String']['input'];
+  where: IssueWhereInput;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput> | IssueOrderByWithRelationInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+
+export type UpdateIssueMutationVariables = Exact<{
+  where: IssueWhereUniqueInput;
+  data: IssueUpdateInput;
+}>;
+
+
+export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+
+export type UpdateIssueStatusMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+}>;
+
+
+export type UpdateIssueStatusMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+
+export type UpdateIssuePriorityMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  priorityId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateIssuePriorityMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+
+export type UpdateIssueAssigneeMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  assigneeId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+
+export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
+
+export const IssueCoreFragmentDoc = gql`
+    fragment IssueCore on Issue {
+  id
+  identifier
+  title
+  description
+  status
+  priority
+  rank
+  cycleId
+  dueDate
+  issueType
+  taskId
+  subtaskId
+  assigneeId
+  projectId
+  createdAt
+  updatedAt
+}
+    `;
 export const NewTaskFragmentDoc = gql`
     fragment NewTask on Task {
   id
@@ -10357,77 +10446,204 @@ export const NewTaskFragmentDoc = gql`
   updatedAt
 }
     `;
-export const UpdateIssueDocument = gql`
-    mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
-  updateOneIssue(where: $where, data: $data) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+export const BulkUpdateIssuesDocument = gql`
+    mutation BulkUpdateIssues($where: IssueWhereInput!, $data: IssueUpdateManyMutationInput!) {
+  updateManyIssue(where: $where, data: $data) {
+    count
   }
 }
     `;
-export type UpdateIssueMutationFn = Apollo.MutationFunction<UpdateIssueMutation, UpdateIssueMutationVariables>;
+export type BulkUpdateIssuesMutationFn = Apollo.MutationFunction<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>;
 
 /**
- * __useUpdateIssueMutation__
+ * __useBulkUpdateIssuesMutation__
  *
- * To run a mutation, you first call `useUpdateIssueMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateIssueMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useBulkUpdateIssuesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBulkUpdateIssuesMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateIssueMutation, { data, loading, error }] = useUpdateIssueMutation({
+ * const [bulkUpdateIssuesMutation, { data, loading, error }] = useBulkUpdateIssuesMutation({
  *   variables: {
  *      where: // value for 'where'
  *      data: // value for 'data'
  *   },
  * });
  */
-export function useUpdateIssueMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueMutation, UpdateIssueMutationVariables>) {
+export function useBulkUpdateIssuesMutation(baseOptions?: Apollo.MutationHookOptions<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateIssueMutation, UpdateIssueMutationVariables>(UpdateIssueDocument, options);
+        return Apollo.useMutation<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>(BulkUpdateIssuesDocument, options);
       }
-export type UpdateIssueMutationHookResult = ReturnType<typeof useUpdateIssueMutation>;
-export type UpdateIssueMutationResult = Apollo.MutationResult<UpdateIssueMutation>;
-export type UpdateIssueMutationOptions = Apollo.BaseMutationOptions<UpdateIssueMutation, UpdateIssueMutationVariables>;
-export const GetIssueDocument = gql`
-    query GetIssue($id: String!) {
-  issue(where: {id: $id}) {
+export type BulkUpdateIssuesMutationHookResult = ReturnType<typeof useBulkUpdateIssuesMutation>;
+export type BulkUpdateIssuesMutationResult = Apollo.MutationResult<BulkUpdateIssuesMutation>;
+export type BulkUpdateIssuesMutationOptions = Apollo.BaseMutationOptions<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>;
+export const CreateIssueDocument = gql`
+    mutation CreateIssue($data: IssueCreateInput!) {
+  createOneIssue(data: $data) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type CreateIssueMutationFn = Apollo.MutationFunction<CreateIssueMutation, CreateIssueMutationVariables>;
+
+/**
+ * __useCreateIssueMutation__
+ *
+ * To run a mutation, you first call `useCreateIssueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateIssueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createIssueMutation, { data, loading, error }] = useCreateIssueMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateIssueMutation(baseOptions?: Apollo.MutationHookOptions<CreateIssueMutation, CreateIssueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateIssueMutation, CreateIssueMutationVariables>(CreateIssueDocument, options);
+      }
+export type CreateIssueMutationHookResult = ReturnType<typeof useCreateIssueMutation>;
+export type CreateIssueMutationResult = Apollo.MutationResult<CreateIssueMutation>;
+export type CreateIssueMutationOptions = Apollo.BaseMutationOptions<CreateIssueMutation, CreateIssueMutationVariables>;
+export const DeleteIssueDocument = gql`
+    mutation DeleteIssue($where: IssueWhereUniqueInput!) {
+  deleteOneIssue(where: $where) {
     id
     identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
+  }
+}
+    `;
+export type DeleteIssueMutationFn = Apollo.MutationFunction<DeleteIssueMutation, DeleteIssueMutationVariables>;
+
+/**
+ * __useDeleteIssueMutation__
+ *
+ * To run a mutation, you first call `useDeleteIssueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteIssueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteIssueMutation, { data, loading, error }] = useDeleteIssueMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteIssueMutation(baseOptions?: Apollo.MutationHookOptions<DeleteIssueMutation, DeleteIssueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteIssueMutation, DeleteIssueMutationVariables>(DeleteIssueDocument, options);
+      }
+export type DeleteIssueMutationHookResult = ReturnType<typeof useDeleteIssueMutation>;
+export type DeleteIssueMutationResult = Apollo.MutationResult<DeleteIssueMutation>;
+export type DeleteIssueMutationOptions = Apollo.BaseMutationOptions<DeleteIssueMutation, DeleteIssueMutationVariables>;
+export const GetIssueStatusesDocument = gql`
+    query GetIssueStatuses($where: IssueStatusWhereInput, $orderBy: [IssueStatusOrderByWithRelationInput!]) {
+  issueStatuses(where: $where, orderBy: $orderBy) {
+    id
+    name
+    color
+    iconName
     createdAt
     updatedAt
   }
 }
     `;
+
+/**
+ * __useGetIssueStatusesQuery__
+ *
+ * To run a query within a React component, call `useGetIssueStatusesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssueStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIssueStatusesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useGetIssueStatusesQuery(baseOptions?: Apollo.QueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+      }
+export function useGetIssueStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+        }
+export function useGetIssueStatusesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+        }
+export type GetIssueStatusesQueryHookResult = ReturnType<typeof useGetIssueStatusesQuery>;
+export type GetIssueStatusesLazyQueryHookResult = ReturnType<typeof useGetIssueStatusesLazyQuery>;
+export type GetIssueStatusesSuspenseQueryHookResult = ReturnType<typeof useGetIssueStatusesSuspenseQuery>;
+export type GetIssueStatusesQueryResult = Apollo.QueryResult<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>;
+export const GetDisplayIssueStatusesDocument = gql`
+    query GetDisplayIssueStatuses {
+  issueStatuses(orderBy: [{name: asc}]) {
+    id
+    name
+    color
+    iconName
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetDisplayIssueStatusesQuery__
+ *
+ * To run a query within a React component, call `useGetDisplayIssueStatusesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDisplayIssueStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDisplayIssueStatusesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDisplayIssueStatusesQuery(baseOptions?: Apollo.QueryHookOptions<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>(GetDisplayIssueStatusesDocument, options);
+      }
+export function useGetDisplayIssueStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>(GetDisplayIssueStatusesDocument, options);
+        }
+export function useGetDisplayIssueStatusesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>(GetDisplayIssueStatusesDocument, options);
+        }
+export type GetDisplayIssueStatusesQueryHookResult = ReturnType<typeof useGetDisplayIssueStatusesQuery>;
+export type GetDisplayIssueStatusesLazyQueryHookResult = ReturnType<typeof useGetDisplayIssueStatusesLazyQuery>;
+export type GetDisplayIssueStatusesSuspenseQueryHookResult = ReturnType<typeof useGetDisplayIssueStatusesSuspenseQuery>;
+export type GetDisplayIssueStatusesQueryResult = Apollo.QueryResult<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>;
+export const GetIssueDocument = gql`
+    query GetIssue($where: IssueWhereUniqueInput!) {
+  issue(where: $where) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
 
 /**
  * __useGetIssueQuery__
@@ -10441,7 +10657,7 @@ export const GetIssueDocument = gql`
  * @example
  * const { data, loading, error } = useGetIssueQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      where: // value for 'where'
  *   },
  * });
  */
@@ -10462,27 +10678,17 @@ export type GetIssueLazyQueryHookResult = ReturnType<typeof useGetIssueLazyQuery
 export type GetIssueSuspenseQueryHookResult = ReturnType<typeof useGetIssueSuspenseQuery>;
 export type GetIssueQueryResult = Apollo.QueryResult<GetIssueQuery, GetIssueQueryVariables>;
 export const GetIssuesByStatusDocument = gql`
-    query GetIssuesByStatus($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
-  issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+    query GetIssuesByStatus($status: String!, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  issues(
+    where: {status: {equals: $status}}
+    orderBy: $orderBy
+    skip: $skip
+    take: $take
+  ) {
+    ...IssueCore
   }
 }
-    `;
+    ${IssueCoreFragmentDoc}`;
 
 /**
  * __useGetIssuesByStatusQuery__
@@ -10496,14 +10702,14 @@ export const GetIssuesByStatusDocument = gql`
  * @example
  * const { data, loading, error } = useGetIssuesByStatusQuery({
  *   variables: {
- *      where: // value for 'where'
+ *      status: // value for 'status'
  *      orderBy: // value for 'orderBy'
  *      skip: // value for 'skip'
  *      take: // value for 'take'
  *   },
  * });
  */
-export function useGetIssuesByStatusQuery(baseOptions?: Apollo.QueryHookOptions<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables>) {
+export function useGetIssuesByStatusQuery(baseOptions: Apollo.QueryHookOptions<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables> & ({ variables: GetIssuesByStatusQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables>(GetIssuesByStatusDocument, options);
       }
@@ -10522,25 +10728,10 @@ export type GetIssuesByStatusQueryResult = Apollo.QueryResult<GetIssuesByStatusQ
 export const GetIssuesDocument = gql`
     query GetIssues($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
   issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+    ...IssueCore
   }
 }
-    `;
+    ${IssueCoreFragmentDoc}`;
 
 /**
  * __useGetIssuesQuery__
@@ -10577,40 +10768,25 @@ export type GetIssuesQueryHookResult = ReturnType<typeof useGetIssuesQuery>;
 export type GetIssuesLazyQueryHookResult = ReturnType<typeof useGetIssuesLazyQuery>;
 export type GetIssuesSuspenseQueryHookResult = ReturnType<typeof useGetIssuesSuspenseQuery>;
 export type GetIssuesQueryResult = Apollo.QueryResult<GetIssuesQuery, GetIssuesQueryVariables>;
-export const SearchIssuesDocument = gql`
-    query SearchIssues($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+export const GetIssuesDetailedDocument = gql`
+    query GetIssuesDetailed($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
   issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+    ...IssueCore
   }
 }
-    `;
+    ${IssueCoreFragmentDoc}`;
 
 /**
- * __useSearchIssuesQuery__
+ * __useGetIssuesDetailedQuery__
  *
- * To run a query within a React component, call `useSearchIssuesQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchIssuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetIssuesDetailedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssuesDetailedQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchIssuesQuery({
+ * const { data, loading, error } = useGetIssuesDetailedQuery({
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
@@ -10619,35 +10795,29 @@ export const SearchIssuesDocument = gql`
  *   },
  * });
  */
-export function useSearchIssuesQuery(baseOptions?: Apollo.QueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+export function useGetIssuesDetailedQuery(baseOptions?: Apollo.QueryHookOptions<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+        return Apollo.useQuery<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>(GetIssuesDetailedDocument, options);
       }
-export function useSearchIssuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+export function useGetIssuesDetailedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+          return Apollo.useLazyQuery<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>(GetIssuesDetailedDocument, options);
         }
-export function useSearchIssuesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+export function useGetIssuesDetailedSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+          return Apollo.useSuspenseQuery<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>(GetIssuesDetailedDocument, options);
         }
-export type SearchIssuesQueryHookResult = ReturnType<typeof useSearchIssuesQuery>;
-export type SearchIssuesLazyQueryHookResult = ReturnType<typeof useSearchIssuesLazyQuery>;
-export type SearchIssuesSuspenseQueryHookResult = ReturnType<typeof useSearchIssuesSuspenseQuery>;
-export type SearchIssuesQueryResult = Apollo.QueryResult<SearchIssuesQuery, SearchIssuesQueryVariables>;
-export const GetIssueStatusesDocument = gql`
-    query GetIssueStatuses($where: IssueStatusWhereInput, $orderBy: [IssueStatusOrderByWithRelationInput!], $cursor: IssueStatusWhereUniqueInput, $take: Int, $skip: Int) {
-  issueStatuses(
-    where: $where
-    orderBy: $orderBy
-    cursor: $cursor
-    take: $take
-    skip: $skip
-  ) {
+export type GetIssuesDetailedQueryHookResult = ReturnType<typeof useGetIssuesDetailedQuery>;
+export type GetIssuesDetailedLazyQueryHookResult = ReturnType<typeof useGetIssuesDetailedLazyQuery>;
+export type GetIssuesDetailedSuspenseQueryHookResult = ReturnType<typeof useGetIssuesDetailedSuspenseQuery>;
+export type GetIssuesDetailedQueryResult = Apollo.QueryResult<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>;
+export const GetLabelsDocument = gql`
+    query GetLabels($where: LabelWhereInput, $orderBy: [LabelOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  labels(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
     id
     name
     color
-    iconName
+    description
     createdAt
     updatedAt
   }
@@ -10655,48 +10825,47 @@ export const GetIssueStatusesDocument = gql`
     `;
 
 /**
- * __useGetIssueStatusesQuery__
+ * __useGetLabelsQuery__
  *
- * To run a query within a React component, call `useGetIssueStatusesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetIssueStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetLabelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetIssueStatusesQuery({
+ * const { data, loading, error } = useGetLabelsQuery({
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
- *      cursor: // value for 'cursor'
- *      take: // value for 'take'
  *      skip: // value for 'skip'
+ *      take: // value for 'take'
  *   },
  * });
  */
-export function useGetIssueStatusesQuery(baseOptions?: Apollo.QueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+export function useGetLabelsQuery(baseOptions?: Apollo.QueryHookOptions<GetLabelsQuery, GetLabelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+        return Apollo.useQuery<GetLabelsQuery, GetLabelsQueryVariables>(GetLabelsDocument, options);
       }
-export function useGetIssueStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+export function useGetLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLabelsQuery, GetLabelsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+          return Apollo.useLazyQuery<GetLabelsQuery, GetLabelsQueryVariables>(GetLabelsDocument, options);
         }
-export function useGetIssueStatusesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+export function useGetLabelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetLabelsQuery, GetLabelsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+          return Apollo.useSuspenseQuery<GetLabelsQuery, GetLabelsQueryVariables>(GetLabelsDocument, options);
         }
-export type GetIssueStatusesQueryHookResult = ReturnType<typeof useGetIssueStatusesQuery>;
-export type GetIssueStatusesLazyQueryHookResult = ReturnType<typeof useGetIssueStatusesLazyQuery>;
-export type GetIssueStatusesSuspenseQueryHookResult = ReturnType<typeof useGetIssueStatusesSuspenseQuery>;
-export type GetIssueStatusesQueryResult = Apollo.QueryResult<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>;
+export type GetLabelsQueryHookResult = ReturnType<typeof useGetLabelsQuery>;
+export type GetLabelsLazyQueryHookResult = ReturnType<typeof useGetLabelsLazyQuery>;
+export type GetLabelsSuspenseQueryHookResult = ReturnType<typeof useGetLabelsSuspenseQuery>;
+export type GetLabelsQueryResult = Apollo.QueryResult<GetLabelsQuery, GetLabelsQueryVariables>;
 export const GetPrioritiesDocument = gql`
-    query GetPriorities($where: IssuePriorityWhereInput, $orderBy: [IssuePriorityOrderByWithRelationInput!], $skip: Int, $take: Int) {
-  issuePriorities(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    query GetPriorities($where: IssuePriorityWhereInput, $orderBy: [IssuePriorityOrderByWithRelationInput!]) {
+  issuePriorities(where: $where, orderBy: $orderBy) {
     id
     name
-    iconName
     order
+    iconName
     createdAt
     updatedAt
   }
@@ -10717,8 +10886,6 @@ export const GetPrioritiesDocument = gql`
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
- *      skip: // value for 'skip'
- *      take: // value for 'take'
  *   },
  * });
  */
@@ -10743,9 +10910,14 @@ export const GetProjectsDocument = gql`
   projects(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
     id
     name
+    identifier
     description
     color
-    identifier
+    icon
+    leadId
+    health
+    percentComplete
+    startDate
     createdAt
     updatedAt
   }
@@ -10787,54 +10959,6 @@ export type GetProjectsQueryHookResult = ReturnType<typeof useGetProjectsQuery>;
 export type GetProjectsLazyQueryHookResult = ReturnType<typeof useGetProjectsLazyQuery>;
 export type GetProjectsSuspenseQueryHookResult = ReturnType<typeof useGetProjectsSuspenseQuery>;
 export type GetProjectsQueryResult = Apollo.QueryResult<GetProjectsQuery, GetProjectsQueryVariables>;
-export const GetUserDocument = gql`
-    query GetUser($id: String!) {
-  user(where: {id: $id}) {
-    id
-    name
-    email
-    avatarUrl
-    status
-    role
-    joinedDate
-    createdAt
-    updatedAt
-  }
-}
-    `;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export function useGetUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUsersDocument = gql`
     query GetUsers($where: UserWhereInput, $orderBy: [UserOrderByWithRelationInput!], $skip: Int, $take: Int) {
   users(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
@@ -10842,9 +10966,8 @@ export const GetUsersDocument = gql`
     name
     email
     avatarUrl
-    status
     role
-    joinedDate
+    status
     createdAt
     updatedAt
   }
@@ -10886,3 +11009,238 @@ export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    name
+    email
+    avatarUrl
+    role
+    status
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export function useGetUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const SearchIssuesDocument = gql`
+    query SearchIssues($search: String!, $where: IssueWhereInput!, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  issues(
+    where: {AND: [$where, {OR: [{title: {contains: $search}}, {description: {contains: $search}}, {identifier: {contains: $search}}]}]}
+    orderBy: $orderBy
+    skip: $skip
+    take: $take
+  ) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+
+/**
+ * __useSearchIssuesQuery__
+ *
+ * To run a query within a React component, call `useSearchIssuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchIssuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchIssuesQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *      skip: // value for 'skip'
+ *      take: // value for 'take'
+ *   },
+ * });
+ */
+export function useSearchIssuesQuery(baseOptions: Apollo.QueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables> & ({ variables: SearchIssuesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+      }
+export function useSearchIssuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+        }
+export function useSearchIssuesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+        }
+export type SearchIssuesQueryHookResult = ReturnType<typeof useSearchIssuesQuery>;
+export type SearchIssuesLazyQueryHookResult = ReturnType<typeof useSearchIssuesLazyQuery>;
+export type SearchIssuesSuspenseQueryHookResult = ReturnType<typeof useSearchIssuesSuspenseQuery>;
+export type SearchIssuesQueryResult = Apollo.QueryResult<SearchIssuesQuery, SearchIssuesQueryVariables>;
+export const UpdateIssueDocument = gql`
+    mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
+  updateOneIssue(where: $where, data: $data) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueMutationFn = Apollo.MutationFunction<UpdateIssueMutation, UpdateIssueMutationVariables>;
+
+/**
+ * __useUpdateIssueMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueMutation, { data, loading, error }] = useUpdateIssueMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateIssueMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueMutation, UpdateIssueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueMutation, UpdateIssueMutationVariables>(UpdateIssueDocument, options);
+      }
+export type UpdateIssueMutationHookResult = ReturnType<typeof useUpdateIssueMutation>;
+export type UpdateIssueMutationResult = Apollo.MutationResult<UpdateIssueMutation>;
+export type UpdateIssueMutationOptions = Apollo.BaseMutationOptions<UpdateIssueMutation, UpdateIssueMutationVariables>;
+export const UpdateIssueStatusDocument = gql`
+    mutation UpdateIssueStatus($id: String!, $status: String!) {
+  updateOneIssue(where: {id: $id}, data: {status: {set: $status}}) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueStatusMutationFn = Apollo.MutationFunction<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>;
+
+/**
+ * __useUpdateIssueStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueStatusMutation, { data, loading, error }] = useUpdateIssueStatusMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useUpdateIssueStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>(UpdateIssueStatusDocument, options);
+      }
+export type UpdateIssueStatusMutationHookResult = ReturnType<typeof useUpdateIssueStatusMutation>;
+export type UpdateIssueStatusMutationResult = Apollo.MutationResult<UpdateIssueStatusMutation>;
+export type UpdateIssueStatusMutationOptions = Apollo.BaseMutationOptions<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>;
+export const UpdateIssuePriorityDocument = gql`
+    mutation UpdateIssuePriority($id: String!, $priorityId: String!) {
+  updateOneIssue(
+    where: {id: $id}
+    data: {issuePriority: {connect: {id: $priorityId}}}
+  ) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssuePriorityMutationFn = Apollo.MutationFunction<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>;
+
+/**
+ * __useUpdateIssuePriorityMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssuePriorityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssuePriorityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssuePriorityMutation, { data, loading, error }] = useUpdateIssuePriorityMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      priorityId: // value for 'priorityId'
+ *   },
+ * });
+ */
+export function useUpdateIssuePriorityMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>(UpdateIssuePriorityDocument, options);
+      }
+export type UpdateIssuePriorityMutationHookResult = ReturnType<typeof useUpdateIssuePriorityMutation>;
+export type UpdateIssuePriorityMutationResult = Apollo.MutationResult<UpdateIssuePriorityMutation>;
+export type UpdateIssuePriorityMutationOptions = Apollo.BaseMutationOptions<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>;
+export const UpdateIssueAssigneeDocument = gql`
+    mutation UpdateIssueAssignee($id: String!, $assigneeId: String) {
+  updateOneIssue(where: {id: $id}, data: {assignee: {connect: {id: $assigneeId}}}) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueAssigneeMutationFn = Apollo.MutationFunction<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>;
+
+/**
+ * __useUpdateIssueAssigneeMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueAssigneeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueAssigneeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueAssigneeMutation, { data, loading, error }] = useUpdateIssueAssigneeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      assigneeId: // value for 'assigneeId'
+ *   },
+ * });
+ */
+export function useUpdateIssueAssigneeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>(UpdateIssueAssigneeDocument, options);
+      }
+export type UpdateIssueAssigneeMutationHookResult = ReturnType<typeof useUpdateIssueAssigneeMutation>;
+export type UpdateIssueAssigneeMutationResult = Apollo.MutationResult<UpdateIssueAssigneeMutation>;
+export type UpdateIssueAssigneeMutationOptions = Apollo.BaseMutationOptions<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>;

@@ -1,23 +1,21 @@
 query GetProjects(
-  $where: ProjectWhereInput
-  $orderBy: [ProjectOrderByWithRelationInput!]
-  $skip: Int
-  $take: Int
+   $where: ProjectWhereInput
+   $orderBy: [ProjectOrderByWithRelationInput!]
+   $skip: Int
+   $take: Int
 ) {
-  projects(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    name
-    identifier
-    description
-    color
-    icon
-    status
-    leadId
-    health
-    priority
-    startDate
-    targetDate
-    createdAt
-    updatedAt
-  }
+   projects(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+      id
+      name
+      identifier
+      description
+      color
+      icon
+      leadId
+      health
+      percentComplete
+      startDate
+      createdAt
+      updatedAt
+   }
 }

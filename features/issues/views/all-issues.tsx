@@ -1,6 +1,6 @@
 'use client';
 
-import { useDisplayIssueStatuses } from '../../hooks/reference/use-display-issue-statuses';
+import { useDisplayIssueStatuses } from '../../hooks/use-display-issue-statuses';
 import { useSearchStore } from '../../store/search-store';
 import { useViewStore } from '../../store/view-store';
 import { SearchIssues } from './search-issues';

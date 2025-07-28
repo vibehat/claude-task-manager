@@ -30,10 +30,10 @@ generates:
 
    # ✅ Client-side types and hooks
    ./libs/client/graphql-client/generated/index.ts:
-      documents: 
+      documents:
          - 'libs/client/**/*.{ts,tsx}'
-         - 'features/**/graphql/**/*.{ts,tsx}'  # Include feature GraphQL documents
-         - '!libs/client/graphql-client/generated/**'  # Exclude generated files
+         - 'features/**/graphql/**/*.graphql'
+         - '!libs/client/graphql-client/generated/**' # Exclude generated files
       plugins:
          - 'typescript'
          - 'typescript-operations'

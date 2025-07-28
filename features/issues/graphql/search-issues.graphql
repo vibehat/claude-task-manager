@@ -1,29 +1,29 @@
 #import "issue-core.graphql"
 
 query SearchIssues(
-  $search: String!
-  $where: IssueWhereInput
-  $orderBy: [IssueOrderByWithRelationInput!]
-  $skip: Int
-  $take: Int
+   $search: String!
+   $where: IssueWhereInput!
+   $orderBy: [IssueOrderByWithRelationInput!]
+   $skip: Int
+   $take: Int
 ) {
-  issues(
-    where: {
-      AND: [
-        $where,
-        {
-          OR: [
-            { title: { contains: $search, mode: insensitive } }
-            { description: { contains: $search, mode: insensitive } }
-            { identifier: { contains: $search, mode: insensitive } }
-          ]
-        }
-      ]
-    }
-    orderBy: $orderBy
-    skip: $skip
-    take: $take
-  ) {
-    ...IssueCore
-  }
+   issues(
+      where: {
+         AND: [
+            $where
+            {
+               OR: [
+                  { title: { contains: $search } }
+                  { description: { contains: $search } }
+                  { identifier: { contains: $search } }
+               ]
+            }
+         ]
+      }
+      orderBy: $orderBy
+      skip: $skip
+      take: $take
+   ) {
+      ...IssueCore
+   }
 }
