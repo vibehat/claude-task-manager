@@ -10,97 +10,28 @@ import type { Issue } from '@/mock-data/issues';
 // GraphQL Document
 const GET_ISSUES = gql`
    query GetIssues(
-      $filter: IssueFilterInput
-      $orderBy: [IssueOrderByInput!]
-      $pagination: PaginationInput
+      $where: IssueWhereInput
+      $orderBy: [IssueOrderByWithRelationInput!]
+      $skip: Int
+      $take: Int
    ) {
-      issues(filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-         edges {
-            node {
-               id
-               identifier
-               title
-               description
-               status
-               priority
-               rank
-               cycleId
-               dueDate
-               issueType
-               taskId
-               subtaskId
-               subissues
-               createdAt
-               updatedAt
-               assignee {
-                  id
-                  name
-                  email
-                  avatarUrl
-                  status
-                  role
-               }
-               project {
-                  id
-                  name
-                  description
-                  color
-                  identifier
-               }
-               labels {
-                  id
-                  name
-                  color
-                  description
-               }
-            }
-            cursor
-         }
-         nodes {
-            id
-            identifier
-            title
-            description
-            status
-            priority
-            rank
-            cycleId
-            dueDate
-            issueType
-            taskId
-            subtaskId
-            subissues
-            createdAt
-            updatedAt
-            assignee {
-               id
-               name
-               email
-               avatarUrl
-               status
-               role
-            }
-            project {
-               id
-               name
-               description
-               color
-               identifier
-            }
-            labels {
-               id
-               name
-               color
-               description
-            }
-         }
-         pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-         }
-         totalCount
+      issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+         id
+         identifier
+         title
+         description
+         status
+         priority
+         rank
+         cycleId
+         dueDate
+         issueType
+         taskId
+         subtaskId
+         assigneeId
+         projectId
+         createdAt
+         updatedAt
       }
    }
 `;
@@ -171,7 +102,7 @@ export type UseIssuesResult = ReturnType<
 export function useIssues(options: UseIssuesOptions = {}) {
    const {
       filter,
-      orderBy = [{ field: 'rank', direction: 'ASC' }],
+      orderBy = [{ rank: 'asc' }],
       pagination,
       skip = false,
       pollInterval,
@@ -180,9 +111,10 @@ export function useIssues(options: UseIssuesOptions = {}) {
 
    return useQuery(GET_ISSUES, {
       variables: {
-         filter,
+         where: filter,
          orderBy,
-         pagination,
+         skip: pagination?.after ? parseInt(pagination.after) : 0,
+         take: pagination?.first || 50,
       },
       skip,
       pollInterval,

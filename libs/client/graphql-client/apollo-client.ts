@@ -1,7 +1,5 @@
 import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import type { Task } from './generated';
-import { TaskPriority } from './generated';
 
 // GraphQL endpoint
 const httpLink = createHttpLink({
@@ -23,218 +21,7 @@ const authLink = setContext((_, { headers }) => {
 
 // Type policies for Apollo Client cache
 const cache = new InMemoryCache({
-   typePolicies: {
-      Query: {
-         fields: {
-            // Cache tasks with connection-based pagination
-            tasks: {
-               keyArgs: ['filter', 'orderBy'], // Cache separately for different filters/ordering
-               merge(existing, incoming) {
-                  // Merge connection data for pagination
-                  if (!existing) return incoming;
-
-                  return {
-                     ...incoming,
-                     edges: [...(existing.edges || []), ...(incoming.edges || [])],
-                  };
-               },
-            },
-
-            // Cache ready tasks separately
-            readyTasks: {
-               keyArgs: ['filter', 'orderBy'],
-               merge(existing, incoming) {
-                  if (!existing) return incoming;
-
-                  return {
-                     ...incoming,
-                     edges: [...(existing.edges || []), ...(incoming.edges || [])],
-                  };
-               },
-            },
-
-            // Cache CLI history with pagination
-            cliHistory: {
-               keyArgs: ['filter', 'orderBy'],
-               merge(existing, incoming) {
-                  if (!existing) return incoming;
-
-                  return {
-                     ...incoming,
-                     edges: [...(existing.edges || []), ...(incoming.edges || [])],
-                  };
-               },
-            },
-
-            // Cache sync operations with pagination
-            syncOperations: {
-               keyArgs: ['filter', 'orderBy'],
-               merge(existing, incoming) {
-                  if (!existing) return incoming;
-
-                  return {
-                     ...incoming,
-                     edges: [...(existing.edges || []), ...(incoming.edges || [])],
-                  };
-               },
-            },
-         },
-      },
-
-      Task: {
-         fields: {
-            // Cache task dependencies as references
-            dependencies: {
-               merge(existing = [], incoming) {
-                  return incoming;
-               },
-            },
-
-            // Cache subtasks as embedded objects
-            subtasks: {
-               merge(existing = [], incoming) {
-                  return incoming;
-               },
-            },
-
-            // Compute progress based on subtasks completion
-            progress: {
-               read(existing, { readField }) {
-                  if (existing !== undefined) return existing;
-
-                  const subtasks = (readField('subtasks') as any[]) || [];
-                  if (subtasks.length === 0) return 0;
-
-                  const completed = subtasks.filter(
-                     (subtask) => readField('status', subtask) === 'done'
-                  ).length;
-
-                  return Math.round((completed / subtasks.length) * 100);
-               },
-            },
-
-            // Compute isReady based on dependencies status
-            isReady: {
-               read(existing, { readField, cache }) {
-                  if (existing !== undefined) return existing;
-
-                  const dependencies = (readField('dependencies') as string[]) || [];
-                  if (dependencies.length === 0) return true;
-
-                  // Check if all dependencies are completed
-                  for (const depId of dependencies) {
-                     const depTask = cache.readFragment({
-                        id: cache.identify({ __typename: 'Task', id: depId }),
-                        fragment: gql`
-                           fragment TaskStatus on Task {
-                              status
-                           }
-                        `,
-                     });
-
-                     if (
-                        !depTask ||
-                        !(depTask as any)?.status ||
-                        (depTask as any).status !== 'done'
-                     ) {
-                        return false;
-                     }
-                  }
-
-                  return true;
-               },
-            },
-         },
-      },
-
-      Subtask: {
-         fields: {
-            // Cache subtask dependencies
-            dependencies: {
-               merge(existing = [], incoming) {
-                  return incoming;
-               },
-            },
-
-            // Reference to parent task
-            parentTask: {
-               merge(existing, incoming) {
-                  return incoming;
-               },
-            },
-         },
-      },
-
-      CLICommandResult: {
-         fields: {
-            // Cache CLI command args
-            args: {
-               merge(existing = [], incoming) {
-                  return incoming;
-               },
-            },
-
-            // Parse and cache CLI error information
-            error: {
-               merge(existing, incoming) {
-                  return incoming;
-               },
-            },
-         },
-      },
-
-      SyncOperation: {
-         fields: {
-            // Cache task IDs affected by sync operation
-            taskIds: {
-               merge(existing = [], incoming) {
-                  return incoming;
-               },
-            },
-
-            // Cache sync operation metadata
-            metadata: {
-               merge(existing, incoming) {
-                  return incoming || existing;
-               },
-            },
-         },
-      },
-
-      SyncConflict: {
-         fields: {
-            // Cache conflict data versions
-            uiVersion: {
-               merge(existing, incoming) {
-                  return incoming || existing;
-               },
-            },
-
-            cliVersion: {
-               merge(existing, incoming) {
-                  return incoming || existing;
-               },
-            },
-         },
-      },
-
-      // Cache control for different connection types
-      TaskConnection: {
-         keyFields: false, // Don't use object identity for connections
-      },
-
-      CLICommandConnection: {
-         keyFields: false,
-      },
-
-      SyncOperationConnection: {
-         keyFields: false,
-      },
-
-      SyncConflictConnection: {
-         keyFields: false,
-      },
-   },
+   typePolicies: {},
 
    // Possible types for interface/union handling
    possibleTypes: {
@@ -281,7 +68,7 @@ export const apolloClient = new ApolloClient({
 // Cache helper functions
 export const cacheHelpers = {
    // Update task in cache
-   updateTaskInCache: (taskId: string, updates: Partial<Task>) => {
+   updateTaskInCache: (taskId: string, updates: any) => {
       cache.modify({
          id: cache.identify({ __typename: 'Task', id: taskId }),
          fields: {
@@ -300,7 +87,7 @@ export const cacheHelpers = {
    },
 
    // Add new task to cache
-   addTaskToCache: (task: Task) => {
+   addTaskToCache: (task: any) => {
       cache.modify({
          fields: {
             tasks(existingTasksConnection = { edges: [], nodes: [] }) {
@@ -313,14 +100,11 @@ export const cacheHelpers = {
                         description
                         status
                         priority
-                        dependencies
                         details
                         testStrategy
                         complexity
                         createdAt
                         updatedAt
-                        progress
-                        isReady
                      }
                   `,
                });

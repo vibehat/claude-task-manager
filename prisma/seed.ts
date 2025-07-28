@@ -442,7 +442,6 @@ async function main() {
                issueType: 'TASK',
                assigneeId: assigneeId,
                projectId: projectId,
-               subissues: JSON.stringify([]),
             },
          });
 

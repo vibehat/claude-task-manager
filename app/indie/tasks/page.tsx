@@ -1,5 +1,5 @@
 import React from 'react';
-import AllIssues from '@/components/common/issues/all-issues';
+import { AllIssues } from '@/features/issues';
 import { IndieLayout } from '@/components/layout/indie-layout';
 import TasksOptions from '@/components/layout/headers/indie/tasks-options';
 

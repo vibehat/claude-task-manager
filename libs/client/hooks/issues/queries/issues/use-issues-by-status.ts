@@ -11,97 +11,28 @@ import type { IssueFilterInput, IssueOrderByInput, PaginationInput } from './use
 // GraphQL Document for fetching issues by status
 const GET_ISSUES_BY_STATUS = gql`
    query GetIssuesByStatus(
-      $filter: IssueFilterInput
-      $orderBy: [IssueOrderByInput!]
-      $pagination: PaginationInput
+      $where: IssueWhereInput
+      $orderBy: [IssueOrderByWithRelationInput!]
+      $skip: Int
+      $take: Int
    ) {
-      issues(filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-         edges {
-            node {
-               id
-               identifier
-               title
-               description
-               status
-               priority
-               rank
-               cycleId
-               dueDate
-               issueType
-               taskId
-               subtaskId
-               subissues
-               createdAt
-               updatedAt
-               assignee {
-                  id
-                  name
-                  email
-                  avatarUrl
-                  status
-                  role
-               }
-               project {
-                  id
-                  name
-                  description
-                  color
-                  identifier
-               }
-               labels {
-                  id
-                  name
-                  color
-                  description
-               }
-            }
-            cursor
-         }
-         nodes {
-            id
-            identifier
-            title
-            description
-            status
-            priority
-            rank
-            cycleId
-            dueDate
-            issueType
-            taskId
-            subtaskId
-            subissues
-            createdAt
-            updatedAt
-            assignee {
-               id
-               name
-               email
-               avatarUrl
-               status
-               role
-            }
-            project {
-               id
-               name
-               description
-               color
-               identifier
-            }
-            labels {
-               id
-               name
-               color
-               description
-            }
-         }
-         pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-         }
-         totalCount
+      issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+         id
+         identifier
+         title
+         description
+         status
+         priority
+         rank
+         cycleId
+         dueDate
+         issueType
+         taskId
+         subtaskId
+         assigneeId
+         projectId
+         createdAt
+         updatedAt
       }
    }
 `;
@@ -151,7 +82,7 @@ export function useIssuesByStatus(options: UseIssuesByStatusOptions) {
    const {
       statusId,
       filter = {},
-      orderBy = [{ field: 'rank', direction: 'ASC' }],
+      orderBy = [{ rank: 'asc' }],
       pagination,
       skip = false,
       pollInterval,
@@ -159,16 +90,17 @@ export function useIssuesByStatus(options: UseIssuesByStatusOptions) {
    } = options;
 
    // Merge status filter with additional filters
-   const mergedFilter: IssueFilterInput = {
+   const where = {
       ...filter,
-      status: [statusId], // Always filter by the specific status
+      status: { equals: statusId },
    };
 
    return useQuery(GET_ISSUES_BY_STATUS, {
       variables: {
-         filter: mergedFilter,
+         where,
          orderBy,
-         pagination,
+         skip: pagination?.after ? parseInt(pagination.after) : 0,
+         take: pagination?.first || 50,
       },
       skip,
       pollInterval,

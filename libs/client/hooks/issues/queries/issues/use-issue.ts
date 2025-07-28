@@ -9,8 +9,8 @@ import type { Issue } from '@/mock-data/issues';
 
 // GraphQL Document
 const GET_ISSUE = gql`
-   query GetIssue($id: ID!) {
-      issue(id: $id) {
+   query GetIssue($id: String!) {
+      issue(where: { id: $id }) {
          id
          identifier
          title
@@ -23,41 +23,10 @@ const GET_ISSUE = gql`
          issueType
          taskId
          subtaskId
-         subissues
+         assigneeId
+         projectId
          createdAt
          updatedAt
-         assignee {
-            id
-            name
-            email
-            avatarUrl
-            status
-            role
-         }
-         project {
-            id
-            name
-            description
-            color
-            identifier
-         }
-         labels {
-            id
-            name
-            color
-            description
-         }
-         task {
-            id
-            title
-            description
-            status
-            priority
-            dependencies
-            details
-            testStrategy
-            complexity
-         }
       }
    }
 `;

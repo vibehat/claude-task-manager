@@ -1,6 +1,6 @@
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import { CreateIssueModalProvider } from '@/components/common/issues/create-issue-modal-provider';
+import { CreateIssueModalProvider } from '@/features/issues';
 import { cn } from '@/libs/client/utils';
 
 interface MainLayoutProps {

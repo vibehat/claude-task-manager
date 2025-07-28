@@ -9,8 +9,8 @@ import type { Issue } from '@/mock-data/issues';
 
 // GraphQL Document
 const UPDATE_ISSUE = gql`
-   mutation UpdateIssue($id: ID!, $input: UpdateIssueInput!) {
-      updateIssue(id: $id, input: $input) {
+   mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
+      updateOneIssue(where: $where, data: $data) {
          id
          identifier
          title
@@ -23,30 +23,10 @@ const UPDATE_ISSUE = gql`
          issueType
          taskId
          subtaskId
-         subissues
+         assigneeId
+         projectId
          createdAt
          updatedAt
-         assignee {
-            id
-            name
-            email
-            avatarUrl
-            status
-            role
-         }
-         project {
-            id
-            name
-            description
-            color
-            identifier
-         }
-         labels {
-            id
-            name
-            color
-            description
-         }
       }
    }
 `;

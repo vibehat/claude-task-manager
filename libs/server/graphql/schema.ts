@@ -61,7 +61,7 @@ export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
          SyncOperationCrudResolver,
          SyncConflictCrudResolver,
       ],
-      emitSchemaFile: __dirname + '/generated-schema.graphql',
+      emitSchemaFile: './schema.graphql',
       validate: {
          forbidUnknownValues: false,
       },

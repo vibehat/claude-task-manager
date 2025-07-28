@@ -11,98 +11,28 @@ import type { IssueFilterInput, IssueOrderByInput, PaginationInput } from './use
 // GraphQL Document
 const SEARCH_ISSUES = gql`
    query SearchIssues(
-      $query: String!
-      $filter: IssueFilterInput
-      $orderBy: [IssueOrderByInput!]
-      $pagination: PaginationInput
+      $where: IssueWhereInput
+      $orderBy: [IssueOrderByWithRelationInput!]
+      $skip: Int
+      $take: Int
    ) {
-      searchIssues(query: $query, filter: $filter, orderBy: $orderBy, pagination: $pagination) {
-         edges {
-            node {
-               id
-               identifier
-               title
-               description
-               status
-               priority
-               rank
-               cycleId
-               dueDate
-               issueType
-               taskId
-               subtaskId
-               subissues
-               createdAt
-               updatedAt
-               assignee {
-                  id
-                  name
-                  email
-                  avatarUrl
-                  status
-                  role
-               }
-               project {
-                  id
-                  name
-                  description
-                  color
-                  identifier
-               }
-               labels {
-                  id
-                  name
-                  color
-                  description
-               }
-            }
-            cursor
-         }
-         nodes {
-            id
-            identifier
-            title
-            description
-            status
-            priority
-            rank
-            cycleId
-            dueDate
-            issueType
-            taskId
-            subtaskId
-            subissues
-            createdAt
-            updatedAt
-            assignee {
-               id
-               name
-               email
-               avatarUrl
-               status
-               role
-            }
-            project {
-               id
-               name
-               description
-               color
-               identifier
-            }
-            labels {
-               id
-               name
-               color
-               description
-            }
-         }
-         pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-         }
-         totalCount
+      issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+         id
+         identifier
+         title
+         description
+         status
+         priority
+         rank
+         cycleId
+         dueDate
+         issueType
+         taskId
+         subtaskId
+         assigneeId
+         projectId
+         createdAt
+         updatedAt
       }
    }
 `;
@@ -153,8 +83,8 @@ export type UseSearchIssuesResult = ReturnType<
 export function useSearchIssues(options: UseSearchIssuesOptions) {
    const {
       query,
-      filter,
-      orderBy = [{ field: 'rank', direction: 'ASC' }],
+      filter = {},
+      orderBy = [{ rank: 'asc' }],
       pagination,
       skip = false,
       fetchPolicy = 'cache-first',
@@ -163,12 +93,21 @@ export function useSearchIssues(options: UseSearchIssuesOptions) {
    const trimmedQuery = query.trim();
    const shouldSkip = skip || !trimmedQuery;
 
+   // Build search where clause
+   const where = {
+      ...filter,
+      OR: [
+         { title: { contains: trimmedQuery, mode: 'insensitive' } },
+         { description: { contains: trimmedQuery, mode: 'insensitive' } },
+      ],
+   };
+
    return useQuery(SEARCH_ISSUES, {
       variables: {
-         query: trimmedQuery,
-         filter,
+         where,
          orderBy,
-         pagination,
+         skip: pagination?.after ? parseInt(pagination.after) : 0,
+         take: pagination?.first || 50,
       },
       skip: shouldSkip,
       fetchPolicy,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useIssueStatuses } from '@/libs/client/hooks/issues/queries/reference/use-issue-statuses';
+import { useDisplayIssueStatuses } from '@/libs/client/hooks/issues/queries/reference/use-display-issue-statuses';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
 import { SearchIssues } from './search-issues';
@@ -17,7 +17,7 @@ export default function AllIssues(): React.JSX.Element {
       data: statusesData,
       loading: statusesLoading,
       error: statusesError,
-   } = useIssueStatuses();
+   } = useDisplayIssueStatuses();
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
