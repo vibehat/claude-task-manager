@@ -148,7 +148,7 @@ export function findAllTypeScriptFiles(directory: string): string[] {
       
       if (entry.isDirectory()) {
         // Skip certain directories
-        if (!['node_modules', '.next', 'dist', 'build', '.git', 'scripts', 'prisma', 'generated', '.', 'docs'].includes(entry.name)) {
+        if (!['node_modules', '.next', 'dist', 'build', '.git'].includes(entry.name)) {
           traverse(fullPath);
         }
       } else if (entry.isFile()) {

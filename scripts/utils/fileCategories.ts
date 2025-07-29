@@ -142,8 +142,10 @@ export function shouldSkipFile(filePath: string): boolean {
     'coverage',
     '.turbo',
     '.taskmaster',
-    '.',
-    'app'
+    '/app/',
+    '/scripts/',
+    '/prisma/',
+    '/generated/',
   ];
   
   return skipPatterns.some(pattern => filePath.includes(pattern));
