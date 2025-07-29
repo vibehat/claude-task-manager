@@ -8,6 +8,7 @@ import { IssueListView } from '../issues-list';
 import { IssueGridView } from '../issues-grid';
 import { cn } from '@/libs/client/utils';
 import { useEdges } from '@/hooks/use-edges';
+import { useMemo } from 'react';
 
 function AllIssues(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
@@ -24,6 +25,28 @@ function AllIssues(): React.JSX.Element {
    const isViewTypeGrid = viewType === 'grid';
 
    const statuses = useEdges(statusesData?.issueStatuses);
+
+   // Sort statuses based on the defined order
+   const sortedStatuses = useMemo(() => {
+      if (!statuses) return [];
+      // Define correct status order
+      const statusOrder = [
+         'backlog',
+         'to-do',
+         'in-progress',
+         'technical-review',
+         'completed',
+         'paused',
+      ];
+      return [...statuses].sort((a, b) => {
+         const orderA = statusOrder.indexOf(a.id);
+         const orderB = statusOrder.indexOf(b.id);
+         // If status not found in order, put it at the end
+         const finalOrderA = orderA === -1 ? statusOrder.length : orderA;
+         const finalOrderB = orderB === -1 ? statusOrder.length : orderB;
+         return finalOrderA - finalOrderB;
+      });
+   }, [statuses]);
 
    // Show loading state while fetching statuses
    if (statusesLoading) {
@@ -48,11 +71,11 @@ function AllIssues(): React.JSX.Element {
    return (
       <div className={cn('w-full h-full')}>
          {isSearching ? (
-            <SearchIssues />
+            <SearchIssuesView />
          ) : isViewTypeGrid ? (
-            <IssueGridView statuses={statuses} />
+            <IssueGridView statuses={sortedStatuses} />
          ) : (
-            <IssueListView statuses={statuses} />
+            <IssueListView statuses={sortedStatuses} />
          )}
       </div>
    );

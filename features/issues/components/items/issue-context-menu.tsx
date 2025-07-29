@@ -37,6 +37,8 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 // import { useIssuesStore } from '@/store/issues-store';
+import { useIssueSidePanelStore } from '@/store/issue-side-panel-store';
+import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import {
    useGetIssueStatusesQuery,
    useGetPrioritiesQuery,
@@ -49,13 +51,17 @@ import { getPriorityIcon } from '../../constants/priority-icons';
 import { toast } from 'sonner';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
+type IssueFromQuery = GetIssuesQuery['issues'][0];
+
 interface IssueContextMenuProps {
    issueId?: string;
+   issue?: IssueFromQuery;
 }
 
-export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.Element {
+export function IssueContextMenu({ issueId, issue }: IssueContextMenuProps): React.JSX.Element {
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
+   const { openPanel } = useIssueSidePanelStore();
 
    // Fetch data from GraphQL
    const { data: statusesData } = useGetIssueStatusesQuery();
@@ -287,7 +293,15 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
                <ContextMenuShortcut>D</ContextMenuShortcut>
             </ContextMenuItem>
 
-            <ContextMenuItem>
+            <ContextMenuItem
+               onClick={() => {
+                  if (issue) {
+                     openPanel(issue);
+                  } else {
+                     toast.error('Issue data not available');
+                  }
+               }}
+            >
                <Pencil className="size-4" /> Rename...
                <ContextMenuShortcut>R</ContextMenuShortcut>
             </ContextMenuItem>

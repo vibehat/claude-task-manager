@@ -1,6 +1,10 @@
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import { CreateIssueModalProvider } from '@/features/issues';
+import {
+   CreateIssueModalProvider,
+   UpdateIssueModalProvider,
+   IssueSidePanelProvider,
+} from '@/features/issues';
 import { cn } from '@/libs/client/utils';
 
 interface MainLayoutProps {
@@ -21,6 +25,8 @@ export default function MainLayout({
    return (
       <SidebarProvider>
          <CreateIssueModalProvider />
+         <UpdateIssueModalProvider />
+         <IssueSidePanelProvider />
          <AppSidebar />
          <SidebarInset>
             <div className="h-svh overflow-hidden lg:p-2 w-full">

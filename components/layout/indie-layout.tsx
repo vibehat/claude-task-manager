@@ -2,7 +2,11 @@
 
 import * as React from 'react';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import { CreateIssueModalProvider } from '@/features/issues';
+import {
+   CreateIssueModalProvider,
+   UpdateIssueModalProvider,
+   IssueSidePanelProvider,
+} from '@/features/issues';
 import { IndieProjectProvider } from '@/libs/client/contexts/indie-project-context';
 import { IndieSidebar } from '@/components/layout/sidebar/indie-sidebar';
 import { cn } from '@/libs/client/utils';
@@ -41,6 +45,8 @@ export function IndieLayout({
       <IndieProjectProvider>
          <SidebarProvider>
             <CreateIssueModalProvider />
+            <UpdateIssueModalProvider />
+            <IssueSidePanelProvider />
             <IndieSidebar />
             <SidebarInset>
                <div className={cn('h-svh overflow-hidden lg:p-2 w-full', className)}>

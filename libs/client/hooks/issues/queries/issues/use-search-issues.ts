@@ -11,7 +11,10 @@ export function useSearchIssues(options: UseSearchIssuesOptions = {}) {
    return useSearchIssuesQuery({
       variables: {
          search: query || '',
-         where: {},
+         where: {
+            // Filter only parent issues (no parentIssueId)
+            parentIssueId: { equals: null },
+         },
       },
       skip: skip || !query,
    });

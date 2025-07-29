@@ -27,8 +27,9 @@
       "prisma:generate": "prisma generate",
       "graphql:codegen": "graphql-codegen --config codegen.yml",
       "codegen": "pnpm run prisma:generate && pnpm run graphql:codegen",
+      "generate:types": "pnpm run codegen",
       "prebuild": "npm run generate:types",
-      "sync:taskmaster": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/sync-taskmaster-to-prisma.ts sync",
+      "sync:taskmaster": "ts-node --project tsconfig.node.json scripts/sync-taskmaster-to-prisma.ts sync",
       "sync:taskmaster:watch": "npm run sync:taskmaster watch",
       "sync:taskmaster:force": "npm run sync:taskmaster sync --force"
    },
@@ -132,6 +133,6 @@
       "typescript": "^5"
    },
    "prisma": {
-      "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+      "seed": "ts-node --project tsconfig.node.json prisma/seed.ts"
    }
 }

@@ -20,9 +20,15 @@ const IssueListView: FC<IssueListViewProps> = ({ statuses, loading, error }) => 
 
    // Convert filter store format to GraphQL filter format
    const graphqlFilter = useMemo((): IssueWhereInput | undefined => {
-      if (!hasActiveFilters()) return undefined;
+      const baseFilter: IssueWhereInput = {
+         // Filter only parent issues (no parentIssueId)
+         parentIssueId: { equals: null },
+      };
+
+      if (!hasActiveFilters()) return baseFilter;
 
       return {
+         ...baseFilter,
          assigneeId: filters.assignee.length > 0 ? { in: filters.assignee } : undefined,
          projectId: filters.project.length > 0 ? { in: filters.project } : undefined,
          labels:
