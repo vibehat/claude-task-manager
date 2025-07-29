@@ -141,7 +141,9 @@ export function shouldSkipFile(filePath: string): boolean {
     '.git',
     'coverage',
     '.turbo',
-    '.taskmaster'
+    '.taskmaster',
+    '.',
+    'app'
   ];
   
   return skipPatterns.some(pattern => filePath.includes(pattern));
