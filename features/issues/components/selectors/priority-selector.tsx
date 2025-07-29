@@ -10,27 +10,38 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useUpdateIssue } from '@/features/issues/hooks/mutations/issues/use-update-issue';
-import type { Priority } from '@/mock-data/priorities';
-import { priorities } from '@/mock-data/priorities';
+import type { IssuePriority } from '@/libs/client/graphql-client/generated';
+import {
+   useGetPrioritiesQuery,
+   useUpdateIssuePriorityMutation,
+   SortOrder,
+} from '@/libs/client/graphql-client/generated';
+import { getPriorityIcon } from '@/features/issues/constants/priority-icons';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
-   priority: Priority | string;
+   priority: Pick<IssuePriority, 'id' | 'iconName' | 'name'> | string | null | undefined;
    issueId?: string;
 }
 
 export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const priorityId = typeof priority === 'string' ? priority : priority.id;
-   const [value, setValue] = useState<string>(priorityId);
+   const priorityId = typeof priority === 'string' ? priority : priority?.id;
+   const [value, setValue] = useState<string>(priorityId || 'no-priority');
 
-   const [updateIssue] = useUpdateIssue();
+   const [updatePriority] = useUpdateIssuePriorityMutation();
+   const { data: prioritiesData } = useGetPrioritiesQuery({
+      variables: {
+         orderBy: [{ order: SortOrder.Asc }],
+      },
+   });
+
+   const priorities = prioritiesData?.issuePriorities || [];
 
    useEffect(() => {
-      setValue(priorityId);
+      setValue(priorityId || 'no-priority');
    }, [priorityId]);
 
    const handlePriorityChange = (priorityId: string): void => {
@@ -38,10 +49,10 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
       setOpen(false);
 
       if (issueId) {
-         updateIssue({
+         updatePriority({
             variables: {
                id: issueId,
-               input: { priority: priorityId },
+               priorityId: priorityId,
             },
          });
       }
@@ -62,7 +73,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
                   {((): React.JSX.Element => {
                      const selectedItem = priorities.find((item) => item.id === value);
                      if (selectedItem) {
-                        const Icon = selectedItem.icon;
+                        const Icon = getPriorityIcon(selectedItem.iconName);
                         return <Icon className="text-muted-foreground size-4" />;
                      }
                      return <></>;
@@ -78,23 +89,24 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
                   <CommandList>
                      <CommandEmpty>No priority found.</CommandEmpty>
                      <CommandGroup>
-                        {priorities.map((item) => (
-                           <CommandItem
-                              key={item.id}
-                              value={item.id}
-                              onSelect={handlePriorityChange}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 <item.icon className="text-muted-foreground size-4" />
-                                 {item.name}
-                              </div>
-                              {value === item.id && <CheckIcon size={16} className="ml-auto" />}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
-                              </span>
-                           </CommandItem>
-                        ))}
+                        {priorities.map((item) => {
+                           const Icon = getPriorityIcon(item.iconName);
+                           return (
+                              <CommandItem
+                                 key={item.id}
+                                 value={item.id}
+                                 onSelect={handlePriorityChange}
+                                 className="flex items-center justify-between"
+                              >
+                                 <div className="flex items-center gap-2">
+                                    <Icon className="text-muted-foreground size-4" />
+                                    {item.name}
+                                 </div>
+                                 {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+                                 <span className="text-muted-foreground text-xs">{0}</span>
+                              </CommandItem>
+                           );
+                        })}
                      </CommandGroup>
                   </CommandList>
                </Command>

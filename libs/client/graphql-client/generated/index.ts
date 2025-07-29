@@ -10458,7 +10458,7 @@ export type CreateIssueMutationVariables = Exact<{
 }>;
 
 
-export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } };
+export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } };
 
 export type DeleteIssueMutationVariables = Exact<{
   where: IssueWhereUniqueInput;
@@ -10485,7 +10485,7 @@ export type GetIssueQueryVariables = Exact<{
 }>;
 
 
-export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
+export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null } }>, project?: { __typename?: 'Project', id: string, name: string, identifier?: string | null, color?: string | null, icon?: string | null } | null, parentIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null } | null, subIssues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null, assignee?: { __typename?: 'User', id: string, name: string, avatarUrl?: string | null } | null }>, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
 
 export type GetIssuesByStatusQueryVariables = Exact<{
   status: Scalars['String']['input'];
@@ -10495,7 +10495,7 @@ export type GetIssuesByStatusQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesByStatusQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
+export type GetIssuesByStatusQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
 
 export type GetIssuesStatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10510,7 +10510,7 @@ export type GetIssuesQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
+export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
 
 export type GetIssuesDetailedQueryVariables = Exact<{
   where?: InputMaybe<IssueWhereInput>;
@@ -10520,7 +10520,7 @@ export type GetIssuesDetailedQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesDetailedQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
+export type GetIssuesDetailedQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
 
 export type GetLabelsQueryVariables = Exact<{
   where?: InputMaybe<LabelWhereInput>;
@@ -10567,7 +10567,9 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, role: string, status: string, createdAt: string, updatedAt: string } | null };
 
-export type IssueCoreFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null };
+export type IssueCoreFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null };
+
+export type IssueDetailsFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null } }>, project?: { __typename?: 'Project', id: string, name: string, identifier?: string | null, color?: string | null, icon?: string | null } | null, parentIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null } | null, subIssues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null, assignee?: { __typename?: 'User', id: string, name: string, avatarUrl?: string | null } | null }>, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null };
 
 export type SearchIssuesQueryVariables = Exact<{
   search: Scalars['String']['input'];
@@ -10578,7 +10580,7 @@ export type SearchIssuesQueryVariables = Exact<{
 }>;
 
 
-export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null }> };
+export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
 
 export type UpdateIssueMutationVariables = Exact<{
   where: IssueWhereUniqueInput;
@@ -10586,7 +10588,7 @@ export type UpdateIssueMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
+export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
 
 export type UpdateIssueStatusMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10594,7 +10596,7 @@ export type UpdateIssueStatusMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueStatusMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
+export type UpdateIssueStatusMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
 
 export type UpdateIssuePriorityMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10602,7 +10604,7 @@ export type UpdateIssuePriorityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssuePriorityMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
+export type UpdateIssuePriorityMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
 
 export type UpdateIssueAssigneeMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10610,7 +10612,7 @@ export type UpdateIssueAssigneeMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null } | null };
+export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
 
 export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
 
@@ -10638,6 +10640,12 @@ export const IssueCoreFragmentDoc = gql`
     iconName
     order
   }
+  assignee {
+    id
+    name
+    email
+    avatarUrl
+  }
   taskId
   subtaskId
   assigneeId
@@ -10646,6 +10654,44 @@ export const IssueCoreFragmentDoc = gql`
   updatedAt
 }
     `;
+export const IssueDetailsFragmentDoc = gql`
+    fragment IssueDetails on Issue {
+  ...IssueCore
+  labels {
+    id
+    label {
+      id
+      name
+      color
+      description
+    }
+  }
+  project {
+    id
+    name
+    identifier
+    color
+    icon
+  }
+  parentIssue {
+    id
+    identifier
+    title
+    status
+  }
+  subIssues {
+    id
+    identifier
+    title
+    status
+    assignee {
+      id
+      name
+      avatarUrl
+    }
+  }
+}
+    ${IssueCoreFragmentDoc}`;
 export const NewTaskFragmentDoc = gql`
     fragment NewTask on Task {
   id
@@ -10854,10 +10900,10 @@ export type GetDisplayIssueStatusesQueryResult = Apollo.QueryResult<GetDisplayIs
 export const GetIssueDocument = gql`
     query GetIssue($where: IssueWhereUniqueInput!) {
   issue(where: $where) {
-    ...IssueCore
+    ...IssueDetails
   }
 }
-    ${IssueCoreFragmentDoc}`;
+    ${IssueDetailsFragmentDoc}`;
 
 /**
  * __useGetIssueQuery__

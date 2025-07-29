@@ -3,13 +3,13 @@
 import { useGetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
 import { useSearchStore } from '../../store/search-store';
 import { useViewStore } from '../../store/view-store';
-import { SearchIssues } from './search-issues';
+import SearchIssues from './search-issues';
 import { IssueListView } from '../issues-list';
 import { IssueGridView } from '../issues-grid';
 import { cn } from '@/libs/client/utils';
 import { useEdges } from '@/hooks/use-edges';
 
-export default function AllIssues(): React.JSX.Element {
+function AllIssues(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
 
@@ -23,7 +23,7 @@ export default function AllIssues(): React.JSX.Element {
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
 
-   const statuses = useEdges(statusesData.issueStatuses);
+   const statuses = useEdges(statusesData?.issueStatuses);
 
    // Show loading state while fetching statuses
    if (statusesLoading) {
@@ -48,7 +48,7 @@ export default function AllIssues(): React.JSX.Element {
    return (
       <div className={cn('w-full h-full')}>
          {isSearching ? (
-            <SearchIssuesView />
+            <SearchIssues />
          ) : isViewTypeGrid ? (
             <IssueGridView statuses={statuses} />
          ) : (
@@ -63,3 +63,5 @@ const SearchIssuesView = (): React.JSX.Element => (
       <SearchIssues />
    </div>
 );
+
+export default AllIssues;

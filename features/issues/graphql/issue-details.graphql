@@ -2,3 +2,37 @@
 
 fragment IssueDetails on Issue {
    ...IssueCore
+   labels {
+      id
+      label {
+         id
+         name
+         color
+         description
+      }
+   }
+   project {
+      id
+      name
+      identifier
+      color
+      icon
+   }
+   parentIssue {
+      id
+      identifier
+      title
+      status
+   }
+   subIssues {
+      id
+      identifier
+      title
+      status
+      assignee {
+         id
+         name
+         avatarUrl
+      }
+   }
+}

@@ -10,27 +10,33 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useUpdateIssue } from '@/features/issues/hooks/mutations/issues/use-update-issue';
-import type { Status } from '@/mock-data/status';
-import { status as allStatus } from '@/mock-data/status';
+import type { IssueStatus } from '@/libs/client/graphql-client/generated';
+import {
+   useGetIssueStatusesQuery,
+   useUpdateIssueStatusMutation,
+} from '@/libs/client/graphql-client/generated';
+import { getStatusIcon } from '@/features/issues/constants/status-icons';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
-   status: Status | string;
+   status: Pick<IssueStatus, 'id' | 'iconName' | 'name' | 'color'> | string | null | undefined;
    issueId: string;
 }
 
 export function StatusSelector({ status, issueId }: StatusSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const statusId = typeof status === 'string' ? status : status.id;
-   const [value, setValue] = useState<string>(statusId);
+   const statusId = typeof status === 'string' ? status : status?.id;
+   const [value, setValue] = useState<string>(statusId || 'to-do');
 
-   const [updateIssue] = useUpdateIssue();
+   const [updateStatus] = useUpdateIssueStatusMutation();
+   const { data: statusesData } = useGetIssueStatusesQuery();
+
+   const statuses = statusesData?.issueStatuses || [];
 
    useEffect(() => {
-      setValue(statusId);
+      setValue(statusId || 'to-do');
    }, [statusId]);
 
    const handleStatusChange = (statusId: string): void => {
@@ -38,10 +44,10 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
       setOpen(false);
 
       if (issueId) {
-         updateIssue({
+         updateStatus({
             variables: {
                id: issueId,
-               input: { status: statusId },
+               status: statusId,
             },
          });
       }
@@ -60,9 +66,9 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
                   aria-expanded={open}
                >
                   {((): React.JSX.Element => {
-                     const selectedItem = allStatus.find((item) => item.id === value);
+                     const selectedItem = statuses.find((item) => item.id === value);
                      if (selectedItem) {
-                        const Icon = selectedItem.icon;
+                        const Icon = getStatusIcon(selectedItem.iconName);
                         return <Icon />;
                      }
                      return <></>;
@@ -78,23 +84,24 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
                   <CommandList>
                      <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
-                        {allStatus.map((item) => (
-                           <CommandItem
-                              key={item.id}
-                              value={item.id}
-                              onSelect={handleStatusChange}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 <item.icon />
-                                 {item.name}
-                              </div>
-                              {value === item.id && <CheckIcon size={16} className="ml-auto" />}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
-                              </span>
-                           </CommandItem>
-                        ))}
+                        {statuses.map((item) => {
+                           const Icon = getStatusIcon(item.iconName);
+                           return (
+                              <CommandItem
+                                 key={item.id}
+                                 value={item.id}
+                                 onSelect={handleStatusChange}
+                                 className="flex items-center justify-between"
+                              >
+                                 <div className="flex items-center gap-2">
+                                    <Icon />
+                                    {item.name}
+                                 </div>
+                                 {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+                                 <span className="text-muted-foreground text-xs">{0}</span>
+                              </CommandItem>
+                           );
+                        })}
                      </CommandGroup>
                   </CommandList>
                </Command>

@@ -30,8 +30,6 @@ export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
       validate: {
          forbidUnknownValues: false,
       },
-      // Add PubSub for subscriptions
-      pubSub,
       // Add scalar resolvers for custom scalars
       scalarsMap: [
          { type: Date, scalar: DateTimeResolver },

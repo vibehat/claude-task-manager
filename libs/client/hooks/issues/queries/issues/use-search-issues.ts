@@ -10,7 +10,8 @@ export function useSearchIssues(options: UseSearchIssuesOptions = {}) {
 
    return useSearchIssuesQuery({
       variables: {
-         query: query || '',
+         search: query || '',
+         where: {},
       },
       skip: skip || !query,
    });

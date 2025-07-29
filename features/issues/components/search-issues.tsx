@@ -2,7 +2,7 @@
 
 import { useSearchIssues } from '@/libs/client/hooks/issues/queries/issues/use-search-issues';
 import { useSearchStore } from '@/store/search-store';
-import { IssueLine } from './issue-line';
+import { IssueLine } from './items/issue-line';
 
 export function SearchIssues(): React.JSX.Element {
    const { searchQuery, isSearchOpen } = useSearchStore();
@@ -13,7 +13,7 @@ export function SearchIssues(): React.JSX.Element {
       skip: searchQuery.trim() === '',
    });
 
-   const searchResults = data?.searchIssues?.nodes || [];
+   const searchResults = data?.issues || [];
 
    if (!isSearchOpen) {
       return <></>;

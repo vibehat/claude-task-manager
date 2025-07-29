@@ -1,18 +1,21 @@
 'use client';
 
-import type { Status } from '@/mock-data/status';
+import type { GetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
 import { cn } from '@/libs/client/utils';
 import { Plus } from 'lucide-react';
+import { getStatusIcon } from '../../constants/status-icons';
 import { Button } from '@/components/ui/button';
 import { useCreateIssueStore } from '@/store/create-issue-store';
 import { useSortIssuesByPriority } from '@/features/issues/hooks/use-sort-issues-by-priority';
 import { useEdges } from '@/hooks/use-edges';
 import type { IssueWhereInput } from '@/libs/client/graphql-client/generated';
 import { useGetIssuesQuery } from '@/libs/client/graphql-client/generated';
-import { IssueLine } from '../../components/issue-line';
+import { IssueLine } from '../../components/items/issue-line';
+
+type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
 
 interface GroupIssuesListProps {
-   status: Status;
+   status: IssueStatusFromQuery;
    additionalFilter?: IssueWhereInput;
 }
 
@@ -47,7 +50,10 @@ function GroupIssuesList({ status, additionalFilter }: GroupIssuesListProps): Re
                   }}
                >
                   <div className="flex items-center gap-2">
-                     <status.icon />
+                     {(() => {
+                        const StatusIcon = getStatusIcon(status.iconName);
+                        return <StatusIcon className="size-4" />;
+                     })()}
                      <span className="text-sm font-medium">{status.name}</span>
                      <span className="text-sm text-muted-foreground">...</span>
                   </div>
@@ -72,7 +78,10 @@ function GroupIssuesList({ status, additionalFilter }: GroupIssuesListProps): Re
                   }}
                >
                   <div className="flex items-center gap-2">
-                     <status.icon />
+                     {(() => {
+                        const StatusIcon = getStatusIcon(status.iconName);
+                        return <StatusIcon className="size-4" />;
+                     })()}
                      <span className="text-sm font-medium">{status.name}</span>
                      <span className="text-sm text-red-500">Error</span>
                   </div>
@@ -95,7 +104,10 @@ function GroupIssuesList({ status, additionalFilter }: GroupIssuesListProps): Re
                }}
             >
                <div className="flex items-center gap-2">
-                  <status.icon />
+                  {(() => {
+                     const StatusIcon = getStatusIcon(status.iconName);
+                     return <StatusIcon className="size-4" />;
+                  })()}
                   <span className="text-sm font-medium">{status.name}</span>
                   <span className="text-sm text-muted-foreground">{count}</span>
                </div>
@@ -123,5 +135,4 @@ function GroupIssuesList({ status, additionalFilter }: GroupIssuesListProps): Re
    );
 }
 
-export { GroupIssuesList };
 export default GroupIssuesList;

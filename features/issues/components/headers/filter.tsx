@@ -13,11 +13,16 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filter-store';
-import { status as allStatus } from '@/mock-data/status';
-import { priorities } from '@/mock-data/priorities';
-import { labels } from '@/mock-data/labels';
-import { projects } from '@/mock-data/projects';
-import { users } from '@/mock-data/users';
+import {
+   useGetIssueStatusesQuery,
+   useGetPrioritiesQuery,
+   useGetUsersQuery,
+   useGetLabelsQuery,
+   useGetProjectsQuery,
+   SortOrder,
+} from '@/libs/client/graphql-client/generated';
+import { getStatusIcon } from '../../constants/status-icons';
+import { getPriorityIcon } from '../../constants/priority-icons';
 import {
    CheckIcon,
    ChevronRight,
@@ -39,6 +44,21 @@ export function Filter(): React.JSX.Element {
    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
 
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
+
+   // Fetch data from GraphQL
+   const { data: statusesData } = useGetIssueStatusesQuery();
+   const { data: prioritiesData } = useGetPrioritiesQuery({
+      variables: { orderBy: [{ order: SortOrder.Asc }] },
+   });
+   const { data: usersData } = useGetUsersQuery();
+   const { data: labelsData } = useGetLabelsQuery();
+   const { data: projectsData } = useGetProjectsQuery();
+
+   const allStatus = statusesData?.issueStatuses || [];
+   const priorities = prioritiesData?.issuePriorities || [];
+   const users = usersData?.users || [];
+   const labels = labelsData?.labels || [];
+   const projects = projectsData?.projects || [];
 
    // TODO: Replace with GraphQL-based filtering
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
@@ -188,7 +208,10 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <item.icon />
+                                 {(() => {
+                                    const Icon = getStatusIcon(item.iconName);
+                                    return <Icon />;
+                                 })()}
                                  {item.name}
                               </div>
                               {filters.status.includes(item.id) && (
@@ -244,7 +267,10 @@ export function Filter(): React.JSX.Element {
                            >
                               <div className="flex items-center gap-2">
                                  <Avatar className="size-5">
-                                    <AvatarImage src={user.avatarUrl} alt={user.name} />
+                                    <AvatarImage
+                                       src={user.avatarUrl || undefined}
+                                       alt={user.name}
+                                    />
                                     <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                                  </Avatar>
                                  {user.name}
@@ -285,7 +311,10 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <item.icon className="text-muted-foreground size-4" />
+                                 {(() => {
+                                    const Icon = getPriorityIcon(item.iconName);
+                                    return <Icon className="text-muted-foreground size-4" />;
+                                 })()}
                                  {item.name}
                               </div>
                               {filters.priority.includes(item.id) && (
@@ -366,7 +395,7 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <project.icon className="size-4" />
+                                 <Folder className="size-4" />
                                  {project.name}
                               </div>
                               {filters.project.includes(project.id) && (

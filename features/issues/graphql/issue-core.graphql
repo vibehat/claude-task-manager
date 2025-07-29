@@ -21,6 +21,12 @@ fragment IssueCore on Issue {
       iconName
       order
    }
+   assignee {
+      id
+      name
+      email
+      avatarUrl
+   }
    taskId
    subtaskId
    assigneeId

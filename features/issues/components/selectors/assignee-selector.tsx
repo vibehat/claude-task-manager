@@ -8,19 +8,20 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { User } from '@/mock-data/users';
-import { statusUserColors, users } from '@/mock-data/users';
+import type { User } from '@/libs/client/graphql-client/generated';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
 interface AssigneeUserProps {
-   user: User | null;
+   user: Pick<User, 'id' | 'name' | 'email' | 'avatarUrl'> | null | undefined;
 }
 
 export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
    const [open, setOpen] = useState(false);
-   const [currentAssignee, setCurrentAssignee] = useState<User | null>(user);
+   const [currentAssignee, setCurrentAssignee] = useState<
+      Pick<User, 'id' | 'name' | 'email' | 'avatarUrl'> | null | undefined
+   >(user);
 
    useEffect(() => {
       setCurrentAssignee(user);
@@ -30,7 +31,10 @@ export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
       if (currentAssignee) {
          return (
             <Avatar className="size-6 shrink-0">
-               <AvatarImage src={currentAssignee.avatarUrl} alt={currentAssignee.name} />
+               <AvatarImage
+                  src={currentAssignee.avatarUrl || undefined}
+                  alt={currentAssignee.name}
+               />
                <AvatarFallback>{currentAssignee.name[0]}</AvatarFallback>
             </Avatar>
          );
@@ -49,11 +53,8 @@ export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
             <button className="relative w-fit focus:outline-none">
                {renderAvatar()}
                {currentAssignee && (
-                  <span
-                     className="border-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full border-2"
-                     style={{ backgroundColor: statusUserColors[currentAssignee.status] }}
-                  >
-                     <span className="sr-only">{currentAssignee.status}</span>
+                  <span className="border-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full border-2 bg-green-500">
+                     <span className="sr-only">online</span>
                   </span>
                )}
             </button>
@@ -74,27 +75,7 @@ export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
                {!currentAssignee && <CheckIcon className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {users
-               .filter((user) => user.teamIds.includes(DEFAULT_CONFIG.DEFAULT_TEAM_ID))
-               .map((user) => (
-                  <DropdownMenuItem
-                     key={user.id}
-                     onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentAssignee(user);
-                        setOpen(false);
-                     }}
-                  >
-                     <div className="flex items-center gap-2">
-                        <Avatar className="h-5 w-5">
-                           <AvatarImage src={user.avatarUrl} alt={user.name} />
-                           <AvatarFallback>{user.name[0]}</AvatarFallback>
-                        </Avatar>
-                        <span>{user.name}</span>
-                     </div>
-                     {currentAssignee?.id === user.id && <CheckIcon className="ml-auto h-4 w-4" />}
-                  </DropdownMenuItem>
-               ))}
+            {/* TODO: Load users from GraphQL query */}
             <DropdownMenuSeparator />
             <DropdownMenuLabel>New user</DropdownMenuLabel>
             <DropdownMenuItem>

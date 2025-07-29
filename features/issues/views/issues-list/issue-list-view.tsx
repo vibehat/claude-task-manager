@@ -1,14 +1,16 @@
 'use client';
 
-import type { Status } from '@/mock-data/status';
+import type { GetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
 import type { FC } from 'react';
 import { useFilterStore } from '@/store/filter-store';
 import { useMemo } from 'react';
-import { GroupIssuesList } from './group-issues-list';
-import type { IssueFilterInput } from '@/features/issues/hooks/queries/use-issues';
+import GroupIssuesList from './group-issues-list';
+import type { IssueWhereInput } from '@/libs/client/graphql-client/generated';
+
+type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
 
 interface IssueListViewProps {
-   statuses: Status[];
+   statuses: IssueStatusFromQuery[];
    loading?: boolean;
    error?: Error | null;
 }
@@ -17,13 +19,14 @@ const IssueListView: FC<IssueListViewProps> = ({ statuses, loading, error }) => 
    const { filters, hasActiveFilters } = useFilterStore();
 
    // Convert filter store format to GraphQL filter format
-   const graphqlFilter = useMemo((): Omit<IssueFilterInput, 'status'> | undefined => {
+   const graphqlFilter = useMemo((): IssueWhereInput | undefined => {
       if (!hasActiveFilters()) return undefined;
 
       return {
-         assigneeId: filters.assignee.length > 0 ? filters.assignee : undefined,
-         projectId: filters.project.length > 0 ? filters.project : undefined,
-         labelIds: filters.labels.length > 0 ? filters.labels : undefined,
+         assigneeId: filters.assignee.length > 0 ? { in: filters.assignee } : undefined,
+         projectId: filters.project.length > 0 ? { in: filters.project } : undefined,
+         labels:
+            filters.labels.length > 0 ? { some: { labelId: { in: filters.labels } } } : undefined,
       };
    }, [filters, hasActiveFilters]);
 

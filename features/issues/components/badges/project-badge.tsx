@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
-import type { Project } from '@/mock-data/projects';
+import type { Project } from '@/libs/client/graphql-client/generated';
 import Link from 'next/link';
+import { FolderIcon } from 'lucide-react';
 
 export function ProjectBadge({ project }: { project: Project }): React.JSX.Element {
    return (
@@ -9,7 +10,7 @@ export function ProjectBadge({ project }: { project: Project }): React.JSX.Eleme
             variant="outline"
             className="gap-1.5 rounded-full text-muted-foreground bg-background"
          >
-            <project.icon size={16} />
+            <FolderIcon size={16} />
             {project.name}
          </Badge>
       </Link>

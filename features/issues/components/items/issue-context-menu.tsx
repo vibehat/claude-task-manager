@@ -37,11 +37,15 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 // import { useIssuesStore } from '@/store/issues-store';
-import { status } from '@/mock-data/status';
-import { priorities } from '@/mock-data/priorities';
-import { users } from '@/mock-data/users';
-import { labels } from '@/mock-data/labels';
-import { projects } from '@/mock-data/projects';
+import {
+   useGetIssueStatusesQuery,
+   useGetPrioritiesQuery,
+   useGetUsersQuery,
+   useGetLabelsQuery,
+   useGetProjectsQuery,
+   SortOrder,
+} from '@/libs/client/graphql-client/generated';
+import { getPriorityIcon } from '../../constants/priority-icons';
 import { toast } from 'sonner';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
@@ -53,21 +57,24 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
 
-   // TODO: Replace with mutation hooks
-   // const {
-   //    updateIssueStatus,
-   //    updateIssuePriority,
-   //    updateIssueAssignee,
-   //    addIssueLabel,
-   //    removeIssueLabel,
-   //    updateIssueProject,
-   //    updateIssue,
-   //    getIssueById,
-   // } = useIssuesStore();
+   // Fetch data from GraphQL
+   const { data: statusesData } = useGetIssueStatusesQuery();
+   const { data: prioritiesData } = useGetPrioritiesQuery({
+      variables: { orderBy: [{ order: SortOrder.Asc }] },
+   });
+   const { data: usersData } = useGetUsersQuery();
+   const { data: labelsData } = useGetLabelsQuery();
+   const { data: projectsData } = useGetProjectsQuery();
+
+   const statuses = statusesData?.issueStatuses || [];
+   const priorities = prioritiesData?.issuePriorities || [];
+   const users = usersData?.users || [];
+   const labels = labelsData?.labels || [];
+   const projects = projectsData?.projects || [];
 
    const handleStatusChange = (statusId: string): void => {
       if (!issueId) return;
-      const newStatus = status.find((s) => s.id === statusId);
+      const newStatus = statuses.find((s) => s.id === statusId);
       if (newStatus) {
          // TODO: Implement with mutation hook
          // updateIssueStatus(issueId, newStatus);
@@ -182,14 +189,20 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
                   <CircleCheck className="mr-2 size-4" /> Status
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
-                  {status.map((s) => {
-                     const Icon = s.icon;
-                     return (
-                        <ContextMenuItem key={s.id} onClick={() => handleStatusChange(s.id)}>
-                           <Icon /> {s.name}
-                        </ContextMenuItem>
-                     );
-                  })}
+                  {statuses.map((s) => (
+                     <ContextMenuItem key={s.id} onClick={() => handleStatusChange(s.id)}>
+                        <div
+                           style={{
+                              backgroundColor: s.color,
+                              width: '12px',
+                              height: '12px',
+                              borderRadius: '50%',
+                              marginRight: '8px',
+                           }}
+                        ></div>
+                        {s.name}
+                     </ContextMenuItem>
+                  ))}
                </ContextMenuSubContent>
             </ContextMenuSub>
 
@@ -201,20 +214,15 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
                   <ContextMenuItem onClick={() => handleAssigneeChange(null)}>
                      <User className="size-4" /> Unassigned
                   </ContextMenuItem>
-                  {users
-                     .filter((user) => user.teamIds.includes(DEFAULT_CONFIG.DEFAULT_TEAM_ID))
-                     .map((user) => (
-                        <ContextMenuItem
-                           key={user.id}
-                           onClick={() => handleAssigneeChange(user.id)}
-                        >
-                           <Avatar className="size-4">
-                              <AvatarImage src={user.avatarUrl} alt={user.name} />
-                              <AvatarFallback>{user.name[0]}</AvatarFallback>
-                           </Avatar>
-                           {user.name}
-                        </ContextMenuItem>
-                     ))}
+                  {users.map((user) => (
+                     <ContextMenuItem key={user.id} onClick={() => handleAssigneeChange(user.id)}>
+                        <Avatar className="size-4">
+                           <AvatarImage src={user.avatarUrl || undefined} alt={user.name} />
+                           <AvatarFallback>{user.name[0]}</AvatarFallback>
+                        </Avatar>
+                        {user.name}
+                     </ContextMenuItem>
+                  ))}
                </ContextMenuSubContent>
             </ContextMenuSub>
 
@@ -223,14 +231,17 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
                   <BarChart3 className="mr-2 size-4" /> Priority
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
-                  {priorities.map((priority) => (
-                     <ContextMenuItem
-                        key={priority.id}
-                        onClick={() => handlePriorityChange(priority.id)}
-                     >
-                        <priority.icon className="size-4" /> {priority.name}
-                     </ContextMenuItem>
-                  ))}
+                  {priorities.map((priority) => {
+                     const Icon = getPriorityIcon(priority.iconName);
+                     return (
+                        <ContextMenuItem
+                           key={priority.id}
+                           onClick={() => handlePriorityChange(priority.id)}
+                        >
+                           <Icon className="size-4" /> {priority.name}
+                        </ContextMenuItem>
+                     );
+                  })}
                </ContextMenuSubContent>
             </ContextMenuSub>
 
@@ -265,7 +276,7 @@ export function IssueContextMenu({ issueId }: IssueContextMenuProps): React.JSX.
                         key={project.id}
                         onClick={() => handleProjectChange(project.id)}
                      >
-                        <project.icon className="size-4" /> {project.name}
+                        <Folder className="size-4" /> {project.name}
                      </ContextMenuItem>
                   ))}
                </ContextMenuSubContent>

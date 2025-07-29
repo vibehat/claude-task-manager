@@ -1,8 +1,11 @@
 'use client';
 
-import type { Issue } from '@/mock-data/issues';
-import type { Status } from '@/mock-data/status';
-import { useUpdateIssue } from '@/features/issues/hooks/mutations/issues/use-update-issue';
+import type {
+   GetIssuesQuery,
+   GetIssueStatusesQuery,
+   IssueWhereInput,
+} from '@/libs/client/graphql-client/generated';
+import { useGetIssuesQuery, useUpdateIssueMutation } from '@/libs/client/graphql-client/generated';
 import { Plus } from 'lucide-react';
 import type { FC } from 'react';
 import { useRef } from 'react';
@@ -12,17 +15,20 @@ import { useCreateIssueStore } from '@/store/create-issue-store';
 import { useSortIssuesByPriority } from '@/features/issues/hooks/use-sort-issues-by-priority';
 import { useEdges } from '@/hooks/use-edges';
 import { AnimatePresence, motion } from 'motion/react';
-import type { IssueWhereInput } from '@/libs/client/graphql-client/generated';
-import { useGetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import IssueGrid, { IssueDragType } from '../../components/items/issue-grid';
+import { useIssueStatusIcon } from '../../hooks/use-issue-status-icon';
+
+type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
+type IssueFromQuery = GetIssuesQuery['issues'][0];
 
 interface GroupIssuesGridProps {
-   status: Status;
+   status: IssueStatusFromQuery;
    additionalFilter?: IssueWhereInput;
 }
 
 function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): React.JSX.Element {
    const { openModal } = useCreateIssueStore();
+   const StatusIcon = useIssueStatusIcon(status);
 
    // Fetch issues for this specific status
    const { data, loading, error } = useGetIssuesQuery({
@@ -51,7 +57,7 @@ function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): Re
                   }}
                >
                   <div className="flex items-center gap-2">
-                     <status.icon />
+                     <StatusIcon />
                      <span className="text-sm font-medium">{status.name}</span>
                      <span className="text-sm text-muted-foreground">...</span>
                   </div>
@@ -76,7 +82,7 @@ function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): Re
                   }}
                >
                   <div className="flex items-center gap-2">
-                     <status.icon />
+                     <StatusIcon />
                      <span className="text-sm font-medium">{status.name}</span>
                      <span className="text-sm text-red-500">Error</span>
                   </div>
@@ -99,7 +105,7 @@ function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): Re
                }}
             >
                <div className="flex items-center gap-2">
-                  <status.icon />
+                  <StatusIcon />
                   <span className="text-sm font-medium">{status.name}</span>
                   <span className="text-sm text-muted-foreground">{count}</span>
                </div>
@@ -123,22 +129,26 @@ function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): Re
    );
 }
 
-const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
+const IssueGridList: FC<{ issues: IssueFromQuery[]; status: IssueStatusFromQuery }> = ({
    issues,
    status,
 }): React.JSX.Element => {
    const ref = useRef<HTMLDivElement>(null);
-   const [updateIssue] = useUpdateIssue();
+   const [updateIssue] = useUpdateIssueMutation();
 
    // Set up drop functionality to accept only issue items.
    const [{ isOver }, drop] = useDrop(() => ({
       accept: IssueDragType,
-      drop(item: Issue, monitor): void {
-         if (monitor.didDrop() && item.status.id !== status.id) {
+      drop(item: IssueFromQuery, monitor): void {
+         if (monitor.didDrop() && item.issueStatus?.id !== status.id) {
             updateIssue({
                variables: {
-                  id: item.id,
-                  input: { status: status.id },
+                  where: { id: item.id },
+                  data: {
+                     issueStatus: {
+                        connect: { id: status.id },
+                     },
+                  },
                },
             });
          }
@@ -149,7 +159,7 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
    }));
    drop(ref);
 
-   const sortedIssues = useSortIssuesByPriority(issues);
+   const sortedIssues = useSortIssuesByPriority(issues || []);
 
    return (
       <div
@@ -183,5 +193,4 @@ const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({
    );
 };
 
-export { GroupIssuesGrid };
 export default GroupIssuesGrid;

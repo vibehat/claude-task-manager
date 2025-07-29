@@ -2,6 +2,6 @@
 
 query GetIssue($where: IssueWhereUniqueInput!) {
    issue(where: $where) {
-      ...IssueCore
+      ...IssueDetails
    }
 }

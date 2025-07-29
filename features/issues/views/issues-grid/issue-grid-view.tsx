@@ -3,14 +3,16 @@
 import type { FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { GroupIssuesGrid } from './group-issues-grid';
+import GroupIssuesGrid from './group-issues-grid';
 import { cn } from '@/libs/client/utils';
 import { CustomDragLayer } from '../../components/items/issue-grid';
-import { IssueStatus } from '@/libs/client/graphql-client/generated';
+import type { GetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
 import { useIssuesFilterStore } from '../../store/issue-filter-store';
 
+type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
+
 interface IssueGridViewProps {
-   statuses: IssueStatus[];
+   statuses: IssueStatusFromQuery[];
    loading?: boolean;
    error?: Error | null;
 }
