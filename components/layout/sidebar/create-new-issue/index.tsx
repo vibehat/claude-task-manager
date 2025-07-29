@@ -44,7 +44,9 @@ export function CreateNewIssue(): React.JSX.Element {
 
    const createDefaultData = useCallback((): Issue => {
       const identifier = generateUniqueIdentifier();
-      const defaultStatusValue = defaultStatus ?? status.find((s) => s.id === 'to-do') ?? status[0];
+      const defaultStatusValue = defaultStatus
+         ? (status.find((s) => s.id === defaultStatus.id) ?? status[0])
+         : (status.find((s) => s.id === 'to-do') ?? status[0]);
       const defaultPriority = priorities.find((p) => p.id === 'no-priority') ?? priorities[0];
       const defaultRank = ranks[ranks.length - 1];
 

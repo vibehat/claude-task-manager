@@ -1,6 +1,6 @@
 mutation DeleteIssue($where: IssueWhereUniqueInput!) {
-  deleteOneIssue(where: $where) {
-    id
-    identifier
-  }
+   deleteOneIssue(where: $where) {
+      id
+      identifier
+   }
 }

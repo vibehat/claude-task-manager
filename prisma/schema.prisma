@@ -8,6 +8,7 @@ generator client {
 generator typegraphql {
   provider = "typegraphql-prisma"
   output   = "../libs/server/graphql/generated"
+  emitTranspiledCode = true
 }
 
 datasource db {

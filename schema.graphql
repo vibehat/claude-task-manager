@@ -144,71 +144,6 @@ input BoolWithAggregatesFilter {
   not: NestedBoolWithAggregatesFilter
 }
 
-type CLICommand {
-  args: [String!]!
-  category: String!
-  description: String!
-  examples: [String!]
-  name: String!
-  parseOutput: Boolean!
-  requiredArgs: [String!]!
-  timeout: Float!
-}
-
-type CLIExecutionStats {
-  averageExecutionTime: Float!
-  commandFrequency: String!
-  failedExecutions: Float!
-  successRate: Float!
-  successfulExecutions: Float!
-  totalExecutions: Float!
-}
-
-input CLIHistoryFilter {
-  command: String
-  endDate: DateTime
-  startDate: DateTime
-  success: Boolean
-}
-
-type CLIHistoryItem {
-  args: String!
-  command: String!
-  error: String
-  executionTime: Float!
-  id: ID!
-  output: String!
-  success: Boolean!
-  timestamp: DateTime!
-}
-
-type CLIProcess {
-  id: ID!
-  startTime: String!
-  status: String!
-}
-
-type CLIStatus {
-  activeProcessCount: Float!
-  activeProcesses: [CLIProcess!]!
-  error: String
-  executionStats: CLIExecutionStats!
-  isHealthy: Boolean!
-  recentCommands: [CLIHistoryItem!]!
-  systemInfo: CLISystemInfo!
-  timestamp: DateTime!
-}
-
-type CLISystemInfo {
-  architecture: String!
-  cwd: String!
-  memoryUsage: String!
-  nodeVersion: String!
-  pid: Float!
-  platform: String!
-  uptime: Float!
-}
-
 type CreateManyAndReturnCycle {
   createdAt: DateTime!
   endDate: DateTime!
@@ -419,10 +354,12 @@ type Cycle {
   createdAt: DateTime!
   endDate: DateTime!
   id: String!
+  issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
   name: String!
   number: Int!
   progress: Int!
   startDate: DateTime!
+  team: Team!
   teamId: String!
   updatedAt: DateTime!
 }
@@ -972,22 +909,32 @@ input IntWithAggregatesFilter {
 
 type Issue {
   _count: IssueCount
+  assignee(where: UserWhereInput): User
   assigneeId: String
   createdAt: DateTime!
+  cycle(where: CycleWhereInput): Cycle
   cycleId: String
   description: String!
   dueDate: DateTime
   id: String!
   identifier: String!
+  issuePriority(where: IssuePriorityWhereInput): IssuePriority
+  issueStatus(where: IssueStatusWhereInput): IssueStatus
   issueType: String!
+  labels(cursor: IssueLabelWhereUniqueInput, distinct: [IssueLabelScalarFieldEnum!], orderBy: [IssueLabelOrderByWithRelationInput!], skip: Int, take: Int, where: IssueLabelWhereInput): [IssueLabel!]!
+  parentIssue(where: IssueWhereInput): Issue
   parentIssueId: String
   priority: String
   priorityId: String
+  project(where: ProjectWhereInput): Project
   projectId: String
   rank: String!
   status: String
   statusId: String
+  subIssues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
+  subtask(where: SubtaskWhereInput): Subtask
   subtaskId: String
+  task(where: TaskWhereInput): Task
   taskId: Int
   title: String!
   updatedAt: DateTime!
@@ -1674,7 +1621,9 @@ type IssueGroupBy {
 
 type IssueLabel {
   id: String!
+  issue: Issue!
   issueId: String!
+  label: Label!
   labelId: String!
 }
 
@@ -2114,6 +2063,7 @@ type IssuePriority {
   createdAt: DateTime!
   iconName: String!
   id: String!
+  issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
   name: String!
   order: Int!
   updatedAt: DateTime!
@@ -2449,12 +2399,21 @@ input IssueScalarWhereWithAggregatesInput {
   updatedAt: DateTimeWithAggregatesFilter
 }
 
+type IssueStats {
+  completed: Int!
+  completionRate: Int!
+  inProgress: Int!
+  pending: Int!
+  total: Int!
+}
+
 type IssueStatus {
   _count: IssueStatusCount
   color: String!
   createdAt: DateTime!
   iconName: String!
   id: String!
+  issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
   name: String!
   updatedAt: DateTime!
 }
@@ -3324,6 +3283,7 @@ type Label {
   createdAt: DateTime!
   description: String
   id: String!
+  issues(cursor: IssueLabelWhereUniqueInput, distinct: [IssueLabelScalarFieldEnum!], orderBy: [IssueLabelOrderByWithRelationInput!], skip: Int, take: Int, where: IssueLabelWhereInput): [IssueLabel!]!
   name: String!
   updatedAt: DateTime!
 }
@@ -3929,10 +3889,13 @@ type Project {
   icon: String
   id: String!
   identifier: String
+  issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
+  lead(where: UserWhereInput): User
   leadId: String
   name: String!
   percentComplete: Int!
   startDate: DateTime
+  teams(cursor: TeamProjectWhereUniqueInput, distinct: [TeamProjectScalarFieldEnum!], orderBy: [TeamProjectOrderByWithRelationInput!], skip: Int, take: Int, where: TeamProjectWhereInput): [TeamProject!]!
   updatedAt: DateTime!
 }
 
@@ -4518,10 +4481,6 @@ type Query {
   aggregateTeamMember(cursor: TeamMemberWhereUniqueInput, orderBy: [TeamMemberOrderByWithRelationInput!], skip: Int, take: Int, where: TeamMemberWhereInput): AggregateTeamMember!
   aggregateTeamProject(cursor: TeamProjectWhereUniqueInput, orderBy: [TeamProjectOrderByWithRelationInput!], skip: Int, take: Int, where: TeamProjectWhereInput): AggregateTeamProject!
   aggregateUser(cursor: UserWhereUniqueInput, orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): AggregateUser!
-  availableCommands: [CLICommand!]!
-  cliCommand(name: String!): CLICommand
-  cliHistory(filter: CLIHistoryFilter, limit: Float = 50): [CLIHistoryItem!]!
-  cliStatus: CLIStatus!
   cycle(where: CycleWhereUniqueInput!): Cycle
   cycles(cursor: CycleWhereUniqueInput, distinct: [CycleScalarFieldEnum!], orderBy: [CycleOrderByWithRelationInput!], skip: Int, take: Int, where: CycleWhereInput): [Cycle!]!
   findFirstCycle(cursor: CycleWhereUniqueInput, distinct: [CycleScalarFieldEnum!], orderBy: [CycleOrderByWithRelationInput!], skip: Int, take: Int, where: CycleWhereInput): Cycle
@@ -4603,6 +4562,7 @@ type Query {
   issueStatus(where: IssueStatusWhereUniqueInput!): IssueStatus
   issueStatuses(cursor: IssueStatusWhereUniqueInput, distinct: [IssueStatusScalarFieldEnum!], orderBy: [IssueStatusOrderByWithRelationInput!], skip: Int, take: Int, where: IssueStatusWhereInput): [IssueStatus!]!
   issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
+  issuesStats: IssueStats!
   label(where: LabelWhereUniqueInput!): Label
   labels(cursor: LabelWhereUniqueInput, distinct: [LabelScalarFieldEnum!], orderBy: [LabelOrderByWithRelationInput!], skip: Int, take: Int, where: LabelWhereInput): [Label!]!
   project(where: ProjectWhereUniqueInput!): Project
@@ -4710,7 +4670,9 @@ type Subtask {
   description: String!
   details: String
   id: String!
+  issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
   parentId: Int!
+  parentTask: Task!
   status: String!
   testStrategy: String
   title: String!
@@ -5740,11 +5702,15 @@ type Task {
   _count: TaskCount
   complexity: Int
   createdAt: DateTime!
+  dependencies(cursor: TaskDependencyWhereUniqueInput, distinct: [TaskDependencyScalarFieldEnum!], orderBy: [TaskDependencyOrderByWithRelationInput!], skip: Int, take: Int, where: TaskDependencyWhereInput): [TaskDependency!]!
+  dependents(cursor: TaskDependencyWhereUniqueInput, distinct: [TaskDependencyScalarFieldEnum!], orderBy: [TaskDependencyOrderByWithRelationInput!], skip: Int, take: Int, where: TaskDependencyWhereInput): [TaskDependency!]!
   description: String!
   details: String
   id: Int!
+  issues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
   priority: String!
   status: String!
+  subtasks(cursor: SubtaskWhereUniqueInput, distinct: [SubtaskScalarFieldEnum!], orderBy: [SubtaskOrderByWithRelationInput!], skip: Int, take: Int, where: SubtaskWhereInput): [Subtask!]!
   testStrategy: String
   title: String!
   updatedAt: DateTime!
@@ -5934,8 +5900,10 @@ input TaskCreateWithoutSubtasksInput {
 
 type TaskDependency {
   createdAt: DateTime!
+  dependsOn: Task!
   dependsOnId: Int!
   id: Int!
+  task: Task!
   taskId: Int!
 }
 
@@ -6782,10 +6750,13 @@ type Team {
   _count: TeamCount
   color: String!
   createdAt: DateTime!
+  cycles(cursor: CycleWhereUniqueInput, distinct: [CycleScalarFieldEnum!], orderBy: [CycleOrderByWithRelationInput!], skip: Int, take: Int, where: CycleWhereInput): [Cycle!]!
   icon: String!
   id: String!
   joined: Boolean!
+  members(cursor: TeamMemberWhereUniqueInput, distinct: [TeamMemberScalarFieldEnum!], orderBy: [TeamMemberOrderByWithRelationInput!], skip: Int, take: Int, where: TeamMemberWhereInput): [TeamMember!]!
   name: String!
+  projects(cursor: TeamProjectWhereUniqueInput, distinct: [TeamProjectScalarFieldEnum!], orderBy: [TeamProjectOrderByWithRelationInput!], skip: Int, take: Int, where: TeamProjectWhereInput): [TeamProject!]!
   updatedAt: DateTime!
 }
 
@@ -6943,7 +6914,9 @@ input TeamMaxOrderByAggregateInput {
 
 type TeamMember {
   id: String!
+  team: Team!
   teamId: String!
+  user: User!
   userId: String!
 }
 
@@ -7264,7 +7237,9 @@ input TeamOrderByWithRelationInput {
 
 type TeamProject {
   id: String!
+  project: Project!
   projectId: String!
+  team: Team!
   teamId: String!
 }
 
@@ -7715,15 +7690,18 @@ input TeamWhereUniqueInput {
 
 type User {
   _count: UserCount
+  assignedIssues(cursor: IssueWhereUniqueInput, distinct: [IssueScalarFieldEnum!], orderBy: [IssueOrderByWithRelationInput!], skip: Int, take: Int, where: IssueWhereInput): [Issue!]!
   avatarUrl: String
   createdAt: DateTime!
   email: String!
   id: String!
   joinedDate: DateTime!
+  ledProjects(cursor: ProjectWhereUniqueInput, distinct: [ProjectScalarFieldEnum!], orderBy: [ProjectOrderByWithRelationInput!], skip: Int, take: Int, where: ProjectWhereInput): [Project!]!
   name: String!
   role: String!
   status: String!
   teamIds: String!
+  teams(cursor: TeamMemberWhereUniqueInput, distinct: [TeamMemberScalarFieldEnum!], orderBy: [TeamMemberOrderByWithRelationInput!], skip: Int, take: Int, where: TeamMemberWhereInput): [TeamMember!]!
   updatedAt: DateTime!
 }
 

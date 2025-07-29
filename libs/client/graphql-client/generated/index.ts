@@ -178,77 +178,6 @@ export type BoolWithAggregatesFilter = {
   not?: InputMaybe<NestedBoolWithAggregatesFilter>;
 };
 
-export type CliCommand = {
-  __typename?: 'CLICommand';
-  args: Array<Scalars['String']['output']>;
-  category: Scalars['String']['output'];
-  description: Scalars['String']['output'];
-  examples?: Maybe<Array<Scalars['String']['output']>>;
-  name: Scalars['String']['output'];
-  parseOutput: Scalars['Boolean']['output'];
-  requiredArgs: Array<Scalars['String']['output']>;
-  timeout: Scalars['Float']['output'];
-};
-
-export type CliExecutionStats = {
-  __typename?: 'CLIExecutionStats';
-  averageExecutionTime: Scalars['Float']['output'];
-  commandFrequency: Scalars['String']['output'];
-  failedExecutions: Scalars['Float']['output'];
-  successRate: Scalars['Float']['output'];
-  successfulExecutions: Scalars['Float']['output'];
-  totalExecutions: Scalars['Float']['output'];
-};
-
-export type CliHistoryFilter = {
-  command?: InputMaybe<Scalars['String']['input']>;
-  endDate?: InputMaybe<Scalars['DateTime']['input']>;
-  startDate?: InputMaybe<Scalars['DateTime']['input']>;
-  success?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type CliHistoryItem = {
-  __typename?: 'CLIHistoryItem';
-  args: Scalars['String']['output'];
-  command: Scalars['String']['output'];
-  error?: Maybe<Scalars['String']['output']>;
-  executionTime: Scalars['Float']['output'];
-  id: Scalars['ID']['output'];
-  output: Scalars['String']['output'];
-  success: Scalars['Boolean']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type CliProcess = {
-  __typename?: 'CLIProcess';
-  id: Scalars['ID']['output'];
-  startTime: Scalars['String']['output'];
-  status: Scalars['String']['output'];
-};
-
-export type CliStatus = {
-  __typename?: 'CLIStatus';
-  activeProcessCount: Scalars['Float']['output'];
-  activeProcesses: Array<CliProcess>;
-  error?: Maybe<Scalars['String']['output']>;
-  executionStats: CliExecutionStats;
-  isHealthy: Scalars['Boolean']['output'];
-  recentCommands: Array<CliHistoryItem>;
-  systemInfo: CliSystemInfo;
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type CliSystemInfo = {
-  __typename?: 'CLISystemInfo';
-  architecture: Scalars['String']['output'];
-  cwd: Scalars['String']['output'];
-  memoryUsage: Scalars['String']['output'];
-  nodeVersion: Scalars['String']['output'];
-  pid: Scalars['Float']['output'];
-  platform: Scalars['String']['output'];
-  uptime: Scalars['Float']['output'];
-};
-
 export type CreateManyAndReturnCycle = {
   __typename?: 'CreateManyAndReturnCycle';
   createdAt: Scalars['DateTime']['output'];
@@ -522,12 +451,24 @@ export type Cycle = {
   createdAt: Scalars['DateTime']['output'];
   endDate: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   number: Scalars['Int']['output'];
   progress: Scalars['Int']['output'];
   startDate: Scalars['DateTime']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type CycleIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type CycleAvgAggregate = {
@@ -1083,25 +1024,95 @@ export type IntWithAggregatesFilter = {
 export type Issue = {
   __typename?: 'Issue';
   _count?: Maybe<IssueCount>;
+  assignee?: Maybe<User>;
   assigneeId?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  cycle?: Maybe<Cycle>;
   cycleId?: Maybe<Scalars['String']['output']>;
   description: Scalars['String']['output'];
   dueDate?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['String']['output'];
   identifier: Scalars['String']['output'];
+  issuePriority?: Maybe<IssuePriority>;
+  issueStatus?: Maybe<IssueStatus>;
   issueType: Scalars['String']['output'];
+  labels: Array<IssueLabel>;
+  parentIssue?: Maybe<Issue>;
   parentIssueId?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Scalars['String']['output']>;
   priorityId?: Maybe<Scalars['String']['output']>;
+  project?: Maybe<Project>;
   projectId?: Maybe<Scalars['String']['output']>;
   rank: Scalars['String']['output'];
   status?: Maybe<Scalars['String']['output']>;
   statusId?: Maybe<Scalars['String']['output']>;
+  subIssues: Array<Issue>;
+  subtask?: Maybe<Subtask>;
   subtaskId?: Maybe<Scalars['String']['output']>;
+  task?: Maybe<Task>;
   taskId?: Maybe<Scalars['Int']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssueAssigneeArgs = {
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type IssueCycleArgs = {
+  where?: InputMaybe<CycleWhereInput>;
+};
+
+
+export type IssueIssuePriorityArgs = {
+  where?: InputMaybe<IssuePriorityWhereInput>;
+};
+
+
+export type IssueIssueStatusArgs = {
+  where?: InputMaybe<IssueStatusWhereInput>;
+};
+
+
+export type IssueLabelsArgs = {
+  cursor?: InputMaybe<IssueLabelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueLabelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueLabelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueLabelWhereInput>;
+};
+
+
+export type IssueParentIssueArgs = {
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type IssueProjectArgs = {
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+
+export type IssueSubIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type IssueSubtaskArgs = {
+  where?: InputMaybe<SubtaskWhereInput>;
+};
+
+
+export type IssueTaskArgs = {
+  where?: InputMaybe<TaskWhereInput>;
 };
 
 export type IssueAvgAggregate = {
@@ -1800,7 +1811,9 @@ export type IssueGroupBy = {
 export type IssueLabel = {
   __typename?: 'IssueLabel';
   id: Scalars['String']['output'];
+  issue: Issue;
   issueId: Scalars['String']['output'];
+  label: Label;
   labelId: Scalars['String']['output'];
 };
 
@@ -2247,9 +2260,20 @@ export type IssuePriority = {
   createdAt: Scalars['DateTime']['output'];
   iconName: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   order: Scalars['Int']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssuePriorityIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type IssuePriorityAvgAggregate = {
@@ -2594,6 +2618,15 @@ export type IssueScalarWhereWithAggregatesInput = {
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
 };
 
+export type IssueStats = {
+  __typename?: 'IssueStats';
+  completed: Scalars['Int']['output'];
+  completionRate: Scalars['Int']['output'];
+  inProgress: Scalars['Int']['output'];
+  pending: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
 export type IssueStatus = {
   __typename?: 'IssueStatus';
   _count?: Maybe<IssueStatusCount>;
@@ -2601,8 +2634,19 @@ export type IssueStatus = {
   createdAt: Scalars['DateTime']['output'];
   iconName: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssueStatusIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type IssueStatusCount = {
@@ -3482,8 +3526,19 @@ export type Label = {
   createdAt: Scalars['DateTime']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  issues: Array<IssueLabel>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type LabelIssuesArgs = {
+  cursor?: InputMaybe<IssueLabelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueLabelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueLabelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueLabelWhereInput>;
 };
 
 export type LabelCount = {
@@ -4847,11 +4902,39 @@ export type Project = {
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   identifier?: Maybe<Scalars['String']['output']>;
+  issues: Array<Issue>;
+  lead?: Maybe<User>;
   leadId?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   percentComplete: Scalars['Int']['output'];
   startDate?: Maybe<Scalars['DateTime']['output']>;
+  teams: Array<TeamProject>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type ProjectIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type ProjectLeadArgs = {
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type ProjectTeamsArgs = {
+  cursor?: InputMaybe<TeamProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamProjectWhereInput>;
 };
 
 export type ProjectAvgAggregate = {
@@ -5454,10 +5537,6 @@ export type Query = {
   aggregateTeamMember: AggregateTeamMember;
   aggregateTeamProject: AggregateTeamProject;
   aggregateUser: AggregateUser;
-  availableCommands: Array<CliCommand>;
-  cliCommand?: Maybe<CliCommand>;
-  cliHistory: Array<CliHistoryItem>;
-  cliStatus: CliStatus;
   cycle?: Maybe<Cycle>;
   cycles: Array<Cycle>;
   findFirstCycle?: Maybe<Cycle>;
@@ -5539,6 +5618,7 @@ export type Query = {
   issueStatus?: Maybe<IssueStatus>;
   issueStatuses: Array<IssueStatus>;
   issues: Array<Issue>;
+  issuesStats: IssueStats;
   label?: Maybe<Label>;
   labels: Array<Label>;
   project?: Maybe<Project>;
@@ -5714,17 +5794,6 @@ export type QueryAggregateUserArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserWhereInput>;
-};
-
-
-export type QueryCliCommandArgs = {
-  name: Scalars['String']['input'];
-};
-
-
-export type QueryCliHistoryArgs = {
-  filter?: InputMaybe<CliHistoryFilter>;
-  limit?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
@@ -6661,11 +6730,23 @@ export type Subtask = {
   description: Scalars['String']['output'];
   details?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   parentId: Scalars['Int']['output'];
+  parentTask: Task;
   status: Scalars['String']['output'];
   testStrategy?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type SubtaskIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type SubtaskAvgAggregate = {
@@ -7716,14 +7797,58 @@ export type Task = {
   _count?: Maybe<TaskCount>;
   complexity?: Maybe<Scalars['Int']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  dependencies: Array<TaskDependency>;
+  dependents: Array<TaskDependency>;
   description: Scalars['String']['output'];
   details?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
+  issues: Array<Issue>;
   priority: Scalars['String']['output'];
   status: Scalars['String']['output'];
+  subtasks: Array<Subtask>;
   testStrategy?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type TaskDependenciesArgs = {
+  cursor?: InputMaybe<TaskDependencyWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TaskDependencyScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TaskDependencyOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TaskDependencyWhereInput>;
+};
+
+
+export type TaskDependentsArgs = {
+  cursor?: InputMaybe<TaskDependencyWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TaskDependencyScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TaskDependencyOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TaskDependencyWhereInput>;
+};
+
+
+export type TaskIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type TaskSubtasksArgs = {
+  cursor?: InputMaybe<SubtaskWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SubtaskScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SubtaskOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SubtaskWhereInput>;
 };
 
 export type TaskAvgAggregate = {
@@ -7934,8 +8059,10 @@ export type TaskCreateWithoutSubtasksInput = {
 export type TaskDependency = {
   __typename?: 'TaskDependency';
   createdAt: Scalars['DateTime']['output'];
+  dependsOn: Task;
   dependsOnId: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  task: Task;
   taskId: Scalars['Int']['output'];
 };
 
@@ -8800,11 +8927,44 @@ export type Team = {
   _count?: Maybe<TeamCount>;
   color: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
+  cycles: Array<Cycle>;
   icon: Scalars['String']['output'];
   id: Scalars['String']['output'];
   joined: Scalars['Boolean']['output'];
+  members: Array<TeamMember>;
   name: Scalars['String']['output'];
+  projects: Array<TeamProject>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type TeamCyclesArgs = {
+  cursor?: InputMaybe<CycleWhereUniqueInput>;
+  distinct?: InputMaybe<Array<CycleScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<CycleOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CycleWhereInput>;
+};
+
+
+export type TeamMembersArgs = {
+  cursor?: InputMaybe<TeamMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamMemberWhereInput>;
+};
+
+
+export type TeamProjectsArgs = {
+  cursor?: InputMaybe<TeamProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamProjectWhereInput>;
 };
 
 export type TeamCount = {
@@ -8981,7 +9141,9 @@ export type TeamMaxOrderByAggregateInput = {
 export type TeamMember = {
   __typename?: 'TeamMember';
   id: Scalars['String']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
+  user: User;
   userId: Scalars['String']['output'];
 };
 
@@ -9308,7 +9470,9 @@ export type TeamOrderByWithRelationInput = {
 export type TeamProject = {
   __typename?: 'TeamProject';
   id: Scalars['String']['output'];
+  project: Project;
   projectId: Scalars['String']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
 };
 
@@ -9764,16 +9928,49 @@ export type TeamWhereUniqueInput = {
 export type User = {
   __typename?: 'User';
   _count?: Maybe<UserCount>;
+  assignedIssues: Array<Issue>;
   avatarUrl?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   joinedDate: Scalars['DateTime']['output'];
+  ledProjects: Array<Project>;
   name: Scalars['String']['output'];
   role: Scalars['String']['output'];
   status: Scalars['String']['output'];
   teamIds: Scalars['String']['output'];
+  teams: Array<TeamMember>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type UserAssignedIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type UserLedProjectsArgs = {
+  cursor?: InputMaybe<ProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+
+export type UserTeamsArgs = {
+  cursor?: InputMaybe<TeamMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamMemberWhereInput>;
 };
 
 export type UserCount = {
@@ -10248,32 +10445,62 @@ export type UserWhereUniqueInput = {
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
-export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
-
-export type UpdateIssueMutationVariables = Exact<{
-  where: IssueWhereUniqueInput;
-  data: IssueUpdateInput;
+export type BulkUpdateIssuesMutationVariables = Exact<{
+  where: IssueWhereInput;
+  data: IssueUpdateManyMutationInput;
 }>;
 
 
-export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type BulkUpdateIssuesMutation = { __typename?: 'Mutation', updateManyIssue: { __typename?: 'AffectedRowsOutput', count: number } };
+
+export type CreateIssueMutationVariables = Exact<{
+  data: IssueCreateInput;
+}>;
+
+
+export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } };
+
+export type DeleteIssueMutationVariables = Exact<{
+  where: IssueWhereUniqueInput;
+}>;
+
+
+export type DeleteIssueMutation = { __typename?: 'Mutation', deleteOneIssue?: { __typename?: 'Issue', id: string, identifier: string } | null };
+
+export type GetIssueStatusesQueryVariables = Exact<{
+  where?: InputMaybe<IssueStatusWhereInput>;
+  orderBy?: InputMaybe<Array<IssueStatusOrderByWithRelationInput> | IssueStatusOrderByWithRelationInput>;
+}>;
+
+
+export type GetIssueStatusesQuery = { __typename?: 'Query', issueStatuses: Array<{ __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string, createdAt: string, updatedAt: string }> };
+
+export type GetDisplayIssueStatusesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDisplayIssueStatusesQuery = { __typename?: 'Query', issueStatuses: Array<{ __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string, createdAt: string, updatedAt: string }> };
 
 export type GetIssueQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  where: IssueWhereUniqueInput;
 }>;
 
 
-export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string } | null };
+export type GetIssueQuery = { __typename?: 'Query', issue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null } }>, project?: { __typename?: 'Project', id: string, name: string, identifier?: string | null, color?: string | null, icon?: string | null } | null, parentIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null } | null, subIssues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null, assignee?: { __typename?: 'User', id: string, name: string, avatarUrl?: string | null } | null }>, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
 
 export type GetIssuesByStatusQueryVariables = Exact<{
-  where?: InputMaybe<IssueWhereInput>;
+  status: Scalars['String']['input'];
   orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput> | IssueOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetIssuesByStatusQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesByStatusQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
+
+export type GetIssuesStatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIssuesStatsQuery = { __typename?: 'Query', issuesStats: { __typename?: 'IssueStats', total: number, completed: number, inProgress: number, pending: number, completionRate: number } };
 
 export type GetIssuesQueryVariables = Exact<{
   where?: InputMaybe<IssueWhereInput>;
@@ -10283,9 +10510,9 @@ export type GetIssuesQueryVariables = Exact<{
 }>;
 
 
-export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
 
-export type SearchIssuesQueryVariables = Exact<{
+export type GetIssuesDetailedQueryVariables = Exact<{
   where?: InputMaybe<IssueWhereInput>;
   orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput> | IssueOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -10293,28 +10520,25 @@ export type SearchIssuesQueryVariables = Exact<{
 }>;
 
 
-export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string }> };
+export type GetIssuesDetailedQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
 
-export type GetIssueStatusesQueryVariables = Exact<{
-  where?: InputMaybe<IssueStatusWhereInput>;
-  orderBy?: InputMaybe<Array<IssueStatusOrderByWithRelationInput> | IssueStatusOrderByWithRelationInput>;
-  cursor?: InputMaybe<IssueStatusWhereUniqueInput>;
-  take?: InputMaybe<Scalars['Int']['input']>;
+export type GetLabelsQueryVariables = Exact<{
+  where?: InputMaybe<LabelWhereInput>;
+  orderBy?: InputMaybe<Array<LabelOrderByWithRelationInput> | LabelOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetIssueStatusesQuery = { __typename?: 'Query', issueStatuses: Array<{ __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string, createdAt: string, updatedAt: string }> };
+export type GetLabelsQuery = { __typename?: 'Query', labels: Array<{ __typename?: 'Label', id: string, name: string, color: string, description?: string | null, createdAt: string, updatedAt: string }> };
 
 export type GetPrioritiesQueryVariables = Exact<{
   where?: InputMaybe<IssuePriorityWhereInput>;
   orderBy?: InputMaybe<Array<IssuePriorityOrderByWithRelationInput> | IssuePriorityOrderByWithRelationInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  take?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetPrioritiesQuery = { __typename?: 'Query', issuePriorities: Array<{ __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number, createdAt: string, updatedAt: string }> };
+export type GetPrioritiesQuery = { __typename?: 'Query', issuePriorities: Array<{ __typename?: 'IssuePriority', id: string, name: string, order: number, iconName: string, createdAt: string, updatedAt: string }> };
 
 export type GetProjectsQueryVariables = Exact<{
   where?: InputMaybe<ProjectWhereInput>;
@@ -10324,14 +10548,7 @@ export type GetProjectsQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, color?: string | null, identifier?: string | null, createdAt: string, updatedAt: string }> };
-
-export type GetUserQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, status: string, role: string, joinedDate: string, createdAt: string, updatedAt: string } | null };
+export type GetProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, identifier?: string | null, description?: string | null, color?: string | null, icon?: string | null, leadId?: string | null, health: string, percentComplete: number, startDate?: string | null, createdAt: string, updatedAt: string }> };
 
 export type GetUsersQueryVariables = Exact<{
   where?: InputMaybe<UserWhereInput>;
@@ -10341,8 +10558,140 @@ export type GetUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, status: string, role: string, joinedDate: string, createdAt: string, updatedAt: string }> };
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, role: string, status: string, createdAt: string, updatedAt: string }> };
 
+export type GetUserQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null, role: string, status: string, createdAt: string, updatedAt: string } | null };
+
+export type IssueCoreFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null };
+
+export type IssueDetailsFragment = { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null } }>, project?: { __typename?: 'Project', id: string, name: string, identifier?: string | null, color?: string | null, icon?: string | null } | null, parentIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null } | null, subIssues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null, assignee?: { __typename?: 'User', id: string, name: string, avatarUrl?: string | null } | null }>, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null };
+
+export type SearchIssuesQueryVariables = Exact<{
+  search: Scalars['String']['input'];
+  where: IssueWhereInput;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput> | IssueOrderByWithRelationInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SearchIssuesQuery = { __typename?: 'Query', issues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null }> };
+
+export type UpdateIssueMutationVariables = Exact<{
+  where: IssueWhereUniqueInput;
+  data: IssueUpdateInput;
+}>;
+
+
+export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
+
+export type UpdateIssueStatusMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+}>;
+
+
+export type UpdateIssueStatusMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
+
+export type UpdateIssuePriorityMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  priorityId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateIssuePriorityMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
+
+export type UpdateIssueAssigneeMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  assigneeId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null } | null };
+
+export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
+
+export const IssueCoreFragmentDoc = gql`
+    fragment IssueCore on Issue {
+  id
+  identifier
+  title
+  description
+  status
+  priority
+  rank
+  cycleId
+  dueDate
+  issueType
+  issueStatus {
+    id
+    name
+    color
+    iconName
+  }
+  issuePriority {
+    id
+    name
+    iconName
+    order
+  }
+  assignee {
+    id
+    name
+    email
+    avatarUrl
+  }
+  taskId
+  subtaskId
+  assigneeId
+  projectId
+  createdAt
+  updatedAt
+}
+    `;
+export const IssueDetailsFragmentDoc = gql`
+    fragment IssueDetails on Issue {
+  ...IssueCore
+  labels {
+    id
+    label {
+      id
+      name
+      color
+      description
+    }
+  }
+  project {
+    id
+    name
+    identifier
+    color
+    icon
+  }
+  parentIssue {
+    id
+    identifier
+    title
+    status
+  }
+  subIssues {
+    id
+    identifier
+    title
+    status
+    assignee {
+      id
+      name
+      avatarUrl
+    }
+  }
+}
+    ${IssueCoreFragmentDoc}`;
 export const NewTaskFragmentDoc = gql`
     fragment NewTask on Task {
   id
@@ -10357,77 +10706,204 @@ export const NewTaskFragmentDoc = gql`
   updatedAt
 }
     `;
-export const UpdateIssueDocument = gql`
-    mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
-  updateOneIssue(where: $where, data: $data) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+export const BulkUpdateIssuesDocument = gql`
+    mutation BulkUpdateIssues($where: IssueWhereInput!, $data: IssueUpdateManyMutationInput!) {
+  updateManyIssue(where: $where, data: $data) {
+    count
   }
 }
     `;
-export type UpdateIssueMutationFn = Apollo.MutationFunction<UpdateIssueMutation, UpdateIssueMutationVariables>;
+export type BulkUpdateIssuesMutationFn = Apollo.MutationFunction<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>;
 
 /**
- * __useUpdateIssueMutation__
+ * __useBulkUpdateIssuesMutation__
  *
- * To run a mutation, you first call `useUpdateIssueMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateIssueMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useBulkUpdateIssuesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBulkUpdateIssuesMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateIssueMutation, { data, loading, error }] = useUpdateIssueMutation({
+ * const [bulkUpdateIssuesMutation, { data, loading, error }] = useBulkUpdateIssuesMutation({
  *   variables: {
  *      where: // value for 'where'
  *      data: // value for 'data'
  *   },
  * });
  */
-export function useUpdateIssueMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueMutation, UpdateIssueMutationVariables>) {
+export function useBulkUpdateIssuesMutation(baseOptions?: Apollo.MutationHookOptions<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateIssueMutation, UpdateIssueMutationVariables>(UpdateIssueDocument, options);
+        return Apollo.useMutation<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>(BulkUpdateIssuesDocument, options);
       }
-export type UpdateIssueMutationHookResult = ReturnType<typeof useUpdateIssueMutation>;
-export type UpdateIssueMutationResult = Apollo.MutationResult<UpdateIssueMutation>;
-export type UpdateIssueMutationOptions = Apollo.BaseMutationOptions<UpdateIssueMutation, UpdateIssueMutationVariables>;
-export const GetIssueDocument = gql`
-    query GetIssue($id: String!) {
-  issue(where: {id: $id}) {
+export type BulkUpdateIssuesMutationHookResult = ReturnType<typeof useBulkUpdateIssuesMutation>;
+export type BulkUpdateIssuesMutationResult = Apollo.MutationResult<BulkUpdateIssuesMutation>;
+export type BulkUpdateIssuesMutationOptions = Apollo.BaseMutationOptions<BulkUpdateIssuesMutation, BulkUpdateIssuesMutationVariables>;
+export const CreateIssueDocument = gql`
+    mutation CreateIssue($data: IssueCreateInput!) {
+  createOneIssue(data: $data) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type CreateIssueMutationFn = Apollo.MutationFunction<CreateIssueMutation, CreateIssueMutationVariables>;
+
+/**
+ * __useCreateIssueMutation__
+ *
+ * To run a mutation, you first call `useCreateIssueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateIssueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createIssueMutation, { data, loading, error }] = useCreateIssueMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateIssueMutation(baseOptions?: Apollo.MutationHookOptions<CreateIssueMutation, CreateIssueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateIssueMutation, CreateIssueMutationVariables>(CreateIssueDocument, options);
+      }
+export type CreateIssueMutationHookResult = ReturnType<typeof useCreateIssueMutation>;
+export type CreateIssueMutationResult = Apollo.MutationResult<CreateIssueMutation>;
+export type CreateIssueMutationOptions = Apollo.BaseMutationOptions<CreateIssueMutation, CreateIssueMutationVariables>;
+export const DeleteIssueDocument = gql`
+    mutation DeleteIssue($where: IssueWhereUniqueInput!) {
+  deleteOneIssue(where: $where) {
     id
     identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
+  }
+}
+    `;
+export type DeleteIssueMutationFn = Apollo.MutationFunction<DeleteIssueMutation, DeleteIssueMutationVariables>;
+
+/**
+ * __useDeleteIssueMutation__
+ *
+ * To run a mutation, you first call `useDeleteIssueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteIssueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteIssueMutation, { data, loading, error }] = useDeleteIssueMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteIssueMutation(baseOptions?: Apollo.MutationHookOptions<DeleteIssueMutation, DeleteIssueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteIssueMutation, DeleteIssueMutationVariables>(DeleteIssueDocument, options);
+      }
+export type DeleteIssueMutationHookResult = ReturnType<typeof useDeleteIssueMutation>;
+export type DeleteIssueMutationResult = Apollo.MutationResult<DeleteIssueMutation>;
+export type DeleteIssueMutationOptions = Apollo.BaseMutationOptions<DeleteIssueMutation, DeleteIssueMutationVariables>;
+export const GetIssueStatusesDocument = gql`
+    query GetIssueStatuses($where: IssueStatusWhereInput, $orderBy: [IssueStatusOrderByWithRelationInput!]) {
+  issueStatuses(where: $where, orderBy: $orderBy) {
+    id
+    name
+    color
+    iconName
     createdAt
     updatedAt
   }
 }
     `;
+
+/**
+ * __useGetIssueStatusesQuery__
+ *
+ * To run a query within a React component, call `useGetIssueStatusesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssueStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIssueStatusesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useGetIssueStatusesQuery(baseOptions?: Apollo.QueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+      }
+export function useGetIssueStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+        }
+export function useGetIssueStatusesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+        }
+export type GetIssueStatusesQueryHookResult = ReturnType<typeof useGetIssueStatusesQuery>;
+export type GetIssueStatusesLazyQueryHookResult = ReturnType<typeof useGetIssueStatusesLazyQuery>;
+export type GetIssueStatusesSuspenseQueryHookResult = ReturnType<typeof useGetIssueStatusesSuspenseQuery>;
+export type GetIssueStatusesQueryResult = Apollo.QueryResult<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>;
+export const GetDisplayIssueStatusesDocument = gql`
+    query GetDisplayIssueStatuses {
+  issueStatuses(orderBy: [{name: asc}]) {
+    id
+    name
+    color
+    iconName
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetDisplayIssueStatusesQuery__
+ *
+ * To run a query within a React component, call `useGetDisplayIssueStatusesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDisplayIssueStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDisplayIssueStatusesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDisplayIssueStatusesQuery(baseOptions?: Apollo.QueryHookOptions<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>(GetDisplayIssueStatusesDocument, options);
+      }
+export function useGetDisplayIssueStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>(GetDisplayIssueStatusesDocument, options);
+        }
+export function useGetDisplayIssueStatusesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>(GetDisplayIssueStatusesDocument, options);
+        }
+export type GetDisplayIssueStatusesQueryHookResult = ReturnType<typeof useGetDisplayIssueStatusesQuery>;
+export type GetDisplayIssueStatusesLazyQueryHookResult = ReturnType<typeof useGetDisplayIssueStatusesLazyQuery>;
+export type GetDisplayIssueStatusesSuspenseQueryHookResult = ReturnType<typeof useGetDisplayIssueStatusesSuspenseQuery>;
+export type GetDisplayIssueStatusesQueryResult = Apollo.QueryResult<GetDisplayIssueStatusesQuery, GetDisplayIssueStatusesQueryVariables>;
+export const GetIssueDocument = gql`
+    query GetIssue($where: IssueWhereUniqueInput!) {
+  issue(where: $where) {
+    ...IssueDetails
+  }
+}
+    ${IssueDetailsFragmentDoc}`;
 
 /**
  * __useGetIssueQuery__
@@ -10441,7 +10917,7 @@ export const GetIssueDocument = gql`
  * @example
  * const { data, loading, error } = useGetIssueQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      where: // value for 'where'
  *   },
  * });
  */
@@ -10462,27 +10938,17 @@ export type GetIssueLazyQueryHookResult = ReturnType<typeof useGetIssueLazyQuery
 export type GetIssueSuspenseQueryHookResult = ReturnType<typeof useGetIssueSuspenseQuery>;
 export type GetIssueQueryResult = Apollo.QueryResult<GetIssueQuery, GetIssueQueryVariables>;
 export const GetIssuesByStatusDocument = gql`
-    query GetIssuesByStatus($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
-  issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+    query GetIssuesByStatus($status: String!, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  issues(
+    where: {status: {equals: $status}}
+    orderBy: $orderBy
+    skip: $skip
+    take: $take
+  ) {
+    ...IssueCore
   }
 }
-    `;
+    ${IssueCoreFragmentDoc}`;
 
 /**
  * __useGetIssuesByStatusQuery__
@@ -10496,14 +10962,14 @@ export const GetIssuesByStatusDocument = gql`
  * @example
  * const { data, loading, error } = useGetIssuesByStatusQuery({
  *   variables: {
- *      where: // value for 'where'
+ *      status: // value for 'status'
  *      orderBy: // value for 'orderBy'
  *      skip: // value for 'skip'
  *      take: // value for 'take'
  *   },
  * });
  */
-export function useGetIssuesByStatusQuery(baseOptions?: Apollo.QueryHookOptions<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables>) {
+export function useGetIssuesByStatusQuery(baseOptions: Apollo.QueryHookOptions<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables> & ({ variables: GetIssuesByStatusQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables>(GetIssuesByStatusDocument, options);
       }
@@ -10519,28 +10985,56 @@ export type GetIssuesByStatusQueryHookResult = ReturnType<typeof useGetIssuesByS
 export type GetIssuesByStatusLazyQueryHookResult = ReturnType<typeof useGetIssuesByStatusLazyQuery>;
 export type GetIssuesByStatusSuspenseQueryHookResult = ReturnType<typeof useGetIssuesByStatusSuspenseQuery>;
 export type GetIssuesByStatusQueryResult = Apollo.QueryResult<GetIssuesByStatusQuery, GetIssuesByStatusQueryVariables>;
-export const GetIssuesDocument = gql`
-    query GetIssues($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
-  issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+export const GetIssuesStatsDocument = gql`
+    query GetIssuesStats {
+  issuesStats {
+    total
+    completed
+    inProgress
+    pending
+    completionRate
   }
 }
     `;
+
+/**
+ * __useGetIssuesStatsQuery__
+ *
+ * To run a query within a React component, call `useGetIssuesStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssuesStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIssuesStatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetIssuesStatsQuery(baseOptions?: Apollo.QueryHookOptions<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>(GetIssuesStatsDocument, options);
+      }
+export function useGetIssuesStatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>(GetIssuesStatsDocument, options);
+        }
+export function useGetIssuesStatsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>(GetIssuesStatsDocument, options);
+        }
+export type GetIssuesStatsQueryHookResult = ReturnType<typeof useGetIssuesStatsQuery>;
+export type GetIssuesStatsLazyQueryHookResult = ReturnType<typeof useGetIssuesStatsLazyQuery>;
+export type GetIssuesStatsSuspenseQueryHookResult = ReturnType<typeof useGetIssuesStatsSuspenseQuery>;
+export type GetIssuesStatsQueryResult = Apollo.QueryResult<GetIssuesStatsQuery, GetIssuesStatsQueryVariables>;
+export const GetIssuesDocument = gql`
+    query GetIssues($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
 
 /**
  * __useGetIssuesQuery__
@@ -10577,40 +11071,25 @@ export type GetIssuesQueryHookResult = ReturnType<typeof useGetIssuesQuery>;
 export type GetIssuesLazyQueryHookResult = ReturnType<typeof useGetIssuesLazyQuery>;
 export type GetIssuesSuspenseQueryHookResult = ReturnType<typeof useGetIssuesSuspenseQuery>;
 export type GetIssuesQueryResult = Apollo.QueryResult<GetIssuesQuery, GetIssuesQueryVariables>;
-export const SearchIssuesDocument = gql`
-    query SearchIssues($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+export const GetIssuesDetailedDocument = gql`
+    query GetIssuesDetailed($where: IssueWhereInput, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
   issues(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
-    id
-    identifier
-    title
-    description
-    status
-    priority
-    rank
-    cycleId
-    dueDate
-    issueType
-    taskId
-    subtaskId
-    assigneeId
-    projectId
-    createdAt
-    updatedAt
+    ...IssueCore
   }
 }
-    `;
+    ${IssueCoreFragmentDoc}`;
 
 /**
- * __useSearchIssuesQuery__
+ * __useGetIssuesDetailedQuery__
  *
- * To run a query within a React component, call `useSearchIssuesQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchIssuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetIssuesDetailedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIssuesDetailedQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchIssuesQuery({
+ * const { data, loading, error } = useGetIssuesDetailedQuery({
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
@@ -10619,35 +11098,29 @@ export const SearchIssuesDocument = gql`
  *   },
  * });
  */
-export function useSearchIssuesQuery(baseOptions?: Apollo.QueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+export function useGetIssuesDetailedQuery(baseOptions?: Apollo.QueryHookOptions<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+        return Apollo.useQuery<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>(GetIssuesDetailedDocument, options);
       }
-export function useSearchIssuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+export function useGetIssuesDetailedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+          return Apollo.useLazyQuery<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>(GetIssuesDetailedDocument, options);
         }
-export function useSearchIssuesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+export function useGetIssuesDetailedSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+          return Apollo.useSuspenseQuery<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>(GetIssuesDetailedDocument, options);
         }
-export type SearchIssuesQueryHookResult = ReturnType<typeof useSearchIssuesQuery>;
-export type SearchIssuesLazyQueryHookResult = ReturnType<typeof useSearchIssuesLazyQuery>;
-export type SearchIssuesSuspenseQueryHookResult = ReturnType<typeof useSearchIssuesSuspenseQuery>;
-export type SearchIssuesQueryResult = Apollo.QueryResult<SearchIssuesQuery, SearchIssuesQueryVariables>;
-export const GetIssueStatusesDocument = gql`
-    query GetIssueStatuses($where: IssueStatusWhereInput, $orderBy: [IssueStatusOrderByWithRelationInput!], $cursor: IssueStatusWhereUniqueInput, $take: Int, $skip: Int) {
-  issueStatuses(
-    where: $where
-    orderBy: $orderBy
-    cursor: $cursor
-    take: $take
-    skip: $skip
-  ) {
+export type GetIssuesDetailedQueryHookResult = ReturnType<typeof useGetIssuesDetailedQuery>;
+export type GetIssuesDetailedLazyQueryHookResult = ReturnType<typeof useGetIssuesDetailedLazyQuery>;
+export type GetIssuesDetailedSuspenseQueryHookResult = ReturnType<typeof useGetIssuesDetailedSuspenseQuery>;
+export type GetIssuesDetailedQueryResult = Apollo.QueryResult<GetIssuesDetailedQuery, GetIssuesDetailedQueryVariables>;
+export const GetLabelsDocument = gql`
+    query GetLabels($where: LabelWhereInput, $orderBy: [LabelOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  labels(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
     id
     name
     color
-    iconName
+    description
     createdAt
     updatedAt
   }
@@ -10655,48 +11128,47 @@ export const GetIssueStatusesDocument = gql`
     `;
 
 /**
- * __useGetIssueStatusesQuery__
+ * __useGetLabelsQuery__
  *
- * To run a query within a React component, call `useGetIssueStatusesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetIssueStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetLabelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetIssueStatusesQuery({
+ * const { data, loading, error } = useGetLabelsQuery({
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
- *      cursor: // value for 'cursor'
- *      take: // value for 'take'
  *      skip: // value for 'skip'
+ *      take: // value for 'take'
  *   },
  * });
  */
-export function useGetIssueStatusesQuery(baseOptions?: Apollo.QueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+export function useGetLabelsQuery(baseOptions?: Apollo.QueryHookOptions<GetLabelsQuery, GetLabelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+        return Apollo.useQuery<GetLabelsQuery, GetLabelsQueryVariables>(GetLabelsDocument, options);
       }
-export function useGetIssueStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+export function useGetLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLabelsQuery, GetLabelsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+          return Apollo.useLazyQuery<GetLabelsQuery, GetLabelsQueryVariables>(GetLabelsDocument, options);
         }
-export function useGetIssueStatusesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>) {
+export function useGetLabelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetLabelsQuery, GetLabelsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>(GetIssueStatusesDocument, options);
+          return Apollo.useSuspenseQuery<GetLabelsQuery, GetLabelsQueryVariables>(GetLabelsDocument, options);
         }
-export type GetIssueStatusesQueryHookResult = ReturnType<typeof useGetIssueStatusesQuery>;
-export type GetIssueStatusesLazyQueryHookResult = ReturnType<typeof useGetIssueStatusesLazyQuery>;
-export type GetIssueStatusesSuspenseQueryHookResult = ReturnType<typeof useGetIssueStatusesSuspenseQuery>;
-export type GetIssueStatusesQueryResult = Apollo.QueryResult<GetIssueStatusesQuery, GetIssueStatusesQueryVariables>;
+export type GetLabelsQueryHookResult = ReturnType<typeof useGetLabelsQuery>;
+export type GetLabelsLazyQueryHookResult = ReturnType<typeof useGetLabelsLazyQuery>;
+export type GetLabelsSuspenseQueryHookResult = ReturnType<typeof useGetLabelsSuspenseQuery>;
+export type GetLabelsQueryResult = Apollo.QueryResult<GetLabelsQuery, GetLabelsQueryVariables>;
 export const GetPrioritiesDocument = gql`
-    query GetPriorities($where: IssuePriorityWhereInput, $orderBy: [IssuePriorityOrderByWithRelationInput!], $skip: Int, $take: Int) {
-  issuePriorities(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+    query GetPriorities($where: IssuePriorityWhereInput, $orderBy: [IssuePriorityOrderByWithRelationInput!]) {
+  issuePriorities(where: $where, orderBy: $orderBy) {
     id
     name
-    iconName
     order
+    iconName
     createdAt
     updatedAt
   }
@@ -10717,8 +11189,6 @@ export const GetPrioritiesDocument = gql`
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
- *      skip: // value for 'skip'
- *      take: // value for 'take'
  *   },
  * });
  */
@@ -10743,9 +11213,14 @@ export const GetProjectsDocument = gql`
   projects(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
     id
     name
+    identifier
     description
     color
-    identifier
+    icon
+    leadId
+    health
+    percentComplete
+    startDate
     createdAt
     updatedAt
   }
@@ -10787,54 +11262,6 @@ export type GetProjectsQueryHookResult = ReturnType<typeof useGetProjectsQuery>;
 export type GetProjectsLazyQueryHookResult = ReturnType<typeof useGetProjectsLazyQuery>;
 export type GetProjectsSuspenseQueryHookResult = ReturnType<typeof useGetProjectsSuspenseQuery>;
 export type GetProjectsQueryResult = Apollo.QueryResult<GetProjectsQuery, GetProjectsQueryVariables>;
-export const GetUserDocument = gql`
-    query GetUser($id: String!) {
-  user(where: {id: $id}) {
-    id
-    name
-    email
-    avatarUrl
-    status
-    role
-    joinedDate
-    createdAt
-    updatedAt
-  }
-}
-    `;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export function useGetUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUsersDocument = gql`
     query GetUsers($where: UserWhereInput, $orderBy: [UserOrderByWithRelationInput!], $skip: Int, $take: Int) {
   users(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
@@ -10842,9 +11269,8 @@ export const GetUsersDocument = gql`
     name
     email
     avatarUrl
-    status
     role
-    joinedDate
+    status
     createdAt
     updatedAt
   }
@@ -10886,3 +11312,238 @@ export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    name
+    email
+    avatarUrl
+    role
+    status
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export function useGetUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const SearchIssuesDocument = gql`
+    query SearchIssues($search: String!, $where: IssueWhereInput!, $orderBy: [IssueOrderByWithRelationInput!], $skip: Int, $take: Int) {
+  issues(
+    where: {AND: [$where, {OR: [{title: {contains: $search}}, {description: {contains: $search}}, {identifier: {contains: $search}}]}]}
+    orderBy: $orderBy
+    skip: $skip
+    take: $take
+  ) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+
+/**
+ * __useSearchIssuesQuery__
+ *
+ * To run a query within a React component, call `useSearchIssuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchIssuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchIssuesQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *      skip: // value for 'skip'
+ *      take: // value for 'take'
+ *   },
+ * });
+ */
+export function useSearchIssuesQuery(baseOptions: Apollo.QueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables> & ({ variables: SearchIssuesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+      }
+export function useSearchIssuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+        }
+export function useSearchIssuesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchIssuesQuery, SearchIssuesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchIssuesQuery, SearchIssuesQueryVariables>(SearchIssuesDocument, options);
+        }
+export type SearchIssuesQueryHookResult = ReturnType<typeof useSearchIssuesQuery>;
+export type SearchIssuesLazyQueryHookResult = ReturnType<typeof useSearchIssuesLazyQuery>;
+export type SearchIssuesSuspenseQueryHookResult = ReturnType<typeof useSearchIssuesSuspenseQuery>;
+export type SearchIssuesQueryResult = Apollo.QueryResult<SearchIssuesQuery, SearchIssuesQueryVariables>;
+export const UpdateIssueDocument = gql`
+    mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
+  updateOneIssue(where: $where, data: $data) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueMutationFn = Apollo.MutationFunction<UpdateIssueMutation, UpdateIssueMutationVariables>;
+
+/**
+ * __useUpdateIssueMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueMutation, { data, loading, error }] = useUpdateIssueMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateIssueMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueMutation, UpdateIssueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueMutation, UpdateIssueMutationVariables>(UpdateIssueDocument, options);
+      }
+export type UpdateIssueMutationHookResult = ReturnType<typeof useUpdateIssueMutation>;
+export type UpdateIssueMutationResult = Apollo.MutationResult<UpdateIssueMutation>;
+export type UpdateIssueMutationOptions = Apollo.BaseMutationOptions<UpdateIssueMutation, UpdateIssueMutationVariables>;
+export const UpdateIssueStatusDocument = gql`
+    mutation UpdateIssueStatus($id: String!, $status: String!) {
+  updateOneIssue(where: {id: $id}, data: {issueStatus: {connect: {id: $status}}}) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueStatusMutationFn = Apollo.MutationFunction<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>;
+
+/**
+ * __useUpdateIssueStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueStatusMutation, { data, loading, error }] = useUpdateIssueStatusMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useUpdateIssueStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>(UpdateIssueStatusDocument, options);
+      }
+export type UpdateIssueStatusMutationHookResult = ReturnType<typeof useUpdateIssueStatusMutation>;
+export type UpdateIssueStatusMutationResult = Apollo.MutationResult<UpdateIssueStatusMutation>;
+export type UpdateIssueStatusMutationOptions = Apollo.BaseMutationOptions<UpdateIssueStatusMutation, UpdateIssueStatusMutationVariables>;
+export const UpdateIssuePriorityDocument = gql`
+    mutation UpdateIssuePriority($id: String!, $priorityId: String!) {
+  updateOneIssue(
+    where: {id: $id}
+    data: {issuePriority: {connect: {id: $priorityId}}}
+  ) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssuePriorityMutationFn = Apollo.MutationFunction<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>;
+
+/**
+ * __useUpdateIssuePriorityMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssuePriorityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssuePriorityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssuePriorityMutation, { data, loading, error }] = useUpdateIssuePriorityMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      priorityId: // value for 'priorityId'
+ *   },
+ * });
+ */
+export function useUpdateIssuePriorityMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>(UpdateIssuePriorityDocument, options);
+      }
+export type UpdateIssuePriorityMutationHookResult = ReturnType<typeof useUpdateIssuePriorityMutation>;
+export type UpdateIssuePriorityMutationResult = Apollo.MutationResult<UpdateIssuePriorityMutation>;
+export type UpdateIssuePriorityMutationOptions = Apollo.BaseMutationOptions<UpdateIssuePriorityMutation, UpdateIssuePriorityMutationVariables>;
+export const UpdateIssueAssigneeDocument = gql`
+    mutation UpdateIssueAssignee($id: String!, $assigneeId: String) {
+  updateOneIssue(where: {id: $id}, data: {assignee: {connect: {id: $assigneeId}}}) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueAssigneeMutationFn = Apollo.MutationFunction<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>;
+
+/**
+ * __useUpdateIssueAssigneeMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueAssigneeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueAssigneeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueAssigneeMutation, { data, loading, error }] = useUpdateIssueAssigneeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      assigneeId: // value for 'assigneeId'
+ *   },
+ * });
+ */
+export function useUpdateIssueAssigneeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>(UpdateIssueAssigneeDocument, options);
+      }
+export type UpdateIssueAssigneeMutationHookResult = ReturnType<typeof useUpdateIssueAssigneeMutation>;
+export type UpdateIssueAssigneeMutationResult = Apollo.MutationResult<UpdateIssueAssigneeMutation>;
+export type UpdateIssueAssigneeMutationOptions = Apollo.BaseMutationOptions<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>;

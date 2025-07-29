@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { IndieLayout } from '@/components/layout/indie-layout';
-import { useIssues } from '@/features/issues/hooks/queries/use-issues';
+import { useGetIssueQuery } from '@/libs/client/graphql-client/generated';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,20 +10,22 @@ import { Separator } from '@/components/ui/separator';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, FlagIcon, TagIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { Issue } from '@/mock-data/issues';
-import { useMemo } from 'react';
 
 export default function TaskDetailPage(): React.JSX.Element {
    const params = useParams();
    const taskId = params?.taskId as string;
 
-   // Fetch all issues using GraphQL
-   const { data, loading, error } = useIssues();
+   // Fetch single issue using GraphQL
+   const { data, loading, error } = useGetIssueQuery({
+      variables: {
+         where: {
+            id: taskId,
+         },
+      },
+   });
 
-   // Find the task by ID from the fetched issues
-   const task = useMemo(() => {
-      return data?.issues?.nodes?.find((issue: Issue) => issue.id === taskId);
-   }, [data?.issues?.nodes, taskId]);
+   // Get the task from the query result
+   const task = data?.issue;
 
    if (loading) {
       return (
@@ -65,12 +67,14 @@ export default function TaskDetailPage(): React.JSX.Element {
                   <div className="space-y-2">
                      <h1 className="text-3xl font-bold tracking-tight">{task.title}</h1>
                      <div className="flex items-center gap-2">
-                        <Badge variant={task.status.id === 'done' ? 'default' : 'secondary'}>
-                           {task.status.name}
+                        <Badge
+                           variant={task.issueStatus?.name === 'Done' ? 'default' : 'secondary'}
+                        >
+                           {task.issueStatus?.name || 'No Status'}
                         </Badge>
                         <Badge variant="outline">
                            <FlagIcon className="mr-1 h-3 w-3" />
-                           {task.priority.name}
+                           {task.issuePriority?.name || 'No Priority'}
                         </Badge>
                      </div>
                   </div>
@@ -140,10 +144,10 @@ export default function TaskDetailPage(): React.JSX.Element {
                      </CardHeader>
                      <CardContent>
                         <div className="flex flex-wrap gap-1">
-                           {task.labels.length > 0 ? (
-                              task.labels.map((label) => (
-                                 <Badge key={label.id} variant="outline" className="text-xs">
-                                    {label.name}
+                           {task.labels && task.labels.length > 0 ? (
+                              task.labels.map((issueLabel) => (
+                                 <Badge key={issueLabel.id} variant="outline" className="text-xs">
+                                    {issueLabel.label.name}
                                  </Badge>
                               ))
                            ) : (

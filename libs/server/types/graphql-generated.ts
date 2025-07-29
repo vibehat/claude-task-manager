@@ -178,77 +178,6 @@ export type BoolWithAggregatesFilter = {
   not?: InputMaybe<NestedBoolWithAggregatesFilter>;
 };
 
-export type CliCommand = {
-  __typename?: 'CLICommand';
-  args: Array<Scalars['String']['output']>;
-  category: Scalars['String']['output'];
-  description: Scalars['String']['output'];
-  examples?: Maybe<Array<Scalars['String']['output']>>;
-  name: Scalars['String']['output'];
-  parseOutput: Scalars['Boolean']['output'];
-  requiredArgs: Array<Scalars['String']['output']>;
-  timeout: Scalars['Float']['output'];
-};
-
-export type CliExecutionStats = {
-  __typename?: 'CLIExecutionStats';
-  averageExecutionTime: Scalars['Float']['output'];
-  commandFrequency: Scalars['String']['output'];
-  failedExecutions: Scalars['Float']['output'];
-  successRate: Scalars['Float']['output'];
-  successfulExecutions: Scalars['Float']['output'];
-  totalExecutions: Scalars['Float']['output'];
-};
-
-export type CliHistoryFilter = {
-  command?: InputMaybe<Scalars['String']['input']>;
-  endDate?: InputMaybe<Scalars['DateTime']['input']>;
-  startDate?: InputMaybe<Scalars['DateTime']['input']>;
-  success?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type CliHistoryItem = {
-  __typename?: 'CLIHistoryItem';
-  args: Scalars['String']['output'];
-  command: Scalars['String']['output'];
-  error?: Maybe<Scalars['String']['output']>;
-  executionTime: Scalars['Float']['output'];
-  id: Scalars['ID']['output'];
-  output: Scalars['String']['output'];
-  success: Scalars['Boolean']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type CliProcess = {
-  __typename?: 'CLIProcess';
-  id: Scalars['ID']['output'];
-  startTime: Scalars['String']['output'];
-  status: Scalars['String']['output'];
-};
-
-export type CliStatus = {
-  __typename?: 'CLIStatus';
-  activeProcessCount: Scalars['Float']['output'];
-  activeProcesses: Array<CliProcess>;
-  error?: Maybe<Scalars['String']['output']>;
-  executionStats: CliExecutionStats;
-  isHealthy: Scalars['Boolean']['output'];
-  recentCommands: Array<CliHistoryItem>;
-  systemInfo: CliSystemInfo;
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type CliSystemInfo = {
-  __typename?: 'CLISystemInfo';
-  architecture: Scalars['String']['output'];
-  cwd: Scalars['String']['output'];
-  memoryUsage: Scalars['String']['output'];
-  nodeVersion: Scalars['String']['output'];
-  pid: Scalars['Float']['output'];
-  platform: Scalars['String']['output'];
-  uptime: Scalars['Float']['output'];
-};
-
 export type CreateManyAndReturnCycle = {
   __typename?: 'CreateManyAndReturnCycle';
   createdAt: Scalars['DateTime']['output'];
@@ -522,12 +451,24 @@ export type Cycle = {
   createdAt: Scalars['DateTime']['output'];
   endDate: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   number: Scalars['Int']['output'];
   progress: Scalars['Int']['output'];
   startDate: Scalars['DateTime']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type CycleIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type CycleAvgAggregate = {
@@ -1082,25 +1023,95 @@ export type IntWithAggregatesFilter = {
 export type Issue = {
   __typename?: 'Issue';
   _count?: Maybe<IssueCount>;
+  assignee?: Maybe<User>;
   assigneeId?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  cycle?: Maybe<Cycle>;
   cycleId?: Maybe<Scalars['String']['output']>;
   description: Scalars['String']['output'];
   dueDate?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['String']['output'];
   identifier: Scalars['String']['output'];
+  issuePriority?: Maybe<IssuePriority>;
+  issueStatus?: Maybe<IssueStatus>;
   issueType: Scalars['String']['output'];
+  labels: Array<IssueLabel>;
+  parentIssue?: Maybe<Issue>;
   parentIssueId?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Scalars['String']['output']>;
   priorityId?: Maybe<Scalars['String']['output']>;
+  project?: Maybe<Project>;
   projectId?: Maybe<Scalars['String']['output']>;
   rank: Scalars['String']['output'];
   status?: Maybe<Scalars['String']['output']>;
   statusId?: Maybe<Scalars['String']['output']>;
+  subIssues: Array<Issue>;
+  subtask?: Maybe<Subtask>;
   subtaskId?: Maybe<Scalars['String']['output']>;
+  task?: Maybe<Task>;
   taskId?: Maybe<Scalars['Int']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssueAssigneeArgs = {
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type IssueCycleArgs = {
+  where?: InputMaybe<CycleWhereInput>;
+};
+
+
+export type IssueIssuePriorityArgs = {
+  where?: InputMaybe<IssuePriorityWhereInput>;
+};
+
+
+export type IssueIssueStatusArgs = {
+  where?: InputMaybe<IssueStatusWhereInput>;
+};
+
+
+export type IssueLabelsArgs = {
+  cursor?: InputMaybe<IssueLabelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueLabelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueLabelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueLabelWhereInput>;
+};
+
+
+export type IssueParentIssueArgs = {
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type IssueProjectArgs = {
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+
+export type IssueSubIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type IssueSubtaskArgs = {
+  where?: InputMaybe<SubtaskWhereInput>;
+};
+
+
+export type IssueTaskArgs = {
+  where?: InputMaybe<TaskWhereInput>;
 };
 
 export type IssueAvgAggregate = {
@@ -1799,7 +1810,9 @@ export type IssueGroupBy = {
 export type IssueLabel = {
   __typename?: 'IssueLabel';
   id: Scalars['String']['output'];
+  issue: Issue;
   issueId: Scalars['String']['output'];
+  label: Label;
   labelId: Scalars['String']['output'];
 };
 
@@ -2245,9 +2258,20 @@ export type IssuePriority = {
   createdAt: Scalars['DateTime']['output'];
   iconName: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   order: Scalars['Int']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssuePriorityIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type IssuePriorityAvgAggregate = {
@@ -2590,6 +2614,15 @@ export type IssueScalarWhereWithAggregatesInput = {
   updatedAt?: InputMaybe<DateTimeWithAggregatesFilter>;
 };
 
+export type IssueStats = {
+  __typename?: 'IssueStats';
+  completed: Scalars['Int']['output'];
+  completionRate: Scalars['Int']['output'];
+  inProgress: Scalars['Int']['output'];
+  pending: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
 export type IssueStatus = {
   __typename?: 'IssueStatus';
   _count?: Maybe<IssueStatusCount>;
@@ -2597,8 +2630,19 @@ export type IssueStatus = {
   createdAt: Scalars['DateTime']['output'];
   iconName: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type IssueStatusIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type IssueStatusCount = {
@@ -3477,8 +3521,19 @@ export type Label = {
   createdAt: Scalars['DateTime']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  issues: Array<IssueLabel>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type LabelIssuesArgs = {
+  cursor?: InputMaybe<IssueLabelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueLabelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueLabelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueLabelWhereInput>;
 };
 
 export type LabelCount = {
@@ -4840,11 +4895,39 @@ export type Project = {
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   identifier?: Maybe<Scalars['String']['output']>;
+  issues: Array<Issue>;
+  lead?: Maybe<User>;
   leadId?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   percentComplete: Scalars['Int']['output'];
   startDate?: Maybe<Scalars['DateTime']['output']>;
+  teams: Array<TeamProject>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type ProjectIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type ProjectLeadArgs = {
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type ProjectTeamsArgs = {
+  cursor?: InputMaybe<TeamProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamProjectWhereInput>;
 };
 
 export type ProjectAvgAggregate = {
@@ -5446,10 +5529,6 @@ export type Query = {
   aggregateTeamMember: AggregateTeamMember;
   aggregateTeamProject: AggregateTeamProject;
   aggregateUser: AggregateUser;
-  availableCommands: Array<CliCommand>;
-  cliCommand?: Maybe<CliCommand>;
-  cliHistory: Array<CliHistoryItem>;
-  cliStatus: CliStatus;
   cycle?: Maybe<Cycle>;
   cycles: Array<Cycle>;
   findFirstCycle?: Maybe<Cycle>;
@@ -5531,6 +5610,7 @@ export type Query = {
   issueStatus?: Maybe<IssueStatus>;
   issueStatuses: Array<IssueStatus>;
   issues: Array<Issue>;
+  issuesStats: IssueStats;
   label?: Maybe<Label>;
   labels: Array<Label>;
   project?: Maybe<Project>;
@@ -5706,17 +5786,6 @@ export type QueryAggregateUserArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserWhereInput>;
-};
-
-
-export type QueryCliCommandArgs = {
-  name: Scalars['String']['input'];
-};
-
-
-export type QueryCliHistoryArgs = {
-  filter?: InputMaybe<CliHistoryFilter>;
-  limit?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
@@ -6652,11 +6721,23 @@ export type Subtask = {
   description: Scalars['String']['output'];
   details?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  issues: Array<Issue>;
   parentId: Scalars['Int']['output'];
+  parentTask: Task;
   status: Scalars['String']['output'];
   testStrategy?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type SubtaskIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type SubtaskAvgAggregate = {
@@ -7704,14 +7785,58 @@ export type Task = {
   _count?: Maybe<TaskCount>;
   complexity?: Maybe<Scalars['Int']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  dependencies: Array<TaskDependency>;
+  dependents: Array<TaskDependency>;
   description: Scalars['String']['output'];
   details?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
+  issues: Array<Issue>;
   priority: Scalars['String']['output'];
   status: Scalars['String']['output'];
+  subtasks: Array<Subtask>;
   testStrategy?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type TaskDependenciesArgs = {
+  cursor?: InputMaybe<TaskDependencyWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TaskDependencyScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TaskDependencyOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TaskDependencyWhereInput>;
+};
+
+
+export type TaskDependentsArgs = {
+  cursor?: InputMaybe<TaskDependencyWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TaskDependencyScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TaskDependencyOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TaskDependencyWhereInput>;
+};
+
+
+export type TaskIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type TaskSubtasksArgs = {
+  cursor?: InputMaybe<SubtaskWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SubtaskScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SubtaskOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SubtaskWhereInput>;
 };
 
 export type TaskAvgAggregate = {
@@ -7922,8 +8047,10 @@ export type TaskCreateWithoutSubtasksInput = {
 export type TaskDependency = {
   __typename?: 'TaskDependency';
   createdAt: Scalars['DateTime']['output'];
+  dependsOn: Task;
   dependsOnId: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  task: Task;
   taskId: Scalars['Int']['output'];
 };
 
@@ -8785,11 +8912,44 @@ export type Team = {
   _count?: Maybe<TeamCount>;
   color: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
+  cycles: Array<Cycle>;
   icon: Scalars['String']['output'];
   id: Scalars['String']['output'];
   joined: Scalars['Boolean']['output'];
+  members: Array<TeamMember>;
   name: Scalars['String']['output'];
+  projects: Array<TeamProject>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type TeamCyclesArgs = {
+  cursor?: InputMaybe<CycleWhereUniqueInput>;
+  distinct?: InputMaybe<Array<CycleScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<CycleOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CycleWhereInput>;
+};
+
+
+export type TeamMembersArgs = {
+  cursor?: InputMaybe<TeamMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamMemberWhereInput>;
+};
+
+
+export type TeamProjectsArgs = {
+  cursor?: InputMaybe<TeamProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamProjectWhereInput>;
 };
 
 export type TeamCount = {
@@ -8966,7 +9126,9 @@ export type TeamMaxOrderByAggregateInput = {
 export type TeamMember = {
   __typename?: 'TeamMember';
   id: Scalars['String']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
+  user: User;
   userId: Scalars['String']['output'];
 };
 
@@ -9292,7 +9454,9 @@ export type TeamOrderByWithRelationInput = {
 export type TeamProject = {
   __typename?: 'TeamProject';
   id: Scalars['String']['output'];
+  project: Project;
   projectId: Scalars['String']['output'];
+  team: Team;
   teamId: Scalars['String']['output'];
 };
 
@@ -9746,16 +9910,49 @@ export type TeamWhereUniqueInput = {
 export type User = {
   __typename?: 'User';
   _count?: Maybe<UserCount>;
+  assignedIssues: Array<Issue>;
   avatarUrl?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   joinedDate: Scalars['DateTime']['output'];
+  ledProjects: Array<Project>;
   name: Scalars['String']['output'];
   role: Scalars['String']['output'];
   status: Scalars['String']['output'];
   teamIds: Scalars['String']['output'];
+  teams: Array<TeamMember>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type UserAssignedIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<IssueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<IssueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type UserLedProjectsArgs = {
+  cursor?: InputMaybe<ProjectWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProjectScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProjectOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+
+export type UserTeamsArgs = {
+  cursor?: InputMaybe<TeamMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TeamMemberWhereInput>;
 };
 
 export type UserCount = {
@@ -10323,13 +10520,6 @@ export type ResolversTypes = ResolversObject<{
   BoolFilter: ResolverTypeWrapper<Partial<BoolFilter>>;
   BoolWithAggregatesFilter: ResolverTypeWrapper<Partial<BoolWithAggregatesFilter>>;
   Boolean: ResolverTypeWrapper<Partial<Scalars['Boolean']['output']>>;
-  CLICommand: ResolverTypeWrapper<Partial<CliCommand>>;
-  CLIExecutionStats: ResolverTypeWrapper<Partial<CliExecutionStats>>;
-  CLIHistoryFilter: ResolverTypeWrapper<Partial<CliHistoryFilter>>;
-  CLIHistoryItem: ResolverTypeWrapper<Partial<CliHistoryItem>>;
-  CLIProcess: ResolverTypeWrapper<Partial<CliProcess>>;
-  CLIStatus: ResolverTypeWrapper<Partial<CliStatus>>;
-  CLISystemInfo: ResolverTypeWrapper<Partial<CliSystemInfo>>;
   CreateManyAndReturnCycle: ResolverTypeWrapper<Partial<CreateManyAndReturnCycle>>;
   CreateManyAndReturnIssue: ResolverTypeWrapper<Partial<CreateManyAndReturnIssue>>;
   CreateManyAndReturnIssueLabel: ResolverTypeWrapper<Partial<CreateManyAndReturnIssueLabel>>;
@@ -10398,7 +10588,6 @@ export type ResolversTypes = ResolversObject<{
   DateTimeNullableWithAggregatesFilter: ResolverTypeWrapper<Partial<DateTimeNullableWithAggregatesFilter>>;
   DateTimeWithAggregatesFilter: ResolverTypeWrapper<Partial<DateTimeWithAggregatesFilter>>;
   Float: ResolverTypeWrapper<Partial<Scalars['Float']['output']>>;
-  ID: ResolverTypeWrapper<Partial<Scalars['ID']['output']>>;
   Int: ResolverTypeWrapper<Partial<Scalars['Int']['output']>>;
   IntFieldUpdateOperationsInput: ResolverTypeWrapper<Partial<IntFieldUpdateOperationsInput>>;
   IntFilter: ResolverTypeWrapper<Partial<IntFilter>>;
@@ -10546,6 +10735,7 @@ export type ResolversTypes = ResolversObject<{
   IssueScalarFieldEnum: ResolverTypeWrapper<Partial<IssueScalarFieldEnum>>;
   IssueScalarWhereInput: ResolverTypeWrapper<Partial<IssueScalarWhereInput>>;
   IssueScalarWhereWithAggregatesInput: ResolverTypeWrapper<Partial<IssueScalarWhereWithAggregatesInput>>;
+  IssueStats: ResolverTypeWrapper<Partial<IssueStats>>;
   IssueStatus: ResolverTypeWrapper<Partial<IssueStatus>>;
   IssueStatusCount: ResolverTypeWrapper<Partial<IssueStatusCount>>;
   IssueStatusCountAggregate: ResolverTypeWrapper<Partial<IssueStatusCountAggregate>>;
@@ -11134,13 +11324,6 @@ export type ResolversParentTypes = ResolversObject<{
   BoolFilter: Partial<BoolFilter>;
   BoolWithAggregatesFilter: Partial<BoolWithAggregatesFilter>;
   Boolean: Partial<Scalars['Boolean']['output']>;
-  CLICommand: Partial<CliCommand>;
-  CLIExecutionStats: Partial<CliExecutionStats>;
-  CLIHistoryFilter: Partial<CliHistoryFilter>;
-  CLIHistoryItem: Partial<CliHistoryItem>;
-  CLIProcess: Partial<CliProcess>;
-  CLIStatus: Partial<CliStatus>;
-  CLISystemInfo: Partial<CliSystemInfo>;
   CreateManyAndReturnCycle: Partial<CreateManyAndReturnCycle>;
   CreateManyAndReturnIssue: Partial<CreateManyAndReturnIssue>;
   CreateManyAndReturnIssueLabel: Partial<CreateManyAndReturnIssueLabel>;
@@ -11208,7 +11391,6 @@ export type ResolversParentTypes = ResolversObject<{
   DateTimeNullableWithAggregatesFilter: Partial<DateTimeNullableWithAggregatesFilter>;
   DateTimeWithAggregatesFilter: Partial<DateTimeWithAggregatesFilter>;
   Float: Partial<Scalars['Float']['output']>;
-  ID: Partial<Scalars['ID']['output']>;
   Int: Partial<Scalars['Int']['output']>;
   IntFieldUpdateOperationsInput: Partial<IntFieldUpdateOperationsInput>;
   IntFilter: Partial<IntFilter>;
@@ -11353,6 +11535,7 @@ export type ResolversParentTypes = ResolversObject<{
   IssueRelationFilter: Partial<IssueRelationFilter>;
   IssueScalarWhereInput: Partial<IssueScalarWhereInput>;
   IssueScalarWhereWithAggregatesInput: Partial<IssueScalarWhereWithAggregatesInput>;
+  IssueStats: Partial<IssueStats>;
   IssueStatus: Partial<IssueStatus>;
   IssueStatusCount: Partial<IssueStatusCount>;
   IssueStatusCountAggregate: Partial<IssueStatusCountAggregate>;
@@ -12044,70 +12227,6 @@ export type AggregateUserResolvers<ContextType = GraphQLContext, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type CliCommandResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CLICommand'] = ResolversParentTypes['CLICommand']> = ResolversObject<{
-  args?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  category?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  examples?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  parseOutput?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  requiredArgs?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  timeout?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type CliExecutionStatsResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CLIExecutionStats'] = ResolversParentTypes['CLIExecutionStats']> = ResolversObject<{
-  averageExecutionTime?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  commandFrequency?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  failedExecutions?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  successRate?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  successfulExecutions?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  totalExecutions?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type CliHistoryItemResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CLIHistoryItem'] = ResolversParentTypes['CLIHistoryItem']> = ResolversObject<{
-  args?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  command?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  error?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  executionTime?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  output?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type CliProcessResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CLIProcess'] = ResolversParentTypes['CLIProcess']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  startTime?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type CliStatusResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CLIStatus'] = ResolversParentTypes['CLIStatus']> = ResolversObject<{
-  activeProcessCount?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  activeProcesses?: Resolver<Array<ResolversTypes['CLIProcess']>, ParentType, ContextType>;
-  error?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  executionStats?: Resolver<ResolversTypes['CLIExecutionStats'], ParentType, ContextType>;
-  isHealthy?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  recentCommands?: Resolver<Array<ResolversTypes['CLIHistoryItem']>, ParentType, ContextType>;
-  systemInfo?: Resolver<ResolversTypes['CLISystemInfo'], ParentType, ContextType>;
-  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type CliSystemInfoResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CLISystemInfo'] = ResolversParentTypes['CLISystemInfo']> = ResolversObject<{
-  architecture?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  cwd?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  memoryUsage?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  nodeVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  pid?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  platform?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  uptime?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type CreateManyAndReturnCycleResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['CreateManyAndReturnCycle'] = ResolversParentTypes['CreateManyAndReturnCycle']> = ResolversObject<{
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   endDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
@@ -12335,10 +12454,12 @@ export type CycleResolvers<ContextType = GraphQLContext, ParentType extends Reso
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   endDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<CycleIssuesArgs>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   number?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   progress?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   startDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   teamId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -12425,22 +12546,32 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type IssueResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['Issue'] = ResolversParentTypes['Issue']> = ResolversObject<{
   _count?: Resolver<Maybe<ResolversTypes['IssueCount']>, ParentType, ContextType>;
+  assignee?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<IssueAssigneeArgs>>;
   assigneeId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  cycle?: Resolver<Maybe<ResolversTypes['Cycle']>, ParentType, ContextType, Partial<IssueCycleArgs>>;
   cycleId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   dueDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   identifier?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issuePriority?: Resolver<Maybe<ResolversTypes['IssuePriority']>, ParentType, ContextType, Partial<IssueIssuePriorityArgs>>;
+  issueStatus?: Resolver<Maybe<ResolversTypes['IssueStatus']>, ParentType, ContextType, Partial<IssueIssueStatusArgs>>;
   issueType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  labels?: Resolver<Array<ResolversTypes['IssueLabel']>, ParentType, ContextType, Partial<IssueLabelsArgs>>;
+  parentIssue?: Resolver<Maybe<ResolversTypes['Issue']>, ParentType, ContextType, Partial<IssueParentIssueArgs>>;
   parentIssueId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   priority?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   priorityId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, Partial<IssueProjectArgs>>;
   projectId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   rank?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   statusId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  subIssues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<IssueSubIssuesArgs>>;
+  subtask?: Resolver<Maybe<ResolversTypes['Subtask']>, ParentType, ContextType, Partial<IssueSubtaskArgs>>;
   subtaskId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  task?: Resolver<Maybe<ResolversTypes['Task']>, ParentType, ContextType, Partial<IssueTaskArgs>>;
   taskId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
@@ -12512,7 +12643,9 @@ export type IssueGroupByResolvers<ContextType = GraphQLContext, ParentType exten
 
 export type IssueLabelResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['IssueLabel'] = ResolversParentTypes['IssueLabel']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issue?: Resolver<ResolversTypes['Issue'], ParentType, ContextType>;
   issueId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes['Label'], ParentType, ContextType>;
   labelId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -12600,6 +12733,7 @@ export type IssuePriorityResolvers<ContextType = GraphQLContext, ParentType exte
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   iconName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<IssuePriorityIssuesArgs>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
@@ -12667,12 +12801,22 @@ export type IssuePrioritySumAggregateResolvers<ContextType = GraphQLContext, Par
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type IssueStatsResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['IssueStats'] = ResolversParentTypes['IssueStats']> = ResolversObject<{
+  completed?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  completionRate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  inProgress?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  pending?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type IssueStatusResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['IssueStatus'] = ResolversParentTypes['IssueStatus']> = ResolversObject<{
   _count?: Resolver<Maybe<ResolversTypes['IssueStatusCount']>, ParentType, ContextType>;
   color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   iconName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<IssueStatusIssuesArgs>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -12738,6 +12882,7 @@ export type LabelResolvers<ContextType = GraphQLContext, ParentType extends Reso
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['IssueLabel']>, ParentType, ContextType, Partial<LabelIssuesArgs>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -12940,10 +13085,13 @@ export type ProjectResolvers<ContextType = GraphQLContext, ParentType extends Re
   icon?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   identifier?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<ProjectIssuesArgs>>;
+  lead?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ProjectLeadArgs>>;
   leadId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   percentComplete?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   startDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  teams?: Resolver<Array<ResolversTypes['TeamProject']>, ParentType, ContextType, Partial<ProjectTeamsArgs>>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -13052,10 +13200,6 @@ export type QueryResolvers<ContextType = GraphQLContext, ParentType extends Reso
   aggregateTeamMember?: Resolver<ResolversTypes['AggregateTeamMember'], ParentType, ContextType, Partial<QueryAggregateTeamMemberArgs>>;
   aggregateTeamProject?: Resolver<ResolversTypes['AggregateTeamProject'], ParentType, ContextType, Partial<QueryAggregateTeamProjectArgs>>;
   aggregateUser?: Resolver<ResolversTypes['AggregateUser'], ParentType, ContextType, Partial<QueryAggregateUserArgs>>;
-  availableCommands?: Resolver<Array<ResolversTypes['CLICommand']>, ParentType, ContextType>;
-  cliCommand?: Resolver<Maybe<ResolversTypes['CLICommand']>, ParentType, ContextType, RequireFields<QueryCliCommandArgs, 'name'>>;
-  cliHistory?: Resolver<Array<ResolversTypes['CLIHistoryItem']>, ParentType, ContextType, RequireFields<QueryCliHistoryArgs, 'limit'>>;
-  cliStatus?: Resolver<ResolversTypes['CLIStatus'], ParentType, ContextType>;
   cycle?: Resolver<Maybe<ResolversTypes['Cycle']>, ParentType, ContextType, RequireFields<QueryCycleArgs, 'where'>>;
   cycles?: Resolver<Array<ResolversTypes['Cycle']>, ParentType, ContextType, Partial<QueryCyclesArgs>>;
   findFirstCycle?: Resolver<Maybe<ResolversTypes['Cycle']>, ParentType, ContextType, Partial<QueryFindFirstCycleArgs>>;
@@ -13137,6 +13281,7 @@ export type QueryResolvers<ContextType = GraphQLContext, ParentType extends Reso
   issueStatus?: Resolver<Maybe<ResolversTypes['IssueStatus']>, ParentType, ContextType, RequireFields<QueryIssueStatusArgs, 'where'>>;
   issueStatuses?: Resolver<Array<ResolversTypes['IssueStatus']>, ParentType, ContextType, Partial<QueryIssueStatusesArgs>>;
   issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<QueryIssuesArgs>>;
+  issuesStats?: Resolver<ResolversTypes['IssueStats'], ParentType, ContextType>;
   label?: Resolver<Maybe<ResolversTypes['Label']>, ParentType, ContextType, RequireFields<QueryLabelArgs, 'where'>>;
   labels?: Resolver<Array<ResolversTypes['Label']>, ParentType, ContextType, Partial<QueryLabelsArgs>>;
   project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<QueryProjectArgs, 'where'>>;
@@ -13168,7 +13313,9 @@ export type SubtaskResolvers<ContextType = GraphQLContext, ParentType extends Re
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<SubtaskIssuesArgs>>;
   parentId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  parentTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   testStrategy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -13434,11 +13581,15 @@ export type TaskResolvers<ContextType = GraphQLContext, ParentType extends Resol
   _count?: Resolver<Maybe<ResolversTypes['TaskCount']>, ParentType, ContextType>;
   complexity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  dependencies?: Resolver<Array<ResolversTypes['TaskDependency']>, ParentType, ContextType, Partial<TaskDependenciesArgs>>;
+  dependents?: Resolver<Array<ResolversTypes['TaskDependency']>, ParentType, ContextType, Partial<TaskDependentsArgs>>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   details?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  issues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<TaskIssuesArgs>>;
   priority?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  subtasks?: Resolver<Array<ResolversTypes['Subtask']>, ParentType, ContextType, Partial<TaskSubtasksArgs>>;
   testStrategy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
@@ -13476,8 +13627,10 @@ export type TaskCountAggregateResolvers<ContextType = GraphQLContext, ParentType
 
 export type TaskDependencyResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['TaskDependency'] = ResolversParentTypes['TaskDependency']> = ResolversObject<{
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  dependsOn?: Resolver<ResolversTypes['Task'], ParentType, ContextType>;
   dependsOnId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  task?: Resolver<ResolversTypes['Task'], ParentType, ContextType>;
   taskId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -13647,10 +13800,13 @@ export type TeamResolvers<ContextType = GraphQLContext, ParentType extends Resol
   _count?: Resolver<Maybe<ResolversTypes['TeamCount']>, ParentType, ContextType>;
   color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  cycles?: Resolver<Array<ResolversTypes['Cycle']>, ParentType, ContextType, Partial<TeamCyclesArgs>>;
   icon?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   joined?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  members?: Resolver<Array<ResolversTypes['TeamMember']>, ParentType, ContextType, Partial<TeamMembersArgs>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  projects?: Resolver<Array<ResolversTypes['TeamProject']>, ParentType, ContextType, Partial<TeamProjectsArgs>>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -13701,7 +13857,9 @@ export type TeamMaxAggregateResolvers<ContextType = GraphQLContext, ParentType e
 
 export type TeamMemberResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['TeamMember'] = ResolversParentTypes['TeamMember']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   teamId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -13751,7 +13909,9 @@ export type TeamMinAggregateResolvers<ContextType = GraphQLContext, ParentType e
 
 export type TeamProjectResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['TeamProject'] = ResolversParentTypes['TeamProject']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  project?: Resolver<ResolversTypes['Project'], ParentType, ContextType>;
   projectId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   teamId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -13790,15 +13950,18 @@ export type TeamProjectMinAggregateResolvers<ContextType = GraphQLContext, Paren
 
 export type UserResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   _count?: Resolver<Maybe<ResolversTypes['UserCount']>, ParentType, ContextType>;
+  assignedIssues?: Resolver<Array<ResolversTypes['Issue']>, ParentType, ContextType, Partial<UserAssignedIssuesArgs>>;
   avatarUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   joinedDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  ledProjects?: Resolver<Array<ResolversTypes['Project']>, ParentType, ContextType, Partial<UserLedProjectsArgs>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   role?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   teamIds?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  teams?: Resolver<Array<ResolversTypes['TeamMember']>, ParentType, ContextType, Partial<UserTeamsArgs>>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -13889,12 +14052,6 @@ export type Resolvers<ContextType = GraphQLContext> = ResolversObject<{
   AggregateTeamMember?: AggregateTeamMemberResolvers<ContextType>;
   AggregateTeamProject?: AggregateTeamProjectResolvers<ContextType>;
   AggregateUser?: AggregateUserResolvers<ContextType>;
-  CLICommand?: CliCommandResolvers<ContextType>;
-  CLIExecutionStats?: CliExecutionStatsResolvers<ContextType>;
-  CLIHistoryItem?: CliHistoryItemResolvers<ContextType>;
-  CLIProcess?: CliProcessResolvers<ContextType>;
-  CLIStatus?: CliStatusResolvers<ContextType>;
-  CLISystemInfo?: CliSystemInfoResolvers<ContextType>;
   CreateManyAndReturnCycle?: CreateManyAndReturnCycleResolvers<ContextType>;
   CreateManyAndReturnIssue?: CreateManyAndReturnIssueResolvers<ContextType>;
   CreateManyAndReturnIssueLabel?: CreateManyAndReturnIssueLabelResolvers<ContextType>;
@@ -13941,6 +14098,7 @@ export type Resolvers<ContextType = GraphQLContext> = ResolversObject<{
   IssuePriorityMaxAggregate?: IssuePriorityMaxAggregateResolvers<ContextType>;
   IssuePriorityMinAggregate?: IssuePriorityMinAggregateResolvers<ContextType>;
   IssuePrioritySumAggregate?: IssuePrioritySumAggregateResolvers<ContextType>;
+  IssueStats?: IssueStatsResolvers<ContextType>;
   IssueStatus?: IssueStatusResolvers<ContextType>;
   IssueStatusCount?: IssueStatusCountResolvers<ContextType>;
   IssueStatusCountAggregate?: IssueStatusCountAggregateResolvers<ContextType>;

@@ -1,18 +1,36 @@
 fragment IssueCore on Issue {
-  id
-  identifier
-  title
-  description
-  status
-  priority
-  rank
-  cycleId
-  dueDate
-  issueType
-  taskId
-  subtaskId
-  assigneeId
-  projectId
-  createdAt
-  updatedAt
+   id
+   identifier
+   title
+   description
+   status
+   priority
+   rank
+   cycleId
+   dueDate
+   issueType
+   issueStatus {
+      id
+      name
+      color
+      iconName
+   }
+   issuePriority {
+      id
+      name
+      iconName
+      order
+   }
+   assignee {
+      id
+      name
+      email
+      avatarUrl
+   }
+   taskId
+   subtaskId
+   assigneeId
+   projectId
+   createdAt
+   updatedAt
 }

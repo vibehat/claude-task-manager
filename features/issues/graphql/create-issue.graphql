@@ -1,7 +1,7 @@
-#import "issue-details.graphql"
+#import "issue-core.graphql"
 
 mutation CreateIssue($data: IssueCreateInput!) {
-  createOneIssue(data: $data) {
-    ...IssueDetails
-  }
+   createOneIssue(data: $data) {
+      ...IssueCore
+   }
 }

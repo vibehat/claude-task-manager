@@ -1,0 +1,38 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateTeamMemberArgs } from "./args/AggregateTeamMemberArgs";
+import { CreateManyAndReturnTeamMemberArgs } from "./args/CreateManyAndReturnTeamMemberArgs";
+import { CreateManyTeamMemberArgs } from "./args/CreateManyTeamMemberArgs";
+import { CreateOneTeamMemberArgs } from "./args/CreateOneTeamMemberArgs";
+import { DeleteManyTeamMemberArgs } from "./args/DeleteManyTeamMemberArgs";
+import { DeleteOneTeamMemberArgs } from "./args/DeleteOneTeamMemberArgs";
+import { FindFirstTeamMemberArgs } from "./args/FindFirstTeamMemberArgs";
+import { FindFirstTeamMemberOrThrowArgs } from "./args/FindFirstTeamMemberOrThrowArgs";
+import { FindManyTeamMemberArgs } from "./args/FindManyTeamMemberArgs";
+import { FindUniqueTeamMemberArgs } from "./args/FindUniqueTeamMemberArgs";
+import { FindUniqueTeamMemberOrThrowArgs } from "./args/FindUniqueTeamMemberOrThrowArgs";
+import { GroupByTeamMemberArgs } from "./args/GroupByTeamMemberArgs";
+import { UpdateManyTeamMemberArgs } from "./args/UpdateManyTeamMemberArgs";
+import { UpdateOneTeamMemberArgs } from "./args/UpdateOneTeamMemberArgs";
+import { UpsertOneTeamMemberArgs } from "./args/UpsertOneTeamMemberArgs";
+import { TeamMember } from "../../../models/TeamMember";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateTeamMember } from "../../outputs/AggregateTeamMember";
+import { CreateManyAndReturnTeamMember } from "../../outputs/CreateManyAndReturnTeamMember";
+import { TeamMemberGroupBy } from "../../outputs/TeamMemberGroupBy";
+export declare class TeamMemberCrudResolver {
+    aggregateTeamMember(ctx: any, info: GraphQLResolveInfo, args: AggregateTeamMemberArgs): Promise<AggregateTeamMember>;
+    createManyTeamMember(ctx: any, info: GraphQLResolveInfo, args: CreateManyTeamMemberArgs): Promise<AffectedRowsOutput>;
+    createManyAndReturnTeamMember(ctx: any, info: GraphQLResolveInfo, args: CreateManyAndReturnTeamMemberArgs): Promise<CreateManyAndReturnTeamMember[]>;
+    createOneTeamMember(ctx: any, info: GraphQLResolveInfo, args: CreateOneTeamMemberArgs): Promise<TeamMember>;
+    deleteManyTeamMember(ctx: any, info: GraphQLResolveInfo, args: DeleteManyTeamMemberArgs): Promise<AffectedRowsOutput>;
+    deleteOneTeamMember(ctx: any, info: GraphQLResolveInfo, args: DeleteOneTeamMemberArgs): Promise<TeamMember | null>;
+    findFirstTeamMember(ctx: any, info: GraphQLResolveInfo, args: FindFirstTeamMemberArgs): Promise<TeamMember | null>;
+    findFirstTeamMemberOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstTeamMemberOrThrowArgs): Promise<TeamMember | null>;
+    teamMembers(ctx: any, info: GraphQLResolveInfo, args: FindManyTeamMemberArgs): Promise<TeamMember[]>;
+    teamMember(ctx: any, info: GraphQLResolveInfo, args: FindUniqueTeamMemberArgs): Promise<TeamMember | null>;
+    getTeamMember(ctx: any, info: GraphQLResolveInfo, args: FindUniqueTeamMemberOrThrowArgs): Promise<TeamMember | null>;
+    groupByTeamMember(ctx: any, info: GraphQLResolveInfo, args: GroupByTeamMemberArgs): Promise<TeamMemberGroupBy[]>;
+    updateManyTeamMember(ctx: any, info: GraphQLResolveInfo, args: UpdateManyTeamMemberArgs): Promise<AffectedRowsOutput>;
+    updateOneTeamMember(ctx: any, info: GraphQLResolveInfo, args: UpdateOneTeamMemberArgs): Promise<TeamMember | null>;
+    upsertOneTeamMember(ctx: any, info: GraphQLResolveInfo, args: UpsertOneTeamMemberArgs): Promise<TeamMember>;
+}

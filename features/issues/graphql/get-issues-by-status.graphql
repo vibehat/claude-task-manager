@@ -1,12 +1,12 @@
 #import "issue-core.graphql"
 
 query GetIssuesByStatus(
-  $status: String!
-  $orderBy: [IssueOrderByWithRelationInput!]
-  $skip: Int
-  $take: Int
+   $status: String!
+   $orderBy: [IssueOrderByWithRelationInput!]
+   $skip: Int
+   $take: Int
 ) {
-  issues(where: { status: { equals: $status } }, orderBy: $orderBy, skip: $skip, take: $take) {
-    ...IssueCore
-  }
+   issues(where: { status: { equals: $status } }, orderBy: $orderBy, skip: $skip, take: $take) {
+      ...IssueCore
+   }
 }

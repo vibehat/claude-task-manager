@@ -1,6 +1,6 @@
 'use client';
 
-import type { Issue } from '@/mock-data/issues';
+import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import { format } from 'date-fns';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
@@ -16,27 +16,29 @@ import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { IssueContextMenu } from './issue-context-menu';
 
 export const IssueDragType = 'ISSUE';
+
+type IssueFromQuery = GetIssuesQuery['issues'][0];
+
 interface IssueGridProps {
-   issue: Issue;
+   issue: IssueFromQuery;
 }
 
 // Custom DragLayer component to render the drag preview
-function IssueDragPreview({ issue }: { issue: Issue }): React.JSX.Element {
+function IssueDragPreview({ issue }: { issue: IssueFromQuery }): React.JSX.Element {
    return (
       <div className="w-full p-3 bg-background rounded-md border border-border/50 overflow-hidden">
          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-1.5">
-               <PrioritySelector priority={issue.priority} issueId={issue.id} />
+               <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
                <span className="text-xs text-muted-foreground font-medium">{issue.identifier}</span>
             </div>
-            <StatusSelector status={issue.status} issueId={issue.id} />
+            <StatusSelector status={issue.issueStatus} issueId={issue.id} />
          </div>
 
          <h3 className="text-sm font-semibold mb-3 line-clamp-2">{issue.title}</h3>
 
          <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
-            <LabelBadge label={issue.labels} />
-            {issue.project && <ProjectBadge project={issue.project} />}
+            {/* Labels and project badges temporarily removed until GraphQL query includes them */}
          </div>
 
          <div className="flex items-center justify-between mt-auto pt-2">
@@ -114,17 +116,16 @@ export function IssueGrid({ issue }: IssueGridProps): React.JSX.Element {
             >
                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5">
-                     <PrioritySelector priority={issue.priority} issueId={issue.id} />
+                     <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
                      <span className="text-xs text-muted-foreground font-medium">
                         {issue.identifier}
                      </span>
                   </div>
-                  <StatusSelector status={issue.status} issueId={issue.id} />
+                  <StatusSelector status={issue.issueStatus} issueId={issue.id} />
                </div>
                <h3 className="text-sm font-semibold mb-3 line-clamp-2">{issue.title}</h3>
                <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
-                  <LabelBadge label={issue.labels} />
-                  {issue.project && <ProjectBadge project={issue.project} />}
+                  {/* Labels and project badges temporarily removed until GraphQL query includes them */}
                </div>
                <div className="flex items-center justify-between mt-auto pt-2">
                   <span className="text-xs text-muted-foreground">

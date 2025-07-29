@@ -13,11 +13,16 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filter-store';
-import { status as allStatus } from '@/mock-data/status';
-import { priorities } from '@/mock-data/priorities';
-import { labels } from '@/mock-data/labels';
-import { projects } from '@/mock-data/projects';
-import { users } from '@/mock-data/users';
+import {
+   useGetIssueStatusesQuery,
+   useGetPrioritiesQuery,
+   useGetUsersQuery,
+   useGetLabelsQuery,
+   useGetProjectsQuery,
+   SortOrder,
+} from '@/libs/client/graphql-client/generated';
+import { useIssueStatusIcon } from '../../hooks/use-issue-status-icon';
+import { getPriorityIcon } from '../../constants/priority-icons';
 import {
    CheckIcon,
    ChevronRight,
@@ -39,6 +44,21 @@ export function Filter(): React.JSX.Element {
    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
 
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
+
+   // Fetch data from GraphQL
+   const { data: statusesData } = useGetIssueStatusesQuery();
+   const { data: prioritiesData } = useGetPrioritiesQuery({
+      variables: { orderBy: [{ order: SortOrder.Asc }] },
+   });
+   const { data: usersData } = useGetUsersQuery();
+   const { data: labelsData } = useGetLabelsQuery();
+   const { data: projectsData } = useGetProjectsQuery();
+
+   const allStatus = statusesData?.issueStatuses || [];
+   const priorities = prioritiesData?.issuePriorities || [];
+   const users = usersData?.users || [];
+   const labels = labelsData?.labels || [];
+   const projects = projectsData?.projects || [];
 
    // TODO: Replace with GraphQL-based filtering
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
@@ -181,23 +201,12 @@ export function Filter(): React.JSX.Element {
                      <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
                         {allStatus.map((item) => (
-                           <CommandItem
+                           <FilterStatusItem
                               key={item.id}
-                              value={item.id}
+                              item={item}
+                              isSelected={filters.status.includes(item.id)}
                               onSelect={() => toggleFilter('status', item.id)}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 <item.icon />
-                                 {item.name}
-                              </div>
-                              {filters.status.includes(item.id) && (
-                                 <CheckIcon size={16} className="ml-auto" />
-                              )}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
-                              </span>
-                           </CommandItem>
+                           />
                         ))}
                      </CommandGroup>
                   </CommandList>
@@ -244,7 +253,10 @@ export function Filter(): React.JSX.Element {
                            >
                               <div className="flex items-center gap-2">
                                  <Avatar className="size-5">
-                                    <AvatarImage src={user.avatarUrl} alt={user.name} />
+                                    <AvatarImage
+                                       src={user.avatarUrl || undefined}
+                                       alt={user.name}
+                                    />
                                     <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                                  </Avatar>
                                  {user.name}
@@ -285,7 +297,10 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <item.icon className="text-muted-foreground size-4" />
+                                 {(() => {
+                                    const Icon = getPriorityIcon(item.iconName);
+                                    return <Icon className="text-muted-foreground size-4" />;
+                                 })()}
                                  {item.name}
                               </div>
                               {filters.priority.includes(item.id) && (
@@ -366,7 +381,7 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <project.icon className="size-4" />
+                                 <Folder className="size-4" />
                                  {project.name}
                               </div>
                               {filters.project.includes(project.id) && (
@@ -383,6 +398,34 @@ export function Filter(): React.JSX.Element {
             ) : null}
          </PopoverContent>
       </Popover>
+   );
+}
+
+// Helper component that can use hooks
+interface FilterStatusItemProps {
+   item: any;
+   isSelected: boolean;
+   onSelect: () => void;
+}
+
+function FilterStatusItem({ item, isSelected, onSelect }: FilterStatusItemProps) {
+   const StatusIcon = useIssueStatusIcon(item);
+
+   return (
+      <CommandItem
+         value={item.id}
+         onSelect={onSelect}
+         className="flex items-center justify-between"
+      >
+         <div className="flex items-center gap-2">
+            <StatusIcon />
+            {item.name}
+         </div>
+         {isSelected && <CheckIcon size={16} className="ml-auto" />}
+         <span className="text-muted-foreground text-xs">
+            {0 /* TODO: Get count from GraphQL */}
+         </span>
+      </CommandItem>
    );
 }
 

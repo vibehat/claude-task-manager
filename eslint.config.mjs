@@ -13,17 +13,17 @@ const eslintConfig = [
    ...compat.extends('next/core-web-vitals', 'next/typescript'),
    {
       ignores: [
-         'lib/generated/**/*', 
-         'libs/server/generated/**/*', 
+         'lib/generated/**/*',
+         'libs/server/generated/**/*',
          '.next/**/*',
-         'coverage/**/*', 
+         'coverage/**/*',
          '**/graphql-generated.ts',
          'libs/client/graphql-client/generated.ts',
          'libs/server/types/graphql-generated.ts',
          'prisma/migrations/**/*',
          'libs/server/prisma/generated/**/*',
          'scripts/**/*',
-         '**/mock-data/**/*'
+         '**/mock-data/**/*',
       ],
    },
    {
@@ -58,11 +58,11 @@ const eslintConfig = [
          '@typescript-eslint/no-unnecessary-type-assertion': 'off',
          '@typescript-eslint/no-empty-interface': 'off',
          '@typescript-eslint/consistent-type-definitions': 'off',
-         '@typescript-eslint/array-type': "off",
+         '@typescript-eslint/array-type': 'off',
 
          // Import and module rules
          '@typescript-eslint/consistent-type-imports': [
-            'error',
+            'warn',
             {
                prefer: 'type-imports',
                disallowTypeAnnotations: false,

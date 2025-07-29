@@ -1,0 +1,38 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateIssueLabelArgs } from "./args/AggregateIssueLabelArgs";
+import { CreateManyAndReturnIssueLabelArgs } from "./args/CreateManyAndReturnIssueLabelArgs";
+import { CreateManyIssueLabelArgs } from "./args/CreateManyIssueLabelArgs";
+import { CreateOneIssueLabelArgs } from "./args/CreateOneIssueLabelArgs";
+import { DeleteManyIssueLabelArgs } from "./args/DeleteManyIssueLabelArgs";
+import { DeleteOneIssueLabelArgs } from "./args/DeleteOneIssueLabelArgs";
+import { FindFirstIssueLabelArgs } from "./args/FindFirstIssueLabelArgs";
+import { FindFirstIssueLabelOrThrowArgs } from "./args/FindFirstIssueLabelOrThrowArgs";
+import { FindManyIssueLabelArgs } from "./args/FindManyIssueLabelArgs";
+import { FindUniqueIssueLabelArgs } from "./args/FindUniqueIssueLabelArgs";
+import { FindUniqueIssueLabelOrThrowArgs } from "./args/FindUniqueIssueLabelOrThrowArgs";
+import { GroupByIssueLabelArgs } from "./args/GroupByIssueLabelArgs";
+import { UpdateManyIssueLabelArgs } from "./args/UpdateManyIssueLabelArgs";
+import { UpdateOneIssueLabelArgs } from "./args/UpdateOneIssueLabelArgs";
+import { UpsertOneIssueLabelArgs } from "./args/UpsertOneIssueLabelArgs";
+import { IssueLabel } from "../../../models/IssueLabel";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateIssueLabel } from "../../outputs/AggregateIssueLabel";
+import { CreateManyAndReturnIssueLabel } from "../../outputs/CreateManyAndReturnIssueLabel";
+import { IssueLabelGroupBy } from "../../outputs/IssueLabelGroupBy";
+export declare class IssueLabelCrudResolver {
+    aggregateIssueLabel(ctx: any, info: GraphQLResolveInfo, args: AggregateIssueLabelArgs): Promise<AggregateIssueLabel>;
+    createManyIssueLabel(ctx: any, info: GraphQLResolveInfo, args: CreateManyIssueLabelArgs): Promise<AffectedRowsOutput>;
+    createManyAndReturnIssueLabel(ctx: any, info: GraphQLResolveInfo, args: CreateManyAndReturnIssueLabelArgs): Promise<CreateManyAndReturnIssueLabel[]>;
+    createOneIssueLabel(ctx: any, info: GraphQLResolveInfo, args: CreateOneIssueLabelArgs): Promise<IssueLabel>;
+    deleteManyIssueLabel(ctx: any, info: GraphQLResolveInfo, args: DeleteManyIssueLabelArgs): Promise<AffectedRowsOutput>;
+    deleteOneIssueLabel(ctx: any, info: GraphQLResolveInfo, args: DeleteOneIssueLabelArgs): Promise<IssueLabel | null>;
+    findFirstIssueLabel(ctx: any, info: GraphQLResolveInfo, args: FindFirstIssueLabelArgs): Promise<IssueLabel | null>;
+    findFirstIssueLabelOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstIssueLabelOrThrowArgs): Promise<IssueLabel | null>;
+    issueLabels(ctx: any, info: GraphQLResolveInfo, args: FindManyIssueLabelArgs): Promise<IssueLabel[]>;
+    issueLabel(ctx: any, info: GraphQLResolveInfo, args: FindUniqueIssueLabelArgs): Promise<IssueLabel | null>;
+    getIssueLabel(ctx: any, info: GraphQLResolveInfo, args: FindUniqueIssueLabelOrThrowArgs): Promise<IssueLabel | null>;
+    groupByIssueLabel(ctx: any, info: GraphQLResolveInfo, args: GroupByIssueLabelArgs): Promise<IssueLabelGroupBy[]>;
+    updateManyIssueLabel(ctx: any, info: GraphQLResolveInfo, args: UpdateManyIssueLabelArgs): Promise<AffectedRowsOutput>;
+    updateOneIssueLabel(ctx: any, info: GraphQLResolveInfo, args: UpdateOneIssueLabelArgs): Promise<IssueLabel | null>;
+    upsertOneIssueLabel(ctx: any, info: GraphQLResolveInfo, args: UpsertOneIssueLabelArgs): Promise<IssueLabel>;
+}

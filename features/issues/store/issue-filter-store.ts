@@ -22,7 +22,10 @@ export interface FilterState {
 
 export const useIssuesFilterStore = create<FilterState>((set, get) => ({
    // Initial state - direct IssueWhereInput
-   where: {},
+   // Always filter for parent issues only
+   where: {
+      parentIssueId: { equals: null },
+   },
 
    // Actions
    setFilter: (type, ids) => {
@@ -69,6 +72,9 @@ export const useIssuesFilterStore = create<FilterState>((set, get) => ({
             }
          }
 
+         // Always keep parent issue filter
+         newWhere.parentIssueId = { equals: null };
+
          return { where: newWhere };
       });
    },
@@ -82,7 +88,7 @@ export const useIssuesFilterStore = create<FilterState>((set, get) => ({
    },
 
    clearFilters: () => {
-      set({ where: {} });
+      set({ where: { parentIssueId: { equals: null } } });
    },
 
    clearFilterType: (type) => {
@@ -90,13 +96,16 @@ export const useIssuesFilterStore = create<FilterState>((set, get) => ({
    },
 
    setWhere: (where) => {
-      set({ where });
+      // Always include parent issue filter
+      set({ where: { ...where, parentIssueId: { equals: null } } });
    },
 
    // Utility
    hasActiveFilters: () => {
       const { where } = get();
-      return Object.keys(where).length > 0;
+      // Don't count parentIssueId filter as an active filter since it's always there
+      const filterKeys = Object.keys(where).filter((key) => key !== 'parentIssueId');
+      return filterKeys.length > 0;
    },
 
    getActiveFiltersCount: () => {

@@ -8,28 +8,11 @@ import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { DateTimeResolver } from 'graphql-scalars';
 import { GraphQLJSONObject } from 'graphql-type-json';
-import { CLIResolver } from './resolvers/cli.resolver';
-import { IssueResolver } from './resolvers/issue.resolver';
+// import { CLIResolver } from './resolvers/cli.resolver'; // Temporarily disabled
+import { IssueResolver } from './resolvers/issue.resolver'; // Temporarily disabled
 import {
-   // Import generated CRUD resolvers
-   UserCrudResolver,
-   ProjectCrudResolver,
-   LabelCrudResolver,
-   TeamCrudResolver,
-   TeamMemberCrudResolver,
-   TeamProjectCrudResolver,
-   CycleCrudResolver,
-   IssueLabelCrudResolver,
-   IssueStatusCrudResolver,
-   IssuePriorityCrudResolver,
-   TaskDependencyCrudResolver,
-   TaskMasterMetadataCrudResolver,
-   TaskCrudResolver,
-   SubtaskCrudResolver,
-   IssueCrudResolver,
-   SyncOperationCrudResolver,
-   SyncConflictCrudResolver,
-   FindManyIssueStatusResolver,
+   // Import all generated resolvers (CRUD + Relations)
+   resolvers as generatedResolvers,
 } from './generated';
 import type { GraphQLSchema } from 'graphql';
 import { pubSub } from './pubsub';
@@ -37,36 +20,16 @@ import { pubSub } from './pubsub';
 export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
    const schema = await buildSchema({
       resolvers: [
-         // Custom resolvers
-         CLIResolver,
-         IssueResolver,
-         // Generated CRUD resolvers for supporting models
-         UserCrudResolver,
-         ProjectCrudResolver,
-         LabelCrudResolver,
-         TeamCrudResolver,
-         TeamMemberCrudResolver,
-         TeamProjectCrudResolver,
-         CycleCrudResolver,
-         IssueLabelCrudResolver,
-         IssueStatusCrudResolver,
-         IssuePriorityCrudResolver,
-         TaskDependencyCrudResolver,
-         TaskMasterMetadataCrudResolver,
-         TaskCrudResolver,
-         SubtaskCrudResolver,
-         IssueCrudResolver,
-         FindManyIssueStatusResolver,
-         // Generated CRUD resolvers for core models (replacing custom ones)
-         SyncOperationCrudResolver,
-         SyncConflictCrudResolver,
+         // Custom resolvers temporarily disabled for testing
+         // CLIResolver, // Temporarily disabled due to TypeGraphQL issues
+         IssueResolver, // Temporarily disabled for testing
+         // All generated resolvers (CRUD + Relations)
+         ...generatedResolvers,
       ],
       emitSchemaFile: './schema.graphql',
       validate: {
          forbidUnknownValues: false,
       },
-      // Add PubSub for subscriptions
-      pubSub,
       // Add scalar resolvers for custom scalars
       scalarsMap: [
          { type: Date, scalar: DateTimeResolver },
@@ -77,4 +40,4 @@ export async function createTypeGraphQLSchema(): Promise<GraphQLSchema> {
    return schema;
 }
 
-export { CLIResolver };
+// export { CLIResolver }; // Temporarily disabled

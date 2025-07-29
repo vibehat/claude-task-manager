@@ -1,0 +1,38 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateTaskMasterMetadataArgs } from "./args/AggregateTaskMasterMetadataArgs";
+import { CreateManyAndReturnTaskMasterMetadataArgs } from "./args/CreateManyAndReturnTaskMasterMetadataArgs";
+import { CreateManyTaskMasterMetadataArgs } from "./args/CreateManyTaskMasterMetadataArgs";
+import { CreateOneTaskMasterMetadataArgs } from "./args/CreateOneTaskMasterMetadataArgs";
+import { DeleteManyTaskMasterMetadataArgs } from "./args/DeleteManyTaskMasterMetadataArgs";
+import { DeleteOneTaskMasterMetadataArgs } from "./args/DeleteOneTaskMasterMetadataArgs";
+import { FindFirstTaskMasterMetadataArgs } from "./args/FindFirstTaskMasterMetadataArgs";
+import { FindFirstTaskMasterMetadataOrThrowArgs } from "./args/FindFirstTaskMasterMetadataOrThrowArgs";
+import { FindManyTaskMasterMetadataArgs } from "./args/FindManyTaskMasterMetadataArgs";
+import { FindUniqueTaskMasterMetadataArgs } from "./args/FindUniqueTaskMasterMetadataArgs";
+import { FindUniqueTaskMasterMetadataOrThrowArgs } from "./args/FindUniqueTaskMasterMetadataOrThrowArgs";
+import { GroupByTaskMasterMetadataArgs } from "./args/GroupByTaskMasterMetadataArgs";
+import { UpdateManyTaskMasterMetadataArgs } from "./args/UpdateManyTaskMasterMetadataArgs";
+import { UpdateOneTaskMasterMetadataArgs } from "./args/UpdateOneTaskMasterMetadataArgs";
+import { UpsertOneTaskMasterMetadataArgs } from "./args/UpsertOneTaskMasterMetadataArgs";
+import { TaskMasterMetadata } from "../../../models/TaskMasterMetadata";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateTaskMasterMetadata } from "../../outputs/AggregateTaskMasterMetadata";
+import { CreateManyAndReturnTaskMasterMetadata } from "../../outputs/CreateManyAndReturnTaskMasterMetadata";
+import { TaskMasterMetadataGroupBy } from "../../outputs/TaskMasterMetadataGroupBy";
+export declare class TaskMasterMetadataCrudResolver {
+    aggregateTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: AggregateTaskMasterMetadataArgs): Promise<AggregateTaskMasterMetadata>;
+    createManyTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: CreateManyTaskMasterMetadataArgs): Promise<AffectedRowsOutput>;
+    createManyAndReturnTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: CreateManyAndReturnTaskMasterMetadataArgs): Promise<CreateManyAndReturnTaskMasterMetadata[]>;
+    createOneTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: CreateOneTaskMasterMetadataArgs): Promise<TaskMasterMetadata>;
+    deleteManyTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: DeleteManyTaskMasterMetadataArgs): Promise<AffectedRowsOutput>;
+    deleteOneTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: DeleteOneTaskMasterMetadataArgs): Promise<TaskMasterMetadata | null>;
+    findFirstTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: FindFirstTaskMasterMetadataArgs): Promise<TaskMasterMetadata | null>;
+    findFirstTaskMasterMetadataOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstTaskMasterMetadataOrThrowArgs): Promise<TaskMasterMetadata | null>;
+    findManyTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: FindManyTaskMasterMetadataArgs): Promise<TaskMasterMetadata[]>;
+    findUniqueTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: FindUniqueTaskMasterMetadataArgs): Promise<TaskMasterMetadata | null>;
+    findUniqueTaskMasterMetadataOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindUniqueTaskMasterMetadataOrThrowArgs): Promise<TaskMasterMetadata | null>;
+    groupByTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: GroupByTaskMasterMetadataArgs): Promise<TaskMasterMetadataGroupBy[]>;
+    updateManyTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: UpdateManyTaskMasterMetadataArgs): Promise<AffectedRowsOutput>;
+    updateOneTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: UpdateOneTaskMasterMetadataArgs): Promise<TaskMasterMetadata | null>;
+    upsertOneTaskMasterMetadata(ctx: any, info: GraphQLResolveInfo, args: UpsertOneTaskMasterMetadataArgs): Promise<TaskMasterMetadata>;
+}

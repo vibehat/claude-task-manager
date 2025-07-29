@@ -10,37 +10,44 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useUpdateIssue } from '@/features/issues/hooks/mutations/issues/use-update-issue';
-import type { Status } from '@/mock-data/status';
-import { status as allStatus } from '@/mock-data/status';
+import type { IssueStatus } from '@/libs/client/graphql-client/generated';
+import {
+   useGetIssueStatusesQuery,
+   useUpdateIssueStatusMutation,
+} from '@/libs/client/graphql-client/generated';
+import { useIssueStatusIcon } from '@/features/issues/hooks/use-issue-status-icon';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
-   status: Status;
+   status: Pick<IssueStatus, 'id' | 'iconName' | 'name' | 'color'> | string | null | undefined;
    issueId: string;
 }
 
 export function StatusSelector({ status, issueId }: StatusSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string>(status.id);
+   const statusId = typeof status === 'string' ? status : status?.id;
+   const [value, setValue] = useState<string>(statusId || 'to-do');
 
-   const [updateIssue] = useUpdateIssue();
+   const [updateStatus] = useUpdateIssueStatusMutation();
+   const { data: statusesData } = useGetIssueStatusesQuery();
+
+   const statuses = statusesData?.issueStatuses || [];
 
    useEffect(() => {
-      setValue(status.id);
-   }, [status.id]);
+      setValue(statusId || 'to-do');
+   }, [statusId]);
 
    const handleStatusChange = (statusId: string): void => {
       setValue(statusId);
       setOpen(false);
 
       if (issueId) {
-         updateIssue({
+         updateStatus({
             variables: {
                id: issueId,
-               input: { status: statusId },
+               status: statusId,
             },
          });
       }
@@ -50,23 +57,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
       <div className="*:not-first:mt-2">
          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-               <Button
-                  id={id}
-                  className="size-7 flex items-center justify-center"
-                  size="icon"
-                  variant="ghost"
-                  role="combobox"
-                  aria-expanded={open}
-               >
-                  {((): React.JSX.Element => {
-                     const selectedItem = allStatus.find((item) => item.id === value);
-                     if (selectedItem) {
-                        const Icon = selectedItem.icon;
-                        return <Icon />;
-                     }
-                     return <></>;
-                  })()}
-               </Button>
+               <StatusSelectorButton id={id} open={open} statuses={statuses} value={value} />
             </PopoverTrigger>
             <PopoverContent
                className="border-input w-full min-w-[var(--radix-popper-anchor-width)] p-0"
@@ -77,22 +68,13 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
                   <CommandList>
                      <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
-                        {allStatus.map((item) => (
-                           <CommandItem
+                        {statuses.map((item) => (
+                           <StatusSelectorItem
                               key={item.id}
-                              value={item.id}
+                              item={item}
+                              value={value}
                               onSelect={handleStatusChange}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 <item.icon />
-                                 {item.name}
-                              </div>
-                              {value === item.id && <CheckIcon size={16} className="ml-auto" />}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
-                              </span>
-                           </CommandItem>
+                           />
                         ))}
                      </CommandGroup>
                   </CommandList>
@@ -100,6 +82,57 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
             </PopoverContent>
          </Popover>
       </div>
+   );
+}
+
+// Helper components that can use hooks
+interface StatusSelectorButtonProps {
+   id: string;
+   open: boolean;
+   statuses: any[];
+   value: string;
+}
+
+function StatusSelectorButton({ id, open, statuses, value }: StatusSelectorButtonProps) {
+   const selectedItem = statuses.find((item) => item.id === value);
+   const StatusIcon = selectedItem ? useIssueStatusIcon(selectedItem) : null;
+
+   return (
+      <Button
+         id={id}
+         className="size-7 flex items-center justify-center"
+         size="icon"
+         variant="ghost"
+         role="combobox"
+         aria-expanded={open}
+      >
+         {StatusIcon ? <StatusIcon /> : <></>}
+      </Button>
+   );
+}
+
+interface StatusSelectorItemProps {
+   item: any;
+   value: string;
+   onSelect: (statusId: string) => void;
+}
+
+function StatusSelectorItem({ item, value, onSelect }: StatusSelectorItemProps) {
+   const StatusIcon = useIssueStatusIcon(item);
+
+   return (
+      <CommandItem
+         value={item.id}
+         onSelect={onSelect}
+         className="flex items-center justify-between"
+      >
+         <div className="flex items-center gap-2">
+            <StatusIcon />
+            {item.name}
+         </div>
+         {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+         <span className="text-muted-foreground text-xs">{0}</span>
+      </CommandItem>
    );
 }
 

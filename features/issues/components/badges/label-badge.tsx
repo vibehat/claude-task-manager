@@ -1,21 +1,21 @@
 import { Badge } from '@/components/ui/badge';
-import type { LabelInterface } from '@/mock-data/labels';
+import type { IssueLabel } from '@/libs/client/graphql-client/generated';
 
-export function LabelBadge({ label }: { label: LabelInterface[] }): React.JSX.Element {
+export function LabelBadge({ labels }: { labels: IssueLabel[] }): React.JSX.Element {
    return (
       <>
-         {label.map((l) => (
+         {labels.map((issueLabel) => (
             <Badge
-               key={l.id}
+               key={issueLabel.id}
                variant="outline"
                className="gap-1.5 rounded-full text-muted-foreground bg-background"
             >
                <span
                   className="size-1.5 rounded-full"
-                  style={{ backgroundColor: l.color }}
+                  style={{ backgroundColor: issueLabel.label.color }}
                   aria-hidden="true"
                ></span>
-               {l.name}
+               {issueLabel.label.name}
             </Badge>
          ))}
       </>

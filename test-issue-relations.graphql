@@ -1,0 +1,19 @@
+query TestIssueRelations {
+  issues {
+    id
+    identifier
+    title
+    issueStatus {
+      id
+      name
+      color
+      iconName
+    }
+    issuePriority {
+      id
+      name
+      iconName
+      order
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { createTypeGraphQLSchema } from '@/libs/server/graphql';
 import { createGraphQLContext } from '@/libs/server/graphql/context';
 import type { NextRequest } from 'next/server';
 // import { responseCachePlugin } from '@apollo/server-plugin-response-cache';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from '@apollo/server-plugin-landing-page-graphql-playground';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 // Create server with lazy schema initialization to avoid top-level await
 const createServer = async () => {
@@ -15,13 +15,11 @@ const createServer = async () => {
       // Enable introspection and playground in development
       introspection: process.env.NODE_ENV !== 'production',
       plugins: [
-         // GraphQL Playground in development only
+         // Apollo Studio Explorer in development only
          ...(process.env.NODE_ENV !== 'production'
             ? [
-                 ApolloServerPluginLandingPageGraphQLPlayground({
-                    settings: {
-                       'request.credentials': 'include',
-                    },
+                 ApolloServerPluginLandingPageLocalDefault({
+                    includeCookies: true,
                  }),
               ]
             : []),
