@@ -1,6 +1,6 @@
-export const BacklogIcon: React.FC = () => {
+export const BacklogIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
          <circle
             cx="7"
             cy="7"
@@ -27,9 +27,9 @@ export const BacklogIcon: React.FC = () => {
    );
 };
 
-export const PausedIcon: React.FC = () => {
+export const PausedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
          <circle
             cx="7"
             cy="7"
@@ -56,9 +56,9 @@ export const PausedIcon: React.FC = () => {
    );
 };
 
-export const ToDoIcon: React.FC = () => {
+export const ToDoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
          <circle
             cx="7"
             cy="7"
@@ -85,9 +85,9 @@ export const ToDoIcon: React.FC = () => {
    );
 };
 
-export const InProgressIcon: React.FC = () => {
+export const InProgressIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
          <circle
             cx="7"
             cy="7"
@@ -114,9 +114,9 @@ export const InProgressIcon: React.FC = () => {
    );
 };
 
-export const TechnicalReviewIcon: React.FC = () => {
+export const TechnicalReviewIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
          <circle
             cx="7"
             cy="7"
@@ -143,9 +143,9 @@ export const TechnicalReviewIcon: React.FC = () => {
    );
 };
 
-export const CompletedIcon: React.FC = () => {
+export const CompletedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
          <circle
             cx="7"
             cy="7"

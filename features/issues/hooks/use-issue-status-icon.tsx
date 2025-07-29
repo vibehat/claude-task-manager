@@ -9,7 +9,7 @@ import {
    CompletedIcon,
 } from '@/components/icons/issue-status-icons';
 
-const iconMapById: Record<string, FC> = {
+const iconMapById: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
    'in-progress': InProgressIcon,
    'technical-review': TechnicalReviewIcon,
    'completed': CompletedIcon,
@@ -18,7 +18,7 @@ const iconMapById: Record<string, FC> = {
    'backlog': BacklogIcon,
 };
 
-const iconMapByName: Record<string, FC> = {
+const iconMapByName: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
    BacklogIcon: BacklogIcon,
    PausedIcon: PausedIcon,
    ToDoIcon: ToDoIcon,
@@ -27,7 +27,9 @@ const iconMapByName: Record<string, FC> = {
    CompletedIcon: CompletedIcon,
 };
 
-export function useIssueStatusIcon(status: Pick<IssueStatus, 'id' | 'iconName'>): FC {
+export function useIssueStatusIcon(
+   status: Pick<IssueStatus, 'id' | 'iconName'>
+): FC<React.SVGProps<SVGSVGElement>> {
    // First try to map by iconName
    if (status.iconName && iconMapByName[status.iconName]) {
       return iconMapByName[status.iconName];
