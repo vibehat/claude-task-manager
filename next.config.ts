@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
             os: false,
          };
       }
+
+      // Handle font files for Milkdown Crepe
+      config.module.rules.push({
+         test: /\.(woff|woff2|eot|ttf|otf)$/i,
+         type: 'asset/resource',
+      });
+
       return config;
    },
 };

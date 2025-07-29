@@ -7,6 +7,7 @@ import {
    UpdateIssueModalProvider,
    IssueSidePanelProvider,
 } from '@/features/issues';
+import { useIssueSidePanelStore } from '@/store/issue-side-panel-store';
 import { IndieProjectProvider } from '@/libs/client/contexts/indie-project-context';
 import { IndieSidebar } from '@/components/layout/sidebar/indie-sidebar';
 import { cn } from '@/libs/client/utils';
@@ -31,6 +32,7 @@ export function IndieLayout({
    headersNumber = 2,
    className,
 }: IndieLayoutProps): React.JSX.Element {
+   const { isOpen, panelWidth } = useIssueSidePanelStore();
    const height = {
       1: 'h-[calc(100svh-40px)] lg:h-[calc(100svh-56px)]',
       2: 'h-[calc(100svh-80px)] lg:h-[calc(100svh-96px)]',
@@ -48,7 +50,12 @@ export function IndieLayout({
             <UpdateIssueModalProvider />
             <IssueSidePanelProvider />
             <IndieSidebar />
-            <SidebarInset>
+            <SidebarInset
+               style={{
+                  marginRight: isOpen ? `${panelWidth}px` : '0',
+                  transition: 'margin-right 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+               }}
+            >
                <div className={cn('h-svh overflow-hidden lg:p-2 w-full', className)}>
                   <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full">
                      {headerElement}

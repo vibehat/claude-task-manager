@@ -99,15 +99,15 @@ export const LowPriorityIcon = ({ className, ...props }: IconProps) => (
 
 export const getPriorityIcon = (iconName: string): React.FC<IconProps> => {
    switch (iconName) {
-      case 'no-priority':
+      case 'NoPriorityIcon':
          return NoPriorityIcon;
-      case 'urgent':
+      case 'UrgentPriorityIcon':
          return UrgentPriorityIcon;
-      case 'high':
+      case 'HighPriorityIcon':
          return HighPriorityIcon;
-      case 'medium':
+      case 'MediumPriorityIcon':
          return MediumPriorityIcon;
-      case 'low':
+      case 'LowPriorityIcon':
          return LowPriorityIcon;
       default:
          return NoPriorityIcon;
