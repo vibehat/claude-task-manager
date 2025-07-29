@@ -19,12 +19,12 @@ const iconMapById: Record<string, FC> = {
 };
 
 const iconMapByName: Record<string, FC> = {
-   BacklogIcon,
-   PausedIcon,
-   ToDoIcon,
-   InProgressIcon,
-   TechnicalReviewIcon,
-   CompletedIcon,
+   BacklogIcon: BacklogIcon,
+   PausedIcon: PausedIcon,
+   ToDoIcon: ToDoIcon,
+   InProgressIcon: InProgressIcon,
+   TechnicalReviewIcon: TechnicalReviewIcon,
+   CompletedIcon: CompletedIcon,
 };
 
 export function useIssueStatusIcon(status: Pick<IssueStatus, 'id' | 'iconName'>): FC {

@@ -13,28 +13,10 @@ type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
 
 interface IssueGridViewProps {
    statuses: IssueStatusFromQuery[];
-   loading?: boolean;
-   error?: Error | null;
 }
 
-const IssueGridView: FC<IssueGridViewProps> = ({ statuses, loading, error }) => {
+const IssueGridView: FC<IssueGridViewProps> = ({ statuses }) => {
    const { where } = useIssuesFilterStore();
-
-   if (loading) {
-      return (
-         <div className="flex items-center justify-center h-64">
-            <div className="text-sm text-muted-foreground">Loading issues...</div>
-         </div>
-      );
-   }
-
-   if (error) {
-      return (
-         <div className="flex items-center justify-center h-64">
-            <div className="text-sm text-red-500">Error loading issues: {error.message}</div>
-         </div>
-      );
-   }
 
    return (
       <div className={cn('w-full h-full overflow-x-auto')}>

@@ -2,7 +2,7 @@
 
 import { useGetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
 import { useSearchStore } from '../../store/search-store';
-import { useViewStore } from '../../store/view-store';
+import { useViewStore } from '@/store/view-store';
 import SearchIssues from './search-issues';
 import { IssueListView } from '../issues-list';
 import { IssueGridView } from '../issues-grid';

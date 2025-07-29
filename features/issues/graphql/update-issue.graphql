@@ -7,7 +7,7 @@ mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
 }
 
 mutation UpdateIssueStatus($id: String!, $status: String!) {
-   updateOneIssue(where: { id: $id }, data: { status: { set: $status } }) {
+   updateOneIssue(where: { id: $id }, data: { issueStatus: { connect: { id: $status } } }) {
       ...IssueCore
    }
 }

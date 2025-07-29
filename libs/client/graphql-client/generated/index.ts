@@ -11444,7 +11444,7 @@ export type UpdateIssueMutationResult = Apollo.MutationResult<UpdateIssueMutatio
 export type UpdateIssueMutationOptions = Apollo.BaseMutationOptions<UpdateIssueMutation, UpdateIssueMutationVariables>;
 export const UpdateIssueStatusDocument = gql`
     mutation UpdateIssueStatus($id: String!, $status: String!) {
-  updateOneIssue(where: {id: $id}, data: {status: {set: $status}}) {
+  updateOneIssue(where: {id: $id}, data: {issueStatus: {connect: {id: $status}}}) {
     ...IssueCore
   }
 }

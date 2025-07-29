@@ -168,24 +168,3 @@ export const CompletedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) =>
       </svg>
    );
 };
-
-export const getStatusIcon = (iconName: string): React.FC<React.SVGProps<SVGSVGElement>> => {
-   switch (iconName) {
-      case 'to-do':
-      case 'todo':
-         return ToDoIcon;
-      case 'backlog':
-         return BacklogIcon;
-      case 'in-progress':
-         return InProgressIcon;
-      case 'technical-review':
-         return TechnicalReviewIcon;
-      case 'completed':
-      case 'done':
-         return CompletedIcon;
-      case 'paused':
-         return PausedIcon;
-      default:
-         return ToDoIcon;
-   }
-};

@@ -15,7 +15,7 @@ import {
    useGetIssueStatusesQuery,
    useUpdateIssueStatusMutation,
 } from '@/libs/client/graphql-client/generated';
-import { getStatusIcon } from '@/features/issues/constants/status-icons';
+import { useIssueStatusIcon } from '@/features/issues/hooks/use-issue-status-icon';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
@@ -57,23 +57,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
       <div className="*:not-first:mt-2">
          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-               <Button
-                  id={id}
-                  className="size-7 flex items-center justify-center"
-                  size="icon"
-                  variant="ghost"
-                  role="combobox"
-                  aria-expanded={open}
-               >
-                  {((): React.JSX.Element => {
-                     const selectedItem = statuses.find((item) => item.id === value);
-                     if (selectedItem) {
-                        const Icon = getStatusIcon(selectedItem.iconName);
-                        return <Icon />;
-                     }
-                     return <></>;
-                  })()}
-               </Button>
+               <StatusSelectorButton id={id} open={open} statuses={statuses} value={value} />
             </PopoverTrigger>
             <PopoverContent
                className="border-input w-full min-w-[var(--radix-popper-anchor-width)] p-0"
@@ -84,30 +68,71 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
                   <CommandList>
                      <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
-                        {statuses.map((item) => {
-                           const Icon = getStatusIcon(item.iconName);
-                           return (
-                              <CommandItem
-                                 key={item.id}
-                                 value={item.id}
-                                 onSelect={handleStatusChange}
-                                 className="flex items-center justify-between"
-                              >
-                                 <div className="flex items-center gap-2">
-                                    <Icon />
-                                    {item.name}
-                                 </div>
-                                 {value === item.id && <CheckIcon size={16} className="ml-auto" />}
-                                 <span className="text-muted-foreground text-xs">{0}</span>
-                              </CommandItem>
-                           );
-                        })}
+                        {statuses.map((item) => (
+                           <StatusSelectorItem
+                              key={item.id}
+                              item={item}
+                              value={value}
+                              onSelect={handleStatusChange}
+                           />
+                        ))}
                      </CommandGroup>
                   </CommandList>
                </Command>
             </PopoverContent>
          </Popover>
       </div>
+   );
+}
+
+// Helper components that can use hooks
+interface StatusSelectorButtonProps {
+   id: string;
+   open: boolean;
+   statuses: any[];
+   value: string;
+}
+
+function StatusSelectorButton({ id, open, statuses, value }: StatusSelectorButtonProps) {
+   const selectedItem = statuses.find((item) => item.id === value);
+   const StatusIcon = selectedItem ? useIssueStatusIcon(selectedItem) : null;
+
+   return (
+      <Button
+         id={id}
+         className="size-7 flex items-center justify-center"
+         size="icon"
+         variant="ghost"
+         role="combobox"
+         aria-expanded={open}
+      >
+         {StatusIcon ? <StatusIcon /> : <></>}
+      </Button>
+   );
+}
+
+interface StatusSelectorItemProps {
+   item: any;
+   value: string;
+   onSelect: (statusId: string) => void;
+}
+
+function StatusSelectorItem({ item, value, onSelect }: StatusSelectorItemProps) {
+   const StatusIcon = useIssueStatusIcon(item);
+
+   return (
+      <CommandItem
+         value={item.id}
+         onSelect={onSelect}
+         className="flex items-center justify-between"
+      >
+         <div className="flex items-center gap-2">
+            <StatusIcon />
+            {item.name}
+         </div>
+         {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+         <span className="text-muted-foreground text-xs">{0}</span>
+      </CommandItem>
    );
 }
 

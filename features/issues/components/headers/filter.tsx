@@ -21,7 +21,7 @@ import {
    useGetProjectsQuery,
    SortOrder,
 } from '@/libs/client/graphql-client/generated';
-import { getStatusIcon } from '../../constants/status-icons';
+import { useIssueStatusIcon } from '../../hooks/use-issue-status-icon';
 import { getPriorityIcon } from '../../constants/priority-icons';
 import {
    CheckIcon,
@@ -201,26 +201,12 @@ export function Filter(): React.JSX.Element {
                      <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
                         {allStatus.map((item) => (
-                           <CommandItem
+                           <FilterStatusItem
                               key={item.id}
-                              value={item.id}
+                              item={item}
+                              isSelected={filters.status.includes(item.id)}
                               onSelect={() => toggleFilter('status', item.id)}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 {(() => {
-                                    const Icon = getStatusIcon(item.iconName);
-                                    return <Icon />;
-                                 })()}
-                                 {item.name}
-                              </div>
-                              {filters.status.includes(item.id) && (
-                                 <CheckIcon size={16} className="ml-auto" />
-                              )}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
-                              </span>
-                           </CommandItem>
+                           />
                         ))}
                      </CommandGroup>
                   </CommandList>
@@ -412,6 +398,34 @@ export function Filter(): React.JSX.Element {
             ) : null}
          </PopoverContent>
       </Popover>
+   );
+}
+
+// Helper component that can use hooks
+interface FilterStatusItemProps {
+   item: any;
+   isSelected: boolean;
+   onSelect: () => void;
+}
+
+function FilterStatusItem({ item, isSelected, onSelect }: FilterStatusItemProps) {
+   const StatusIcon = useIssueStatusIcon(item);
+
+   return (
+      <CommandItem
+         value={item.id}
+         onSelect={onSelect}
+         className="flex items-center justify-between"
+      >
+         <div className="flex items-center gap-2">
+            <StatusIcon />
+            {item.name}
+         </div>
+         {isSelected && <CheckIcon size={16} className="ml-auto" />}
+         <span className="text-muted-foreground text-xs">
+            {0 /* TODO: Get count from GraphQL */}
+         </span>
+      </CommandItem>
    );
 }
 
