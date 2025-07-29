@@ -1,1 +1,1 @@
-export * from './api-key-manager';
+export * from './apiKeyManager';

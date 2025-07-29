@@ -9,7 +9,7 @@ export { createGraphQLContext } from './context';
 export { pubSub, Topic } from './pubsub';
 
 // Export types
-export * from './types/task.types';
-export * from './types/cli.types';
-export * from './types/issue.types';
-export * from './types/sync.types';
+export * from './types/taskTypes';
+export * from './types/cliTypes';
+export * from './types/issueTypes';
+export * from './types/syncTypes';

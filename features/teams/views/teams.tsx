@@ -1,7 +1,7 @@
 'use client';
 
 import { teams } from '@/mock-data/teams';
-import TeamLine from './team-line';
+import TeamLine from './TeamLine';
 
 export default function Teams(): React.JSX.Element {
    return (

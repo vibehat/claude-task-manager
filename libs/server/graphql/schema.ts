@@ -9,7 +9,7 @@ import { buildSchema } from 'type-graphql';
 import { DateTimeResolver } from 'graphql-scalars';
 import { GraphQLJSONObject } from 'graphql-type-json';
 // import { CLIResolver } from './resolvers/cli.resolver'; // Temporarily disabled
-import { IssueResolver } from './resolvers/issue.resolver'; // Temporarily disabled
+import { IssueResolver } from './resolvers/issueResolver'; // Temporarily disabled
 import {
    // Import all generated resolvers (CRUD + Relations)
    resolvers as generatedResolvers,

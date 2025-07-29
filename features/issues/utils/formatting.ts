@@ -2,7 +2,7 @@
  * Issue Formatting Utilities
  */
 
-import { Issue } from '../types/issue.types';
+import { Issue } from '../types/issueTypes';
 
 /**
  * Format issue identifier for display

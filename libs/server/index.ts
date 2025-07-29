@@ -23,7 +23,7 @@ export * from './security';
 export * from './validation';
 
 // WebSocket server
-export * from './websocket-server';
+export * from './websocketServer';
 
 // Types - specific exports to avoid conflicts
 export type {

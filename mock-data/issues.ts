@@ -5,8 +5,8 @@ import type { Priority } from './priorities';
 import { priorities } from './priorities';
 import type { Project } from './projects';
 import { projects } from './projects';
-import type { Status } from './status';
-import { status } from './status';
+import type { Status } from './StatusIcon';
+import { status } from './StatusIcon';
 import type { User } from './users';
 import { users } from './users';
 

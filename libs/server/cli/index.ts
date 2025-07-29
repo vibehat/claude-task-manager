@@ -1,5 +1,5 @@
-export * from './cli-executor-types';
-export * from './cli-command-validator';
+export * from './cliExecutorTypes';
+export * from './cliCommandValidator';
 
 import type { EventEmitter } from 'events';
 
@@ -65,7 +65,7 @@ class ClientTaskMasterCLIExecutor {
 const initializeServerModules = () => {
    if (typeof window === 'undefined' && !_cliExecutor) {
       try {
-         const serverModule = require('./cli-executor');
+         const serverModule = require('./cliExecutor');
          _cliExecutor = serverModule.cliExecutor;
          _TaskMasterCLIExecutor = serverModule.TaskMasterCLIExecutor;
       } catch (error) {

@@ -6,7 +6,7 @@
  */
 
 // Apollo Client exports
-export { apolloClient as client, apolloClient, cacheHelpers } from './apollo-client';
+export { apolloClient as client, apolloClient, cacheHelpers } from './apolloClient';
 
 // Generated types and hooks
 export * from './generated';
@@ -29,7 +29,7 @@ export {
 
 // Provider component for React apps
 export { ApolloProvider } from '@apollo/client';
-export { GraphQLProvider } from './provider';
+export { GraphQLProvider } from './GraphQLProvider';
 
 // Error handling utilities
 export { ApolloError, isApolloError } from '@apollo/client';

@@ -2,8 +2,8 @@
  * Issue Grouping Utilities
  */
 
-import { Issue } from '../types/issue.types';
-import { GroupByOption } from '../types/views.types';
+import { Issue } from '../types/issueTypes';
+import { GroupByOption } from '../types/viewsTypes';
 
 export interface IssueGroup {
    key: string;

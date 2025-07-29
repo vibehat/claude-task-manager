@@ -5,8 +5,8 @@
  */
 
 import { PubSub } from 'graphql-subscriptions';
-import type { IssueUpdatePayload } from './types/issue.types';
-import type { SyncOperationPayload } from './types/sync.types';
+import type { IssueUpdatePayload } from './types/issueTypes';
+import type { SyncOperationPayload } from './types/syncTypes';
 
 export const enum Topic {
    ISSUE_UPDATED = 'ISSUE_UPDATED',
