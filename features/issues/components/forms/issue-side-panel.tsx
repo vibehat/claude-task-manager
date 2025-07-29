@@ -12,7 +12,7 @@ import { useUpdateIssueMutation } from '@/libs/client/graphql-client/generated';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
-import { Calendar, Clock, User, Flag, Tag, Folder, X } from 'lucide-react';
+import { Calendar, Clock, User, Flag, Folder, X } from 'lucide-react';
 import { StatusSelector } from '../selectors/status-selector';
 import { PrioritySelector } from '../selectors/priority-selector';
 import { AssigneeUser } from '../assignee-user';
@@ -165,35 +165,13 @@ export function IssueSidePanel(): React.JSX.Element {
                      </div>
 
                      {/* Project */}
-                     {issue.project && (
+                     {issue.projectId && (
                         <div className="flex items-center justify-between">
                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
                               <Folder className="h-4 w-4" />
                               <span>Project</span>
                            </div>
-                           <Badge variant="outline">{issue.project.name}</Badge>
-                        </div>
-                     )}
-
-                     {/* Labels */}
-                     {issue.labels && issue.labels.length > 0 && (
-                        <div className="flex items-start justify-between">
-                           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <Tag className="h-4 w-4" />
-                              <span>Labels</span>
-                           </div>
-                           <div className="flex flex-wrap gap-1 max-w-[200px]">
-                              {issue.labels.map((labelConnection) => (
-                                 <Badge
-                                    key={labelConnection.label.id}
-                                    variant="secondary"
-                                    style={{ backgroundColor: `${labelConnection.label.color}20` }}
-                                    className="text-xs"
-                                 >
-                                    {labelConnection.label.name}
-                                 </Badge>
-                              ))}
-                           </div>
+                           <Badge variant="outline">Project ID: {issue.projectId}</Badge>
                         </div>
                      )}
 
