@@ -1,6 +1,6 @@
 'use client';
 
-import { SubtaskItem } from './SubtaskItem';
+import { SubtaskItem } from '../../../forms/SubtaskItem';
 import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 
 type IssueFromQuery = GetIssuesQuery['issues'][0];

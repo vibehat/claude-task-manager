@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { MarkdownEditor } from './MarkdownEditor';
+import { MarkdownEditor } from '../../../editors/MarkdownEditor';
 
 interface IssueDescriptionSectionProps {
    initialValue: string;

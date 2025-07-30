@@ -4,10 +4,10 @@ import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import { format } from 'date-fns';
 import { Calendar, Clock, User, Flag, Folder, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { StatusSelector } from '../selectors/StatusSelector';
-import { PrioritySelector } from '../selectors/PrioritySelector';
-import { LabelSelector } from '../selectors/LabelSelector';
-import { AssigneeUser } from '../AssigneeUser';
+import { StatusSelector } from '../../../selectors/StatusSelector';
+import { PrioritySelector } from '../../../selectors/PrioritySelector';
+import { LabelSelector } from '../../../selectors/LabelSelector';
+import { AssigneeUser } from '../../../AssigneeUser';
 
 type IssueFromQuery = GetIssuesQuery['issues'][0];
 
@@ -95,7 +95,14 @@ export function IssueDetailsSection({
                      <Calendar className="h-4 w-4" />
                      <span>Due Date</span>
                   </div>
-                  <span className="text-sm">{format(new Date(issue.dueDate), 'MMM dd, yyyy')}</span>
+                  <span className="text-sm">
+                     {(() => {
+                        const date = new Date(issue.dueDate);
+                        return isNaN(date.getTime())
+                           ? 'Invalid date'
+                           : format(date, 'MMM dd, yyyy');
+                     })()}
+                  </span>
                </div>
             )}
 
@@ -106,7 +113,10 @@ export function IssueDetailsSection({
                   <span>Created</span>
                </div>
                <span className="text-sm text-muted-foreground">
-                  {format(new Date(issue.createdAt), 'MMM dd, yyyy')}
+                  {(() => {
+                     const date = new Date(issue.createdAt);
+                     return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
+                  })()}
                </span>
             </div>
 
@@ -117,7 +127,10 @@ export function IssueDetailsSection({
                   <span>Updated</span>
                </div>
                <span className="text-sm text-muted-foreground">
-                  {format(new Date(issue.updatedAt), 'MMM dd, yyyy')}
+                  {(() => {
+                     const date = new Date(issue.updatedAt);
+                     return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
+                  })()}
                </span>
             </div>
          </div>

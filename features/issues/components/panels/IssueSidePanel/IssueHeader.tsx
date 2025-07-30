@@ -4,8 +4,8 @@ import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { X } from 'lucide-react';
-import { StatusSelector } from '../selectors/StatusSelector';
-import { PrioritySelector } from '../selectors/PrioritySelector';
+import { StatusSelector } from '../../selectors/StatusSelector';
+import { PrioritySelector } from '../../selectors/PrioritySelector';
 
 type IssueFromQuery = GetIssuesQuery['issues'][0];
 

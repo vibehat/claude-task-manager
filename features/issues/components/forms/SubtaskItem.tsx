@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
-import { MarkdownEditor } from './MarkdownEditor';
+import { MarkdownEditor } from '../editors/MarkdownEditor';
 import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 
 type Subtask = NonNullable<GetIssuesQuery['issues'][0]['subtask']>;
