@@ -6,10 +6,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import GroupIssuesGrid from './GroupIssuesGrid';
 import { cn } from '@/libs/client/utils';
 import { CustomDragLayer } from '../../components/items/IssueDragType';
-import type { GetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
+import type { IssueStatus } from '@/libs/client/types';
 import { useIssuesFilterStore } from '../../store/issueFilterStore';
 
-type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
+type IssueStatusFromQuery = IssueStatus;
 
 interface IssueGridViewProps {
    statuses: IssueStatusFromQuery[];

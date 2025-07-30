@@ -97,7 +97,7 @@ export function LabelSelector({ selectedLabels, onChange }: LabelSelectorProps):
                                  </div>
                                  {isSelected && <CheckIcon size={16} className="ml-auto" />}
                                  <span className="text-muted-foreground text-xs">
-                                    {0 /* TODO: Get count from GraphQL */}
+                                    {0 /* TODO: Now using local data*/}
                                  </span>
                               </CommandItem>
                            );

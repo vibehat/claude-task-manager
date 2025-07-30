@@ -106,7 +106,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): Re
                               </div>
                               {value === project.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
+                                 {0 /* TODO: Now using local data*/}
                               </span>
                            </CommandItem>
                         ))}

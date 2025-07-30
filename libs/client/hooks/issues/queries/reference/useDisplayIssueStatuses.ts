@@ -1,5 +1,10 @@
-import { useGetDisplayIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 
 export function useDisplayIssueStatuses() {
-   return useGetDisplayIssueStatusesQuery();
+   const { statuses } = useDataStore();
+   return {
+      data: { issueStatuses: statuses },
+      loading: false,
+      error: null,
+   };
 }

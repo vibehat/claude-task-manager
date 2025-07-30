@@ -10,18 +10,29 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import type { IssuePriority } from '@/libs/client/graphql-client/generated';
-import {
-   useGetPrioritiesQuery,
-   useUpdateIssuePriorityMutation,
-   SortOrder,
-} from '@/libs/client/graphql-client/generated';
+import type { IssuePriority } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { getPriorityIcon } from '@/features/issues/constants/NoPriorityIcon';
+
+const getPriorityIconName = (name: string): string => {
+   switch (name.toLowerCase()) {
+      case 'urgent':
+         return 'UrgentPriorityIcon';
+      case 'high':
+         return 'HighPriorityIcon';
+      case 'medium':
+         return 'MediumPriorityIcon';
+      case 'low':
+         return 'LowPriorityIcon';
+      default:
+         return 'NoPriorityIcon';
+   }
+};
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
-   priority: Pick<IssuePriority, 'id' | 'iconName' | 'name'> | string | null | undefined;
+   priority: Pick<IssuePriority, 'id' | 'name'> | string | null | undefined;
    issueId?: string;
 }
 
@@ -31,14 +42,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
    const priorityId = typeof priority === 'string' ? priority : priority?.id;
    const [value, setValue] = useState<string>(priorityId || 'no-priority');
 
-   const [updatePriority] = useUpdateIssuePriorityMutation();
-   const { data: prioritiesData } = useGetPrioritiesQuery({
-      variables: {
-         orderBy: [{ order: SortOrder.Asc }],
-      },
-   });
-
-   const priorities = prioritiesData?.issuePriorities || [];
+   const { updateIssue, priorities } = useDataStore();
 
    useEffect(() => {
       setValue(priorityId || 'no-priority');
@@ -49,13 +53,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
       setOpen(false);
 
       if (issueId) {
-         updatePriority({
-            variables: {
-               id: issueId,
-               priorityId: priorityId,
-            },
-            refetchQueries: ['GetIssues'],
-         });
+         updateIssue(issueId, { priorityId });
       }
    };
 
@@ -74,7 +72,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
                   {((): React.JSX.Element => {
                      const selectedItem = priorities.find((item) => item.id === value);
                      if (selectedItem) {
-                        const Icon = getPriorityIcon(selectedItem.iconName);
+                        const Icon = getPriorityIcon(getPriorityIconName(selectedItem.name));
                         return <Icon className="text-muted-foreground size-4" />;
                      }
                      return <></>;
@@ -91,7 +89,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
                      <CommandEmpty>No priority found.</CommandEmpty>
                      <CommandGroup>
                         {priorities.map((item) => {
-                           const Icon = getPriorityIcon(item.iconName);
+                           const Icon = getPriorityIcon(getPriorityIconName(item.name));
                            return (
                               <CommandItem
                                  key={item.id}

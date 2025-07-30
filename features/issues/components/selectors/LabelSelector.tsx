@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useGetLabelsQuery, useCreateLabelMutation } from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { CheckIcon, Tag, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/libs/client/utils';
@@ -35,9 +35,9 @@ export function LabelSelector({
 }: LabelSelectorProps): React.JSX.Element {
    const [open, setOpen] = useState<boolean>(false);
    const [searchValue, setSearchValue] = useState<string>('');
-   const { data: labelsData, loading: labelsLoading, refetch } = useGetLabelsQuery();
-   const [createLabel, { loading: createLoading }] = useCreateLabelMutation();
-   const labels = labelsData?.labels || [];
+   const { labels } = useDataStore();
+   const labelsLoading = false;
+   const createLoading = false;
 
    const generateRandomColor = (): string => {
       const colors = [
@@ -77,24 +77,8 @@ export function LabelSelector({
 
    const handleCreateLabel = async (name: string): Promise<void> => {
       try {
-         const result = await createLabel({
-            variables: {
-               input: {
-                  name: name.trim(),
-                  color: generateRandomColor(),
-               },
-            },
-         });
-
-         if (result.data?.createOneLabel) {
-            const newLabel = result.data.createOneLabel;
-            // Add the new label to selection
-            const newLabelIds = [...selectedLabels.map((l) => l.label.id), newLabel.id];
-            onChange(newLabelIds);
-            // Refetch labels to update the list
-            await refetch();
-            setSearchValue('');
-         }
+         // Label creation not implemented in local-only mode
+         console.warn('Label creation not implemented in local-only mode');
       } catch (error) {
          console.error('Failed to create label:', error);
       }

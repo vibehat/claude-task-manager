@@ -17,9 +17,6 @@ const IMPORT_MAPPINGS = {
   '@/components/layout/theme-provider': '@/components/layout/ThemeProvider',
   '@/components/layout/theme-toggle': '@/components/layout/ThemeToggle',
   
-  // GraphQL client imports - keeping generated path as is since it's auto-generated
-  '@/libs/client/graphql-client/apollo-client': '@/libs/client/graphql-client/apolloClient',
-  '@/libs/client/graphql-client/provider': '@/libs/client/graphql-client/GraphQLProvider',
   
   // Store imports
   '@/store/create-issue-store': '@/store/createIssueStore',
@@ -76,8 +73,6 @@ const RELATIVE_MAPPINGS = {
   './indie-layout': './IndieLayout',
   './theme-provider': './ThemeProvider',
   './theme-toggle': './ThemeToggle',
-  './apollo-client': './apolloClient',
-  './provider': './GraphQLProvider',
   
   // Feature relative imports
   './use-issue-status-icon': './useIssueStatusIcon',

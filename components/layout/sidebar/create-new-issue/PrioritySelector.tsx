@@ -89,7 +89,7 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps):
                               </div>
                               {value === item.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
+                                 {0 /* TODO: Now using local data*/}
                               </span>
                            </CommandItem>
                         ))}

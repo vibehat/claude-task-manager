@@ -1,6 +1,7 @@
 'use client';
 
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
+import type { Issue } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { format } from 'date-fns';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
@@ -17,22 +18,24 @@ import { IssueContextMenu } from './IssueContextMenu';
 
 export const IssueDragType = 'ISSUE';
 
-type IssueFromQuery = GetIssuesQuery['issues'][0];
-
 interface IssueGridProps {
-   issue: IssueFromQuery;
+   issue: Issue;
 }
 
 // Custom DragLayer component to render the drag preview
-function IssueDragPreview({ issue }: { issue: IssueFromQuery }): React.JSX.Element {
+function IssueDragPreview({ issue }: { issue: Issue }): React.JSX.Element {
+   const { getUserById, getStatusById, getPriorityById } = useDataStore();
+   const assignee = issue.assigneeId ? getUserById(issue.assigneeId) : null;
+   const status = getStatusById(issue.statusId);
+   const priority = issue.priorityId ? getPriorityById(issue.priorityId) : null;
    return (
       <div className="w-full p-3 bg-background rounded-md border border-border/50 overflow-hidden">
          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-1.5">
-               <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
-               <span className="text-xs text-muted-foreground font-medium">{issue.identifier}</span>
+               <PrioritySelector priority={priority} issueId={issue.id} />
+               <span className="text-xs text-muted-foreground font-medium">{issue.id}</span>
             </div>
-            <StatusSelector status={issue.issueStatus} issueId={issue.id} />
+            <StatusSelector status={status} issueId={issue.id} />
          </div>
 
          <h3 className="text-sm font-semibold mb-3 line-clamp-2">{issue.title}</h3>
@@ -45,7 +48,7 @@ function IssueDragPreview({ issue }: { issue: IssueFromQuery }): React.JSX.Eleme
             <span className="text-xs text-muted-foreground">
                {format(new Date(issue.createdAt), 'MMM dd')}
             </span>
-            <AssigneeUser user={issue.assignee} />
+            <AssigneeUser user={assignee as any} />
          </div>
       </div>
    );
@@ -79,6 +82,10 @@ export function CustomDragLayer(): React.JSX.Element | null {
 
 export function IssueGrid({ issue }: IssueGridProps): React.JSX.Element {
    const ref = useRef<HTMLDivElement>(null);
+   const { getUserById, getStatusById, getPriorityById } = useDataStore();
+   const assignee = issue.assigneeId ? getUserById(issue.assigneeId) : null;
+   const status = getStatusById(issue.statusId);
+   const priority = issue.priorityId ? getPriorityById(issue.priorityId) : null;
 
    // Set up drag functionality.
    const [{ isDragging }, drag, preview] = useDrag(() => ({
@@ -108,7 +115,7 @@ export function IssueGrid({ issue }: IssueGridProps): React.JSX.Element {
             <motion.div
                ref={ref}
                className="w-full p-3 bg-background rounded-md shadow-xs border border-border/50 cursor-default"
-               layoutId={`issue-grid-${issue.identifier}`}
+               layoutId={`issue-grid-${issue.id}`}
                style={{
                   opacity: isDragging ? 0.5 : 1,
                   cursor: isDragging ? 'grabbing' : 'default',
@@ -116,12 +123,10 @@ export function IssueGrid({ issue }: IssueGridProps): React.JSX.Element {
             >
                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5">
-                     <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
-                     <span className="text-xs text-muted-foreground font-medium">
-                        {issue.identifier}
-                     </span>
+                     <PrioritySelector priority={priority} issueId={issue.id} />
+                     <span className="text-xs text-muted-foreground font-medium">{issue.id}</span>
                   </div>
-                  <StatusSelector status={issue.issueStatus} issueId={issue.id} />
+                  <StatusSelector status={status} issueId={issue.id} />
                </div>
                <h3 className="text-sm font-semibold mb-3 line-clamp-2">{issue.title}</h3>
                <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
@@ -131,11 +136,11 @@ export function IssueGrid({ issue }: IssueGridProps): React.JSX.Element {
                   <span className="text-xs text-muted-foreground">
                      {format(new Date(issue.createdAt), 'MMM dd')}
                   </span>
-                  <AssigneeUser user={issue.assignee} />
+                  <AssigneeUser user={assignee as any} />
                </div>
             </motion.div>
          </ContextMenuTrigger>
-         <IssueContextMenu issueId={issue.id} />
+         <IssueContextMenu issueId={issue.id} issue={issue} />
       </ContextMenu>
    );
 }

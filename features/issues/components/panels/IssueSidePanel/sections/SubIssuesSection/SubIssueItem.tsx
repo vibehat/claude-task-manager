@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-   IssueDetailsFragment,
-   useDeleteIssueMutation,
-} from '@/libs/client/graphql-client/generated';
+import { IssueDetailsFragment } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -32,7 +30,11 @@ interface SubIssueItemProps {
 export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemProps) {
    const [isEditing, setIsEditing] = useState(false);
    const { openPanel } = useIssueSidePanelStore();
-   const [deleteIssue, { loading: deleting }] = useDeleteIssueMutation();
+   const { deleteIssue, getUserById } = useDataStore();
+   const deleting = false;
+
+   // Get assignee data
+   const assignee = subIssue.assigneeId ? getUserById(subIssue.assigneeId) : null;
 
    const getStatusIcon = (status?: string | null) => {
       switch (status) {
@@ -65,7 +67,7 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
       setIsEditing(true);
    };
 
-   const handleDelete = async (e: React.MouseEvent) => {
+   const handleDelete = (e: React.MouseEvent) => {
       e.stopPropagation();
 
       if (!confirm('Are you sure you want to delete this sub-issue?')) {
@@ -73,12 +75,7 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
       }
 
       try {
-         await deleteIssue({
-            variables: {
-               where: { id: subIssue.id },
-            },
-            refetchQueries: ['GetIssues', 'GetIssue'],
-         });
+         deleteIssue(subIssue.id);
          toast.success('Sub-issue deleted successfully');
       } catch (error) {
          toast.error('Failed to delete sub-issue');
@@ -117,19 +114,17 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
          <CardContent className="px-1 py-0">
             <div className="flex items-center justify-between">
                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  {getStatusIcon(subIssue.status)}
-                  <span className="text-xs text-muted-foreground font-mono">
-                     {subIssue.identifier}
-                  </span>
+                  {getStatusIcon(subIssue.statusId)}
+                  <span className="text-xs text-muted-foreground font-mono">{subIssue.id}</span>
                   <h4 className="text-sm font-medium line-clamp-1 flex-1">{subIssue.title}</h4>
                </div>
 
                <div className="flex items-center flex-shrink-0">
-                  {subIssue.assignee && (
+                  {assignee && (
                      <Avatar className="h-4 w-4">
-                        <AvatarImage src={subIssue.assignee.avatarUrl || undefined} />
+                        <AvatarImage src={assignee.avatarUrl || undefined} />
                         <AvatarFallback className="text-xs">
-                           {subIssue.assignee.name?.charAt(0).toUpperCase() || '?'}
+                           {assignee.name?.charAt(0).toUpperCase() || '?'}
                         </AvatarFallback>
                      </Avatar>
                   )}

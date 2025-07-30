@@ -2,10 +2,7 @@
 
 import { Separator } from '@/components/ui/separator';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
-import {
-   useUpdateIssueMutation,
-   useUpdateIssueLabelsMutation,
-} from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
 import { IssueHeader } from './IssueHeader';
@@ -23,8 +20,7 @@ export function IssueSidePanel(): React.JSX.Element {
       closePanel,
       updateIssue: updateIssueInStore,
    } = useIssueSidePanelStore();
-   const [updateIssue, { loading: updating }] = useUpdateIssueMutation();
-   const [updateIssueLabels, { loading: updatingLabels }] = useUpdateIssueLabelsMutation();
+   const { updateIssue } = useDataStore();
 
    const handleUpdateField = async (
       field: 'title' | 'description',
@@ -33,18 +29,11 @@ export function IssueSidePanel(): React.JSX.Element {
       if (!issue) return;
 
       try {
-         const { data } = await updateIssue({
-            variables: {
-               where: { id: issue.id },
-               data: { [field]: { set: value } },
-            },
-            refetchQueries: ['GetIssues'],
-         });
+         // Update the issue using Zustand store
+         updateIssue(issue.id, { [field]: value });
 
-         // Update the issue in the store with the response
-         if (data?.updateOneIssue) {
-            updateIssueInStore(data.updateOneIssue);
-         }
+         // Update the issue in the side panel store with the updated value
+         updateIssueInStore({ ...issue, [field]: value });
 
          toast.success(`${field === 'title' ? 'Title' : 'Description'} updated successfully`);
       } catch (error) {
@@ -72,22 +61,11 @@ export function IssueSidePanel(): React.JSX.Element {
       if (!issue) return;
 
       try {
-         const connectLabels = labelIds.map((labelId) => ({
-            label: { connect: { id: labelId } },
-         }));
+         // Update the issue using Zustand store
+         updateIssue(issue.id, { labelIds });
 
-         const { data } = await updateIssueLabels({
-            variables: {
-               id: issue.id,
-               connectLabels,
-            },
-            refetchQueries: ['GetIssues'],
-         });
-
-         // Update the issue in the store with the response
-         if (data?.updateOneIssue) {
-            updateIssueInStore(data.updateOneIssue);
-         }
+         // Update the issue in the side panel store with the updated labels
+         updateIssueInStore({ ...issue, labelIds });
 
          toast.success('Labels updated successfully');
       } catch (error) {
@@ -113,13 +91,13 @@ export function IssueSidePanel(): React.JSX.Element {
                   <IssueTitleEditor
                      initialValue={issue.title}
                      onBlur={handleTitleUpdate}
-                     disabled={updating || updatingLabels}
+                     disabled={false}
                   />
 
                   <IssueDescriptionSection
                      initialValue={issue.description || ''}
                      onSave={handleDescriptionUpdate}
-                     disabled={updating || updatingLabels}
+                     disabled={false}
                   />
 
                   <Separator />
@@ -127,12 +105,12 @@ export function IssueSidePanel(): React.JSX.Element {
                   <SubtasksSection
                      issue={issue}
                      onSubtaskUpdate={handleSubtaskUpdate}
-                     disabled={updating || updatingLabels}
+                     disabled={false}
                   />
 
                   <Separator />
 
-                  <SubIssuesSection issue={issue} disabled={updating || updatingLabels} />
+                  <SubIssuesSection issue={issue} disabled={false} />
 
                   <Separator />
 

@@ -104,7 +104,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps):
                            </div>
                            {value === null && <CheckIcon size={16} className="ml-auto" />}
                            <span className="text-muted-foreground text-xs">
-                              {0 /* TODO: Get count from GraphQL */}
+                              {0 /* TODO: Now using local data*/}
                            </span>
                         </CommandItem>
                         {users
@@ -125,7 +125,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps):
                                  </div>
                                  {value === user.id && <CheckIcon size={16} className="ml-auto" />}
                                  <span className="text-muted-foreground text-xs">
-                                    {0 /* TODO: Get count from GraphQL */}
+                                    {0 /* TODO: Now using local data*/}
                                  </span>
                               </CommandItem>
                            ))}

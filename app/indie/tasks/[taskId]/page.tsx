@@ -2,7 +2,8 @@
 
 import { useParams } from 'next/navigation';
 import { IndieLayout } from '@/components/layout/IndieLayout';
-import { useGetIssueQuery } from '@/libs/client/graphql-client/generated';
+import { useIssue } from '@/libs/client/hooks/useIssues';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -15,17 +16,17 @@ export default function TaskDetailPage(): React.JSX.Element {
    const params = useParams();
    const taskId = params?.taskId as string;
 
-   // Fetch single issue using GraphQL
-   const { data, loading, error } = useGetIssueQuery({
-      variables: {
-         where: {
-            id: taskId,
-         },
-      },
-   });
+   // Fetch single issue using Zustand
+   const { data: task, loading, error } = useIssue(taskId);
+   const { getUserById, getProjectById, getStatusById, getPriorityById, getLabelById } =
+      useDataStore();
 
-   // Get the task from the query result
-   const task = data?.issue;
+   // Get related data
+   const assignee = task?.assigneeId ? getUserById(task.assigneeId) : null;
+   const project = task?.projectId ? getProjectById(task.projectId) : null;
+   const status = task?.statusId ? getStatusById(task.statusId) : null;
+   const priority = task?.priorityId ? getPriorityById(task.priorityId) : null;
+   const labels = task?.labelIds.map((id) => getLabelById(id)).filter(Boolean) || [];
 
    if (loading) {
       return (
@@ -58,7 +59,7 @@ export default function TaskDetailPage(): React.JSX.Element {
                      Back to Tasks
                   </Link>
                </Button>
-               <div className="text-sm text-muted-foreground">{task.identifier}</div>
+               <div className="text-sm text-muted-foreground">{task.id}</div>
             </div>
 
             {/* Task Header */}
@@ -67,14 +68,12 @@ export default function TaskDetailPage(): React.JSX.Element {
                   <div className="space-y-2">
                      <h1 className="text-3xl font-bold tracking-tight">{task.title}</h1>
                      <div className="flex items-center gap-2">
-                        <Badge
-                           variant={task.issueStatus?.name === 'Done' ? 'default' : 'secondary'}
-                        >
-                           {task.issueStatus?.name || 'No Status'}
+                        <Badge variant={status?.name === 'done' ? 'default' : 'secondary'}>
+                           {status?.name || 'No Status'}
                         </Badge>
                         <Badge variant="outline">
                            <FlagIcon className="mr-1 h-3 w-3" />
-                           {task.issuePriority?.name || 'No Priority'}
+                           {priority?.name || 'No Priority'}
                         </Badge>
                      </div>
                   </div>
@@ -91,17 +90,17 @@ export default function TaskDetailPage(): React.JSX.Element {
                      </CardHeader>
                      <CardContent>
                         <div className="flex items-center space-x-2">
-                           {task.assignee ? (
+                           {assignee ? (
                               <>
                                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
                                     <span className="text-xs font-semibold text-white">
-                                       {task.assignee.name.charAt(0).toUpperCase()}
+                                       {assignee.name.charAt(0).toUpperCase()}
                                     </span>
                                  </div>
                                  <div>
-                                    <p className="text-sm font-medium">{task.assignee.name}</p>
+                                    <p className="text-sm font-medium">{assignee.name}</p>
                                     <p className="text-xs text-muted-foreground">
-                                       {task.assignee.email}
+                                       {assignee.email}
                                     </p>
                                  </div>
                               </>
@@ -127,11 +126,7 @@ export default function TaskDetailPage(): React.JSX.Element {
                               day: 'numeric',
                            })}
                         </p>
-                        {task.dueDate && (
-                           <p className="text-xs text-muted-foreground">
-                              Due: {new Date(task.dueDate).toLocaleDateString()}
-                           </p>
-                        )}
+                        {/* Due date not implemented in current schema */}
                      </CardContent>
                   </Card>
 
@@ -144,10 +139,10 @@ export default function TaskDetailPage(): React.JSX.Element {
                      </CardHeader>
                      <CardContent>
                         <div className="flex flex-wrap gap-1">
-                           {task.labels && task.labels.length > 0 ? (
-                              task.labels.map((issueLabel) => (
-                                 <Badge key={issueLabel.id} variant="outline" className="text-xs">
-                                    {issueLabel.label.name}
+                           {labels.length > 0 ? (
+                              labels.map((label) => (
+                                 <Badge key={label.id} variant="outline" className="text-xs">
+                                    {label.name}
                                  </Badge>
                               ))
                            ) : (
@@ -182,7 +177,7 @@ export default function TaskDetailPage(): React.JSX.Element {
             </Card>
 
             {/* Project Information */}
-            {task.project && (
+            {project && (
                <Card>
                   <CardHeader>
                      <CardTitle>Project</CardTitle>
@@ -191,7 +186,7 @@ export default function TaskDetailPage(): React.JSX.Element {
                      <div className="flex items-center space-x-3">
                         <div className="w-4 h-4 rounded-full bg-gray-500" />
                         <div>
-                           <p className="text-sm font-medium">{task.project.name}</p>
+                           <p className="text-sm font-medium">{project.name}</p>
                            <p className="text-xs text-muted-foreground">Project</p>
                         </div>
                      </div>

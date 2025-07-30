@@ -7,9 +7,9 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { MarkdownEditor } from '../editors/MarkdownEditor';
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
+import type { Issue } from '@/libs/client/types';
 
-type Subtask = NonNullable<GetIssuesQuery['issues'][0]['subtask']>;
+type Subtask = Issue; // Using Issue type for subtasks
 
 interface SubtaskItemProps {
    subtask: Subtask;
@@ -68,9 +68,9 @@ export function SubtaskItem({
                   <div className="flex items-center gap-2">
                      <Badge
                         variant="outline"
-                        className={`text-xs ${getStatusColor(subtask.status)}`}
+                        className={`text-xs ${getStatusColor(subtask.statusId)}`}
                      >
-                        {subtask.status}
+                        {subtask.statusId}
                      </Badge>
                      <span className="text-xs text-muted-foreground">
                         {format(new Date(subtask.updatedAt), 'MMM dd')}
@@ -93,11 +93,11 @@ export function SubtaskItem({
                            />
                         </div>
 
-                        {subtask.details && (
+                        {subtask.description && (
                            <div>
                               <h5 className="text-sm font-medium mb-2">Details</h5>
                               <MarkdownEditor
-                                 value={subtask.details}
+                                 value={subtask.description}
                                  onChange={(value) => handleDescriptionSave(value)}
                                  disabled={disabled}
                                  placeholder="Add implementation details..."

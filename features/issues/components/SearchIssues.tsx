@@ -13,7 +13,7 @@ export function SearchIssues(): React.JSX.Element {
       skip: searchQuery.trim() === '',
    });
 
-   const searchResults = data?.issues || [];
+   const searchResults = data?.searchIssues || [];
 
    if (!isSearchOpen) {
       return <></>;

@@ -10,17 +10,14 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import type { IssueStatus } from '@/libs/client/graphql-client/generated';
-import {
-   useGetIssueStatusesQuery,
-   useUpdateIssueStatusMutation,
-} from '@/libs/client/graphql-client/generated';
+import type { IssueStatus } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { useIssueStatusIcon } from '@/features/issues/hooks/useIssueStatusIcon';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
-   status: Pick<IssueStatus, 'id' | 'iconName' | 'name' | 'color'> | string | null | undefined;
+   status: Pick<IssueStatus, 'id' | 'name' | 'color'> | string | null | undefined;
    issueId: string;
 }
 
@@ -30,10 +27,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
    const statusId = typeof status === 'string' ? status : status?.id;
    const [value, setValue] = useState<string>(statusId || 'to-do');
 
-   const [updateStatus] = useUpdateIssueStatusMutation();
-   const { data: statusesData } = useGetIssueStatusesQuery();
-
-   const statuses = statusesData?.issueStatuses || [];
+   const { updateIssue, statuses } = useDataStore();
 
    useEffect(() => {
       setValue(statusId || 'to-do');
@@ -44,13 +38,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
       setOpen(false);
 
       if (issueId) {
-         updateStatus({
-            variables: {
-               id: issueId,
-               status: statusId,
-            },
-            refetchQueries: ['GetIssues'],
-         });
+         updateIssue(issueId, { statusId });
       }
    };
 
