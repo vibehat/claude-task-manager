@@ -1,7 +1,7 @@
 'use client';
 
 import { users } from '@/mock-data/users';
-import MemberLine from './member-line';
+import MemberLine from './MemberLine';
 
 export default function Members(): React.JSX.Element {
    return (

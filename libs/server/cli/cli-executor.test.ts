@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
-import { TaskMasterCLIExecutor, CLIExecutionError, CLITimeoutError } from './cli-executor';
-import type { CLICommandConfig, CLIExecutionResult } from './cli-executor';
+import { TaskMasterCLIExecutor, CLIExecutionError, CLITimeoutError } from './cliExecutor';
+import type { CLICommandConfig, CLIExecutionResult } from './cliExecutor';
 
 // Mock child_process
 jest.mock('child_process', () => ({

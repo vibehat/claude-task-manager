@@ -1,5 +1,5 @@
-import HeaderNav from './header-nav';
-import HeaderOptions from './header-options';
+import HeaderNav from './HeaderNav';
+import HeaderOptions from './HeaderOptions';
 
 export default function Header(): React.JSX.Element {
    return (

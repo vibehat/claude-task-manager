@@ -1,7 +1,7 @@
 'use client';
 
 import { projects } from '@/mock-data/projects';
-import ProjectLine from '@/features/projects/views/project-line';
+import ProjectLine from '@/features/projects/views/ProjectLine';
 
 export default function Projects(): React.JSX.Element {
    return (

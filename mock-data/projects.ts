@@ -1,5 +1,5 @@
-import type { Status } from './status';
-import { status } from './status';
+import type { Status } from './StatusIcon';
+import { status } from './StatusIcon';
 import type { LucideIcon } from 'lucide-react';
 import {
    Accessibility,

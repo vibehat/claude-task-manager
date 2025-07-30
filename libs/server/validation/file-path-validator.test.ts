@@ -5,8 +5,8 @@ import {
    isPathTraversal,
    isPathSafe,
    normalizePath,
-} from './file-path-validator';
-import type { PathValidationRule, PathValidationResult } from './file-path-validator';
+} from './filePathValidator';
+import type { PathValidationRule, PathValidationResult } from './filePathValidator';
 
 describe('FilePathValidator', () => {
    let validator: FilePathValidator;

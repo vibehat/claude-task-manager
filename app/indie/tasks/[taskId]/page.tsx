@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { IndieLayout } from '@/components/layout/indie-layout';
+import { IndieLayout } from '@/components/layout/IndieLayout';
 import { useGetIssueQuery } from '@/libs/client/graphql-client/generated';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

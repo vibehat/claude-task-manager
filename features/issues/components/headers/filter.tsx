@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
-import { useFilterStore } from '@/store/filter-store';
+import { useFilterStore } from '@/store/filterStore';
 import {
    useGetIssueStatusesQuery,
    useGetPrioritiesQuery,
@@ -21,8 +21,8 @@ import {
    useGetProjectsQuery,
    SortOrder,
 } from '@/libs/client/graphql-client/generated';
-import { useIssueStatusIcon } from '../../hooks/use-issue-status-icon';
-import { getPriorityIcon } from '../../constants/priority-icons';
+import { useIssueStatusIcon } from '../../hooks/useIssueStatusIcon';
+import { getPriorityIcon } from '../../constants/NoPriorityIcon';
 import {
    CheckIcon,
    ChevronRight,

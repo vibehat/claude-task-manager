@@ -7,7 +7,7 @@
 
 // @jest-environment jsdom
 
-import { APIKeyManager, apiKeyManager } from './api-key-manager';
+import { APIKeyManager, apiKeyManager } from './apiKeyManager';
 
 // Mock localStorage for testing
 const localStorageMock = (() => {

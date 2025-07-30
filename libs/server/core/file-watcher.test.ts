@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
-import { EnhancedFileWatcher, getGlobalFileWatcher } from './file-watcher';
-import type { FileChangeEvent, FileWatcherConfig } from './file-watcher';
+import { EnhancedFileWatcher, getGlobalFileWatcher } from './fileWatcher';
+import type { FileChangeEvent, FileWatcherConfig } from './fileWatcher';
 import { existsSync, statSync } from 'fs';
 
 // Mock fs module completely

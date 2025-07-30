@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
-import { CLICommandValidator } from './cli-command-validator';
-import type { CLICommandRule, CommandValidationResult } from './cli-command-validator';
+import { CLICommandValidator } from './cliCommandValidator';
+import type { CLICommandRule, CommandValidationResult } from './cliCommandValidator';
 
 describe('CLICommandValidator', () => {
    let validator: CLICommandValidator;

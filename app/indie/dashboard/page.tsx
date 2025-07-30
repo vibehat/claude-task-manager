@@ -17,9 +17,9 @@ import {
    TrendingUpIcon,
 } from 'lucide-react';
 import { useMemo } from 'react';
-import { useEdges } from '@/hooks/use-edges';
+import { useEdges } from '@/hooks/useEdges';
 import Link from 'next/link';
-import { IndieLayout } from '@/components/layout/indie-layout';
+import { IndieLayout } from '@/components/layout/IndieLayout';
 
 export default function IndieDashboardPage(): React.JSX.Element {
    const { data } = useGetIssuesQuery({

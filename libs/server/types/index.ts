@@ -21,4 +21,4 @@ export * from './validation';
 export * from './extended';
 
 // GraphQL types
-export type { GraphQLContext } from './graphql-context';
+export type { GraphQLContext } from './graphqlContext';

@@ -5,8 +5,8 @@ import {
    ErrorCategory,
    ErrorSeverity,
    getGlobalErrorHandler,
-} from './error-handler';
-import type { TaskMasterError } from './error-handler';
+} from './errorHandler';
+import type { TaskMasterError } from './errorHandler';
 
 describe('TaskMasterErrorHandler', () => {
    let errorHandler: TaskMasterErrorHandler;

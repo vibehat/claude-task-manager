@@ -1,8 +1,8 @@
-#import "issue-core.graphql"
+#import "issue-details.graphql"
 
 mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
    updateOneIssue(where: $where, data: $data) {
-      ...IssueCore
+      ...IssueDetails
    }
 }
 
@@ -21,5 +21,19 @@ mutation UpdateIssuePriority($id: String!, $priorityId: String!) {
 mutation UpdateIssueAssignee($id: String!, $assigneeId: String) {
    updateOneIssue(where: { id: $id }, data: { assignee: { connect: { id: $assigneeId } } }) {
       ...IssueCore
+   }
+}
+
+mutation UpdateIssueLabels($id: String!, $connectLabels: [IssueLabelCreateWithoutIssueInput!]!) {
+   updateOneIssue(
+      where: { id: $id }
+      data: {
+         labels: {
+            deleteMany: {}
+            create: $connectLabels
+         }
+      }
+   ) {
+      ...IssueDetails
    }
 }

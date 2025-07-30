@@ -1,2 +1,2 @@
-export { default as IssueGridView } from './issue-grid-view';
-export { default as GroupIssuesGrid } from './group-issues-grid';
+export { default as IssueGridView } from './issueGridView';
+export { default as GroupIssuesGrid } from './GroupIssuesGrid';

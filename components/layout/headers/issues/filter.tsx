@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
-import { useFilterStore } from '@/store/filter-store';
-import { status as allStatus } from '@/mock-data/status';
+import { useFilterStore } from '@/store/filterStore';
+import { status as allStatus } from '@/mock-data/StatusIcon';
 import { priorities } from '@/mock-data/priorities';
 import { labels } from '@/mock-data/labels';
 import { projects } from '@/mock-data/projects';

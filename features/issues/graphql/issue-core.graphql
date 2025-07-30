@@ -27,8 +27,25 @@ fragment IssueCore on Issue {
       email
       avatarUrl
    }
+   labels {
+      id
+      label {
+         id
+         name
+         color
+      }
+   }
    taskId
    subtaskId
+   subtask {
+      id
+      title
+      description
+      details
+      status
+      createdAt
+      updatedAt
+   }
    assigneeId
    projectId
    createdAt

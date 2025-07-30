@@ -1,0 +1,2593 @@
+{
+   "version": "1.0.0",
+   "timestamp": "2025-07-29T21:35:16.358Z",
+   "dryRun": false,
+   "changes": [
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/icons/issue-status-icons.tsx",
+         "newPath": "components/icons/BacklogIcon.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/mock-data/StatusIcon.tsx",
+               "oldImport": "@/components/icons/issue-status-icons",
+               "newImport": "@/components/icons/BacklogIcon",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/indie/filter.tsx",
+         "newPath": "components/layout/headers/indie/Filter.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/Filter.tsx",
+               "oldImport": "@/store/filter-store",
+               "newImport": "@/store/filterStore",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/TasksOptions.tsx",
+               "oldImport": "./filter",
+               "newImport": "./Filter",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/Filter.tsx",
+               "oldImport": "@/store/filter-store",
+               "newImport": "@/store/filterStore",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/HeaderOptions.tsx",
+               "oldImport": "./filter",
+               "newImport": "./Filter",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/Filter.tsx",
+               "oldImport": "@/store/filter-store",
+               "newImport": "@/store/filterStore",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/HeaderOptions.tsx",
+               "oldImport": "./filter",
+               "newImport": "./Filter",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/types/viewsTypes.ts",
+               "oldImport": "./filters.types",
+               "newImport": "./filtersTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/utils/filtering.ts",
+               "oldImport": "../types/filters.types",
+               "newImport": "../types/filtersTypes",
+               "line": 6
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/issueGridView.tsx",
+               "oldImport": "../../store/issue-filter-store",
+               "newImport": "../../store/issueFilterStore",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/issueListView.tsx",
+               "oldImport": "@/store/filter-store",
+               "newImport": "@/store/filterStore",
+               "line": 5
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/indie/header-nav.tsx",
+         "newPath": "components/layout/headers/indie/HeaderNav.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/IndieHeader.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/Header.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/members/Header.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/projects/Header.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/settings/Header.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/teams/Header.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/Header.tsx",
+               "oldImport": "./header-nav",
+               "newImport": "./HeaderNav",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/indie/header.tsx",
+         "newPath": "components/layout/headers/indie/IndieHeader.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/IndieLayout.tsx",
+               "oldImport": "@/components/layout/headers/indie/header",
+               "newImport": "@/components/layout/headers/indie/IndieHeader",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/Header.tsx",
+               "oldImport": "./header-options",
+               "newImport": "./HeaderOptions",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/members/Header.tsx",
+               "oldImport": "./header-options",
+               "newImport": "./HeaderOptions",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/projects/Header.tsx",
+               "oldImport": "./header-options",
+               "newImport": "./HeaderOptions",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/teams/Header.tsx",
+               "oldImport": "./header-options",
+               "newImport": "./HeaderOptions",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanel.tsx",
+               "oldImport": "./issue-header",
+               "newImport": "./IssueHeader",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/Header.tsx",
+               "oldImport": "./header-options",
+               "newImport": "./HeaderOptions",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/indie/tasks-options.tsx",
+         "newPath": "components/layout/headers/indie/TasksOptions.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/issues/filter.tsx",
+         "newPath": "components/layout/headers/issues/Filter.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/issues/header-nav.tsx",
+         "newPath": "components/layout/headers/issues/HeaderNav.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/issues/header-options.tsx",
+         "newPath": "components/layout/headers/issues/HeaderOptions.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/issues/header.tsx",
+         "newPath": "components/layout/headers/issues/Header.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/issues/notifications.tsx",
+         "newPath": "components/layout/headers/issues/Notifications.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/HeaderNav.tsx",
+               "oldImport": "./notifications",
+               "newImport": "./Notifications",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/HeaderNav.tsx",
+               "oldImport": "./notifications",
+               "newImport": "./Notifications",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/members/header-nav.tsx",
+         "newPath": "components/layout/headers/members/HeaderNav.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/members/header-options.tsx",
+         "newPath": "components/layout/headers/members/HeaderOptions.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/members/header.tsx",
+         "newPath": "components/layout/headers/members/Header.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/projects/header-nav.tsx",
+         "newPath": "components/layout/headers/projects/HeaderNav.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/projects/header-options.tsx",
+         "newPath": "components/layout/headers/projects/HeaderOptions.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/projects/header.tsx",
+         "newPath": "components/layout/headers/projects/Header.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/settings/header-nav.tsx",
+         "newPath": "components/layout/headers/settings/HeaderNav.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/settings/header.tsx",
+         "newPath": "components/layout/headers/settings/Header.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/teams/header-nav.tsx",
+         "newPath": "components/layout/headers/teams/HeaderNav.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/teams/header-options.tsx",
+         "newPath": "components/layout/headers/teams/HeaderOptions.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/headers/teams/header.tsx",
+         "newPath": "components/layout/headers/teams/Header.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/indie-layout.tsx",
+         "newPath": "components/layout/IndieLayout.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/main-layout.tsx",
+         "newPath": "components/layout/MainLayout.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/app-sidebar.tsx",
+         "newPath": "components/layout/sidebar/AppSidebar.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/MainLayout.tsx",
+               "oldImport": "@/components/layout/sidebar/app-sidebar",
+               "newImport": "@/components/layout/sidebar/AppSidebar",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/back-to-app.tsx",
+         "newPath": "components/layout/sidebar/BackToApp.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/back-to-app",
+               "newImport": "@/components/layout/sidebar/BackToApp",
+               "line": 19
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/create-new-issue/assignee-selector.tsx",
+         "newPath": "components/layout/sidebar/create-new-issue/AssigneeSelector.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "./assignee-selector",
+               "newImport": "./AssigneeSelector",
+               "line": 19
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "../selectors/assignee-selector",
+               "newImport": "../selectors/AssigneeUser",
+               "line": 10
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/create-new-issue/label-selector.tsx",
+         "newPath": "components/layout/sidebar/create-new-issue/LabelSelector.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "./label-selector",
+               "newImport": "./LabelSelector",
+               "line": 21
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/create-new-issue/priority-selector.tsx",
+         "newPath": "components/layout/sidebar/create-new-issue/PrioritySelector.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "./priority-selector",
+               "newImport": "./PrioritySelector",
+               "line": 18
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueDetailsSection.tsx",
+               "oldImport": "../selectors/priority-selector",
+               "newImport": "../selectors/PrioritySelector",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueHeader.tsx",
+               "oldImport": "../selectors/priority-selector",
+               "newImport": "../selectors/PrioritySelector",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "../selectors/priority-selector",
+               "newImport": "../selectors/PrioritySelector",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "../selectors/priority-selector",
+               "newImport": "../selectors/PrioritySelector",
+               "line": 7
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/ProjectLine.tsx",
+               "oldImport": "./priority-selector",
+               "newImport": "./PrioritySelector",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/create-new-issue/project-selector.tsx",
+         "newPath": "components/layout/sidebar/create-new-issue/ProjectSelector.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "./project-selector",
+               "newImport": "./ProjectSelector",
+               "line": 20
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/create-new-issue/status-selector.tsx",
+         "newPath": "components/layout/sidebar/create-new-issue/StatusSelector.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "./status-selector",
+               "newImport": "./StatusSelector",
+               "line": 17
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueDetailsSection.tsx",
+               "oldImport": "../selectors/status-selector",
+               "newImport": "../selectors/StatusSelector",
+               "line": 7
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueHeader.tsx",
+               "oldImport": "../selectors/status-selector",
+               "newImport": "../selectors/StatusSelector",
+               "line": 7
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "../selectors/status-selector",
+               "newImport": "../selectors/StatusSelector",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "../selectors/status-selector",
+               "newImport": "../selectors/StatusSelector",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/help-button.tsx",
+         "newPath": "components/layout/sidebar/HelpButton.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/help-button",
+               "newImport": "@/components/layout/sidebar/HelpButton",
+               "line": 7
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/IndieSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/help-button",
+               "newImport": "@/components/layout/sidebar/HelpButton",
+               "line": 7
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/indie-sidebar.tsx",
+         "newPath": "components/layout/sidebar/IndieSidebar.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/IndieLayout.tsx",
+               "oldImport": "@/components/layout/sidebar/indie-sidebar",
+               "newImport": "@/components/layout/sidebar/IndieSidebar",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/IndieSidebar.tsx",
+               "oldImport": "@/mock-data/indie-sidebar-nav",
+               "newImport": "@/mock-data/indieSidebarNav",
+               "line": 21
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/mode-switcher.tsx",
+         "newPath": "components/layout/sidebar/ModeSwitcher.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/IndieSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/mode-switcher",
+               "newImport": "@/components/layout/sidebar/ModeSwitcher",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/nav-account.tsx",
+         "newPath": "components/layout/sidebar/NavAccount.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/nav-account",
+               "newImport": "@/components/layout/sidebar/NavAccount",
+               "line": 11
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/nav-features.tsx",
+         "newPath": "components/layout/sidebar/NavFeatures.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/nav-features",
+               "newImport": "@/components/layout/sidebar/NavFeatures",
+               "line": 12
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/nav-inbox.tsx",
+         "newPath": "components/layout/sidebar/NavInbox.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/nav-inbox",
+               "newImport": "@/components/layout/sidebar/NavInbox",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/nav-teams-settings.tsx",
+         "newPath": "components/layout/sidebar/NavTeamsSettings.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/nav-teams-settings",
+               "newImport": "@/components/layout/sidebar/NavTeamsSettings",
+               "line": 13
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/nav-teams.tsx",
+         "newPath": "components/layout/sidebar/NavTeams.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/nav-teams",
+               "newImport": "@/components/layout/sidebar/NavTeams",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/nav-workspace.tsx",
+         "newPath": "components/layout/sidebar/NavWorkspace.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/nav-workspace",
+               "newImport": "@/components/layout/sidebar/NavWorkspace",
+               "line": 10
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/sidebar/org-switcher.tsx",
+         "newPath": "components/layout/sidebar/OrgSwitcher.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/layout/sidebar/org-switcher",
+               "newImport": "@/components/layout/sidebar/OrgSwitcher",
+               "line": 14
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/theme-provider.tsx",
+         "newPath": "components/layout/ThemeProvider.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/layout/theme-toggle.tsx",
+         "newPath": "components/layout/ThemeToggle.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/BackToApp.tsx",
+               "oldImport": "@/components/layout/theme-toggle",
+               "newImport": "@/components/layout/ThemeToggle",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/OrgSwitcher.tsx",
+               "oldImport": "../theme-toggle",
+               "newImport": "../ThemeToggle",
+               "line": 22
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/alert-dialog.tsx",
+         "newPath": "components/ui/AlertDialog.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/calendar.tsx",
+         "newPath": "components/ui/Calendar.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/DatePicker.tsx",
+               "oldImport": "@/components/ui/calendar",
+               "newImport": "@/components/ui/Calendar",
+               "line": 7
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/context-menu.tsx",
+         "newPath": "components/ui/ContextMenu.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "@/components/ui/context-menu",
+               "newImport": "@/components/ui/ContextMenu",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "./issue-context-menu",
+               "newImport": "./IssueContextMenu",
+               "line": 16
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "@/components/ui/context-menu",
+               "newImport": "@/components/ui/ContextMenu",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "./issue-context-menu",
+               "newImport": "./IssueContextMenu",
+               "line": 15
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/dropdown-menu.tsx",
+         "newPath": "components/ui/DropdownMenu.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/form.tsx",
+         "newPath": "components/ui/FormItem.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/index.ts",
+               "oldImport": "./components/forms/update-issue-modal-provider",
+               "newImport": "./components/forms/UpdateIssueModalProvider",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/index.ts",
+               "oldImport": "./components/forms/issue-side-panel-provider",
+               "newImport": "./components/forms/IssueSidePanelProvider",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/sidebar.tsx",
+         "newPath": "components/ui/SidebarProvider.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/IndieLayout.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/MainLayout.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 7
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/members/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/projects/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/settings/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/teams/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/AppSidebar.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 16
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/OrgSwitcher.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 20
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/HeaderNav.tsx",
+               "oldImport": "@/components/ui/sidebar",
+               "newImport": "@/components/ui/SidebarProvider",
+               "line": 5
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "components/ui/tooltip.tsx",
+         "newPath": "components/ui/TooltipProvider.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/ui/SidebarProvider.tsx",
+               "oldImport": "@/components/ui/tooltip",
+               "newImport": "@/components/ui/TooltipProvider",
+               "line": 22
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/members/views/MemberLine.tsx",
+               "oldImport": "./teams-tooltip",
+               "newImport": "./TeamsTooltip",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/members/views/TeamsTooltip.tsx",
+               "oldImport": "@/components/ui/tooltip",
+               "newImport": "@/components/ui/TooltipProvider",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/teams/views/MembersTooltip.tsx",
+               "oldImport": "@/components/ui/tooltip",
+               "newImport": "@/components/ui/TooltipProvider",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/teams/views/ProjectsTooltip.tsx",
+               "oldImport": "@/components/ui/tooltip",
+               "newImport": "@/components/ui/TooltipProvider",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/teams/views/TeamLine.tsx",
+               "oldImport": "./members-tooltip",
+               "newImport": "./MembersTooltip",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/teams/views/TeamLine.tsx",
+               "oldImport": "./projects-tooltip",
+               "newImport": "./ProjectsTooltip",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/assignee-user.tsx",
+         "newPath": "features/issues/components/AssigneeUser.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueDetailsSection.tsx",
+               "oldImport": "../assignee-user",
+               "newImport": "../AssigneeUser",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "../assignee-user",
+               "newImport": "../AssigneeUser",
+               "line": 5
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/badges/label-badge.tsx",
+         "newPath": "features/issues/components/badges/LabelBadge.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "../badges/label-badge",
+               "newImport": "../badges/LabelBadge",
+               "line": 11
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "../badges/label-badge",
+               "newImport": "../badges/LabelBadge",
+               "line": 6
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/badges/project-badge.tsx",
+         "newPath": "features/issues/components/badges/ProjectBadge.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueDragType.tsx",
+               "oldImport": "../badges/project-badge",
+               "newImport": "../badges/ProjectBadge",
+               "line": 13
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/create-issue-modal-provider.tsx",
+         "newPath": "features/issues/components/CreateIssueModalProvider.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/index.ts",
+               "oldImport": "./components/create-issue-modal-provider",
+               "newImport": "./components/CreateIssueModalProvider",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/create-issue-modal-provider.tsx",
+         "newPath": "features/issues/components/forms/CreateIssueModalProvider.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/issue-description-section.tsx",
+         "newPath": "features/issues/components/forms/IssueDescriptionSection.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanel.tsx",
+               "oldImport": "./issue-description-section",
+               "newImport": "./IssueDescriptionSection",
+               "line": 10
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/issue-details-section.tsx",
+         "newPath": "features/issues/components/forms/IssueDetailsSection.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanel.tsx",
+               "oldImport": "./issue-details-section",
+               "newImport": "./IssueDetailsSection",
+               "line": 11
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/issue-header.tsx",
+         "newPath": "features/issues/components/forms/IssueHeader.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/issue-side-panel-provider.tsx",
+         "newPath": "features/issues/components/forms/IssueSidePanelProvider.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/issue-side-panel.tsx",
+         "newPath": "features/issues/components/forms/IssueSidePanel.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/IndieLayout.tsx",
+               "oldImport": "@/store/issue-side-panel-store",
+               "newImport": "@/store/issueSidePanelStore",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/MainLayout.tsx",
+               "oldImport": "@/store/issue-side-panel-store",
+               "newImport": "@/store/issueSidePanelStore",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanel.tsx",
+               "oldImport": "@/store/issue-side-panel-store",
+               "newImport": "@/store/issueSidePanelStore",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanelProvider.tsx",
+               "oldImport": "./issue-side-panel",
+               "newImport": "./IssueSidePanel",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueContextMenu.tsx",
+               "oldImport": "@/store/issue-side-panel-store",
+               "newImport": "@/store/issueSidePanelStore",
+               "line": 40
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueLine.tsx",
+               "oldImport": "@/store/issue-side-panel-store",
+               "newImport": "@/store/issueSidePanelStore",
+               "line": 12
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/issue-title-editor.tsx",
+         "newPath": "features/issues/components/forms/IssueTitleEditor.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanel.tsx",
+               "oldImport": "./issue-title-editor",
+               "newImport": "./IssueTitleEditor",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/markdown-editor.tsx",
+         "newPath": "features/issues/components/forms/MarkdownEditor.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueDescriptionSection.tsx",
+               "oldImport": "./markdown-editor",
+               "newImport": "./MarkdownEditor",
+               "line": 6
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/SubtaskItem.tsx",
+               "oldImport": "./markdown-editor",
+               "newImport": "./MarkdownEditor",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/subtask-item.tsx",
+         "newPath": "features/issues/components/forms/SubtaskItem.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/SubtasksSection.tsx",
+               "oldImport": "./subtask-item",
+               "newImport": "./SubtaskItem",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/subtasks-section.tsx",
+         "newPath": "features/issues/components/forms/SubtasksSection.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/IssueSidePanel.tsx",
+               "oldImport": "./subtasks-section",
+               "newImport": "./SubtasksSection",
+               "line": 12
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/update-issue-modal-provider.tsx",
+         "newPath": "features/issues/components/forms/UpdateIssueModalProvider.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/forms/update-issue-modal.tsx",
+         "newPath": "features/issues/components/forms/UpdateIssueModal.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/UpdateIssueModalProvider.tsx",
+               "oldImport": "./update-issue-modal",
+               "newImport": "./UpdateIssueModal",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/headers/filter.tsx",
+         "newPath": "features/issues/components/headers/Filter.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/headers/header-nav.tsx",
+         "newPath": "features/issues/components/headers/HeaderNav.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/headers/header-options.tsx",
+         "newPath": "features/issues/components/headers/HeaderOptions.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/headers/header.tsx",
+         "newPath": "features/issues/components/headers/Header.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/headers/notifications.tsx",
+         "newPath": "features/issues/components/headers/Notifications.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/items/issue-context-menu.tsx",
+         "newPath": "features/issues/components/items/IssueContextMenu.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/items/issue-grid.tsx",
+         "newPath": "features/issues/components/items/IssueDragType.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/GroupIssuesGrid.tsx",
+               "oldImport": "../../components/items/issue-grid",
+               "newImport": "../../components/items/IssueDragType",
+               "line": 18
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/index.ts",
+               "oldImport": "./issue-grid-view",
+               "newImport": "./issueGridView",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/issueGridView.tsx",
+               "oldImport": "../../components/items/issue-grid",
+               "newImport": "../../components/items/IssueDragType",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/items/issue-line.tsx",
+         "newPath": "features/issues/components/items/IssueLine.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/SearchIssues.tsx",
+               "oldImport": "./items/issue-line",
+               "newImport": "./items/IssueLine",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/SearchIssues.tsx",
+               "oldImport": "../../components/items/issue-line",
+               "newImport": "../../components/items/IssueLine",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/GroupIssuesList.tsx",
+               "oldImport": "../../components/items/issue-line",
+               "newImport": "../../components/items/IssueLine",
+               "line": 13
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/search-issues.tsx",
+         "newPath": "features/issues/components/SearchIssues.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/SearchIssues.tsx",
+               "oldImport": "@/libs/client/hooks/issues/queries/issues/use-search-issues",
+               "newImport": "@/libs/client/hooks/issues/queries/issues/useSearchIssues",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/AllIssues.tsx",
+               "oldImport": "./search-issues",
+               "newImport": "./SearchIssues",
+               "line": 6
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/SearchIssues.tsx",
+               "oldImport": "@/libs/client/hooks/issues/queries/issues/use-search-issues",
+               "newImport": "@/libs/client/hooks/issues/queries/issues/useSearchIssues",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/index.ts",
+               "oldImport": "./search-issues",
+               "newImport": "./SearchIssues",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/selectors/assignee-selector.tsx",
+         "newPath": "features/issues/components/selectors/AssigneeUser.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/selectors/priority-selector.tsx",
+         "newPath": "features/issues/components/selectors/PrioritySelector.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/components/selectors/status-selector.tsx",
+         "newPath": "features/issues/components/selectors/StatusSelector.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/constants/priority-icons.tsx",
+         "newPath": "features/issues/constants/NoPriorityIcon.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/Filter.tsx",
+               "oldImport": "../../constants/priority-icons",
+               "newImport": "../../constants/NoPriorityIcon",
+               "line": 25
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/items/IssueContextMenu.tsx",
+               "oldImport": "../../constants/priority-icons",
+               "newImport": "../../constants/NoPriorityIcon",
+               "line": 50
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/selectors/PrioritySelector.tsx",
+               "oldImport": "@/features/issues/constants/priority-icons",
+               "newImport": "@/features/issues/constants/NoPriorityIcon",
+               "line": 19
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/constants/status-icons.tsx",
+         "newPath": "features/issues/constants/BacklogIcon.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "hook",
+         "oldPath": "features/issues/hooks/use-issue-status-icon.tsx",
+         "newPath": "features/issues/hooks/useIssueStatusIcon.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/Filter.tsx",
+               "oldImport": "../../hooks/use-issue-status-icon",
+               "newImport": "../../hooks/useIssueStatusIcon",
+               "line": 24
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/selectors/StatusSelector.tsx",
+               "oldImport": "@/features/issues/hooks/use-issue-status-icon",
+               "newImport": "@/features/issues/hooks/useIssueStatusIcon",
+               "line": 18
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/GroupIssuesGrid.tsx",
+               "oldImport": "../../hooks/use-issue-status-icon",
+               "newImport": "../../hooks/useIssueStatusIcon",
+               "line": 19
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/GroupIssuesList.tsx",
+               "oldImport": "../../hooks/use-issue-status-icon",
+               "newImport": "../../hooks/useIssueStatusIcon",
+               "line": 6
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "hook",
+         "oldPath": "features/issues/hooks/use-sort-issues-by-priority.ts",
+         "newPath": "features/issues/hooks/useSortIssuesByPriority.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/index.ts",
+               "oldImport": "./hooks/use-sort-issues-by-priority",
+               "newImport": "./hooks/useSortIssuesByPriority",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/GroupIssuesGrid.tsx",
+               "oldImport": "@/features/issues/hooks/use-sort-issues-by-priority",
+               "newImport": "@/features/issues/hooks/useSortIssuesByPriority",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/GroupIssuesList.tsx",
+               "oldImport": "@/features/issues/hooks/use-sort-issues-by-priority",
+               "newImport": "@/features/issues/hooks/useSortIssuesByPriority",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "store",
+         "oldPath": "features/issues/store/create-issue-store.ts",
+         "newPath": "features/issues/store/createIssueStore.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "@/store/create-issue-store",
+               "newImport": "@/store/createIssueStore",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/GroupIssuesGrid.tsx",
+               "oldImport": "@/store/create-issue-store",
+               "newImport": "@/store/createIssueStore",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/GroupIssuesList.tsx",
+               "oldImport": "@/store/create-issue-store",
+               "newImport": "@/store/createIssueStore",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "features/issues/store/issue-filter-store.ts",
+         "newPath": "features/issues/store/issueFilterStore.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "store",
+         "oldPath": "features/issues/store/search-store.ts",
+         "newPath": "features/issues/store/searchStore.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/HeaderNav.tsx",
+               "oldImport": "@/store/search-store",
+               "newImport": "@/store/searchStore",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/HeaderNav.tsx",
+               "oldImport": "@/store/search-store",
+               "newImport": "@/store/searchStore",
+               "line": 6
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/SearchIssues.tsx",
+               "oldImport": "@/store/search-store",
+               "newImport": "@/store/searchStore",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/HeaderNav.tsx",
+               "oldImport": "@/store/search-store",
+               "newImport": "@/store/searchStore",
+               "line": 6
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/AllIssues.tsx",
+               "oldImport": "../../store/search-store",
+               "newImport": "../../store/searchStore",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/SearchIssues.tsx",
+               "oldImport": "@/store/search-store",
+               "newImport": "@/store/searchStore",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "features/issues/types/api.types.ts",
+         "newPath": "features/issues/types/apiTypes.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "features/issues/types/filters.types.ts",
+         "newPath": "features/issues/types/filtersTypes.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "features/issues/types/issue.types.ts",
+         "newPath": "features/issues/types/issueTypes.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/store/createIssueStore.ts",
+               "oldImport": "../types/issue.types",
+               "newImport": "../types/issueTypes",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/types/apiTypes.ts",
+               "oldImport": "./issue.types",
+               "newImport": "./issueTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/types/filtersTypes.ts",
+               "oldImport": "./issue.types",
+               "newImport": "./issueTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/utils/filtering.ts",
+               "oldImport": "../types/issue.types",
+               "newImport": "../types/issueTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/utils/formatting.ts",
+               "oldImport": "../types/issue.types",
+               "newImport": "../types/issueTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/utils/grouping.ts",
+               "oldImport": "../types/issue.types",
+               "newImport": "../types/issueTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/utils/issueHelpers.ts",
+               "oldImport": "../types/issue.types",
+               "newImport": "../types/issueTypes",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/index.ts",
+               "oldImport": "./types/issue.types",
+               "newImport": "./types/issueTypes",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/pubsub.ts",
+               "oldImport": "./types/issue.types",
+               "newImport": "./types/issueTypes",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "features/issues/types/views.types.ts",
+         "newPath": "features/issues/types/viewsTypes.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/utils/grouping.ts",
+               "oldImport": "../types/views.types",
+               "newImport": "../types/viewsTypes",
+               "line": 6
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "util",
+         "oldPath": "features/issues/utils/issue-helpers.ts",
+         "newPath": "features/issues/utils/issueHelpers.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/views/all-issues/all-issues.tsx",
+         "newPath": "features/issues/views/all-issues/AllIssues.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/index.ts",
+               "oldImport": "./all-issues",
+               "newImport": "./AllIssues",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/index.ts",
+               "oldImport": "./all-issues",
+               "newImport": "./AllIssues",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/views/all-issues/search-issues.tsx",
+         "newPath": "features/issues/views/all-issues/SearchIssues.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/views/issues-grid/group-issues-grid.tsx",
+         "newPath": "features/issues/views/issues-grid/GroupIssuesGrid.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/index.ts",
+               "oldImport": "./group-issues-grid",
+               "newImport": "./GroupIssuesGrid",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/issueGridView.tsx",
+               "oldImport": "./group-issues-grid",
+               "newImport": "./GroupIssuesGrid",
+               "line": 6
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "features/issues/views/issues-grid/issue-grid-view.tsx",
+         "newPath": "features/issues/views/issues-grid/issueGridView.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/issues/views/issues-list/group-issues-list.tsx",
+         "newPath": "features/issues/views/issues-list/GroupIssuesList.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/index.ts",
+               "oldImport": "./group-issues-list",
+               "newImport": "./GroupIssuesList",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/issueListView.tsx",
+               "oldImport": "./group-issues-list",
+               "newImport": "./GroupIssuesList",
+               "line": 7
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "features/issues/views/issues-list/issue-list-view.tsx",
+         "newPath": "features/issues/views/issues-list/issueListView.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/index.ts",
+               "oldImport": "./issue-list-view",
+               "newImport": "./issueListView",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/members/views/member-line.tsx",
+         "newPath": "features/members/views/MemberLine.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/members/views/Members.tsx",
+               "oldImport": "./member-line",
+               "newImport": "./MemberLine",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/members/views/members.tsx",
+         "newPath": "features/members/views/Members.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/members/views/teams-tooltip.tsx",
+         "newPath": "features/members/views/TeamsTooltip.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/date-picker.tsx",
+         "newPath": "features/projects/views/DatePicker.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/ProjectLine.tsx",
+               "oldImport": "./date-picker",
+               "newImport": "./DatePicker",
+               "line": 6
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/health-popover.tsx",
+         "newPath": "features/projects/views/HealthPopover.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/ProjectLine.tsx",
+               "oldImport": "./health-popover",
+               "newImport": "./HealthPopover",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/lead-selector.tsx",
+         "newPath": "features/projects/views/LeadSelector.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/ProjectLine.tsx",
+               "oldImport": "./lead-selector",
+               "newImport": "./LeadSelector",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/priority-selector.tsx",
+         "newPath": "features/projects/views/PrioritySelector.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/project-line.tsx",
+         "newPath": "features/projects/views/ProjectLine.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/Projects.tsx",
+               "oldImport": "@/features/projects/views/project-line",
+               "newImport": "@/features/projects/views/ProjectLine",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/projects.tsx",
+         "newPath": "features/projects/views/Projects.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/projects/views/status-with-percent.tsx",
+         "newPath": "features/projects/views/StatusWithPercent.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/ProjectLine.tsx",
+               "oldImport": "./status-with-percent",
+               "newImport": "./StatusWithPercent",
+               "line": 5
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/settings/views/settings.tsx",
+         "newPath": "features/settings/views/Settings.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/teams/views/members-tooltip.tsx",
+         "newPath": "features/teams/views/MembersTooltip.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/teams/views/projects-tooltip.tsx",
+         "newPath": "features/teams/views/ProjectsTooltip.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/teams/views/team-line.tsx",
+         "newPath": "features/teams/views/TeamLine.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/teams/views/Teams.tsx",
+               "oldImport": "./team-line",
+               "newImport": "./TeamLine",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "features/teams/views/teams.tsx",
+         "newPath": "features/teams/views/Teams.tsx",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "hook",
+         "oldPath": "hooks/use-edges.ts",
+         "newPath": "hooks/useEdges.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/AllIssues.tsx",
+               "oldImport": "@/hooks/use-edges",
+               "newImport": "@/hooks/useEdges",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-grid/GroupIssuesGrid.tsx",
+               "oldImport": "@/hooks/use-edges",
+               "newImport": "@/hooks/useEdges",
+               "line": 16
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/issues-list/GroupIssuesList.tsx",
+               "oldImport": "@/hooks/use-edges",
+               "newImport": "@/hooks/useEdges",
+               "line": 10
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "hook",
+         "oldPath": "hooks/use-mobile.ts",
+         "newPath": "hooks/useIsMobile.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/ui/SidebarProvider.tsx",
+               "oldImport": "@/hooks/use-mobile",
+               "newImport": "@/hooks/useIsMobile",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/HealthPopover.tsx",
+               "oldImport": "@/hooks/use-mobile",
+               "newImport": "@/hooks/useIsMobile",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "libs/client/contexts/indie-project-context.tsx",
+         "newPath": "libs/client/contexts/IndieProjectProvider.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/IndieLayout.tsx",
+               "oldImport": "@/libs/client/contexts/indie-project-context",
+               "newImport": "@/libs/client/contexts/IndieProjectProvider",
+               "line": 11
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/client/graphql-client/apollo-client.ts",
+         "newPath": "libs/client/graphql-client/apolloClient.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/client/graphql-client/GraphQLProvider.tsx",
+               "oldImport": "./apollo-client",
+               "newImport": "./apolloClient",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/client/graphql-client/index.ts",
+               "oldImport": "./apollo-client",
+               "newImport": "./apolloClient",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "libs/client/graphql-client/provider.tsx",
+         "newPath": "libs/client/graphql-client/GraphQLProvider.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/client/graphql-client/index.ts",
+               "oldImport": "./provider",
+               "newImport": "./GraphQLProvider",
+               "line": 32
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "hook",
+         "oldPath": "libs/client/hooks/issues/queries/issues/use-search-issues.ts",
+         "newPath": "libs/client/hooks/issues/queries/issues/useSearchIssues.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "hook",
+         "oldPath": "libs/client/hooks/issues/queries/reference/use-display-issue-statuses.ts",
+         "newPath": "libs/client/hooks/issues/queries/reference/useDisplayIssueStatuses.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/cli/cli-command-validator.ts",
+         "newPath": "libs/server/cli/cliCommandValidator.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliCommandValidatorTest.ts",
+               "oldImport": "./cli-command-validator",
+               "newImport": "./cliCommandValidator",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliCommandValidatorTest.ts",
+               "oldImport": "./cli-command-validator",
+               "newImport": "./cliCommandValidator",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/index.ts",
+               "oldImport": "./cli-command-validator",
+               "newImport": "./cliCommandValidator",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/cli/cli-executor-types.ts",
+         "newPath": "libs/server/cli/cliExecutorTypes.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutor.ts",
+               "oldImport": "./cli-executor-types",
+               "newImport": "./cliExecutorTypes",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutor.ts",
+               "oldImport": "./cli-executor-types",
+               "newImport": "./cliExecutorTypes",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutor.ts",
+               "oldImport": "./cli-executor-types",
+               "newImport": "./cliExecutorTypes",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/index.ts",
+               "oldImport": "./cli-executor-types",
+               "newImport": "./cliExecutorTypes",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/cli/cli-executor.ts",
+         "newPath": "libs/server/cli/cliExecutor.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutorTest.ts",
+               "oldImport": "./cli-executor",
+               "newImport": "./cliExecutor",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutorTest.ts",
+               "oldImport": "./cli-executor",
+               "newImport": "./cliExecutor",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/index.ts",
+               "oldImport": "./cli-executor",
+               "newImport": "./cliExecutor",
+               "line": 68
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/core/error-handler.ts",
+         "newPath": "libs/server/core/errorHandler.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliCommandValidator.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "../core/errorHandler",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutor.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "../core/errorHandler",
+               "line": 4
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/cli/cliExecutor.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "../core/errorHandler",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/errorHandlerTest.ts",
+               "oldImport": "./error-handler",
+               "newImport": "./errorHandler",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/index.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "./errorHandler",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/memoryManager.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "./errorHandler",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/paginationManager.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "./errorHandler",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/syncManager.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "./errorHandler",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/syncManager.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "./errorHandler",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/validation/filePathValidator.ts",
+               "oldImport": "../core/error-handler",
+               "newImport": "../core/errorHandler",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/core/file-watcher.ts",
+         "newPath": "libs/server/core/fileWatcher.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/fileWatcherTest.ts",
+               "oldImport": "./file-watcher",
+               "newImport": "./fileWatcher",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/fileWatcherTest.ts",
+               "oldImport": "./file-watcher",
+               "newImport": "./fileWatcher",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/index.ts",
+               "oldImport": "./file-watcher",
+               "newImport": "./fileWatcher",
+               "line": 2
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/syncManager.ts",
+               "oldImport": "./file-watcher",
+               "newImport": "./fileWatcher",
+               "line": 3
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/core/fs-operations.ts",
+         "newPath": "libs/server/core/fsOperations.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/fileWatcher.ts",
+               "oldImport": "./fs-operations",
+               "newImport": "./fsOperations",
+               "line": 5
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/index.ts",
+               "oldImport": "./fs-operations",
+               "newImport": "./fsOperations",
+               "line": 3
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/syncManager.ts",
+               "oldImport": "./fs-operations",
+               "newImport": "./fsOperations",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/core/memory-manager.ts",
+         "newPath": "libs/server/core/memoryManager.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/index.ts",
+               "oldImport": "./memory-manager",
+               "newImport": "./memoryManager",
+               "line": 4
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/core/pagination-manager.ts",
+         "newPath": "libs/server/core/paginationManager.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/index.ts",
+               "oldImport": "./pagination-manager",
+               "newImport": "./paginationManager",
+               "line": 5
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/core/sync-manager.ts",
+         "newPath": "libs/server/core/syncManager.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/core/index.ts",
+               "oldImport": "./sync-manager",
+               "newImport": "./syncManager",
+               "line": 6
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/graphql/resolvers/base.resolver.ts",
+         "newPath": "libs/server/graphql/resolvers/baseResolver.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/cliResolver.ts",
+               "oldImport": "./base.resolver",
+               "newImport": "./baseResolver",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/issueResolver.ts",
+               "oldImport": "./base.resolver",
+               "newImport": "./baseResolver",
+               "line": 6
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/syncResolver.ts",
+               "oldImport": "./base.resolver",
+               "newImport": "./baseResolver",
+               "line": 25
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/taskResolver.ts",
+               "oldImport": "./base.resolver",
+               "newImport": "./baseResolver",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/graphql/resolvers/cli.resolver.ts",
+         "newPath": "libs/server/graphql/resolvers/cliResolver.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/graphql/resolvers/issue.resolver.ts",
+         "newPath": "libs/server/graphql/resolvers/issueResolver.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/schema.ts",
+               "oldImport": "./resolvers/issue.resolver",
+               "newImport": "./resolvers/issueResolver",
+               "line": 12
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/graphql/resolvers/sync.resolver.ts",
+         "newPath": "libs/server/graphql/resolvers/syncResolver.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/graphql/resolvers/task.resolver.ts",
+         "newPath": "libs/server/graphql/resolvers/taskResolver.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/graphql/types/cli.types.ts",
+         "newPath": "libs/server/graphql/types/cliTypes.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/index.ts",
+               "oldImport": "./types/cli.types",
+               "newImport": "./types/cliTypes",
+               "line": 13
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/graphql/types/issue.types.ts",
+         "newPath": "libs/server/graphql/types/issueTypes.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/graphql/types/sync.types.ts",
+         "newPath": "libs/server/graphql/types/syncTypes.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/index.ts",
+               "oldImport": "./types/sync.types",
+               "newImport": "./types/syncTypes",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/pubsub.ts",
+               "oldImport": "./types/sync.types",
+               "newImport": "./types/syncTypes",
+               "line": 9
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/graphql/types/task.types.ts",
+         "newPath": "libs/server/graphql/types/taskTypes.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/index.ts",
+               "oldImport": "./types/task.types",
+               "newImport": "./types/taskTypes",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/baseResolver.ts",
+               "oldImport": "../types/task.types",
+               "newImport": "../types/taskTypes",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/baseResolver.ts",
+               "oldImport": "../types/task.types",
+               "newImport": "../types/taskTypes",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/syncResolver.ts",
+               "oldImport": "../types/task.types",
+               "newImport": "../types/taskTypes",
+               "line": 24
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/taskResolver.ts",
+               "oldImport": "../types/task.types",
+               "newImport": "../types/taskTypes",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/types/issueTypes.ts",
+               "oldImport": "./task.types",
+               "newImport": "./taskTypes",
+               "line": 8
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/security/api-key-manager.ts",
+         "newPath": "libs/server/security/apiKeyManager.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/security/apiKeyManagerTest.ts",
+               "oldImport": "./api-key-manager",
+               "newImport": "./apiKeyManager",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/security/index.ts",
+               "oldImport": "./api-key-manager",
+               "newImport": "./apiKeyManager",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "libs/server/taskmaster/test-sync.ts",
+         "newPath": "libs/server/taskmaster/testSync.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/types/graphql-context.ts",
+         "newPath": "libs/server/types/graphqlContext.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/types/index.ts",
+               "oldImport": "./graphql-context",
+               "newImport": "./graphqlContext",
+               "line": 24
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/types/graphql-generated.ts",
+         "newPath": "libs/server/types/graphqlGenerated.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/validation/file-path-validator.ts",
+         "newPath": "libs/server/validation/filePathValidator.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/validation/filePathValidatorTest.ts",
+               "oldImport": "./file-path-validator",
+               "newImport": "./filePathValidator",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/validation/index.ts",
+               "oldImport": "./file-path-validator",
+               "newImport": "./filePathValidator",
+               "line": 1
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "libs/server/websocket-server.ts",
+         "newPath": "libs/server/websocketServer.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/graphql/resolvers/syncResolver.ts",
+               "oldImport": "../../websocket-server",
+               "newImport": "../../websocketServer",
+               "line": 28
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/libs/server/index.ts",
+               "oldImport": "./websocket-server",
+               "newImport": "./websocketServer",
+               "line": 26
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "mock-data/indie-sidebar-nav.ts",
+         "newPath": "mock-data/indieSidebarNav.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "other",
+         "oldPath": "mock-data/side-bar-nav.ts",
+         "newPath": "mock-data/sideBarNav.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/NavAccount.tsx",
+               "oldImport": "@/mock-data/side-bar-nav",
+               "newImport": "@/mock-data/sideBarNav",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/NavFeatures.tsx",
+               "oldImport": "@/mock-data/side-bar-nav",
+               "newImport": "@/mock-data/sideBarNav",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/NavInbox.tsx",
+               "oldImport": "@/mock-data/side-bar-nav",
+               "newImport": "@/mock-data/sideBarNav",
+               "line": 10
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/NavWorkspace.tsx",
+               "oldImport": "@/mock-data/side-bar-nav",
+               "newImport": "@/mock-data/sideBarNav",
+               "line": 20
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "component",
+         "oldPath": "mock-data/status.tsx",
+         "newPath": "mock-data/StatusIcon.tsx",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/Filter.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 16
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/Filter.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 16
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/StatusSelector.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/StatusSelector.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 15
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/sidebar/create-new-issue/index.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/StatusWithPercent.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 13
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/projects/views/StatusWithPercent.tsx",
+               "oldImport": "@/mock-data/status",
+               "newImport": "@/mock-data/StatusIcon",
+               "line": 14
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/mock-data/issues.ts",
+               "oldImport": "./status",
+               "newImport": "./StatusIcon",
+               "line": 8
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/mock-data/issues.ts",
+               "oldImport": "./status",
+               "newImport": "./StatusIcon",
+               "line": 9
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/mock-data/projects.ts",
+               "oldImport": "./status",
+               "newImport": "./StatusIcon",
+               "line": 1
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/mock-data/projects.ts",
+               "oldImport": "./status",
+               "newImport": "./StatusIcon",
+               "line": 2
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "store",
+         "oldPath": "store/create-issue-store.ts",
+         "newPath": "store/createIssueStore.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "store/filter-store.ts",
+         "newPath": "store/filterStore.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "store",
+         "oldPath": "store/issue-side-panel-store.ts",
+         "newPath": "store/issueSidePanelStore.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "store",
+         "oldPath": "store/search-store.ts",
+         "newPath": "store/searchStore.ts",
+         "importUpdates": []
+      },
+      {
+         "type": "rename",
+         "category": "store",
+         "oldPath": "store/update-issue-store.ts",
+         "newPath": "store/updateIssueStore.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/forms/UpdateIssueModal.tsx",
+               "oldImport": "@/store/update-issue-store",
+               "newImport": "@/store/updateIssueStore",
+               "line": 7
+            }
+         ]
+      },
+      {
+         "type": "rename",
+         "category": "type",
+         "oldPath": "store/view-store.ts",
+         "newPath": "store/viewStore.ts",
+         "importUpdates": [
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/TasksOptions.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/indie/TasksOptions.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 13
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/HeaderOptions.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 11
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/components/layout/headers/issues/HeaderOptions.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/HeaderOptions.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 11
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/components/headers/HeaderOptions.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 12
+            },
+            {
+               "file": "/Users/minh/Documents/claude-task-master-ui/features/issues/views/all-issues/AllIssues.tsx",
+               "oldImport": "@/store/view-store",
+               "newImport": "@/store/viewStore",
+               "line": 5
+            }
+         ]
+      }
+   ],
+   "summary": {
+      "totalFiles": 3147,
+      "renamedFiles": 161,
+      "updatedImports": 239,
+      "byCategory": {
+         "component": 101,
+         "hook": 6,
+         "type": 24,
+         "util": 2,
+         "constant": 0,
+         "store": 6,
+         "other": 22
+      }
+   }
+}
