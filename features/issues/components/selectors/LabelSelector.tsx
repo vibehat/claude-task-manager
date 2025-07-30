@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useGetLabelsQuery } from '@/libs/client/graphql-client/generated';
+import { useGetLabelsQuery, useCreateLabelMutation } from '@/libs/client/graphql-client/generated';
 import { CheckIcon, Tag, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/libs/client/utils';
@@ -34,8 +34,33 @@ export function LabelSelector({
    disabled,
 }: LabelSelectorProps): React.JSX.Element {
    const [open, setOpen] = useState<boolean>(false);
-   const { data: labelsData, loading: labelsLoading } = useGetLabelsQuery();
+   const [searchValue, setSearchValue] = useState<string>('');
+   const { data: labelsData, loading: labelsLoading, refetch } = useGetLabelsQuery();
+   const [createLabel, { loading: createLoading }] = useCreateLabelMutation();
    const labels = labelsData?.labels || [];
+
+   const generateRandomColor = (): string => {
+      const colors = [
+         '#ef4444',
+         '#f97316',
+         '#f59e0b',
+         '#eab308',
+         '#84cc16',
+         '#22c55e',
+         '#10b981',
+         '#14b8a6',
+         '#06b6d4',
+         '#0ea5e9',
+         '#3b82f6',
+         '#6366f1',
+         '#8b5cf6',
+         '#a855f7',
+         '#d946ef',
+         '#ec4899',
+         '#f43f5e',
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+   };
 
    const handleLabelToggle = (label: { id: string; name: string; color: string }): void => {
       const isSelected = selectedLabels.some((l) => l.label.id === label.id);
@@ -50,7 +75,42 @@ export function LabelSelector({
       onChange(newLabelIds);
    };
 
+   const handleCreateLabel = async (name: string): Promise<void> => {
+      try {
+         const result = await createLabel({
+            variables: {
+               input: {
+                  name: name.trim(),
+                  color: generateRandomColor(),
+               },
+            },
+         });
+
+         if (result.data?.createOneLabel) {
+            const newLabel = result.data.createOneLabel;
+            // Add the new label to selection
+            const newLabelIds = [...selectedLabels.map((l) => l.label.id), newLabel.id];
+            onChange(newLabelIds);
+            // Refetch labels to update the list
+            await refetch();
+            setSearchValue('');
+         }
+      } catch (error) {
+         console.error('Failed to create label:', error);
+      }
+   };
+
    const hasLabels = selectedLabels.length > 0;
+
+   // Filter labels based on search value
+   const filteredLabels = labels.filter((label) =>
+      label.name.toLowerCase().includes(searchValue.toLowerCase())
+   );
+
+   // Check if we should show "Create new label" option
+   const shouldShowCreateOption =
+      searchValue.trim() &&
+      !filteredLabels.some((label) => label.name.toLowerCase() === searchValue.toLowerCase());
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -90,19 +150,25 @@ export function LabelSelector({
          </PopoverTrigger>
          <PopoverContent className="w-64 p-0" align="start">
             <Command>
-               <CommandInput placeholder="Search labels..." />
+               <CommandInput
+                  placeholder="Search labels..."
+                  value={searchValue}
+                  onValueChange={setSearchValue}
+               />
                <CommandList>
                   {labelsLoading && (
                      <div className="p-2 text-sm text-muted-foreground">Loading labels...</div>
                   )}
-                  <CommandEmpty>No labels found.</CommandEmpty>
+                  {!labelsLoading && filteredLabels.length === 0 && !shouldShowCreateOption && (
+                     <CommandEmpty>No labels found.</CommandEmpty>
+                  )}
                   <CommandGroup>
-                     {labels.map((label) => {
+                     {filteredLabels.map((label) => {
                         const isSelected = selectedLabels.some((l) => l.label.id === label.id);
                         return (
                            <CommandItem
                               key={label.id}
-                              value={label.id}
+                              value={label.name}
                               onSelect={() => handleLabelToggle(label)}
                               className="flex items-center gap-2"
                            >
@@ -115,6 +181,20 @@ export function LabelSelector({
                            </CommandItem>
                         );
                      })}
+                     {shouldShowCreateOption && (
+                        <CommandItem
+                           value={`create-${searchValue}`}
+                           onSelect={() => handleCreateLabel(searchValue)}
+                           className="flex items-center gap-2"
+                           disabled={createLoading}
+                        >
+                           <Plus className="h-4 w-4" />
+                           <span>Create "{searchValue.trim()}"</span>
+                           {createLoading && (
+                              <span className="text-xs text-muted-foreground">Creating...</span>
+                           )}
+                        </CommandItem>
+                     )}
                   </CommandGroup>
                </CommandList>
             </Command>

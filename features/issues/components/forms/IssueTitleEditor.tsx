@@ -32,7 +32,7 @@ export function IssueTitleEditor({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onBlur={handleBlur}
-            className="text-xl font-semibold border-none px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="text-xl font-semibold border-none px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-white dark:placeholder:text-gray-400 dark:bg-transparent"
             placeholder="Issue title"
             disabled={disabled}
          />

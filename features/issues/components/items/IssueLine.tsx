@@ -6,10 +6,12 @@ import { AssigneeUser } from '../AssigneeUser';
 import { LabelBadge } from '../badges/LabelBadge';
 import { PrioritySelector } from '../selectors/PrioritySelector';
 import { StatusSelector } from '../selectors/StatusSelector';
+import { LabelSelector } from '../selectors/LabelSelector';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import { Pencil } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
+import { useUpdateIssueLabelsMutation } from '@/libs/client/graphql-client/generated';
 
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/ContextMenu';
 import { IssueContextMenu } from './IssueContextMenu';
@@ -24,6 +26,24 @@ export function IssueLine({
    layoutId?: boolean;
 }): React.JSX.Element {
    const { openPanel } = useIssueSidePanelStore();
+   const [updateIssueLabels] = useUpdateIssueLabelsMutation();
+
+   const handleLabelChange = async (labelIds: string[]): Promise<void> => {
+      try {
+         const connectLabels = labelIds.map((labelId) => ({
+            label: { connect: { id: labelId } },
+         }));
+         await updateIssueLabels({
+            variables: {
+               id: issue.id,
+               connectLabels,
+            },
+            refetchQueries: ['GetIssues'],
+         });
+      } catch (error) {
+         console.error('Failed to update issue labels:', error);
+      }
+   };
    return (
       <ContextMenu>
          <ContextMenuTrigger asChild>
@@ -45,7 +65,7 @@ export function IssueLine({
                </div>
                <span className="min-w-0 flex items-center justify-start mr-1 ml-0.5">
                   <button
-                     className="text-xs sm:text-sm font-medium sm:font-semibold truncate text-left hover:text-blue-600 transition-colors cursor-pointer"
+                     className="text-xs sm:text-sm font-medium sm:font-semibold truncate text-left hover:text-white hover:underline transition-all cursor-pointer"
                      onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
@@ -56,18 +76,20 @@ export function IssueLine({
                   </button>
                </span>
                <div className="flex items-center justify-end gap-2 ml-auto sm:w-fit">
-                  <Button
-                     size="icon"
-                     variant="ghost"
-                     className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-accent"
-                     onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        openPanel(issue);
-                     }}
-                  >
-                     <Pencil className="h-3 w-3" />
-                  </Button>
+                  {(!issue.labels || issue.labels.length === 0) && (
+                     <div
+                        className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           e.preventDefault();
+                        }}
+                     >
+                        <LabelSelector
+                           selectedLabels={issue.labels || []}
+                           onChange={handleLabelChange}
+                        />
+                     </div>
+                  )}
                   {issue.labels && issue.labels.length > 0 && (
                      <div className="flex items-center gap-1 hidden sm:flex">
                         <LabelBadge labels={issue.labels} />

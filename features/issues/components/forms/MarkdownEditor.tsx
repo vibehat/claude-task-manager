@@ -1,10 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { Crepe } from '@milkdown/crepe';
-import '@/styles/milkdown-crepe.css';
-import '@milkdown/crepe/theme/common/style.css';
-import '@milkdown/crepe/theme/frame.css';
+import { Editor, rootCtx } from '@milkdown/kit/core';
+import { commonmark } from '@milkdown/kit/preset/commonmark';
+import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 
 interface MarkdownEditorProps {
    value: string;
@@ -14,75 +12,30 @@ interface MarkdownEditorProps {
    className?: string;
 }
 
-export function MarkdownEditor({
+const MilkdownEditor: React.FC<MarkdownEditorProps> = ({
    value,
    onChange,
    placeholder = 'Add a description...',
    disabled = false,
    className = 'min-h-[200px] w-full',
-}: MarkdownEditorProps): React.JSX.Element {
-   const editorRef = useRef<HTMLDivElement>(null);
-   const crepeRef = useRef<Crepe | null>(null);
-
-   useEffect(() => {
-      if (!editorRef.current || disabled) return;
-
-      // Clean up previous editor if it exists
-      if (crepeRef.current) {
-         crepeRef.current.destroy();
-      }
-
-      // Create new Crepe instance
-      const crepe = new Crepe({
-         root: editorRef.current,
-         defaultValue: value || placeholder,
-      });
-
-      crepe
-         .on((listener) => {
-            listener.markdownUpdated((ctx, markdown) => {
-               onChange(markdown);
-            });
+}) => {
+   const { get } = useEditor((root) =>
+      Editor.make()
+         .config((ctx) => {
+            ctx.set(rootCtx, root);
          })
-         .create()
-         .then(() => {
-            console.log('Milkdown editor created');
-            crepeRef.current = crepe;
-         })
-         .catch((error) => {
-            console.error('Failed to create Milkdown editor:', error);
-         });
+         .use(commonmark)
+   );
 
-      // Cleanup on unmount
-      return () => {
-         if (crepeRef.current) {
-            crepeRef.current.destroy();
-            crepeRef.current = null;
-         }
-      };
-   }, [value, placeholder, disabled, onChange]);
+   return <Milkdown />;
+};
 
-   // Clean up editor when disabled
-   useEffect(() => {
-      if (disabled && crepeRef.current) {
-         crepeRef.current.destroy();
-         crepeRef.current = null;
-      }
-   }, [disabled]);
-
-   const getMarkdown = (): string => {
-      if (crepeRef.current) {
-         return crepeRef.current.getMarkdown();
-      }
-      return value;
-   };
-
-   // Expose getMarkdown method through ref
-   useEffect(() => {
-      (editorRef.current as any)?.setAttribute('data-get-markdown', getMarkdown);
-   });
-
-   return <div ref={editorRef} className={className} />;
+export function MarkdownEditor(props: MarkdownEditorProps): React.JSX.Element {
+   return (
+      <MilkdownProvider>
+         <MilkdownEditor {...props} />
+      </MilkdownProvider>
+   );
 }
 
 export default MarkdownEditor;

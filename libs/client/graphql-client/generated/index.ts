@@ -10460,6 +10460,13 @@ export type CreateIssueMutationVariables = Exact<{
 
 export type CreateIssueMutation = { __typename?: 'Mutation', createOneIssue: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string } }>, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } };
 
+export type CreateLabelMutationVariables = Exact<{
+  input: LabelCreateInput;
+}>;
+
+
+export type CreateLabelMutation = { __typename?: 'Mutation', createOneLabel: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null, createdAt: string, updatedAt: string } };
+
 export type DeleteIssueMutationVariables = Exact<{
   where: IssueWhereUniqueInput;
 }>;
@@ -10798,6 +10805,44 @@ export function useCreateIssueMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateIssueMutationHookResult = ReturnType<typeof useCreateIssueMutation>;
 export type CreateIssueMutationResult = Apollo.MutationResult<CreateIssueMutation>;
 export type CreateIssueMutationOptions = Apollo.BaseMutationOptions<CreateIssueMutation, CreateIssueMutationVariables>;
+export const CreateLabelDocument = gql`
+    mutation CreateLabel($input: LabelCreateInput!) {
+  createOneLabel(data: $input) {
+    id
+    name
+    color
+    description
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateLabelMutationFn = Apollo.MutationFunction<CreateLabelMutation, CreateLabelMutationVariables>;
+
+/**
+ * __useCreateLabelMutation__
+ *
+ * To run a mutation, you first call `useCreateLabelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLabelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLabelMutation, { data, loading, error }] = useCreateLabelMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateLabelMutation(baseOptions?: Apollo.MutationHookOptions<CreateLabelMutation, CreateLabelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateLabelMutation, CreateLabelMutationVariables>(CreateLabelDocument, options);
+      }
+export type CreateLabelMutationHookResult = ReturnType<typeof useCreateLabelMutation>;
+export type CreateLabelMutationResult = Apollo.MutationResult<CreateLabelMutation>;
+export type CreateLabelMutationOptions = Apollo.BaseMutationOptions<CreateLabelMutation, CreateLabelMutationVariables>;
 export const DeleteIssueDocument = gql`
     mutation DeleteIssue($where: IssueWhereUniqueInput!) {
   deleteOneIssue(where: $where) {

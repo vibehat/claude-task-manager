@@ -35,6 +35,12 @@ importers:
       '@milkdown/crepe':
         specifier: ^7.15.2
         version: 7.15.2(prosemirror-model@1.25.2)(prosemirror-state@1.4.3)(prosemirror-view@1.40.1)(typescript@5.7.3)
+      '@milkdown/kit':
+        specifier: ^7.15.2
+        version: 7.15.2(@codemirror/language@6.11.2)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(typescript@5.7.3)
+      '@milkdown/react':
+        specifier: ^7.15.2
+        version: 7.15.2(@codemirror/language@6.11.2)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(prosemirror-model@1.25.2)(prosemirror-state@1.4.3)(prosemirror-view@1.40.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
@@ -1594,6 +1600,12 @@ packages:
 
   '@milkdown/prose@7.15.2':
     resolution: {integrity: sha512-8APWqVCJvnEljOgkNZi4jSIpZ6icJR8BKmClIZ+x/KQuZHChqR50ou9Z06Rdh4/VHUN6tyRfs9r8td1LAqf+fg==}
+
+  '@milkdown/react@7.15.2':
+    resolution: {integrity: sha512-X8BW6TLYsfVVUuvQjr5FNRxx8Sin1JUGgeilNEyjTtvcyCDo2s1jpwyHEkd+kTLRnnKpdqM3tEuxWhA/AFlZSw==}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
 
   '@milkdown/transformer@7.15.2':
     resolution: {integrity: sha512-OxpO6ijKHekCc2V1gMooRp6NGQQm4eDBNbH3Bd/AWTYiI8bTsA7Xeydu6KTB6YqBCQMi2MJ0pnYnny1bZJZRcg==}
@@ -9059,6 +9071,23 @@ snapshots:
       prosemirror-transform: 1.10.4
       prosemirror-view: 1.40.1
       tslib: 2.8.1
+
+  '@milkdown/react@7.15.2(@codemirror/language@6.11.2)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(prosemirror-model@1.25.2)(prosemirror-state@1.4.3)(prosemirror-view@1.40.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)':
+    dependencies:
+      '@milkdown/crepe': 7.15.2(prosemirror-model@1.25.2)(prosemirror-state@1.4.3)(prosemirror-view@1.40.1)(typescript@5.7.3)
+      '@milkdown/kit': 7.15.2(@codemirror/language@6.11.2)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(typescript@5.7.3)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@codemirror/language'
+      - '@codemirror/state'
+      - '@codemirror/view'
+      - prosemirror-model
+      - prosemirror-state
+      - prosemirror-view
+      - supports-color
+      - typescript
 
   '@milkdown/transformer@7.15.2':
     dependencies:

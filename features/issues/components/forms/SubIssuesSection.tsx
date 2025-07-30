@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Issue } from '@/libs/client/graphql-client/generated';
+import { IssueDetailsFragment } from '@/libs/client/graphql-client/generated';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -18,7 +18,7 @@ import { cn } from '@/libs/client/utils';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
 
 interface SubIssuesSectionProps {
-   issue: Issue;
+   issue: IssueDetailsFragment;
    disabled?: boolean;
 }
 
@@ -46,7 +46,7 @@ export function SubIssuesSection({ issue, disabled }: SubIssuesSectionProps) {
 }
 
 interface SubIssueItemProps {
-   subIssue: Issue;
+   subIssue: IssueDetailsFragment['subIssues'][0];
    disabled?: boolean;
 }
 
@@ -70,7 +70,8 @@ function SubIssueItem({ subIssue, disabled }: SubIssueItemProps) {
 
    const handleClick = () => {
       if (!disabled) {
-         openPanel(subIssue);
+         // We need to pass a full issue object to openPanel, so we'll cast the subIssue
+         openPanel(subIssue as any);
       }
    };
 
@@ -92,11 +93,6 @@ function SubIssueItem({ subIssue, disabled }: SubIssueItemProps) {
                         <span className="text-xs text-muted-foreground font-mono">
                            {subIssue.identifier}
                         </span>
-                        {subIssue.priority && (
-                           <Badge variant="outline" className="text-xs h-5">
-                              {subIssue.priority}
-                           </Badge>
-                        )}
                      </div>
 
                      <h4 className="text-sm font-medium line-clamp-2">{subIssue.title}</h4>

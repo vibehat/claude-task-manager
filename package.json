@@ -48,6 +48,8 @@
       "@hookform/resolvers": "^4.1.2",
       "@kayron013/lexorank": "^2.0.0",
       "@milkdown/crepe": "^7.15.2",
+      "@milkdown/kit": "^7.15.2",
+      "@milkdown/react": "^7.15.2",
       "@prisma/client": "^5.22.0",
       "@radix-ui/react-alert-dialog": "^1.1.6",
       "@radix-ui/react-avatar": "^1.1.3",

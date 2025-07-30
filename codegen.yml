@@ -14,7 +14,7 @@ generates:
          scalars:
             DateTime: string
             JSON: any
-         contextType: '../graphql/context#GraphQLContext'
+         contextType: '../context#GraphQLContext'
          useIndexSignature: true
          enumsAsTypes: true
          constEnums: true
