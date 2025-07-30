@@ -53,7 +53,7 @@ export const metadata: Metadata = {
    keywords: ['ui', 'lndev', 'components', 'template'],
 };
 
-import { ThemeProvider } from '@/components/layout/theme-provider';
+import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { GraphQLProvider } from '@/libs/client/graphql-client';
 
 export default function RootLayout({

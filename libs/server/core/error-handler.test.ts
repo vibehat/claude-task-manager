@@ -5,7 +5,7 @@ import {
    ErrorCategory,
    ErrorSeverity,
    getGlobalErrorHandler,
-} from './error-handler';
+} from './errorHandler';
 import type { TaskMasterError } from './errorHandler';
 
 describe('TaskMasterErrorHandler', () => {

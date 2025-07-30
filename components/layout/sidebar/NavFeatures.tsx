@@ -8,7 +8,7 @@ import {
    SidebarMenu,
    SidebarMenuButton,
    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/SidebarProvider';
 import { featuresItems } from '@/mock-data/sideBarNav';
 
 export function NavFeatures(): React.JSX.Element {

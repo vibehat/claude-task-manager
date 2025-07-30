@@ -9,6 +9,7 @@ interface IssueSidePanelStore {
    panelWidth: number;
    openPanel: (issue: IssueFromQuery) => void;
    closePanel: () => void;
+   updateIssue: (issue: IssueFromQuery) => void;
 }
 
 export const useIssueSidePanelStore = create<IssueSidePanelStore>((set) => ({
@@ -17,4 +18,5 @@ export const useIssueSidePanelStore = create<IssueSidePanelStore>((set) => ({
    panelWidth: 600,
    openPanel: (issue) => set({ isOpen: true, issue }),
    closePanel: () => set({ isOpen: false, issue: null }),
+   updateIssue: (issue) => set({ issue }),
 }));

@@ -33,11 +33,15 @@ export function IssueLine({
                className="w-full flex items-center justify-start h-11 px-6 hover:bg-sidebar/50 group"
             >
                <div className="flex items-center gap-0.5">
-                  <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
+                  <div onClick={(e) => e.stopPropagation()}>
+                     <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
+                  </div>
                   <span className="text-sm hidden sm:inline-block text-muted-foreground font-medium w-[66px] truncate shrink-0 mr-0.5">
                      {issue.identifier}
                   </span>
-                  <StatusSelector status={issue.issueStatus} issueId={issue.id} />
+                  <div onClick={(e) => e.stopPropagation()}>
+                     <StatusSelector status={issue.issueStatus} issueId={issue.id} />
+                  </div>
                </div>
                <span className="min-w-0 flex items-center justify-start mr-1 ml-0.5">
                   <button

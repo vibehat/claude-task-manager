@@ -2,19 +2,24 @@
 
 import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
 import { format } from 'date-fns';
-import { Calendar, Clock, User, Flag, Folder } from 'lucide-react';
+import { Calendar, Clock, User, Flag, Folder, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { StatusSelector } from '../selectors/StatusSelector';
 import { PrioritySelector } from '../selectors/PrioritySelector';
+import { LabelSelector } from '../selectors/LabelSelector';
 import { AssigneeUser } from '../AssigneeUser';
 
 type IssueFromQuery = GetIssuesQuery['issues'][0];
 
 interface IssueDetailsSectionProps {
    issue: IssueFromQuery;
+   onLabelsUpdate?: (labelIds: string[]) => void;
 }
 
-export function IssueDetailsSection({ issue }: IssueDetailsSectionProps): React.JSX.Element {
+export function IssueDetailsSection({
+   issue,
+   onLabelsUpdate,
+}: IssueDetailsSectionProps): React.JSX.Element {
    return (
       <div className="space-y-4">
          <h3 className="text-sm font-medium">Details</h3>
@@ -54,6 +59,21 @@ export function IssueDetailsSection({ issue }: IssueDetailsSectionProps): React.
                </div>
                <div className="flex items-center gap-2">
                   <StatusSelector status={issue.issueStatus} issueId={issue.id} />
+               </div>
+            </div>
+
+            {/* Labels */}
+            <div className="flex items-start justify-between">
+               <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Tag className="h-4 w-4" />
+                  <span>Labels</span>
+               </div>
+               <div className="flex-1 ml-4">
+                  <LabelSelector
+                     selectedLabels={issue.labels || []}
+                     onChange={onLabelsUpdate || (() => {})}
+                     disabled={false}
+                  />
                </div>
             </div>
 

@@ -11,7 +11,7 @@ import {
    CLIHistoryItem,
    CLIHistoryArgs,
    CLICommandArgs,
-} from '../types/cli.types';
+} from '../types/cliTypes';
 import { BaseResolver } from './baseResolver';
 import { cliExecutor } from '../../cli';
 import { categorizeCommand, getCommandExamples } from './shared/helpers';

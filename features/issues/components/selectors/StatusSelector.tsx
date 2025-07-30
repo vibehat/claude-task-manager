@@ -49,15 +49,28 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
                id: issueId,
                status: statusId,
             },
+            refetchQueries: ['GetIssues'],
          });
       }
    };
+
+   const selectedItem = statuses.find((item) => item.id === value);
+   const StatusIcon = selectedItem ? useIssueStatusIcon(selectedItem) : null;
 
    return (
       <div className="*:not-first:mt-2">
          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-               <StatusSelectorButton id={id} open={open} statuses={statuses} value={value} />
+               <Button
+                  id={id}
+                  className="size-7 flex items-center justify-center"
+                  size="icon"
+                  variant="ghost"
+                  role="combobox"
+                  aria-expanded={open}
+               >
+                  {StatusIcon ? <StatusIcon /> : <></>}
+               </Button>
             </PopoverTrigger>
             <PopoverContent
                className="border-input w-full min-w-[var(--radix-popper-anchor-width)] p-0"
@@ -82,32 +95,6 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
             </PopoverContent>
          </Popover>
       </div>
-   );
-}
-
-// Helper components that can use hooks
-interface StatusSelectorButtonProps {
-   id: string;
-   open: boolean;
-   statuses: any[];
-   value: string;
-}
-
-function StatusSelectorButton({ id, open, statuses, value }: StatusSelectorButtonProps) {
-   const selectedItem = statuses.find((item) => item.id === value);
-   const StatusIcon = selectedItem ? useIssueStatusIcon(selectedItem) : null;
-
-   return (
-      <Button
-         id={id}
-         className="size-7 flex items-center justify-center"
-         size="icon"
-         variant="ghost"
-         role="combobox"
-         aria-expanded={open}
-      >
-         {StatusIcon ? <StatusIcon /> : <></>}
-      </Button>
    );
 }
 

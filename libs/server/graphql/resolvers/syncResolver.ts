@@ -20,7 +20,7 @@ import {
    SyncOperationType,
    SyncOperationStatus,
    SyncState,
-} from '../types/sync.types';
+} from '../types/syncTypes';
 import { TaskStatus } from '../types/taskTypes';
 import { BaseResolver } from './baseResolver';
 import { getGlobalSyncManager } from '../../core';

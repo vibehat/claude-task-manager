@@ -5,7 +5,7 @@ import {
    SidebarMenu,
    SidebarMenuButton,
    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/SidebarProvider';
 import Link from 'next/link';
 import { inboxItems } from '@/mock-data/sideBarNav';
 

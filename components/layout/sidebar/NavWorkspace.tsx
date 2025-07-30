@@ -8,14 +8,14 @@ import {
    DropdownMenuItem,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/DropdownMenu';
 import {
    SidebarGroup,
    SidebarGroupLabel,
    SidebarMenu,
    SidebarMenuButton,
    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/SidebarProvider';
 import Link from 'next/link';
 import { workspaceItems } from '@/mock-data/sideBarNav';
 import { RiPresentationLine } from '@remixicon/react';

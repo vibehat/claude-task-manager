@@ -16,7 +16,7 @@ import {
    DropdownMenuSubContent,
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/DropdownMenu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/SidebarProvider';
 import { CreateNewIssue } from './create-new-issue';
 import { ThemeToggle } from '../ThemeToggle';

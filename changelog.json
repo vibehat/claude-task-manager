@@ -5,13 +5,6 @@
    "changes": [
       {
          "type": "rename",
-         "category": "other",
-         "oldPath": "__tests__/setup/setupTests-simple.ts",
-         "newPath": "__tests__/setup/setuptestsSimple.ts",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
          "category": "component",
          "oldPath": "components/icons/issue-status-icons.tsx",
          "newPath": "components/icons/BacklogIcon.tsx",
@@ -1825,13 +1818,6 @@
       },
       {
          "type": "rename",
-         "category": "other",
-         "oldPath": "jest.config.js",
-         "newPath": "jestConfig.js",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
          "category": "component",
          "oldPath": "libs/client/contexts/indie-project-context.tsx",
          "newPath": "libs/client/contexts/IndieProjectProvider.tsx",
@@ -1890,13 +1876,6 @@
          "category": "hook",
          "oldPath": "libs/client/hooks/issues/queries/reference/use-display-issue-statuses.ts",
          "newPath": "libs/client/hooks/issues/queries/reference/useDisplayIssueStatuses.ts",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
-         "category": "other",
-         "oldPath": "libs/server/cli/cli-command-validator.test.ts",
-         "newPath": "libs/server/cli/cliCommandValidatorTest.ts",
          "importUpdates": []
       },
       {
@@ -1960,13 +1939,6 @@
       {
          "type": "rename",
          "category": "other",
-         "oldPath": "libs/server/cli/cli-executor.test.ts",
-         "newPath": "libs/server/cli/cliExecutorTest.ts",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
-         "category": "other",
          "oldPath": "libs/server/cli/cli-executor.ts",
          "newPath": "libs/server/cli/cliExecutor.ts",
          "importUpdates": [
@@ -1989,13 +1961,6 @@
                "line": 68
             }
          ]
-      },
-      {
-         "type": "rename",
-         "category": "other",
-         "oldPath": "libs/server/core/error-handler.test.ts",
-         "newPath": "libs/server/core/errorHandlerTest.ts",
-         "importUpdates": []
       },
       {
          "type": "rename",
@@ -2064,13 +2029,6 @@
                "line": 3
             }
          ]
-      },
-      {
-         "type": "rename",
-         "category": "other",
-         "oldPath": "libs/server/core/file-watcher.test.ts",
-         "newPath": "libs/server/core/fileWatcherTest.ts",
-         "importUpdates": []
       },
       {
          "type": "rename",
@@ -2171,13 +2129,6 @@
                "line": 6
             }
          ]
-      },
-      {
-         "type": "rename",
-         "category": "util",
-         "oldPath": "libs/server/core/utils.test.ts",
-         "newPath": "libs/server/core/utilsTest.ts",
-         "importUpdates": []
       },
       {
          "type": "rename",
@@ -2333,13 +2284,6 @@
       },
       {
          "type": "rename",
-         "category": "other",
-         "oldPath": "libs/server/security/api-key-manager.test.ts",
-         "newPath": "libs/server/security/apiKeyManagerTest.ts",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
          "category": "type",
          "oldPath": "libs/server/security/api-key-manager.ts",
          "newPath": "libs/server/security/apiKeyManager.ts",
@@ -2384,13 +2328,6 @@
          "category": "type",
          "oldPath": "libs/server/types/graphql-generated.ts",
          "newPath": "libs/server/types/graphqlGenerated.ts",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
-         "category": "other",
-         "oldPath": "libs/server/validation/file-path-validator.test.ts",
-         "newPath": "libs/server/validation/filePathValidatorTest.ts",
          "importUpdates": []
       },
       {
@@ -2545,20 +2482,6 @@
                "line": 2
             }
          ]
-      },
-      {
-         "type": "rename",
-         "category": "other",
-         "oldPath": "next-env.d.ts",
-         "newPath": "nextEnvD.ts",
-         "importUpdates": []
-      },
-      {
-         "type": "rename",
-         "category": "other",
-         "oldPath": "next.config.ts",
-         "newPath": "nextConfig.ts",
-         "importUpdates": []
       },
       {
          "type": "rename",

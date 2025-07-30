@@ -23,3 +23,17 @@ mutation UpdateIssueAssignee($id: String!, $assigneeId: String) {
       ...IssueCore
    }
 }
+
+mutation UpdateIssueLabels($id: String!, $connectLabels: [IssueLabelCreateWithoutIssueInput!]!) {
+   updateOneIssue(
+      where: { id: $id }
+      data: {
+         labels: {
+            deleteMany: {}
+            create: $connectLabels
+         }
+      }
+   ) {
+      ...IssueCore
+   }
+}

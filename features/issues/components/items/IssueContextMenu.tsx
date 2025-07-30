@@ -10,7 +10,7 @@ import {
    ContextMenuSub,
    ContextMenuSubContent,
    ContextMenuSubTrigger,
-} from '@/components/ui/context-menu';
+} from '@/components/ui/ContextMenu';
 import {
    CircleCheck,
    User,

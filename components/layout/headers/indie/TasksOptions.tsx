@@ -7,12 +7,12 @@ import {
    DropdownMenuContent,
    DropdownMenuItem,
    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/DropdownMenu';
 import { cn } from '@/libs/client/utils';
 import type { ViewType } from '@/store/viewStore';
 import { useViewStore } from '@/store/viewStore';
 import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
-import { Filter } from './Filter';
+import { Filter } from './filter';
 
 export default function TasksOptions(): React.JSX.Element {
    const { viewType, setViewType } = useViewStore();

@@ -54,6 +54,7 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
                id: issueId,
                priorityId: priorityId,
             },
+            refetchQueries: ['GetIssues'],
          });
       }
    };

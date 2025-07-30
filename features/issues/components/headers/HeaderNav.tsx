@@ -6,7 +6,7 @@ import { SidebarTrigger } from '@/components/ui/SidebarProvider';
 import { useSearchStore } from '@/store/searchStore';
 import { SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import Notifications from './Notifications';
+import Notifications from './notifications';
 
 export default function HeaderNav(): React.JSX.Element {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =

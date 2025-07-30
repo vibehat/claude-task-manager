@@ -107,6 +107,60 @@ const testLabels = [
       color: '#3b82f6',
       description: 'Improvement to existing feature',
    },
+   {
+      id: 'label4',
+      name: 'UI Enhancement',
+      color: '#8b5cf6',
+      description: 'User interface improvements',
+   },
+   {
+      id: 'label5',
+      name: 'Documentation',
+      color: '#3b82f6',
+      description: 'Documentation updates',
+   },
+   {
+      id: 'label6',
+      name: 'Refactor',
+      color: '#f59e0b',
+      description: 'Code refactoring',
+   },
+   {
+      id: 'label7',
+      name: 'Performance',
+      color: '#f97316',
+      description: 'Performance improvements',
+   },
+   {
+      id: 'label8',
+      name: 'Design',
+      color: '#ec4899',
+      description: 'Design related tasks',
+   },
+   {
+      id: 'label9',
+      name: 'Security',
+      color: '#6b7280',
+      description: 'Security improvements',
+   },
+   {
+      id: 'label10',
+      name: 'Accessibility',
+      color: '#6366f1',
+      description: 'Accessibility improvements',
+   },
+   {
+      id: 'label11',
+      name: 'Testing',
+      color: '#14b8a6',
+      description: 'Testing related tasks',
+   },
+   {
+      id: 'label12',
+      name: 'Internationalization',
+      color: '#06b6d4',
+      description: 'i18n and localization',
+   },
 ];
 
 // Issue statuses from mock-data/status.tsx

@@ -2,7 +2,10 @@
 
 import { Separator } from '@/components/ui/separator';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
-import { useUpdateIssueMutation } from '@/libs/client/graphql-client/generated';
+import {
+   useUpdateIssueMutation,
+   useUpdateIssueLabelsMutation,
+} from '@/libs/client/graphql-client/generated';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
 import { IssueHeader } from './IssueHeader';
@@ -12,8 +15,15 @@ import { IssueDetailsSection } from './IssueDetailsSection';
 import { SubtasksSection } from './SubtasksSection';
 
 export function IssueSidePanel(): React.JSX.Element {
-   const { isOpen, issue, panelWidth, closePanel } = useIssueSidePanelStore();
+   const {
+      isOpen,
+      issue,
+      panelWidth,
+      closePanel,
+      updateIssue: updateIssueInStore,
+   } = useIssueSidePanelStore();
    const [updateIssue, { loading: updating }] = useUpdateIssueMutation();
+   const [updateIssueLabels, { loading: updatingLabels }] = useUpdateIssueLabelsMutation();
 
    const handleUpdateField = async (
       field: 'title' | 'description',
@@ -22,13 +32,19 @@ export function IssueSidePanel(): React.JSX.Element {
       if (!issue) return;
 
       try {
-         await updateIssue({
+         const { data } = await updateIssue({
             variables: {
                where: { id: issue.id },
                data: { [field]: { set: value } },
             },
             refetchQueries: ['GetIssues'],
          });
+
+         // Update the issue in the store with the response
+         if (data?.updateOneIssue) {
+            updateIssueInStore(data.updateOneIssue);
+         }
+
          toast.success(`${field === 'title' ? 'Title' : 'Description'} updated successfully`);
       } catch (error) {
          toast.error(`Failed to update ${field}`);
@@ -51,6 +67,34 @@ export function IssueSidePanel(): React.JSX.Element {
       console.log(`Updating subtask ${subtaskId} with description:`, description);
    };
 
+   const handleLabelsUpdate = async (labelIds: string[]): Promise<void> => {
+      if (!issue) return;
+
+      try {
+         const connectLabels = labelIds.map((labelId) => ({
+            label: { connect: { id: labelId } },
+         }));
+
+         const { data } = await updateIssueLabels({
+            variables: {
+               id: issue.id,
+               connectLabels,
+            },
+            refetchQueries: ['GetIssues'],
+         });
+
+         // Update the issue in the store with the response
+         if (data?.updateOneIssue) {
+            updateIssueInStore(data.updateOneIssue);
+         }
+
+         toast.success('Labels updated successfully');
+      } catch (error) {
+         toast.error('Failed to update labels');
+         console.error('Update labels error:', error);
+      }
+   };
+
    return (
       <AnimatePresence>
          {isOpen && issue && (
@@ -68,13 +112,13 @@ export function IssueSidePanel(): React.JSX.Element {
                   <IssueTitleEditor
                      initialValue={issue.title}
                      onBlur={handleTitleUpdate}
-                     disabled={updating}
+                     disabled={updating || updatingLabels}
                   />
 
                   <IssueDescriptionSection
                      initialValue={issue.description || ''}
                      onSave={handleDescriptionUpdate}
-                     disabled={updating}
+                     disabled={updating || updatingLabels}
                   />
 
                   <Separator />
@@ -82,12 +126,12 @@ export function IssueSidePanel(): React.JSX.Element {
                   <SubtasksSection
                      issue={issue}
                      onSubtaskUpdate={handleSubtaskUpdate}
-                     disabled={updating}
+                     disabled={updating || updatingLabels}
                   />
 
                   <Separator />
 
-                  <IssueDetailsSection issue={issue} />
+                  <IssueDetailsSection issue={issue} onLabelsUpdate={handleLabelsUpdate} />
                </div>
             </motion.div>
          )}

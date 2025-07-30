@@ -9,7 +9,7 @@ import {
    SidebarMenu,
    SidebarMenuButton,
    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/SidebarProvider';
 import { teams } from '@/mock-data/teams';
 import { Button } from '@/components/ui/button';
 

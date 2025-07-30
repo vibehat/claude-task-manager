@@ -10614,6 +10614,14 @@ export type UpdateIssueAssigneeMutationVariables = Exact<{
 
 export type UpdateIssueAssigneeMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string } }>, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } | null };
 
+export type UpdateIssueLabelsMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  connectLabels: Array<IssueLabelCreateWithoutIssueInput> | IssueLabelCreateWithoutIssueInput;
+}>;
+
+
+export type UpdateIssueLabelsMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string } }>, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } | null };
+
 export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
 
 export const IssueCoreFragmentDoc = gql`
@@ -11564,3 +11572,40 @@ export function useUpdateIssueAssigneeMutation(baseOptions?: Apollo.MutationHook
 export type UpdateIssueAssigneeMutationHookResult = ReturnType<typeof useUpdateIssueAssigneeMutation>;
 export type UpdateIssueAssigneeMutationResult = Apollo.MutationResult<UpdateIssueAssigneeMutation>;
 export type UpdateIssueAssigneeMutationOptions = Apollo.BaseMutationOptions<UpdateIssueAssigneeMutation, UpdateIssueAssigneeMutationVariables>;
+export const UpdateIssueLabelsDocument = gql`
+    mutation UpdateIssueLabels($id: String!, $connectLabels: [IssueLabelCreateWithoutIssueInput!]!) {
+  updateOneIssue(
+    where: {id: $id}
+    data: {labels: {deleteMany: {}, create: $connectLabels}}
+  ) {
+    ...IssueCore
+  }
+}
+    ${IssueCoreFragmentDoc}`;
+export type UpdateIssueLabelsMutationFn = Apollo.MutationFunction<UpdateIssueLabelsMutation, UpdateIssueLabelsMutationVariables>;
+
+/**
+ * __useUpdateIssueLabelsMutation__
+ *
+ * To run a mutation, you first call `useUpdateIssueLabelsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIssueLabelsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateIssueLabelsMutation, { data, loading, error }] = useUpdateIssueLabelsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      connectLabels: // value for 'connectLabels'
+ *   },
+ * });
+ */
+export function useUpdateIssueLabelsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateIssueLabelsMutation, UpdateIssueLabelsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateIssueLabelsMutation, UpdateIssueLabelsMutationVariables>(UpdateIssueLabelsDocument, options);
+      }
+export type UpdateIssueLabelsMutationHookResult = ReturnType<typeof useUpdateIssueLabelsMutation>;
+export type UpdateIssueLabelsMutationResult = Apollo.MutationResult<UpdateIssueLabelsMutation>;
+export type UpdateIssueLabelsMutationOptions = Apollo.BaseMutationOptions<UpdateIssueLabelsMutation, UpdateIssueLabelsMutationVariables>;

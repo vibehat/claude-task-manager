@@ -9,7 +9,7 @@ import {
    DropdownMenuContent,
    DropdownMenuItem,
    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/DropdownMenu';
 
 export function ThemeToggle(): React.JSX.Element | null {
    const { theme, setTheme } = useTheme();

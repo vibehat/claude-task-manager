@@ -17,7 +17,7 @@ import {
    SidebarMenu,
    SidebarMenuButton,
    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/SidebarProvider';
 import { indieNavigationSections } from '@/mock-data/indieSidebarNav';
 import Link from 'next/link';
 

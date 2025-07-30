@@ -7,7 +7,7 @@ import {
    InProgressIcon,
    TechnicalReviewIcon,
    CompletedIcon,
-} from '@/components/icons/issue-status-icons';
+} from '@/components/icons/BacklogIcon';
 
 const iconMapById: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
    'in-progress': InProgressIcon,

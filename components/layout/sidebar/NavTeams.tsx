@@ -20,7 +20,7 @@ import {
    DropdownMenuItem,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/DropdownMenu';
 import {
    SidebarGroup,
    SidebarGroupLabel,
@@ -31,7 +31,7 @@ import {
    SidebarMenuSub,
    SidebarMenuSubButton,
    SidebarMenuSubItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/SidebarProvider';
 import { teams } from '@/mock-data/teams';
 import { RiDonutChartFill } from '@remixicon/react';
 import { DEFAULT_CONFIG, getTeamRoute } from '@/libs/config/defaults';
