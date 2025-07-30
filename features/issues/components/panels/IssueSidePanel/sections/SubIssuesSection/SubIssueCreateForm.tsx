@@ -1,20 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-   IssueDetailsFragment,
-   useCreateIssueMutation,
-} from '@/libs/client/graphql-client/generated';
+import { Issue } from '@/libs/client/services/mockDataService';
+import { useIssueMutations } from '@/libs/client/hooks/useIssues';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Check, X } from 'lucide-react';
-import { LexoRank } from '@/libs/client/utils';
 import { toast } from 'sonner';
 
 interface SubIssueCreateFormProps {
-   issue: IssueDetailsFragment;
+   issue: Issue;
    onSuccess: () => void;
    onCancel: () => void;
 }
@@ -22,7 +19,7 @@ interface SubIssueCreateFormProps {
 export function SubIssueCreateForm({ issue, onSuccess, onCancel }: SubIssueCreateFormProps) {
    const [title, setTitle] = useState('');
    const [description, setDescription] = useState('');
-   const [createIssue, { loading }] = useCreateIssueMutation();
+   const { createIssue, loading } = useIssueMutations();
 
    const handleCreate = async () => {
       if (!title.trim()) {
@@ -30,43 +27,26 @@ export function SubIssueCreateForm({ issue, onSuccess, onCancel }: SubIssueCreat
          return;
       }
 
-      if (!issue.project?.id) {
-         toast.error('Parent issue must have a project');
-         return;
-      }
-
       try {
-         // Generate a unique identifier for the sub-issue
-         const identifier = `SUB-${Date.now()}`;
-
-         // Generate a rank for ordering (place at the end)
-         const rank = new LexoRank('z' + Math.random().toString(36).substring(2)).toString();
-
-         const { data } = await createIssue({
-            variables: {
-               data: {
-                  identifier,
-                  title: title.trim(),
-                  description: description.trim() || 'Sub-issue',
-                  status: 'pending',
-                  issueType: 'subtask',
-                  rank,
-                  parentIssue: {
-                     connect: { id: issue.id },
-                  },
-                  project: {
-                     connect: { id: issue.project.id },
-                  },
-               },
-            },
-            refetchQueries: ['GetIssues', 'GetIssue'],
+         const result = await createIssue({
+            title: title.trim(),
+            description: description.trim() || undefined,
+            statusId: issue.statusId, // Use same status as parent
+            priorityId: issue.priorityId,
+            assigneeId: issue.assigneeId,
+            projectId: issue.projectId,
+            parentIssueId: issue.id,
+            labelIds: [],
          });
 
-         if (data?.createOneIssue) {
+         if (result.data) {
             toast.success('Sub-issue created successfully');
             setTitle('');
             setDescription('');
             onSuccess();
+         } else if (result.error) {
+            toast.error('Failed to create sub-issue');
+            console.error('Create sub-issue error:', result.error);
          }
       } catch (error) {
          toast.error('Failed to create sub-issue');
