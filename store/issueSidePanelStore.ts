@@ -1,15 +1,15 @@
 import { create } from 'zustand';
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
+import type { GetIssuesQuery, IssueDetailsFragment } from '@/libs/client/graphql-client/generated';
 
 type IssueFromQuery = GetIssuesQuery['issues'][0];
 
 interface IssueSidePanelStore {
    isOpen: boolean;
-   issue: IssueFromQuery | null;
+   issue: IssueDetailsFragment | null;
    panelWidth: number;
    openPanel: (issue: IssueFromQuery) => void;
    closePanel: () => void;
-   updateIssue: (issue: IssueFromQuery) => void;
+   updateIssue: (issue: IssueDetailsFragment) => void;
 }
 
 export const useIssueSidePanelStore = create<IssueSidePanelStore>((set) => ({

@@ -1,8 +1,8 @@
-#import "issue-core.graphql"
+#import "issue-details.graphql"
 
 mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
    updateOneIssue(where: $where, data: $data) {
-      ...IssueCore
+      ...IssueDetails
    }
 }
 
@@ -34,6 +34,6 @@ mutation UpdateIssueLabels($id: String!, $connectLabels: [IssueLabelCreateWithou
          }
       }
    ) {
-      ...IssueCore
+      ...IssueDetails
    }
 }

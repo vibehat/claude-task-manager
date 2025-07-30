@@ -13,6 +13,7 @@ import { IssueTitleEditor } from './IssueTitleEditor';
 import { IssueDescriptionSection } from './IssueDescriptionSection';
 import { IssueDetailsSection } from './IssueDetailsSection';
 import { SubtasksSection } from './SubtasksSection';
+import { SubIssuesSection } from './SubIssuesSection';
 
 export function IssueSidePanel(): React.JSX.Element {
    const {
@@ -128,6 +129,10 @@ export function IssueSidePanel(): React.JSX.Element {
                      onSubtaskUpdate={handleSubtaskUpdate}
                      disabled={updating || updatingLabels}
                   />
+
+                  <Separator />
+
+                  <SubIssuesSection issue={issue} disabled={updating || updatingLabels} />
 
                   <Separator />
 

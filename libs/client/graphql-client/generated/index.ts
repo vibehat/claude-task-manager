@@ -10588,7 +10588,7 @@ export type UpdateIssueMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string } }>, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } | null };
+export type UpdateIssueMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null } }>, project?: { __typename?: 'Project', id: string, name: string, identifier?: string | null, color?: string | null, icon?: string | null } | null, parentIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null } | null, subIssues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null, assignee?: { __typename?: 'User', id: string, name: string, avatarUrl?: string | null } | null }>, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } | null };
 
 export type UpdateIssueStatusMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -10620,7 +10620,7 @@ export type UpdateIssueLabelsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIssueLabelsMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string } }>, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } | null };
+export type UpdateIssueLabelsMutation = { __typename?: 'Mutation', updateOneIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, description: string, status?: string | null, priority?: string | null, rank: string, cycleId?: string | null, dueDate?: string | null, issueType: string, taskId?: number | null, subtaskId?: string | null, assigneeId?: string | null, projectId?: string | null, createdAt: string, updatedAt: string, labels: Array<{ __typename?: 'IssueLabel', id: string, label: { __typename?: 'Label', id: string, name: string, color: string, description?: string | null } }>, project?: { __typename?: 'Project', id: string, name: string, identifier?: string | null, color?: string | null, icon?: string | null } | null, parentIssue?: { __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null } | null, subIssues: Array<{ __typename?: 'Issue', id: string, identifier: string, title: string, status?: string | null, assignee?: { __typename?: 'User', id: string, name: string, avatarUrl?: string | null } | null }>, issueStatus?: { __typename?: 'IssueStatus', id: string, name: string, color: string, iconName: string } | null, issuePriority?: { __typename?: 'IssuePriority', id: string, name: string, iconName: string, order: number } | null, assignee?: { __typename?: 'User', id: string, name: string, email: string, avatarUrl?: string | null } | null, subtask?: { __typename?: 'Subtask', id: string, title: string, description: string, details?: string | null, status: string, createdAt: string, updatedAt: string } | null } | null };
 
 export type NewTaskFragment = { __typename?: 'Task', id: number, title: string, description: string, status: string, priority: string, details?: string | null, testStrategy?: string | null, complexity?: number | null, createdAt: string, updatedAt: string };
 
@@ -11436,10 +11436,10 @@ export type SearchIssuesQueryResult = Apollo.QueryResult<SearchIssuesQuery, Sear
 export const UpdateIssueDocument = gql`
     mutation UpdateIssue($where: IssueWhereUniqueInput!, $data: IssueUpdateInput!) {
   updateOneIssue(where: $where, data: $data) {
-    ...IssueCore
+    ...IssueDetails
   }
 }
-    ${IssueCoreFragmentDoc}`;
+    ${IssueDetailsFragmentDoc}`;
 export type UpdateIssueMutationFn = Apollo.MutationFunction<UpdateIssueMutation, UpdateIssueMutationVariables>;
 
 /**
@@ -11578,10 +11578,10 @@ export const UpdateIssueLabelsDocument = gql`
     where: {id: $id}
     data: {labels: {deleteMany: {}, create: $connectLabels}}
   ) {
-    ...IssueCore
+    ...IssueDetails
   }
 }
-    ${IssueCoreFragmentDoc}`;
+    ${IssueDetailsFragmentDoc}`;
 export type UpdateIssueLabelsMutationFn = Apollo.MutationFunction<UpdateIssueLabelsMutation, UpdateIssueLabelsMutationVariables>;
 
 /**
