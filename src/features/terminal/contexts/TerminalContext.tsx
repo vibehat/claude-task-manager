@@ -10,17 +10,8 @@ import {
 } from '../types/terminal';
 import { useMultiTerminalStore } from '@/store/multiTerminalStore';
 
-// Legacy single terminal context for backward compatibility
-interface LegacyTerminalContextValue extends UseTerminalReturn {
-   isVisible: boolean;
-   showTerminal: () => void;
-   hideTerminal: () => void;
-   toggleTerminal: () => void;
-   terminalRef: React.RefObject<HTMLDivElement | null>;
-}
-
-// Enhanced context that includes both legacy and multi-terminal support
-interface EnhancedTerminalContextValue extends LegacyTerminalContextValue {
+// Multi-terminal context
+interface TerminalContextValue {
    // Multi-terminal functionality
    terminals: Map<string, MultiTerminalInstance>;
    activeTerminalId: string | null;
@@ -39,7 +30,7 @@ interface EnhancedTerminalContextValue extends LegacyTerminalContextValue {
    updateTerminalTitle: (id: string, title: string) => void;
 }
 
-const TerminalContext = createContext<EnhancedTerminalContextValue | null>(null);
+const TerminalContext = createContext<TerminalContextValue | null>(null);
 
 interface TerminalProviderProps {
    children: React.ReactNode;
@@ -54,57 +45,10 @@ export function TerminalProvider({
    fontSize = 14,
    fontFamily = 'Monaco, Menlo, "Ubuntu Mono", monospace',
 }: TerminalProviderProps) {
-   const [isVisible, setIsVisible] = useState(false);
    const [terminals] = useState<Map<string, MultiTerminalInstance>>(new Map());
-   const terminalRef = useRef<HTMLDivElement | null>(null);
 
    // Multi-terminal store
    const multiTerminalStore = useMultiTerminalStore();
-
-   const handleConnect = useCallback(() => {
-      console.log('Persistent terminal connected');
-   }, []);
-
-   const handleDisconnect = useCallback(() => {
-      console.log('Persistent terminal disconnected');
-   }, []);
-
-   const handleError = useCallback((error: string) => {
-      console.error('Persistent terminal error:', error);
-   }, []);
-
-   // Legacy single terminal for backward compatibility
-   const terminal = useTerminal({
-      theme,
-      fontSize,
-      fontFamily,
-      onConnect: handleConnect,
-      onDisconnect: handleDisconnect,
-      onError: handleError,
-   });
-
-   // Legacy terminal visibility controls
-   const showTerminal = useCallback(() => {
-      setIsVisible(true);
-      // Auto-connect if not already connected
-      if (terminal.connectionStatus === TerminalConnectionStatus.DISCONNECTED) {
-         setTimeout(() => {
-            terminal.connect();
-         }, 100);
-      }
-   }, [terminal]);
-
-   const hideTerminal = useCallback(() => {
-      setIsVisible(false);
-   }, []);
-
-   const toggleTerminal = useCallback(() => {
-      if (isVisible) {
-         hideTerminal();
-      } else {
-         showTerminal();
-      }
-   }, [isVisible, hideTerminal, showTerminal]);
 
    // Multi-terminal functionality - create new terminal instance
    const createTerminal = useCallback(
@@ -141,15 +85,7 @@ export function TerminalProvider({
       [terminals]
    );
 
-   const contextValue: EnhancedTerminalContextValue = {
-      // Legacy single terminal support
-      ...terminal,
-      isVisible,
-      showTerminal,
-      hideTerminal,
-      toggleTerminal,
-      terminalRef,
-
+   const contextValue: TerminalContextValue = {
       // Multi-terminal support
       terminals,
       activeTerminalId: multiTerminalStore.activeTerminalId,
@@ -171,7 +107,7 @@ export function TerminalProvider({
    return <TerminalContext.Provider value={contextValue}>{children}</TerminalContext.Provider>;
 }
 
-export function useTerminalContext(): EnhancedTerminalContextValue {
+export function useTerminalContext(): TerminalContextValue {
    const context = useContext(TerminalContext);
    if (!context) {
       throw new Error('useTerminalContext must be used within a TerminalProvider');

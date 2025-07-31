@@ -154,7 +154,14 @@ export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
 
    toggleMinimize: (id: string) => {
       const terminal = get().getTerminalById(id);
-      if (!terminal) return;
+      if (!terminal) {
+         console.log(`Terminal not found: ${id}`);
+         return;
+      }
+
+      console.log(
+         `Toggle minimize for terminal ${id}: currently ${terminal.isMinimized ? 'minimized' : 'normal'}`
+      );
 
       if (terminal.isMinimized) {
          get().restoreTerminal(id);

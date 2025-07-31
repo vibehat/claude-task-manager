@@ -86,9 +86,6 @@ export function IndieLayout({
 
                {/* Multi-Terminal Manager */}
                <MultiTerminalManager />
-
-               {/* Legacy Persistent Terminal - kept for backward compatibility */}
-               <PersistentTerminal />
             </SidebarProvider>
          </TerminalProvider>
       </IndieProjectProvider>

@@ -27,29 +27,20 @@ export function TerminalToggle({ className, size = 'sm', variant = 'ghost' }: Te
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
    // Multi-terminal functionality
-   const { terminals, activeTerminalId, createTerminal, closeTerminal, setActiveTerminal } =
-      terminalContext;
+   const { activeTerminalId, createTerminal, closeTerminal, setActiveTerminal } = terminalContext;
 
-   // Legacy single terminal fallback
-   const { isVisible, toggleTerminal, connectionStatus, session } = terminalContext;
-
-   const hasMultipleTerminals = terminals.size > 0;
+   // Get terminals from the multi-terminal store
+   const storeTerminals = multiTerminalStore.terminals;
+   const hasTerminals = storeTerminals.length > 0;
    const activeTerminal = activeTerminalId
       ? multiTerminalStore.getTerminalById(activeTerminalId)
       : null;
 
    const getStatusColor = () => {
-      switch (connectionStatus) {
-         case TerminalConnectionStatus.CONNECTED:
-            return 'text-green-500';
-         case TerminalConnectionStatus.CONNECTING:
-         case TerminalConnectionStatus.RECONNECTING:
-            return 'text-yellow-500';
-         case TerminalConnectionStatus.ERROR:
-            return 'text-red-500';
-         default:
-            return 'text-gray-500';
+      if (activeTerminal) {
+         return 'text-green-500'; // Active terminal
       }
+      return hasTerminals ? 'text-blue-500' : 'text-gray-500';
    };
 
    const handleCreateNewTerminal = () => {
@@ -69,30 +60,14 @@ export function TerminalToggle({ className, size = 'sm', variant = 'ghost' }: Te
    };
 
    const getTooltipText = () => {
-      if (hasMultipleTerminals) {
-         return `Terminal Manager (${terminals.size} terminals)`;
+      if (hasTerminals) {
+         return `Terminal Manager (${storeTerminals.length} terminals)`;
       }
-
-      if (isVisible) {
-         return 'Hide Terminal';
-      }
-
-      switch (connectionStatus) {
-         case TerminalConnectionStatus.CONNECTED:
-            return `Show Terminal (${session?.shell || 'Connected'})`;
-         case TerminalConnectionStatus.CONNECTING:
-            return 'Show Terminal (Connecting...)';
-         case TerminalConnectionStatus.RECONNECTING:
-            return 'Show Terminal (Reconnecting...)';
-         case TerminalConnectionStatus.ERROR:
-            return 'Show Terminal (Connection Error)';
-         default:
-            return 'Show Terminal';
-      }
+      return 'Create Terminal';
    };
 
-   // If we have multiple terminals, show dropdown
-   if (hasMultipleTerminals) {
+   // If we have terminals, show dropdown
+   if (hasTerminals) {
       return (
          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger asChild>
@@ -106,11 +81,9 @@ export function TerminalToggle({ className, size = 'sm', variant = 'ghost' }: Te
                   <ChevronDown className="h-3 w-3 ml-1" />
 
                   {/* Terminal count indicator */}
-                  {terminals.size > 0 && (
-                     <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
-                        {terminals.size}
-                     </div>
-                  )}
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
+                     {storeTerminals.length}
+                  </div>
                </Button>
             </DropdownMenuTrigger>
 
@@ -120,32 +93,31 @@ export function TerminalToggle({ className, size = 'sm', variant = 'ghost' }: Te
                   New Terminal
                </DropdownMenuItem>
 
-               {terminals.size > 0 && <DropdownMenuSeparator />}
+               {storeTerminals.length > 0 && <DropdownMenuSeparator />}
 
-               {Array.from(terminals.entries()).map(([terminalId, terminalInstance]) => {
-                  const terminal = multiTerminalStore.getTerminalById(terminalId);
+               {storeTerminals.map((terminal) => {
                   return (
                      <DropdownMenuItem
-                        key={terminalId}
-                        onClick={() => handleSwitchToTerminal(terminalId)}
+                        key={terminal.id}
+                        onClick={() => handleSwitchToTerminal(terminal.id)}
                         className={cn(
                            'flex items-center justify-between',
-                           activeTerminalId === terminalId && 'bg-accent'
+                           activeTerminalId === terminal.id && 'bg-accent'
                         )}
                      >
                         <div className="flex items-center min-w-0 flex-1">
                            <Terminal className="h-3 w-3 mr-2 flex-shrink-0" />
                            <span className="truncate">
-                              {terminal?.title || `Terminal ${terminalId.slice(0, 8)}`}
+                              {terminal.title || `Terminal ${terminal.id.slice(0, 8)}`}
                            </span>
-                           {terminal?.isMinimized && (
+                           {terminal.isMinimized && (
                               <span className="ml-1 text-xs text-gray-400">(minimized)</span>
                            )}
                         </div>
                         <Button
                            variant="ghost"
                            size="sm"
-                           onClick={(e) => handleCloseTerminal(terminalId, e)}
+                           onClick={(e) => handleCloseTerminal(terminal.id, e)}
                            className="h-5 w-5 p-0 hover:bg-red-100 hover:text-red-600"
                         >
                            <X className="h-3 w-3" />
@@ -158,30 +130,16 @@ export function TerminalToggle({ className, size = 'sm', variant = 'ghost' }: Te
       );
    }
 
-   // Legacy single terminal toggle
+   // No terminals - show create button
    return (
       <Button
          size={size}
          variant={variant}
-         onClick={toggleTerminal}
-         className={cn('relative', isVisible && 'bg-accent', className)}
+         onClick={handleCreateNewTerminal}
+         className={cn('relative', className)}
          title={getTooltipText()}
       >
          <Terminal className={cn('h-4 w-4', getStatusColor())} />
-
-         {/* Connection status indicator */}
-         <div
-            className={cn(
-               'absolute -top-1 -right-1 w-2 h-2 rounded-full',
-               connectionStatus === TerminalConnectionStatus.CONNECTED && 'bg-green-400',
-               connectionStatus === TerminalConnectionStatus.CONNECTING &&
-                  'bg-yellow-400 animate-pulse',
-               connectionStatus === TerminalConnectionStatus.RECONNECTING &&
-                  'bg-yellow-400 animate-pulse',
-               connectionStatus === TerminalConnectionStatus.ERROR && 'bg-red-400',
-               connectionStatus === TerminalConnectionStatus.DISCONNECTED && 'bg-gray-400'
-            )}
-         />
       </Button>
    );
 }

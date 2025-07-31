@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { getTerminalServer, startTerminalServer } from '../../../server/websocket-server';
+import { getTerminalServer, startTerminalServer } from '../../../../server/websocket-server';
 import * as os from 'os';
 
 // Initialize terminal server on first request

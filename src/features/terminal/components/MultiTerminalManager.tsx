@@ -53,6 +53,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
    // Handle terminal minimize
    const handleTerminalMinimize = useCallback(
       (terminalId: string) => {
+         console.log(`Minimizing terminal: ${terminalId}`);
          toggleMinimize(terminalId);
       },
       [toggleMinimize]

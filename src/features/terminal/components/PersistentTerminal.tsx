@@ -30,11 +30,14 @@ export function PersistentTerminal({
    const [isDragging, setIsDragging] = useState(false);
    const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
-   // Multi-terminal mode: use terminalId to get specific terminal
-   const isMultiTerminalMode = !!terminalId;
+   // Get terminal instance from store
    const terminalInstance = terminalId ? multiTerminalStore.getTerminalById(terminalId) : null;
 
-   // Create individual terminal hook for multi-terminal mode
+   if (!terminalId || !terminalInstance) {
+      return null; // Must have a terminal ID and instance
+   }
+
+   // Create individual terminal hook
    const individualTerminal = useTerminal({
       theme: theme as 'light' | 'dark' | 'auto',
       fontSize: 14,
@@ -44,7 +47,7 @@ export function PersistentTerminal({
       onError: (error: string) => console.error(`Terminal ${terminalId} error:`, error),
    });
 
-   // Use multi-terminal instance data or fallback to legacy context
+   // Use terminal instance data
    const {
       terminal,
       initializeTerminal,
@@ -55,13 +58,12 @@ export function PersistentTerminal({
       fit,
       isConnected,
       error,
-   } = isMultiTerminalMode ? individualTerminal : terminalContext;
+   } = individualTerminal;
 
-   // Terminal visibility and state
-   const isVisible = isMultiTerminalMode ? true : terminalContext.isVisible;
-   const isMinimized = terminalInstance?.isMinimized || false;
-   const isMaximized = terminalInstance?.isMaximized || false;
-   const title = terminalInstance?.title || 'Terminal';
+   // Terminal state
+   const isMinimized = terminalInstance.isMinimized;
+   const isMaximized = terminalInstance.isMaximized;
+   const title = terminalInstance.title;
 
    // Mount terminal to DOM
    const mountTerminal = useCallback(async () => {
@@ -71,37 +73,32 @@ export function PersistentTerminal({
 
       try {
          // Initialize terminal if not already done
-         const terminalInstance = terminal || (await initializeTerminal());
+         const terminalInstanceToMount = terminal || (await initializeTerminal());
 
-         if (!terminalInstance) {
+         if (!terminalInstanceToMount) {
             console.error('Failed to initialize persistent terminal');
             return;
          }
 
-         terminalInstance.open(terminalContainerRef.current);
+         terminalInstanceToMount.open(terminalContainerRef.current);
          terminalMountedRef.current = true;
-
-         // Store reference in context for external access (legacy mode only)
-         if (!isMultiTerminalMode && terminalContext.terminalRef) {
-            terminalContext.terminalRef.current = terminalContainerRef.current;
-         }
 
          // Focus the terminal and fit to container after mounting
          setTimeout(() => {
-            terminalInstance.focus();
+            terminalInstanceToMount.focus();
             fit();
          }, 100);
       } catch (err) {
          console.error('Error mounting persistent terminal:', err);
       }
-   }, [terminal, initializeTerminal, fit, isMultiTerminalMode, terminalContext]);
+   }, [terminal, initializeTerminal, fit]);
 
    // Setup resize observer
    useEffect(() => {
       if (!terminalContainerRef.current || isMinimized) return;
 
       const resizeObserver = new ResizeObserver(() => {
-         if (terminalMountedRef.current && isConnected && isVisible) {
+         if (terminalMountedRef.current && isConnected) {
             // Debounce resize calls
             setTimeout(() => {
                fit();
@@ -116,21 +113,19 @@ export function PersistentTerminal({
          resizeObserver.disconnect();
          resizeObserverRef.current = null;
       };
-   }, [fit, isConnected, isVisible, isMinimized]);
+   }, [fit, isConnected, isMinimized]);
 
-   // Mount terminal when visible
+   // Mount terminal
    useEffect(() => {
-      if (isVisible) {
-         mountTerminal();
-      }
-   }, [isVisible, mountTerminal]);
+      mountTerminal();
+   }, [mountTerminal]);
 
-   // Auto-connect when terminal becomes visible
+   // Auto-connect
    useEffect(() => {
-      if (isVisible && connectionStatus === TerminalConnectionStatus.DISCONNECTED) {
+      if (connectionStatus === TerminalConnectionStatus.DISCONNECTED) {
          connect();
       }
-   }, [isVisible, connect, connectionStatus]);
+   }, [connect, connectionStatus]);
 
    // Handle reconnect
    const handleReconnect = useCallback(() => {
@@ -142,39 +137,25 @@ export function PersistentTerminal({
 
    // Handle minimize/maximize
    const handleMinimize = useCallback(() => {
-      if (isMultiTerminalMode && terminalId) {
-         onMinimize?.(terminalId);
-      } else {
-         // Legacy mode - would need local state management
-      }
-   }, [isMultiTerminalMode, terminalId, onMinimize]);
+      onMinimize?.(terminalId);
+   }, [terminalId, onMinimize]);
 
    const handleMaximize = useCallback(() => {
-      if (isMultiTerminalMode && terminalId) {
-         onMaximize?.(terminalId);
-      } else {
-         // Legacy mode - would need local state management
-      }
-   }, [isMultiTerminalMode, terminalId, onMaximize]);
+      onMaximize?.(terminalId);
+   }, [terminalId, onMaximize]);
 
    const handleClose = useCallback(() => {
-      if (isMultiTerminalMode && terminalId) {
-         onClose?.(terminalId);
-      } else {
-         terminalContext.hideTerminal();
-      }
-   }, [isMultiTerminalMode, terminalId, onClose, terminalContext]);
+      onClose?.(terminalId);
+   }, [terminalId, onClose]);
 
    const handleFocus = useCallback(() => {
-      if (isMultiTerminalMode && terminalId) {
-         onFocus?.(terminalId);
-      }
-   }, [isMultiTerminalMode, terminalId, onFocus]);
+      onFocus?.(terminalId);
+   }, [terminalId, onFocus]);
 
-   // Handle dragging for multi-terminal mode
+   // Handle dragging
    const handleMouseDown = useCallback(
       (e: React.MouseEvent) => {
-         if (!isMultiTerminalMode || !terminalId || isMaximized) return;
+         if (isMaximized) return;
 
          setIsDragging(true);
          const rect = e.currentTarget.getBoundingClientRect();
@@ -183,12 +164,12 @@ export function PersistentTerminal({
             y: e.clientY - rect.top,
          });
       },
-      [isMultiTerminalMode, terminalId, isMaximized]
+      [isMaximized]
    );
 
    const handleMouseMove = useCallback(
       (e: MouseEvent) => {
-         if (!isDragging || !terminalId || isMaximized) return;
+         if (!isDragging || isMaximized) return;
 
          const newX = e.clientX - dragOffset.x;
          const newY = e.clientY - dragOffset.y;
@@ -214,21 +195,10 @@ export function PersistentTerminal({
       }
    }, [isDragging, handleMouseMove, handleMouseUp]);
 
-   if (!isVisible) {
-      return null;
-   }
-
    return (
       <div
          className={cn(
-            'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-2xl',
-            isMultiTerminalMode ? 'relative w-full h-full' : 'fixed bottom-0 right-0 z-50',
-            !isMultiTerminalMode && isMaximized && 'inset-4 rounded-lg',
-            !isMultiTerminalMode && isMinimized && 'w-96 h-12',
-            !isMultiTerminalMode &&
-               !isMaximized &&
-               !isMinimized &&
-               'w-[800px] h-[500px] max-w-[90vw] max-h-[70vh]',
+            'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-2xl relative w-full h-full',
             className
          )}
          onClick={handleFocus}
@@ -239,7 +209,7 @@ export function PersistentTerminal({
             className={cn(
                'flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-t-lg',
                isDragging && 'cursor-grabbing',
-               isMultiTerminalMode && !isMaximized && 'cursor-grab'
+               !isMaximized && 'cursor-grab'
             )}
             onMouseDown={handleMouseDown}
          >
@@ -249,7 +219,7 @@ export function PersistentTerminal({
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                </div>
-               {isMultiTerminalMode && <Move className="h-3 w-3 text-gray-400" />}
+               <Move className="h-3 w-3 text-gray-400" />
                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</span>
                {session && (
                   <span className="text-xs text-gray-500 dark:text-gray-400">
