@@ -105,6 +105,7 @@ export const useDataStore = create<DataState>()(
             try {
                await mockDataService.simulateDelay(500);
                const data = mockDataService.generateAllData();
+               console.log('DataStore initialization - generated data:', data);
 
                // Check if TaskMaster should be enabled
                const shouldEnableTaskMaster =
@@ -149,11 +150,13 @@ export const useDataStore = create<DataState>()(
                   }
                }
 
+               console.log('DataStore - setting final data:', data);
                set({
                   ...data,
                   isLoading: false,
                   isInitialized: true,
                });
+               console.log('DataStore - final state after set:', get());
             } catch (error) {
                set({
                   isLoading: false,

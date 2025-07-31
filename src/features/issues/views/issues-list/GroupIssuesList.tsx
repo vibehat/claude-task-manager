@@ -30,6 +30,14 @@ function GroupIssuesList({ status }: GroupIssuesListProps): React.JSX.Element {
    const count = issues.length;
    const sortedIssues = useSortIssuesByPriority(issues);
 
+   // Debug logging
+   console.log(`GroupIssuesList for ${status.name}:`, {
+      statusId: status.id,
+      issues,
+      count,
+      sortedIssues,
+   });
+
    return (
       <div className="bg-container">
          <div className="sticky top-0 z-10 bg-container w-full h-10">

@@ -8,17 +8,34 @@ export function useStatuses() {
    const { statuses, isInitialized, initialize } = useDataStore();
 
    useEffect(() => {
+      console.log('useStatuses - effect triggered:', {
+         isInitialized,
+         statusesLength: statuses.length,
+      });
       if (!isInitialized) {
+         console.log('useStatuses - calling initialize()');
          initialize()
-            .then(() => setLoading(false))
+            .then(() => {
+               console.log('useStatuses - initialize completed');
+               setLoading(false);
+            })
             .catch((err) => {
+               console.error('useStatuses - initialize failed:', err);
                setError(err);
                setLoading(false);
             });
       } else {
+         console.log('useStatuses - already initialized, setting loading false');
          setLoading(false);
       }
    }, [isInitialized, initialize]);
+
+   console.log('useStatuses - render:', {
+      statuses: statuses.length,
+      loading,
+      error,
+      isInitialized,
+   });
 
    return {
       data: statuses,

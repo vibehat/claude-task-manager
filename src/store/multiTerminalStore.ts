@@ -54,14 +54,23 @@ interface MultiTerminalStore {
    getVisibleTerminals: () => TerminalInstance[];
    getMinimizedTerminals: () => TerminalInstance[];
    arrangeTerminals: () => void;
+   calculateOptimalTerminalSize: () => { width: number; height: number };
 }
 
-// Default terminal dimensions and positioning
-const DEFAULT_TERMINAL_WIDTH = 800;
-const DEFAULT_TERMINAL_HEIGHT = 500;
-const MINIMIZED_TERMINAL_HEIGHT = 48;
-const TERMINAL_SPACING = 20;
+// Default terminal dimensions and positioning (Chat-style)
+const DEFAULT_TERMINAL_WIDTH = 480; // Smaller, more chat-like width
+const DEFAULT_TERMINAL_HEIGHT = 600; // Taller for better terminal experience
+const MINIMIZED_TERMINAL_HEIGHT = 56; // Slightly taller for better chat tabs
+const TERMINAL_SPACING = 24; // More spacing for cleaner look
 const BASE_Z_INDEX = 1000;
+
+// Chat positioning constraints
+const CHAT_MIN_WIDTH = 360;
+const CHAT_MAX_WIDTH = 800;
+const CHAT_MIN_HEIGHT = 400;
+const CHAT_MAX_HEIGHT = 800;
+const SAFE_AREA_X = 50;
+const SAFE_AREA_Y = 80;
 
 export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
    terminals: [],
@@ -74,10 +83,23 @@ export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
       const terminals = get().terminals;
       const now = new Date();
 
-      // Calculate position for new terminal (Facebook chat style - bottom right, stacked)
-      const terminalIndex = terminals.length;
-      const x = window.innerWidth - DEFAULT_TERMINAL_WIDTH - TERMINAL_SPACING - terminalIndex * 20;
-      const y = window.innerHeight - DEFAULT_TERMINAL_HEIGHT - TERMINAL_SPACING;
+      // Calculate position for new terminal (Chat style - bottom right with 150px safe area)
+
+      const optimalSize = get().calculateOptimalTerminalSize();
+      const x = Math.max(
+         TERMINAL_SPACING,
+         Math.min(
+            window.innerWidth - optimalSize.width - SAFE_AREA_X,
+            window.innerWidth - optimalSize.width - TERMINAL_SPACING
+         )
+      );
+      const y = Math.max(
+         TERMINAL_SPACING,
+         Math.min(
+            window.innerHeight - optimalSize.height - SAFE_AREA_Y,
+            window.innerHeight - optimalSize.height - TERMINAL_SPACING
+         )
+      );
 
       const newZIndex = get().maxZIndex + 1;
 
@@ -86,15 +108,21 @@ export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
          title: `${title} ${terminals.length + 1}`,
          isMinimized: false,
          isMaximized: false,
-         position: { x: Math.max(20, x), y: Math.max(20, y) },
-         size: { width: DEFAULT_TERMINAL_WIDTH, height: DEFAULT_TERMINAL_HEIGHT },
+         position: { x, y },
+         size: optimalSize,
          zIndex: newZIndex,
          createdAt: now,
          lastActiveAt: now,
       };
 
+      // Chat-like behavior: minimize all existing visible terminals before adding new one
+      const updatedTerminals = terminals.map((terminal) => ({
+         ...terminal,
+         isMinimized: !terminal.isMinimized, // Only minimize currently visible ones
+      }));
+
       set((state) => ({
-         terminals: [...state.terminals, newTerminal],
+         terminals: [...updatedTerminals, newTerminal],
          activeTerminalId: id,
          maxZIndex: newZIndex,
       }));
@@ -120,11 +148,14 @@ export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
 
       get().bringTerminalToFront(id);
 
+      // Chat-like behavior: ensure only the active terminal is visible
       set((state) => ({
          activeTerminalId: id,
-         terminals: state.terminals.map((t) =>
-            t.id === id ? { ...t, lastActiveAt: new Date() } : t
-         ),
+         terminals: state.terminals.map((t) => ({
+            ...t,
+            lastActiveAt: t.id === id ? new Date() : t.lastActiveAt,
+            isMinimized: t.id === id ? false : true,
+         })),
       }));
    },
 
@@ -164,7 +195,21 @@ export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
       );
 
       if (terminal.isMinimized) {
-         get().restoreTerminal(id);
+         // Chat-like behavior: minimize all other visible terminals when restoring one
+         const terminals = get().terminals;
+         const updatedTerminals = terminals.map((t) => ({
+            ...t,
+            isMinimized: t.id === id ? false : t.isMinimized ? t.isMinimized : true,
+            isMaximized: t.id === id ? t.isMaximized : false,
+         }));
+
+         set((state) => ({
+            terminals: updatedTerminals,
+            activeTerminalId: id,
+         }));
+
+         // Update last active time
+         get().setActiveTerminal(id);
       } else {
          get().minimizeTerminal(id);
       }
@@ -229,26 +274,50 @@ export const useMultiTerminalStore = create<MultiTerminalStore>((set, get) => ({
 
    arrangeTerminals: () => {
       const terminals = get().getVisibleTerminals();
-      const updates: { id: string; x: number; y: number }[] = [];
 
+      // For chat-like behavior, we typically only have one visible terminal
+      // But if multiple are visible, arrange them in a more organized way
       terminals.forEach((terminal, index) => {
          if (!terminal.isMaximized) {
-            const x = window.innerWidth - DEFAULT_TERMINAL_WIDTH - TERMINAL_SPACING - index * 20;
-            const y = window.innerHeight - DEFAULT_TERMINAL_HEIGHT - TERMINAL_SPACING - index * 30;
+            // Calculate optimal position for chat-style arrangement with 150px safe area
+            const SAFE_AREA = 150;
+            const optimalSize = get().calculateOptimalTerminalSize();
+            const x = Math.max(
+               TERMINAL_SPACING,
+               Math.min(
+                  window.innerWidth - optimalSize.width - SAFE_AREA,
+                  window.innerWidth - optimalSize.width - TERMINAL_SPACING
+               )
+            );
+            const y = Math.max(
+               TERMINAL_SPACING,
+               Math.min(
+                  window.innerHeight - optimalSize.height - SAFE_AREA,
+                  window.innerHeight - optimalSize.height - TERMINAL_SPACING
+               )
+            );
 
-            updates.push({
-               id: terminal.id,
-               x: Math.max(20, x),
-               y: Math.max(20, y),
-            });
+            get().updateTerminalPosition(terminal.id, x, y);
          }
       });
+   },
 
-      set((state) => ({
-         terminals: state.terminals.map((t) => {
-            const update = updates.find((u) => u.id === t.id);
-            return update ? { ...t, position: { x: update.x, y: update.y } } : t;
-         }),
-      }));
+   // Helper function to calculate optimal terminal size for viewport
+   calculateOptimalTerminalSize: () => {
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      // Calculate optimal dimensions based on viewport size
+      const optimalWidth = Math.min(
+         CHAT_MAX_WIDTH,
+         Math.max(CHAT_MIN_WIDTH, viewportWidth * 0.4) // 40% of viewport width
+      );
+
+      const optimalHeight = Math.min(
+         CHAT_MAX_HEIGHT,
+         Math.max(CHAT_MIN_HEIGHT, viewportHeight * 0.7) // 70% of viewport height
+      );
+
+      return { width: optimalWidth, height: optimalHeight };
    },
 }));

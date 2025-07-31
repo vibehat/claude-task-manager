@@ -1,17 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { IndieLayout } from '@/components/layout/IndieLayout';
 import { useTerminalContext } from '@/features/terminal';
 import { useMultiTerminalStore } from '@/store/multiTerminalStore';
-import {
-   Terminal as TerminalIcon,
-   ExternalLink,
-   Plus,
-   Minimize2,
-   Maximize2,
-   X,
-   Clock,
-} from 'lucide-react';
+import { Terminal as TerminalIcon, Plus, Minimize2, Maximize2, X, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/libs/client/utils';
 import type { TerminalInstance } from '@/store/multiTerminalStore';
@@ -304,11 +297,19 @@ export default function TerminalPage(): React.JSX.Element {
       } catch {
          setHasProviderError(true);
       }
-   }, []);
+   }, [setHasProviderError]);
 
    if (hasProviderError) {
-      return <TerminalPageError />;
+      return (
+         <IndieLayout>
+            <TerminalPageError />
+         </IndieLayout>
+      );
    }
 
-   return <TerminalPageContent />;
+   return (
+      <IndieLayout>
+         <TerminalPageContent />
+      </IndieLayout>
+   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useDataStore } from '../stores/dataStore';
 
 interface IndieProject {
    id: string;
@@ -36,6 +37,26 @@ export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
    const [projects, setProjects] = React.useState<IndieProject[]>([]);
    const [isLoading, setIsLoading] = React.useState(false);
    const [error, setError] = React.useState<string | null>(null);
+
+   // Initialize data store
+   const { initialize, isInitialized, reset, statuses } = useDataStore();
+
+   React.useEffect(() => {
+      console.log('IndieProjectProvider - initialization check:', {
+         isInitialized,
+         statusesCount: statuses.length,
+      });
+      if (!isInitialized) {
+         console.log('IndieProjectProvider - calling initialize()');
+         initialize();
+      } else if (statuses.length === 0) {
+         console.log(
+            'IndieProjectProvider - initialized but no data, resetting and re-initializing'
+         );
+         reset();
+         initialize();
+      }
+   }, [initialize, isInitialized, reset, statuses.length]);
 
    const addProject = React.useCallback(
       (projectData: Omit<IndieProject, 'id' | 'createdAt' | 'updatedAt'>) => {

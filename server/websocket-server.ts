@@ -1,12 +1,25 @@
 import { WebSocketServer } from 'ws';
-import * as pty from 'node-pty';
 import * as os from 'os';
 import * as http from 'http';
+import { spawn, ChildProcess } from 'child_process';
+
+// Try to import node-pty with fallback
+let pty: typeof import('node-pty') | null = null;
+try {
+   pty = require('node-pty');
+   console.log('node-pty loaded successfully');
+} catch (error) {
+   console.warn(
+      'node-pty not available, falling back to child_process:',
+      error instanceof Error ? error.message : 'Unknown error'
+   );
+}
 
 interface TerminalSession {
-   ptyProcess: pty.IPty;
+   ptyProcess: any; // Can be either pty.IPty or ChildProcess
    sessionId: string;
    createdAt: Date;
+   usingPty: boolean;
 }
 
 class TerminalWebSocketServer {
@@ -64,48 +77,110 @@ class TerminalWebSocketServer {
       const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 
       try {
-         // Create new pseudo terminal
-         const ptyProcess = pty.spawn(shell, [], {
-            name: 'xterm-color',
-            cols: 80,
-            rows: 30,
-            cwd: process.env.PWD || process.cwd(),
-            env: process.env,
-         });
+         let ptyProcess: any;
+         let usingPty = false;
+
+         if (pty) {
+            // Use node-pty if available
+            try {
+               ptyProcess = pty.spawn(shell, [], {
+                  name: 'xterm-color',
+                  cols: 80,
+                  rows: 30,
+                  cwd: process.env.PWD || process.cwd(),
+                  env: process.env,
+               });
+               usingPty = true;
+               console.log(`Created pty terminal session ${sessionId} with ${shell}`);
+            } catch (ptyError) {
+               console.warn('Failed to create pty, falling back to child_process:', ptyError);
+               pty = null; // Disable pty for future sessions
+            }
+         }
+
+         if (!pty) {
+            // Fallback to child_process
+            ptyProcess = spawn(shell, [], {
+               cwd: process.cwd(),
+               env: process.env,
+               stdio: ['pipe', 'pipe', 'pipe'],
+            });
+            usingPty = false;
+            console.log(`Created child_process terminal session ${sessionId} with ${shell}`);
+         }
 
          // Store session
          const session: TerminalSession = {
             ptyProcess,
             sessionId,
             createdAt: new Date(),
+            usingPty,
          };
          this.sessions.set(sessionId, session);
 
          // Handle terminal data output
-         ptyProcess.onData((data) => {
-            if (ws.readyState === ws.OPEN) {
-               ws.send(
-                  JSON.stringify({
-                     type: 'data',
-                     data: data,
-                  })
-               );
-            }
-         });
+         if (usingPty) {
+            ptyProcess.onData((data: string) => {
+               if (ws.readyState === ws.OPEN) {
+                  ws.send(
+                     JSON.stringify({
+                        type: 'data',
+                        data: data,
+                     })
+                  );
+               }
+            });
 
-         // Handle terminal exit
-         ptyProcess.onExit((exitCode) => {
-            console.log(`Terminal session ${sessionId} exited with code:`, exitCode);
-            if (ws.readyState === ws.OPEN) {
-               ws.send(
-                  JSON.stringify({
-                     type: 'exit',
-                     exitCode: exitCode.exitCode,
-                  })
-               );
-            }
-            this.sessions.delete(sessionId);
-         });
+            // Handle terminal exit
+            ptyProcess.onExit((exitCode: any) => {
+               console.log(`Terminal session ${sessionId} exited with code:`, exitCode);
+               if (ws.readyState === ws.OPEN) {
+                  ws.send(
+                     JSON.stringify({
+                        type: 'exit',
+                        exitCode: exitCode.exitCode,
+                     })
+                  );
+               }
+               this.sessions.delete(sessionId);
+            });
+         } else {
+            // Handle child_process stdout/stderr
+            ptyProcess.stdout?.on('data', (data: Buffer) => {
+               if (ws.readyState === ws.OPEN) {
+                  ws.send(
+                     JSON.stringify({
+                        type: 'data',
+                        data: data.toString(),
+                     })
+                  );
+               }
+            });
+
+            ptyProcess.stderr?.on('data', (data: Buffer) => {
+               if (ws.readyState === ws.OPEN) {
+                  ws.send(
+                     JSON.stringify({
+                        type: 'data',
+                        data: data.toString(),
+                     })
+                  );
+               }
+            });
+
+            ptyProcess.on('exit', (exitCode: number | null) => {
+               console.log(`Terminal session ${sessionId} exited with code:`, exitCode);
+               if (ws.readyState === ws.OPEN) {
+                  ws.send(
+                     JSON.stringify({
+                        type: 'exit',
+                        exitCode: exitCode || 0,
+                     })
+                  );
+               }
+               this.sessions.delete(sessionId);
+            });
+         }
 
          // Handle WebSocket messages
          ws.on('message', (message: Buffer) => {
@@ -115,14 +190,22 @@ class TerminalWebSocketServer {
                switch (type) {
                   case 'input':
                      // Write input to terminal
-                     ptyProcess.write(data);
+                     if (usingPty) {
+                        ptyProcess.write(data);
+                     } else {
+                        ptyProcess.stdin?.write(data);
+                     }
                      break;
 
                   case 'resize':
-                     // Resize terminal
-                     const { cols, rows } = data;
-                     if (cols && rows) {
-                        ptyProcess.resize(cols, rows);
+                     // Resize terminal (only works with pty)
+                     if (usingPty) {
+                        const { cols, rows } = data;
+                        if (cols && rows) {
+                           ptyProcess.resize(cols, rows);
+                        }
+                     } else {
+                        console.warn('Terminal resize not supported with child_process fallback');
                      }
                      break;
 
@@ -154,6 +237,8 @@ class TerminalWebSocketServer {
                shell,
                platform: os.platform(),
                cwd: process.cwd(),
+               usingPty,
+               ptySupport: pty !== null,
             })
          );
       } catch (error) {
@@ -172,9 +257,13 @@ class TerminalWebSocketServer {
       const session = this.sessions.get(sessionId);
       if (session) {
          try {
-            session.ptyProcess.kill();
+            if (session.usingPty) {
+               session.ptyProcess.kill();
+            } else {
+               session.ptyProcess.kill('SIGTERM');
+            }
          } catch (error) {
-            console.error('Error killing pty process:', error);
+            console.error('Error killing process:', error);
          }
          this.sessions.delete(sessionId);
       }

@@ -74,4 +74,4 @@ node_modules/
 package-lock.json
 
 # Claude Code
-.claude\settings.local.json
+.claude/settings.local.json

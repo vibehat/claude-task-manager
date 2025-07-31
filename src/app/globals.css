@@ -360,3 +360,93 @@ input[type='search'] {
 .terminal-container .xterm {
    background: #ffffff !important;
 }
+
+/* Chat-style Terminal Animations */
+@keyframes terminal-slide-up {
+   from {
+      transform: translateY(100%);
+      opacity: 0;
+   }
+   to {
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+@keyframes terminal-slide-down {
+   from {
+      transform: translateY(0);
+      opacity: 1;
+   }
+   to {
+      transform: translateY(100%);
+      opacity: 0;
+   }
+}
+
+@keyframes chat-tab-bounce {
+   0%,
+   100% {
+      transform: translateY(0) scale(1);
+   }
+   50% {
+      transform: translateY(-4px) scale(1.02);
+   }
+}
+
+@keyframes virtual-ray-glow {
+   0%,
+   100% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+   }
+   50% {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+   }
+}
+
+/* Terminal chat animation classes */
+.terminal-entering {
+   animation: terminal-slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.terminal-exiting {
+   animation: terminal-slide-down 0.3s ease-in;
+}
+
+.chat-tab-hover {
+   animation: chat-tab-bounce 0.6s ease-out;
+}
+
+.virtual-ray-effect {
+   animation: virtual-ray-glow 2s ease-in-out infinite;
+}
+
+/* Smooth transitions for terminal positioning */
+.terminal-transition {
+   transition:
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.3s ease-out,
+      width 0.3s ease-out,
+      height 0.3s ease-out;
+}
+
+/* Chat tab stagger animation */
+.chat-tab-stagger {
+   animation: slide-in-from-bottom-4 0.4s ease-out both;
+}
+
+.chat-tab-stagger:nth-child(1) {
+   animation-delay: 0ms;
+}
+.chat-tab-stagger:nth-child(2) {
+   animation-delay: 100ms;
+}
+.chat-tab-stagger:nth-child(3) {
+   animation-delay: 200ms;
+}
+.chat-tab-stagger:nth-child(4) {
+   animation-delay: 300ms;
+}
+.chat-tab-stagger:nth-child(5) {
+   animation-delay: 400ms;
+}
