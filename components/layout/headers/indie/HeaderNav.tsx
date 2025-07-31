@@ -29,6 +29,7 @@ export default function HeaderNav({
    const getPageTitle = (): string => {
       if (pathname.includes('/indie/dashboard')) return 'Dashboard';
       if (pathname.includes('/indie/tasks')) return 'Tasks';
+      if (pathname.includes('/indie/terminal')) return 'Terminal';
       if (pathname.includes('/indie/settings')) return 'Settings';
       return 'Individual Mode';
    };

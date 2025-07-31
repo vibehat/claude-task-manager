@@ -9,6 +9,8 @@ import {
    IssuePriority,
    Issue,
 } from '../services/mockDataService';
+import { syncService, SyncOptions } from '../services/syncService';
+import { taskMasterService } from '../services/taskMasterService';
 
 interface DataState {
    // Data
@@ -19,13 +21,26 @@ interface DataState {
    priorities: IssuePriority[];
    issues: Issue[];
 
+   // TaskMaster sync state
+   isTaskMasterEnabled: boolean;
+   taskMasterSyncStatus: 'idle' | 'syncing' | 'synced' | 'error';
+   taskMasterError: string | null;
+   isRealTimeSyncActive: boolean;
+
    // Loading states
    isLoading: boolean;
    isInitialized: boolean;
 
    // Actions
-   initialize: () => Promise<void>;
+   initialize: (enableTaskMaster?: boolean) => Promise<void>;
    reset: () => void;
+
+   // TaskMaster actions
+   enableTaskMasterSync: (options?: SyncOptions) => Promise<void>;
+   disableTaskMasterSync: () => Promise<void>;
+   forceSyncTaskMaster: (tagName?: string) => Promise<void>;
+   toggleRealTimeSync: (enabled: boolean, options?: SyncOptions) => Promise<void>;
+   getTaskMasterStats: (tagName?: string) => Promise<any>;
 
    // User actions
    addUser: (user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => User;
@@ -66,7 +81,7 @@ interface DataState {
 
 export const useDataStore = create<DataState>()(
    devtools(
-      (set, get) => ({
+      (set, get): DataState => ({
          // Initial state
          users: [],
          projects: [],
@@ -74,26 +89,85 @@ export const useDataStore = create<DataState>()(
          statuses: [],
          priorities: [],
          issues: [],
+         isTaskMasterEnabled: false,
+         taskMasterSyncStatus: 'idle',
+         taskMasterError: null,
+         isRealTimeSyncActive: false,
          isLoading: false,
          isInitialized: false,
 
-         // Initialize with mock data
-         initialize: async () => {
+         // Initialize with mock data and optionally TaskMaster
+         initialize: async (enableTaskMaster = false) => {
             if (get().isInitialized) return;
 
             set({ isLoading: true });
-            await mockDataService.simulateDelay(500);
 
-            const data = mockDataService.generateAllData();
-            set({
-               ...data,
-               isLoading: false,
-               isInitialized: true,
-            });
+            try {
+               await mockDataService.simulateDelay(500);
+               const data = mockDataService.generateAllData();
+
+               // Check if TaskMaster should be enabled
+               const shouldEnableTaskMaster =
+                  enableTaskMaster || (await taskMasterService.isAvailable());
+
+               if (shouldEnableTaskMaster) {
+                  // Try to sync TaskMaster data
+                  try {
+                     const syncResult = await syncService.syncTaskMasterData({
+                        onSyncStart: () => set({ taskMasterSyncStatus: 'syncing' }),
+                        onSyncComplete: (issues) => {
+                           set((state) => ({
+                              issues: [...state.issues, ...issues],
+                              taskMasterSyncStatus: 'synced',
+                              taskMasterError: null,
+                           }));
+                        },
+                        onSyncError: (error) => {
+                           set({
+                              taskMasterSyncStatus: 'error',
+                              taskMasterError: error.message,
+                           });
+                        },
+                     });
+
+                     if (syncResult.success) {
+                        data.issues = [...data.issues, ...syncResult.issues];
+                        data.labels = [...data.labels, ...syncResult.labels];
+                        data.projects = [...data.projects, ...syncResult.projects];
+
+                        set({
+                           isTaskMasterEnabled: true,
+                           taskMasterSyncStatus: 'synced',
+                        });
+                     }
+                  } catch (error) {
+                     console.warn('TaskMaster sync failed during initialization:', error);
+                     set({
+                        taskMasterSyncStatus: 'error',
+                        taskMasterError: (error as Error).message,
+                     });
+                  }
+               }
+
+               set({
+                  ...data,
+                  isLoading: false,
+                  isInitialized: true,
+               });
+            } catch (error) {
+               set({
+                  isLoading: false,
+                  taskMasterSyncStatus: 'error',
+                  taskMasterError: (error as Error).message,
+               });
+            }
          },
 
          // Reset all data
          reset: () => {
+            // Stop any active sync before reset
+            syncService.stopRealTimeSync();
+
             set({
                users: [],
                projects: [],
@@ -101,8 +175,129 @@ export const useDataStore = create<DataState>()(
                statuses: [],
                priorities: [],
                issues: [],
+               isTaskMasterEnabled: false,
+               taskMasterSyncStatus: 'idle',
+               taskMasterError: null,
+               isRealTimeSyncActive: false,
                isInitialized: false,
             });
+         },
+
+         // TaskMaster sync actions
+         enableTaskMasterSync: async (options = {}) => {
+            set({ taskMasterSyncStatus: 'syncing', taskMasterError: null });
+
+            try {
+               const syncResult = await syncService.syncTaskMasterData({
+                  ...options,
+                  onSyncStart: () => set({ taskMasterSyncStatus: 'syncing' }),
+                  onSyncComplete: (issues) => {
+                     set((state) => ({
+                        issues: [...state.issues.filter((i) => !i.taskId), ...issues],
+                        taskMasterSyncStatus: 'synced',
+                        taskMasterError: null,
+                        isTaskMasterEnabled: true,
+                     }));
+                  },
+                  onSyncError: (error) => {
+                     set({
+                        taskMasterSyncStatus: 'error',
+                        taskMasterError: error.message,
+                     });
+                  },
+               });
+
+               if (syncResult.success) {
+                  // Merge TaskMaster data with existing data
+                  set((state) => ({
+                     issues: [...state.issues.filter((i) => !i.taskId), ...syncResult.issues],
+                     labels: [
+                        ...state.labels.filter((l) => !l.id.includes('taskmaster')),
+                        ...syncResult.labels,
+                     ],
+                     projects: [
+                        ...state.projects.filter((p) => p.id !== 'project-taskmaster'),
+                        ...syncResult.projects,
+                     ],
+                     isTaskMasterEnabled: true,
+                     taskMasterSyncStatus: 'synced',
+                  }));
+
+                  // Start real-time sync if enabled
+                  if (options.enableRealTimeSync !== false) {
+                     await get().toggleRealTimeSync(true, options);
+                  }
+               }
+            } catch (error) {
+               set({
+                  taskMasterSyncStatus: 'error',
+                  taskMasterError: (error as Error).message,
+               });
+            }
+         },
+
+         disableTaskMasterSync: async () => {
+            await syncService.stopRealTimeSync();
+
+            set((state) => ({
+               // Remove TaskMaster issues, labels, and projects
+               issues: state.issues.filter((i) => !i.taskId),
+               labels: state.labels.filter(
+                  (l) =>
+                     !l.id.includes('taskmaster') &&
+                     !l.id.includes('subtask') &&
+                     !l.id.includes('parent') &&
+                     !l.id.includes('dependent')
+               ),
+               projects: state.projects.filter((p) => p.id !== 'project-taskmaster'),
+               isTaskMasterEnabled: false,
+               taskMasterSyncStatus: 'idle',
+               taskMasterError: null,
+               isRealTimeSyncActive: false,
+            }));
+         },
+
+         forceSyncTaskMaster: async (tagName = 'master') => {
+            if (!get().isTaskMasterEnabled) {
+               throw new Error('TaskMaster sync is not enabled');
+            }
+
+            set({ taskMasterSyncStatus: 'syncing', taskMasterError: null });
+
+            try {
+               await syncService.forceSyncNow((issues) => {
+                  set((state) => ({
+                     issues: [...state.issues.filter((i) => !i.taskId), ...issues],
+                     taskMasterSyncStatus: 'synced',
+                     taskMasterError: null,
+                  }));
+               }, tagName);
+            } catch (error) {
+               set({
+                  taskMasterSyncStatus: 'error',
+                  taskMasterError: (error as Error).message,
+               });
+               throw error;
+            }
+         },
+
+         toggleRealTimeSync: async (enabled, options = {}) => {
+            if (enabled && !get().isRealTimeSyncActive) {
+               await syncService.startRealTimeSync((issues) => {
+                  set((state) => ({
+                     issues: [...state.issues.filter((i) => !i.taskId), ...issues],
+                  }));
+               }, options);
+
+               set({ isRealTimeSyncActive: true });
+            } else if (!enabled && get().isRealTimeSyncActive) {
+               await syncService.stopRealTimeSync();
+               set({ isRealTimeSyncActive: false });
+            }
+         },
+
+         getTaskMasterStats: async (tagName = 'master') => {
+            return await syncService.getTaskMasterStats(tagName);
          },
 
          // User actions

@@ -5,6 +5,7 @@ import {
    BarChart3,
    Calendar,
    Clock,
+   Terminal,
    type LucideIcon,
 } from 'lucide-react';
 
@@ -57,6 +58,15 @@ export const indieTaskItems: IndieNavItem[] = [
    },
 ];
 
+export const indieDevItems: IndieNavItem[] = [
+   {
+      name: 'Terminal',
+      url: '/indie/terminal',
+      icon: Terminal,
+      description: 'Interactive terminal for commands and Task Master CLI',
+   },
+];
+
 export const indieSettingsItems: IndieNavItem[] = [
    {
       name: 'Settings',
@@ -76,6 +86,10 @@ export const indieNavigationSections: IndieNavSection[] = [
       items: indieTaskItems,
    },
    {
+      label: 'Development',
+      items: indieDevItems,
+   },
+   {
       label: 'Settings',
       items: indieSettingsItems,
    },
@@ -85,5 +99,6 @@ export const indieNavigationSections: IndieNavSection[] = [
 export const allIndieNavItems: IndieNavItem[] = [
    ...indieDashboardItems,
    ...indieTaskItems,
+   ...indieDevItems,
    ...indieSettingsItems,
 ];
