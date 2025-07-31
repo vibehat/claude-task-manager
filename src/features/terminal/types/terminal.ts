@@ -112,3 +112,61 @@ export interface TerminalStatusProps {
    error: string | null;
    onReconnect?: () => void;
 }
+
+// Multi-terminal specific interfaces
+export interface MultiTerminalInstance {
+   id: string;
+   terminal: any | null; // XTerm Terminal instance
+   terminalHook: UseTerminalReturn;
+   title: string;
+   isMinimized: boolean;
+   isMaximized: boolean;
+   position: { x: number; y: number };
+   size: { width: number; height: number };
+   zIndex: number;
+   createdAt: Date;
+   lastActiveAt: Date;
+}
+
+export interface MultiTerminalContextValue {
+   terminals: Map<string, MultiTerminalInstance>;
+   activeTerminalId: string | null;
+
+   // Terminal management
+   createTerminal: (title?: string) => string;
+   closeTerminal: (id: string) => void;
+   setActiveTerminal: (id: string) => void;
+   getTerminal: (id: string) => MultiTerminalInstance | undefined;
+
+   // Terminal state management
+   minimizeTerminal: (id: string) => void;
+   maximizeTerminal: (id: string) => void;
+   restoreTerminal: (id: string) => void;
+   toggleMinimize: (id: string) => void;
+   toggleMaximize: (id: string) => void;
+
+   // Terminal positioning
+   updateTerminalPosition: (id: string, x: number, y: number) => void;
+   updateTerminalSize: (id: string, width: number, height: number) => void;
+   bringTerminalToFront: (id: string) => void;
+
+   // Terminal properties
+   updateTerminalTitle: (id: string, title: string) => void;
+
+   // Legacy single terminal support (for backward compatibility)
+   terminal: any | null;
+   isVisible: boolean;
+   showTerminal: () => void;
+   hideTerminal: () => void;
+   toggleTerminal: () => void;
+   terminalRef: React.RefObject<HTMLDivElement | null>;
+}
+
+export interface PersistentTerminalProps {
+   className?: string;
+   terminalId?: string; // For multi-terminal support
+   onClose?: (id: string) => void;
+   onMinimize?: (id: string) => void;
+   onMaximize?: (id: string) => void;
+   onFocus?: (id: string) => void;
+}

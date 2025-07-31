@@ -25,7 +25,7 @@ claude-task-manager is a comprehensive web interface that brings all the power o
 - **📊 Visual Task Management**: Interactive dashboards, kanban boards, and project views
 - **🔄 Real-time Updates**: Live synchronization with your task master data
 - **🎭 Multi-Model AI Support**: Configure and manage multiple AI providers seamlessly
-- **👥 Multi-Agent AI Collaboration**: Multiple AI agents can work on the same project simultaneously
+- **💻 Integrated Terminal**: Built-in terminal for direct CLI access within the interface
 - **📱 Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - **🌙 Dark/Light Mode**: Complete theme support with system preferences detection
 - **⚡ Performance Optimized**: Built with Next.js 15 and modern optimization techniques
@@ -98,33 +98,42 @@ claude-task-manager is a comprehensive web interface that brings all the power o
 - **Forms**: React Hook Form with Zod validation
 - **Icons**: Lucide React and Remix Icons
 - **Animation**: Motion (Framer Motion) for smooth interactions
+- **Terminal**: xterm.js for integrated terminal functionality
 
 ### Project Structure
 
 ```
 claude-task-manager/
-├── app/                    # Next.js 15 App Router
-│   ├── [projectId]/      # Project-scoped pages
-│   │   ├── dashboard/     # Project dashboard interface
-│   │   ├── agents/        # AI agent management views
-│   │   ├── tasks/         # Task management interface
-│   │   └── settings/      # Configuration panels
-│   └── globals.css        # Global styles
-├── components/            # React components
-│   ├── ui/               # Base UI components (shadcn/ui)
-│   ├── common/           # Feature-specific components
-│   │   ├── issues/       # Task/issue management
-│   │   ├── projects/     # Project-related components
-│   │   ├── agents/       # AI agent components
-│   │   └── settings/     # Configuration components
-│   └── layout/           # Layout and navigation
-│       ├── headers/      # Page headers with context
-│       └── sidebar/      # Navigation and quick actions
-├── hooks/                # Custom React hooks
-├── lib/                  # Utility functions and configurations
-├── store/                # Zustand state management
-├── mock-data/            # Development data and types
-└── public/               # Static assets
+├── src/                    # All source code
+│   ├── app/               # Next.js 15 App Router
+│   │   ├── [orgId]/      # Organization-scoped pages
+│   │   ├── indie/        # Individual mode pages
+│   │   │   ├── dashboard/ # Dashboard interface
+│   │   │   ├── tasks/     # Task management
+│   │   │   ├── terminal/  # Integrated terminal
+│   │   │   └── settings/  # Configuration
+│   │   ├── api/          # API endpoints
+│   │   └── globals.css   # Global styles
+│   ├── components/        # React components
+│   │   ├── ui/           # Base UI components (shadcn/ui)
+│   │   ├── layout/       # Layout and navigation
+│   │   │   ├── headers/  # Page headers with context
+│   │   │   └── sidebar/  # Navigation and quick actions
+│   │   └── icons/        # Icon components
+│   ├── features/          # Feature-based modules
+│   │   ├── issues/       # Issue/task management
+│   │   ├── projects/     # Project management
+│   │   ├── teams/        # Team management
+│   │   ├── members/      # Member management
+│   │   └── terminal/     # Terminal feature
+│   ├── hooks/            # Custom React hooks
+│   ├── libs/             # Shared utilities and services
+│   ├── store/            # Zustand state management
+│   ├── mock-data/        # Development data
+│   └── styles/           # Additional styles
+├── public/                # Static assets
+├── scripts/               # Build and utility scripts
+└── docs/                  # Documentation
 ```
 
 ## 🎛️ Core Features
@@ -147,18 +156,17 @@ claude-task-manager/
 - **Task Generation**: AI-powered task creation from descriptions
 - **Smart Suggestions**: Context-aware task recommendations
 
-### 🤖 Multi-Agent AI Collaboration
+### 💻 Integrated Terminal
 
-- **Agent Management**: Configure and manage multiple AI agents per project
-- **Task Assignment**: Intelligent task distribution across AI agents
-- **Agent Coordination**: Real-time coordination between multiple AI agents
-- **Agent Analytics**: Performance tracking and productivity insights for each agent
-- **Activity Timeline**: Comprehensive project and agent activity feeds
+- **Full CLI Access**: Direct access to Claude Task Master CLI within the interface
+- **Command History**: Persistent command history with search functionality
+- **Multiple Sessions**: Support for multiple terminal sessions
+- **Context Awareness**: Terminal aware of current project and task context
+- **Visual Output**: Enhanced output formatting for better readability
 
 ### ⚙️ Configuration Management
 
 - **AI Provider Setup**: Streamlined API key management and model selection
-- **Agent Configuration**: Configure individual AI agent capabilities and specializations
 - **Project Settings**: Customize workflows, templates, and automation rules
 - **User Preferences**: Personal dashboard customization and theme selection
 - **Integration Settings**: Connect with external tools and services
@@ -188,9 +196,9 @@ This UI provides comprehensive coverage of all Claude Task Master CLI functional
 
 - **Dependency Visualization**: Interactive dependency graphs and management
 - **Progress Tracking**: Visual progress indicators and milestone tracking
-- **Agent Orchestration**: Intelligent coordination of multiple AI agents
 - **Template Management**: Create and manage task and project templates
-- **Multi-Agent Reporting**: Generate insights on agent performance and collaboration
+- **Terminal Integration**: Direct CLI access with enhanced UI integration
+- **Real-time Sync**: Live updates between UI and CLI operations
 - **API Integration**: RESTful API for external integrations
 
 ## 🎨 Design System
@@ -323,27 +331,28 @@ pnpm format       # Format code with Prettier
 - [x] Claude Task Master CLI integration
 - [x] Responsive design implementation
 - [x] AI model configuration UI
+- [x] Integrated terminal functionality
 
-### Phase 2: Multi-Agent Features 🚧
+### Phase 2: Enhanced Features 🚧
 
-- [ ] Multi-agent AI coordination system
-- [ ] Agent performance analytics dashboard
-- [ ] Intelligent task distribution
-- [ ] Agent specialization framework
+- [ ] Advanced terminal features with command autocomplete
+- [ ] Task dependency visualization
+- [ ] Real-time collaboration features
+- [ ] Enhanced project templates
 
-### Phase 3: Advanced AI Features 📋
-
-- [ ] Cross-agent communication protocols
-- [ ] Advanced agent orchestration
-- [ ] AI agent learning and adaptation
-- [ ] Custom agent behavior configuration
-
-### Phase 4: AI Enhancements 🔮
+### Phase 3: AI Enhancements 📋
 
 - [ ] AI-powered task suggestions
 - [ ] Natural language task creation
 - [ ] Intelligent project insights
-- [ ] Predictive task completion with multi-agent consensus
+- [ ] Automated task breakdown
+
+### Phase 4: Advanced Integration 🔮
+
+- [ ] External tool integrations
+- [ ] Custom workflow automation
+- [ ] Advanced reporting and analytics
+- [ ] Plugin system for extensibility
 
 ## 📄 License
 
@@ -364,56 +373,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   
   **[⭐ Star this project](https://github.com/minhlucvan/claude-task-manager)** if you find it useful!
 </div>
-
-<!-- TASKMASTER_EXPORT_START -->
-
-> 🎯 **Taskmaster Export** - 2025-07-26 15:41:29 UTC
-> 📋 Export: without subtasks • Status filter: none
-> 🔗 Powered by [Task Master](https://task-master.dev?utm_source=github-readme&utm_medium=readme-export&utm_campaign=claude-task-manager&utm_content=task-export-link)
-
-| Project Dashboard |                          |
-| :---------------- | :----------------------- |
-| Task Progress     | █████████████░░░░░░░ 65% |
-| Done              | 17                       |
-| In Progress       | 0                        |
-| Pending           | 7                        |
-| Deferred          | 0                        |
-| Cancelled         | 2                        |
-| -                 | -                        |
-| Subtask Progress  | █████████████████░░░ 85% |
-| Completed         | 50                       |
-| In Progress       | 1                        |
-| Pending           | 8                        |
-
-| ID  | Title                                                           | Status           | Priority | Dependencies                   | Complexity |
-| :-- | :-------------------------------------------------------------- | :--------------- | :------- | :----------------------------- | :--------- |
-| 1   | Setup Next.js 15 Project Foundation                             | ✓&nbsp;done      | high     | None                           | N/A        |
-| 2   | Implement Task Master CLI Integration Layer                     | ✓&nbsp;done      | high     | 1                              | N/A        |
-| 3   | Build Core UI Component Library                                 | ✓&nbsp;done      | medium   | 1                              | N/A        |
-| 4   | Create Task Management Dashboard                                | ✓&nbsp;done      | high     | 2, 3                           | N/A        |
-| 5   | Implement AI Provider Configuration System                      | ○&nbsp;pending   | low      | 3                              | ● 8        |
-| 6   | Develop Multi-Agent Management System                           | ○&nbsp;pending   | high     | 4, 5                           | ● 9        |
-| 7   | Build PRD Parsing and Project Setup Interface                   | ○&nbsp;pending   | medium   | 4, 5                           | ● 7        |
-| 8   | Implement Real-time Collaboration Features                      | ○&nbsp;pending   | medium   | 6                              | ● 8        |
-| 9   | Develop Advanced Analytics and Reporting                        | x&nbsp;cancelled | low      | 6, 8                           | N/A        |
-| 10  | Implement Mobile-First Responsive Design and PWA                | x&nbsp;cancelled | medium   | 4, 8                           | N/A        |
-| 11  | Write Comprehensive API Tests for CLI Integration Layer         | ✓&nbsp;done      | medium   | 2.1, 2.2, 2.3, 2.4             | N/A        |
-| 12  | Add Comprehensive Unit Tests for All Modules in ./lib Directory | ✓&nbsp;done      | medium   | 2                              | ● 6        |
-| 13  | Setup GraphQL Server Infrastructure                             | ✓&nbsp;done      | high     | None                           | N/A        |
-| 14  | Design Core GraphQL Schema                                      | ✓&nbsp;done      | high     | 13                             | ● 5        |
-| 15  | Implement Task Query Resolvers                                  | ✓&nbsp;done      | high     | 14, 24                         | ● 6        |
-| 16  | Implement CLI Operation Resolvers                               | ✓&nbsp;done      | medium   | 14                             | ● 7        |
-| 17  | Implement Sync Operation Resolvers                              | ✓&nbsp;done      | medium   | 14                             | ● 6        |
-| 18  | Implement Task Mutation Resolvers                               | ✓&nbsp;done      | high     | 15                             | ● 7        |
-| 19  | Implement CLI and Sync Mutation Resolvers                       | ✓&nbsp;done      | medium   | 16, 17                         | ● 8        |
-| 20  | Implement GraphQL Subscriptions                                 | ✓&nbsp;done      | medium   | 18, 19                         | ● 8        |
-| 21  | Add Performance Optimizations                                   | ○&nbsp;pending   | medium   | 20                             | ● 7        |
-| 22  | Security and Migration Setup                                    | ○&nbsp;pending   | high     | 21                             | ● 8        |
-| 23  | Migrate GraphQL to Code-First TypeScript Approach               | ✓&nbsp;done      | medium   | 13, 14, 15, 16, 17, 18, 19, 20 | N/A        |
-| 24  | Implement SQLite Database Integration with Prisma ORM           | ✓&nbsp;done      | medium   | None                           | N/A        |
-| 25  | Implement lib/taskmaster Task Master API Library                | ✓&nbsp;done      | medium   | None                           | N/A        |
-| 26  | Remove Mock Data Directory and Files After GraphQL Migration    | ○&nbsp;pending   | medium   | 15, 18, 19, 20, 23             | N/A        |
-
-> 📋 **End of Taskmaster Export** - Tasks are synced from your project using the `sync-readme` command.
-
-<!-- TASKMASTER_EXPORT_END -->

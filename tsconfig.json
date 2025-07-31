@@ -23,21 +23,21 @@
          }
       ],
       "paths": {
-         "@/*": ["./*"]
+         "@/*": ["./src/*"]
       }
    },
    "include": [
       "next-env.d.ts",
-      "app/**/*.ts",
-      "app/**/*.tsx",
-      "components/**/*.ts",
-      "components/**/*.tsx",
-      "libs/client/**/*.ts",
-      "libs/client/**/*.tsx",
-      "features/**/*.ts",
-      "features/**/*.tsx",
-      "hooks/**/*.ts",
-      "store/**/*.ts",
+      "src/app/**/*.ts",
+      "src/app/**/*.tsx",
+      "src/components/**/*.ts",
+      "src/components/**/*.tsx",
+      "src/libs/client/**/*.ts",
+      "src/libs/client/**/*.tsx",
+      "src/features/**/*.ts",
+      "src/features/**/*.tsx",
+      "src/hooks/**/*.ts",
+      "src/store/**/*.ts",
       ".next/types/**/*.ts"
    ],
    "exclude": [
