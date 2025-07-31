@@ -7,14 +7,12 @@
 
 ## Project Overview
 
-This is a **Task Management UI** application built with modern web technologies to provide a beautiful interface for Claude Task Master. The application follows a feature-based architecture with GraphQL API and real-time updates.
+This is a **Task Management UI** application built with modern web technologies to provide a beautiful interface for Claude Task Master. The application follows a feature-based architecture with real-time updates.
 
 ### Tech Stack
 
 - **Framework**: Next.js 15.2.4 with App Router
 - **Language**: TypeScript with strict mode
-- **API**: GraphQL with Apollo Server & Client
-- **Database**: SQLite with Prisma ORM
 - **Styling**: Tailwind CSS v4 with custom design system
 - **UI Components**: Radix UI primitives with shadcn/ui
 - **State Management**: Zustand for lightweight state
@@ -22,11 +20,21 @@ This is a **Task Management UI** application built with modern web technologies 
 
 ### Architecture
 
-- `/app` - Next.js App Router pages and API routes
-- `/features` - Feature-based modules (issues, projects, teams, members)
-- `/components` - Reusable UI components
-- `/libs` - Shared utilities and GraphQL client
-- `/prisma` - Database schema and migrations
+**Note**: All source code is now organized under the `/src` directory following Next.js best practices.
+
+- `/src` - All source code
+  - `/src/app` - Next.js App Router pages and API routes
+  - `/src/features` - Feature-based modules (issues, projects, teams, members)
+  - `/src/components` - Reusable UI components
+  - `/src/libs` - Shared utilities and services
+  - `/src/hooks` - React hooks
+  - `/src/store` - Zustand stores
+  - `/src/mock-data` - Mock data files
+  - `/src/styles` - Global styles
+- `/public` - Static assets
+- `/scripts` - Build and utility scripts
+- `/docs` - Documentation
+- `/server` - WebSocket server code
 
 ## Essential Development Commands
 
@@ -36,12 +44,6 @@ pnpm dev              # Start dev server with turbopack
 pnpm lint             # Run ESLint
 pnpm typecheck        # TypeScript type checking
 pnpm format           # Format with Prettier
-
-# Database & GraphQL
-pnpm prisma:generate  # Generate Prisma client
-pnpm graphql:codegen  # Generate GraphQL types
-pnpm codegen          # Run both generators
-pnpm prisma:studio    # Open Prisma Studio
 
 # Testing
 pnpm test             # Run Jest tests
@@ -101,37 +103,28 @@ pnpm start            # Start production server
 
 ### File Organization
 
-- **Features**: Group related components, hooks, and utilities in `/features/{feature-name}/`
-- **Components**: Shared UI components in `/components/ui/` (shadcn/ui based)
-- **GraphQL**: Schema in `/libs/server/graphql/`, generated types in `/libs/client/graphql-client/generated/`
-- **API Routes**: GraphQL endpoint at `/app/api/graphql/route.ts`
+- **Features**: Group related components, hooks, and utilities in `/src/features/{feature-name}/`
+- **Components**: Shared UI components in `/src/components/ui/` (shadcn/ui based)
+- **API Routes**: API endpoints in `/src/app/api/`
 
 ### Component Development
 
 - Use feature-based architecture: each feature has its own `views/`, `components/`, `hooks/`, `types/`, and `utils/`
-- Follow existing patterns from `/features/issues/` as reference
+- Follow existing patterns from `/src/features/issues/` as reference
 - Always use TypeScript with proper interfaces
 - Prefer composition over inheritance
 - Use Radix UI primitives with custom styling
 
-### GraphQL Workflow
-
-1. Define schema in `/libs/server/graphql/schema/`
-2. Run `pnpm graphql:codegen` to generate types
-3. Use generated hooks from `/libs/client/hooks/`
-4. Follow resolver patterns in `/libs/server/graphql/resolvers/`
-
 ### State Management
 
-- Use Zustand for global state (see `/features/issues/store/`)
-- Prefer React Query/Apollo Client for server state
+- Use Zustand for global state (see `/src/features/issues/store/`)
 - Local component state with useState/useReducer
 - Form state with React Hook Form
 
 ### Styling Guidelines
 
 - Use Tailwind CSS utilities, avoid custom CSS
-- Follow design system tokens from `/components/ui/`
+- Follow design system tokens from `/src/components/ui/`
 - Responsive design: mobile-first approach
 - Dark mode support via `next-themes`
 
@@ -140,43 +133,31 @@ pnpm start            # Start production server
 ### Working with Issues/Tasks
 
 ```typescript
-// Query issues
-const { data } = useSearchIssuesQuery({
-   variables: { filter: { status: ['pending'] } },
-});
+// Get issues from store
+const issues = useIssueStore((state) => state.issues);
+const filteredIssues = issues.filter(issue => issue.status === 'pending');
 
 // Update issue
-const [updateIssue] = useUpdateIssueMutation();
-await updateIssue({
-   variables: { id: issueId, input: { status: 'done' } },
-});
+const updateIssue = useIssueStore((state) => state.updateIssue);
+updateIssue(issueId, { status: 'done' });
 ```
 
 ### Adding New Features
 
-1. Create feature folder: `/features/{feature-name}/`
+1. Create feature folder: `/src/features/{feature-name}/`
 2. Add components in `components/`, views in `views/`
-3. Define GraphQL schema if needed
-4. Run `pnpm codegen` to generate types
-5. Create Zustand store if global state needed
-
-### Database Operations
-
-```bash
-# Make schema changes in prisma/schema.prisma
-pnpm prisma migrate dev --name "description"
-pnpm prisma:generate
-pnpm codegen  # Regenerate GraphQL types
-```
+3. Create Zustand store if global state needed
+4. Add any necessary API routes in `/src/app/api/`
 
 ### Component Patterns
 
 ```typescript
 // Feature component example
 export function IssueList({ projectId }: IssueListProps) {
-  const { data, loading } = useIssuesQuery({
-    variables: { projectId }
-  });
+  const issues = useIssueStore((state) => state.issues);
+  const loading = useIssueStore((state) => state.loading);
+  
+  const projectIssues = issues.filter(issue => issue.projectId === projectId);
 
   if (loading) return <Skeleton />;
   return <>{/* render issues */}</>;
@@ -194,12 +175,6 @@ pnpm typecheck        # Check for type errors
 pnpm typecheck:strict # Strict mode checking
 ```
 
-#### GraphQL Codegen Issues
-
-- Ensure schema is valid: check `/libs/server/graphql/schema/`
-- Run `pnpm codegen` after schema changes
-- Clear generated files: `rm -rf libs/client/graphql-client/generated/`
-
 #### Build Failures
 
 ```bash
@@ -211,15 +186,6 @@ pnpm build
 rm -rf .next node_modules/.cache
 pnpm install
 pnpm build
-```
-
-#### Database Sync Issues
-
-```bash
-# Reset database
-pnpm prisma migrate reset
-pnpm prisma:generate
-pnpm sync:taskmaster:force
 ```
 
 #### Development Server Issues
@@ -235,21 +201,18 @@ pnpm sync:taskmaster:force
 - `/package.json` - Scripts and dependencies
 - `/tsconfig.json` - TypeScript configuration
 - `/tailwind.config.ts` - Tailwind CSS config
-- `/codegen.yml` - GraphQL code generation config
-- `/prisma/schema.prisma` - Database schema
 - `/.env.local` - Environment variables (create from .env.example)
 
 ### Key Source Files
 
-- `/app/api/graphql/route.ts` - GraphQL API endpoint
-- `/libs/server/graphql/schema/` - GraphQL schema definitions
-- `/libs/server/graphql/resolvers/` - GraphQL resolvers
-- `/libs/client/apollo-client.ts` - Apollo Client setup
-- `/components/ui/` - Reusable UI components
-- `/features/issues/` - Reference feature implementation
+- `/src/app/api/` - API endpoints
+- `/src/components/ui/` - Reusable UI components
+- `/src/features/issues/` - Reference feature implementation
+- `/src/store/` - Zustand stores for state management
+- `/src/libs/client/` - Shared utilities and services
 
 ### Task Master Integration
 
 - `/.taskmaster/tasks/tasks.json` - Task Master task data
-- `/scripts/sync-taskmaster-to-prisma.ts` - Sync script
+- `/scripts/sync-taskmaster.ts` - Sync script
 - Task IDs: Current range 28-31 for individual mode features

@@ -13,7 +13,7 @@ const config = {
 
    // Module resolution
    moduleNameMapper: {
-      '^@/(.*)$': '<rootDir>/$1',
+      '^@/(.*)$': '<rootDir>/src/$1',
    },
 
    // TypeScript configuration

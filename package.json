@@ -23,11 +23,7 @@
       "format": "prettier --write .",
       "prepare": "husky install",
       "postinstall": "node scripts/setup-katex-fonts.js",
-      "test": "jest",
-      "rename:dry-run": "tsx scripts/renamingTool.ts --dry-run",
-      "rename:execute": "tsx scripts/renamingTool.ts",
-      "rename:revert": "tsx scripts/revertRenaming.ts",
-      "rename:validate": "tsx scripts/validateRename.ts"
+      "test": "jest"
    },
    "dependencies": {
       "@hookform/resolvers": "^4.1.2",
