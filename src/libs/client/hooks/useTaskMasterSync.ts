@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDataStore } from '../stores/dataStore';
 import type { SyncOptions } from '../services/syncService';
-import type { Issue } from '../types/dataModels';
+import type { Task } from '../types/dataModels';
 
 export interface UseTaskMasterSyncResult {
    // State
@@ -12,7 +12,7 @@ export interface UseTaskMasterSyncResult {
    isLoading: boolean;
 
    // Data
-   taskMasterIssues: Issue[];
+   taskMasterTasks: Task[];
    taskMasterStats: {
       totalTasks: number;
       totalSubtasks: number;
@@ -53,7 +53,7 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
       taskMasterError,
       isRealTimeSyncActive,
       isLoading,
-      issues,
+      tasks,
       enableTaskMasterSync,
       disableTaskMasterSync,
       forceSyncTaskMaster,
@@ -61,10 +61,10 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
       getTaskMasterStats,
    } = useDataStore();
 
-   // Filter TaskMaster issues
-   const taskMasterIssues = useMemo(() => {
-      return issues.filter((issue) => issue.taskId !== undefined);
-   }, [issues]);
+   // Filter TaskMaster tasks
+   const taskMasterTasks = useMemo(() => {
+      return tasks.filter((task) => task.taskId !== undefined);
+   }, [tasks]);
 
    // Stats state
    const [stats, setStats] = useState<UseTaskMasterSyncResult['taskMasterStats']>(null);
@@ -83,9 +83,9 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
    // Handle sync callbacks
    useEffect(() => {
       if (taskMasterSyncStatus === 'synced' && onSyncComplete) {
-         onSyncComplete(taskMasterIssues);
+         onSyncComplete(taskMasterTasks);
       }
-   }, [taskMasterSyncStatus, taskMasterIssues, onSyncComplete]);
+   }, [taskMasterSyncStatus, taskMasterTasks, onSyncComplete]);
 
    useEffect(() => {
       if (taskMasterSyncStatus === 'error' && taskMasterError && onSyncError) {
@@ -183,7 +183,7 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
       isLoading,
 
       // Data
-      taskMasterIssues,
+      taskMasterTasks,
       taskMasterStats: stats,
 
       // Actions

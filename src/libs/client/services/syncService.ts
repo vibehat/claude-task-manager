@@ -1,19 +1,19 @@
 import type { TaskMasterTask } from './taskMasterService';
 import { taskMasterService } from './taskMasterService';
-import type { Issue, Label, Project } from '../types/dataModels';
+import type { Task, Label, Project } from '../types/dataModels';
 
 export interface SyncOptions {
    tagName?: string;
    enableRealTimeSync?: boolean;
    syncInterval?: number;
    onSyncStart?: () => void;
-   onSyncComplete?: (issues: Issue[]) => void;
+   onSyncComplete?: (tasks: Task[]) => void;
    onSyncError?: (error: Error) => void;
 }
 
 export interface SyncResult {
    success: boolean;
-   issues: Issue[];
+   tasks: Task[];
    labels: Label[];
    projects: Project[];
    error?: Error;
@@ -45,8 +45,8 @@ class SyncService {
             throw new Error('TaskMaster tasks.json file not found');
          }
 
-         // Convert TaskMaster tasks to issues
-         const issues = await taskMasterService.convertAllTasksToIssues(tagName);
+         // Convert TaskMaster tasks to tasks
+         const tasks = await taskMasterService.convertAllTasksToTasks(tagName);
 
          // Create TaskMaster-specific labels and projects
          const labels = await this.createTaskMasterLabels();
@@ -54,19 +54,19 @@ class SyncService {
 
          const result: SyncResult = {
             success: true,
-            issues,
+            tasks,
             labels,
             projects,
          };
 
-         onSyncComplete?.(issues);
+         onSyncComplete?.(tasks);
          return result;
       } catch (error) {
          const err = error as Error;
          onSyncError?.(err);
          return {
             success: false,
-            issues: [],
+            tasks: [],
             labels: [],
             projects: [],
             error: err,
@@ -75,7 +75,7 @@ class SyncService {
    }
 
    async startRealTimeSync(
-      updateCallback: (issues: Issue[]) => void,
+      updateCallback: (tasks: Task[]) => void,
       options: SyncOptions = {}
    ): Promise<void> {
       if (this.isWatching) {
@@ -92,8 +92,8 @@ class SyncService {
          // Set up file watcher
          this.unsubscribeWatcher = taskMasterService.addWatcher(async (tasks: TaskMasterTask[]) => {
             try {
-               const issues = await taskMasterService.convertAllTasksToIssues(tagName);
-               updateCallback(issues);
+               const tasks = await taskMasterService.convertAllTasksToTasks(tagName);
+               updateCallback(tasks);
             } catch (error) {
                console.error('Error in real-time sync callback:', error);
                options.onSyncError?.(error as Error);
@@ -204,14 +204,11 @@ class SyncService {
    }
 
    // Manual sync trigger
-   async forceSyncNow(
-      updateCallback: (issues: Issue[]) => void,
-      tagName = 'master'
-   ): Promise<void> {
+   async forceSyncNow(updateCallback: (tasks: Task[]) => void, tagName = 'master'): Promise<void> {
       try {
          const result = await this.syncTaskMasterData({ tagName });
          if (result.success) {
-            updateCallback(result.issues);
+            updateCallback(result.tasks);
          } else {
             throw result.error || new Error('Sync failed');
          }

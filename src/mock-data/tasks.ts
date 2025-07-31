@@ -40,7 +40,7 @@ const generateIssuesRanks = () => {
 };
 generateIssuesRanks();
 
-export const issues: Issue[] = [
+export const tasks: Task[] = [
    {
       id: '1',
       identifier: 'LNUI-101',
@@ -464,21 +464,21 @@ export const issues: Issue[] = [
    },
 ];
 
-export function groupIssuesByStatus(issues: Issue[]): Record<string, Issue[]> {
-   return issues.reduce<Record<string, Issue[]>>((acc, issue) => {
-      const statusId = issue.status.id;
+export function groupTasksByStatus(tasks: Task[]): Record<string, Task[]> {
+   return tasks.reduce<Record<string, Task[]>>((acc, task) => {
+      const statusId = task.status.id;
 
       if (!acc[statusId]) {
          acc[statusId] = [];
       }
 
-      acc[statusId].push(issue);
+      acc[statusId].push(task);
 
       return acc;
    }, {});
 }
 
-export function sortIssuesByPriority(issues: Issue[]): Issue[] {
+export function sortTasksByPriority(tasks: Task[]): Task[] {
    const priorityOrder: Record<string, number> = {
       'urgent': 0,
       'high': 1,
@@ -487,7 +487,7 @@ export function sortIssuesByPriority(issues: Issue[]): Issue[] {
       'no-priority': 4,
    };
 
-   return issues
+   return tasks
       .slice()
       .sort((a, b) => priorityOrder[a.priority.id] - priorityOrder[b.priority.id]);
 }

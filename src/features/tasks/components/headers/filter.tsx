@@ -405,7 +405,7 @@ interface FilterStatusItemProps {
 }
 
 function FilterStatusItem({ item, isSelected, onSelect }: FilterStatusItemProps) {
-   const StatusIcon = useIssueStatusIcon(item);
+   const StatusIcon = useTaskStatusIcon(item);
 
    return (
       <CommandItem

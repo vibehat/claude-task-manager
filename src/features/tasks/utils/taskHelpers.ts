@@ -1,37 +1,37 @@
 /**
- * Issue Helper Utilities
+ * Task Helper Utilities
  */
 
-import type { Issue } from '../types/issueTypes';
-import { IssueStatus, IssuePriority } from '../types/issueTypes';
+import type { Task } from '@/libs/client/types';
+import type { TaskStatus, TaskPriority } from '@/libs/client/types';
 
 /**
- * Generate a unique identifier for an issue
+ * Generate a unique identifier for a task
  */
-export function generateIssueIdentifier(projectIdentifier: string, issueNumber: number): string {
+export function generateTaskIdentifier(projectIdentifier: string, taskNumber: number): string {
    return `${projectIdentifier}-${issueNumber}`;
 }
 
 /**
- * Check if an issue is overdue
+ * Check if a task is overdue
  */
-export function isIssueOverdue(issue: Issue): boolean {
-   if (!issue.dueDate) return false;
-   return new Date(issue.dueDate) < new Date();
+export function isTaskOverdue(task: Task): boolean {
+   if (!task.dueDate) return false;
+   return new Date(task.dueDate) < new Date();
 }
 
 /**
- * Check if an issue is completed
+ * Check if a task is completed
  */
-export function isIssueCompleted(issue: Issue): boolean {
-   return issue.status === 'DONE' || issue.status === 'COMPLETED';
+export function isTaskCompleted(task: Task): boolean {
+   return task.statusId === 'done' || task.statusId === 'completed';
 }
 
 /**
- * Check if an issue is in progress
+ * Check if a task is in progress
  */
-export function isIssueInProgress(issue: Issue): boolean {
-   return issue.status === 'IN_PROGRESS' || issue.status === 'DOING';
+export function isTaskInProgress(task: Task): boolean {
+   return task.statusId === 'in-progress' || task.statusId === 'doing';
 }
 
 /**

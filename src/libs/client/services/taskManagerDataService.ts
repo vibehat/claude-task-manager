@@ -1,12 +1,12 @@
-import type { User, Project, Label, IssueStatus, IssuePriority, Issue } from '../types/dataModels';
+import type { User, Project, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 
 export interface TaskManagerData {
    users: User[];
    projects: Project[];
    labels: Label[];
-   statuses: IssueStatus[];
-   priorities: IssuePriority[];
-   additionalIssues: Issue[];
+   statuses: TaskStatus[];
+   priorities: TaskPriority[];
+   additionalTasks: Task[];
    metadata: {
       created: string;
       updated: string;
@@ -113,9 +113,9 @@ class TaskManagerDataService {
       if (!data) return false;
 
       data.users = data.users.filter((user) => user.id !== id);
-      // Also unassign from additional issues
-      data.additionalIssues = data.additionalIssues.map((issue) =>
-         issue.assigneeId === id ? { ...issue, assigneeId: undefined } : issue
+      // Also unassign from additional tasks
+      data.additionalTasks = data.additionalTasks.map((task) =>
+         task.assigneeId === id ? { ...task, assigneeId: undefined } : task
       );
 
       return await this.writeTaskManagerData(data);
@@ -160,9 +160,9 @@ class TaskManagerDataService {
       if (!data) return false;
 
       data.projects = data.projects.filter((project) => project.id !== id);
-      // Also remove project from additional issues
-      data.additionalIssues = data.additionalIssues.map((issue) =>
-         issue.projectId === id ? { ...issue, projectId: undefined } : issue
+      // Also remove project from additional tasks
+      data.additionalTasks = data.additionalTasks.map((task) =>
+         task.projectId === id ? { ...task, projectId: undefined } : task
       );
 
       return await this.writeTaskManagerData(data);
@@ -205,43 +205,43 @@ class TaskManagerDataService {
       if (!data) return false;
 
       data.labels = data.labels.filter((label) => label.id !== id);
-      // Also remove label from additional issues
-      data.additionalIssues = data.additionalIssues.map((issue) => ({
-         ...issue,
-         labelIds: issue.labelIds.filter((labelId) => labelId !== id),
+      // Also remove label from additional tasks
+      data.additionalTasks = data.additionalTasks.map((task) => ({
+         ...task,
+         labelIds: task.labelIds.filter((labelId) => labelId !== id),
       }));
 
       return await this.writeTaskManagerData(data);
    }
 
-   async addAdditionalIssue(
-      issue: Omit<Issue, 'id' | 'createdAt' | 'updatedAt' | 'orderIndex'>
-   ): Promise<Issue | null> {
+   async addAdditionalTask(
+      task: Omit<Task, 'id' | 'createdAt' | 'updatedAt' | 'orderIndex'>
+   ): Promise<Task | null> {
       const data = await this.readTaskManagerData();
       if (!data) return null;
 
-      const newIssue: Issue = {
-         ...issue,
-         id: `issue-additional-${Date.now()}`,
-         orderIndex: data.additionalIssues.length,
+      const newTask: Task = {
+         ...task,
+         id: `task-additional-${Date.now()}`,
+         orderIndex: data.additionalTasks.length,
          createdAt: new Date(),
          updatedAt: new Date(),
       };
 
-      data.additionalIssues.push(newIssue);
+      data.additionalTasks.push(newTask);
       const success = await this.writeTaskManagerData(data);
-      return success ? newIssue : null;
+      return success ? newTask : null;
    }
 
-   async updateAdditionalIssue(id: string, updates: Partial<Issue>): Promise<boolean> {
+   async updateAdditionalTask(id: string, updates: Partial<Task>): Promise<boolean> {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      const issueIndex = data.additionalIssues.findIndex((issue) => issue.id === id);
-      if (issueIndex === -1) return false;
+      const taskIndex = data.additionalTasks.findIndex((task) => task.id === id);
+      if (taskIndex === -1) return false;
 
-      data.additionalIssues[issueIndex] = {
-         ...data.additionalIssues[issueIndex],
+      data.additionalTasks[taskIndex] = {
+         ...data.additionalTasks[taskIndex],
          ...updates,
          updatedAt: new Date(),
       };
@@ -249,12 +249,12 @@ class TaskManagerDataService {
       return await this.writeTaskManagerData(data);
    }
 
-   async deleteAdditionalIssue(id: string): Promise<boolean> {
+   async deleteAdditionalTask(id: string): Promise<boolean> {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      data.additionalIssues = data.additionalIssues.filter(
-         (issue) => issue.id !== id && issue.parentIssueId !== id
+      data.additionalTasks = data.additionalTasks.filter(
+         (task) => task.id !== id && task.parentTaskId !== id
       );
 
       return await this.writeTaskManagerData(data);

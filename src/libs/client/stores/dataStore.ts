@@ -106,9 +106,9 @@ export const useDataStore = create<DataState>()(
                   users: [] as User[],
                   projects: [] as Project[],
                   labels: [] as Label[],
-                  statuses: [] as IssueStatus[],
-                  priorities: [] as IssuePriority[],
-                  issues: [] as Issue[],
+                  statuses: [] as TaskStatus[],
+                  priorities: [] as TaskPriority[],
+                  tasks: [] as Task[],
                };
 
                // Try to load UI data from taskmanager.json
@@ -121,7 +121,7 @@ export const useDataStore = create<DataState>()(
                         labels: taskManagerData.labels,
                         statuses: taskManagerData.statuses,
                         priorities: taskManagerData.priorities,
-                        issues: taskManagerData.additionalIssues,
+                        tasks: taskManagerData.additionalTasks || [],
                      };
                      console.log('Loaded UI data from taskmanager.json');
                   }
@@ -139,10 +139,10 @@ export const useDataStore = create<DataState>()(
                   try {
                      const syncResult = await syncService.syncTaskMasterData({
                         onSyncStart: () => set({ taskMasterSyncStatus: 'syncing' }),
-                        onSyncComplete: (issues) => {
-                           console.log(`TaskMaster sync complete - ${issues.length} issues loaded`);
+                        onSyncComplete: (tasks) => {
+                           console.log(`TaskMaster sync complete - ${tasks.length} tasks loaded`);
                            set((state) => ({
-                              issues: [...state.issues, ...issues],
+                              tasks: [...state.tasks, ...tasks],
                               taskMasterSyncStatus: 'synced',
                               taskMasterError: null,
                            }));
@@ -158,8 +158,8 @@ export const useDataStore = create<DataState>()(
                      });
 
                      if (syncResult.success) {
-                        // Merge TaskMaster data with UI data (TaskMaster issues take precedence)
-                        uiData.issues = [...uiData.issues, ...syncResult.issues];
+                        // Merge TaskMaster data with UI data (TaskMaster tasks take precedence)
+                        uiData.tasks = [...uiData.tasks, ...syncResult.tasks];
                         uiData.labels = [...uiData.labels, ...syncResult.labels];
                         uiData.projects = [...uiData.projects, ...syncResult.projects];
 
@@ -189,7 +189,7 @@ export const useDataStore = create<DataState>()(
                   isInitialized: true,
                });
 
-               console.log(`DataStore initialized with ${uiData.issues.length} issues total`);
+               console.log(`DataStore initialized with ${uiData.tasks.length} tasks total`);
             } catch (error) {
                console.error('DataStore initialization failed:', error);
                set({
@@ -212,7 +212,7 @@ export const useDataStore = create<DataState>()(
                labels: [],
                statuses: [],
                priorities: [],
-               issues: [],
+               tasks: [],
                isTaskMasterEnabled: false,
                taskMasterSyncStatus: 'idle',
                taskMasterError: null,
@@ -229,9 +229,9 @@ export const useDataStore = create<DataState>()(
                const syncResult = await syncService.syncTaskMasterData({
                   ...options,
                   onSyncStart: () => set({ taskMasterSyncStatus: 'syncing' }),
-                  onSyncComplete: (issues) => {
+                  onSyncComplete: (tasks) => {
                      set((state) => ({
-                        issues: [...state.issues.filter((i) => !i.taskId), ...issues],
+                        tasks: [...state.tasks.filter((t) => !t.taskId), ...tasks],
                         taskMasterSyncStatus: 'synced',
                         taskMasterError: null,
                         isTaskMasterEnabled: true,
@@ -248,7 +248,7 @@ export const useDataStore = create<DataState>()(
                if (syncResult.success) {
                   // Merge TaskMaster data with existing data
                   set((state) => ({
-                     issues: [...state.issues.filter((i) => !i.taskId), ...syncResult.issues],
+                     tasks: [...state.tasks.filter((t) => !t.taskId), ...syncResult.tasks],
                      labels: [
                         ...state.labels.filter((l) => !l.id.includes('taskmaster')),
                         ...syncResult.labels,
@@ -278,8 +278,8 @@ export const useDataStore = create<DataState>()(
             await syncService.stopRealTimeSync();
 
             set((state) => ({
-               // Remove TaskMaster issues, labels, and projects
-               issues: state.issues.filter((i) => !i.taskId),
+               // Remove TaskMaster tasks, labels, and projects
+               tasks: state.tasks.filter((t) => !t.taskId),
                labels: state.labels.filter(
                   (l) =>
                      !l.id.includes('taskmaster') &&
@@ -303,9 +303,9 @@ export const useDataStore = create<DataState>()(
             set({ taskMasterSyncStatus: 'syncing', taskMasterError: null });
 
             try {
-               await syncService.forceSyncNow((issues) => {
+               await syncService.forceSyncNow((tasks) => {
                   set((state) => ({
-                     issues: [...state.issues.filter((i) => !i.taskId), ...issues],
+                     tasks: [...state.tasks.filter((t) => !t.taskId), ...tasks],
                      taskMasterSyncStatus: 'synced',
                      taskMasterError: null,
                   }));
@@ -321,9 +321,9 @@ export const useDataStore = create<DataState>()(
 
          toggleRealTimeSync: async (enabled, options = {}) => {
             if (enabled && !get().isRealTimeSyncActive) {
-               await syncService.startRealTimeSync((issues) => {
+               await syncService.startRealTimeSync((tasks) => {
                   set((state) => ({
-                     issues: [...state.issues.filter((i) => !i.taskId), ...issues],
+                     tasks: [...state.tasks.filter((t) => !t.taskId), ...tasks],
                   }));
                }, options);
 
@@ -368,9 +368,9 @@ export const useDataStore = create<DataState>()(
          deleteUser: (id) => {
             set((state) => ({
                users: state.users.filter((user) => user.id !== id),
-               // Also unassign issues
-               issues: state.issues.map((issue) =>
-                  issue.assigneeId === id ? { ...issue, assigneeId: undefined } : issue
+               // Also unassign tasks
+               tasks: state.tasks.map((task) =>
+                  task.assigneeId === id ? { ...task, assigneeId: undefined } : task
                ),
             }));
 
@@ -408,9 +408,9 @@ export const useDataStore = create<DataState>()(
          deleteProject: (id) => {
             set((state) => ({
                projects: state.projects.filter((project) => project.id !== id),
-               // Also remove project from issues
-               issues: state.issues.map((issue) =>
-                  issue.projectId === id ? { ...issue, projectId: undefined } : issue
+               // Also remove project from tasks
+               tasks: state.tasks.map((task) =>
+                  task.projectId === id ? { ...task, projectId: undefined } : task
                ),
             }));
 
@@ -448,10 +448,10 @@ export const useDataStore = create<DataState>()(
          deleteLabel: (id) => {
             set((state) => ({
                labels: state.labels.filter((label) => label.id !== id),
-               // Also remove label from issues
-               issues: state.issues.map((issue) => ({
-                  ...issue,
-                  labelIds: issue.labelIds.filter((labelId) => labelId !== id),
+               // Also remove label from tasks
+               tasks: state.tasks.map((task) => ({
+                  ...task,
+                  labelIds: task.labelIds.filter((labelId) => labelId !== id),
                })),
             }));
 
@@ -459,43 +459,43 @@ export const useDataStore = create<DataState>()(
             taskManagerDataService.deleteLabel(id).catch(console.warn);
          },
 
-         // Issue actions
-         addIssue: (issueData) => {
+         // Task actions
+         addTask: (taskData) => {
             const state = get();
-            const newIssue: Issue = {
-               ...issueData,
-               id: `issue-${Date.now()}`,
-               orderIndex: state.issues.length,
+            const newTask: Task = {
+               ...taskData,
+               id: `task-${Date.now()}`,
+               orderIndex: state.tasks.length,
                createdAt: new Date(),
                updatedAt: new Date(),
             };
-            set((state) => ({ issues: [...state.issues, newIssue] }));
+            set((state) => ({ tasks: [...state.tasks, newTask] }));
 
-            // Only persist additional issues (not TaskMaster issues) to taskmanager.json
-            if (!newIssue.taskId) {
-               taskManagerDataService.addAdditionalIssue(issueData).catch(console.warn);
+            // Only persist additional tasks (not TaskMaster tasks) to taskmanager.json
+            if (!newTask.taskId) {
+               taskManagerDataService.addAdditionalTask(taskData).catch(console.warn);
             }
 
-            return newIssue;
+            return newTask;
          },
 
-         updateIssue: async (id, updates) => {
-            const currentIssue = get().issues.find((i) => i.id === id);
+         updateTask: async (id, updates) => {
+            const currentTask = get().tasks.find((t) => t.id === id);
 
             // Update the local state immediately for responsive UI
             set((state) => ({
-               issues: state.issues.map((issue) =>
-                  issue.id === id ? { ...issue, ...updates, updatedAt: new Date() } : issue
+               tasks: state.tasks.map((task) =>
+                  task.id === id ? { ...task, ...updates, updatedAt: new Date() } : task
                ),
             }));
 
-            if (currentIssue) {
-               // Handle TaskMaster issue updates
-               if (currentIssue.taskId && updates.statusId) {
+            if (currentTask) {
+               // Handle TaskMaster task updates
+               if (currentTask.taskId && updates.statusId) {
                   try {
                      const result = await taskMasterUpdateService.updateTaskStatusSafe({
-                        taskId: currentIssue.taskId,
-                        subtaskId: currentIssue.subtaskId,
+                        taskId: currentTask.taskId,
+                        subtaskId: currentTask.subtaskId,
                         status: updates.statusId,
                      });
 
@@ -507,69 +507,65 @@ export const useDataStore = create<DataState>()(
                      console.error('TaskMaster update error:', error);
                   }
                }
-               // Handle regular issues (persist to taskmanager.json)
-               else if (!currentIssue.taskId) {
-                  taskManagerDataService.updateAdditionalIssue(id, updates).catch(console.warn);
+               // Handle regular tasks (persist to taskmanager.json)
+               else if (!currentTask.taskId) {
+                  taskManagerDataService.updateAdditionalTask(id, updates).catch(console.warn);
                }
             }
          },
 
-         deleteIssue: (id) => {
-            const issue = get().issues.find((i) => i.id === id);
+         deleteTask: (id) => {
+            const task = get().tasks.find((t) => t.id === id);
 
             set((state) => ({
-               issues: state.issues.filter(
-                  (issue) => issue.id !== id && issue.parentIssueId !== id
-               ),
+               tasks: state.tasks.filter((task) => task.id !== id && task.parentTaskId !== id),
             }));
 
-            // Only persist additional issues (not TaskMaster issues) to taskmanager.json
-            if (issue && !issue.taskId) {
-               taskManagerDataService.deleteAdditionalIssue(id).catch(console.warn);
+            // Only persist additional tasks (not TaskMaster tasks) to taskmanager.json
+            if (task && !task.taskId) {
+               taskManagerDataService.deleteAdditionalTask(id).catch(console.warn);
             }
          },
 
-         bulkUpdateIssues: (ids, updates) => {
+         bulkUpdateTasks: (ids, updates) => {
             set((state) => ({
-               issues: state.issues.map((issue) =>
-                  ids.includes(issue.id) ? { ...issue, ...updates, updatedAt: new Date() } : issue
+               tasks: state.tasks.map((task) =>
+                  ids.includes(task.id) ? { ...task, ...updates, updatedAt: new Date() } : task
                ),
             }));
          },
 
          // Query methods
-         getIssueById: (id) => {
-            return get().issues.find((issue) => issue.id === id);
+         getTaskById: (id) => {
+            return get().tasks.find((task) => task.id === id);
          },
 
-         getIssuesByStatus: (statusId) => {
-            return get().issues.filter((issue) => issue.statusId === statusId);
+         getTasksByStatus: (statusId) => {
+            return get().tasks.filter((task) => task.statusId === statusId);
          },
 
-         getParentIssuesByStatus: (statusId) => {
-            return get().issues.filter(
-               (issue) => issue.statusId === statusId && !issue.parentIssueId
-            );
+         getParentTasksByStatus: (statusId) => {
+            return get().tasks.filter((task) => task.statusId === statusId && !task.parentTaskId);
          },
 
-         getIssuesByProject: (projectId) => {
-            return get().issues.filter((issue) => issue.projectId === projectId);
+         getTasksByProject: (projectId) => {
+            return get().tasks.filter((task) => task.projectId === projectId);
          },
 
-         getIssuesByAssignee: (assigneeId) => {
-            return get().issues.filter((issue) => issue.assigneeId === assigneeId);
+         getTasksByAssignee: (assigneeId) => {
+            return get().tasks.filter((task) => task.assigneeId === assigneeId);
          },
 
-         getSubIssues: (parentIssueId) => {
-            return get().issues.filter((issue) => issue.parentIssueId === parentIssueId);
+         getSubtasks: (parentTaskId) => {
+            return get().tasks.filter((task) => task.parentTaskId === parentTaskId);
          },
 
-         searchIssues: (query) => {
+         searchTasks: (query) => {
             const lowerQuery = query.toLowerCase();
-            return get().issues.filter(
-               (issue) =>
-                  issue.title.toLowerCase().includes(lowerQuery) ||
-                  issue.description?.toLowerCase().includes(lowerQuery)
+            return get().tasks.filter(
+               (task) =>
+                  task.title.toLowerCase().includes(lowerQuery) ||
+                  task.description?.toLowerCase().includes(lowerQuery)
             );
          },
 

@@ -1,4 +1,4 @@
-import type { Issue, IssueStatus, IssuePriority } from '../types/dataModels';
+import type { Task, TaskStatus, TaskPriority } from '../types/dataModels';
 
 export interface TaskMasterTask {
    id: number;
@@ -85,16 +85,16 @@ class TaskMasterService {
       return task?.subtasks.find((subtask) => subtask.id === subtaskId) || null;
    }
 
-   convertTaskToIssue(task: TaskMasterTask, orderIndex: number): Issue {
+   convertTaskToTask(task: TaskMasterTask, orderIndex: number): Task {
       return {
          id: `task-${task.id}`,
          title: task.title,
          description: task.description,
-         statusId: this.mapTaskStatusToIssueStatus(task.status),
-         priorityId: this.mapTaskPriorityToIssuePriority(task.priority),
+         statusId: this.mapTaskStatusToTaskStatus(task.status),
+         priorityId: this.mapTaskPriorityToTaskPriority(task.priority),
          assigneeId: undefined,
          projectId: 'project-taskmaster',
-         parentIssueId: undefined,
+         parentTaskId: undefined,
          labelIds: this.getLabelsForTask(task),
          taskId: task.id,
          subtaskId: undefined,
@@ -104,20 +104,20 @@ class TaskMasterService {
       };
    }
 
-   convertSubtaskToIssue(
+   convertSubtaskToTask(
       subtask: TaskMasterSubtask,
       parentTaskId: number,
       orderIndex: number
-   ): Issue {
+   ): Task {
       return {
          id: `task-${parentTaskId}-${subtask.id}`,
          title: subtask.title,
          description: subtask.description,
-         statusId: this.mapTaskStatusToIssueStatus(subtask.status),
+         statusId: this.mapTaskStatusToTaskStatus(subtask.status),
          priorityId: 'priority-3', // Default to medium for subtasks
          assigneeId: undefined,
          projectId: 'project-taskmaster',
-         parentIssueId: `task-${parentTaskId}`,
+         parentTaskId: `task-${parentTaskId}`,
          labelIds: ['label-subtask'],
          taskId: parentTaskId,
          subtaskId: `${parentTaskId}.${subtask.id}`,
@@ -127,7 +127,7 @@ class TaskMasterService {
       };
    }
 
-   private mapTaskStatusToIssueStatus(status: TaskMasterTask['status']): string {
+   private mapTaskStatusToTaskStatus(status: TaskMasterTask['status']): string {
       const statusMap: Record<TaskMasterTask['status'], string> = {
          'pending': 'status-2', // todo
          'in-progress': 'status-3', // in_progress
@@ -139,7 +139,7 @@ class TaskMasterService {
       return statusMap[status] || 'status-1';
    }
 
-   private mapTaskPriorityToIssuePriority(priority: TaskMasterTask['priority']): string {
+   private mapTaskPriorityToTaskPriority(priority: TaskMasterTask['priority']): string {
       const priorityMap: Record<TaskMasterTask['priority'], string> = {
          high: 'priority-2', // high
          medium: 'priority-3', // medium
@@ -166,22 +166,22 @@ class TaskMasterService {
       return labels;
    }
 
-   async convertAllTasksToIssues(tagName = 'master'): Promise<Issue[]> {
+   async convertAllTasksToTasks(tagName = 'master'): Promise<Task[]> {
       const tasks = await this.getAllTasks(tagName);
-      const issues: Issue[] = [];
+      const tasksConverted: Task[] = [];
       let orderIndex = 0;
 
       for (const task of tasks) {
-         // Add main task as issue
-         issues.push(this.convertTaskToIssue(task, orderIndex++));
+         // Add main task
+         tasksConverted.push(this.convertTaskToTask(task, orderIndex++));
 
-         // Add subtasks as child issues
+         // Add subtasks as child tasks
          for (const subtask of task.subtasks) {
-            issues.push(this.convertSubtaskToIssue(subtask, task.id, orderIndex++));
+            tasksConverted.push(this.convertSubtaskToTask(subtask, task.id, orderIndex++));
          }
       }
 
-      return issues;
+      return tasksConverted;
    }
 
    // File watching functionality
@@ -279,7 +279,7 @@ class TaskMasterService {
    }
 
    // Utility methods
-   async getTaskMasterStatuses(): Promise<IssueStatus[]> {
+   async getTaskMasterStatuses(): Promise<TaskStatus[]> {
       return [
          {
             id: 'status-1',
@@ -324,7 +324,7 @@ class TaskMasterService {
       ];
    }
 
-   async getTaskMasterPriorities(): Promise<IssuePriority[]> {
+   async getTaskMasterPriorities(): Promise<TaskPriority[]> {
       return [
          {
             id: 'priority-0',

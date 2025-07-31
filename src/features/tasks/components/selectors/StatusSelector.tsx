@@ -49,7 +49,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
    };
 
    const selectedItem = statuses.find((item) => item.id === value);
-   const StatusIcon = selectedItem ? useIssueStatusIcon(selectedItem) : null;
+   const StatusIcon = selectedItem ? useTaskStatusIcon(selectedItem) : null;
 
    return (
       <div className="*:not-first:mt-2">
@@ -99,7 +99,7 @@ interface StatusSelectorItemProps {
 }
 
 function StatusSelectorItem({ item, value, onSelect }: StatusSelectorItemProps) {
-   const StatusIcon = useIssueStatusIcon(item);
+   const StatusIcon = useTaskStatusIcon(item);
 
    return (
       <CommandItem

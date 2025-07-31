@@ -17,34 +17,34 @@ import Link from 'next/link';
 import { IndieLayout } from '@/components/layout/IndieLayout';
 
 export default function IndieDashboardPage(): React.JSX.Element {
-   const { issues, statuses, priorities } = useDataStore();
+   const { tasks, statuses, priorities } = useDataStore();
 
-   // Get recent issues (last 5)
-   const recentIssues = useMemo(() => {
-      return [...issues]
+   // Get recent tasks (last 5)
+   const recentTasks = useMemo(() => {
+      return [...tasks]
          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
          .slice(0, 5);
-   }, [issues]);
+   }, [tasks]);
 
    // Calculate stats from local data
    const taskStats = useMemo(() => {
-      const total = issues.length;
-      const completed = issues.filter((issue) => {
-         const status = statuses.find((s) => s.id === issue.statusId);
+      const total = tasks.length;
+      const completed = tasks.filter((task) => {
+         const status = statuses.find((s) => s.id === task.statusId);
          return status?.name === 'done';
       }).length;
-      const inProgress = issues.filter((issue) => {
-         const status = statuses.find((s) => s.id === issue.statusId);
+      const inProgress = tasks.filter((task) => {
+         const status = statuses.find((s) => s.id === task.statusId);
          return status?.name === 'in_progress';
       }).length;
-      const pending = issues.filter((issue) => {
-         const status = statuses.find((s) => s.id === issue.statusId);
+      const pending = tasks.filter((task) => {
+         const status = statuses.find((s) => s.id === task.statusId);
          return status?.name === 'todo' || status?.name === 'backlog';
       }).length;
       const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
 
       return { total, completed, inProgress, pending, completionRate };
-   }, [issues, statuses]);
+   }, [tasks, statuses]);
 
    return (
       <IndieLayout>
@@ -131,33 +131,32 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <CardDescription>Your most recently created tasks</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                     {recentIssues.length > 0 ? (
-                        recentIssues.map((issue) => (
-                           <div key={issue.id} className="flex items-center justify-between">
+                     {recentTasks.length > 0 ? (
+                        recentTasks.map((task) => (
+                           <div key={task.id} className="flex items-center justify-between">
                               <div className="flex items-center space-x-3">
                                  <div
                                     className={`w-2 h-2 rounded-full ${
-                                       statuses.find((s) => s.id === issue.statusId)?.name ===
-                                       'done'
+                                       statuses.find((s) => s.id === task.statusId)?.name === 'done'
                                           ? 'bg-green-500'
-                                          : statuses.find((s) => s.id === issue.statusId)?.name ===
+                                          : statuses.find((s) => s.id === task.statusId)?.name ===
                                               'in_progress'
                                             ? 'bg-blue-500'
                                             : 'bg-gray-400'
                                     }`}
                                  />
                                  <div>
-                                    <p className="text-sm font-medium">{issue.title}</p>
-                                    <p className="text-xs text-muted-foreground">{issue.id}</p>
+                                    <p className="text-sm font-medium">{task.title}</p>
+                                    <p className="text-xs text-muted-foreground">{task.id}</p>
                                  </div>
                               </div>
                               <div className="flex items-center space-x-2">
                                  <Badge variant="secondary">
-                                    {statuses.find((s) => s.id === issue.statusId)?.name ||
+                                    {statuses.find((s) => s.id === task.statusId)?.name ||
                                        'unknown'}
                                  </Badge>
                                  <Badge variant="outline">
-                                    {priorities.find((p) => p.id === issue.priorityId)?.name ||
+                                    {priorities.find((p) => p.id === task.priorityId)?.name ||
                                        'no priority'}
                                  </Badge>
                               </div>

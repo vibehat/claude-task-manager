@@ -61,7 +61,7 @@ export const usePersistenceStore = create<PersistenceState>()(
                labels: dataStore.labels,
                statuses: dataStore.statuses,
                priorities: dataStore.priorities,
-               issues: dataStore.issues,
+               tasks: dataStore.tasks,
                savedAt: new Date().toISOString(),
             };
 
@@ -110,11 +110,13 @@ export const usePersistenceStore = create<PersistenceState>()(
                         createdAt: new Date(priority.createdAt),
                         updatedAt: new Date(priority.updatedAt),
                      })),
-                     issues: parsedData.issues.map((issue: any) => ({
-                        ...issue,
-                        createdAt: new Date(issue.createdAt),
-                        updatedAt: new Date(issue.updatedAt),
-                     })),
+                     tasks: parsedData.tasks
+                        ? parsedData.tasks.map((task: any) => ({
+                             ...task,
+                             createdAt: new Date(task.createdAt),
+                             updatedAt: new Date(task.updatedAt),
+                          }))
+                        : [],
                   };
 
                   // Update data store
@@ -124,7 +126,7 @@ export const usePersistenceStore = create<PersistenceState>()(
                      labels: processedData.labels,
                      statuses: processedData.statuses,
                      priorities: processedData.priorities,
-                     issues: processedData.issues,
+                     tasks: processedData.tasks,
                      isInitialized: true,
                   });
 
@@ -154,7 +156,7 @@ export const usePersistenceStore = create<PersistenceState>()(
                labels: dataStore.labels,
                statuses: dataStore.statuses,
                priorities: dataStore.priorities,
-               issues: dataStore.issues,
+               tasks: dataStore.tasks,
                exportedAt: new Date().toISOString(),
                version: '1.0.0',
             };
@@ -168,7 +170,7 @@ export const usePersistenceStore = create<PersistenceState>()(
                const parsedData = JSON.parse(jsonData);
 
                // Validate the data structure
-               if (!parsedData.users || !parsedData.issues || !parsedData.statuses) {
+               if (!parsedData.users || !parsedData.tasks || !parsedData.statuses) {
                   throw new Error('Invalid data format');
                }
 
