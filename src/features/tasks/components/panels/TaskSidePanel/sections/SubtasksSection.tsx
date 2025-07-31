@@ -1,21 +1,21 @@
 'use client';
 
 import { SubtaskItem } from '../../../forms/SubtaskItem';
-import type { Issue } from '@/libs/client/types';
+import type { Task } from '@/libs/client/types';
 
 interface SubtasksSectionProps {
-   issue: Issue;
+   task: Task;
    onSubtaskUpdate?: (subtaskId: string, description: string) => void;
    disabled?: boolean;
 }
 
 export function SubtasksSection({
-   issue,
+   task,
    onSubtaskUpdate,
    disabled = false,
 }: SubtasksSectionProps): React.JSX.Element | null {
-   // If the issue doesn't have a subtask, don't render anything
-   if (!issue.subtaskId) {
+   // If the task doesn't have a subtask, don't render anything
+   if (!task.subtaskId) {
       return null;
    }
 
@@ -27,11 +27,7 @@ export function SubtasksSection({
          </div>
 
          <div className="space-y-2">
-            <SubtaskItem
-               subtask={issue}
-               onDescriptionUpdate={onSubtaskUpdate}
-               disabled={disabled}
-            />
+            <SubtaskItem subtask={task} onDescriptionUpdate={onSubtaskUpdate} disabled={disabled} />
          </div>
       </div>
    );

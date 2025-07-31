@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 
-interface IssueTitleEditorProps {
+interface TaskTitleEditorProps {
    initialValue: string;
    onBlur: (value: string) => void;
    disabled?: boolean;
@@ -13,7 +13,7 @@ export function TaskTitleEditor({
    initialValue,
    onBlur,
    disabled = false,
-}: IssueTitleEditorProps): React.JSX.Element {
+}: TaskTitleEditorProps): React.JSX.Element {
    const [title, setTitle] = useState(initialValue);
 
    useEffect(() => {
@@ -33,7 +33,7 @@ export function TaskTitleEditor({
             onChange={(e) => setTitle(e.target.value)}
             onBlur={handleBlur}
             className="text-xl font-semibold border-none px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-white dark:placeholder:text-gray-400 dark:bg-transparent"
-            placeholder="Issue title"
+            placeholder="Task title"
             disabled={disabled}
          />
       </div>

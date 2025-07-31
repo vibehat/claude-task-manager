@@ -1,6 +1,8 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { taskMasterCLI } from '@/libs/server';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 /**
  * Task Master CLI API endpoint
@@ -129,6 +131,42 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
                stderr: '',
                exitCode: 0,
             };
+            break;
+
+         case 'raw-file-read':
+            // Special case for direct file reading (for tasks.json)
+            try {
+               const filePath = args[0];
+               if (!filePath) {
+                  return NextResponse.json(
+                     { error: 'File path is required for raw-file-read command' },
+                     { status: 400 }
+                  );
+               }
+
+               // Security: only allow reading .taskmaster files
+               if (!filePath.startsWith('.taskmaster/')) {
+                  return NextResponse.json(
+                     { error: 'Only .taskmaster files are allowed' },
+                     { status: 403 }
+                  );
+               }
+
+               const fullPath = join(process.cwd(), filePath);
+               const fileContent = readFileSync(fullPath, 'utf-8');
+
+               result = {
+                  stdout: fileContent,
+                  stderr: '',
+                  exitCode: 0,
+               };
+            } catch (error) {
+               result = {
+                  stdout: '',
+                  stderr: `Failed to read file: ${error.message}`,
+                  exitCode: 1,
+               };
+            }
             break;
 
          default:

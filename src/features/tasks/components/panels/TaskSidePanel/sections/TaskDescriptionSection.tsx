@@ -5,17 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { MarkdownEditor } from '../../../editors/MarkdownEditor';
 
-interface IssueDescriptionSectionProps {
+interface TaskDescriptionSectionProps {
    initialValue: string;
    onSave: (value: string) => void;
    disabled?: boolean;
 }
 
-export function IssueDescriptionSection({
+export function TaskDescriptionSection({
    initialValue,
    onSave,
    disabled = false,
-}: IssueDescriptionSectionProps): React.JSX.Element {
+}: TaskDescriptionSectionProps): React.JSX.Element {
    const [description, setDescription] = useState(initialValue);
    const editorRef = useRef<HTMLDivElement>(null);
 
@@ -53,4 +53,4 @@ export function IssueDescriptionSection({
    );
 }
 
-export default IssueDescriptionSection;
+export default TaskDescriptionSection;

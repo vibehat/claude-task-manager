@@ -7,9 +7,9 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { MarkdownEditor } from '../editors/MarkdownEditor';
-import type { Issue } from '@/libs/client/types';
+import type { Task } from '@/libs/client/types';
 
-type Subtask = Issue; // Using Issue type for subtasks
+type Subtask = Task; // Using Task type for subtasks
 
 interface SubtaskItemProps {
    subtask: Subtask;

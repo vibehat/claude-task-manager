@@ -24,14 +24,14 @@ export function TaskSidePanel(): React.JSX.Element {
       field: 'title' | 'description',
       value: string
    ): Promise<void> => {
-      if (!issue) return;
+      if (!task) return;
 
       try {
-         // Update the issue using Zustand store
-         await updateIssue(issue.id, { [field]: value });
+         // Update the task using Zustand store
+         await updateTask(task.id, { [field]: value });
 
-         // Update the issue in the side panel store with the updated value
-         updateIssueInStore({ ...issue, [field]: value });
+         // Update the task in the side panel store with the updated value
+         updateTaskInStore({ ...task, [field]: value });
 
          toast.success(`${field === 'title' ? 'Title' : 'Description'} updated successfully`);
       } catch (error) {
@@ -56,14 +56,14 @@ export function TaskSidePanel(): React.JSX.Element {
    };
 
    const handleLabelsUpdate = async (labelIds: string[]): Promise<void> => {
-      if (!issue) return;
+      if (!task) return;
 
       try {
-         // Update the issue using Zustand store
-         await updateIssue(issue.id, { labelIds });
+         // Update the task using Zustand store
+         await updateTask(task.id, { labelIds });
 
-         // Update the issue in the side panel store with the updated labels
-         updateIssueInStore({ ...issue, labelIds });
+         // Update the task in the side panel store with the updated labels
+         updateTaskInStore({ ...task, labelIds });
 
          toast.success('Labels updated successfully');
       } catch (error) {
@@ -74,7 +74,7 @@ export function TaskSidePanel(): React.JSX.Element {
 
    return (
       <AnimatePresence>
-         {isOpen && issue && (
+         {isOpen && task && (
             <motion.div
                initial={{ x: panelWidth }}
                animate={{ x: 0 }}
@@ -83,17 +83,17 @@ export function TaskSidePanel(): React.JSX.Element {
                className="fixed top-0 right-0 h-full bg-background border-l shadow-lg z-50 overflow-y-auto"
                style={{ width: panelWidth }}
             >
-               <IssueHeader issue={issue} onClose={closePanel} />
+               <TaskHeader task={task} onClose={closePanel} />
 
                <div className="p-6 space-y-6">
-                  <IssueTitleEditor
-                     initialValue={issue.title}
+                  <TaskTitleEditor
+                     initialValue={task.title}
                      onBlur={handleTitleUpdate}
                      disabled={false}
                   />
 
-                  <IssueDescriptionSection
-                     initialValue={issue.description || ''}
+                  <TaskDescriptionSection
+                     initialValue={task.description || ''}
                      onSave={handleDescriptionUpdate}
                      disabled={false}
                   />
@@ -101,18 +101,14 @@ export function TaskSidePanel(): React.JSX.Element {
                   <Separator />
 
                   <SubtasksSection
-                     issue={issue}
+                     task={task}
                      onSubtaskUpdate={handleSubtaskUpdate}
                      disabled={false}
                   />
 
                   <Separator />
 
-                  <SubIssuesSection issue={issue} disabled={false} />
-
-                  <Separator />
-
-                  <IssueDetailsSection issue={issue} onLabelsUpdate={handleLabelsUpdate} />
+                  <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
                </div>
             </motion.div>
          )}

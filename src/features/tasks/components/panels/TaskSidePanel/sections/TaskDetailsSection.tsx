@@ -1,6 +1,6 @@
 'use client';
 
-import type { Issue } from '@/libs/client/types';
+import type { Task } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { format } from 'date-fns';
 import { Calendar, Clock, User, Flag, Folder, Tag } from 'lucide-react';
@@ -10,22 +10,22 @@ import { PrioritySelector } from '../../../selectors/PrioritySelector';
 import { LabelSelector } from '../../../selectors/LabelSelector';
 import { AssigneeUser } from '../../../AssigneeUser';
 
-interface IssueDetailsSectionProps {
-   issue: Issue;
+interface TaskDetailsSectionProps {
+   task: Task;
    onLabelsUpdate?: (labelIds: string[]) => void;
 }
 
-export function IssueDetailsSection({
-   issue,
+export function TaskDetailsSection({
+   task,
    onLabelsUpdate,
-}: IssueDetailsSectionProps): React.JSX.Element {
+}: TaskDetailsSectionProps): React.JSX.Element {
    const { getUserById, getStatusById, getPriorityById, getLabelById } = useDataStore();
 
    // Get related data
-   const assignee = issue.assigneeId ? getUserById(issue.assigneeId) : null;
-   const priority = issue.priorityId ? getPriorityById(issue.priorityId) : null;
-   const status = getStatusById(issue.statusId);
-   const labels = issue.labelIds
+   const assignee = task.assigneeId ? getUserById(task.assigneeId) : null;
+   const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
+   const status = getStatusById(task.statusId);
+   const labels = task.labelIds
       .map((id) => {
          const label = getLabelById(id);
          return label ? { id, label } : null;
@@ -58,7 +58,7 @@ export function IssueDetailsSection({
                   <span>Priority</span>
                </div>
                <div className="flex items-center gap-2">
-                  <PrioritySelector priority={priority} issueId={issue.id} />
+                  <PrioritySelector priority={priority} taskId={task.id} />
                </div>
             </div>
 
@@ -69,7 +69,7 @@ export function IssueDetailsSection({
                   <span>Status</span>
                </div>
                <div className="flex items-center gap-2">
-                  <StatusSelector status={status} issueId={issue.id} />
+                  <StatusSelector status={status} taskId={task.id} />
                </div>
             </div>
 
@@ -89,13 +89,13 @@ export function IssueDetailsSection({
             </div>
 
             {/* Project */}
-            {issue.projectId && (
+            {task.projectId && (
                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                      <Folder className="h-4 w-4" />
                      <span>Project</span>
                   </div>
-                  <Badge variant="outline">Project ID: {issue.projectId}</Badge>
+                  <Badge variant="outline">Project ID: {task.projectId}</Badge>
                </div>
             )}
 
@@ -125,7 +125,7 @@ export function IssueDetailsSection({
                </div>
                <span className="text-sm text-muted-foreground">
                   {(() => {
-                     const date = new Date(issue.createdAt);
+                     const date = new Date(task.createdAt);
                      return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
                   })()}
                </span>
@@ -139,7 +139,7 @@ export function IssueDetailsSection({
                </div>
                <span className="text-sm text-muted-foreground">
                   {(() => {
-                     const date = new Date(issue.updatedAt);
+                     const date = new Date(task.updatedAt);
                      return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
                   })()}
                </span>
@@ -149,4 +149,4 @@ export function IssueDetailsSection({
    );
 }
 
-export default IssueDetailsSection;
+export default TaskDetailsSection;
