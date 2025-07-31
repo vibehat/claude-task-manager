@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { IndieLayout } from '@/components/layout/IndieLayout';
 
 export const metadata: Metadata = {
    title: 'Individual Mode | Circle',
@@ -11,5 +12,5 @@ interface IndieLayoutPageProps {
 }
 
 export default function IndieLayoutPage({ children }: IndieLayoutPageProps): React.JSX.Element {
-   return <>{children}</>;
+   return children;
 }

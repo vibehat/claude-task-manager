@@ -12,6 +12,8 @@ import { IndieProjectProvider } from '@/libs/client/contexts/IndieProjectProvide
 import { IndieSidebar } from '@/components/layout/sidebar/IndieSidebar';
 import { cn } from '@/libs/client/utils';
 import IndieHeader from '@/components/layout/headers/indie/IndieHeader';
+import { TerminalProvider, PersistentTerminal, TerminalToggle } from '@/features/terminal';
+import { useTheme } from 'next-themes';
 
 interface IndieLayoutProps {
    children: React.ReactNode;
@@ -33,39 +35,54 @@ export function IndieLayout({
    className,
 }: IndieLayoutProps): React.JSX.Element {
    const { isOpen, panelWidth } = useIssueSidePanelStore();
+   const { theme } = useTheme();
+
    const height = {
       1: 'h-[calc(100svh-40px)] lg:h-[calc(100svh-56px)]',
       2: 'h-[calc(100svh-80px)] lg:h-[calc(100svh-96px)]',
    };
 
+   // Default actions include terminal toggle
+   const defaultActions = (
+      <>
+         <TerminalToggle />
+         {headerActions}
+      </>
+   );
+
    // Use provided header or create default shared header
    const headerElement = header || (
-      <IndieHeader actions={headerActions} showSearch={showSearch} filterOptions={filterOptions} />
+      <IndieHeader actions={defaultActions} showSearch={showSearch} filterOptions={filterOptions} />
    );
 
    return (
       <IndieProjectProvider>
-         <SidebarProvider>
-            <CreateIssueModalProvider />
-            <UpdateIssueModalProvider />
-            <IssueSidePanelProvider />
-            <IndieSidebar />
-            <SidebarInset
-               style={{
-                  marginRight: isOpen ? `${panelWidth}px` : '0',
-                  transition: 'margin-right 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-               }}
-            >
-               <div className={cn('h-svh overflow-hidden lg:p-2 w-full', className)}>
-                  <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full">
-                     {headerElement}
-                     <div className={cn('overflow-auto w-full', height[headersNumber])}>
-                        {children}
+         <TerminalProvider theme={theme as 'light' | 'dark' | 'auto'}>
+            <SidebarProvider>
+               <CreateIssueModalProvider />
+               <UpdateIssueModalProvider />
+               <IssueSidePanelProvider />
+               <IndieSidebar />
+               <SidebarInset
+                  style={{
+                     marginRight: isOpen ? `${panelWidth}px` : '0',
+                     transition: 'margin-right 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  }}
+               >
+                  <div className={cn('h-svh overflow-hidden lg:p-2 w-full', className)}>
+                     <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full relative">
+                        {headerElement}
+                        <div className={cn('overflow-auto w-full', height[headersNumber])}>
+                           {children}
+                        </div>
                      </div>
                   </div>
-               </div>
-            </SidebarInset>
-         </SidebarProvider>
+               </SidebarInset>
+
+               {/* Persistent Terminal */}
+               <PersistentTerminal />
+            </SidebarProvider>
+         </TerminalProvider>
       </IndieProjectProvider>
    );
 }

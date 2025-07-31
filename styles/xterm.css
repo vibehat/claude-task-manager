@@ -1,0 +1,2 @@
+/* Import xterm CSS for terminal components */
+@import '@xterm/xterm/css/xterm.css';
