@@ -25,7 +25,7 @@ export interface Label {
    updatedAt: Date;
 }
 
-export interface IssueStatus {
+export interface TaskStatus {
    id: string;
    name: string;
    color: string;
@@ -34,7 +34,7 @@ export interface IssueStatus {
    updatedAt: Date;
 }
 
-export interface IssuePriority {
+export interface TaskPriority {
    id: string;
    name: string;
    value: number;
@@ -43,7 +43,7 @@ export interface IssuePriority {
    updatedAt: Date;
 }
 
-export interface Issue {
+export interface Task {
    id: string;
    title: string;
    description?: string;
@@ -51,7 +51,7 @@ export interface Issue {
    priorityId?: string;
    assigneeId?: string;
    projectId?: string;
-   parentIssueId?: string;
+   parentTaskId?: string;
    labelIds: string[];
    taskId?: number;
    subtaskId?: string;
@@ -60,11 +60,11 @@ export interface Issue {
    updatedAt: Date;
 }
 
-export interface SubIssue {
+export interface Subtask {
    id: string;
    title: string;
    description?: string;
-   parentIssueId: string;
+   parentTaskId: string;
    completed: boolean;
    orderIndex: number;
    createdAt: Date;

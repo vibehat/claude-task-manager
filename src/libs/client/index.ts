@@ -3,7 +3,7 @@ export * from './stores/dataStore';
 export * from './stores/persistenceStore';
 
 // Hooks
-export * from './hooks/useIssues';
+export * from './hooks/useTasks';
 export * from './hooks/useUsers';
 export * from './hooks/useProjects';
 export * from './hooks/useLabels';

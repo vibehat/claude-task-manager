@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { IndieLayout } from '@/components/layout/IndieLayout';
-import { useIssue } from '@/libs/client/hooks/useIssues';
+import { useTask } from '@/libs/client/hooks/useTasks';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,7 +17,7 @@ export default function TaskDetailPage(): React.JSX.Element {
    const taskId = params?.taskId as string;
 
    // Fetch single issue using Zustand
-   const { data: task, loading, error } = useIssue(taskId);
+   const { data: task, loading, error } = useTask(taskId);
    const { getUserById, getProjectById, getStatusById, getPriorityById, getLabelById } =
       useDataStore();
 

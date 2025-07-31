@@ -1,38 +1,30 @@
 // Re-export all types from dataModels for easy imports
-export type {
-   User,
-   Project,
-   Label,
-   IssueStatus,
-   IssuePriority,
-   Issue,
-   SubIssue,
-} from './dataModels';
+export type { User, Project, Label, TaskStatus, TaskPriority, Task, Subtask } from './dataModels';
 
 // Import types for legacy compatibility
-import type { User, Project, Label, IssueStatus, IssuePriority, Issue } from './dataModels';
+import type { User, Project, Label, TaskStatus, TaskPriority, Task } from './dataModels';
 
 // Legacy type aliases for compatibility
-export type GetIssuesQuery = {
-   issues: Issue[];
+export type GetTasksQuery = {
+   tasks: Task[];
 };
 
-export type GetIssueStatusesQuery = {
-   issueStatuses: IssueStatus[];
+export type GetTaskStatusesQuery = {
+   taskStatuses: TaskStatus[];
 };
 
-export type IssueDetailsFragment = Issue & {
-   subIssues?: Issue[];
+export type TaskDetailsFragment = Task & {
+   subtasks?: Task[];
    assignee?: User;
    project?: Project;
    labels?: Label[];
-   priority?: IssuePriority;
-   status?: IssueStatus;
+   priority?: TaskPriority;
+   status?: TaskStatus;
 };
 
 // Where clause types for filtering
-export interface IssueWhereInput {
-   parentIssueId?: { equals: string | null };
+export interface TaskWhereInput {
+   parentTaskId?: { equals: string | null };
    statusId?: { in: string[]; equals?: string };
    assigneeId?: { in: string[]; equals?: string };
    priorityId?: { in: string[]; equals?: string };

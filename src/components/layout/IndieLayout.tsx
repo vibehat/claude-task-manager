@@ -3,11 +3,11 @@
 import * as React from 'react';
 import { SidebarProvider, SidebarInset } from '@/components/ui/SidebarProvider';
 import {
-   CreateIssueModalProvider,
-   UpdateIssueModalProvider,
-   IssueSidePanelProvider,
-} from '@/features/issues';
-import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
+   CreateTaskModalProvider,
+   UpdateTaskModalProvider,
+   TaskSidePanelProvider,
+} from '@/features/tasks';
+import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { IndieProjectProvider } from '@/libs/client/contexts/IndieProjectProvider';
 import { IndieSidebar } from '@/components/layout/sidebar/IndieSidebar';
 import { cn } from '@/libs/client/utils';
@@ -33,7 +33,7 @@ export function IndieLayout({
    headersNumber = 2,
    className,
 }: IndieLayoutProps): React.JSX.Element {
-   const { isOpen, panelWidth } = useIssueSidePanelStore();
+   const { isOpen, panelWidth } = useTaskSidePanelStore();
 
    const height = {
       1: 'h-[calc(100svh-40px)] lg:h-[calc(100svh-56px)]',
@@ -56,9 +56,9 @@ export function IndieLayout({
    return (
       <IndieProjectProvider>
          <SidebarProvider>
-            <CreateIssueModalProvider />
-            <UpdateIssueModalProvider />
-            <IssueSidePanelProvider />
+            <CreateTaskModalProvider />
+            <UpdateTaskModalProvider />
+            <TaskSidePanelProvider />
             <IndieSidebar />
             <SidebarInset
                style={{

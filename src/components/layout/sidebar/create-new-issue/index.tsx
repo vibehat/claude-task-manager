@@ -7,11 +7,11 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { RiEditLine } from '@remixicon/react';
 import { useState, useEffect, useCallback } from 'react';
-import type { Issue } from '@/mock-data/issues';
+import type { Task } from '@/mock-data/tasks';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/StatusIcon';
 // import { useIssuesStore } from '@/store/issues-store';
-import { useCreateIssueStore } from '@/store/createIssueStore';
+import { useCreateTaskStore } from '@/store/createTaskStore';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { StatusSelector } from './StatusSelector';
@@ -19,12 +19,12 @@ import { PrioritySelector } from './PrioritySelector';
 import { AssigneeSelector } from './AssigneeSelector';
 import { ProjectSelector } from './ProjectSelector';
 import { LabelSelector } from './LabelSelector';
-import { ranks } from '@/mock-data/issues';
+import { ranks } from '@/mock-data/tasks';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
 export function CreateNewIssue(): React.JSX.Element {
    const [createMore, setCreateMore] = useState<boolean>(false);
-   const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
+   const { isOpen, defaultStatus, openModal, closeModal } = useCreateTaskStore();
    // TODO: Now using local data
    // const { addIssue, getAllIssues } = useIssuesStore();
 

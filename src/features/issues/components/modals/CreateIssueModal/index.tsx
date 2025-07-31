@@ -1,1 +1,0 @@
-export { CreateIssueModalProvider } from './CreateIssueModalProvider';

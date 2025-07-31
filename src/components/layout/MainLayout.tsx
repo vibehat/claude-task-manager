@@ -1,11 +1,11 @@
 import { AppSidebar } from '@/components/layout/sidebar/AppSidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/SidebarProvider';
 import {
-   CreateIssueModalProvider,
-   UpdateIssueModalProvider,
-   IssueSidePanelProvider,
-} from '@/features/issues';
-import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
+   CreateTaskModalProvider,
+   UpdateTaskModalProvider,
+   TaskSidePanelProvider,
+} from '@/features/tasks';
+import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { cn } from '@/libs/client/utils';
 
 interface MainLayoutProps {
@@ -19,7 +19,7 @@ export default function MainLayout({
    header,
    headersNumber = 2,
 }: MainLayoutProps): React.JSX.Element {
-   const { isOpen, panelWidth } = useIssueSidePanelStore();
+   const { isOpen, panelWidth } = useTaskSidePanelStore();
    const height = {
       1: 'h-[calc(100svh-40px)] lg:h-[calc(100svh-56px)]',
       2: 'h-[calc(100svh-80px)] lg:h-[calc(100svh-96px)]',
@@ -27,9 +27,9 @@ export default function MainLayout({
 
    return (
       <SidebarProvider>
-         <CreateIssueModalProvider />
-         <UpdateIssueModalProvider />
-         <IssueSidePanelProvider />
+         <CreateTaskModalProvider />
+         <UpdateTaskModalProvider />
+         <TaskSidePanelProvider />
          <AppSidebar />
          <SidebarInset
             style={{

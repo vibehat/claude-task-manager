@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import type { User, Project, Label, IssueStatus, IssuePriority, Issue } from '../types/dataModels';
+import type { User, Project, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 import type { SyncOptions } from '../services/syncService';
 import { syncService } from '../services/syncService';
 import { taskMasterService } from '../services/taskMasterService';
@@ -12,9 +12,9 @@ interface DataState {
    users: User[];
    projects: Project[];
    labels: Label[];
-   statuses: IssueStatus[];
-   priorities: IssuePriority[];
-   issues: Issue[];
+   statuses: TaskStatus[];
+   priorities: TaskPriority[];
+   tasks: Task[];
 
    // TaskMaster sync state
    isTaskMasterEnabled: boolean;
@@ -52,26 +52,27 @@ interface DataState {
    updateLabel: (id: string, updates: Partial<Label>) => void;
    deleteLabel: (id: string) => void;
 
-   // Issue actions
-   addIssue: (issue: Omit<Issue, 'id' | 'createdAt' | 'updatedAt' | 'orderIndex'>) => Issue;
-   updateIssue: (id: string, updates: Partial<Issue>) => Promise<void>;
-   deleteIssue: (id: string) => void;
-   bulkUpdateIssues: (ids: string[], updates: Partial<Issue>) => void;
+   // Task actions
+   addTask: (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt' | 'orderIndex'>) => Task;
+   updateTask: (id: string, updates: Partial<Task>) => Promise<void>;
+   deleteTask: (id: string) => void;
+   bulkUpdateTasks: (ids: string[], updates: Partial<Task>) => void;
 
    // Query methods
-   getIssueById: (id: string) => Issue | undefined;
-   getIssuesByStatus: (statusId: string) => Issue[];
-   getIssuesByProject: (projectId: string) => Issue[];
-   getIssuesByAssignee: (assigneeId: string) => Issue[];
-   getSubIssues: (parentIssueId: string) => Issue[];
-   searchIssues: (query: string) => Issue[];
+   getTaskById: (id: string) => Task | undefined;
+   getTasksByStatus: (statusId: string) => Task[];
+   getParentTasksByStatus: (statusId: string) => Task[];
+   getTasksByProject: (projectId: string) => Task[];
+   getTasksByAssignee: (assigneeId: string) => Task[];
+   getSubtasks: (parentTaskId: string) => Task[];
+   searchTasks: (query: string) => Task[];
 
    // Utility methods
    getUserById: (id: string) => User | undefined;
    getProjectById: (id: string) => Project | undefined;
    getLabelById: (id: string) => Label | undefined;
-   getStatusById: (id: string) => IssueStatus | undefined;
-   getPriorityById: (id: string) => IssuePriority | undefined;
+   getStatusById: (id: string) => TaskStatus | undefined;
+   getPriorityById: (id: string) => TaskPriority | undefined;
 }
 
 export const useDataStore = create<DataState>()(
@@ -83,7 +84,7 @@ export const useDataStore = create<DataState>()(
          labels: [],
          statuses: [],
          priorities: [],
-         issues: [],
+         tasks: [],
          isTaskMasterEnabled: false,
          taskMasterSyncStatus: 'idle',
          taskMasterError: null,
@@ -543,6 +544,12 @@ export const useDataStore = create<DataState>()(
 
          getIssuesByStatus: (statusId) => {
             return get().issues.filter((issue) => issue.statusId === statusId);
+         },
+
+         getParentIssuesByStatus: (statusId) => {
+            return get().issues.filter(
+               (issue) => issue.statusId === statusId && !issue.parentIssueId
+            );
          },
 
          getIssuesByProject: (projectId) => {
