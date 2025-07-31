@@ -18,7 +18,7 @@ export function useUsers() {
       } else {
          setLoading(false);
       }
-   }, [isInitialized, initialize]);
+   }, [isInitialized]);
 
    return {
       data: users,

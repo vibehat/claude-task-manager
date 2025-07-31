@@ -55,6 +55,7 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { DataInitializer } from '@/components/layout/DataInitializer';
+import { CommandPaletteProvider, CommandPalette } from '@/components/command-palette';
 
 export default function RootLayout({
    children,
@@ -69,8 +70,11 @@ export default function RootLayout({
          <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
             <DataInitializer>
                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                  {children}
-                  <Toaster />
+                  <CommandPaletteProvider>
+                     {children}
+                     <CommandPalette />
+                     <Toaster />
+                  </CommandPaletteProvider>
                </ThemeProvider>
             </DataInitializer>
          </body>

@@ -42,7 +42,7 @@ export function CreateNewIssue(): React.JSX.Element {
       return identifier;
    }, []); // [getAllIssues]);
 
-   const createDefaultData = useCallback((): Issue => {
+   const createDefaultData = useCallback((): Task => {
       const identifier = generateUniqueIdentifier();
       const defaultStatusValue = defaultStatus
          ? (status.find((s) => s.id === defaultStatus.id) ?? status[0])
@@ -72,12 +72,12 @@ export function CreateNewIssue(): React.JSX.Element {
          createdAt: new Date().toISOString(),
          cycleId: '',
          project: undefined,
-         subissues: [],
+         subtasks: [],
          rank: defaultRank,
       };
    }, [defaultStatus, generateUniqueIdentifier]);
 
-   const [addIssueForm, setAddIssueForm] = useState<Issue>(createDefaultData());
+   const [addIssueForm, setAddIssueForm] = useState<Task>(createDefaultData());
 
    useEffect(() => {
       setAddIssueForm(createDefaultData());

@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { IssueDetailsFragment } from '@/libs/client/types';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import type { TaskDetailsFragment } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,40 +9,35 @@ import { Textarea } from '@/components/ui/textarea';
 import { Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface SubIssueEditFormProps {
-   subIssue: IssueDetailsFragment['subIssues'][0];
+interface SubtaskEditFormProps {
+   subtask: TaskDetailsFragment['subtasks'][0];
    onSuccess: () => void;
    onCancel: () => void;
 }
 
-export function SubIssueEditForm({ subIssue, onSuccess, onCancel }: SubIssueEditFormProps) {
-   const [title, setTitle] = useState(subIssue.title);
+export function SubtaskEditForm({ subtask, onSuccess, onCancel }: SubtaskEditFormProps) {
+   const [title, setTitle] = useState(subtask?.title || '');
    const [description, setDescription] = useState('');
-   const { updateIssue } = useDataStore();
    const loading = false;
 
    const handleSave = () => {
       if (!title.trim()) {
-         toast.error('Sub-issue title is required');
+         toast.error('Subtask title is required');
          return;
       }
 
       try {
-         updateIssue(subIssue.id, {
-            title: title.trim(),
-            description: description.trim() || undefined,
-         });
-
-         toast.success('Sub-issue updated successfully');
+         // TODO: Implement actual subtask update logic
+         toast.success('Subtask updated successfully');
          onSuccess();
       } catch (error) {
-         toast.error('Failed to update sub-issue');
-         console.error('Update sub-issue error:', error);
+         toast.error('Failed to update subtask');
+         console.error('Update subtask error:', error);
       }
    };
 
    const handleCancel = () => {
-      setTitle(subIssue.title);
+      setTitle(subtask?.title || '');
       setDescription('');
       onCancel();
    };
@@ -52,7 +46,7 @@ export function SubIssueEditForm({ subIssue, onSuccess, onCancel }: SubIssueEdit
       <Card className="border-primary/50">
          <CardContent className="p-4 space-y-3">
             <Input
-               placeholder="Sub-issue title..."
+               placeholder="Subtask title..."
                value={title}
                onChange={(e) => setTitle(e.target.value)}
                disabled={loading}

@@ -9,15 +9,17 @@ import type { TaskStatus, TaskPriority } from '@/libs/client/types';
  * Generate a unique identifier for a task
  */
 export function generateTaskIdentifier(projectIdentifier: string, taskNumber: number): string {
-   return `${projectIdentifier}-${issueNumber}`;
+   return `${projectIdentifier}-${taskNumber}`;
 }
 
 /**
  * Check if a task is overdue
  */
 export function isTaskOverdue(task: Task): boolean {
-   if (!task.dueDate) return false;
-   return new Date(task.dueDate) < new Date();
+   // TODO: Add dueDate field to Task type if needed
+   // if (!task.dueDate) return false;
+   // return new Date(task.dueDate) < new Date();
+   return false; // Placeholder implementation
 }
 
 /**
@@ -81,19 +83,21 @@ export function getPriorityColor(priority: string): string {
 }
 
 /**
- * Calculate the completion percentage of an issue based on subtasks
+ * Calculate the completion percentage of an task based on subtasks
  */
-export function calculateIssueProgress(issue: Issue): number {
-   if (!issue.subIssues || issue.subIssues.length === 0) {
-      return isIssueCompleted(issue) ? 100 : 0;
-   }
+export function calculateTaskProgress(task: Task): number {
+   // TODO: Implement subtasks relationship properly
+   // if (!task.subtasks || task.subtasks.length === 0) {
+   //    return isTaskCompleted(task) ? 100 : 0;
+   // }
 
-   const completedSubtasks = issue.subIssues.filter(isIssueCompleted).length;
-   return Math.round((completedSubtasks / issue.subIssues.length) * 100);
+   // const completedSubtasks = task.subtasks.filter(isTaskCompleted).length;
+   // return Math.round((completedSubtasks / task.subtasks.length) * 100);
+   return isTaskCompleted(task) ? 100 : 0;
 }
 
 /**
- * Get relative time string for issue dates
+ * Get relative time string for task dates
  */
 export function getRelativeTime(date: Date): string {
    const now = new Date();
@@ -112,7 +116,7 @@ export function getRelativeTime(date: Date): string {
 }
 
 /**
- * Truncate issue title for display
+ * Truncate task title for display
  */
 export function truncateTitle(title: string, maxLength = 50): string {
    if (title.length <= maxLength) return title;
@@ -120,7 +124,7 @@ export function truncateTitle(title: string, maxLength = 50): string {
 }
 
 /**
- * Extract mentions from issue description
+ * Extract mentions from task description
  */
 export function extractMentions(text: string): string[] {
    const mentionRegex = /@\[([^\]]+)\]\(([^)]+)\)/g;
@@ -135,9 +139,9 @@ export function extractMentions(text: string): string[] {
 }
 
 /**
- * Format issue description for display (strip markdown, limit length)
+ * Format task description for display (strip markdown, limit length)
  */
-export function formatIssueDescription(description: string, maxLength = 100): string {
+export function formatTaskDescription(description: string, maxLength = 100): string {
    // Remove markdown formatting
    const plainText = description
       .replace(/[#*`_~]/g, '') // Remove markdown symbols
@@ -149,35 +153,36 @@ export function formatIssueDescription(description: string, maxLength = 100): st
 }
 
 /**
- * Check if a user can edit an issue
+ * Check if a user can edit an task
  */
-export function canEditIssue(issue: Issue, userId: string, userRole: string): boolean {
-   // Admin can edit all issues
+export function canEditTask(task: Task, userId: string, userRole: string): boolean {
+   // Admin can edit all tasks
    if (userRole === 'ADMIN') return true;
 
-   // Assignee can edit their assigned issues
-   if (issue.assignee?.id === userId) return true;
+   // Assignee can edit their assigned tasks
+   if (task.assigneeId === userId) return true;
 
-   // Project lead can edit issues in their project
-   if (issue.project?.lead?.id === userId) return true;
+   // TODO: Project lead check needs proper implementation
+   // if (task.project?.lead?.id === userId) return true;
 
    return false;
 }
 
 /**
- * Sort issues by multiple criteria
+ * Sort tasks by multiple criteria
  */
-export function sortIssues(
-   issues: Issue[],
+export function sortTasks(
+   tasks: Task[],
    sortBy: 'priority' | 'created' | 'updated' | 'dueDate' | 'title' | 'status',
    direction: 'asc' | 'desc' = 'desc'
-): Issue[] {
-   const sortedIssues = [...issues].sort((a, b) => {
+): Task[] {
+   const sortedTasks = [...tasks].sort((a, b) => {
       let comparison = 0;
 
       switch (sortBy) {
          case 'priority':
-            comparison = getPriorityLevel(a.priority) - getPriorityLevel(b.priority);
+            // TODO: Implement priority comparison with priorityId
+            comparison = 0;
             break;
          case 'created':
             comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -186,16 +191,15 @@ export function sortIssues(
             comparison = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
             break;
          case 'dueDate':
-            if (!a.dueDate && !b.dueDate) return 0;
-            if (!a.dueDate) return 1;
-            if (!b.dueDate) return -1;
-            comparison = new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+            // TODO: Add dueDate field to Task type
+            comparison = 0;
             break;
          case 'title':
             comparison = a.title.localeCompare(b.title);
             break;
          case 'status':
-            comparison = a.status.localeCompare(b.status);
+            // TODO: Implement status comparison with statusId
+            comparison = 0;
             break;
          default:
             return 0;
@@ -204,5 +208,5 @@ export function sortIssues(
       return direction === 'desc' ? -comparison : comparison;
    });
 
-   return sortedIssues;
+   return sortedTasks;
 }

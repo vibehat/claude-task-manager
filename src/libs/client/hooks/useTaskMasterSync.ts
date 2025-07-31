@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDataStore } from '../stores/dataStore';
-import type { SyncOptions } from '../services/syncService';
 import type { Task } from '../types/dataModels';
+
+// TODO: Implement SyncOptions type when syncService is created
+interface SyncOptions {
+   enableRealTimeSync?: boolean;
+   tagName?: string;
+}
 
 export interface UseTaskMasterSyncResult {
    // State
@@ -33,7 +38,7 @@ export interface UseTaskMasterSyncOptions {
    enableRealTimeSync?: boolean;
    tagName?: string;
    syncOptions?: SyncOptions;
-   onSyncComplete?: (issues: Issue[]) => void;
+   onSyncComplete?: (tasks: Task[]) => void;
    onSyncError?: (error: Error) => void;
 }
 
@@ -97,10 +102,7 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
    const enableSync = useCallback(
       async (opts?: SyncOptions) => {
          try {
-            await enableTaskMasterSync({
-               ...syncOptions,
-               ...opts,
-            });
+            await enableTaskMasterSync();
          } catch (error) {
             console.error('Failed to enable TaskMaster sync:', error);
             onSyncError?.(error as Error);
@@ -122,9 +124,9 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
    const forceSync = useCallback(
       async (tag?: string) => {
          try {
-            await forceSyncTaskMaster(tag || tagName);
+            await forceSyncTaskMaster();
             // Refresh stats after sync
-            await refreshStats(tag || tagName);
+            await refreshStats();
          } catch (error) {
             console.error('Failed to force sync TaskMaster:', error);
             onSyncError?.(error as Error);
@@ -137,10 +139,7 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
    const toggleRealTimeSync = useCallback(
       async (enabled: boolean, opts?: SyncOptions) => {
          try {
-            await storeToggleRealTimeSync(enabled, {
-               ...syncOptions,
-               ...opts,
-            });
+            await storeToggleRealTimeSync(enabled);
          } catch (error) {
             console.error('Failed to toggle real-time sync:', error);
             onSyncError?.(error as Error);
@@ -157,7 +156,7 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
          }
 
          try {
-            const newStats = await getTaskMasterStats(tag || tagName);
+            const newStats = getTaskMasterStats();
             setStats(newStats);
          } catch (error) {
             console.error('Failed to get TaskMaster stats:', error);

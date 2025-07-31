@@ -1,21 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { IssueDetailsFragment } from '@/libs/client/types';
+import type { TaskDetailsFragment } from '@/libs/client/types';
 import { GitBranch, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { SubIssueCreateForm } from './SubIssueCreateForm';
-import { SubIssueItem } from './SubIssueItem';
-import { EmptySubIssues } from './EmptySubIssues';
+import { SubtaskCreateForm } from './SubtaskCreateForm';
+import { SubtaskItem } from './SubtaskItem';
+import { EmptySubtasks } from './EmptySubtasks';
 
-interface SubIssuesSectionProps {
-   issue: IssueDetailsFragment;
+interface SubtasksSectionProps {
+   task: TaskDetailsFragment;
    disabled?: boolean;
 }
 
-export function SubIssuesSection({ issue, disabled }: SubIssuesSectionProps) {
+export function SubtasksSection({ task, disabled }: SubtasksSectionProps) {
    const [isCreating, setIsCreating] = useState(false);
-   const subIssues = issue.subIssues || [];
+   const subtasks = task.subtasks || [];
 
    const handleCreateSuccess = () => {
       setIsCreating(false);
@@ -30,7 +30,7 @@ export function SubIssuesSection({ issue, disabled }: SubIssuesSectionProps) {
          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                <GitBranch className="h-4 w-4" />
-               <span>Sub-issues ({subIssues.length})</span>
+               <span>Subtasks ({subtasks.length})</span>
             </div>
             {!isCreating && (
                <Button
@@ -41,28 +41,28 @@ export function SubIssuesSection({ issue, disabled }: SubIssuesSectionProps) {
                   className="h-8 gap-2"
                >
                   <Plus className="h-3 w-3" />
-                  Add sub-issue
+                  Add subtask
                </Button>
             )}
          </div>
 
-         {subIssues.length === 0 && !isCreating ? (
-            <EmptySubIssues />
+         {subtasks.length === 0 && !isCreating ? (
+            <EmptySubtasks />
          ) : (
             <div className="space-y-1">
                {isCreating && (
-                  <SubIssueCreateForm
-                     issue={issue}
+                  <SubtaskCreateForm
+                     task={task}
                      onSuccess={handleCreateSuccess}
                      onCancel={handleCreateCancel}
                   />
                )}
 
-               {subIssues.map((subIssue) => (
-                  <SubIssueItem
-                     key={subIssue.id}
-                     subIssue={subIssue}
-                     parentIssue={issue}
+               {subtasks.map((subtask) => (
+                  <SubtaskItem
+                     key={subtask.id}
+                     subtask={subtask}
+                     parentTask={task}
                      disabled={disabled}
                   />
                ))}

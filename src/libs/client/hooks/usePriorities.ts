@@ -18,7 +18,7 @@ export function usePriorities() {
       } else {
          setLoading(false);
       }
-   }, [isInitialized, initialize]);
+   }, [isInitialized]);
 
    return {
       data: priorities,

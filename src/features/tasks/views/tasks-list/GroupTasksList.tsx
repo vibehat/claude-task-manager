@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useCreateTaskStore } from '@/store/createTaskStore';
 import { useSortTasksByPriority } from '@/features/tasks/hooks/useSortTasksByPriority';
 import { TaskLine } from '../../components/items/TaskLine';
+import { EmptyStatusColumn } from '@/components/empty-states/EmptyStatusColumn';
 
 interface GroupTasksListProps {
    status: TaskStatus;
@@ -53,9 +54,11 @@ function GroupTasksList({ status, tasks }: GroupTasksListProps): React.JSX.Eleme
          </div>
 
          <div className="space-y-0">
-            {sortedTasks.map((task) => (
-               <TaskLine key={task.id} task={task} layoutId={true} />
-            ))}
+            {sortedTasks.length > 0 ? (
+               sortedTasks.map((task) => <TaskLine key={task.id} task={task} layoutId={true} />)
+            ) : (
+               <EmptyStatusColumn status={status} variant="list" />
+            )}
          </div>
       </div>
    );

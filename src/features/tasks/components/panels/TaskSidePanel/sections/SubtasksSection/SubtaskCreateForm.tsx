@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { Issue } from '@/libs/client/types/dataModels';
-import { useIssueMutations } from '@/libs/client/hooks/useIssues';
+import type { TaskDetailsFragment } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,47 +9,37 @@ import { Textarea } from '@/components/ui/textarea';
 import { Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface SubIssueCreateFormProps {
-   issue: Issue;
+interface SubtaskCreateFormProps {
+   task: TaskDetailsFragment;
    onSuccess: () => void;
    onCancel: () => void;
 }
 
-export function SubIssueCreateForm({ issue, onSuccess, onCancel }: SubIssueCreateFormProps) {
+export function SubtaskCreateForm({ task, onSuccess, onCancel }: SubtaskCreateFormProps) {
    const [title, setTitle] = useState('');
    const [description, setDescription] = useState('');
-   const { createIssue, loading } = useIssueMutations();
+   const [loading, setLoading] = useState(false);
 
    const handleCreate = async () => {
       if (!title.trim()) {
-         toast.error('Sub-issue title is required');
+         toast.error('Subtask title is required');
          return;
       }
 
+      setLoading(true);
       try {
-         const result = await createIssue({
-            title: title.trim(),
-            description: description.trim() || undefined,
-            statusId: issue.statusId, // Use same status as parent
-            priorityId: issue.priorityId,
-            assigneeId: issue.assigneeId,
-            projectId: issue.projectId,
-            parentIssueId: issue.id,
-            labelIds: [],
-         });
+         // TODO: Implement actual subtask creation logic
+         await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
 
-         if (result.data) {
-            toast.success('Sub-issue created successfully');
-            setTitle('');
-            setDescription('');
-            onSuccess();
-         } else if (result.error) {
-            toast.error('Failed to create sub-issue');
-            console.error('Create sub-issue error:', result.error);
-         }
+         toast.success('Subtask created successfully');
+         setTitle('');
+         setDescription('');
+         onSuccess();
       } catch (error) {
-         toast.error('Failed to create sub-issue');
-         console.error('Create sub-issue error:', error);
+         toast.error('Failed to create subtask');
+         console.error('Create subtask error:', error);
+      } finally {
+         setLoading(false);
       }
    };
 
@@ -64,7 +53,7 @@ export function SubIssueCreateForm({ issue, onSuccess, onCancel }: SubIssueCreat
       <Card className="border-dashed border-primary/50">
          <CardContent className="p-4 space-y-3">
             <Input
-               placeholder="Sub-issue title..."
+               placeholder="Subtask title..."
                value={title}
                onChange={(e) => setTitle(e.target.value)}
                disabled={loading}

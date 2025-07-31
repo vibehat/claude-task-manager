@@ -153,10 +153,24 @@
          "updatedAt": "2025-01-01T00:00:00.000Z"
       }
    ],
-   "additionalIssues": [],
    "metadata": {
       "created": "2025-07-31T00:00:00.000Z",
-      "updated": "2025-07-31T00:00:00.000Z",
-      "description": "Additional UI data for TaskMaster integration"
-   }
+      "updated": "2025-07-31T21:05:35.161Z",
+      "description": "UI data for TaskMaster integration"
+   },
+   "tasks": [
+      {
+         "id": "ui-test-task",
+         "title": "Test UI Task",
+         "description": "This is a test task created via the UI",
+         "statusId": "status-2",
+         "priorityId": "priority-3",
+         "assigneeId": "user-1",
+         "projectId": "project-personal",
+         "labelIds": ["label-taskmaster"],
+         "orderIndex": 999,
+         "createdAt": "2025-07-31T20:54:45.752Z",
+         "updatedAt": "2025-07-31T20:54:45.752Z"
+      }
+   ]
 }

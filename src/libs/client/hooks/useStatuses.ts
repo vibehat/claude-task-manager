@@ -2,44 +2,20 @@ import { useEffect, useState } from 'react';
 import { useDataStore } from '../stores/dataStore';
 
 export function useStatuses() {
-   const [loading, setLoading] = useState(true);
+   const { statuses, isInitialized, isLoading, initialize } = useDataStore();
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { statuses, isInitialized, initialize } = useDataStore();
-
    useEffect(() => {
-      console.log('useStatuses - effect triggered:', {
-         isInitialized,
-         statusesLength: statuses.length,
-      });
       if (!isInitialized) {
-         console.log('useStatuses - calling initialize()');
-         initialize()
-            .then(() => {
-               console.log('useStatuses - initialize completed');
-               setLoading(false);
-            })
-            .catch((err) => {
-               console.error('useStatuses - initialize failed:', err);
-               setError(err);
-               setLoading(false);
-            });
-      } else {
-         console.log('useStatuses - already initialized, setting loading false');
-         setLoading(false);
+         initialize().catch((err) => {
+            setError(err);
+         });
       }
    }, [isInitialized, initialize]);
 
-   console.log('useStatuses - render:', {
-      statuses: statuses.length,
-      loading,
-      error,
-      isInitialized,
-   });
-
    return {
       data: statuses,
-      loading,
+      loading: isLoading || !isInitialized,
       error,
    };
 }

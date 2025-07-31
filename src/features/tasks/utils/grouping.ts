@@ -1,14 +1,14 @@
 /**
- * Issue Grouping Utilities
+ * Task Grouping Utilities
  */
 
-import type { Issue } from '../types/issueTypes';
+import type { Task } from '../types/taskTypes';
 import type { GroupByOption } from '../types/viewsTypes';
 
-export interface IssueGroup {
+export interface TaskGroup {
    key: string;
    label: string;
-   issues: Issue[];
+   issues: Task[];
    count: number;
    color?: string;
    icon?: string;
@@ -17,7 +17,7 @@ export interface IssueGroup {
 /**
  * Group issues by the specified criteria
  */
-export function groupIssues(issues: Issue[], groupBy: GroupByOption): IssueGroup[] {
+export function groupTasks(issues: Task[], groupBy: GroupByOption): TaskGroup[] {
    switch (groupBy) {
       case 'status':
          return groupByStatus(issues);
@@ -34,7 +34,7 @@ export function groupIssues(issues: Issue[], groupBy: GroupByOption): IssueGroup
          return [
             {
                key: 'all',
-               label: 'All Issues',
+               label: 'All Tasks',
                issues,
                count: issues.length,
             },
@@ -45,8 +45,8 @@ export function groupIssues(issues: Issue[], groupBy: GroupByOption): IssueGroup
 /**
  * Group issues by status
  */
-function groupByStatus(issues: Issue[]): IssueGroup[] {
-   const groups = new Map<string, Issue[]>();
+function groupByStatus(issues: Task[]): TaskGroup[] {
+   const groups = new Map<string, Task[]>();
 
    issues.forEach((issue) => {
       const status = issue.status || 'No Status';
@@ -56,11 +56,11 @@ function groupByStatus(issues: Issue[]): IssueGroup[] {
       groups.get(status)!.push(issue);
    });
 
-   return Array.from(groups.entries()).map(([status, groupIssues]) => ({
+   return Array.from(groups.entries()).map(([status, groupTasks]) => ({
       key: status,
       label: formatStatusLabel(status),
-      issues: groupIssues,
-      count: groupIssues.length,
+      issues: groupTasks,
+      count: groupTasks.length,
       color: getStatusColor(status),
    }));
 }
@@ -68,8 +68,8 @@ function groupByStatus(issues: Issue[]): IssueGroup[] {
 /**
  * Group issues by assignee
  */
-function groupByAssignee(issues: Issue[]): IssueGroup[] {
-   const groups = new Map<string, Issue[]>();
+function groupByAssignee(issues: Task[]): TaskGroup[] {
+   const groups = new Map<string, Task[]>();
 
    issues.forEach((issue) => {
       const assigneeId = issue.assignee?.id || 'unassigned';
@@ -79,13 +79,13 @@ function groupByAssignee(issues: Issue[]): IssueGroup[] {
       groups.get(assigneeId)!.push(issue);
    });
 
-   return Array.from(groups.entries()).map(([assigneeId, groupIssues]) => {
-      const assignee = groupIssues[0]?.assignee;
+   return Array.from(groups.entries()).map(([assigneeId, groupTasks]) => {
+      const assignee = groupTasks[0]?.assignee;
       return {
          key: assigneeId,
          label: assignee ? assignee.name : 'Unassigned',
-         issues: groupIssues,
-         count: groupIssues.length,
+         issues: groupTasks,
+         count: groupTasks.length,
          icon: assignee?.avatarUrl,
       };
    });
@@ -94,9 +94,9 @@ function groupByAssignee(issues: Issue[]): IssueGroup[] {
 /**
  * Group issues by priority
  */
-function groupByPriority(issues: Issue[]): IssueGroup[] {
+function groupByPriority(issues: Task[]): TaskGroup[] {
    const priorityOrder = ['URGENT', 'HIGH', 'MEDIUM', 'LOW', 'No Priority'];
-   const groups = new Map<string, Issue[]>();
+   const groups = new Map<string, Task[]>();
 
    issues.forEach((issue) => {
       const priority = issue.priority || 'No Priority';
@@ -109,13 +109,13 @@ function groupByPriority(issues: Issue[]): IssueGroup[] {
    // Sort groups by priority order
    const sortedGroups = priorityOrder
       .filter((priority) => groups.has(priority))
-      .map((priority) => [priority, groups.get(priority)!] as [string, Issue[]]);
+      .map((priority) => [priority, groups.get(priority)!] as [string, Task[]]);
 
-   return sortedGroups.map(([priority, groupIssues]) => ({
+   return sortedGroups.map(([priority, groupTasks]) => ({
       key: priority,
       label: formatPriorityLabel(priority),
-      issues: groupIssues,
-      count: groupIssues.length,
+      issues: groupTasks,
+      count: groupTasks.length,
       color: getPriorityColor(priority),
    }));
 }
@@ -123,8 +123,8 @@ function groupByPriority(issues: Issue[]): IssueGroup[] {
 /**
  * Group issues by project
  */
-function groupByProject(issues: Issue[]): IssueGroup[] {
-   const groups = new Map<string, Issue[]>();
+function groupByProject(issues: Task[]): TaskGroup[] {
+   const groups = new Map<string, Task[]>();
 
    issues.forEach((issue) => {
       const projectId = issue.project?.id || 'no-project';
@@ -134,13 +134,13 @@ function groupByProject(issues: Issue[]): IssueGroup[] {
       groups.get(projectId)!.push(issue);
    });
 
-   return Array.from(groups.entries()).map(([projectId, groupIssues]) => {
-      const project = groupIssues[0]?.project;
+   return Array.from(groups.entries()).map(([projectId, groupTasks]) => {
+      const project = groupTasks[0]?.project;
       return {
          key: projectId,
          label: project ? project.name : 'No Project',
-         issues: groupIssues,
-         count: groupIssues.length,
+         issues: groupTasks,
+         count: groupTasks.length,
          color: project?.color,
          icon: project?.icon,
       };
@@ -150,8 +150,8 @@ function groupByProject(issues: Issue[]): IssueGroup[] {
 /**
  * Group issues by label (first label or no label)
  */
-function groupByLabel(issues: Issue[]): IssueGroup[] {
-   const groups = new Map<string, Issue[]>();
+function groupByLabel(issues: Task[]): TaskGroup[] {
+   const groups = new Map<string, Task[]>();
 
    issues.forEach((issue) => {
       const firstLabel = issue.labels?.[0];
@@ -163,13 +163,13 @@ function groupByLabel(issues: Issue[]): IssueGroup[] {
       groups.get(labelId)!.push(issue);
    });
 
-   return Array.from(groups.entries()).map(([labelId, groupIssues]) => {
-      const label = groupIssues[0]?.labels?.[0];
+   return Array.from(groups.entries()).map(([labelId, groupTasks]) => {
+      const label = groupTasks[0]?.labels?.[0];
       return {
          key: labelId,
          label: label ? label.name : 'No Label',
-         issues: groupIssues,
-         count: groupIssues.length,
+         issues: groupTasks,
+         count: groupTasks.length,
          color: label?.color,
       };
    });
@@ -243,10 +243,10 @@ function getPriorityColor(priority: string): string {
  * Sort groups by a specific criteria
  */
 export function sortGroups(
-   groups: IssueGroup[],
+   groups: TaskGroup[],
    sortBy: 'name' | 'count' | 'priority' = 'name',
    direction: 'asc' | 'desc' = 'asc'
-): IssueGroup[] {
+): TaskGroup[] {
    return [...groups].sort((a, b) => {
       let comparison = 0;
 
@@ -273,24 +273,24 @@ export function sortGroups(
 /**
  * Filter groups by minimum count
  */
-export function filterGroupsByCount(groups: IssueGroup[], minCount = 1): IssueGroup[] {
+export function filterGroupsByCount(groups: TaskGroup[], minCount = 1): TaskGroup[] {
    return groups.filter((group) => group.count >= minCount);
 }
 
 /**
  * Get group statistics
  */
-export function getGroupStats(groups: IssueGroup[]) {
-   const totalIssues = groups.reduce((sum, group) => sum + group.count, 0);
+export function getGroupStats(groups: TaskGroup[]) {
+   const totalTasks = groups.reduce((sum, group) => sum + group.count, 0);
    const totalGroups = groups.length;
-   const averagePerGroup = totalGroups > 0 ? Math.round(totalIssues / totalGroups) : 0;
+   const averagePerGroup = totalGroups > 0 ? Math.round(totalTasks / totalGroups) : 0;
    const largestGroup = groups.reduce(
       (max, group) => (group.count > max.count ? group : max),
       groups[0] || { count: 0, label: '' }
    );
 
    return {
-      totalIssues,
+      totalTasks,
       totalGroups,
       averagePerGroup,
       largestGroup: largestGroup.label,

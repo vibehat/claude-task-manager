@@ -13,6 +13,7 @@ import { useEdges } from '@/hooks/useEdges';
 import { AnimatePresence, motion } from 'motion/react';
 import TaskGrid, { TaskDragType } from '../../components/items/TaskDragType';
 import { useTaskStatusIcon } from '../../hooks/useTaskStatusIcon';
+import { EmptyStatusColumn } from '@/components/empty-states/EmptyStatusColumn';
 
 type TaskStatusFromQuery = TaskStatus;
 type TaskFromQuery = Task;
@@ -170,9 +171,11 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; status: TaskStatusFromQuery }> 
                </motion.div>
             )}
          </AnimatePresence>
-         {sortedTasks.map((task) => (
-            <TaskGrid key={task.id} task={task} />
-         ))}
+         {sortedTasks.length > 0 ? (
+            sortedTasks.map((task) => <TaskGrid key={task.id} task={task} />)
+         ) : (
+            <EmptyStatusColumn status={status} variant="grid" />
+         )}
       </div>
    );
 };

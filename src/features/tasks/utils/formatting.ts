@@ -1,22 +1,22 @@
 /**
- * Issue Formatting Utilities
+ * Task Formatting Utilities
  */
 
-import type { Issue } from '../types/issueTypes';
+import type { Task } from '../types/taskTypes';
 
 /**
  * Format issue identifier for display
  */
-export function formatIssueIdentifier(issue: Issue): string {
+export function formatTaskIdentifier(issue: Task): string {
    return issue.identifier || `#${issue.id.slice(-6)}`;
 }
 
 /**
  * Format issue title with identifier
  */
-export function formatIssueTitle(issue: Issue, includeIdentifier = true): string {
+export function formatTaskTitle(issue: Task, includeIdentifier = true): string {
    if (includeIdentifier) {
-      return `${formatIssueIdentifier(issue)} ${issue.title}`;
+      return `${formatTaskIdentifier(issue)} ${issue.title}`;
    }
    return issue.title;
 }
@@ -24,7 +24,7 @@ export function formatIssueTitle(issue: Issue, includeIdentifier = true): string
 /**
  * Format issue status for display
  */
-export function formatIssueStatus(status: string): string {
+export function formatTaskStatus(status: string): string {
    const statusMap: Record<string, string> = {
       OPEN: 'Open',
       TODO: 'To Do',
@@ -44,7 +44,7 @@ export function formatIssueStatus(status: string): string {
 /**
  * Format issue priority for display
  */
-export function formatIssuePriority(priority: string): string {
+export function formatTaskPriority(priority: string): string {
    const priorityMap: Record<string, string> = {
       LOW: 'Low',
       MEDIUM: 'Medium',
@@ -155,15 +155,15 @@ export function formatAssigneeName(assignee: { name: string; email: string } | n
 /**
  * Format issue progress as percentage
  */
-export function formatIssueProgress(issue: Issue): string {
-   if (!issue.subIssues || issue.subIssues.length === 0) {
+export function formatTaskProgress(issue: Task): string {
+   if (!issue.subtasks || issue.subtasks.length === 0) {
       return issue.status === 'DONE' || issue.status === 'COMPLETED' ? '100%' : '0%';
    }
 
-   const completed = issue.subIssues.filter(
+   const completed = issue.subtasks.filter(
       (sub) => sub.status === 'DONE' || sub.status === 'COMPLETED'
    ).length;
-   const percentage = Math.round((completed / issue.subIssues.length) * 100);
+   const percentage = Math.round((completed / issue.subtasks.length) * 100);
 
    return `${percentage}%`;
 }
@@ -179,7 +179,7 @@ export function formatLabels(labels: Array<{ name: string }>): string {
 /**
  * Format issue description for preview
  */
-export function formatIssuePreview(description: string, maxLength = 100): string {
+export function formatTaskPreview(description: string, maxLength = 100): string {
    if (!description) return 'No description';
 
    // Remove markdown formatting
@@ -209,7 +209,7 @@ export function formatFileSize(bytes: number): string {
 /**
  * Format issue count
  */
-export function formatIssueCount(count: number): string {
+export function formatTaskCount(count: number): string {
    if (count === 0) return 'No issues';
    if (count === 1) return '1 issue';
    return `${count.toLocaleString()} issues`;

@@ -35,7 +35,7 @@ export function useTasks(options: UseTasksOptions = {}): UseTasksResult {
       } else if (isInitialized) {
          setLoading(false);
       }
-   }, [skip, isInitialized, initialize]);
+   }, [skip, isInitialized]);
 
    // Filter tasks based on where clause
    const filteredTasks = useMemo(() => {
@@ -134,7 +134,7 @@ export function useSearchTasks(query: string, options: UseTasksOptions = {}) {
       } else if (isInitialized) {
          setLoading(false);
       }
-   }, [skip, isInitialized, initialize]);
+   }, [skip, isInitialized]);
 
    // Search tasks
    const results = useMemo(() => {
@@ -184,7 +184,7 @@ export function useTask(id: string | undefined) {
       } else if (isInitialized || !id) {
          setLoading(false);
       }
-   }, [id, isInitialized, initialize]);
+   }, [id, isInitialized]);
 
    const task = id ? getTaskById(id) : undefined;
    const subtasks = id ? getSubtasks(id) : [];

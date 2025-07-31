@@ -19,7 +19,7 @@ export function useLabels() {
       } else {
          setLoading(false);
       }
-   }, [isInitialized, initialize]);
+   }, [isInitialized]);
 
    return {
       data: labels,

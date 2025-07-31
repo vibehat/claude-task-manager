@@ -43,7 +43,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
          } catch (error) {
             console.error('Failed to update task status:', error);
             // Optionally revert the UI state on error
-            setValue(status?.id || 'to-do');
+            setValue(statusId || 'to-do');
          }
       }
    };

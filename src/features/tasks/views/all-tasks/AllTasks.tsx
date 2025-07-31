@@ -10,6 +10,7 @@ import { TaskGridView } from '../tasks-grid';
 import { cn } from '@/libs/client/utils';
 import { useMemo } from 'react';
 import type { Task, TaskStatus } from '@/libs/client/types/dataModels';
+import { EmptyTasksState } from '@/components/empty-states/EmptyTasksState';
 
 function AllTasks(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
@@ -20,6 +21,14 @@ function AllTasks(): React.JSX.Element {
 
    // Get all tasks from the data store
    const allTasks = useDataStore((state) => state.tasks);
+
+   // Debug logging
+   console.log('[AllTasks] Component rendered with:', {
+      totalTasks: allTasks.length,
+      statusesCount: statuses?.length,
+      statusesLoading,
+      isSearching: isSearchOpen && searchQuery.trim() !== '',
+   });
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
@@ -32,7 +41,7 @@ function AllTasks(): React.JSX.Element {
 
    // Group tasks by status and filter parent tasks only
    const groupedTasks = useMemo(() => {
-      if (!sortedStatuses.length || !allTasks.length) return new Map<string, Task[]>();
+      if (!sortedStatuses.length) return new Map<string, Task[]>();
 
       const grouped = new Map<string, Task[]>();
 
@@ -51,6 +60,21 @@ function AllTasks(): React.JSX.Element {
       return grouped;
    }, [sortedStatuses, allTasks]);
 
+   // Check if there are any tasks at all
+   const hasTasks = allTasks.length > 0;
+   const hasTasksInAnyStatus = Array.from(groupedTasks.values()).some((tasks) => tasks.length > 0);
+
+   // More debug logging
+   console.log('[AllTasks] Grouped tasks by status:', {
+      groupedTasksSize: groupedTasks.size,
+      statuses: Array.from(groupedTasks.entries()).map(([statusId, tasks]) => ({
+         statusId,
+         taskCount: tasks.length,
+      })),
+      hasTasks,
+      hasTasksInAnyStatus,
+   });
+
    // Show loading state while fetching statuses
    if (statusesLoading) {
       return (
@@ -67,6 +91,24 @@ function AllTasks(): React.JSX.Element {
             <div className="text-sm text-red-500">
                Error loading statuses: {statusesError.message}
             </div>
+         </div>
+      );
+   }
+
+   // Show empty state only if we have statuses but no tasks in any of them
+   if (sortedStatuses.length > 0 && !hasTasksInAnyStatus) {
+      return (
+         <div className={cn('w-full h-full')}>
+            <EmptyTasksState statuses={sortedStatuses} variant="no-tasks" />
+         </div>
+      );
+   }
+
+   // If we have no statuses at all, show a loading/empty state
+   if (sortedStatuses.length === 0) {
+      return (
+         <div className="flex items-center justify-center h-64">
+            <div className="text-sm text-muted-foreground">No statuses configured</div>
          </div>
       );
    }

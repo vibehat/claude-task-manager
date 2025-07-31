@@ -2,7 +2,7 @@
  * View Configuration Types for Issues
  */
 
-import type { IssueFilterInput } from './filtersTypes';
+import type { TaskFilterInput } from './filtersTypes';
 
 export type ViewType = 'list' | 'grid' | 'kanban' | 'calendar';
 
@@ -17,7 +17,7 @@ export interface ViewConfig {
    groupBy: GroupByOption;
    sortBy: SortOption;
    sortDirection: 'asc' | 'desc';
-   filters: IssueFilterInput;
+   filters: TaskFilterInput;
    isDefault?: boolean;
    isPublic?: boolean;
    createdBy?: string;

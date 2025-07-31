@@ -18,7 +18,7 @@ export function useProjects() {
       } else {
          setLoading(false);
       }
-   }, [isInitialized, initialize]);
+   }, [isInitialized]);
 
    return {
       data: projects,

@@ -66,7 +66,7 @@ export const tasks: Task[] = [
       labels: [labels[1]],
       createdAt: '2025-03-12',
       cycleId: '42',
-      subissues: ['1', '3'],
+      subtasks: ['1', '3'],
       rank: ranks[1],
    },
    {
@@ -109,7 +109,7 @@ export const tasks: Task[] = [
       createdAt: '2025-03-10',
       cycleId: '42',
       project: projects[4],
-      subissues: ['8', '9'],
+      subtasks: ['8', '9'],
       rank: ranks[4],
    },
    {

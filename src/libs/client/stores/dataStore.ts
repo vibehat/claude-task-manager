@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 import type { User, Project, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 import { taskManagerDataService } from '../services/taskManagerDataService';
 
@@ -15,6 +14,12 @@ interface DataState {
    // Loading states
    isLoading: boolean;
    isInitialized: boolean;
+
+   // TaskMaster sync properties
+   isTaskMasterEnabled: boolean;
+   taskMasterSyncStatus: 'idle' | 'syncing' | 'synced' | 'error';
+   taskMasterError: string | null;
+   isRealTimeSyncActive: boolean;
 
    // Actions
    initialize: () => Promise<void>;
@@ -56,280 +61,361 @@ interface DataState {
    getLabelById: (id: string) => Label | undefined;
    getStatusById: (id: string) => TaskStatus | undefined;
    getPriorityById: (id: string) => TaskPriority | undefined;
+
+   // TaskMaster sync actions
+   enableTaskMasterSync: () => Promise<void>;
+   disableTaskMasterSync: () => Promise<void>;
+   forceSyncTaskMaster: () => Promise<void>;
+   toggleRealTimeSync: (enabled: boolean) => Promise<void>;
+   getTaskMasterStats: () => any;
 }
 
 export const useDataStore = create<DataState>()(
-   devtools(
-      (set, get): DataState => ({
-         // Initial state
-         users: [],
-         projects: [],
-         labels: [],
-         statuses: [],
-         priorities: [],
-         tasks: [],
-         isLoading: false,
-         isInitialized: false,
+   (set, get): DataState => ({
+      // Initial state
+      users: [],
+      projects: [],
+      labels: [],
+      statuses: [],
+      priorities: [],
+      tasks: [],
+      isLoading: false,
+      isInitialized: false,
 
-         // Simplified initialization - just load UI data
-         initialize: async () => {
-            if (get().isInitialized) return;
+      // TaskMaster sync initial state
+      isTaskMasterEnabled: false,
+      taskMasterSyncStatus: 'idle',
+      taskMasterError: null,
+      isRealTimeSyncActive: false,
 
-            set({ isLoading: true });
+      // Load data from TaskMaster API (with auto-merge functionality)
+      initialize: async () => {
+         if (get().isInitialized) return;
 
-            try {
-               console.log('DataStore initialization - loading UI data...');
+         set({ isLoading: true });
 
-               // Load UI data from taskmanager.json
-               let uiData = {
-                  users: [] as User[],
-                  projects: [] as Project[],
-                  labels: [] as Label[],
-                  statuses: [] as TaskStatus[],
-                  priorities: [] as TaskPriority[],
-                  tasks: [] as Task[],
-               };
+         try {
+            console.log('DataStore initialization - loading merged TaskMaster data...');
 
-               try {
-                  const taskManagerData = await taskManagerDataService.readTaskManagerData();
-                  if (taskManagerData) {
-                     uiData = {
-                        users: taskManagerData.users,
-                        projects: taskManagerData.projects,
-                        labels: taskManagerData.labels,
-                        statuses: taskManagerData.statuses,
-                        priorities: taskManagerData.priorities,
-                        tasks: taskManagerData.additionalTasks || [],
-                     };
-                     console.log('Loaded UI data from taskmanager.json');
-                  }
-               } catch (error) {
-                  console.warn('Failed to load UI data from taskmanager.json:', error);
-               }
+            const taskManagerData = await taskManagerDataService.readTaskManagerData();
+
+            if (taskManagerData) {
+               // Convert date strings to Date objects
+               const users = taskManagerData.users.map((user) => ({
+                  ...user,
+                  createdAt: new Date(user.createdAt),
+                  updatedAt: new Date(user.updatedAt),
+               }));
+
+               const projects = taskManagerData.projects.map((project) => ({
+                  ...project,
+                  createdAt: new Date(project.createdAt),
+                  updatedAt: new Date(project.updatedAt),
+               }));
+
+               const labels = taskManagerData.labels.map((label) => ({
+                  ...label,
+                  createdAt: new Date(label.createdAt),
+                  updatedAt: new Date(label.updatedAt),
+               }));
+
+               const statuses = taskManagerData.statuses.map((status) => ({
+                  ...status,
+                  createdAt: new Date(status.createdAt),
+                  updatedAt: new Date(status.updatedAt),
+               }));
+
+               const priorities = taskManagerData.priorities.map((priority) => ({
+                  ...priority,
+                  createdAt: new Date(priority.createdAt),
+                  updatedAt: new Date(priority.updatedAt),
+               }));
+
+               const tasks = (taskManagerData.tasks || []).map((task) => ({
+                  ...task,
+                  createdAt: new Date(task.createdAt),
+                  updatedAt: new Date(task.updatedAt),
+               }));
 
                // Set final data state
                set({
-                  ...uiData,
+                  users,
+                  projects,
+                  labels,
+                  statuses,
+                  priorities,
+                  tasks,
                   isLoading: false,
                   isInitialized: true,
                });
 
-               console.log(`DataStore initialized with ${uiData.tasks.length} UI tasks`);
-               console.log('💡 Use TaskMaster CLI integration for task management');
-            } catch (error) {
-               console.error('DataStore initialization failed:', error);
-               set({
-                  isLoading: false,
-               });
+               const taskMasterTasks = tasks.filter((task) => task.id.startsWith('tm-'));
+               const uiTasks = tasks.filter((task) => !task.id.startsWith('tm-'));
+               const parentTasks = tasks.filter((task) => !task.parentTaskId);
+
+               console.log(`DataStore initialized with ${tasks.length} total tasks:`);
+               console.log(`  - ${taskMasterTasks.length} TaskMaster CLI tasks`);
+               console.log(`  - ${uiTasks.length} UI tasks`);
+               console.log(`  - ${parentTasks.length} parent tasks (will be displayed)`);
+               console.log(`  - ${tasks.length - parentTasks.length} subtasks`);
+               console.log('💡 TaskMaster CLI and UI data merged successfully');
+            } else {
+               throw new Error('TaskManager data not available');
             }
-         },
-
-         // Reset all data
-         reset: () => {
+         } catch (error) {
+            console.error('DataStore initialization failed:', error);
             set({
-               users: [],
-               projects: [],
-               labels: [],
-               statuses: [],
-               priorities: [],
-               tasks: [],
-               isInitialized: false,
+               isLoading: false,
+               isInitialized: false, // Make sure to set this to false on error
             });
-         },
+         }
+      },
 
-         // User actions
-         addUser: (userData) => {
-            const newUser: User = {
-               ...userData,
-               id: `user-${Date.now()}`,
-               createdAt: new Date(),
-               updatedAt: new Date(),
-            };
-            set((state) => ({ users: [...state.users, newUser] }));
-            taskManagerDataService.addUser(userData).catch(console.warn);
-            return newUser;
-         },
+      // Reset all data
+      reset: () => {
+         set({
+            users: [],
+            projects: [],
+            labels: [],
+            statuses: [],
+            priorities: [],
+            tasks: [],
+            isInitialized: false,
+         });
+      },
 
-         updateUser: (id, updates) => {
-            set((state) => ({
-               users: state.users.map((user) =>
-                  user.id === id ? { ...user, ...updates, updatedAt: new Date() } : user
-               ),
-            }));
-            taskManagerDataService.updateUser(id, updates).catch(console.warn);
-         },
+      // User actions
+      addUser: (userData) => {
+         const newUser: User = {
+            ...userData,
+            id: `user-${Date.now()}`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+         };
+         set((state) => ({ users: [...state.users, newUser] }));
+         taskManagerDataService.addUser(userData).catch(console.warn);
+         return newUser;
+      },
 
-         deleteUser: (id) => {
-            set((state) => ({
-               users: state.users.filter((user) => user.id !== id),
-               tasks: state.tasks.map((task) =>
-                  task.assigneeId === id ? { ...task, assigneeId: undefined } : task
-               ),
-            }));
-            taskManagerDataService.deleteUser(id).catch(console.warn);
-         },
+      updateUser: (id, updates) => {
+         set((state) => ({
+            users: state.users.map((user) =>
+               user.id === id ? { ...user, ...updates, updatedAt: new Date() } : user
+            ),
+         }));
+         taskManagerDataService.updateUser(id, updates).catch(console.warn);
+      },
 
-         // Project actions
-         addProject: (projectData) => {
-            const newProject: Project = {
-               ...projectData,
-               id: `project-${Date.now()}`,
-               createdAt: new Date(),
-               updatedAt: new Date(),
-            };
-            set((state) => ({ projects: [...state.projects, newProject] }));
-            taskManagerDataService.addProject(projectData).catch(console.warn);
-            return newProject;
-         },
+      deleteUser: (id) => {
+         set((state) => ({
+            users: state.users.filter((user) => user.id !== id),
+            tasks: state.tasks.map((task) =>
+               task.assigneeId === id ? { ...task, assigneeId: undefined } : task
+            ),
+         }));
+         taskManagerDataService.deleteUser(id).catch(console.warn);
+      },
 
-         updateProject: (id, updates) => {
-            set((state) => ({
-               projects: state.projects.map((project) =>
-                  project.id === id ? { ...project, ...updates, updatedAt: new Date() } : project
-               ),
-            }));
-            taskManagerDataService.updateProject(id, updates).catch(console.warn);
-         },
+      // Project actions
+      addProject: (projectData) => {
+         const newProject: Project = {
+            ...projectData,
+            id: `project-${Date.now()}`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+         };
+         set((state) => ({ projects: [...state.projects, newProject] }));
+         taskManagerDataService.addProject(projectData).catch(console.warn);
+         return newProject;
+      },
 
-         deleteProject: (id) => {
-            set((state) => ({
-               projects: state.projects.filter((project) => project.id !== id),
-               tasks: state.tasks.map((task) =>
-                  task.projectId === id ? { ...task, projectId: undefined } : task
-               ),
-            }));
-            taskManagerDataService.deleteProject(id).catch(console.warn);
-         },
+      updateProject: (id, updates) => {
+         set((state) => ({
+            projects: state.projects.map((project) =>
+               project.id === id ? { ...project, ...updates, updatedAt: new Date() } : project
+            ),
+         }));
+         taskManagerDataService.updateProject(id, updates).catch(console.warn);
+      },
 
-         // Label actions
-         addLabel: (labelData) => {
-            const newLabel: Label = {
-               ...labelData,
-               id: `label-${Date.now()}`,
-               createdAt: new Date(),
-               updatedAt: new Date(),
-            };
-            set((state) => ({ labels: [...state.labels, newLabel] }));
-            taskManagerDataService.addLabel(labelData).catch(console.warn);
-            return newLabel;
-         },
+      deleteProject: (id) => {
+         set((state) => ({
+            projects: state.projects.filter((project) => project.id !== id),
+            tasks: state.tasks.map((task) =>
+               task.projectId === id ? { ...task, projectId: undefined } : task
+            ),
+         }));
+         taskManagerDataService.deleteProject(id).catch(console.warn);
+      },
 
-         updateLabel: (id, updates) => {
-            set((state) => ({
-               labels: state.labels.map((label) =>
-                  label.id === id ? { ...label, ...updates, updatedAt: new Date() } : label
-               ),
-            }));
-            taskManagerDataService.updateLabel(id, updates).catch(console.warn);
-         },
+      // Label actions
+      addLabel: (labelData) => {
+         const newLabel: Label = {
+            ...labelData,
+            id: `label-${Date.now()}`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+         };
+         set((state) => ({ labels: [...state.labels, newLabel] }));
+         taskManagerDataService.addLabel(labelData).catch(console.warn);
+         return newLabel;
+      },
 
-         deleteLabel: (id) => {
-            set((state) => ({
-               labels: state.labels.filter((label) => label.id !== id),
-               tasks: state.tasks.map((task) => ({
-                  ...task,
-                  labelIds: task.labelIds.filter((labelId) => labelId !== id),
-               })),
-            }));
-            taskManagerDataService.deleteLabel(id).catch(console.warn);
-         },
+      updateLabel: (id, updates) => {
+         set((state) => ({
+            labels: state.labels.map((label) =>
+               label.id === id ? { ...label, ...updates, updatedAt: new Date() } : label
+            ),
+         }));
+         taskManagerDataService.updateLabel(id, updates).catch(console.warn);
+      },
 
-         // Task actions - simplified for UI tasks only
-         addTask: (taskData) => {
-            const state = get();
-            const newTask: Task = {
-               ...taskData,
-               id: `task-${Date.now()}`,
-               orderIndex: state.tasks.length,
-               createdAt: new Date(),
-               updatedAt: new Date(),
-            };
-            set((state) => ({ tasks: [...state.tasks, newTask] }));
-            taskManagerDataService.addAdditionalTask(taskData).catch(console.warn);
-            return newTask;
-         },
+      deleteLabel: (id) => {
+         set((state) => ({
+            labels: state.labels.filter((label) => label.id !== id),
+            tasks: state.tasks.map((task) => ({
+               ...task,
+               labelIds: task.labelIds.filter((labelId) => labelId !== id),
+            })),
+         }));
+         taskManagerDataService.deleteLabel(id).catch(console.warn);
+      },
 
-         updateTask: async (id, updates) => {
-            set((state) => ({
-               tasks: state.tasks.map((task) =>
-                  task.id === id ? { ...task, ...updates, updatedAt: new Date() } : task
-               ),
-            }));
-            taskManagerDataService.updateAdditionalTask(id, updates).catch(console.warn);
-         },
+      // Task actions - simplified for UI tasks only
+      addTask: (taskData) => {
+         const state = get();
+         const newTask: Task = {
+            ...taskData,
+            id: `task-${Date.now()}`,
+            orderIndex: state.tasks.length,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+         };
+         set((state) => ({ tasks: [...state.tasks, newTask] }));
+         taskManagerDataService.addAdditionalTask(taskData).catch(console.warn);
+         return newTask;
+      },
 
-         deleteTask: (id) => {
-            set((state) => ({
-               tasks: state.tasks.filter((task) => task.id !== id && task.parentTaskId !== id),
-            }));
-            taskManagerDataService.deleteAdditionalTask(id).catch(console.warn);
-         },
+      updateTask: async (id, updates) => {
+         set((state) => ({
+            tasks: state.tasks.map((task) =>
+               task.id === id ? { ...task, ...updates, updatedAt: new Date() } : task
+            ),
+         }));
+         taskManagerDataService.updateAdditionalTask(id, updates).catch(console.warn);
+      },
 
-         bulkUpdateTasks: (ids, updates) => {
-            set((state) => ({
-               tasks: state.tasks.map((task) =>
-                  ids.includes(task.id) ? { ...task, ...updates, updatedAt: new Date() } : task
-               ),
-            }));
-         },
+      deleteTask: (id) => {
+         set((state) => ({
+            tasks: state.tasks.filter((task) => task.id !== id && task.parentTaskId !== id),
+         }));
+         taskManagerDataService.deleteAdditionalTask(id).catch(console.warn);
+      },
 
-         // Query methods
-         getTaskById: (id) => {
-            return get().tasks.find((task) => task.id === id);
-         },
+      bulkUpdateTasks: (ids, updates) => {
+         set((state) => ({
+            tasks: state.tasks.map((task) =>
+               ids.includes(task.id) ? { ...task, ...updates, updatedAt: new Date() } : task
+            ),
+         }));
+      },
 
-         getTasksByStatus: (statusId) => {
-            return get().tasks.filter((task) => task.statusId === statusId);
-         },
+      // Query methods
+      getTaskById: (id) => {
+         return get().tasks.find((task) => task.id === id);
+      },
 
-         getParentTasksByStatus: (statusId) => {
-            return get().tasks.filter((task) => task.statusId === statusId && !task.parentTaskId);
-         },
+      getTasksByStatus: (statusId) => {
+         return get().tasks.filter((task) => task.statusId === statusId);
+      },
 
-         getTasksByProject: (projectId) => {
-            return get().tasks.filter((task) => task.projectId === projectId);
-         },
+      getParentTasksByStatus: (statusId) => {
+         return get().tasks.filter((task) => task.statusId === statusId && !task.parentTaskId);
+      },
 
-         getTasksByAssignee: (assigneeId) => {
-            return get().tasks.filter((task) => task.assigneeId === assigneeId);
-         },
+      getTasksByProject: (projectId) => {
+         return get().tasks.filter((task) => task.projectId === projectId);
+      },
 
-         getSubtasks: (parentTaskId) => {
-            return get().tasks.filter((task) => task.parentTaskId === parentTaskId);
-         },
+      getTasksByAssignee: (assigneeId) => {
+         return get().tasks.filter((task) => task.assigneeId === assigneeId);
+      },
 
-         searchTasks: (query) => {
-            const lowerQuery = query.toLowerCase();
-            return get().tasks.filter(
-               (task) =>
-                  task.title.toLowerCase().includes(lowerQuery) ||
-                  task.description?.toLowerCase().includes(lowerQuery)
-            );
-         },
+      getSubtasks: (parentTaskId) => {
+         return get().tasks.filter((task) => task.parentTaskId === parentTaskId);
+      },
 
-         // Utility methods
-         getUserById: (id) => {
-            return get().users.find((user) => user.id === id);
-         },
+      searchTasks: (query) => {
+         const lowerQuery = query.toLowerCase();
+         return get().tasks.filter(
+            (task) =>
+               task.title.toLowerCase().includes(lowerQuery) ||
+               task.description?.toLowerCase().includes(lowerQuery)
+         );
+      },
 
-         getProjectById: (id) => {
-            return get().projects.find((project) => project.id === id);
-         },
+      // Utility methods
+      getUserById: (id) => {
+         return get().users.find((user) => user.id === id);
+      },
 
-         getLabelById: (id) => {
-            return get().labels.find((label) => label.id === id);
-         },
+      getProjectById: (id) => {
+         return get().projects.find((project) => project.id === id);
+      },
 
-         getStatusById: (id) => {
-            return get().statuses.find((status) => status.id === id);
-         },
+      getLabelById: (id) => {
+         return get().labels.find((label) => label.id === id);
+      },
 
-         getPriorityById: (id) => {
-            return get().priorities.find((priority) => priority.id === id);
-         },
-      }),
-      {
-         name: 'data-store',
-      }
-   )
+      getStatusById: (id) => {
+         return get().statuses.find((status) => status.id === id);
+      },
+
+      getPriorityById: (id) => {
+         return get().priorities.find((priority) => priority.id === id);
+      },
+
+      // TaskMaster sync implementations (placeholder implementations)
+      enableTaskMasterSync: async () => {
+         set({
+            isTaskMasterEnabled: true,
+            taskMasterSyncStatus: 'syncing',
+            taskMasterError: null,
+         });
+         // TODO: Implement actual TaskMaster sync enabling
+         setTimeout(() => {
+            set({ taskMasterSyncStatus: 'synced' });
+         }, 1000);
+      },
+
+      disableTaskMasterSync: async () => {
+         set({
+            isTaskMasterEnabled: false,
+            taskMasterSyncStatus: 'idle',
+            isRealTimeSyncActive: false,
+         });
+      },
+
+      forceSyncTaskMaster: async () => {
+         set({ taskMasterSyncStatus: 'syncing', taskMasterError: null });
+         // TODO: Implement actual force sync
+         setTimeout(() => {
+            set({ taskMasterSyncStatus: 'synced' });
+         }, 1000);
+      },
+
+      toggleRealTimeSync: async (enabled: boolean) => {
+         set({ isRealTimeSyncActive: enabled });
+      },
+
+      getTaskMasterStats: () => {
+         const tasks = get().tasks;
+         return {
+            totalTasks: tasks.length,
+            totalSubtasks: tasks.filter((t) => t.parentTaskId).length,
+            tasksByStatus: {},
+            tasksByPriority: {},
+         };
+      },
+   })
 );

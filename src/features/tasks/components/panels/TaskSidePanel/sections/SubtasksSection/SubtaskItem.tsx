@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { IssueDetailsFragment } from '@/libs/client/types';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import type { TaskDetailsFragment } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -17,24 +16,21 @@ import {
    Trash2,
 } from 'lucide-react';
 import { cn } from '@/libs/client/utils';
-import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
 import { toast } from 'sonner';
-import { SubIssueEditForm } from './SubIssueEditForm';
+import { SubtaskEditForm } from './SubtaskEditForm';
 
-interface SubIssueItemProps {
-   subIssue: IssueDetailsFragment['subIssues'][0];
-   parentIssue: IssueDetailsFragment;
+interface SubtaskItemProps {
+   subtask: TaskDetailsFragment['subtasks'][0];
+   parentTask: TaskDetailsFragment;
    disabled?: boolean;
 }
 
-export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemProps) {
+export function SubtaskItem({ subtask, parentTask, disabled }: SubtaskItemProps) {
    const [isEditing, setIsEditing] = useState(false);
-   const { openPanel } = useIssueSidePanelStore();
-   const { deleteIssue, getUserById } = useDataStore();
    const deleting = false;
 
-   // Get assignee data
-   const assignee = subIssue.assigneeId ? getUserById(subIssue.assigneeId) : null;
+   // Get assignee data - TODO: implement proper assignee logic
+   const assignee = null;
 
    const getStatusIcon = (status?: string | null) => {
       switch (status) {
@@ -58,8 +54,8 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
       const target = e.target as HTMLElement;
       if (target.closest('button')) return;
 
-      // We need to pass a full issue object to openPanel, so we'll cast the subIssue
-      openPanel(subIssue as any);
+      // TODO: implement navigation to subtask
+      console.log('Navigate to subtask:', subtask);
    };
 
    const handleEdit = (e: React.MouseEvent) => {
@@ -70,16 +66,16 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
    const handleDelete = (e: React.MouseEvent) => {
       e.stopPropagation();
 
-      if (!confirm('Are you sure you want to delete this sub-issue?')) {
+      if (!confirm('Are you sure you want to delete this subtask?')) {
          return;
       }
 
       try {
-         deleteIssue(subIssue.id);
-         toast.success('Sub-issue deleted successfully');
+         // TODO: implement actual subtask deletion
+         toast.success('Subtask deleted successfully');
       } catch (error) {
-         toast.error('Failed to delete sub-issue');
-         console.error('Delete sub-issue error:', error);
+         toast.error('Failed to delete subtask');
+         console.error('Delete subtask error:', error);
       }
    };
 
@@ -93,8 +89,8 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
 
    if (isEditing) {
       return (
-         <SubIssueEditForm
-            subIssue={subIssue}
+         <SubtaskEditForm
+            subtask={subtask}
             onSuccess={handleEditSuccess}
             onCancel={handleEditCancel}
          />
@@ -114,9 +110,9 @@ export function SubIssueItem({ subIssue, parentIssue, disabled }: SubIssueItemPr
          <CardContent className="px-1 py-0">
             <div className="flex items-center justify-between">
                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  {getStatusIcon(subIssue.statusId)}
-                  <span className="text-xs text-muted-foreground font-mono">{subIssue.id}</span>
-                  <h4 className="text-sm font-medium line-clamp-1 flex-1">{subIssue.title}</h4>
+                  {getStatusIcon(subtask?.statusId)}
+                  <span className="text-xs text-muted-foreground font-mono">{subtask?.id}</span>
+                  <h4 className="text-sm font-medium line-clamp-1 flex-1">{subtask?.title}</h4>
                </div>
 
                <div className="flex items-center flex-shrink-0">

@@ -1,14 +1,14 @@
 /**
- * Issue Filtering Utilities
+ * Task Filtering Utilities
  */
 
-import type { Issue } from '../types/issueTypes';
-import type { IssueFilterInput } from '../types/filtersTypes';
+import type { Task } from '../types/taskTypes';
+import type { TaskFilterInput } from '../types/filtersTypes';
 
 /**
  * Filter issues based on provided criteria
  */
-export function filterIssues(issues: Issue[], filters: IssueFilterInput): Issue[] {
+export function filterTasks(issues: Task[], filters: TaskFilterInput): Task[] {
    return issues.filter((issue) => {
       // Text search
       if (filters.search) {
@@ -52,20 +52,20 @@ export function filterIssues(issues: Issue[], filters: IssueFilterInput): Issue[
          if (!hasMatchingLabel) return false;
       }
 
-      // Issue type filter
-      if (filters.issueType && issue.issueType !== filters.issueType) {
+      // Task type filter
+      if (filters.taskType && issue.taskType !== filters.taskType) {
          return false;
       }
 
       // Parent issue filter
-      if (filters.parentIssueId) {
-         if (issue.parentIssueId !== filters.parentIssueId) return false;
+      if (filters.parentTaskId) {
+         if (issue.parentTaskId !== filters.parentTaskId) return false;
       }
 
-      // Has subissues filter
-      if (typeof filters.hasSubissues === 'boolean') {
-         const hasSubissues = issue.subIssues && issue.subIssues.length > 0;
-         if (filters.hasSubissues !== hasSubissues) return false;
+      // Has subtasks filter
+      if (typeof filters.hasSubtasks === 'boolean') {
+         const hasSubtasks = issue.subtasks && issue.subtasks.length > 0;
+         if (filters.hasSubtasks !== hasSubtasks) return false;
       }
 
       // Due date filter
@@ -107,7 +107,7 @@ export function filterIssues(issues: Issue[], filters: IssueFilterInput): Issue[
 /**
  * Create a quick filter for common use cases
  */
-export function createQuickFilter(type: string, value?: any): IssueFilterInput {
+export function createQuickFilter(type: string, value?: any): TaskFilterInput {
    switch (type) {
       case 'my-issues':
          return { assigneeIds: [value] };
@@ -163,10 +163,10 @@ export function createQuickFilter(type: string, value?: any): IssueFilterInput {
          return { labelIds: [] };
 
       case 'with-subtasks':
-         return { hasSubissues: true };
+         return { hasSubtasks: true };
 
       case 'without-subtasks':
-         return { hasSubissues: false };
+         return { hasSubtasks: false };
 
       default:
          return {};
@@ -176,12 +176,12 @@ export function createQuickFilter(type: string, value?: any): IssueFilterInput {
 /**
  * Combine multiple filters
  */
-export function combineFilters(...filters: IssueFilterInput[]): IssueFilterInput {
-   const combined: IssueFilterInput = {};
+export function combineFilters(...filters: TaskFilterInput[]): TaskFilterInput {
+   const combined: TaskFilterInput = {};
 
    filters.forEach((filter) => {
       Object.keys(filter).forEach((key) => {
-         const filterKey = key as keyof IssueFilterInput;
+         const filterKey = key as keyof TaskFilterInput;
          const value = filter[filterKey];
 
          if (Array.isArray(value)) {
@@ -207,7 +207,7 @@ export function combineFilters(...filters: IssueFilterInput[]): IssueFilterInput
 /**
  * Check if any filters are active
  */
-export function hasActiveFilters(filters: IssueFilterInput): boolean {
+export function hasActiveFilters(filters: TaskFilterInput): boolean {
    return Object.values(filters).some((value) => {
       if (Array.isArray(value)) return value.length > 0;
       if (typeof value === 'object' && value !== null) return Object.keys(value).length > 0;
@@ -219,9 +219,9 @@ export function hasActiveFilters(filters: IssueFilterInput): boolean {
  * Clear specific filter types
  */
 export function clearFilter(
-   filters: IssueFilterInput,
-   filterType: keyof IssueFilterInput
-): IssueFilterInput {
+   filters: TaskFilterInput,
+   filterType: keyof TaskFilterInput
+): TaskFilterInput {
    const newFilters = { ...filters };
    delete newFilters[filterType];
    return newFilters;
@@ -230,7 +230,7 @@ export function clearFilter(
 /**
  * Get filter summary for display
  */
-export function getFilterSummary(filters: IssueFilterInput): string[] {
+export function getFilterSummary(filters: TaskFilterInput): string[] {
    const summary: string[] = [];
 
    if (filters.search) {

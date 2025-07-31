@@ -1,2 +1,2 @@
-// Temporary forwarding file - this should be removed once imports are fixed
-export { IssueSidePanel } from '../panels/IssueSidePanel/IssueSidePanel';
+// Forward TaskSidePanel as IssueSidePanel for compatibility
+export { TaskSidePanel as IssueSidePanel } from '../panels/TaskSidePanel/TaskSidePanel';

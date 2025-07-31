@@ -16,7 +16,7 @@ export function TaskMasterSyncExample(): React.JSX.Element {
       error,
       isRealTimeSyncActive,
       isLoading,
-      taskMasterIssues,
+      taskMasterTasks,
       taskMasterStats,
       enableSync,
       disableSync,
@@ -225,15 +225,15 @@ export function TaskMasterSyncExample(): React.JSX.Element {
          )}
 
          {/* Issues List Card */}
-         {isEnabled && taskMasterIssues.length > 0 && (
+         {isEnabled && taskMasterTasks.length > 0 && (
             <Card>
                <CardHeader>
-                  <CardTitle>TaskMaster Issues ({taskMasterIssues.length})</CardTitle>
+                  <CardTitle>TaskMaster Issues ({taskMasterTasks.length})</CardTitle>
                   <CardDescription>Issues synchronized from TaskMaster CLI</CardDescription>
                </CardHeader>
                <CardContent>
                   <div className="space-y-2 max-h-96 overflow-y-auto">
-                     {taskMasterIssues.map((issue) => (
+                     {taskMasterTasks.map((issue) => (
                         <div
                            key={issue.id}
                            className="flex items-center justify-between p-3 border rounded-lg"
@@ -252,7 +252,7 @@ export function TaskMasterSyncExample(): React.JSX.Element {
                                        {issue.subtaskId && `.${issue.subtaskId.split('.')[1]}`}
                                     </Badge>
                                  )}
-                                 {issue.parentIssueId && (
+                                 {issue.parentTaskId && (
                                     <Badge variant="outline" className="text-xs">
                                        Subtask
                                     </Badge>

@@ -6,7 +6,7 @@ export interface TaskManagerData {
    labels: Label[];
    statuses: TaskStatus[];
    priorities: TaskPriority[];
-   additionalTasks: Task[];
+   tasks: Task[];
    metadata: {
       created: string;
       updated: string;
@@ -114,7 +114,7 @@ class TaskManagerDataService {
 
       data.users = data.users.filter((user) => user.id !== id);
       // Also unassign from additional tasks
-      data.additionalTasks = data.additionalTasks.map((task) =>
+      data.tasks = data.tasks.map((task) =>
          task.assigneeId === id ? { ...task, assigneeId: undefined } : task
       );
 
@@ -161,7 +161,7 @@ class TaskManagerDataService {
 
       data.projects = data.projects.filter((project) => project.id !== id);
       // Also remove project from additional tasks
-      data.additionalTasks = data.additionalTasks.map((task) =>
+      data.tasks = data.tasks.map((task) =>
          task.projectId === id ? { ...task, projectId: undefined } : task
       );
 
@@ -206,7 +206,7 @@ class TaskManagerDataService {
 
       data.labels = data.labels.filter((label) => label.id !== id);
       // Also remove label from additional tasks
-      data.additionalTasks = data.additionalTasks.map((task) => ({
+      data.tasks = data.tasks.map((task) => ({
          ...task,
          labelIds: task.labelIds.filter((labelId) => labelId !== id),
       }));
@@ -223,12 +223,12 @@ class TaskManagerDataService {
       const newTask: Task = {
          ...task,
          id: `task-additional-${Date.now()}`,
-         orderIndex: data.additionalTasks.length,
+         orderIndex: data.tasks.length,
          createdAt: new Date(),
          updatedAt: new Date(),
       };
 
-      data.additionalTasks.push(newTask);
+      data.tasks.push(newTask);
       const success = await this.writeTaskManagerData(data);
       return success ? newTask : null;
    }
@@ -237,11 +237,11 @@ class TaskManagerDataService {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      const taskIndex = data.additionalTasks.findIndex((task) => task.id === id);
+      const taskIndex = data.tasks.findIndex((task) => task.id === id);
       if (taskIndex === -1) return false;
 
-      data.additionalTasks[taskIndex] = {
-         ...data.additionalTasks[taskIndex],
+      data.tasks[taskIndex] = {
+         ...data.tasks[taskIndex],
          ...updates,
          updatedAt: new Date(),
       };
@@ -253,9 +253,7 @@ class TaskManagerDataService {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      data.additionalTasks = data.additionalTasks.filter(
-         (task) => task.id !== id && task.parentTaskId !== id
-      );
+      data.tasks = data.tasks.filter((task) => task.id !== id && task.parentTaskId !== id);
 
       return await this.writeTaskManagerData(data);
    }
