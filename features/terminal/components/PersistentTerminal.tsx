@@ -1,19 +1,50 @@
 'use client';
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useTerminalContext } from '../contexts/TerminalContext';
+import { useTerminal } from '../hooks/useTerminal';
 import { TerminalStatus } from './TerminalStatus';
 import { XTermStyles } from './XTermStyles';
-import { TerminalConnectionStatus } from '../types/terminal';
+import { TerminalConnectionStatus, PersistentTerminalProps } from '../types/terminal';
 import { cn } from '@/libs/client/utils';
-import { X, Minimize2, Maximize2 } from 'lucide-react';
+import { X, Minimize2, Maximize2, Move } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useMultiTerminalStore } from '@/store/multiTerminalStore';
+import { useTheme } from 'next-themes';
 
-interface PersistentTerminalProps {
-   className?: string;
-}
+export function PersistentTerminal({
+   className,
+   terminalId,
+   onClose,
+   onMinimize,
+   onMaximize,
+   onFocus,
+}: PersistentTerminalProps) {
+   const { theme } = useTheme();
+   const terminalContext = useTerminalContext();
+   const multiTerminalStore = useMultiTerminalStore();
 
-export function PersistentTerminal({ className }: PersistentTerminalProps) {
+   const terminalContainerRef = useRef<HTMLDivElement>(null);
+   const terminalMountedRef = useRef(false);
+   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+   const [isDragging, setIsDragging] = useState(false);
+   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+
+   // Multi-terminal mode: use terminalId to get specific terminal
+   const isMultiTerminalMode = !!terminalId;
+   const terminalInstance = terminalId ? multiTerminalStore.getTerminalById(terminalId) : null;
+
+   // Create individual terminal hook for multi-terminal mode
+   const individualTerminal = useTerminal({
+      theme: theme as 'light' | 'dark' | 'auto',
+      fontSize: 14,
+      fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+      onConnect: () => console.log(`Terminal ${terminalId} connected`),
+      onDisconnect: () => console.log(`Terminal ${terminalId} disconnected`),
+      onError: (error: string) => console.error(`Terminal ${terminalId} error:`, error),
+   });
+
+   // Use multi-terminal instance data or fallback to legacy context
    const {
       terminal,
       initializeTerminal,
@@ -24,16 +55,13 @@ export function PersistentTerminal({ className }: PersistentTerminalProps) {
       fit,
       isConnected,
       error,
-      isVisible,
-      hideTerminal,
-      terminalRef,
-   } = useTerminalContext();
+   } = isMultiTerminalMode ? individualTerminal : terminalContext;
 
-   const terminalContainerRef = useRef<HTMLDivElement>(null);
-   const terminalMountedRef = useRef(false);
-   const resizeObserverRef = useRef<ResizeObserver | null>(null);
-   const [isMinimized, setIsMinimized] = React.useState(false);
-   const [isMaximized, setIsMaximized] = React.useState(false);
+   // Terminal visibility and state
+   const isVisible = isMultiTerminalMode ? true : terminalContext.isVisible;
+   const isMinimized = terminalInstance?.isMinimized || false;
+   const isMaximized = terminalInstance?.isMaximized || false;
+   const title = terminalInstance?.title || 'Terminal';
 
    // Mount terminal to DOM
    const mountTerminal = useCallback(async () => {
@@ -53,9 +81,9 @@ export function PersistentTerminal({ className }: PersistentTerminalProps) {
          terminalInstance.open(terminalContainerRef.current);
          terminalMountedRef.current = true;
 
-         // Store reference in context for external access
-         if (terminalRef) {
-            terminalRef.current = terminalContainerRef.current;
+         // Store reference in context for external access (legacy mode only)
+         if (!isMultiTerminalMode && terminalContext.terminalRef) {
+            terminalContext.terminalRef.current = terminalContainerRef.current;
          }
 
          // Focus the terminal and fit to container after mounting
@@ -66,7 +94,7 @@ export function PersistentTerminal({ className }: PersistentTerminalProps) {
       } catch (err) {
          console.error('Error mounting persistent terminal:', err);
       }
-   }, [terminal, initializeTerminal, fit, terminalRef]);
+   }, [terminal, initializeTerminal, fit, isMultiTerminalMode, terminalContext]);
 
    // Setup resize observer
    useEffect(() => {
@@ -114,14 +142,77 @@ export function PersistentTerminal({ className }: PersistentTerminalProps) {
 
    // Handle minimize/maximize
    const handleMinimize = useCallback(() => {
-      setIsMinimized(!isMinimized);
-      setIsMaximized(false);
-   }, [isMinimized]);
+      if (isMultiTerminalMode && terminalId) {
+         onMinimize?.(terminalId);
+      } else {
+         // Legacy mode - would need local state management
+      }
+   }, [isMultiTerminalMode, terminalId, onMinimize]);
 
    const handleMaximize = useCallback(() => {
-      setIsMaximized(!isMaximized);
-      setIsMinimized(false);
-   }, [isMaximized]);
+      if (isMultiTerminalMode && terminalId) {
+         onMaximize?.(terminalId);
+      } else {
+         // Legacy mode - would need local state management
+      }
+   }, [isMultiTerminalMode, terminalId, onMaximize]);
+
+   const handleClose = useCallback(() => {
+      if (isMultiTerminalMode && terminalId) {
+         onClose?.(terminalId);
+      } else {
+         terminalContext.hideTerminal();
+      }
+   }, [isMultiTerminalMode, terminalId, onClose, terminalContext]);
+
+   const handleFocus = useCallback(() => {
+      if (isMultiTerminalMode && terminalId) {
+         onFocus?.(terminalId);
+      }
+   }, [isMultiTerminalMode, terminalId, onFocus]);
+
+   // Handle dragging for multi-terminal mode
+   const handleMouseDown = useCallback(
+      (e: React.MouseEvent) => {
+         if (!isMultiTerminalMode || !terminalId || isMaximized) return;
+
+         setIsDragging(true);
+         const rect = e.currentTarget.getBoundingClientRect();
+         setDragOffset({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+         });
+      },
+      [isMultiTerminalMode, terminalId, isMaximized]
+   );
+
+   const handleMouseMove = useCallback(
+      (e: MouseEvent) => {
+         if (!isDragging || !terminalId || isMaximized) return;
+
+         const newX = e.clientX - dragOffset.x;
+         const newY = e.clientY - dragOffset.y;
+
+         multiTerminalStore.updateTerminalPosition(terminalId, newX, newY);
+      },
+      [isDragging, terminalId, isMaximized, dragOffset, multiTerminalStore]
+   );
+
+   const handleMouseUp = useCallback(() => {
+      setIsDragging(false);
+   }, []);
+
+   // Add mouse event listeners for dragging
+   useEffect(() => {
+      if (isDragging) {
+         document.addEventListener('mousemove', handleMouseMove);
+         document.addEventListener('mouseup', handleMouseUp);
+         return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+         };
+      }
+   }, [isDragging, handleMouseMove, handleMouseUp]);
 
    if (!isVisible) {
       return null;
@@ -130,27 +221,36 @@ export function PersistentTerminal({ className }: PersistentTerminalProps) {
    return (
       <div
          className={cn(
-            'fixed bottom-0 right-0 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-t-lg shadow-2xl z-50',
-            isMaximized
-               ? 'inset-4 rounded-lg'
-               : isMinimized
-                 ? 'w-96 h-12'
-                 : 'w-[800px] h-[500px] max-w-[90vw] max-h-[70vh]',
+            'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-2xl',
+            isMultiTerminalMode ? 'relative w-full h-full' : 'fixed bottom-0 right-0 z-50',
+            !isMultiTerminalMode && isMaximized && 'inset-4 rounded-lg',
+            !isMultiTerminalMode && isMinimized && 'w-96 h-12',
+            !isMultiTerminalMode &&
+               !isMaximized &&
+               !isMinimized &&
+               'w-[800px] h-[500px] max-w-[90vw] max-h-[70vh]',
             className
          )}
+         onClick={handleFocus}
       >
          <XTermStyles />
          {/* Terminal Header */}
-         <div className="flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-t-lg">
+         <div
+            className={cn(
+               'flex items-center justify-between px-4 py-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-t-lg',
+               isDragging && 'cursor-grabbing',
+               isMultiTerminalMode && !isMaximized && 'cursor-grab'
+            )}
+            onMouseDown={handleMouseDown}
+         >
             <div className="flex items-center space-x-2">
                <div className="flex space-x-1">
                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                </div>
-               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Terminal
-               </span>
+               {isMultiTerminalMode && <Move className="h-3 w-3 text-gray-400" />}
+               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</span>
                {session && (
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                      {session.shell} • {session.platform}
@@ -165,7 +265,7 @@ export function PersistentTerminal({ className }: PersistentTerminalProps) {
                <Button size="sm" variant="ghost" onClick={handleMaximize} className="h-6 w-6 p-0">
                   <Maximize2 className="h-3 w-3" />
                </Button>
-               <Button size="sm" variant="ghost" onClick={hideTerminal} className="h-6 w-6 p-0">
+               <Button size="sm" variant="ghost" onClick={handleClose} className="h-6 w-6 p-0">
                   <X className="h-3 w-3" />
                </Button>
             </div>

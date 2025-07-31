@@ -6,7 +6,35 @@ import { Terminal as TerminalIcon, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function TerminalPage(): React.JSX.Element {
-   const { showTerminal, isVisible, session, connectionStatus } = useTerminalContext();
+   let terminalContext;
+
+   try {
+      terminalContext = useTerminalContext();
+   } catch (error) {
+      // If TerminalProvider is not available, show error message
+      return (
+         <div className="flex flex-col h-full p-6">
+            <div className="flex-1 flex items-center justify-center">
+               <div className="max-w-md text-center space-y-4">
+                  <div className="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center">
+                     <TerminalIcon className="h-8 w-8 text-red-600 dark:text-red-400" />
+                  </div>
+                  <div>
+                     <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                        Terminal Provider Not Available
+                     </h2>
+                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        The terminal functionality is not available. Please ensure you're accessing
+                        this page through the proper layout.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      );
+   }
+
+   const { showTerminal, isVisible, session, connectionStatus } = terminalContext;
 
    // Auto-show terminal when visiting terminal page
    useEffect(() => {

@@ -12,7 +12,12 @@ import { IndieProjectProvider } from '@/libs/client/contexts/IndieProjectProvide
 import { IndieSidebar } from '@/components/layout/sidebar/IndieSidebar';
 import { cn } from '@/libs/client/utils';
 import IndieHeader from '@/components/layout/headers/indie/IndieHeader';
-import { TerminalProvider, PersistentTerminal, TerminalToggle } from '@/features/terminal';
+import {
+   TerminalProvider,
+   PersistentTerminal,
+   TerminalToggle,
+   MultiTerminalManager,
+} from '@/features/terminal';
 import { useTheme } from 'next-themes';
 
 interface IndieLayoutProps {
@@ -79,7 +84,10 @@ export function IndieLayout({
                   </div>
                </SidebarInset>
 
-               {/* Persistent Terminal */}
+               {/* Multi-Terminal Manager */}
+               <MultiTerminalManager />
+
+               {/* Legacy Persistent Terminal - kept for backward compatibility */}
                <PersistentTerminal />
             </SidebarProvider>
          </TerminalProvider>
