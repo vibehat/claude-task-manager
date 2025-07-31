@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IssueDetailsFragment } from '@/libs/client/graphql-client/generated';
+import { IssueDetailsFragment } from '@/libs/client/types';
 import { GitBranch, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SubIssueCreateForm } from './SubIssueCreateForm';
@@ -47,7 +47,7 @@ export function SubIssuesSection({ issue, disabled }: SubIssuesSectionProps) {
          </div>
 
          {subIssues.length === 0 && !isCreating ? (
-            <EmptySubIssues onCreateClick={() => setIsCreating(true)} disabled={disabled} />
+            <EmptySubIssues />
          ) : (
             <div className="space-y-1">
                {isCreating && (

@@ -1,1 +1,0 @@
-export { IssuePriorityIssuesArgs } from "./IssuePriorityIssuesArgs";

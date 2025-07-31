@@ -1,30 +1,33 @@
 'use client';
 
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
+import type { Issue } from '@/libs/client/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { X } from 'lucide-react';
 import { StatusSelector } from '../../selectors/StatusSelector';
 import { PrioritySelector } from '../../selectors/PrioritySelector';
-
-type IssueFromQuery = GetIssuesQuery['issues'][0];
+import { useDataStore } from '@/libs/client/stores/dataStore';
 
 interface IssueHeaderProps {
-   issue: IssueFromQuery;
+   issue: Issue;
    onClose: () => void;
 }
 
 export function IssueHeader({ issue, onClose }: IssueHeaderProps): React.JSX.Element {
+   const { getStatusById, getPriorityById } = useDataStore();
+   const status = getStatusById(issue.statusId);
+   const priority = issue.priorityId ? getPriorityById(issue.priorityId) : null;
+
    return (
       <div className="p-6 pb-4 border-b">
          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
                <Badge variant="secondary" className="font-mono text-xs">
-                  {issue.identifier}
+                  {issue.id}
                </Badge>
                <div className="flex items-center gap-2">
-                  <StatusSelector status={issue.issueStatus} issueId={issue.id} />
-                  <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
+                  <StatusSelector status={status} issueId={issue.id} />
+                  <PrioritySelector priority={priority} issueId={issue.id} />
                </div>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose} className="h-6 w-6">

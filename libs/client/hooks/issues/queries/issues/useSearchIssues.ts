@@ -1,4 +1,4 @@
-import { useSearchIssuesQuery } from '@/libs/client/graphql-client/generated';
+import { useSearchIssues as useSearchIssuesZustand } from '@/libs/client/hooks/useIssues';
 
 export interface UseSearchIssuesOptions {
    query?: string;
@@ -6,16 +6,16 @@ export interface UseSearchIssuesOptions {
 }
 
 export function useSearchIssues(options: UseSearchIssuesOptions = {}) {
-   const { query, skip } = options;
+   const { query = '', skip = false } = options;
 
-   return useSearchIssuesQuery({
-      variables: {
-         search: query || '',
-         where: {
-            // Filter only parent issues (no parentIssueId)
-            parentIssueId: { equals: null },
-         },
-      },
-      skip: skip || !query,
-   });
+   // Use the new Zustand-based hook
+   const result = useSearchIssuesZustand(query, { skip: skip || !query });
+
+   // Transform to match the old GraphQL API shape
+   return {
+      data: result.data ? { searchIssues: result.data } : undefined,
+      loading: result.loading,
+      error: result.error,
+      refetch: result.refetch,
+   };
 }

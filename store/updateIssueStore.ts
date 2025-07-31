@@ -1,12 +1,10 @@
 import { create } from 'zustand';
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
-
-type IssueFromQuery = GetIssuesQuery['issues'][0];
+import type { Issue } from '@/libs/client/types';
 
 interface UpdateIssueStore {
    isOpen: boolean;
-   issue: IssueFromQuery | null;
-   openModal: (issue: IssueFromQuery) => void;
+   issue: Issue | null;
+   openModal: (issue: Issue) => void;
    closeModal: () => void;
 }
 

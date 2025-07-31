@@ -1,7 +1,0 @@
-#import "issue-core.graphql"
-
-mutation CreateIssue($data: IssueCreateInput!) {
-   createOneIssue(data: $data) {
-      ...IssueCore
-   }
-}

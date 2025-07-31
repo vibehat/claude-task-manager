@@ -1,51 +1,28 @@
 'use client';
 
-import { useGetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
+import { useStatuses } from '@/libs/client/hooks/useStatuses';
 import { useSearchStore } from '../../store/searchStore';
 import { useViewStore } from '@/store/viewStore';
 import SearchIssues from './SearchIssues';
 import { IssueListView } from '../issues-list';
 import { IssueGridView } from '../issues-grid';
 import { cn } from '@/libs/client/utils';
-import { useEdges } from '@/hooks/useEdges';
 import { useMemo } from 'react';
 
 function AllIssues(): React.JSX.Element {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
 
-   // Fetch statuses from GraphQL instead of using mock data
-   const {
-      data: statusesData,
-      loading: statusesLoading,
-      error: statusesError,
-   } = useGetIssueStatusesQuery();
+   // Fetch statuses from Zustand store
+   const { data: statuses, loading: statusesLoading, error: statusesError } = useStatuses();
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
 
-   const statuses = useEdges(statusesData?.issueStatuses);
-
-   // Sort statuses based on the defined order
+   // Sort statuses based on their order property
    const sortedStatuses = useMemo(() => {
       if (!statuses) return [];
-      // Define correct status order
-      const statusOrder = [
-         'backlog',
-         'to-do',
-         'in-progress',
-         'technical-review',
-         'completed',
-         'paused',
-      ];
-      return [...statuses].sort((a, b) => {
-         const orderA = statusOrder.indexOf(a.id);
-         const orderB = statusOrder.indexOf(b.id);
-         // If status not found in order, put it at the end
-         const finalOrderA = orderA === -1 ? statusOrder.length : orderA;
-         const finalOrderB = orderB === -1 ? statusOrder.length : orderB;
-         return finalOrderA - finalOrderB;
-      });
+      return [...statuses].sort((a, b) => a.order - b.order);
    }, [statuses]);
 
    // Show loading state while fetching statuses

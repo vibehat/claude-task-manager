@@ -1,6 +1,6 @@
 'use client';
 
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
+import type { Issue } from '@/libs/client/types';
 import { format } from 'date-fns';
 import { AssigneeUser } from '../AssigneeUser';
 import { LabelBadge } from '../badges/LabelBadge';
@@ -11,56 +11,57 @@ import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
-import { useUpdateIssueLabelsMutation } from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/ContextMenu';
 import { IssueContextMenu } from './IssueContextMenu';
-
-type IssueFromQuery = GetIssuesQuery['issues'][0];
 
 export function IssueLine({
    issue,
    layoutId = false,
 }: {
-   issue: IssueFromQuery;
+   issue: Issue;
    layoutId?: boolean;
 }): React.JSX.Element {
    const { openPanel } = useIssueSidePanelStore();
-   const [updateIssueLabels] = useUpdateIssueLabelsMutation();
+   const { updateIssue, getUserById, getStatusById, getPriorityById, getLabelById } =
+      useDataStore();
 
    const handleLabelChange = async (labelIds: string[]): Promise<void> => {
       try {
-         const connectLabels = labelIds.map((labelId) => ({
-            label: { connect: { id: labelId } },
-         }));
-         await updateIssueLabels({
-            variables: {
-               id: issue.id,
-               connectLabels,
-            },
-            refetchQueries: ['GetIssues'],
-         });
+         updateIssue(issue.id, { labelIds });
       } catch (error) {
          console.error('Failed to update issue labels:', error);
       }
    };
+
+   // Get related data
+   const assignee = issue.assigneeId ? getUserById(issue.assigneeId) : null;
+   const status = getStatusById(issue.statusId);
+   const priority = issue.priorityId ? getPriorityById(issue.priorityId) : null;
+   const labels = issue.labelIds
+      .map((id) => {
+         const label = getLabelById(id);
+         return label ? { id, label } : null;
+      })
+      .filter(Boolean);
    return (
       <ContextMenu>
          <ContextMenuTrigger asChild>
             <motion.div
-               {...(layoutId && { layoutId: `issue-line-${issue.identifier}` })}
+               {...(layoutId && { layoutId: `issue-line-${issue.id}` })}
                //href={`/lndev-ui/issue/${issue.identifier}`}
                className="w-full flex items-center justify-start h-11 px-6 hover:bg-sidebar/50 group"
             >
                <div className="flex items-center gap-0.5">
                   <div onClick={(e) => e.stopPropagation()}>
-                     <PrioritySelector priority={issue.issuePriority} issueId={issue.id} />
+                     <PrioritySelector priority={priority} issueId={issue.id} />
                   </div>
                   <span className="text-sm hidden sm:inline-block text-muted-foreground font-medium w-[66px] truncate shrink-0 mr-0.5">
-                     {issue.identifier}
+                     {issue.id}
                   </span>
                   <div onClick={(e) => e.stopPropagation()}>
-                     <StatusSelector status={issue.issueStatus} issueId={issue.id} />
+                     <StatusSelector status={status} issueId={issue.id} />
                   </div>
                </div>
                <span className="min-w-0 flex items-center justify-start mr-1 ml-0.5">
@@ -76,7 +77,7 @@ export function IssueLine({
                   </button>
                </span>
                <div className="flex items-center justify-end gap-2 ml-auto sm:w-fit">
-                  {(!issue.labels || issue.labels.length === 0) && (
+                  {labels.length === 0 && (
                      <div
                         className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                         onClick={(e) => {
@@ -84,21 +85,18 @@ export function IssueLine({
                            e.preventDefault();
                         }}
                      >
-                        <LabelSelector
-                           selectedLabels={issue.labels || []}
-                           onChange={handleLabelChange}
-                        />
+                        <LabelSelector selectedLabels={labels} onChange={handleLabelChange} />
                      </div>
                   )}
-                  {issue.labels && issue.labels.length > 0 && (
+                  {labels.length > 0 && (
                      <div className="flex items-center gap-1 hidden sm:flex">
-                        <LabelBadge labels={issue.labels} />
+                        <LabelBadge labels={labels} />
                      </div>
                   )}
                   <span className="text-xs text-muted-foreground shrink-0 hidden sm:inline-block">
                      {format(new Date(issue.createdAt), 'MMM dd')}
                   </span>
-                  <AssigneeUser user={issue.assignee} />
+                  <AssigneeUser user={assignee} />
                </div>
             </motion.div>
          </ContextMenuTrigger>

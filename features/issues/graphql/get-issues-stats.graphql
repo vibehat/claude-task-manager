@@ -1,9 +1,0 @@
-query GetIssuesStats {
-  issuesStats {
-    total
-    completed
-    inProgress
-    pending
-    completionRate
-  }
-}

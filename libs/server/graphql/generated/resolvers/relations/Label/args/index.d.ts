@@ -1,1 +1,0 @@
-export { LabelIssuesArgs } from "./LabelIssuesArgs";

@@ -38,24 +38,30 @@ import {
 import React, { useState } from 'react';
 // import { useIssuesStore } from '@/store/issues-store';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
-import {
-   useGetIssueStatusesQuery,
-   useGetPrioritiesQuery,
-   useGetUsersQuery,
-   useGetLabelsQuery,
-   useGetProjectsQuery,
-   SortOrder,
-} from '@/libs/client/graphql-client/generated';
+import type { Issue } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { getPriorityIcon } from '../../constants/NoPriorityIcon';
+
+const getPriorityIconName = (name: string): string => {
+   switch (name.toLowerCase()) {
+      case 'urgent':
+         return 'UrgentPriorityIcon';
+      case 'high':
+         return 'HighPriorityIcon';
+      case 'medium':
+         return 'MediumPriorityIcon';
+      case 'low':
+         return 'LowPriorityIcon';
+      default:
+         return 'NoPriorityIcon';
+   }
+};
 import { toast } from 'sonner';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
-type IssueFromQuery = GetIssuesQuery['issues'][0];
-
 interface IssueContextMenuProps {
    issueId?: string;
-   issue?: IssueFromQuery;
+   issue?: Issue;
 }
 
 export function IssueContextMenu({ issueId, issue }: IssueContextMenuProps): React.JSX.Element {
@@ -63,20 +69,8 @@ export function IssueContextMenu({ issueId, issue }: IssueContextMenuProps): Rea
    const [isFavorite, setIsFavorite] = useState(false);
    const { openPanel } = useIssueSidePanelStore();
 
-   // Fetch data from GraphQL
-   const { data: statusesData } = useGetIssueStatusesQuery();
-   const { data: prioritiesData } = useGetPrioritiesQuery({
-      variables: { orderBy: [{ order: SortOrder.Asc }] },
-   });
-   const { data: usersData } = useGetUsersQuery();
-   const { data: labelsData } = useGetLabelsQuery();
-   const { data: projectsData } = useGetProjectsQuery();
-
-   const statuses = statusesData?.issueStatuses || [];
-   const priorities = prioritiesData?.issuePriorities || [];
-   const users = usersData?.users || [];
-   const labels = labelsData?.labels || [];
-   const projects = projectsData?.projects || [];
+   // Get data from store
+   const { statuses, priorities, users, labels, projects } = useDataStore();
 
    const handleStatusChange = (statusId: string): void => {
       if (!issueId) return;
@@ -238,7 +232,7 @@ export function IssueContextMenu({ issueId, issue }: IssueContextMenuProps): Rea
                </ContextMenuSubTrigger>
                <ContextMenuSubContent className="w-48">
                   {priorities.map((priority) => {
-                     const Icon = getPriorityIcon(priority.iconName);
+                     const Icon = getPriorityIcon(getPriorityIconName(priority.name));
                      return (
                         <ContextMenuItem
                            key={priority.id}

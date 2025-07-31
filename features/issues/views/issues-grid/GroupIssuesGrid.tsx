@@ -1,11 +1,7 @@
 'use client';
 
-import type {
-   GetIssuesQuery,
-   GetIssueStatusesQuery,
-   IssueWhereInput,
-} from '@/libs/client/graphql-client/generated';
-import { useGetIssuesQuery, useUpdateIssueMutation } from '@/libs/client/graphql-client/generated';
+import type { Issue, IssueStatus, IssueWhereInput } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Plus } from 'lucide-react';
 import type { FC } from 'react';
 import { useRef } from 'react';
@@ -18,8 +14,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import IssueGrid, { IssueDragType } from '../../components/items/IssueDragType';
 import { useIssueStatusIcon } from '../../hooks/useIssueStatusIcon';
 
-type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
-type IssueFromQuery = GetIssuesQuery['issues'][0];
+type IssueStatusFromQuery = IssueStatus;
+type IssueFromQuery = Issue;
 
 interface GroupIssuesGridProps {
    status: IssueStatusFromQuery;
@@ -31,19 +27,12 @@ function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): Re
    const StatusIcon = useIssueStatusIcon(status);
 
    // Fetch issues for this specific status
-   const { data, loading, error } = useGetIssuesQuery({
-      variables: {
-         where: {
-            statusId: {
-               equals: status.id,
-            },
-            ...additionalFilter,
-         },
-      },
-   });
+   const { getIssuesByStatus } = useDataStore();
+   const issues = getIssuesByStatus(status.id);
+   const loading = false;
+   const error = null;
 
-   const issues = useEdges(data?.issues);
-   const count = data?.issues?.length;
+   const count = issues.length;
 
    // Show loading state for this status
    if (loading) {
@@ -134,22 +123,15 @@ const IssueGridList: FC<{ issues: IssueFromQuery[]; status: IssueStatusFromQuery
    status,
 }): React.JSX.Element => {
    const ref = useRef<HTMLDivElement>(null);
-   const [updateIssue] = useUpdateIssueMutation();
+   const { updateIssue } = useDataStore();
 
    // Set up drop functionality to accept only issue items.
    const [{ isOver }, drop] = useDrop(() => ({
       accept: IssueDragType,
       drop(item: IssueFromQuery, monitor): void {
-         if (monitor.didDrop() && item.issueStatus?.id !== status.id) {
-            updateIssue({
-               variables: {
-                  where: { id: item.id },
-                  data: {
-                     issueStatus: {
-                        connect: { id: status.id },
-                     },
-                  },
-               },
+         if (monitor.didDrop() && item.statusId !== status.id) {
+            updateIssue(item.id, {
+               statusId: status.id,
             });
          }
       },

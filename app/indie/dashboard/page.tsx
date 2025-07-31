@@ -2,11 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-   useGetIssuesQuery,
-   useGetIssuesStatsQuery,
-   SortOrder,
-} from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Badge } from '@/components/ui/badge';
 import {
    CalendarIcon,
@@ -17,37 +13,38 @@ import {
    TrendingUpIcon,
 } from 'lucide-react';
 import { useMemo } from 'react';
-import { useEdges } from '@/hooks/useEdges';
 import Link from 'next/link';
 import { IndieLayout } from '@/components/layout/IndieLayout';
 
 export default function IndieDashboardPage(): React.JSX.Element {
-   const { data } = useGetIssuesQuery({
-      variables: {
-         take: 5,
-         orderBy: {
-            createdAt: SortOrder.Desc,
-         },
-      },
-   });
-   const { data: statsData, loading: statsLoading } = useGetIssuesStatsQuery();
-   const recentIssues = useEdges(data?.issues);
+   const { issues, statuses, priorities } = useDataStore();
 
-   // Use stats from GraphQL resolver or fallback to calculated stats
+   // Get recent issues (last 5)
+   const recentIssues = useMemo(() => {
+      return [...issues]
+         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+         .slice(0, 5);
+   }, [issues]);
+
+   // Calculate stats from local data
    const taskStats = useMemo(() => {
-      const issuesStats = statsData?.issuesStats;
-
-      // Fallback calculation if stats query fails
-      const {
-         total = 0,
-         completed = 0,
-         inProgress = 0,
-         pending = 0,
-         completionRate = 0,
-      } = issuesStats || {};
+      const total = issues.length;
+      const completed = issues.filter((issue) => {
+         const status = statuses.find((s) => s.id === issue.statusId);
+         return status?.name === 'done';
+      }).length;
+      const inProgress = issues.filter((issue) => {
+         const status = statuses.find((s) => s.id === issue.statusId);
+         return status?.name === 'in_progress';
+      }).length;
+      const pending = issues.filter((issue) => {
+         const status = statuses.find((s) => s.id === issue.statusId);
+         return status?.name === 'todo' || status?.name === 'backlog';
+      }).length;
+      const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
 
       return { total, completed, inProgress, pending, completionRate };
-   }, [statsData]);
+   }, [issues, statuses]);
 
    return (
       <IndieLayout>
@@ -83,9 +80,7 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <CircleIcon className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">
-                        {statsLoading ? '...' : taskStats.total}
-                     </div>
+                     <div className="text-2xl font-bold">{false ? '...' : taskStats.total}</div>
                      <p className="text-xs text-muted-foreground">All your tasks</p>
                   </CardContent>
                </Card>
@@ -96,11 +91,9 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <CheckCircleIcon className="h-4 w-4 text-green-600" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">
-                        {statsLoading ? '...' : taskStats.completed}
-                     </div>
+                     <div className="text-2xl font-bold">{false ? '...' : taskStats.completed}</div>
                      <p className="text-xs text-muted-foreground">
-                        {statsLoading ? '...' : `${taskStats.completionRate}% completion rate`}
+                        {false ? '...' : `${taskStats.completionRate}% completion rate`}
                      </p>
                   </CardContent>
                </Card>
@@ -112,7 +105,7 @@ export default function IndieDashboardPage(): React.JSX.Element {
                   </CardHeader>
                   <CardContent>
                      <div className="text-2xl font-bold">
-                        {statsLoading ? '...' : taskStats.inProgress}
+                        {false ? '...' : taskStats.inProgress}
                      </div>
                      <p className="text-xs text-muted-foreground">Currently working on</p>
                   </CardContent>
@@ -124,9 +117,7 @@ export default function IndieDashboardPage(): React.JSX.Element {
                      <TrendingUpIcon className="h-4 w-4 text-orange-600" />
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">
-                        {statsLoading ? '...' : taskStats.pending}
-                     </div>
+                     <div className="text-2xl font-bold">{false ? '...' : taskStats.pending}</div>
                      <p className="text-xs text-muted-foreground">Ready to start</p>
                   </CardContent>
                </Card>
@@ -146,23 +137,29 @@ export default function IndieDashboardPage(): React.JSX.Element {
                               <div className="flex items-center space-x-3">
                                  <div
                                     className={`w-2 h-2 rounded-full ${
-                                       issue.status === 'done'
+                                       statuses.find((s) => s.id === issue.statusId)?.name ===
+                                       'done'
                                           ? 'bg-green-500'
-                                          : issue.status === 'in-progress'
+                                          : statuses.find((s) => s.id === issue.statusId)?.name ===
+                                              'in_progress'
                                             ? 'bg-blue-500'
                                             : 'bg-gray-400'
                                     }`}
                                  />
                                  <div>
                                     <p className="text-sm font-medium">{issue.title}</p>
-                                    <p className="text-xs text-muted-foreground">
-                                       {issue.identifier}
-                                    </p>
+                                    <p className="text-xs text-muted-foreground">{issue.id}</p>
                                  </div>
                               </div>
                               <div className="flex items-center space-x-2">
-                                 <Badge variant="secondary">{issue.status}</Badge>
-                                 <Badge variant="outline">{issue.priority}</Badge>
+                                 <Badge variant="secondary">
+                                    {statuses.find((s) => s.id === issue.statusId)?.name ||
+                                       'unknown'}
+                                 </Badge>
+                                 <Badge variant="outline">
+                                    {priorities.find((p) => p.id === issue.priorityId)?.name ||
+                                       'no priority'}
+                                 </Badge>
                               </div>
                            </div>
                         ))

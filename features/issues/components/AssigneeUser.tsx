@@ -8,19 +8,19 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import type { User } from '@/libs/client/graphql-client/generated';
+import type { User } from '@/libs/client/types';
 import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
 
 interface AssigneeUserProps {
-   user: Pick<User, 'id' | 'name' | 'email' | 'avatarUrl'> | null | undefined;
+   user: (Pick<User, 'id' | 'name' | 'email'> & { avatarUrl?: string }) | null | undefined;
 }
 
 export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
    const [open, setOpen] = useState(false);
    const [currentAssignee, setCurrentAssignee] = useState<
-      Pick<User, 'id' | 'name' | 'email' | 'avatarUrl'> | null | undefined
+      (Pick<User, 'id' | 'name' | 'email'> & { avatarUrl?: string }) | null | undefined
    >(user);
 
    useEffect(() => {
@@ -75,7 +75,7 @@ export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
                {!currentAssignee && <CheckIcon className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {/* TODO: Load users from GraphQL query */}
+            {/* TODO: Now using local data*/}
             <DropdownMenuSeparator />
             <DropdownMenuLabel>New user</DropdownMenuLabel>
             <DropdownMenuItem>

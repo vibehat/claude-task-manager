@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { IssueWhereInput } from '@/libs/client/graphql-client/generated';
+import type { IssueWhereInput } from '@/libs/client/types';
 
 export type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'project';
 

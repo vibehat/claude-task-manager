@@ -2,24 +2,22 @@
 
 import { useEffect } from 'react';
 import { useIssueSidePanelStore } from '@/store/issueSidePanelStore';
-import { useGetIssueLazyQuery } from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { IssueSidePanel } from './IssueSidePanel';
 
 export function IssueSidePanelProvider(): React.JSX.Element {
    const { issue, updateIssue } = useIssueSidePanelStore();
-   const [getIssue, { data }] = useGetIssueLazyQuery();
+   const { getIssueById } = useDataStore();
 
    useEffect(() => {
       if (issue?.id) {
-         getIssue({ variables: { where: { id: issue.id } } });
+         // Get the latest issue data from the store
+         const latestIssue = getIssueById(issue.id);
+         if (latestIssue) {
+            updateIssue(latestIssue);
+         }
       }
-   }, [issue?.id, getIssue]);
-
-   useEffect(() => {
-      if (data?.issue) {
-         updateIssue(data.issue);
-      }
-   }, [data, updateIssue]);
+   }, [issue?.id, getIssueById, updateIssue]);
 
    return <IssueSidePanel />;
 }

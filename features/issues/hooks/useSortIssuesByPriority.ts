@@ -1,17 +1,20 @@
 import { useMemo } from 'react';
+import { useDataStore } from '@/libs/client/stores/dataStore';
+import type { Issue } from '@/libs/client/types';
 
-interface IssueWithPriority {
-   issuePriority?: {
-      order?: number;
-   } | null;
-}
+export function useSortIssuesByPriority(issues: Issue[]): Issue[] {
+   const { getPriorityById } = useDataStore();
 
-export function useSortIssuesByPriority<T extends IssueWithPriority>(issues: T[]): T[] {
    return useMemo(() => {
       return issues.slice().sort((a, b) => {
-         const aOrder = a.issuePriority?.order ?? Number.MAX_SAFE_INTEGER;
-         const bOrder = b.issuePriority?.order ?? Number.MAX_SAFE_INTEGER;
-         return aOrder - bOrder;
+         const aPriority = a.priorityId ? getPriorityById(a.priorityId) : null;
+         const bPriority = b.priorityId ? getPriorityById(b.priorityId) : null;
+
+         const aValue = aPriority?.value ?? 0; // No priority = lowest
+         const bValue = bPriority?.value ?? 0;
+
+         // Sort by priority value (higher value = higher priority)
+         return bValue - aValue;
       });
-   }, [issues]);
+   }, [issues, getPriorityById]);
 }

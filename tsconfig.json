@@ -13,8 +13,6 @@
       "isolatedModules": true,
       "jsx": "preserve",
       "incremental": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
       "noImplicitAny": false,
       "noImplicitReturns": false,
       "noImplicitThis": false,
@@ -36,8 +34,6 @@
       "components/**/*.tsx",
       "libs/client/**/*.ts",
       "libs/client/**/*.tsx",
-      "libs/server/**/*.ts",
-      "libs/server/**/*.tsx",
       "features/**/*.ts",
       "features/**/*.tsx",
       "hooks/**/*.ts",
@@ -52,8 +48,6 @@
       "**/*.spec.ts",
       "__tests__",
       "scripts",
-      "**/mock-data/**/*",
-      "prisma/seed.ts",
-      "prisma/migrations"
+      "**/mock-data/**/*"
    ]
 }

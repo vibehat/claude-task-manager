@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-   IssueDetailsFragment,
-   useUpdateIssueMutation,
-} from '@/libs/client/graphql-client/generated';
+import { IssueDetailsFragment } from '@/libs/client/types';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,24 +19,19 @@ interface SubIssueEditFormProps {
 export function SubIssueEditForm({ subIssue, onSuccess, onCancel }: SubIssueEditFormProps) {
    const [title, setTitle] = useState(subIssue.title);
    const [description, setDescription] = useState('');
-   const [updateIssue, { loading }] = useUpdateIssueMutation();
+   const { updateIssue } = useDataStore();
+   const loading = false;
 
-   const handleSave = async () => {
+   const handleSave = () => {
       if (!title.trim()) {
          toast.error('Sub-issue title is required');
          return;
       }
 
       try {
-         await updateIssue({
-            variables: {
-               where: { id: subIssue.id },
-               data: {
-                  title: { set: title.trim() },
-                  description: description.trim() ? { set: description.trim() } : undefined,
-               },
-            },
-            refetchQueries: ['GetIssues', 'GetIssue'],
+         updateIssue(subIssue.id, {
+            title: title.trim(),
+            description: description.trim() || undefined,
          });
 
          toast.success('Sub-issue updated successfully');

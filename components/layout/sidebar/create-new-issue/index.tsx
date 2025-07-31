@@ -25,11 +25,11 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 export function CreateNewIssue(): React.JSX.Element {
    const [createMore, setCreateMore] = useState<boolean>(false);
    const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
-   // TODO: Replace with GraphQL mutation hooks
+   // TODO: Now using local data
    // const { addIssue, getAllIssues } = useIssuesStore();
 
    const generateUniqueIdentifier = useCallback(() => {
-      // TODO: Fetch existing identifiers from GraphQL
+      // TODO: Now using local data
       const identifiers: string[] = []; // getAllIssues().map((issue) => issue.identifier);
       let identifier = Math.floor(Math.random() * 999)
          .toString()
@@ -89,7 +89,7 @@ export function CreateNewIssue(): React.JSX.Element {
          return;
       }
       toast.success('Issue created');
-      // TODO: Replace with GraphQL create mutation
+      // TODO: Now using local data
       // addIssue(addIssueForm);
       if (!createMore) {
          closeModal();

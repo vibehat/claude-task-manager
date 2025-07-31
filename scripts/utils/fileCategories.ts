@@ -144,7 +144,6 @@ export function shouldSkipFile(filePath: string): boolean {
     '.taskmaster',
     '/app/',
     '/scripts/',
-    '/prisma/',
     '/generated/',
   ];
   

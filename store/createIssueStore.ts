@@ -1,16 +1,14 @@
-import type { GetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
+import type { IssueStatus } from '@/libs/client/types';
 import { create } from 'zustand';
-
-type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
 
 interface CreateIssueState {
    isOpen: boolean;
-   defaultStatus: IssueStatusFromQuery | null;
+   defaultStatus: IssueStatus | null;
 
    // Actions
-   openModal: (status?: IssueStatusFromQuery) => void;
+   openModal: (status?: IssueStatus) => void;
    closeModal: () => void;
-   setDefaultStatus: (status: IssueStatusFromQuery | null) => void;
+   setDefaultStatus: (status: IssueStatus | null) => void;
 }
 
 export const useCreateIssueStore = create<CreateIssueState>((set) => ({

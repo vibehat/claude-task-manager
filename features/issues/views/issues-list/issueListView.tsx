@@ -1,41 +1,16 @@
 'use client';
 
-import type { GetIssueStatusesQuery } from '@/libs/client/graphql-client/generated';
+import type { IssueStatus } from '@/libs/client/services/mockDataService';
 import type { FC } from 'react';
-import { useFilterStore } from '@/store/filterStore';
-import { useMemo } from 'react';
 import GroupIssuesList from './GroupIssuesList';
-import type { IssueWhereInput } from '@/libs/client/graphql-client/generated';
-
-type IssueStatusFromQuery = GetIssueStatusesQuery['issueStatuses'][0];
 
 interface IssueListViewProps {
-   statuses: IssueStatusFromQuery[];
+   statuses: IssueStatus[];
    loading?: boolean;
    error?: Error | null;
 }
 
 const IssueListView: FC<IssueListViewProps> = ({ statuses, loading, error }) => {
-   const { filters, hasActiveFilters } = useFilterStore();
-
-   // Convert filter store format to GraphQL filter format
-   const graphqlFilter = useMemo((): IssueWhereInput | undefined => {
-      const baseFilter: IssueWhereInput = {
-         // Filter only parent issues (no parentIssueId)
-         parentIssueId: { equals: null },
-      };
-
-      if (!hasActiveFilters()) return baseFilter;
-
-      return {
-         ...baseFilter,
-         assigneeId: filters.assignee.length > 0 ? { in: filters.assignee } : undefined,
-         projectId: filters.project.length > 0 ? { in: filters.project } : undefined,
-         labels:
-            filters.labels.length > 0 ? { some: { labelId: { in: filters.labels } } } : undefined,
-      };
-   }, [filters, hasActiveFilters]);
-
    if (loading) {
       return (
          <div className="flex items-center justify-center h-64">
@@ -55,7 +30,7 @@ const IssueListView: FC<IssueListViewProps> = ({ statuses, loading, error }) => 
    return (
       <div className="w-full h-full">
          {statuses.map((status) => (
-            <GroupIssuesList key={status.id} status={status} additionalFilter={graphqlFilter} />
+            <GroupIssuesList key={status.id} status={status} />
          ))}
       </div>
    );

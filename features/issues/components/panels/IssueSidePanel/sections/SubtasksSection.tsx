@@ -1,12 +1,10 @@
 'use client';
 
 import { SubtaskItem } from '../../../forms/SubtaskItem';
-import type { GetIssuesQuery } from '@/libs/client/graphql-client/generated';
-
-type IssueFromQuery = GetIssuesQuery['issues'][0];
+import type { Issue } from '@/libs/client/types';
 
 interface SubtasksSectionProps {
-   issue: IssueFromQuery;
+   issue: Issue;
    onSubtaskUpdate?: (subtaskId: string, description: string) => void;
    disabled?: boolean;
 }
@@ -17,7 +15,7 @@ export function SubtasksSection({
    disabled = false,
 }: SubtasksSectionProps): React.JSX.Element | null {
    // If the issue doesn't have a subtask, don't render anything
-   if (!issue.subtask) {
+   if (!issue.subtaskId) {
       return null;
    }
 
@@ -30,7 +28,7 @@ export function SubtasksSection({
 
          <div className="space-y-2">
             <SubtaskItem
-               subtask={issue.subtask}
+               subtask={issue}
                onDescriptionUpdate={onSubtaskUpdate}
                disabled={disabled}
             />

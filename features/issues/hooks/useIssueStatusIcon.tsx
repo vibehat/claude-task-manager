@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { IssueStatus } from '@/libs/client/graphql-client/generated';
+import type { IssueStatus } from '@/libs/client/types';
 import {
    BacklogIcon,
    PausedIcon,
@@ -9,32 +9,18 @@ import {
    CompletedIcon,
 } from '@/components/icons/BacklogIcon';
 
-const iconMapById: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
-   'in-progress': InProgressIcon,
-   'technical-review': TechnicalReviewIcon,
-   'completed': CompletedIcon,
-   'paused': PausedIcon,
-   'to-do': ToDoIcon,
-   'backlog': BacklogIcon,
-};
-
 const iconMapByName: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
-   BacklogIcon: BacklogIcon,
-   PausedIcon: PausedIcon,
-   ToDoIcon: ToDoIcon,
-   InProgressIcon: InProgressIcon,
-   TechnicalReviewIcon: TechnicalReviewIcon,
-   CompletedIcon: CompletedIcon,
+   backlog: BacklogIcon,
+   todo: ToDoIcon,
+   in_progress: InProgressIcon,
+   technical_review: TechnicalReviewIcon,
+   done: CompletedIcon,
+   cancelled: PausedIcon,
 };
 
 export function useIssueStatusIcon(
-   status: Pick<IssueStatus, 'id' | 'iconName'>
+   status: Pick<IssueStatus, 'id' | 'name'>
 ): FC<React.SVGProps<SVGSVGElement>> {
-   // First try to map by iconName
-   if (status.iconName && iconMapByName[status.iconName]) {
-      return iconMapByName[status.iconName];
-   }
-
-   // Fallback to mapping by id
-   return iconMapById[status.id] || ToDoIcon;
+   // Map by status name
+   return iconMapByName[status.name] || ToDoIcon;
 }

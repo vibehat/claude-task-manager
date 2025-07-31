@@ -13,16 +13,24 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filterStore';
-import {
-   useGetIssueStatusesQuery,
-   useGetPrioritiesQuery,
-   useGetUsersQuery,
-   useGetLabelsQuery,
-   useGetProjectsQuery,
-   SortOrder,
-} from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { useIssueStatusIcon } from '../../hooks/useIssueStatusIcon';
 import { getPriorityIcon } from '../../constants/NoPriorityIcon';
+
+const getPriorityIconName = (name: string): string => {
+   switch (name.toLowerCase()) {
+      case 'urgent':
+         return 'UrgentPriorityIcon';
+      case 'high':
+         return 'HighPriorityIcon';
+      case 'medium':
+         return 'MediumPriorityIcon';
+      case 'low':
+         return 'LowPriorityIcon';
+      default:
+         return 'NoPriorityIcon';
+   }
+};
 import {
    CheckIcon,
    ChevronRight,
@@ -45,22 +53,10 @@ export function Filter(): React.JSX.Element {
 
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
 
-   // Fetch data from GraphQL
-   const { data: statusesData } = useGetIssueStatusesQuery();
-   const { data: prioritiesData } = useGetPrioritiesQuery({
-      variables: { orderBy: [{ order: SortOrder.Asc }] },
-   });
-   const { data: usersData } = useGetUsersQuery();
-   const { data: labelsData } = useGetLabelsQuery();
-   const { data: projectsData } = useGetProjectsQuery();
+   // Get data from store
+   const { statuses: allStatus, priorities, users, labels, projects } = useDataStore();
 
-   const allStatus = statusesData?.issueStatuses || [];
-   const priorities = prioritiesData?.issuePriorities || [];
-   const users = usersData?.users || [];
-   const labels = labelsData?.labels || [];
-   const projects = projectsData?.projects || [];
-
-   // TODO: Replace with GraphQL-based filtering
+   // TODO: Now using local data
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
    //    useIssuesStore();
 
@@ -241,7 +237,7 @@ export function Filter(): React.JSX.Element {
                               <CheckIcon size={16} className="ml-auto" />
                            )}
                            <span className="text-muted-foreground text-xs">
-                              {0 /* TODO: Get count from GraphQL */}
+                              {0 /* TODO: Now using local data*/}
                            </span>
                         </CommandItem>
                         {users.map((user) => (
@@ -265,7 +261,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
+                                 {0 /* TODO: Now using local data*/}
                               </span>
                            </CommandItem>
                         ))}
@@ -298,7 +294,7 @@ export function Filter(): React.JSX.Element {
                            >
                               <div className="flex items-center gap-2">
                                  {(() => {
-                                    const Icon = getPriorityIcon(item.iconName);
+                                    const Icon = getPriorityIcon(getPriorityIconName(item.name));
                                     return <Icon className="text-muted-foreground size-4" />;
                                  })()}
                                  {item.name}
@@ -307,7 +303,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
+                                 {0 /* TODO: Now using local data*/}
                               </span>
                            </CommandItem>
                         ))}
@@ -349,7 +345,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
+                                 {0 /* TODO: Now using local data*/}
                               </span>
                            </CommandItem>
                         ))}
@@ -388,7 +384,7 @@ export function Filter(): React.JSX.Element {
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Get count from GraphQL */}
+                                 {0 /* TODO: Now using local data*/}
                               </span>
                            </CommandItem>
                         ))}
@@ -422,9 +418,7 @@ function FilterStatusItem({ item, isSelected, onSelect }: FilterStatusItemProps)
             {item.name}
          </div>
          {isSelected && <CheckIcon size={16} className="ml-auto" />}
-         <span className="text-muted-foreground text-xs">
-            {0 /* TODO: Get count from GraphQL */}
-         </span>
+         <span className="text-muted-foreground text-xs">{0 /* TODO: Now using local data*/}</span>
       </CommandItem>
    );
 }

@@ -5,14 +5,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useUpdateIssueStore } from '@/store/updateIssueStore';
-import { useUpdateIssueMutation } from '@/libs/client/graphql-client/generated';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Label } from '@/components/ui/label';
 
 export function UpdateIssueModal(): React.JSX.Element {
    const { isOpen, issue, closeModal } = useUpdateIssueStore();
-   const [updateIssue, { loading: updating }] = useUpdateIssueMutation();
+   const { updateIssue } = useDataStore();
+   const [updating, setUpdating] = useState(false);
 
    // Form state
    const [title, setTitle] = useState('');
@@ -30,23 +31,18 @@ export function UpdateIssueModal(): React.JSX.Element {
       if (!issue) return;
 
       try {
-         await updateIssue({
-            variables: {
-               where: {
-                  id: issue.id,
-               },
-               data: {
-                  title: { set: title },
-                  description: { set: description },
-               },
-            },
-            refetchQueries: ['GetIssues'],
+         setUpdating(true);
+         updateIssue(issue.id, {
+            title,
+            description,
          });
          toast.success('Issue updated successfully');
          closeModal();
       } catch (error) {
          toast.error('Failed to update issue');
          console.error('Update issue error:', error);
+      } finally {
+         setUpdating(false);
       }
    };
 
@@ -61,7 +57,7 @@ export function UpdateIssueModal(): React.JSX.Element {
             <DialogHeader>
                <DialogTitle>
                   <div className="flex items-center gap-2">
-                     <span className="text-muted-foreground">{issue?.identifier || 'Issue'}</span>
+                     <span className="text-muted-foreground">{issue?.id || 'Issue'}</span>
                      <span>Update Issue</span>
                   </div>
                </DialogTitle>

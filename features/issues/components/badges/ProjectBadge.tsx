@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import type { Project } from '@/libs/client/graphql-client/generated';
+import type { Project } from '@/libs/client/types';
 import Link from 'next/link';
 import { FolderIcon } from 'lucide-react';
 
