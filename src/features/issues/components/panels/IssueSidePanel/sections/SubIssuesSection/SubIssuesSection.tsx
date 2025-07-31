@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IssueDetailsFragment } from '@/libs/client/types';
+import type { IssueDetailsFragment } from '@/libs/client/types';
 import { GitBranch, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SubIssueCreateForm } from './SubIssueCreateForm';

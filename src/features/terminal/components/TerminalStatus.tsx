@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Terminal, Wifi, WifiOff, AlertCircle, RotateCcw } from 'lucide-react';
-import { TerminalStatusProps, TerminalConnectionStatus } from '../types/terminal';
+import type { TerminalStatusProps } from '../types/terminal';
+import { TerminalConnectionStatus } from '../types/terminal';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/libs/client/utils';
 

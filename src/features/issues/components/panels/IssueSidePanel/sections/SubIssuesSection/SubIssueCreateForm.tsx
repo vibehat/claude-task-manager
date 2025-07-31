@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Issue } from '@/libs/client/services/mockDataService';
+import type { Issue } from '@/libs/client/types/dataModels';
 import { useIssueMutations } from '@/libs/client/hooks/useIssues';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

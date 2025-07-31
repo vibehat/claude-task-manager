@@ -4,13 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Terminal } from '@xterm/xterm';
 import type { FitAddon } from '@xterm/addon-fit';
 import type { WebLinksAddon } from '@xterm/addon-web-links';
-import {
-   TerminalConnectionStatus,
-   TerminalMessage,
-   TerminalSession,
-   UseTerminalReturn,
-   TerminalTheme,
-} from '../types/terminal';
+import type { TerminalMessage, TerminalSession, UseTerminalReturn } from '../types/terminal';
+import { TerminalConnectionStatus, TerminalTheme } from '../types/terminal';
 import { getXTermConfig, getWebSocketUrl, getThemeForMode } from '../utils/terminalConfig';
 
 interface UseTerminalOptions {
@@ -52,6 +47,12 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
 
    // Send input to terminal
    const sendInput = useCallback((data: string) => {
+      console.log(
+         'Sending input to WebSocket:',
+         data,
+         'WebSocket state:',
+         webSocketRef.current?.readyState
+      ); // Debug logging
       if (webSocketRef.current && webSocketRef.current.readyState === WebSocket.OPEN) {
          webSocketRef.current.send(
             JSON.stringify({
@@ -59,6 +60,8 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
                data,
             })
          );
+      } else {
+         console.warn('WebSocket not available for input:', webSocketRef.current?.readyState);
       }
    }, []);
 
@@ -87,6 +90,7 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
 
          // Set up input handler immediately after terminal creation
          const disposable = terminal.onData((data) => {
+            console.log('Terminal input received:', data); // Debug logging
             sendInput(data);
          });
 

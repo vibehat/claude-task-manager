@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDataStore } from '../stores/dataStore';
 import { useIssuesFilterStore } from '@/features/issues/store/issueFilterStore';
-import { Issue } from '../services/mockDataService';
+import type { Issue } from '../types/dataModels';
 
 export interface UseIssuesOptions {
    skip?: boolean;

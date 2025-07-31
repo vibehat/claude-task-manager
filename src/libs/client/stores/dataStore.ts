@@ -1,16 +1,11 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import {
-   mockDataService,
-   User,
-   Project,
-   Label,
-   IssueStatus,
-   IssuePriority,
-   Issue,
-} from '../services/mockDataService';
-import { syncService, SyncOptions } from '../services/syncService';
+import type { User, Project, Label, IssueStatus, IssuePriority, Issue } from '../types/dataModels';
+import type { SyncOptions } from '../services/syncService';
+import { syncService } from '../services/syncService';
 import { taskMasterService } from '../services/taskMasterService';
+import { taskManagerDataService } from '../services/taskManagerDataService';
+import { taskMasterUpdateService } from '../services/taskMasterUpdateService';
 
 interface DataState {
    // Data
@@ -59,7 +54,7 @@ interface DataState {
 
    // Issue actions
    addIssue: (issue: Omit<Issue, 'id' | 'createdAt' | 'updatedAt' | 'orderIndex'>) => Issue;
-   updateIssue: (id: string, updates: Partial<Issue>) => void;
+   updateIssue: (id: string, updates: Partial<Issue>) => Promise<void>;
    deleteIssue: (id: string) => void;
    bulkUpdateIssues: (ids: string[], updates: Partial<Issue>) => void;
 
@@ -96,27 +91,55 @@ export const useDataStore = create<DataState>()(
          isLoading: false,
          isInitialized: false,
 
-         // Initialize with mock data and optionally TaskMaster
-         initialize: async (enableTaskMaster = false) => {
+         // Initialize with TaskMaster data as primary source
+         initialize: async (enableTaskMaster = true) => {
             if (get().isInitialized) return;
 
             set({ isLoading: true });
 
             try {
-               await mockDataService.simulateDelay(500);
-               const data = mockDataService.generateAllData();
-               console.log('DataStore initialization - generated data:', data);
+               console.log('DataStore initialization - loading TaskMaster data...');
 
-               // Check if TaskMaster should be enabled
+               // Load additional UI data from taskmanager.json
+               let uiData = {
+                  users: [] as User[],
+                  projects: [] as Project[],
+                  labels: [] as Label[],
+                  statuses: [] as IssueStatus[],
+                  priorities: [] as IssuePriority[],
+                  issues: [] as Issue[],
+               };
+
+               // Try to load UI data from taskmanager.json
+               try {
+                  const taskManagerData = await taskManagerDataService.readTaskManagerData();
+                  if (taskManagerData) {
+                     uiData = {
+                        users: taskManagerData.users,
+                        projects: taskManagerData.projects,
+                        labels: taskManagerData.labels,
+                        statuses: taskManagerData.statuses,
+                        priorities: taskManagerData.priorities,
+                        issues: taskManagerData.additionalIssues,
+                     };
+                     console.log('Loaded UI data from taskmanager.json');
+                  }
+               } catch (error) {
+                  console.warn('Failed to load UI data from taskmanager.json:', error);
+               }
+
+               // Always check if TaskMaster should be enabled (unless explicitly disabled)
                const shouldEnableTaskMaster =
-                  enableTaskMaster || (await taskMasterService.isAvailable());
+                  enableTaskMaster && (await taskMasterService.isAvailable());
 
                if (shouldEnableTaskMaster) {
+                  console.log('TaskMaster available - syncing data...');
                   // Try to sync TaskMaster data
                   try {
                      const syncResult = await syncService.syncTaskMasterData({
                         onSyncStart: () => set({ taskMasterSyncStatus: 'syncing' }),
                         onSyncComplete: (issues) => {
+                           console.log(`TaskMaster sync complete - ${issues.length} issues loaded`);
                            set((state) => ({
                               issues: [...state.issues, ...issues],
                               taskMasterSyncStatus: 'synced',
@@ -124,22 +147,28 @@ export const useDataStore = create<DataState>()(
                            }));
                         },
                         onSyncError: (error) => {
+                           console.error('TaskMaster sync error:', error);
                            set({
                               taskMasterSyncStatus: 'error',
                               taskMasterError: error.message,
                            });
                         },
+                        enableRealTimeSync: true, // Enable real-time sync by default
                      });
 
                      if (syncResult.success) {
-                        data.issues = [...data.issues, ...syncResult.issues];
-                        data.labels = [...data.labels, ...syncResult.labels];
-                        data.projects = [...data.projects, ...syncResult.projects];
+                        // Merge TaskMaster data with UI data (TaskMaster issues take precedence)
+                        uiData.issues = [...uiData.issues, ...syncResult.issues];
+                        uiData.labels = [...uiData.labels, ...syncResult.labels];
+                        uiData.projects = [...uiData.projects, ...syncResult.projects];
 
                         set({
                            isTaskMasterEnabled: true,
                            taskMasterSyncStatus: 'synced',
+                           isRealTimeSyncActive: true,
                         });
+
+                        console.log('TaskMaster integration enabled successfully');
                      }
                   } catch (error) {
                      console.warn('TaskMaster sync failed during initialization:', error);
@@ -148,16 +177,20 @@ export const useDataStore = create<DataState>()(
                         taskMasterError: (error as Error).message,
                      });
                   }
+               } else {
+                  console.log('TaskMaster not available - using UI data only');
                }
 
-               console.log('DataStore - setting final data:', data);
+               // Set final data state
                set({
-                  ...data,
+                  ...uiData,
                   isLoading: false,
                   isInitialized: true,
                });
-               console.log('DataStore - final state after set:', get());
+
+               console.log(`DataStore initialized with ${uiData.issues.length} issues total`);
             } catch (error) {
+               console.error('DataStore initialization failed:', error);
                set({
                   isLoading: false,
                   taskMasterSyncStatus: 'error',
@@ -170,6 +203,7 @@ export const useDataStore = create<DataState>()(
          reset: () => {
             // Stop any active sync before reset
             syncService.stopRealTimeSync();
+            taskMasterService.stopWatching();
 
             set({
                users: [],
@@ -312,6 +346,10 @@ export const useDataStore = create<DataState>()(
                updatedAt: new Date(),
             };
             set((state) => ({ users: [...state.users, newUser] }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.addUser(userData).catch(console.warn);
+
             return newUser;
          },
 
@@ -321,6 +359,9 @@ export const useDataStore = create<DataState>()(
                   user.id === id ? { ...user, ...updates, updatedAt: new Date() } : user
                ),
             }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.updateUser(id, updates).catch(console.warn);
          },
 
          deleteUser: (id) => {
@@ -331,6 +372,9 @@ export const useDataStore = create<DataState>()(
                   issue.assigneeId === id ? { ...issue, assigneeId: undefined } : issue
                ),
             }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.deleteUser(id).catch(console.warn);
          },
 
          // Project actions
@@ -342,6 +386,10 @@ export const useDataStore = create<DataState>()(
                updatedAt: new Date(),
             };
             set((state) => ({ projects: [...state.projects, newProject] }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.addProject(projectData).catch(console.warn);
+
             return newProject;
          },
 
@@ -351,6 +399,9 @@ export const useDataStore = create<DataState>()(
                   project.id === id ? { ...project, ...updates, updatedAt: new Date() } : project
                ),
             }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.updateProject(id, updates).catch(console.warn);
          },
 
          deleteProject: (id) => {
@@ -361,6 +412,9 @@ export const useDataStore = create<DataState>()(
                   issue.projectId === id ? { ...issue, projectId: undefined } : issue
                ),
             }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.deleteProject(id).catch(console.warn);
          },
 
          // Label actions
@@ -372,6 +426,10 @@ export const useDataStore = create<DataState>()(
                updatedAt: new Date(),
             };
             set((state) => ({ labels: [...state.labels, newLabel] }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.addLabel(labelData).catch(console.warn);
+
             return newLabel;
          },
 
@@ -381,6 +439,9 @@ export const useDataStore = create<DataState>()(
                   label.id === id ? { ...label, ...updates, updatedAt: new Date() } : label
                ),
             }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.updateLabel(id, updates).catch(console.warn);
          },
 
          deleteLabel: (id) => {
@@ -392,6 +453,9 @@ export const useDataStore = create<DataState>()(
                   labelIds: issue.labelIds.filter((labelId) => labelId !== id),
                })),
             }));
+
+            // Persist to taskmanager.json
+            taskManagerDataService.deleteLabel(id).catch(console.warn);
          },
 
          // Issue actions
@@ -405,23 +469,63 @@ export const useDataStore = create<DataState>()(
                updatedAt: new Date(),
             };
             set((state) => ({ issues: [...state.issues, newIssue] }));
+
+            // Only persist additional issues (not TaskMaster issues) to taskmanager.json
+            if (!newIssue.taskId) {
+               taskManagerDataService.addAdditionalIssue(issueData).catch(console.warn);
+            }
+
             return newIssue;
          },
 
-         updateIssue: (id, updates) => {
+         updateIssue: async (id, updates) => {
+            const currentIssue = get().issues.find((i) => i.id === id);
+
+            // Update the local state immediately for responsive UI
             set((state) => ({
                issues: state.issues.map((issue) =>
                   issue.id === id ? { ...issue, ...updates, updatedAt: new Date() } : issue
                ),
             }));
+
+            if (currentIssue) {
+               // Handle TaskMaster issue updates
+               if (currentIssue.taskId && updates.statusId) {
+                  try {
+                     const result = await taskMasterUpdateService.updateTaskStatusSafe({
+                        taskId: currentIssue.taskId,
+                        subtaskId: currentIssue.subtaskId,
+                        status: updates.statusId,
+                     });
+
+                     if (!result.success) {
+                        console.warn('TaskMaster update failed:', result.error);
+                        // Could implement optimistic update rollback here if needed
+                     }
+                  } catch (error) {
+                     console.error('TaskMaster update error:', error);
+                  }
+               }
+               // Handle regular issues (persist to taskmanager.json)
+               else if (!currentIssue.taskId) {
+                  taskManagerDataService.updateAdditionalIssue(id, updates).catch(console.warn);
+               }
+            }
          },
 
          deleteIssue: (id) => {
+            const issue = get().issues.find((i) => i.id === id);
+
             set((state) => ({
                issues: state.issues.filter(
                   (issue) => issue.id !== id && issue.parentIssueId !== id
                ),
             }));
+
+            // Only persist additional issues (not TaskMaster issues) to taskmanager.json
+            if (issue && !issue.taskId) {
+               taskManagerDataService.deleteAdditionalIssue(id).catch(console.warn);
+            }
          },
 
          bulkUpdateIssues: (ids, updates) => {

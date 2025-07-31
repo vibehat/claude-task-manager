@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDataStore } from '../stores/dataStore';
-import { SyncOptions } from '../services/syncService';
-import { Issue } from '../services/mockDataService';
+import type { SyncOptions } from '../services/syncService';
+import type { Issue } from '../types/dataModels';
 
 export interface UseTaskMasterSyncResult {
    // State

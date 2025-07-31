@@ -1,6 +1,6 @@
 'use client';
 
-import type { IssueStatus } from '@/libs/client/services/mockDataService';
+import type { IssueStatus } from '@/libs/client/types/dataModels';
 import { cn } from '@/libs/client/utils';
 import { Plus } from 'lucide-react';
 import { useIssueStatusIcon } from '../../hooks/useIssueStatusIcon';
@@ -9,7 +9,6 @@ import { useCreateIssueStore } from '@/store/createIssueStore';
 import { useSortIssuesByPriority } from '@/features/issues/hooks/useSortIssuesByPriority';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { IssueLine } from '../../components/items/IssueLine';
-import { useMemo } from 'react';
 
 interface GroupIssuesListProps {
    status: IssueStatus;
@@ -19,13 +18,12 @@ function GroupIssuesList({ status }: GroupIssuesListProps): React.JSX.Element {
    const { openModal } = useCreateIssueStore();
    const StatusIcon = useIssueStatusIcon(status);
 
-   // Get issues filtered by status
-   const getIssuesByStatus = useDataStore((state) => state.getIssuesByStatus);
-   const issues = useMemo(() => {
-      const statusIssues = getIssuesByStatus(status.id);
+   // Get issues filtered by status - subscribe to issues array changes
+   const issues = useDataStore((state) => {
+      const statusIssues = state.issues.filter((issue) => issue.statusId === status.id);
       // Filter parent issues only
       return statusIssues.filter((issue) => !issue.parentIssueId);
-   }, [getIssuesByStatus, status.id]);
+   });
 
    const count = issues.length;
    const sortedIssues = useSortIssuesByPriority(issues);

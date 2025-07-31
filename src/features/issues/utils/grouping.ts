@@ -2,8 +2,8 @@
  * Issue Grouping Utilities
  */
 
-import { Issue } from '../types/issueTypes';
-import { GroupByOption } from '../types/viewsTypes';
+import type { Issue } from '../types/issueTypes';
+import type { GroupByOption } from '../types/viewsTypes';
 
 export interface IssueGroup {
    key: string;
@@ -273,7 +273,7 @@ export function sortGroups(
 /**
  * Filter groups by minimum count
  */
-export function filterGroupsByCount(groups: IssueGroup[], minCount: number = 1): IssueGroup[] {
+export function filterGroupsByCount(groups: IssueGroup[], minCount = 1): IssueGroup[] {
    return groups.filter((group) => group.count >= minCount);
 }
 

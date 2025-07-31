@@ -1,4 +1,4 @@
-import { Issue, IssueStatus, IssuePriority } from './mockDataService';
+import type { Issue, IssueStatus, IssuePriority } from '../types/dataModels';
 
 export interface TaskMasterTask {
    id: number;
@@ -49,17 +49,29 @@ class TaskMasterService {
    }
 
    async readTasksJson(): Promise<TaskMasterData | null> {
-      // Client-side: Would need to fetch from API endpoint
-      // For now, return null to indicate TaskMaster is not available
-      return null;
+      try {
+         const response = await fetch('/api/taskmaster/tasks');
+         if (!response.ok) {
+            if (response.status === 404) {
+               console.log('TaskMaster tasks.json not found');
+               return null;
+            }
+            throw new Error(`Failed to fetch tasks: ${response.statusText}`);
+         }
+         const data = await response.json();
+         return data as TaskMasterData;
+      } catch (error) {
+         console.warn('Failed to read TaskMaster tasks:', error);
+         return null;
+      }
    }
 
-   async getAllTasks(tagName: string = 'master'): Promise<TaskMasterTask[]> {
+   async getAllTasks(tagName = 'master'): Promise<TaskMasterTask[]> {
       const data = await this.readTasksJson();
       return data?.[tagName]?.tasks || [];
    }
 
-   async getTaskById(id: number, tagName: string = 'master'): Promise<TaskMasterTask | null> {
+   async getTaskById(id: number, tagName = 'master'): Promise<TaskMasterTask | null> {
       const tasks = await this.getAllTasks(tagName);
       return tasks.find((task) => task.id === id) || null;
    }
@@ -67,7 +79,7 @@ class TaskMasterService {
    async getSubtaskById(
       taskId: number,
       subtaskId: number,
-      tagName: string = 'master'
+      tagName = 'master'
    ): Promise<TaskMasterSubtask | null> {
       const task = await this.getTaskById(taskId, tagName);
       return task?.subtasks.find((subtask) => subtask.id === subtaskId) || null;
@@ -154,7 +166,7 @@ class TaskMasterService {
       return labels;
    }
 
-   async convertAllTasksToIssues(tagName: string = 'master'): Promise<Issue[]> {
+   async convertAllTasksToIssues(tagName = 'master'): Promise<Issue[]> {
       const tasks = await this.getAllTasks(tagName);
       const issues: Issue[] = [];
       let orderIndex = 0;
@@ -182,23 +194,32 @@ class TaskMasterService {
       };
    }
 
-   private async notifyWatchers(tagName: string = 'master'): Promise<void> {
+   private async notifyWatchers(tagName = 'master'): Promise<void> {
       const tasks = await this.getAllTasks(tagName);
       this.watchers.forEach((callback) => callback(tasks));
    }
 
    // Initialize file watcher (client-side implementation would use different approach)
-   async startWatching(tagName: string = 'master'): Promise<void> {
+   async startWatching(tagName = 'master'): Promise<void> {
       if (typeof window !== 'undefined') {
-         // Client-side: use polling or server-sent events
-         this.startPolling(tagName);
+         // Client-side: prefer SSE over polling for better performance
+         this.startServerSentEvents(tagName);
       } else {
          // Server-side: use fs.watch
          this.startFileSystemWatcher(tagName);
       }
    }
 
-   private startPolling(tagName: string = 'master', interval: number = 2000): void {
+   // Stop watching and cleanup resources
+   stopWatching(): void {
+      if ((this as any).eventSource) {
+         (this as any).eventSource.close();
+         delete (this as any).eventSource;
+      }
+      // Clear any active polling timeouts would need additional tracking
+   }
+
+   private startPolling(tagName = 'master', interval = 2000): void {
       let lastModified: string | null = null;
 
       const poll = async () => {
@@ -220,7 +241,38 @@ class TaskMasterService {
       poll();
    }
 
-   private async startFileSystemWatcher(tagName: string = 'master'): Promise<void> {
+   // Start server-sent events for real-time updates
+   private startServerSentEvents(tagName = 'master'): void {
+      if (typeof EventSource === 'undefined') {
+         console.warn('EventSource not supported, falling back to polling');
+         this.startPolling(tagName);
+         return;
+      }
+
+      const eventSource = new EventSource(`/api/taskmaster/watch?tag=${tagName}`);
+
+      eventSource.onmessage = async (event) => {
+         try {
+            const data = JSON.parse(event.data);
+            if (data.type === 'task-update') {
+               await this.notifyWatchers(tagName);
+            }
+         } catch (error) {
+            console.warn('EventSource message error:', error);
+         }
+      };
+
+      eventSource.onerror = (error) => {
+         console.warn('EventSource error, falling back to polling:', error);
+         eventSource.close();
+         this.startPolling(tagName);
+      };
+
+      // Store reference for cleanup
+      (this as any).eventSource = eventSource;
+   }
+
+   private async startFileSystemWatcher(tagName = 'master'): Promise<void> {
       // Client-side: No file system access, fallback to polling
       console.warn('File system watcher not available in browser, using polling');
       this.startPolling(tagName);
@@ -311,9 +363,13 @@ class TaskMasterService {
 
    // Check if TaskMaster is available
    async isAvailable(): Promise<boolean> {
-      // Client-side: TaskMaster integration would require API endpoint
-      // For now, return false to indicate it's not available
-      return false;
+      try {
+         const response = await fetch('/api/taskmaster/status');
+         return response.ok;
+      } catch (error) {
+         console.warn('Failed to check TaskMaster availability:', error);
+         return false;
+      }
    }
 }
 

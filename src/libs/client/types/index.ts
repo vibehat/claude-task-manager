@@ -1,4 +1,4 @@
-// Re-export all types from mockDataService for easy imports
+// Re-export all types from dataModels for easy imports
 export type {
    User,
    Project,
@@ -7,17 +7,10 @@ export type {
    IssuePriority,
    Issue,
    SubIssue,
-} from '../services/mockDataService';
+} from './dataModels';
 
 // Import types for legacy compatibility
-import type {
-   User,
-   Project,
-   Label,
-   IssueStatus,
-   IssuePriority,
-   Issue,
-} from '../services/mockDataService';
+import type { User, Project, Label, IssueStatus, IssuePriority, Issue } from './dataModels';
 
 // Legacy type aliases for compatibility
 export type GetIssuesQuery = {

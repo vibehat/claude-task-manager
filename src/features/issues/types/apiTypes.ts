@@ -2,7 +2,7 @@
  * API Response Types for Issues
  */
 
-import { Issue, IssueConnection, PageInfo } from './issueTypes';
+import type { Issue, IssueConnection, PageInfo } from './issueTypes';
 
 // Query response types
 export interface IssuesQueryResponse {

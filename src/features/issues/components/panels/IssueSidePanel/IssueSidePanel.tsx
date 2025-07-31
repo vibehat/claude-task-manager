@@ -30,7 +30,7 @@ export function IssueSidePanel(): React.JSX.Element {
 
       try {
          // Update the issue using Zustand store
-         updateIssue(issue.id, { [field]: value });
+         await updateIssue(issue.id, { [field]: value });
 
          // Update the issue in the side panel store with the updated value
          updateIssueInStore({ ...issue, [field]: value });
@@ -62,7 +62,7 @@ export function IssueSidePanel(): React.JSX.Element {
 
       try {
          // Update the issue using Zustand store
-         updateIssue(issue.id, { labelIds });
+         await updateIssue(issue.id, { labelIds });
 
          // Update the issue in the side panel store with the updated labels
          updateIssueInStore({ ...issue, labelIds });

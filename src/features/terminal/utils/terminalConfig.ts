@@ -1,4 +1,4 @@
-import { TerminalConfig, TerminalTheme } from '../types/terminal';
+import type { TerminalConfig, TerminalTheme } from '../types/terminal';
 
 // Default terminal themes
 export const lightTheme: TerminalTheme = {

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IssueDetailsFragment } from '@/libs/client/types';
+import type { IssueDetailsFragment } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

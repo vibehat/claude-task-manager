@@ -1,6 +1,6 @@
 'use client';
 
-import type { IssueStatus } from '@/libs/client/services/mockDataService';
+import type { IssueStatus } from '@/libs/client/types/dataModels';
 import type { FC } from 'react';
 import GroupIssuesList from './GroupIssuesList';
 

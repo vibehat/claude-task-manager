@@ -2,7 +2,8 @@
  * Issue Helper Utilities
  */
 
-import { Issue, IssueStatus, IssuePriority } from '../types/issueTypes';
+import type { Issue } from '../types/issueTypes';
+import { IssueStatus, IssuePriority } from '../types/issueTypes';
 
 /**
  * Generate a unique identifier for an issue
@@ -113,7 +114,7 @@ export function getRelativeTime(date: Date): string {
 /**
  * Truncate issue title for display
  */
-export function truncateTitle(title: string, maxLength: number = 50): string {
+export function truncateTitle(title: string, maxLength = 50): string {
    if (title.length <= maxLength) return title;
    return title.substring(0, maxLength - 3) + '...';
 }
@@ -136,7 +137,7 @@ export function extractMentions(text: string): string[] {
 /**
  * Format issue description for display (strip markdown, limit length)
  */
-export function formatIssueDescription(description: string, maxLength: number = 100): string {
+export function formatIssueDescription(description: string, maxLength = 100): string {
    // Remove markdown formatting
    const plainText = description
       .replace(/[#*`_~]/g, '') // Remove markdown symbols

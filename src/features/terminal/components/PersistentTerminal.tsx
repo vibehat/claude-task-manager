@@ -5,7 +5,8 @@ import { useTerminalContext } from '../contexts/TerminalContext';
 import { useTerminal } from '../hooks/useTerminal';
 import { TerminalStatus } from './TerminalStatus';
 import { XTermStyles } from './XTermStyles';
-import { TerminalConnectionStatus, PersistentTerminalProps } from '../types/terminal';
+import type { PersistentTerminalProps } from '../types/terminal';
+import { TerminalConnectionStatus } from '../types/terminal';
 import { cn } from '@/libs/client/utils';
 import { X, Minimize2, Maximize2, Move } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -85,13 +86,14 @@ export function PersistentTerminal({
 
          // Focus the terminal and fit to container after mounting
          setTimeout(() => {
+            console.log(`Focusing terminal ${terminalId} after mount`); // Debug logging
             terminalInstanceToMount.focus();
             fit();
          }, 100);
       } catch (err) {
          console.error('Error mounting persistent terminal:', err);
       }
-   }, [terminal, initializeTerminal, fit]);
+   }, [terminal, initializeTerminal, fit, terminalId]);
 
    // Setup resize observer
    useEffect(() => {
@@ -127,6 +129,20 @@ export function PersistentTerminal({
       }
    }, [connect, connectionStatus]);
 
+   // Focus terminal when it becomes active and is connected
+   useEffect(() => {
+      if (
+         terminal &&
+         isConnected &&
+         !isMinimized &&
+         multiTerminalStore.activeTerminalId === terminalId
+      ) {
+         setTimeout(() => {
+            terminal.focus();
+         }, 100);
+      }
+   }, [terminal, isConnected, isMinimized, multiTerminalStore.activeTerminalId, terminalId]);
+
    // Handle reconnect
    const handleReconnect = useCallback(() => {
       disconnect();
@@ -149,8 +165,14 @@ export function PersistentTerminal({
    }, [terminalId, onClose]);
 
    const handleFocus = useCallback(() => {
+      // Ensure terminal is properly focused for input
+      if (terminal && !isMinimized) {
+         setTimeout(() => {
+            terminal.focus();
+         }, 0);
+      }
       onFocus?.(terminalId);
-   }, [terminalId, onFocus]);
+   }, [terminalId, onFocus, terminal, isMinimized]);
 
    // Handle dragging
    const handleMouseDown = useCallback(
@@ -259,6 +281,7 @@ export function PersistentTerminal({
                      height: isMaximized ? 'calc(100% - 100px)' : 'calc(100% - 90px)',
                      minHeight: '200px',
                   }}
+                  onClick={handleFocus}
                />
 
                {/* Loading Overlay */}

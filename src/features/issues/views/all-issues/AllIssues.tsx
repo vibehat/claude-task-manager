@@ -25,16 +25,6 @@ function AllIssues(): React.JSX.Element {
       return [...statuses].sort((a, b) => a.order - b.order);
    }, [statuses]);
 
-   // Debug logging
-   console.log('AllIssues debug:', {
-      statusesLoading,
-      statusesError,
-      statuses,
-      sortedStatuses,
-      isSearching,
-      isViewTypeGrid,
-   });
-
    // Show loading state while fetching statuses
    if (statusesLoading) {
       return (

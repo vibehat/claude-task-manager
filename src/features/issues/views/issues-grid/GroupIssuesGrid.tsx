@@ -26,9 +26,10 @@ function GroupIssuesGrid({ status, additionalFilter }: GroupIssuesGridProps): Re
    const { openModal } = useCreateIssueStore();
    const StatusIcon = useIssueStatusIcon(status);
 
-   // Fetch issues for this specific status
-   const { getIssuesByStatus } = useDataStore();
-   const issues = getIssuesByStatus(status.id);
+   // Fetch issues for this specific status - subscribe to issues array changes
+   const issues = useDataStore((state) =>
+      state.issues.filter((issue) => issue.statusId === status.id)
+   );
    const loading = false;
    const error = null;
 

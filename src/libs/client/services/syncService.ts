@@ -1,5 +1,6 @@
-import { taskMasterService, TaskMasterTask } from './taskMasterService';
-import { Issue, Label, Project } from './mockDataService';
+import type { TaskMasterTask } from './taskMasterService';
+import { taskMasterService } from './taskMasterService';
+import type { Issue, Label, Project } from '../types/dataModels';
 
 export interface SyncOptions {
    tagName?: string;
@@ -174,7 +175,7 @@ class SyncService {
       return this.isWatching;
    }
 
-   async getTaskMasterStats(tagName: string = 'master'): Promise<{
+   async getTaskMasterStats(tagName = 'master'): Promise<{
       totalTasks: number;
       totalSubtasks: number;
       tasksByStatus: Record<string, number>;
@@ -205,7 +206,7 @@ class SyncService {
    // Manual sync trigger
    async forceSyncNow(
       updateCallback: (issues: Issue[]) => void,
-      tagName: string = 'master'
+      tagName = 'master'
    ): Promise<void> {
       try {
          const result = await this.syncTaskMasterData({ tagName });

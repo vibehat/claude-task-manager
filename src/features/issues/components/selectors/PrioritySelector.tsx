@@ -48,12 +48,16 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps): 
       setValue(priorityId || 'no-priority');
    }, [priorityId]);
 
-   const handlePriorityChange = (priorityId: string): void => {
+   const handlePriorityChange = async (priorityId: string): Promise<void> => {
       setValue(priorityId);
       setOpen(false);
 
       if (issueId) {
-         updateIssue(issueId, { priorityId });
+         try {
+            await updateIssue(issueId, { priorityId });
+         } catch (error) {
+            console.error('Failed to update issue priority:', error);
+         }
       }
    };
 

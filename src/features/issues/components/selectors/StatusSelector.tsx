@@ -33,12 +33,18 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
       setValue(statusId || 'to-do');
    }, [statusId]);
 
-   const handleStatusChange = (statusId: string): void => {
+   const handleStatusChange = async (statusId: string): Promise<void> => {
       setValue(statusId);
       setOpen(false);
 
       if (issueId) {
-         updateIssue(issueId, { statusId });
+         try {
+            await updateIssue(issueId, { statusId });
+         } catch (error) {
+            console.error('Failed to update issue status:', error);
+            // Optionally revert the UI state on error
+            setValue(status?.id || 'to-do');
+         }
       }
    };
 
@@ -89,7 +95,7 @@ export function StatusSelector({ status, issueId }: StatusSelectorProps): React.
 interface StatusSelectorItemProps {
    item: any;
    value: string;
-   onSelect: (statusId: string) => void;
+   onSelect: (statusId: string) => Promise<void>;
 }
 
 function StatusSelectorItem({ item, value, onSelect }: StatusSelectorItemProps) {

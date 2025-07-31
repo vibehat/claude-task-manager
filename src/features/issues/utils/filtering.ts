@@ -2,8 +2,8 @@
  * Issue Filtering Utilities
  */
 
-import { Issue } from '../types/issueTypes';
-import { IssueFilterInput } from '../types/filtersTypes';
+import type { Issue } from '../types/issueTypes';
+import type { IssueFilterInput } from '../types/filtersTypes';
 
 /**
  * Filter issues based on provided criteria

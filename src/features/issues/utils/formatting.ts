@@ -2,7 +2,7 @@
  * Issue Formatting Utilities
  */
 
-import { Issue } from '../types/issueTypes';
+import type { Issue } from '../types/issueTypes';
 
 /**
  * Format issue identifier for display
@@ -14,7 +14,7 @@ export function formatIssueIdentifier(issue: Issue): string {
 /**
  * Format issue title with identifier
  */
-export function formatIssueTitle(issue: Issue, includeIdentifier: boolean = true): string {
+export function formatIssueTitle(issue: Issue, includeIdentifier = true): string {
    if (includeIdentifier) {
       return `${formatIssueIdentifier(issue)} ${issue.title}`;
    }
@@ -179,7 +179,7 @@ export function formatLabels(labels: Array<{ name: string }>): string {
 /**
  * Format issue description for preview
  */
-export function formatIssuePreview(description: string, maxLength: number = 100): string {
+export function formatIssuePreview(description: string, maxLength = 100): string {
    if (!description) return 'No description';
 
    // Remove markdown formatting

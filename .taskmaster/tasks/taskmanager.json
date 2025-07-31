@@ -1,0 +1,162 @@
+{
+   "users": [
+      {
+         "id": "user-1",
+         "name": "John Doe",
+         "email": "john.doe@example.com",
+         "avatarUrl": "https://api.dicebear.com/7.x/avataaars/svg?seed=John Doe",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "user-2",
+         "name": "Jane Smith",
+         "email": "jane.smith@example.com",
+         "avatarUrl": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane Smith",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "user-3",
+         "name": "Bob Johnson",
+         "email": "bob.johnson@example.com",
+         "avatarUrl": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob Johnson",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      }
+   ],
+   "projects": [
+      {
+         "id": "project-personal",
+         "name": "Personal Tasks",
+         "description": "Individual task management",
+         "teamId": "team-individual",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      }
+   ],
+   "labels": [
+      {
+         "id": "label-feature",
+         "name": "feature",
+         "color": "#3498db",
+         "description": "New feature or request",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "label-bug",
+         "name": "bug",
+         "color": "#e74c3c",
+         "description": "Something isn't working",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "label-enhancement",
+         "name": "enhancement",
+         "color": "#2ecc71",
+         "description": "Improvement to existing feature",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "label-documentation",
+         "name": "documentation",
+         "color": "#f39c12",
+         "description": "Improvements or additions to documentation",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      }
+   ],
+   "statuses": [
+      {
+         "id": "status-1",
+         "name": "backlog",
+         "color": "#95a5a6",
+         "order": 0,
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "status-2",
+         "name": "todo",
+         "color": "#3498db",
+         "order": 1,
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "status-3",
+         "name": "in_progress",
+         "color": "#f39c12",
+         "order": 2,
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "status-4",
+         "name": "done",
+         "color": "#2ecc71",
+         "order": 3,
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "status-5",
+         "name": "cancelled",
+         "color": "#e74c3c",
+         "order": 4,
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      }
+   ],
+   "priorities": [
+      {
+         "id": "priority-0",
+         "name": "no_priority",
+         "value": 0,
+         "color": "#95a5a6",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "priority-1",
+         "name": "urgent",
+         "value": 4,
+         "color": "#e74c3c",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "priority-2",
+         "name": "high",
+         "value": 3,
+         "color": "#e67e22",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "priority-3",
+         "name": "medium",
+         "value": 2,
+         "color": "#f39c12",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "priority-4",
+         "name": "low",
+         "value": 1,
+         "color": "#3498db",
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      }
+   ],
+   "additionalIssues": [],
+   "metadata": {
+      "created": "2025-07-31T00:00:00.000Z",
+      "updated": "2025-07-31T00:00:00.000Z",
+      "description": "Additional UI data for TaskMaster integration"
+   }
+}

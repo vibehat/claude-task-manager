@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDataStore } from '../stores/dataStore';
-import { Label } from '../services/mockDataService';
+import type { Label } from '../types/dataModels';
 
 export function useLabels() {
    const [loading, setLoading] = useState(true);

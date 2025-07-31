@@ -2,7 +2,8 @@
 
 import React, { useEffect, useRef, useCallback } from 'react';
 import { useTerminal } from '../hooks/useTerminal';
-import { TerminalComponentProps, TerminalConnectionStatus } from '../types/terminal';
+import type { TerminalComponentProps } from '../types/terminal';
+import { TerminalConnectionStatus } from '../types/terminal';
 import { TerminalStatus } from './TerminalStatus';
 import { XTermStyles } from './XTermStyles';
 import { cn } from '@/libs/client/utils';

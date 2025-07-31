@@ -29,7 +29,7 @@ export function IssueLine({
 
    const handleLabelChange = async (labelIds: string[]): Promise<void> => {
       try {
-         updateIssue(issue.id, { labelIds });
+         await updateIssue(issue.id, { labelIds });
       } catch (error) {
          console.error('Failed to update issue labels:', error);
       }
