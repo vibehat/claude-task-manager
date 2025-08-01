@@ -1,10 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import {
-   getWebSocketServer,
-   startWebSocketServer,
-   stopWebSocketServer,
-} from '../../../../server/websocket-server';
+import { getTerminalServer, startTerminalServer } from '../../../../server/terminal-server';
 import * as os from 'os';
 
 // Initialize terminal server on first request
@@ -13,7 +9,7 @@ let serverInitialized = false;
 async function ensureServerStarted() {
    if (!serverInitialized) {
       try {
-         await startWebSocketServer();
+         await startTerminalServer();
          serverInitialized = true;
          console.log('Modern WebSocket server started');
       } catch (error) {
@@ -21,7 +17,7 @@ async function ensureServerStarted() {
          throw error;
       }
    }
-   return getWebSocketServer();
+   return getTerminalServer();
 }
 
 // Handle terminal server info requests
@@ -109,7 +105,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
          case 'stop':
             try {
-               await stopWebSocketServer();
+               const server = getTerminalServer();
+               await server.stop();
                serverInitialized = false;
 
                return NextResponse.json({

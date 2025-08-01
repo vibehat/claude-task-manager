@@ -23,14 +23,14 @@ This is a **Task Management UI** application built with modern web technologies 
 **Note**: All source code is now organized under the `/src` directory following Next.js best practices.
 
 - `/src` - All source code
-  - `/src/app` - Next.js App Router pages and API routes
-  - `/src/features` - Feature-based modules (issues, projects, teams, members)
-  - `/src/components` - Reusable UI components
-  - `/src/libs` - Shared utilities and services
-  - `/src/hooks` - React hooks
-  - `/src/store` - Zustand stores
-  - `/src/mock-data` - Mock data files
-  - `/src/styles` - Global styles
+   - `/src/app` - Next.js App Router pages and API routes
+   - `/src/features` - Feature-based modules (issues, projects, teams, members)
+   - `/src/components` - Reusable UI components
+   - `/src/libs` - Shared utilities and services
+   - `/src/hooks` - React hooks
+   - `/src/store` - Zustand stores
+   - `/src/mock-data` - Mock data files
+   - `/src/styles` - Global styles
 - `/public` - Static assets
 - `/scripts` - Build and utility scripts
 - `/docs` - Documentation
@@ -66,7 +66,7 @@ pnpm start            # Start production server
 - **Use pnpm for package management** - Never use npm or yarn, all commands should use pnpm
 - **Implement MVP (Minimum Viable Product)** - Focus on working solutions first, optimize later
 - **Follow SOLID, KISS, DRY principles** - Keep it Simple, Don't Repeat Yourself, Single Responsibility
-- **Make it work, then make it clean** - Functionality first, refactor second, avoid over-engineering
+- **Don't over-engineer** - Avoid unnecessary complexity, focus on current requirements
 - **Minimize footprint** - Add only necessary dependencies, keep bundle size small
 
 ### TypeScript Standards
@@ -135,7 +135,7 @@ pnpm start            # Start production server
 ```typescript
 // Get issues from store
 const issues = useIssueStore((state) => state.issues);
-const filteredIssues = issues.filter(issue => issue.status === 'pending');
+const filteredIssues = issues.filter((issue) => issue.status === 'pending');
 
 // Update issue
 const updateIssue = useIssueStore((state) => state.updateIssue);
@@ -156,7 +156,7 @@ updateIssue(issueId, { status: 'done' });
 export function IssueList({ projectId }: IssueListProps) {
   const issues = useIssueStore((state) => state.issues);
   const loading = useIssueStore((state) => state.loading);
-  
+
   const projectIssues = issues.filter(issue => issue.projectId === projectId);
 
   if (loading) return <Skeleton />;

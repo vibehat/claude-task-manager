@@ -4,7 +4,7 @@ import {
    getWebSocketServer,
    startWebSocketServer,
    stopWebSocketServer,
-} from '../../../../../server/websocket-server';
+} from '../../../../../server/terminal-server';
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
