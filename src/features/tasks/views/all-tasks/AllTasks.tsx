@@ -22,14 +22,6 @@ function AllTasks(): React.JSX.Element {
    // Get all tasks from the data store
    const allTasks = useDataStore((state) => state.tasks);
 
-   // Debug logging
-   console.log('[AllTasks] Component rendered with:', {
-      totalTasks: allTasks.length,
-      statusesCount: statuses?.length,
-      statusesLoading,
-      isSearching: isSearchOpen && searchQuery.trim() !== '',
-   });
-
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
 

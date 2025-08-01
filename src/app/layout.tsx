@@ -56,6 +56,7 @@ export const metadata: Metadata = {
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { DataInitializer } from '@/components/layout/DataInitializer';
 import { CommandPaletteProvider, CommandPalette } from '@/components/command-palette';
+import { TaskMasterSyncProvider } from '@/components/sync/TaskMasterSyncProvider';
 
 export default function RootLayout({
    children,
@@ -70,11 +71,13 @@ export default function RootLayout({
          <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
             <DataInitializer>
                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                  <CommandPaletteProvider>
-                     {children}
-                     <CommandPalette />
-                     <Toaster />
-                  </CommandPaletteProvider>
+                  <TaskMasterSyncProvider>
+                     <CommandPaletteProvider>
+                        {children}
+                        <CommandPalette />
+                        <Toaster />
+                     </CommandPaletteProvider>
+                  </TaskMasterSyncProvider>
                </ThemeProvider>
             </DataInitializer>
          </body>

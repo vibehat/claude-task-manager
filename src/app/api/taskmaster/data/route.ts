@@ -73,13 +73,13 @@ function reconstructUITasksFromExtra(taskExtra?: Record<string, TaskExtra>): Tas
       if (taskId.startsWith('tm-')) continue;
 
       // Reconstruct basic UI task structure from metadata
-      // This assumes the taskExtra.metadata contains the core task data
-      if (extra.metadata) {
+      // Only reconstruct if metadata contains actual task data (has title, statusId, etc.)
+      if (extra.metadata && extra.metadata.title && extra.metadata.statusId) {
          const task: Task = {
             id: taskId,
-            title: extra.metadata.title || 'Untitled Task',
+            title: extra.metadata.title,
             description: extra.metadata.description || '',
-            statusId: extra.metadata.statusId || 'status-2',
+            statusId: extra.metadata.statusId,
             priorityId: extra.metadata.priorityId || 'priority-3',
             assigneeId: extra.metadata.assigneeId,
             projectId: extra.metadata.projectId || 'project-personal',
@@ -93,6 +93,7 @@ function reconstructUITasksFromExtra(taskExtra?: Record<string, TaskExtra>): Tas
          };
          uiTasks.push(task);
       }
+      // Skip entries that don't have proper task metadata (like orphaned data)
    }
 
    return uiTasks;

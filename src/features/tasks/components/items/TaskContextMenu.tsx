@@ -58,6 +58,7 @@ const getPriorityIconName = (name: string): string => {
 };
 import { toast } from 'sonner';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
+import { taskMasterCLI } from '@/hooks/useTaskMasterCLI';
 
 interface TaskContextMenuProps {
    taskId?: string;
@@ -179,6 +180,46 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
 
    const handleRemindMe = (): void => {
       toast.success('Reminder set');
+   };
+
+   const handleDelete = async (): Promise<void> => {
+      if (!task) return;
+
+      // Show confirmation dialog
+      const confirmed = window.confirm(
+         `Are you sure you want to delete "${task.title}"? This action cannot be undone.`
+      );
+
+      if (!confirmed) return;
+
+      try {
+         // Check if this is a TaskMaster task
+         if (task.taskId) {
+            // TaskMaster task - use CLI
+            const taskMasterId = task.subtaskId || task.taskId.toString();
+            const result = await taskMasterCLI.removeTask(taskMasterId, true);
+
+            if (result.success) {
+               if (result.result.stderr && result.result.stderr.includes('not found')) {
+                  toast.warning(`TaskMaster task "${taskMasterId}" was not found`);
+               } else if (result.result.stdout.includes('No existing tasks found')) {
+                  toast.warning(`TaskMaster task "${taskMasterId}" was not found`);
+               } else {
+                  toast.success('Task deleted successfully');
+               }
+            } else {
+               toast.error(`Failed to delete task: ${result.result.stderr || 'Unknown error'}`);
+            }
+         } else {
+            // Regular task - use data store
+            const { deleteTask } = useDataStore.getState();
+            deleteTask(task.id);
+            toast.success('Task deleted successfully');
+         }
+      } catch (error) {
+         console.error('Error deleting task:', error);
+         toast.error('Failed to delete task');
+      }
    };
 
    return (
@@ -376,8 +417,8 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
 
          <ContextMenuSeparator />
 
-         <ContextMenuItem variant="destructive">
-            <Trash2 className="size-4" /> Delete...
+         <ContextMenuItem variant="destructive" onClick={handleDelete}>
+            <Trash2 className="size-4" /> Delete
             <ContextMenuShortcut>⌘⌫</ContextMenuShortcut>
          </ContextMenuItem>
       </ContextMenuContent>

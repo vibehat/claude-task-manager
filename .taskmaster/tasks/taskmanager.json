@@ -158,14 +158,5 @@
       "updated": "2025-07-31T21:45:41.094Z",
       "description": "UI data for TaskMaster integration"
    },
-   "taskExtra": {
-      "ui-test-task": {
-         "createdAt": "2025-07-31T20:54:45.752Z",
-         "updatedAt": "2025-07-31T20:54:45.752Z",
-         "metadata": {
-            "source": "ui",
-            "version": "1.0"
-         }
-      }
-   }
+   "taskExtra": {}
 }

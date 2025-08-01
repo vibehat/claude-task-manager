@@ -275,7 +275,25 @@ class TaskManagerDataService {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      data.tasks = data.tasks.filter((task) => task.id !== id && task.parentTaskId !== id);
+      // Remove from tasks array (if it exists there)
+      if (data.tasks) {
+         data.tasks = data.tasks.filter((task) => task.id !== id && task.parentTaskId !== id);
+      }
+
+      // Remove from taskExtra (where UI tasks are actually stored)
+      if (data.taskExtra && data.taskExtra[id]) {
+         delete data.taskExtra[id];
+      }
+
+      // Also remove any child tasks from taskExtra
+      if (data.taskExtra) {
+         const childTaskIds = Object.keys(data.taskExtra).filter(
+            (taskId) => data.taskExtra?.[taskId]?.metadata?.parentTaskId === id
+         );
+         for (const childId of childTaskIds) {
+            delete data.taskExtra[childId];
+         }
+      }
 
       return await this.writeTaskManagerData(data);
    }

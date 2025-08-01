@@ -13,6 +13,7 @@
    "homepage": "https://github.com/minhlucvan/claude-task-manager#readme",
    "scripts": {
       "dev": "next dev --turbopack",
+      "dev:full": "concurrently \"pnpm run dev\" \"pnpm run ws:dev\"",
       "build": "next build",
       "start": "next start",
       "lint": "next lint",
@@ -24,6 +25,7 @@
       "prepare": "husky install",
       "postinstall": "node scripts/setup-katex-fonts.js",
       "test": "jest",
+      "ws:dev": "node scripts/start-websocket-server.js",
       "kill:dev": "pkill -f 'next dev' && pkill -f 'node.*server' && pkill -f 'websocket' || true"
    },
    "dependencies": {
@@ -53,6 +55,7 @@
       "@xterm/addon-fit": "^0.10.0",
       "@xterm/addon-web-links": "^0.11.0",
       "@xterm/xterm": "^5.5.0",
+      "chokidar": "^4.0.3",
       "class-variance-authority": "^0.7.1",
       "clsx": "^2.1.1",
       "cmdk": "1.0.0",
@@ -90,6 +93,7 @@
       "@types/react": "^19",
       "@types/react-dom": "^19",
       "@types/ws": "^8.18.1",
+      "concurrently": "^9.2.0",
       "eslint": "^9",
       "eslint-config-next": "15.2.4",
       "eslint-config-prettier": "^10.0.2",
@@ -102,6 +106,7 @@
       "prettier": "^3.5.2",
       "tailwindcss": "^4",
       "ts-jest": "^29.4.0",
+      "ts-node": "^10.9.2",
       "typescript": "^5"
    }
 }

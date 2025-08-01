@@ -210,12 +210,12 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
             );
 
             if (terminal.isMinimized) {
-               // Chat-like behavior: minimize all other visible terminals when restoring one
+               // Restore the terminal without affecting other terminals
                const terminals = get().terminals;
                const updatedTerminals = terminals.map((t) => ({
                   ...t,
-                  isMinimized: t.id === id ? false : t.isMinimized ? t.isMinimized : true,
-                  isMaximized: t.id === id ? t.isMaximized : false,
+                  isMinimized: t.id === id ? false : t.isMinimized,
+                  isMaximized: t.id === id ? false : t.isMaximized,
                }));
 
                set(() => ({
@@ -223,8 +223,9 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
                   activeTerminalId: id,
                }));
 
-               // Update last active time
+               // Update last active time and bring to front
                get().setActiveTerminal(id);
+               get().bringTerminalToFront(id);
             } else {
                get().minimizeTerminal(id);
             }

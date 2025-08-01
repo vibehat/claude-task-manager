@@ -384,25 +384,9 @@ input[type='search'] {
    }
 }
 
-@keyframes chat-tab-bounce {
-   0%,
-   100% {
-      transform: translateY(0) scale(1);
-   }
-   50% {
-      transform: translateY(-4px) scale(1.02);
-   }
-}
+/* Removed chat-tab-bounce animation - no longer needed */
 
-@keyframes virtual-ray-glow {
-   0%,
-   100% {
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-   }
-   50% {
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
-   }
-}
+/* Removed virtual-ray-glow animation - no longer needed */
 
 /* Terminal chat animation classes */
 .terminal-entering {
@@ -413,13 +397,9 @@ input[type='search'] {
    animation: terminal-slide-down 0.3s ease-in;
 }
 
-.chat-tab-hover {
-   animation: chat-tab-bounce 0.6s ease-out;
-}
+/* Removed chat-tab-hover - no longer needed */
 
-.virtual-ray-effect {
-   animation: virtual-ray-glow 2s ease-in-out infinite;
-}
+/* Removed virtual-ray-effect - no longer needed */
 
 /* Smooth transitions for terminal positioning */
 .terminal-transition {

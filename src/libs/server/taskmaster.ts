@@ -322,6 +322,16 @@ export class TaskMasterCLI {
    }
 
    /**
+    * Remove a task or subtask permanently
+    */
+   async removeTask(id: string, skipConfirmation = false): Promise<CommandResult> {
+      const args = [`--id=${id}`];
+      if (skipConfirmation) args.push('-y');
+
+      return this.execute('remove-task', args);
+   }
+
+   /**
     * Get Task Master version
     */
    async getVersion(): Promise<string> {

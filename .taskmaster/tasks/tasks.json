@@ -184,24 +184,13 @@
             "subtasks": []
          },
          {
-            "id": 32,
-            "title": "Adapt Existing Issue System for Hierarchical Tasks",
-            "description": "Modify existing issue components to work with parent-child task relationships and hierarchy-aware filtering",
-            "details": "Update `AllIssues` component to use new `TaskItem` for hierarchical rendering. Modify existing filtering logic in `/components/common/issues/` to handle parent-child relationships with proper type guards. Adapt `GroupIssues` component to maintain hierarchy within groups. Update search functionality to search across nested tasks and highlight matches in hierarchy. Ensure existing Zustand stores work with hierarchical data structures.",
-            "testStrategy": "Integration testing for filter functionality, search performance testing across hierarchy levels, regression testing for existing issue features",
-            "priority": "medium",
-            "dependencies": [31],
-            "status": "pending",
-            "subtasks": []
-         },
-         {
             "id": 33,
             "title": "Enhanced Task Detail View with Subtask Management",
             "description": "Create comprehensive task detail page with inline subtask creation and management capabilities",
             "details": "Build task detail page reusing existing issue detail components. Implement inline subtask creation with form validation using react-hook-form and zod schemas. Add subtask reordering with @dnd-kit/sortable, maintaining parent-child relationships. Integrate existing `IssueContextMenu` for both tasks and subtasks with hierarchy-aware actions. Implement breadcrumb navigation using Next.js Link components showing full task hierarchy path.",
             "testStrategy": "End-to-end testing for subtask CRUD operations, form validation testing, breadcrumb navigation testing, context menu functionality testing",
             "priority": "medium",
-            "dependencies": [32],
+            "dependencies": [],
             "status": "pending",
             "subtasks": []
          },
@@ -228,24 +217,13 @@
             "subtasks": []
          },
          {
-            "id": 36,
-            "title": "Individual Mode Data Context with Hierarchy Support",
-            "description": "Adapt existing data management for hierarchical task operations while maintaining GraphQL and CLI compatibility",
-            "details": "Create individual project context wrapper using React Context API with TypeScript interfaces. Modify existing Zustand stores to handle hierarchical task data with proper parent-child relationship management. Update task CRUD operations to maintain hierarchy integrity with optimistic updates. Ensure existing GraphQL schema supports task hierarchy with proper resolver updates. Maintain compatibility with Task Master CLI integration by preserving existing data structures and API contracts.",
-            "testStrategy": "Context provider testing, Zustand store testing for hierarchy operations, GraphQL integration testing, CLI compatibility testing, data consistency testing",
-            "priority": "high",
-            "dependencies": [35],
-            "status": "pending",
-            "subtasks": []
-         },
-         {
             "id": 37,
             "title": "Performance Optimization and Final Integration",
             "description": "Optimize hierarchical task rendering performance and ensure seamless integration with existing systems",
             "details": "Implement React.memo, useMemo, and useCallback for hierarchical task components to prevent unnecessary re-renders. Add virtualization for large task lists using @tanstack/react-virtual. Implement lazy loading for deep task hierarchies with React.lazy and Suspense. Add performance monitoring with Next.js built-in metrics and ensure proper bundle splitting. Conduct comprehensive testing across all individual mode features and ensure backward compatibility with team mode.",
             "testStrategy": "Performance benchmarking for large task hierarchies, memory usage testing, bundle size analysis, cross-mode compatibility testing, comprehensive end-to-end testing",
             "priority": "low",
-            "dependencies": [36],
+            "dependencies": [],
             "status": "pending",
             "subtasks": []
          }

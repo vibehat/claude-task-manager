@@ -1,6 +1,10 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { getTerminalServer, startTerminalServer } from '../../../../server/websocket-server';
+import {
+   getWebSocketServer,
+   startWebSocketServer,
+   stopWebSocketServer,
+} from '../../../../server/websocket-server';
 import * as os from 'os';
 
 // Initialize terminal server on first request
@@ -9,15 +13,15 @@ let serverInitialized = false;
 async function ensureServerStarted() {
    if (!serverInitialized) {
       try {
-         await startTerminalServer();
+         await startWebSocketServer();
          serverInitialized = true;
-         console.log('Terminal WebSocket server started');
+         console.log('Modern WebSocket server started');
       } catch (error) {
-         console.error('Failed to start terminal server:', error);
+         console.error('Failed to start WebSocket server:', error);
          throw error;
       }
    }
-   return getTerminalServer();
+   return getWebSocketServer();
 }
 
 // Handle terminal server info requests
@@ -27,11 +31,15 @@ export async function GET(_request: NextRequest): Promise<NextResponse> {
       const status = server.getStatus();
 
       return NextResponse.json({
-         message: 'Terminal WebSocket API',
-         websocketUrl: `ws://localhost:${status.port}`,
+         message: 'Modern WebSocket API - Terminal Endpoint',
+         websocketUrl: `ws://localhost:${status.port}?type=terminal`,
          ...status,
          platform: os.platform(),
          cwd: process.cwd(),
+         endpoints: {
+            terminal: `ws://localhost:${status.port}?type=terminal`,
+            sync: `ws://localhost:${status.port}?type=sync`,
+         },
       });
    } catch (error) {
       console.error('Error in terminal API GET:', error);
@@ -80,9 +88,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
                const status = server.getStatus();
 
                return NextResponse.json({
-                  message: 'Terminal server started',
+                  message: 'WebSocket server started',
                   ...status,
                   timestamp: Date.now(),
+                  endpoints: {
+                     terminal: `ws://localhost:${status.port}?type=terminal`,
+                     sync: `ws://localhost:${status.port}?type=sync`,
+                  },
                });
             } catch (error) {
                return NextResponse.json(
@@ -97,18 +109,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
          case 'stop':
             try {
-               const server = getTerminalServer();
-               await server.stop();
+               await stopWebSocketServer();
                serverInitialized = false;
 
                return NextResponse.json({
-                  message: 'Terminal server stopped',
+                  message: 'WebSocket server stopped',
                   timestamp: Date.now(),
                });
             } catch (error) {
                return NextResponse.json(
                   {
-                     error: 'Failed to stop terminal server',
+                     error: 'Failed to stop WebSocket server',
                      message: error instanceof Error ? error.message : 'Unknown error',
                      timestamp: Date.now(),
                   },

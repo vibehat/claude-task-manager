@@ -70,6 +70,9 @@ interface DataState {
    getTaskMasterStats: () => any;
 }
 
+// Auto-initialize the data store when first created
+let isAutoInitialized = false;
+
 export const useDataStore = create<DataState>()(
    (set, get): DataState => ({
       // Initial state
@@ -93,6 +96,7 @@ export const useDataStore = create<DataState>()(
          if (get().isInitialized) return;
 
          set({ isLoading: true });
+         console.log('[DataStore] Starting initialization...');
 
          try {
             console.log('DataStore initialization - loading merged TaskMaster data...');
@@ -444,10 +448,79 @@ export const useDataStore = create<DataState>()(
 
       forceSyncTaskMaster: async () => {
          set({ taskMasterSyncStatus: 'syncing', taskMasterError: null });
-         // TODO: Implement actual force sync
-         setTimeout(() => {
-            set({ taskMasterSyncStatus: 'synced' });
-         }, 1000);
+
+         try {
+            console.log('[DataStore] Force syncing TaskMaster data...');
+
+            // Reload data from TaskMaster
+            const taskManagerData = await taskManagerDataService.readTaskManagerData();
+
+            if (taskManagerData) {
+               // Convert date strings to Date objects and update state
+               const users = taskManagerData.users.map((user) => ({
+                  ...user,
+                  createdAt: new Date(user.createdAt),
+                  updatedAt: new Date(user.updatedAt),
+               }));
+
+               const projects = taskManagerData.projects.map((project) => ({
+                  ...project,
+                  createdAt: new Date(project.createdAt),
+                  updatedAt: new Date(project.updatedAt),
+               }));
+
+               const labels = taskManagerData.labels.map((label) => ({
+                  ...label,
+                  createdAt: new Date(label.createdAt),
+                  updatedAt: new Date(label.updatedAt),
+               }));
+
+               const statuses = taskManagerData.statuses.map((status) => ({
+                  ...status,
+                  createdAt: new Date(status.createdAt),
+                  updatedAt: new Date(status.updatedAt),
+               }));
+
+               const priorities = taskManagerData.priorities.map((priority) => ({
+                  ...priority,
+                  createdAt: new Date(priority.createdAt),
+                  updatedAt: new Date(priority.updatedAt),
+               }));
+
+               const tasks = (taskManagerData.tasks || []).map((task) => ({
+                  ...task,
+                  createdAt: new Date(task.createdAt),
+                  updatedAt: new Date(task.updatedAt),
+               }));
+
+               // Update all data in one go
+               set({
+                  users,
+                  projects,
+                  labels,
+                  statuses,
+                  priorities,
+                  tasks,
+                  taskMasterSyncStatus: 'synced',
+                  taskMasterError: null,
+               });
+
+               console.log(`[DataStore] Successfully synced ${tasks.length} tasks from TaskMaster`);
+               console.log(`[DataStore] Task IDs: ${tasks.map((t) => t.id).join(', ')}`);
+            } else {
+               set({
+                  taskMasterSyncStatus: 'error',
+                  taskMasterError: 'No TaskMaster data available',
+               });
+            }
+         } catch (error) {
+            console.error('[DataStore] Failed to force sync TaskMaster:', error);
+            set({
+               taskMasterSyncStatus: 'error',
+               taskMasterError: error instanceof Error ? error.message : 'Unknown sync error',
+            });
+            throw error;
+         }
       },
 
       toggleRealTimeSync: async (enabled: boolean) => {
@@ -465,3 +538,16 @@ export const useDataStore = create<DataState>()(
       },
    })
 );
+
+// Auto-initialize the store when it's first used
+if (typeof window !== 'undefined' && !isAutoInitialized) {
+   isAutoInitialized = true;
+   // Initialize in the next tick to avoid SSR issues
+   setTimeout(() => {
+      const store = useDataStore.getState();
+      if (!store.isInitialized) {
+         console.log('[DataStore] Auto-initializing...');
+         store.initialize();
+      }
+   }, 0);
+}

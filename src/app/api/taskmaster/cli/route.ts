@@ -120,6 +120,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             result = await taskMasterCLI.generate();
             break;
 
+         case 'remove-task':
+            if (!options.id) {
+               return NextResponse.json(
+                  { error: 'Task ID is required for remove-task command' },
+                  { status: 400 }
+               );
+            }
+            result = await taskMasterCLI.removeTask(options.id, options.skipConfirmation);
+            break;
+
          case 'models':
             result = await taskMasterCLI.getModels();
             break;
@@ -276,6 +286,11 @@ export async function GET(): Promise<NextResponse> {
          description: 'Update task markdown files',
          args: [],
          options: [],
+      },
+      'remove-task': {
+         description: 'Permanently remove a task or subtask',
+         args: [],
+         options: ['id', 'skipConfirmation?'],
       },
       'models': {
          description: 'Get current model configuration',

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import useSWR, { mutate } from 'swr';
+import { useDataStore } from '@/libs/client/stores/dataStore';
 
 interface CLIResult {
    success: boolean;
@@ -41,6 +42,7 @@ async function executeCLI(request: CLIRequest): Promise<CLIResult> {
 export function useTaskMasterCLI() {
    const [isExecuting, setIsExecuting] = useState(false);
    const [lastResult, setLastResult] = useState<CLIResult | null>(null);
+   const { forceSyncTaskMaster } = useDataStore();
 
    const execute = async (request: CLIRequest) => {
       setIsExecuting(true);
@@ -48,13 +50,51 @@ export function useTaskMasterCLI() {
          const result = await executeCLI(request);
          setLastResult(result);
 
-         // Invalidate any cached data that might be affected
+         // For data-changing commands, trigger native sync
          if (
-            ['set-status', 'add-task', 'update-task', 'update-subtask', 'expand'].includes(
-               request.command
-            )
+            [
+               'set-status',
+               'add-task',
+               'update-task',
+               'update-subtask',
+               'expand',
+               'remove-task',
+            ].includes(request.command)
          ) {
-            await mutate((key) => typeof key === 'string' && key.includes('/api/taskmaster/cli'));
+            // Invalidate SWR cache for immediate UI feedback
+            await mutate((key) => {
+               if (typeof key === 'string') {
+                  return (
+                     key.includes('/api/taskmaster/cli') ||
+                     key.includes('/api/taskmaster/raw-data') ||
+                     key.includes('/api/taskmaster/data')
+                  );
+               }
+               return false;
+            });
+
+            // Auto-sync after successful TaskMaster operations
+            if (result.success) {
+               // Use a more reliable approach: multiple sync attempts with exponential backoff
+               const performSync = async (attempt = 1, maxAttempts = 3) => {
+                  try {
+                     const delay = Math.min(100 * Math.pow(2, attempt - 1), 1000); // 100ms, 200ms, 400ms max
+                     setTimeout(async () => {
+                        await forceSyncTaskMaster();
+                        console.log(`[TaskMasterCLI] Auto-sync completed (attempt ${attempt})`);
+                     }, delay);
+                  } catch (error) {
+                     if (attempt < maxAttempts) {
+                        console.warn(`[TaskMasterCLI] Sync attempt ${attempt} failed, retrying...`);
+                        performSync(attempt + 1, maxAttempts);
+                     } else {
+                        console.warn(`[TaskMasterCLI] All sync attempts failed:`, error);
+                     }
+                  }
+               };
+
+               performSync();
+            }
          }
 
          return result;
@@ -260,6 +300,14 @@ export const taskMasterCLI = {
    // Get model configuration
    async getModels() {
       return executeCLI({ command: 'models' });
+   },
+
+   // Remove task
+   async removeTask(taskId: string, skipConfirmation = false) {
+      return executeCLI({
+         command: 'remove-task',
+         options: { id: taskId, skipConfirmation },
+      });
    },
 
    // Get version
