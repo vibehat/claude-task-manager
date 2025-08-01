@@ -1,6 +1,16 @@
+// Component-level exports
 export { CommandPalette } from './CommandPalette';
-export { CommandPaletteProvider, useCommandPalette } from './CommandPaletteProvider';
-export { CommandArgumentsModal } from './CommandArgumentsModal';
-export { useCommandModules } from './hooks/useCommandModules';
 
-export type * from './types';
+// Providers
+export { CommandPaletteProvider } from './providers/CommandPaletteProvider';
+export { CommandModuleProvider, useCommandModules } from './providers/CommandModuleProvider';
+export { CommandContextProvider, useCommandContext } from './providers/CommandContextProvider';
+
+// Component hooks and utilities
+export { useCommandChain } from './hooks/useCommandChain';
+export { useCommandResolver } from './hooks/useCommandResolver';
+export { useCommandExecution } from './hooks/useCommandExecution';
+export { useCommandPaletteState } from './hooks/useCommandPaletteState';
+
+// Component types
+export * from './types';

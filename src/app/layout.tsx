@@ -55,7 +55,8 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { DataInitializer } from '@/components/layout/DataInitializer';
-import { CommandPaletteProvider, CommandPalette } from '@/components/command-palette';
+import { CommandPaletteProvider } from '@/components/command-palette';
+import { GlobalCommandPalette } from '@/features/commands';
 import { TaskMasterSyncProvider } from '@/components/sync/TaskMasterSyncProvider';
 
 export default function RootLayout({
@@ -74,7 +75,7 @@ export default function RootLayout({
                   <TaskMasterSyncProvider>
                      <CommandPaletteProvider>
                         {children}
-                        <CommandPalette />
+                        <GlobalCommandPalette />
                         <Toaster />
                      </CommandPaletteProvider>
                   </TaskMasterSyncProvider>
