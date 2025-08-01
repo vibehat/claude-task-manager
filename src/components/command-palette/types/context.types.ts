@@ -59,7 +59,7 @@ export interface Command {
    enabled?: (context: CommandContext) => boolean;
 
    // Command behavior
-   type: 'action' | 'select' | 'input' | 'branch' | 'composite';
+   type: 'action' | 'select' | 'input' | 'input-with-actions' | 'branch' | 'composite';
 
    // For select commands
    options?: CommandOption[] | ((context: CommandContext) => Promise<CommandOption[]>);
@@ -73,6 +73,11 @@ export interface Command {
       showContextualTitle?: boolean; // Show "Title: 'input value...'" format
       contextFormat?: (title: string, value: string) => string; // Custom format function
    };
+
+   // For input-with-actions commands (submit buttons as selectable commands)
+   submitActions?:
+      | CommandOption[]
+      | ((inputValue: string, context: CommandContext) => Promise<CommandOption[]>);
 
    // For branch commands
    branches?: {

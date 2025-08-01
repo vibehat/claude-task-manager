@@ -21,6 +21,11 @@ interface CommandPaletteContentProps {
    onSelectOption: (option: CommandOption) => void;
    isLoadingOptions: boolean;
 
+   // Input-with-actions mode props
+   submitActions?: CommandOption[];
+   onSelectAction?: (action: CommandOption) => void;
+   isLoadingActions?: boolean;
+
    // Common props
    searchValue: string;
 }
@@ -33,6 +38,9 @@ export function CommandPaletteContent({
    selectOptions,
    onSelectOption,
    isLoadingOptions,
+   submitActions = [],
+   onSelectAction,
+   isLoadingActions = false,
    searchValue,
 }: CommandPaletteContentProps) {
    // Determine if we should show empty state
@@ -45,10 +53,20 @@ export function CommandPaletteContent({
             return selectOptions.length === 0 && !isLoadingOptions;
          case 'input':
             return false; // Input mode doesn't show lists
+         case 'input-with-actions':
+            return submitActions.length === 0 && !isLoadingActions;
          default:
             return true;
       }
-   }, [mode, displayCommands.length, selectOptions.length, isLoadingOptions, searchValue]);
+   }, [
+      mode,
+      displayCommands.length,
+      selectOptions.length,
+      submitActions.length,
+      isLoadingOptions,
+      isLoadingActions,
+      searchValue,
+   ]);
 
    // Determine empty message based on context
    const getEmptyMessage = () => {
@@ -58,6 +76,9 @@ export function CommandPaletteContent({
       if (mode === 'select') {
          return 'No options available';
       }
+      if (mode === 'input-with-actions') {
+         return 'No submit actions available';
+      }
       return 'No results found';
    };
 
@@ -66,9 +87,11 @@ export function CommandPaletteContent({
          {/* Only show empty state when we actually want it */}
          {shouldShowEmpty && (
             <CommandEmptyState
-               isLoading={isLoadingOptions}
+               isLoading={isLoadingOptions || isLoadingActions}
                emptyMessage={getEmptyMessage()}
-               loadingMessage="Loading options..."
+               loadingMessage={
+                  mode === 'input-with-actions' ? 'Loading actions...' : 'Loading options...'
+               }
             />
          )}
 
@@ -87,6 +110,15 @@ export function CommandPaletteContent({
                commands={displayCommands}
                onSelectCommand={onSelectCommand}
                isCommandEnabled={isCommandEnabled}
+            />
+         )}
+
+         {/* Input-with-actions mode - show submit actions */}
+         {mode === 'input-with-actions' && onSelectAction && (
+            <CommandSelectView
+               options={submitActions}
+               isLoading={isLoadingActions}
+               onSelectOption={onSelectAction}
             />
          )}
       </CommandList>

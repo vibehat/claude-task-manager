@@ -3,8 +3,8 @@
 import React from 'react';
 import { CommandInput } from '@/components/ui/command';
 
-// CommandMode type moved to features/commands/types.ts
-export type CommandMode = 'search' | 'select' | 'input';
+// CommandMode type moved to main types file
+export type CommandMode = 'search' | 'select' | 'input' | 'input-with-actions';
 
 interface CommandSearchInputProps {
    mode: CommandMode;

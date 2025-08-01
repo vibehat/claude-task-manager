@@ -24,6 +24,8 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       currentCommand,
       selectOptions,
       isLoadingOptions,
+      submitActions,
+      isLoadingActions,
       mode,
       displayCommands,
       inputConfig,
@@ -33,6 +35,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       // Handlers
       handleCommandSelect,
       handleOptionSelect,
+      handleActionSelect,
       handleBack,
       handleKeyDown,
       isCommandEnabled,
@@ -104,6 +107,11 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                            !inputValue && (
                               <span className="text-sm text-muted-foreground">• Enter value</span>
                            )}
+                        {currentCommand.type === 'input-with-actions' && (
+                           <span className="text-sm text-muted-foreground">
+                              • Enter value and select action
+                           </span>
+                        )}
                      </>
                   ) : (
                      <>
@@ -158,6 +166,9 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                   selectOptions={selectOptions}
                   onSelectOption={handleOptionSelect}
                   isLoadingOptions={isLoadingOptions}
+                  submitActions={submitActions}
+                  onSelectAction={handleActionSelect}
+                  isLoadingActions={isLoadingActions}
                   searchValue={search}
                />
 

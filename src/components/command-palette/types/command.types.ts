@@ -1,4 +1,4 @@
-import type { Command, CommandContext, CommandOption } from './context.types';
+import type { Command, CommandContext, CommandOption, CommandResult } from './context.types';
 
 // Command creation helpers
 export function createCommand(
@@ -54,6 +54,36 @@ export function createContextualInputCommand(
          contextFormat,
       },
    });
+}
+
+// Helper function to create input-with-actions commands
+export function createInputWithActionsCommand(
+   config: Omit<Command, 'type' | 'execute'> & {
+      type?: 'input-with-actions';
+      inputConfig?: Command['inputConfig'];
+      submitActions: Command['submitActions'];
+      // Execute function receives both input value and selected action
+      execute: (
+         inputValue: string,
+         selectedAction: CommandOption,
+         context: CommandContext
+      ) => Promise<CommandResult>;
+   }
+): Command {
+   const { submitActions, execute: originalExecute, ...rest } = config;
+
+   return createCommand({
+      ...rest,
+      type: 'input-with-actions',
+      submitActions,
+      // Wrapper execute function that handles the action selection
+      execute: async (
+         params: { inputValue: string; action: CommandOption },
+         context: CommandContext
+      ) => {
+         return originalExecute(params.inputValue, params.action, context);
+      },
+   } as any);
 }
 
 export function createBranchCommand(

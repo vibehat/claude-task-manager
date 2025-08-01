@@ -18,6 +18,8 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
    const [currentCommand, setCurrentCommand] = useState<Command | null>(null);
    const [selectOptions, setSelectOptions] = useState<CommandOption[]>([]);
    const [isLoadingOptions, setIsLoadingOptions] = useState(false);
+   const [submitActions, setSubmitActions] = useState<CommandOption[]>([]);
+   const [isLoadingActions, setIsLoadingActions] = useState(false);
 
    // Hooks
    const { breadcrumbs, goBack, executeCommandInChain } = useCommandChain();
@@ -30,6 +32,7 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       if (!currentCommand) return 'search';
       if (currentCommand.type === 'select') return 'select';
       if (currentCommand.type === 'input') return 'input';
+      if (currentCommand.type === 'input-with-actions') return 'input-with-actions';
       return 'search';
    }, [currentCommand]);
 
@@ -55,6 +58,26 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
          setSelectOptions([]);
       }
    }, [currentCommand, resolveSelectOptions]);
+
+   // Load submit actions for input-with-actions commands
+   useEffect(() => {
+      if (currentCommand?.type === 'input-with-actions' && currentCommand.submitActions) {
+         setIsLoadingActions(true);
+
+         const loadActions = async () => {
+            if (typeof currentCommand.submitActions === 'function') {
+               return await currentCommand.submitActions(inputValue, {} as any);
+            }
+            return currentCommand.submitActions || [];
+         };
+
+         loadActions()
+            .then(setSubmitActions)
+            .finally(() => setIsLoadingActions(false));
+      } else {
+         setSubmitActions([]);
+      }
+   }, [currentCommand, inputValue]);
 
    // Reset state when dialog closes
    useEffect(() => {
@@ -106,7 +129,8 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
             }
 
             case 'select':
-            case 'input': {
+            case 'input':
+            case 'input-with-actions': {
                setCurrentCommand(command);
                setSearch('');
                setInputValue('');
@@ -140,7 +164,7 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       [currentCommand, executeCommandInChain, handleNextCommand]
    );
 
-   // Input submission handler
+   // Input submission handler (for regular input commands)
    const handleInputSubmit = useCallback(async () => {
       if (!currentCommand || !inputValue.trim()) return;
 
@@ -166,6 +190,37 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       }
    }, [currentCommand, inputValue, inputConfig, executeCommandInChain, handleNextCommand]);
 
+   // Action selection handler (for input-with-actions commands)
+   const handleActionSelect = useCallback(
+      async (action: CommandOption) => {
+         if (!currentCommand || currentCommand.type !== 'input-with-actions') return;
+
+         // Validate input first
+         if (inputConfig?.validation) {
+            const error = inputConfig.validation(inputValue, {} as any);
+            if (error) {
+               // TODO: Show error state
+               console.error('Validation error:', error);
+               return;
+            }
+         }
+
+         // Transform input if needed
+         const finalValue = inputConfig?.transform
+            ? inputConfig.transform(inputValue, {} as any)
+            : inputValue;
+
+         // Execute with both input value and selected action
+         const params = { inputValue: finalValue, action };
+         const result = await executeCommandInChain(currentCommand, params);
+
+         if (result.success) {
+            handleNextCommand(result.nextCommand);
+         }
+      },
+      [currentCommand, inputValue, inputConfig, executeCommandInChain, handleNextCommand]
+   );
+
    // Back navigation handler
    const handleBack = useCallback(() => {
       if (currentCommand) {
@@ -189,6 +244,7 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
             handleInputSubmit();
             e.preventDefault();
          }
+         // Note: input-with-actions mode doesn't use Enter, user must select an action
       },
       [currentCommand, mode, handleBack, handleInputSubmit]
    );
@@ -202,6 +258,8 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       currentCommand,
       selectOptions,
       isLoadingOptions,
+      submitActions,
+      isLoadingActions,
       mode,
       displayCommands,
       inputConfig,
@@ -211,6 +269,7 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       // Handlers
       handleCommandSelect,
       handleOptionSelect,
+      handleActionSelect,
       handleInputSubmit,
       handleBack,
       handleKeyDown,

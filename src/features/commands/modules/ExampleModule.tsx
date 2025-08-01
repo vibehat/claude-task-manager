@@ -3,6 +3,7 @@ import {
    createSelectCommand,
    createInputCommand,
    createContextualInputCommand,
+   createInputWithActionsCommand,
    createCompositeCommand,
    type CommandModule,
 } from '../types';
@@ -98,6 +99,113 @@ export const exampleModule: CommandModule = {
          },
          execute: async (name) => {
             toast.success(`Created custom item: ${name}`);
+            return { success: true };
+         },
+      }),
+
+      // Input with submit actions - user enters text and selects action button
+      createInputWithActionsCommand({
+         id: 'example:create-with-actions',
+         title: 'Create with Actions',
+         description: 'Enter content and choose how to create it',
+         icon: <PlusIcon className="w-4 h-4" />,
+         group: 'Examples',
+         inputConfig: {
+            placeholder: 'Enter your content...',
+            validation: (value) => {
+               if (!value.trim()) return 'Content is required';
+               return undefined;
+            },
+         },
+         submitActions: [
+            {
+               id: 'create-task',
+               title: 'Create as Task',
+               description: 'Create a new task with this content',
+               value: 'task',
+               icon: '📝',
+            },
+            {
+               id: 'create-note',
+               title: 'Create as Note',
+               description: 'Save as a note',
+               value: 'note',
+               icon: '📄',
+            },
+            {
+               id: 'create-reminder',
+               title: 'Set as Reminder',
+               description: 'Create a reminder for later',
+               value: 'reminder',
+               icon: '⏰',
+            },
+         ],
+         execute: async (content, action, context) => {
+            toast.success(`Created ${action.value}: "${content}"`);
+
+            // Store in context for other commands to use
+            context.data.lastCreatedItem = {
+               type: action.value,
+               content,
+               timestamp: new Date().toISOString(),
+            };
+
+            return {
+               success: true,
+               data: { createdType: action.value, content },
+            };
+         },
+      }),
+
+      // Dynamic submit actions based on input
+      createInputWithActionsCommand({
+         id: 'example:dynamic-actions',
+         title: 'Smart Actions',
+         description: 'Actions change based on what you type',
+         icon: <SettingsIcon className="w-4 h-4" />,
+         group: 'Examples',
+         inputConfig: {
+            placeholder: 'Try typing "email", "call", or "meet"...',
+         },
+         submitActions: async (inputValue, context) => {
+            // Dynamic actions based on input content
+            const value = inputValue.toLowerCase();
+
+            if (value.includes('email')) {
+               return [
+                  { id: 'send-email', title: 'Send Email', value: 'email', icon: '📧' },
+                  { id: 'draft-email', title: 'Save as Draft', value: 'draft-email', icon: '📝' },
+               ];
+            }
+
+            if (value.includes('call')) {
+               return [
+                  { id: 'make-call', title: 'Make Call', value: 'call', icon: '📞' },
+                  {
+                     id: 'schedule-call',
+                     title: 'Schedule Call',
+                     value: 'schedule-call',
+                     icon: '📅',
+                  },
+               ];
+            }
+
+            if (value.includes('meet')) {
+               return [
+                  { id: 'create-meeting', title: 'Create Meeting', value: 'meeting', icon: '🤝' },
+                  { id: 'find-time', title: 'Find Meeting Time', value: 'find-time', icon: '🔍' },
+               ];
+            }
+
+            // Default actions
+            return [
+               { id: 'save', title: 'Save', value: 'save', icon: '💾' },
+               { id: 'share', title: 'Share', value: 'share', icon: '🔗' },
+               { id: 'delete', title: 'Delete', value: 'delete', icon: '🗑️' },
+            ];
+         },
+         execute: async (content, action, context) => {
+            toast.info(`Action: ${action.title} with content: "${content}"`);
             return { success: true };
          },
       }),

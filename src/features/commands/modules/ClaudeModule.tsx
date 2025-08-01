@@ -2,7 +2,7 @@
 
 import { createActionCommand, createInputCommand, type CommandModule } from '../types';
 import { toast } from 'sonner';
-import { MessageCircleIcon, SparklesIcon, BrainIcon } from 'lucide-react';
+import { MessageCircleIcon } from 'lucide-react';
 
 export const claudeModule: CommandModule = {
    id: 'claude',
@@ -62,96 +62,6 @@ export const claudeModule: CommandModule = {
                   },
                }),
             };
-         },
-      }),
-
-      // Quick AI suggestions command
-      createActionCommand({
-         id: 'claude:suggest',
-         title: 'Get AI Suggestions',
-         description: 'Get contextual suggestions based on current workspace',
-         icon: <SparklesIcon className="w-4 h-4" />,
-         group: 'AI Assistant',
-         execute: async () => {
-            const suggestions = [
-               'Create a new task for the current project',
-               'Review recent changes and provide feedback',
-               'Generate documentation for recent work',
-               'Suggest improvements for current workflow',
-               'Analyze project status and next steps',
-            ];
-
-            const suggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-            toast.info(`AI Suggestion: ${suggestion}`);
-
-            return { success: true };
-         },
-      }),
-
-      // AI-powered command search
-      createActionCommand({
-         id: 'claude:smart-search',
-         title: 'Smart Command Search',
-         description: 'Use AI to find the right command for your needs',
-         icon: <BrainIcon className="w-4 h-4" />,
-         group: 'AI Assistant',
-         execute: async () => {
-            return {
-               success: true,
-               nextCommand: createInputCommand({
-                  id: 'claude:smart-search-input',
-                  title: 'Describe What You Want to Do',
-                  description: 'AI will help find the right command',
-                  type: 'input',
-                  inputConfig: {
-                     placeholder:
-                        'e.g., "I want to update a task status" or "create a new project"',
-                     submitHint: 'Press Enter to search with AI',
-                  },
-                  execute: async (description) => {
-                     // In a real implementation, this would use AI to match the description
-                     // to available commands and suggest the best matches
-
-                     const mockSuggestions = [
-                        {
-                           command: 'Set Task Status',
-                           reason: 'Best match for updating task status',
-                        },
-                        { command: 'Add Task', reason: 'Alternative for task management' },
-                        { command: 'Next Task', reason: 'Related to task workflow' },
-                     ];
-
-                     toast.info(`AI found ${mockSuggestions.length} relevant commands`);
-
-                     return {
-                        success: true,
-                        data: { aiSuggestions: mockSuggestions },
-                     };
-                  },
-               }),
-            };
-         },
-      }),
-
-      // Help and documentation command
-      createActionCommand({
-         id: 'claude:help',
-         title: 'AI Help & Documentation',
-         description: 'Get help with using the command palette and available features',
-         icon: <MessageCircleIcon className="w-4 h-4" />,
-         group: 'AI Assistant',
-         execute: async () => {
-            const helpTopics = [
-               '• Use Cmd+K (or Ctrl+K) to open the command palette',
-               '• Start typing to search for commands',
-               '• Use arrow keys to navigate and Enter to select',
-               '• Recent commands appear first when no search query',
-               '• Ask Claude for help with anything not covered by commands',
-            ];
-
-            toast.info(`Command Palette Help:\n${helpTopics.join('\n')}`);
-
-            return { success: true };
          },
       }),
    ],

@@ -4,7 +4,7 @@ export * from './types/module.types';
 export * from './types/command.types';
 
 // Additional types for command palette functionality
-export type CommandMode = 'search' | 'select' | 'input';
+export type CommandMode = 'search' | 'select' | 'input' | 'input-with-actions';
 
-// Re-export the new contextual input command helper
-export { createContextualInputCommand } from './types/command.types';
+// Re-export the new input command helpers
+export { createContextualInputCommand, createInputWithActionsCommand } from './types/command.types';
