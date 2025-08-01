@@ -42,9 +42,11 @@ export interface CommandPaletteState {
    currentCommand: Command | null;
    isExecuting: boolean;
 
-   // Argument collection state
+   // Progressive argument collection state
    isCollectingArgs: boolean;
    commandArgs: Record<string, any>;
+   currentArgIndex: number; // Track which parameter we're currently filling
+   argValidationErrors: Record<string, string>; // Validation errors per argument
 
    // Navigation state (for nested pages)
    pages: string[];
@@ -57,6 +59,7 @@ export interface CommandPaletteState {
    // Search and filtering
    searchValue: string;
    filteredCommands: Command[];
+   isSlashCommand: boolean; // Track if user started with slash
 
    // Loading state
    isLoading: boolean;
@@ -72,9 +75,15 @@ export interface CommandPaletteActions {
    executeCommand: (command: Command, args?: Record<string, any>) => Promise<void>;
    setExecuting: (executing: boolean) => void;
 
-   // Argument collection actions
+   // Progressive argument collection actions
    startArgumentCollection: (command: Command, initialArgs?: Record<string, any>) => void;
    updateCommandArgs: (args: Record<string, any>) => void;
+   updateCurrentArg: (name: string, value: any) => void;
+   setCurrentArgIndex: (index: number) => void;
+   nextArg: () => void;
+   previousArg: () => void;
+   setArgValidationError: (argName: string, error: string) => void;
+   clearArgValidationError: (argName: string) => void;
    finishArgumentCollection: () => void;
    cancelArgumentCollection: () => void;
 
@@ -91,6 +100,7 @@ export interface CommandPaletteActions {
    // Search actions
    setSearchValue: (value: string) => void;
    setFilteredCommands: (commands: Command[]) => void;
+   setSlashCommand: (isSlash: boolean) => void;
 
    // Loading actions
    setLoading: (loading: boolean, message?: string) => void;

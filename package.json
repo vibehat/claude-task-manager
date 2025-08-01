@@ -23,7 +23,8 @@
       "format": "prettier --write .",
       "prepare": "husky install",
       "postinstall": "node scripts/setup-katex-fonts.js",
-      "test": "jest"
+      "test": "jest",
+      "kill:dev": "pkill -f 'next dev' && pkill -f 'node.*server' && pkill -f 'websocket' || true"
    },
    "dependencies": {
       "@hookform/resolvers": "^4.1.2",

@@ -75,6 +75,11 @@ export const getXTermConfig = (theme: TerminalTheme, fontSize: number, fontFamil
    convertEol: true,
    allowTransparency: false,
    minimumContrastRatio: 1,
+   // Use DOM renderer - simpler and standard approach
+   rendererType: 'dom' as const,
+   logLevel: 'warn' as const,
+   screenReaderMode: false,
+   rightClickSelectsWord: true,
    theme: {
       background: theme.background,
       foreground: theme.foreground,

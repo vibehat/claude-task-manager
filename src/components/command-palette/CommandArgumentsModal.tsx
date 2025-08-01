@@ -16,7 +16,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useTasksList } from '@/hooks/useTaskMasterCLI';
-import type { Command, CommandArg, TaskMasterTask, TaskMasterStatus } from './types';
+import type { Command, CommandArg, TaskMasterTask } from './types';
 import { ArrowLeftIcon, PlayIcon, XIcon } from 'lucide-react';
 
 interface CommandArgumentsModalProps {

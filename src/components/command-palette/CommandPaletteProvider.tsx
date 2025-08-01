@@ -15,7 +15,6 @@ import type {
    CommandPaletteState,
    CommandPaletteActions,
    Command,
-   CommandResult,
 } from './types';
 
 const CommandPaletteContext = createContext<CommandPaletteContext | null>(null);
@@ -35,12 +34,15 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
       isExecuting: false,
       isCollectingArgs: false,
       commandArgs: {},
+      currentArgIndex: 0,
+      argValidationErrors: {},
       pages: [],
       currentPage: null,
       history: [],
       favorites: [],
       searchValue: '',
       filteredCommands: [],
+      isSlashCommand: false,
       isLoading: false,
    });
 
@@ -89,8 +91,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
                      isCollectingArgs: false,
                      currentCommand: null,
                      commandArgs: {},
+                     currentArgIndex: 0,
+                     argValidationErrors: {},
                      pages: [],
                      currentPage: null,
+                     isSlashCommand: false,
                   };
                }
                return prev;
@@ -107,6 +112,8 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
                         isCollectingArgs: false,
                         currentCommand: null,
                         commandArgs: {},
+                        currentArgIndex: 0,
+                        argValidationErrors: {},
                      };
                   } else if (prev.pages.length > 0) {
                      const newPages = prev.pages.slice(0, -1);
@@ -124,10 +131,13 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
                         isCollectingArgs: false,
                         currentCommand: null,
                         commandArgs: {},
+                        currentArgIndex: 0,
+                        argValidationErrors: {},
                         pages: [],
                         currentPage: null,
                         isExecuting: false,
                         isLoading: false,
+                        isSlashCommand: false,
                      };
                   }
                }
@@ -149,8 +159,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          isCollectingArgs: false,
          currentCommand: null,
          commandArgs: {},
+         currentArgIndex: 0,
+         argValidationErrors: {},
          pages: [],
          currentPage: null,
+         isSlashCommand: false,
       }));
    }, []);
 
@@ -162,10 +175,13 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          isCollectingArgs: false,
          currentCommand: null,
          commandArgs: {},
+         currentArgIndex: 0,
+         argValidationErrors: {},
          pages: [],
          currentPage: null,
          isExecuting: false,
          isLoading: false,
+         isSlashCommand: false,
       }));
    }, []);
 
@@ -226,7 +242,7 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
       }));
    }, []);
 
-   // Argument collection actions
+   // Progressive argument collection actions
    const startArgumentCollection = useCallback(
       (command: Command, initialArgs?: Record<string, any>) => {
          setState((prev) => ({
@@ -234,6 +250,8 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
             currentCommand: command,
             isCollectingArgs: true,
             commandArgs: initialArgs || {},
+            currentArgIndex: 0,
+            argValidationErrors: {},
          }));
       },
       []
@@ -246,10 +264,58 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
       }));
    }, []);
 
+   const updateCurrentArg = useCallback((name: string, value: any) => {
+      setState((prev) => ({
+         ...prev,
+         commandArgs: { ...prev.commandArgs, [name]: value },
+         argValidationErrors: { ...prev.argValidationErrors, [name]: '' }, // Clear error when updating
+      }));
+   }, []);
+
+   const setCurrentArgIndex = useCallback((index: number) => {
+      setState((prev) => ({
+         ...prev,
+         currentArgIndex: index,
+      }));
+   }, []);
+
+   const nextArg = useCallback(() => {
+      setState((prev) => ({
+         ...prev,
+         currentArgIndex: Math.min(
+            (prev.currentCommand?.args?.length || 1) - 1,
+            prev.currentArgIndex + 1
+         ),
+      }));
+   }, []);
+
+   const previousArg = useCallback(() => {
+      setState((prev) => ({
+         ...prev,
+         currentArgIndex: Math.max(0, prev.currentArgIndex - 1),
+      }));
+   }, []);
+
+   const setArgValidationError = useCallback((argName: string, error: string) => {
+      setState((prev) => ({
+         ...prev,
+         argValidationErrors: { ...prev.argValidationErrors, [argName]: error },
+      }));
+   }, []);
+
+   const clearArgValidationError = useCallback((argName: string) => {
+      setState((prev) => ({
+         ...prev,
+         argValidationErrors: { ...prev.argValidationErrors, [argName]: '' },
+      }));
+   }, []);
+
    const finishArgumentCollection = useCallback(() => {
       setState((prev) => ({
          ...prev,
          isCollectingArgs: false,
+         currentArgIndex: 0,
+         argValidationErrors: {},
       }));
    }, []);
 
@@ -259,6 +325,8 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          isCollectingArgs: false,
          currentCommand: null,
          commandArgs: {},
+         currentArgIndex: 0,
+         argValidationErrors: {},
       }));
    }, []);
 
@@ -327,6 +395,13 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
       }));
    }, []);
 
+   const setSlashCommand = useCallback((isSlash: boolean) => {
+      setState((prev) => ({
+         ...prev,
+         isSlashCommand: isSlash,
+      }));
+   }, []);
+
    // Loading actions
    const setLoading = useCallback((loading: boolean, message?: string) => {
       setState((prev) => ({
@@ -344,6 +419,12 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          setExecuting,
          startArgumentCollection,
          updateCommandArgs,
+         updateCurrentArg,
+         setCurrentArgIndex,
+         nextArg,
+         previousArg,
+         setArgValidationError,
+         clearArgValidationError,
          finishArgumentCollection,
          cancelArgumentCollection,
          navigateToPage,
@@ -354,6 +435,7 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          removeFromFavorites,
          setSearchValue,
          setFilteredCommands,
+         setSlashCommand,
          setLoading,
       }),
       [
@@ -363,6 +445,12 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          setExecuting,
          startArgumentCollection,
          updateCommandArgs,
+         updateCurrentArg,
+         setCurrentArgIndex,
+         nextArg,
+         previousArg,
+         setArgValidationError,
+         clearArgValidationError,
          finishArgumentCollection,
          cancelArgumentCollection,
          navigateToPage,
@@ -373,6 +461,7 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          removeFromFavorites,
          setSearchValue,
          setFilteredCommands,
+         setSlashCommand,
          setLoading,
       ]
    );

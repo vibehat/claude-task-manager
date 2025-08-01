@@ -164,9 +164,55 @@ export const useDataStore = create<DataState>()(
             }
          } catch (error) {
             console.error('DataStore initialization failed:', error);
+
+            // On initialization failure, provide default statuses to prevent UI breaking
+            const defaultStatuses = [
+               {
+                  id: 'status-1',
+                  name: 'backlog',
+                  color: '#95a5a6',
+                  order: 0,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'status-2',
+                  name: 'todo',
+                  color: '#3498db',
+                  order: 1,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'status-3',
+                  name: 'in_progress',
+                  color: '#f39c12',
+                  order: 2,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'status-4',
+                  name: 'done',
+                  color: '#2ecc71',
+                  order: 3,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'status-5',
+                  name: 'cancelled',
+                  color: '#e74c3c',
+                  order: 4,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+            ];
+
             set({
+               statuses: defaultStatuses,
                isLoading: false,
-               isInitialized: false, // Make sure to set this to false on error
+               isInitialized: true, // Set to true to prevent infinite loading
             });
          }
       },

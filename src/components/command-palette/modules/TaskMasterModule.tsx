@@ -1,8 +1,8 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useTaskMasterCLI, taskMasterCLI } from '@/hooks/useTaskMasterCLI';
-import type { CommandModule, Command, CommandArg } from '../types';
+import { taskMasterCLI } from '@/hooks/useTaskMasterCLI';
+import type { CommandModule, Command } from '../types';
 import {
    ListIcon,
    PlayIcon,
@@ -10,22 +10,17 @@ import {
    CheckIcon,
    PlusIcon,
    EditIcon,
-   TrashIcon,
    ExpandIcon,
    BarChartIcon,
    LinkIcon,
-   UnlinkIcon,
    ShieldCheckIcon,
    FileIcon,
    SettingsIcon,
    InfoIcon,
-   RefreshCwIcon,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function useTaskMasterModule(): CommandModule {
-   const { execute, isExecuting } = useTaskMasterCLI();
-
    const commands: Command[] = useMemo(
       () => [
          // Core data commands

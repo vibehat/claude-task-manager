@@ -30,7 +30,7 @@ export const usePersistenceStore = create<PersistenceState>()(
    persist(
       (set, get) => ({
          // Initial state
-         enablePersistence: true,
+         enablePersistence: false, // Temporarily disabled to force API loading
          autoSave: true,
          autoSaveInterval: 30, // 30 seconds
 
@@ -119,6 +119,9 @@ export const usePersistenceStore = create<PersistenceState>()(
                         : [],
                   };
 
+                  // Only mark as initialized if we have valid statuses data
+                  const hasValidData = processedData.statuses && processedData.statuses.length > 0;
+
                   // Update data store
                   useDataStore.setState({
                      users: processedData.users,
@@ -127,10 +130,13 @@ export const usePersistenceStore = create<PersistenceState>()(
                      statuses: processedData.statuses,
                      priorities: processedData.priorities,
                      tasks: processedData.tasks,
-                     isInitialized: true,
+                     isInitialized: hasValidData, // Only mark initialized if we have statuses
                   });
 
-                  console.log('Data loaded from localStorage');
+                  console.log('Data loaded from localStorage', {
+                     hasValidData,
+                     statusCount: processedData.statuses?.length,
+                  });
                }
             } catch (error) {
                console.error('Failed to load data from localStorage:', error);

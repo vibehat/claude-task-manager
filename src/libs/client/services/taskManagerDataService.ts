@@ -1,12 +1,21 @@
 import type { User, Project, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 
+export interface TaskExtra {
+   createdAt?: string;
+   updatedAt?: string;
+   metadata?: {
+      [key: string]: any;
+   };
+}
+
 export interface TaskManagerData {
    users: User[];
    projects: Project[];
    labels: Label[];
    statuses: TaskStatus[];
    priorities: TaskPriority[];
-   tasks: Task[];
+   tasks?: Task[];
+   taskExtra?: Record<string, TaskExtra>;
    metadata: {
       created: string;
       updated: string;
@@ -28,7 +37,14 @@ class TaskManagerDataService {
 
    async readTaskManagerData(): Promise<TaskManagerData | null> {
       try {
+         console.log('[TaskManagerDataService] Starting fetch to /api/taskmaster/data...');
          const response = await fetch('/api/taskmaster/data');
+         console.log('[TaskManagerDataService] Fetch response:', {
+            ok: response.ok,
+            status: response.status,
+            statusText: response.statusText,
+         });
+
          if (!response.ok) {
             if (response.status === 404) {
                console.log('TaskManager data file not found');
@@ -37,9 +53,15 @@ class TaskManagerDataService {
             throw new Error(`Failed to fetch TaskManager data: ${response.statusText}`);
          }
          const data = await response.json();
+         console.log('[TaskManagerDataService] Successfully parsed data:', {
+            hasStatuses: !!data.statuses,
+            statusCount: data.statuses?.length,
+            hasUsers: !!data.users,
+            hasTasks: !!data.tasks,
+         });
          return data as TaskManagerData;
       } catch (error) {
-         console.warn('Failed to read TaskManager data:', error);
+         console.error('[TaskManagerDataService] Failed to read TaskManager data:', error);
          return null;
       }
    }

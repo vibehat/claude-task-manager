@@ -1,5 +1,5 @@
 export interface TerminalMessage {
-   type: 'data' | 'input' | 'resize' | 'connected' | 'exit' | 'error';
+   type: 'data' | 'input' | 'resize' | 'connected' | 'session-restored' | 'exit' | 'error';
    data?: any;
    sessionId?: string;
    shell?: string;
@@ -7,6 +7,8 @@ export interface TerminalMessage {
    cwd?: string;
    exitCode?: number;
    message?: string;
+   usingPty?: boolean;
+   ptySupport?: boolean;
 }
 
 export interface TerminalResizeData {
@@ -86,7 +88,7 @@ export interface UseTerminalReturn {
    initializeTerminal: () => Promise<any | null>;
    connectionStatus: TerminalConnectionStatus;
    session: TerminalSession | null;
-   connect: () => void;
+   connect: () => Promise<void>;
    disconnect: () => void;
    sendInput: (data: string) => void;
    resize: (cols: number, rows: number) => void;

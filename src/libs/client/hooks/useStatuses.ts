@@ -8,10 +8,21 @@ export function useStatuses() {
    useEffect(() => {
       if (!isInitialized) {
          initialize().catch((err) => {
+            console.error('useStatuses: Failed to initialize data store:', err);
             setError(err);
          });
       }
    }, [isInitialized, initialize]);
+
+   // Debug logging for troubleshooting
+   useEffect(() => {
+      console.log('[useStatuses] State update:', {
+         statusesCount: statuses?.length,
+         isInitialized,
+         isLoading,
+         hasError: !!error,
+      });
+   }, [statuses, isInitialized, isLoading, error]);
 
    return {
       data: statuses,

@@ -30,22 +30,30 @@ export function PersistentTerminal({
    const resizeObserverRef = useRef<ResizeObserver | null>(null);
    const [isDragging, setIsDragging] = useState(false);
    const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+   const [isRestoring, setIsRestoring] = useState(false);
+   const reconnectAttemptRef = useRef(0);
+   const maxReconnectAttempts = 3;
 
    // Get terminal instance from store
    const terminalInstance = terminalId ? multiTerminalStore.getTerminalById(terminalId) : null;
 
-   if (!terminalId || !terminalInstance) {
-      return null; // Must have a terminal ID and instance
-   }
-
-   // Create individual terminal hook
+   // Create individual terminal hook - must be called before early returns
    const individualTerminal = useTerminal({
       theme: theme as 'light' | 'dark' | 'auto',
       fontSize: 14,
       fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+      sessionId: terminalInstance?.sessionId, // For session restoration
+      clientId: terminalId, // Use terminal ID as client identifier
       onConnect: () => console.log(`Terminal ${terminalId} connected`),
       onDisconnect: () => console.log(`Terminal ${terminalId} disconnected`),
       onError: (error: string) => console.error(`Terminal ${terminalId} error:`, error),
+      onSessionRestored: (sessionId: string) => {
+         console.log(`✅ Terminal ${terminalId} session restored: ${sessionId}`);
+         if (terminalInstance) {
+            multiTerminalStore.updateTerminalSession(terminalId, sessionId);
+            multiTerminalStore.markTerminalAsRestored(terminalId);
+         }
+      },
    });
 
    // Use terminal instance data
@@ -81,14 +89,38 @@ export function PersistentTerminal({
             return;
          }
 
+         console.log(
+            `Mounting terminal ${terminalId} to DOM element:`,
+            terminalContainerRef.current
+         );
+         console.log(`Container dimensions:`, {
+            width: terminalContainerRef.current.offsetWidth,
+            height: terminalContainerRef.current.offsetHeight,
+            clientWidth: terminalContainerRef.current.clientWidth,
+            clientHeight: terminalContainerRef.current.clientHeight,
+         });
+
          terminalInstanceToMount.open(terminalContainerRef.current);
          terminalMountedRef.current = true;
 
+         console.log(`Terminal ${terminalId} mounted. Element:`, terminalInstanceToMount.element);
+         console.log(`Terminal dimensions after mount:`, {
+            cols: terminalInstanceToMount.cols,
+            rows: terminalInstanceToMount.rows,
+         });
+
          // Focus the terminal and fit to container after mounting
          setTimeout(() => {
-            console.log(`Focusing terminal ${terminalId} after mount`); // Debug logging
+            console.log(`Focusing terminal ${terminalId} after mount`);
             terminalInstanceToMount.focus();
             fit();
+
+            // Additional debugging after fit
+            console.log(`Terminal dimensions after fit:`, {
+               cols: terminalInstanceToMount.cols,
+               rows: terminalInstanceToMount.rows,
+               hasElement: !!terminalInstanceToMount.element,
+            });
          }, 100);
       } catch (err) {
          console.error('Error mounting persistent terminal:', err);
@@ -122,34 +154,39 @@ export function PersistentTerminal({
       mountTerminal();
    }, [mountTerminal]);
 
-   // Auto-connect
-   useEffect(() => {
-      if (connectionStatus === TerminalConnectionStatus.DISCONNECTED) {
-         connect();
-      }
-   }, [connect, connectionStatus]);
+   // Get active terminal ID from store
+   const activeTerminalId = multiTerminalStore.activeTerminalId;
 
    // Focus terminal when it becomes active and is connected
    useEffect(() => {
-      if (
-         terminal &&
-         isConnected &&
-         !isMinimized &&
-         multiTerminalStore.activeTerminalId === terminalId
-      ) {
+      if (terminal && isConnected && !isMinimized && activeTerminalId === terminalId) {
          setTimeout(() => {
             terminal.focus();
          }, 100);
       }
-   }, [terminal, isConnected, isMinimized, multiTerminalStore.activeTerminalId, terminalId]);
+   }, [terminal, isConnected, isMinimized, terminalId, activeTerminalId]);
 
-   // Handle reconnect
+   // Handle reconnect with restoration awareness
    const handleReconnect = useCallback(() => {
+      console.log(`🔄 Manual reconnect requested for terminal ${terminalId}`);
+      setIsRestoring(true);
+      reconnectAttemptRef.current = 0;
+
       disconnect();
       setTimeout(() => {
-         connect();
+         connect()
+            .then(() => {
+               if (terminalInstance) {
+                  multiTerminalStore.markTerminalAsRestored(terminalId);
+               }
+               setIsRestoring(false);
+            })
+            .catch((error) => {
+               console.error(`Failed to manually reconnect terminal ${terminalId}:`, error);
+               setIsRestoring(false);
+            });
       }, 500);
-   }, [connect, disconnect]);
+   }, [connect, disconnect, terminalId, terminalInstance?.sessionId]);
 
    // Handle minimize/maximize
    const handleMinimize = useCallback(() => {
@@ -217,6 +254,84 @@ export function PersistentTerminal({
       }
    }, [isDragging, handleMouseMove, handleMouseUp]);
 
+   // Smart auto-connect/restoration logic
+   useEffect(() => {
+      if (!terminalInstance) return;
+
+      // Prevent infinite loops by checking if we're already connecting/restoring/connected
+      if (
+         connectionStatus === TerminalConnectionStatus.CONNECTING ||
+         connectionStatus === TerminalConnectionStatus.CONNECTED ||
+         isRestoring
+      ) {
+         return;
+      }
+
+      const shouldConnect = connectionStatus === TerminalConnectionStatus.DISCONNECTED;
+      const isRestoredSession = terminalInstance.isRestored;
+
+      if (shouldConnect && !isRestoredSession) {
+         // Fresh connection - immediate connect
+         console.log(`🔗 Auto-connecting fresh terminal ${terminalId}`);
+         connect()
+            .then(() => {
+               // Mark as restored after successful connection
+               multiTerminalStore.markTerminalAsRestored(terminalId);
+            })
+            .catch((error) => {
+               console.error(`❌ Failed to connect fresh terminal ${terminalId}:`, error);
+            });
+      } else if (
+         shouldConnect &&
+         isRestoredSession &&
+         reconnectAttemptRef.current < maxReconnectAttempts
+      ) {
+         // Restored session needs careful reconnection
+         console.log(
+            `🔄 Auto-restoring terminal ${terminalId} (attempt ${reconnectAttemptRef.current + 1})`
+         );
+         setIsRestoring(true);
+         reconnectAttemptRef.current += 1;
+
+         // Delay for restored sessions to avoid overwhelming the server
+         const delay = Math.min(1000 * reconnectAttemptRef.current, 5000);
+         setTimeout(() => {
+            connect()
+               .then(() => {
+                  console.log(`✅ Successfully restored terminal ${terminalId}`);
+                  multiTerminalStore.markTerminalAsRestored(terminalId);
+                  setIsRestoring(false);
+                  reconnectAttemptRef.current = 0;
+               })
+               .catch((error) => {
+                  console.error(
+                     `❌ Failed to restore terminal ${terminalId} (attempt ${reconnectAttemptRef.current}):`,
+                     error
+                  );
+                  setIsRestoring(false);
+
+                  if (reconnectAttemptRef.current >= maxReconnectAttempts) {
+                     console.warn(`🚫 Max reconnect attempts reached for terminal ${terminalId}`);
+                  }
+               });
+         }, delay);
+      }
+   }, [
+      connect,
+      connectionStatus,
+      terminalId,
+      terminalInstance?.isRestored,
+      terminalInstance?.sessionId,
+      isRestoring,
+   ]);
+
+   // Note: Safe startup check is now handled by TerminalStartupManager in DataInitializer
+   // This avoids duplicate calls and infinite loops
+
+   if (!terminalId || !terminalInstance) {
+      return null; // Must have a terminal ID and instance
+   }
+
    return (
       <div
          className={cn(
@@ -246,6 +361,16 @@ export function PersistentTerminal({
                {session && (
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                      {session.shell} • {session.platform}
+                  </span>
+               )}
+               {terminalInstance?.isRestored && (
+                  <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-full">
+                     Restored
+                  </span>
+               )}
+               {isRestoring && (
+                  <span className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full">
+                     Restoring...
                   </span>
                )}
             </div>
@@ -280,18 +405,30 @@ export function PersistentTerminal({
                   style={{
                      height: isMaximized ? 'calc(100% - 100px)' : 'calc(100% - 90px)',
                      minHeight: '200px',
+                     width: '100%',
+                     backgroundColor: '#000000', // Debug: Ensure black background for terminal
+                     position: 'relative', // Ensure proper positioning
                   }}
                   onClick={handleFocus}
                />
 
-               {/* Loading Overlay */}
-               {connectionStatus === TerminalConnectionStatus.CONNECTING && (
+               {/* Loading/Restoration Overlay */}
+               {(connectionStatus === TerminalConnectionStatus.CONNECTING || isRestoring) && (
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
                      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
                         <div className="flex items-center space-x-3">
                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                           <span className="text-sm font-medium">Connecting to terminal...</span>
+                           <span className="text-sm font-medium">
+                              {isRestoring
+                                 ? 'Restoring terminal session...'
+                                 : 'Connecting to terminal...'}
+                           </span>
                         </div>
+                        {isRestoring && reconnectAttemptRef.current > 0 && (
+                           <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                              Attempt {reconnectAttemptRef.current + 1} of {maxReconnectAttempts}
+                           </div>
+                        )}
                      </div>
                   </div>
                )}

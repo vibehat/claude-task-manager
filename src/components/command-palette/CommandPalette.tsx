@@ -10,14 +10,20 @@ import {
    CommandInput,
    CommandItem,
    CommandList,
-   CommandSeparator,
 } from '@/components/ui/command';
-import { Badge } from '@/components/ui/badge';
-import { CommandArgumentsModal } from './CommandArgumentsModal';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from '@/components/ui/select';
 import { useCommandPalette } from './CommandPaletteProvider';
 import { useCommandModules } from './hooks/useCommandModules';
-import type { Command as CommandType } from './types';
-import { StarIcon, SearchIcon, ArrowRightIcon, KeyboardIcon, LoaderIcon } from 'lucide-react';
+import type { Command as CommandType, CommandArg } from './types';
+import { ArrowLeftIcon, ChevronRightIcon, PlayIcon } from 'lucide-react';
 
 export function CommandPalette() {
    const { state, actions } = useCommandPalette();
@@ -25,232 +31,195 @@ export function CommandPalette() {
 
    // Flatten all commands from modules
    const allCommands = useMemo(() => {
-      return modules.flatMap((module) => (module.isEnabled?.() !== false ? module.commands : []));
+      if (!modules || modules.length === 0) return [];
+      return modules.flatMap((module) => {
+         if (module.isEnabled?.() === false) return [];
+         return module.commands || [];
+      });
    }, [modules]);
 
-   // Custom fuzzy search implementation
-   const searchCommands = useCallback(
-      (commands: CommandType[], query: string) => {
-         if (!query.trim()) {
-            return commands;
-         }
+   // Simple command search - no slash distinction, all commands are treated equally
+   const filteredCommands = useMemo(() => {
+      if (!allCommands || allCommands.length === 0) return [];
 
-         const lowerQuery = query.toLowerCase();
-
-         return commands
-            .map((command) => {
-               let score = 0;
-               const title = command.title.toLowerCase();
-               const description = command.description?.toLowerCase() || '';
-               const keywords = command.keywords?.join(' ').toLowerCase() || '';
-               const group = command.group.toLowerCase();
-
-               // Exact matches get highest score
-               if (title === lowerQuery) score += 100;
-               else if (title.includes(lowerQuery)) score += 50;
-               else if (description.includes(lowerQuery)) score += 30;
-               else if (keywords.includes(lowerQuery)) score += 20;
-               else if (group.includes(lowerQuery)) score += 10;
-
-               // Boost favorites
-               if (state.favorites.includes(command.id)) score += 5;
-
-               // Boost recent commands
-               if (state.history.some((h) => h.id === command.id)) score += 3;
-
-               return { command, score };
-            })
-            .filter(({ score }) => score > 0)
-            .sort((a, b) => b.score - a.score)
-            .map(({ command }) => command);
-      },
-      [state.favorites, state.history]
-   );
-
-   // Group commands for display
-   const groupedCommands = useMemo(() => {
-      let commands = allCommands;
-
-      // Apply search if there's a query
-      if (state.searchValue) {
-         commands = searchCommands(commands, state.searchValue);
+      if (!state.searchValue.trim()) {
+         return allCommands;
       }
 
-      const groups: Record<string, CommandType[]> = {};
-
-      // Add favorites group (only when not searching)
-      if (!state.searchValue && state.favorites.length > 0) {
-         const favoriteCommands = allCommands.filter((cmd) => state.favorites.includes(cmd.id));
-         if (favoriteCommands.length > 0) {
-            groups['⭐ Favorites'] = favoriteCommands;
-         }
-      }
-
-      // Add recent commands group (only when not searching)
-      if (!state.searchValue && state.history.length > 0) {
-         const recentCommands = state.history.slice(0, 5);
-         if (recentCommands.length > 0) {
-            groups['🕒 Recent'] = recentCommands;
-         }
-      }
-
-      // Group remaining commands
-      commands.forEach((command) => {
-         const group = command.group;
-         if (!groups[group]) {
-            groups[group] = [];
-         }
-         // Avoid duplicates from favorites/recent
-         const alreadyInGroups = Object.values(groups)
-            .flat()
-            .some((c) => c.id === command.id);
-
-         if (!alreadyInGroups) {
-            groups[group].push(command);
-         }
+      const query = state.searchValue.toLowerCase();
+      return allCommands.filter((command) => {
+         return (
+            command.title?.toLowerCase().includes(query) ||
+            command.description?.toLowerCase().includes(query) ||
+            command.id?.toLowerCase().includes(query) ||
+            command.keywords?.some((keyword) => keyword.toLowerCase().includes(query))
+         );
       });
-
-      return groups;
-   }, [allCommands, state.searchValue, state.favorites, state.history, searchCommands]);
+   }, [allCommands, state.searchValue]);
 
    const handleCommandSelect = useCallback(
       (command: CommandType) => {
          if (command.disabled) return;
 
-         // If command has arguments, start argument collection
          if (command.args && command.args.length > 0) {
             actions.startArgumentCollection(command);
          } else {
-            // Execute command directly
             actions.executeCommand(command);
          }
       },
       [actions]
    );
 
-   const handleArgumentsExecute = useCallback(
-      (args: Record<string, any>) => {
-         if (state.currentCommand) {
-            actions.executeCommand(state.currentCommand, args);
-         }
-      },
-      [state.currentCommand, actions]
-   );
+   const handleBack = useCallback(() => {
+      if (state.isCollectingArgs) {
+         actions.cancelArgumentCollection();
+      }
+   }, [state.isCollectingArgs, actions]);
 
-   const handleArgumentsCancel = useCallback(() => {
-      actions.cancelArgumentCollection();
-   }, [actions]);
+   const handleParameterSubmit = useCallback(
+      (argName: string, value: any) => {
+         actions.updateCurrentArg(argName, value);
 
-   const toggleFavorite = useCallback(
-      (commandId: string, event: React.MouseEvent) => {
-         event.stopPropagation();
-         if (state.favorites.includes(commandId)) {
-            actions.removeFromFavorites(commandId);
+         if (!state.currentCommand) return;
+
+         const totalArgs = state.currentCommand.args?.length || 0;
+         if (state.currentArgIndex >= totalArgs - 1) {
+            // This is the last parameter, execute
+            const finalArgs = { ...state.commandArgs, [argName]: value };
+            actions.executeCommand(state.currentCommand, finalArgs);
          } else {
-            actions.addToFavorites(commandId);
+            // Move to next parameter
+            actions.nextArg();
          }
       },
-      [state.favorites, actions]
+      [state.currentCommand, state.currentArgIndex, state.commandArgs, actions]
    );
 
-   const renderCommandShortcut = useCallback((shortcut?: string[]) => {
-      if (!shortcut || shortcut.length === 0) return null;
+   const renderParameterInput = useCallback(
+      (arg: CommandArg, index: number) => {
+         const value = state.commandArgs[arg.name];
+         const isActive = index === state.currentArgIndex;
 
-      return (
-         <div className="flex items-center space-x-1">
-            {shortcut.map((key, index) => (
-               <Badge key={index} variant="outline" className="px-1.5 py-0.5 text-xs font-mono">
-                  {key}
-               </Badge>
-            ))}
-         </div>
-      );
-   }, []);
+         if (!isActive) {
+            // Show completed parameter as read-only
+            return (
+               <div
+                  key={arg.name}
+                  className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+               >
+                  <div>
+                     <span className="text-sm font-medium">{arg.label}</span>
+                     {arg.description && (
+                        <p className="text-xs text-muted-foreground mt-1">{arg.description}</p>
+                     )}
+                  </div>
+                  <div className="text-sm text-muted-foreground">{value || '—'}</div>
+               </div>
+            );
+         }
 
-   const renderCommandItem = useCallback(
-      (command: CommandType) => {
-         const isFavorite = state.favorites.includes(command.id);
-         const isRecent = state.history.some((h) => h.id === command.id);
-
+         // Active parameter input
          return (
             <motion.div
-               key={command.id}
-               initial={{ opacity: 0, y: 4 }}
-               animate={{ opacity: 1, y: 0 }}
-               exit={{ opacity: 0, y: -4 }}
-               transition={{ duration: 0.15 }}
+               key={arg.name}
+               initial={{ opacity: 0, scale: 0.95 }}
+               animate={{ opacity: 1, scale: 1 }}
+               className="p-4 bg-background border rounded-xl space-y-3"
             >
-               <CommandItem
-                  value={`${command.id} ${command.title} ${command.description || ''} ${command.keywords?.join(' ') || ''}`}
-                  onSelect={() => handleCommandSelect(command)}
-                  disabled={command.disabled}
-                  className="flex items-center justify-between p-3 cursor-pointer group"
-               >
-                  <div className="flex items-center space-x-3 flex-1 min-w-0">
-                     {command.icon && (
-                        <motion.div
-                           className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground"
-                           initial={{ scale: 0.8 }}
-                           animate={{ scale: 1 }}
-                           transition={{ duration: 0.2, delay: 0.1 }}
-                        >
-                           {command.icon}
-                        </motion.div>
-                     )}
-                     <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-2 mb-1">
-                           <span className="font-medium text-sm">{command.title}</span>
-                           {command.loading && (
-                              <LoaderIcon className="w-3 h-3 animate-spin text-muted-foreground" />
-                           )}
-                           {command.args && command.args.length > 0 && (
-                              <ArrowRightIcon className="w-3 h-3 text-muted-foreground" />
-                           )}
-                        </div>
-                        {command.description && (
-                           <p className="text-xs text-muted-foreground truncate">
-                              {command.description}
-                           </p>
-                        )}
-                     </div>
-                  </div>
+               <div>
+                  <label className="text-sm font-medium flex items-center gap-2">
+                     {arg.label}
+                     {arg.required && <span className="text-red-500">*</span>}
+                  </label>
+                  {arg.description && (
+                     <p className="text-xs text-muted-foreground mt-1">{arg.description}</p>
+                  )}
+               </div>
 
-                  <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                     <motion.button
-                        onClick={(e) => toggleFavorite(command.id, e)}
-                        className="p-1 hover:bg-accent rounded-sm transition-colors"
-                        title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                     >
-                        <StarIcon
-                           className={`w-3 h-3 ${isFavorite ? 'text-yellow-500 fill-current' : 'text-muted-foreground'}`}
+               {arg.type === 'select' ? (
+                  <Select
+                     value={value || ''}
+                     onValueChange={(newValue) => handleParameterSubmit(arg.name, newValue)}
+                  >
+                     <SelectTrigger>
+                        <SelectValue
+                           placeholder={arg.placeholder || `Select ${arg.label.toLowerCase()}`}
                         />
-                     </motion.button>
-                     {renderCommandShortcut(command.shortcut)}
-                  </div>
-               </CommandItem>
+                     </SelectTrigger>
+                     <SelectContent>
+                        {arg.options?.map((option) => (
+                           <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                           </SelectItem>
+                        ))}
+                     </SelectContent>
+                  </Select>
+               ) : (
+                  <Input
+                     type={arg.type === 'number' ? 'number' : 'text'}
+                     placeholder={arg.placeholder || arg.label}
+                     value={value || ''}
+                     onChange={(e) => actions.updateCurrentArg(arg.name, e.target.value)}
+                     onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                           handleParameterSubmit(arg.name, e.currentTarget.value);
+                        }
+                     }}
+                     autoFocus
+                     className="bg-background"
+                  />
+               )}
+
+               <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">
+                     Step {index + 1} of {state.currentCommand?.args?.length || 0}
+                  </span>
+                  <Button
+                     size="sm"
+                     onClick={() => handleParameterSubmit(arg.name, value)}
+                     disabled={arg.required && !value}
+                     className="gap-2"
+                  >
+                     {index === (state.currentCommand?.args?.length || 0) - 1 ? (
+                        <>
+                           Execute <PlayIcon className="w-3 h-3" />
+                        </>
+                     ) : (
+                        <>
+                           Next <ChevronRightIcon className="w-3 h-3" />
+                        </>
+                     )}
+                  </Button>
+               </div>
             </motion.div>
          );
       },
-      [state.favorites, state.history, handleCommandSelect, toggleFavorite, renderCommandShortcut]
+      [
+         state.commandArgs,
+         state.currentArgIndex,
+         state.currentCommand,
+         actions,
+         handleParameterSubmit,
+      ]
    );
 
-   // Handle keyboard navigation for back action
+   // Add keyboard handling for the dialog
    useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
          if (!state.isOpen) return;
 
-         // Backspace to go back when search is empty
-         if (event.key === 'Backspace' && !state.searchValue && state.pages.length > 0) {
-            event.preventDefault();
-            actions.navigateBack();
+         if (event.key === 'Escape') {
+            if (state.isCollectingArgs) {
+               actions.cancelArgumentCollection();
+            } else {
+               actions.closePalette();
+            }
          }
       };
 
       document.addEventListener('keydown', handleKeyDown);
       return () => document.removeEventListener('keydown', handleKeyDown);
-   }, [state.isOpen, state.searchValue, state.pages.length, actions]);
+   }, [state.isOpen, state.isCollectingArgs, actions]);
 
    return (
       <CommandDialog
@@ -261,87 +230,94 @@ export function CommandPalette() {
             }
          }}
       >
-         {state.isCollectingArgs && state.currentCommand ? (
-            <CommandArgumentsModal
-               command={state.currentCommand}
-               initialArgs={state.commandArgs}
-               onExecute={handleArgumentsExecute}
-               onCancel={handleArgumentsCancel}
-            />
-         ) : (
-            <Command shouldFilter={false} className="max-w-2xl">
-               <CommandInput
-                  placeholder="Search commands..."
-                  value={state.searchValue}
-                  onValueChange={actions.setSearchValue}
-               />
-
-               <CommandList className="max-h-[400px]">
-                  {state.isLoading && (
-                     <Command.Loading>
-                        <div className="flex items-center justify-center py-6">
-                           <LoaderIcon className="w-6 h-6 animate-spin text-muted-foreground mr-2" />
-                           <span className="text-sm text-muted-foreground">
-                              {state.loadingMessage || 'Loading commands...'}
-                           </span>
-                        </div>
-                     </Command.Loading>
-                  )}
-
-                  <CommandEmpty>
-                     <div className="text-center py-6">
-                        <SearchIcon className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-                        <p className="text-sm text-muted-foreground mb-1">No commands found</p>
-                        <p className="text-xs text-muted-foreground">
-                           {state.searchValue
-                              ? `Try a different search term`
-                              : 'Start typing to search for commands'}
-                        </p>
-                        <div className="flex items-center justify-center mt-3 text-xs text-muted-foreground">
-                           <KeyboardIcon className="w-3 h-3 mr-1" />
-                           <span>Use ⌘K to open • ESC to close</span>
-                        </div>
+         <Command shouldFilter={false} className="max-w-lg">
+            {/* Header */}
+            <div className="flex items-center gap-3 p-4 border-b">
+               {state.isCollectingArgs && (
+                  <Button variant="ghost" size="sm" onClick={handleBack} className="p-2">
+                     <ArrowLeftIcon className="w-4 h-4" />
+                  </Button>
+               )}
+               <div className="flex-1">
+                  {state.isCollectingArgs && state.currentCommand ? (
+                     <div>
+                        <h3 className="font-medium">{state.currentCommand.title}</h3>
+                        <p className="text-xs text-muted-foreground">Configure parameters</p>
                      </div>
-                  </CommandEmpty>
+                  ) : (
+                     <h3 className="font-medium">Command Palette</h3>
+                  )}
+               </div>
+            </div>
 
-                  <AnimatePresence mode="popLayout">
-                     {Object.entries(groupedCommands).map(
-                        ([groupName, commands], groupIndex) =>
-                           commands.length > 0 && (
-                              <motion.div
-                                 key={groupName}
-                                 initial={{ opacity: 0, height: 0 }}
-                                 animate={{ opacity: 1, height: 'auto' }}
-                                 exit={{ opacity: 0, height: 0 }}
-                                 transition={{ duration: 0.2, delay: groupIndex * 0.05 }}
-                              >
-                                 {groupIndex > 0 && <CommandSeparator />}
-                                 <CommandGroup heading={groupName}>
-                                    <AnimatePresence mode="popLayout">
-                                       {commands.map(renderCommandItem)}
-                                    </AnimatePresence>
-                                 </CommandGroup>
-                              </motion.div>
-                           )
-                     )}
-                  </AnimatePresence>
+            {/* Content */}
+            {state.isCollectingArgs && state.currentCommand ? (
+               <div className="p-4 space-y-3 max-h-96 overflow-y-auto">
+                  {state.currentCommand.args?.map(renderParameterInput)}
+               </div>
+            ) : (
+               <>
+                  <CommandInput
+                     placeholder="Search commands..."
+                     value={state.searchValue}
+                     onValueChange={actions.setSearchValue}
+                  />
 
-                  {!state.isLoading &&
-                     Object.keys(groupedCommands).length === 0 &&
-                     !state.searchValue && (
-                        <div className="p-4 text-center">
-                           <p className="text-sm text-muted-foreground mb-2">
-                              Welcome to the Command Palette!
-                           </p>
-                           <p className="text-xs text-muted-foreground">
-                              Start typing to search for Task Master commands (tm:xxx) and other
-                              actions.
+                  <CommandList className="max-h-80">
+                     <CommandEmpty>
+                        <div className="text-center py-8">
+                           <p className="text-sm text-muted-foreground">No commands found</p>
+                           <p className="text-xs text-muted-foreground mt-1">
+                              Try a different search term
                            </p>
                         </div>
-                     )}
-               </CommandList>
-            </Command>
-         )}
+                     </CommandEmpty>
+
+                     <CommandGroup>
+                        <AnimatePresence>
+                           {filteredCommands && filteredCommands.length > 0
+                              ? filteredCommands.map((command) => (
+                                   <motion.div
+                                      key={command.id}
+                                      initial={{ opacity: 0, y: 4 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -4 }}
+                                      transition={{ duration: 0.15 }}
+                                   >
+                                      <CommandItem
+                                         value={`${command.id} ${command.title} ${command.description || ''}`}
+                                         onSelect={() => handleCommandSelect(command)}
+                                         disabled={command.disabled}
+                                         className="flex items-center gap-3 p-3 cursor-pointer"
+                                      >
+                                         {command.icon && (
+                                            <div className="w-5 h-5 flex-shrink-0 text-muted-foreground">
+                                               {command.icon}
+                                            </div>
+                                         )}
+                                         <div className="flex-1 min-w-0">
+                                            <div className="font-medium text-sm">
+                                               {command.title}
+                                            </div>
+                                            {command.description && (
+                                               <div className="text-xs text-muted-foreground truncate">
+                                                  {command.description}
+                                               </div>
+                                            )}
+                                         </div>
+                                         {command.args && command.args.length > 0 && (
+                                            <ChevronRightIcon className="w-4 h-4 text-muted-foreground" />
+                                         )}
+                                      </CommandItem>
+                                   </motion.div>
+                                ))
+                              : null}
+                        </AnimatePresence>
+                     </CommandGroup>
+                  </CommandList>
+               </>
+            )}
+         </Command>
       </CommandDialog>
    );
 }
