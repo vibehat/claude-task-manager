@@ -135,10 +135,10 @@ export function useTaskMasterMetrics(
       const taskCategories = taskMasterData
          ? Object.entries(taskMasterData).map(([tagName, tagData]) => ({
               name: tagName,
-              description: tagData.metadata.description,
+              description: tagData.metadata?.description || `Tasks for ${tagName}`,
               taskCount: tagData.tasks.length,
-              created: tagData.metadata.created,
-              updated: tagData.metadata.updated,
+              created: tagData.metadata?.created,
+              updated: tagData.metadata?.updated,
            }))
          : [];
 

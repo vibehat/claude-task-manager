@@ -492,5 +492,13 @@
          "updated": "2025-08-01T14:32:59.876Z",
          "description": "Tasks focused on performance optimization and system integration"
       }
+   },
+   "user-auth": {
+      "tasks": [],
+      "metadata": {
+         "created": "2025-08-01T21:38:00.645Z",
+         "updated": "2025-08-01T21:38:00.645Z",
+         "description": "User authentication feature tasks"
+      }
    }
 }
