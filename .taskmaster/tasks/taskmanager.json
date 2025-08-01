@@ -71,42 +71,50 @@
    ],
    "statuses": [
       {
-         "id": "status-1",
-         "name": "backlog",
-         "color": "#95a5a6",
+         "id": "pending",
+         "name": "Pending",
+         "color": "#3498db",
          "order": 0,
          "createdAt": "2025-01-01T00:00:00.000Z",
          "updatedAt": "2025-01-01T00:00:00.000Z"
       },
       {
-         "id": "status-2",
-         "name": "todo",
-         "color": "#3498db",
+         "id": "in-progress",
+         "name": "In Progress",
+         "color": "#f39c12",
          "order": 1,
          "createdAt": "2025-01-01T00:00:00.000Z",
          "updatedAt": "2025-01-01T00:00:00.000Z"
       },
       {
-         "id": "status-3",
-         "name": "in_progress",
-         "color": "#f39c12",
+         "id": "review",
+         "name": "Review",
+         "color": "#9b59b6",
          "order": 2,
          "createdAt": "2025-01-01T00:00:00.000Z",
          "updatedAt": "2025-01-01T00:00:00.000Z"
       },
       {
-         "id": "status-4",
-         "name": "done",
+         "id": "done",
+         "name": "Done",
          "color": "#2ecc71",
          "order": 3,
          "createdAt": "2025-01-01T00:00:00.000Z",
          "updatedAt": "2025-01-01T00:00:00.000Z"
       },
       {
-         "id": "status-5",
-         "name": "cancelled",
-         "color": "#e74c3c",
+         "id": "deferred",
+         "name": "Deferred",
+         "color": "#95a5a6",
          "order": 4,
+         "createdAt": "2025-01-01T00:00:00.000Z",
+         "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+         "id": "cancelled",
+         "name": "Cancelled",
+         "color": "#e74c3c",
+         "order": 5,
          "createdAt": "2025-01-01T00:00:00.000Z",
          "updatedAt": "2025-01-01T00:00:00.000Z"
       }
@@ -153,10 +161,10 @@
          "updatedAt": "2025-01-01T00:00:00.000Z"
       }
    ],
+   "taskExtra": {},
    "metadata": {
       "created": "2025-07-31T00:00:00.000Z",
-      "updated": "2025-07-31T21:45:41.094Z",
+      "updated": "2025-08-01T09:09:55.502Z",
       "description": "UI data for TaskMaster integration"
-   },
-   "taskExtra": {}
+   }
 }

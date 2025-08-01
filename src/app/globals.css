@@ -361,72 +361,59 @@ input[type='search'] {
    background: #ffffff !important;
 }
 
-/* Chat-style Terminal Animations */
-@keyframes terminal-slide-up {
+/* Simple Terminal Fade Animations */
+@keyframes terminal-fade-in {
    from {
-      transform: translateY(100%);
       opacity: 0;
    }
    to {
-      transform: translateY(0);
       opacity: 1;
    }
 }
 
-@keyframes terminal-slide-down {
+@keyframes terminal-fade-out {
    from {
-      transform: translateY(0);
       opacity: 1;
    }
    to {
-      transform: translateY(100%);
       opacity: 0;
    }
 }
 
-/* Removed chat-tab-bounce animation - no longer needed */
-
-/* Removed virtual-ray-glow animation - no longer needed */
-
-/* Terminal chat animation classes */
+/* Terminal animation classes */
 .terminal-entering {
-   animation: terminal-slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+   animation: terminal-fade-in 0.3s ease-in-out;
 }
 
 .terminal-exiting {
-   animation: terminal-slide-down 0.3s ease-in;
+   animation: terminal-fade-out 0.2s ease-in-out;
 }
 
-/* Removed chat-tab-hover - no longer needed */
-
-/* Removed virtual-ray-effect - no longer needed */
-
-/* Smooth transitions for terminal positioning */
+/* Simple transitions for terminal positioning */
 .terminal-transition {
    transition:
-      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      opacity 0.3s ease-out,
-      width 0.3s ease-out,
-      height 0.3s ease-out;
+      opacity 0.3s ease-in-out,
+      width 0.2s ease-in-out,
+      height 0.2s ease-in-out;
 }
 
-/* Chat tab stagger animation */
+/* Simple chat tab fade animation */
 .chat-tab-stagger {
-   animation: slide-in-from-bottom-4 0.4s ease-out both;
+   animation: terminal-fade-in 0.3s ease-in-out both;
 }
 
 .chat-tab-stagger:nth-child(1) {
    animation-delay: 0ms;
 }
 .chat-tab-stagger:nth-child(2) {
-   animation-delay: 100ms;
+   animation-delay: 50ms;
 }
 .chat-tab-stagger:nth-child(3) {
-   animation-delay: 200ms;
+   animation-delay: 100ms;
 }
 .chat-tab-stagger:nth-child(4) {
-   animation-delay: 300ms;
+   animation-delay: 150ms;
 }
 .chat-tab-stagger:nth-child(5) {
-   animation-delay: 400ms;
+   animation-delay: 200ms;
 }

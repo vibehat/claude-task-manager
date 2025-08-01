@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import type { TaskStatus } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { useTaskStatusIcon } from '@/features/tasks/hooks/useTaskStatusIcon';
+import { useTaskMasterCLI } from '@/hooks/useTaskMasterCLI';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
@@ -27,23 +28,33 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
    const statusId = typeof status === 'string' ? status : status?.id;
    const [value, setValue] = useState<string>(statusId || 'to-do');
 
-   const { updateTask, statuses } = useDataStore();
+   const { statuses } = useDataStore();
+   const { execute, isExecuting } = useTaskMasterCLI();
 
    useEffect(() => {
       setValue(statusId || 'to-do');
    }, [statusId]);
 
    const handleStatusChange = async (statusId: string): Promise<void> => {
+      const previousValue = value;
       setValue(statusId);
       setOpen(false);
 
       if (taskId) {
          try {
-            await updateTask(taskId, { statusId });
+            // No mapping needed - use TaskMaster status directly
+            const result = await execute({
+               command: 'set-status',
+               options: { id: taskId, status: statusId },
+            });
+
+            if (!result.success) {
+               throw new Error(result.result?.stderr || 'Failed to update task status');
+            }
          } catch (error) {
             console.error('Failed to update task status:', error);
-            // Optionally revert the UI state on error
-            setValue(statusId || 'to-do');
+            // Revert the UI state on error
+            setValue(previousValue);
          }
       }
    };
@@ -62,8 +73,15 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
                   variant="ghost"
                   role="combobox"
                   aria-expanded={open}
+                  disabled={isExecuting}
                >
-                  {StatusIcon ? <StatusIcon /> : <></>}
+                  {isExecuting ? (
+                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
+                  ) : StatusIcon ? (
+                     <StatusIcon />
+                  ) : (
+                     <></>
+                  )}
                </Button>
             </PopoverTrigger>
             <PopoverContent

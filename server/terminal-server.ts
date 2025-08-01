@@ -187,7 +187,11 @@ class TerminalWebSocketServer {
                      })
                   );
                } else {
-                  console.warn(`WebSocket not open, cannot send PTY data. State:`, ws.readyState);
+                  console.warn(
+                     `WebSocket not open, cannot send PTY data. State: ${ws.readyState}. Stopping terminal process.`
+                  );
+                  // Stop the terminal process if WebSocket is closed
+                  this.cleanupSession(sessionId);
                }
             });
 
@@ -222,9 +226,10 @@ class TerminalWebSocketServer {
                   );
                } else {
                   console.warn(
-                     `WebSocket not open, cannot send stdout data. State:`,
-                     ws.readyState
+                     `WebSocket not open, cannot send stdout data. State: ${ws.readyState}. Stopping terminal process.`
                   );
+                  // Stop the terminal process if WebSocket is closed
+                  this.cleanupSession(sessionId);
                }
             });
 
@@ -244,9 +249,10 @@ class TerminalWebSocketServer {
                   );
                } else {
                   console.warn(
-                     `WebSocket not open, cannot send stderr data. State:`,
-                     ws.readyState
+                     `WebSocket not open, cannot send stderr data. State: ${ws.readyState}. Stopping terminal process.`
                   );
+                  // Stop the terminal process if WebSocket is closed
+                  this.cleanupSession(sessionId);
                }
             });
 
@@ -310,8 +316,7 @@ class TerminalWebSocketServer {
          ws.on('close', () => {
             console.log(`Terminal session ${sessionId} disconnected`);
 
-            // Mark session as inactive but don't clean up immediately
-            // This allows for reconnection
+            // Mark session as inactive for potential restoration
             const session = this.sessions.get(sessionId);
             if (session) {
                session.isActive = false;
@@ -319,10 +324,10 @@ class TerminalWebSocketServer {
                console.log(`Session ${sessionId} marked inactive for potential restoration`);
             }
 
-            // Clean up stale sessions after a delay
+            // Clean up session after a shorter delay to prevent resource leaks
             setTimeout(() => {
                this.cleanupStaleSession(sessionId);
-            }, 30000); // 30 second grace period for reconnection
+            }, 5000); // Reduced to 5 seconds to prevent accumulation of orphaned processes
          });
 
          // Handle WebSocket errors
@@ -469,7 +474,7 @@ class TerminalWebSocketServer {
 
          setTimeout(() => {
             this.cleanupStaleSession(sessionId);
-         }, 30000);
+         }, 5000); // Reduced to 5 seconds
       });
 
       ws.on('error', (error: Error) => {

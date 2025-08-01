@@ -104,7 +104,6 @@ function reconstructUITasksFromExtra(taskExtra?: Record<string, TaskExtra>): Tas
  */
 function convertTaskMasterTask(
    tmTask: TaskMasterTask,
-   statusMapping: Record<string, string>,
    priorityMapping: Record<string, string>
 ): Task {
    const now = new Date();
@@ -113,7 +112,7 @@ function convertTaskMasterTask(
       id: `tm-${tmTask.id}`,
       title: tmTask.title,
       description: tmTask.description || '',
-      statusId: statusMapping[tmTask.status] || 'status-2', // default to todo
+      statusId: tmTask.status, // Use TaskMaster status directly
       priorityId: priorityMapping[tmTask.priority] || 'priority-3', // default to medium
       assigneeId: undefined,
       projectId: 'project-personal', // default project for TaskMaster tasks
@@ -133,7 +132,6 @@ function convertTaskMasterTask(
 function convertTaskMasterSubtask(
    subtask: TaskMasterSubtask,
    parentTask: TaskMasterTask,
-   statusMapping: Record<string, string>,
    priorityMapping: Record<string, string>
 ): Task {
    const now = new Date();
@@ -142,7 +140,7 @@ function convertTaskMasterSubtask(
       id: `tm-${parentTask.id}.${subtask.id}`,
       title: subtask.title,
       description: subtask.description || '',
-      statusId: statusMapping[subtask.status] || 'status-2',
+      statusId: subtask.status, // Use TaskMaster status directly
       priorityId: priorityMapping[parentTask.priority] || 'priority-3', // inherit from parent
       assigneeId: undefined,
       projectId: 'project-personal',
@@ -225,42 +223,50 @@ export async function GET(): Promise<NextResponse> {
               ],
               statuses: [
                  {
-                    id: 'status-1',
-                    name: 'backlog',
-                    color: '#95a5a6',
+                    id: 'pending',
+                    name: 'Pending',
+                    color: '#3498db',
                     order: 0,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                  },
                  {
-                    id: 'status-2',
-                    name: 'todo',
-                    color: '#3498db',
+                    id: 'in-progress',
+                    name: 'In Progress',
+                    color: '#f39c12',
                     order: 1,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                  },
                  {
-                    id: 'status-3',
-                    name: 'in_progress',
-                    color: '#f39c12',
+                    id: 'review',
+                    name: 'Review',
+                    color: '#9b59b6',
                     order: 2,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                  },
                  {
-                    id: 'status-4',
-                    name: 'done',
+                    id: 'done',
+                    name: 'Done',
                     color: '#2ecc71',
                     order: 3,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                  },
                  {
-                    id: 'status-5',
-                    name: 'cancelled',
-                    color: '#e74c3c',
+                    id: 'deferred',
+                    name: 'Deferred',
+                    color: '#95a5a6',
                     order: 4,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                 },
+                 {
+                    id: 'cancelled',
+                    name: 'Cancelled',
+                    color: '#e74c3c',
+                    order: 5,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                  },
@@ -315,16 +321,7 @@ export async function GET(): Promise<NextResponse> {
               },
            };
 
-      // Create status and priority mappings for TaskMaster data
-      const statusMapping: Record<string, string> = {
-         'pending': 'status-2', // todo
-         'in-progress': 'status-3', // in_progress
-         'done': 'status-4', // done
-         'cancelled': 'status-5', // cancelled
-         'deferred': 'status-1', // backlog
-         'blocked': 'status-1', // backlog
-      };
-
+      // Create priority mapping for TaskMaster data
       const priorityMapping: Record<string, string> = {
          urgent: 'priority-1',
          high: 'priority-2',
@@ -337,18 +334,13 @@ export async function GET(): Promise<NextResponse> {
 
       for (const tmTask of taskMasterTasks) {
          // Convert parent task
-         const parentTask = convertTaskMasterTask(tmTask, statusMapping, priorityMapping);
+         const parentTask = convertTaskMasterTask(tmTask, priorityMapping);
          convertedTasks.push(parentTask);
 
          // Convert subtasks
          if (tmTask.subtasks) {
             for (const subtask of tmTask.subtasks) {
-               const convertedSubtask = convertTaskMasterSubtask(
-                  subtask,
-                  tmTask,
-                  statusMapping,
-                  priorityMapping
-               );
+               const convertedSubtask = convertTaskMasterSubtask(subtask, tmTask, priorityMapping);
                convertedTasks.push(convertedSubtask);
             }
          }

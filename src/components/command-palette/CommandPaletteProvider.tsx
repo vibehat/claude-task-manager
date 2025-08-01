@@ -15,6 +15,8 @@ import type {
    CommandPaletteState,
    CommandPaletteActions,
    Command,
+   NestedStep,
+   NestedCommandConfig,
 } from './types';
 
 const CommandPaletteContext = createContext<CommandPaletteContext | null>(null);
@@ -36,6 +38,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
       commandArgs: {},
       currentArgIndex: 0,
       argValidationErrors: {},
+      nestedFlowState: 'command-selection',
+      nestedSteps: [],
+      currentStepIndex: 0,
+      canGoBack: false,
+      canSubmit: false,
       pages: [],
       currentPage: null,
       history: [],
@@ -93,6 +100,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
                      commandArgs: {},
                      currentArgIndex: 0,
                      argValidationErrors: {},
+                     nestedFlowState: 'command-selection',
+                     nestedSteps: [],
+                     currentStepIndex: 0,
+                     canGoBack: false,
+                     canSubmit: false,
                      pages: [],
                      currentPage: null,
                      isSlashCommand: false,
@@ -106,7 +118,30 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          if (event.key === 'Escape') {
             setState((prev) => {
                if (prev.isOpen) {
-                  if (prev.isCollectingArgs) {
+                  if (prev.nestedFlowState !== 'command-selection' && prev.nestedSteps.length > 0) {
+                     // Handle nested flow navigation
+                     if (prev.currentStepIndex > 0) {
+                        return {
+                           ...prev,
+                           currentStepIndex: prev.currentStepIndex - 1,
+                           canGoBack: prev.currentStepIndex > 1,
+                           canSubmit: false,
+                           searchValue: '',
+                        };
+                     } else {
+                        return {
+                           ...prev,
+                           nestedFlowState: 'command-selection',
+                           nestedSteps: [],
+                           currentStepIndex: 0,
+                           canGoBack: false,
+                           canSubmit: false,
+                           currentCommand: null,
+                           commandArgs: {},
+                           searchValue: '',
+                        };
+                     }
+                  } else if (prev.isCollectingArgs) {
                      return {
                         ...prev,
                         isCollectingArgs: false,
@@ -133,6 +168,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
                         commandArgs: {},
                         currentArgIndex: 0,
                         argValidationErrors: {},
+                        nestedFlowState: 'command-selection',
+                        nestedSteps: [],
+                        currentStepIndex: 0,
+                        canGoBack: false,
+                        canSubmit: false,
                         pages: [],
                         currentPage: null,
                         isExecuting: false,
@@ -161,6 +201,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          commandArgs: {},
          currentArgIndex: 0,
          argValidationErrors: {},
+         nestedFlowState: 'command-selection',
+         nestedSteps: [],
+         currentStepIndex: 0,
+         canGoBack: false,
+         canSubmit: false,
          pages: [],
          currentPage: null,
          isSlashCommand: false,
@@ -177,6 +222,11 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          commandArgs: {},
          currentArgIndex: 0,
          argValidationErrors: {},
+         nestedFlowState: 'command-selection',
+         nestedSteps: [],
+         currentStepIndex: 0,
+         canGoBack: false,
+         canSubmit: false,
          pages: [],
          currentPage: null,
          isExecuting: false,
@@ -330,6 +380,144 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
       }));
    }, []);
 
+   // Nested command flow actions
+   const startNestedFlow = useCallback((command: Command) => {
+      // Create steps based on command args
+      const steps: NestedStep[] =
+         command.args?.map((arg, index) => ({
+            id: arg.name,
+            label: arg.label,
+            description: arg.description,
+            type: arg.type as any,
+            completed: false,
+            searchValue: '',
+            options:
+               arg.options?.map((opt) => ({ ...opt, description: undefined, icon: undefined })) ||
+               [],
+            isLoading: false,
+         })) || [];
+
+      // Add confirmation step
+      steps.push({
+         id: 'confirmation',
+         label: 'Confirm & Execute',
+         description: `Review and execute ${command.title}`,
+         type: 'confirmation',
+         completed: false,
+      });
+
+      setState((prev) => ({
+         ...prev,
+         currentCommand: command,
+         nestedFlowState: 'argument-collection',
+         nestedSteps: steps,
+         currentStepIndex: 0,
+         canGoBack: false,
+         canSubmit: false,
+         commandArgs: {},
+      }));
+   }, []);
+
+   const nextStep = useCallback(() => {
+      setState((prev) => {
+         const nextIndex = Math.min(prev.nestedSteps.length - 1, prev.currentStepIndex + 1);
+         const isLastStep = nextIndex === prev.nestedSteps.length - 1;
+
+         return {
+            ...prev,
+            currentStepIndex: nextIndex,
+            nestedFlowState: isLastStep ? 'confirmation' : 'argument-collection',
+            canGoBack: true,
+            canSubmit: isLastStep,
+            searchValue: '',
+         };
+      });
+   }, []);
+
+   const previousStep = useCallback(() => {
+      setState((prev) => {
+         const prevIndex = Math.max(0, prev.currentStepIndex - 1);
+         return {
+            ...prev,
+            currentStepIndex: prevIndex,
+            nestedFlowState: 'argument-collection',
+            canGoBack: prevIndex > 0,
+            canSubmit: false,
+            searchValue: '',
+         };
+      });
+   }, []);
+
+   const goToStep = useCallback((stepIndex: number) => {
+      setState((prev) => {
+         const validIndex = Math.max(0, Math.min(prev.nestedSteps.length - 1, stepIndex));
+         const isLastStep = validIndex === prev.nestedSteps.length - 1;
+
+         return {
+            ...prev,
+            currentStepIndex: validIndex,
+            nestedFlowState: isLastStep ? 'confirmation' : 'argument-collection',
+            canGoBack: validIndex > 0,
+            canSubmit: isLastStep,
+            searchValue: '',
+         };
+      });
+   }, []);
+
+   const confirmAndExecute = useCallback(async () => {
+      try {
+         if (!state.currentCommand) return;
+
+         setState((prev) => ({ ...prev, isExecuting: true }));
+
+         // Collect values from all steps (excluding confirmation)
+         const args: Record<string, any> = {};
+         state.nestedSteps.slice(0, -1).forEach((step) => {
+            if (step.value !== undefined) {
+               args[step.id] = step.value;
+            }
+         });
+
+         await executeCommand(state.currentCommand, args);
+      } catch (error) {
+         console.error('Nested command execution failed:', error);
+         setState((prev) => ({ ...prev, isExecuting: false }));
+         throw error;
+      }
+   }, [state.currentCommand, state.nestedSteps, executeCommand]);
+
+   const resetNestedFlow = useCallback(() => {
+      setState((prev) => ({
+         ...prev,
+         nestedFlowState: 'command-selection',
+         nestedSteps: [],
+         currentStepIndex: 0,
+         canGoBack: false,
+         canSubmit: false,
+         currentCommand: null,
+         commandArgs: {},
+      }));
+   }, []);
+
+   const updateStepValue = useCallback((stepIndex: number, value: any) => {
+      setState((prev) => {
+         const updatedSteps = [...prev.nestedSteps];
+         if (updatedSteps[stepIndex]) {
+            updatedSteps[stepIndex] = {
+               ...updatedSteps[stepIndex],
+               value,
+               completed: true,
+            };
+         }
+
+         return {
+            ...prev,
+            nestedSteps: updatedSteps,
+            commandArgs: { ...prev.commandArgs, [updatedSteps[stepIndex]?.id]: value },
+         };
+      });
+   }, []);
+
    // Navigation actions
    const navigateToPage = useCallback((page: string) => {
       setState((prev) => ({
@@ -427,6 +615,13 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          clearArgValidationError,
          finishArgumentCollection,
          cancelArgumentCollection,
+         startNestedFlow,
+         nextStep,
+         previousStep,
+         goToStep,
+         confirmAndExecute,
+         resetNestedFlow,
+         updateStepValue,
          navigateToPage,
          navigateBack,
          resetNavigation,
@@ -453,6 +648,13 @@ export function CommandPaletteProvider({ children }: CommandPaletteProviderProps
          clearArgValidationError,
          finishArgumentCollection,
          cancelArgumentCollection,
+         startNestedFlow,
+         nextStep,
+         previousStep,
+         goToStep,
+         confirmAndExecute,
+         resetNestedFlow,
+         updateStepValue,
          navigateToPage,
          navigateBack,
          resetNavigation,

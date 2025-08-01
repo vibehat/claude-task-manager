@@ -2,13 +2,29 @@ import type { ReactNode } from 'react';
 
 export interface CommandArg {
    name: string;
-   type: 'string' | 'select' | 'number' | 'boolean' | 'task-select' | 'status-select';
+   type:
+      | 'string'
+      | 'select'
+      | 'number'
+      | 'boolean'
+      | 'task-select'
+      | 'status-select'
+      | 'nested-select';
    label: string;
    placeholder?: string;
    description?: string;
    required?: boolean;
    options?: { label: string; value: string }[];
    validation?: (value: any) => string | undefined;
+   // Nested select configuration
+   nestedConfig?: {
+      searchPlaceholder?: string;
+      loadOptions?: () => Promise<
+         { label: string; value: string; description?: string; icon?: React.ReactNode }[]
+      >;
+      allowSearch?: boolean;
+      emptyMessage?: string;
+   };
 }
 
 export interface Command {
@@ -48,6 +64,13 @@ export interface CommandPaletteState {
    currentArgIndex: number; // Track which parameter we're currently filling
    argValidationErrors: Record<string, string>; // Validation errors per argument
 
+   // Nested command flow state
+   nestedFlowState: 'command-selection' | 'argument-collection' | 'confirmation';
+   nestedSteps: NestedStep[];
+   currentStepIndex: number;
+   canGoBack: boolean;
+   canSubmit: boolean;
+
    // Navigation state (for nested pages)
    pages: string[];
    currentPage: string | null;
@@ -86,6 +109,15 @@ export interface CommandPaletteActions {
    clearArgValidationError: (argName: string) => void;
    finishArgumentCollection: () => void;
    cancelArgumentCollection: () => void;
+
+   // Nested command flow actions
+   startNestedFlow: (command: Command) => void;
+   nextStep: () => void;
+   previousStep: () => void;
+   goToStep: (stepIndex: number) => void;
+   confirmAndExecute: () => Promise<void>;
+   resetNestedFlow: () => void;
+   updateStepValue: (stepIndex: number, value: any) => void;
 
    // Navigation actions
    navigateToPage: (page: string) => void;
@@ -129,6 +161,38 @@ export interface TaskMasterTask {
    priority: TaskMasterPriority;
    dependencies?: string[];
    subtasks?: TaskMasterTask[];
+}
+
+// Nested command flow types
+export interface NestedStep {
+   id: string;
+   label: string;
+   description?: string;
+   type: 'task-select' | 'status-select' | 'confirmation' | 'custom';
+   value?: any;
+   completed: boolean;
+   searchValue?: string;
+   options?: { label: string; value: string; description?: string; icon?: React.ReactNode }[];
+   isLoading?: boolean;
+   error?: string;
+}
+
+export interface NestedCommandConfig {
+   steps: {
+      id: string;
+      label: string;
+      description?: string;
+      type: 'task-select' | 'status-select' | 'confirmation';
+      searchPlaceholder?: string;
+      loadOptions?: () => Promise<
+         { label: string; value: string; description?: string; icon?: React.ReactNode }[]
+      >;
+      allowSearch?: boolean;
+      emptyMessage?: string;
+   }[];
+   onSubmit: (values: Record<string, any>) => Promise<void>;
+   submitLabel?: string;
+   submitDescription?: string;
 }
 
 // Command execution result

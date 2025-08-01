@@ -108,11 +108,11 @@ export function useTaskMasterModule(): CommandModule {
             },
          },
 
-         // Task modification commands
+         // Task modification commands - Enhanced with nested flow
          {
             id: 'tm:set-status',
-            title: 'Set Task Status',
-            description: 'Change the status of a task',
+            title: 'Update Task Status',
+            description: 'Change the status of a task with guided selection',
             icon: <CheckIcon className="w-4 h-4" />,
             keywords: ['status', 'update', 'change', 'complete', 'done'],
             group: '📋 Task Master',
@@ -121,15 +121,15 @@ export function useTaskMasterModule(): CommandModule {
                {
                   name: 'taskId',
                   type: 'task-select',
-                  label: 'Task',
-                  description: 'Select the task to update',
+                  label: 'Select Task',
+                  description: 'Choose which task to update',
                   required: true,
                },
                {
                   name: 'status',
                   type: 'status-select',
                   label: 'New Status',
-                  description: 'Select the new status for the task',
+                  description: 'Choose the new status for this task',
                   required: true,
                },
             ],
@@ -139,7 +139,7 @@ export function useTaskMasterModule(): CommandModule {
                }
                const result = await taskMasterCLI.setStatus(args.taskId, args.status);
                if (result.success) {
-                  toast.success(`Task status updated to ${args.status}`);
+                  toast.success(`Task ${args.taskId} status updated to ${args.status}`);
                }
             },
          },

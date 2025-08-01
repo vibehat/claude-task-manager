@@ -1,47 +1,49 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { getTerminalServer, startTerminalServer } from '../../../../server/terminal-server';
+import { getTerminalServer } from '../../../../server/terminal-server';
 import * as os from 'os';
 
-// Initialize terminal server on first request
-let serverInitialized = false;
-
-async function ensureServerStarted() {
-   if (!serverInitialized) {
-      try {
-         await startTerminalServer();
-         serverInitialized = true;
-         console.log('Modern WebSocket server started');
-      } catch (error) {
-         console.error('Failed to start WebSocket server:', error);
-         throw error;
-      }
+// Get terminal server instance (should be started by custom server)
+function getServerInstance() {
+   try {
+      return getTerminalServer();
+   } catch (error) {
+      console.error('Terminal server not available:', error);
+      return null;
    }
-   return getTerminalServer();
 }
 
 // Handle terminal server info requests
 export async function GET(_request: NextRequest): Promise<NextResponse> {
    try {
-      const server = await ensureServerStarted();
+      const server = getServerInstance();
+      if (!server) {
+         return NextResponse.json(
+            {
+               error: 'Terminal server not available',
+               message: 'Make sure the custom server is running with all services',
+               websocketUrl: 'ws://localhost:3001',
+               platform: os.platform(),
+               cwd: process.cwd(),
+            },
+            { status: 503 }
+         );
+      }
+
       const status = server.getStatus();
 
       return NextResponse.json({
-         message: 'Modern WebSocket API - Terminal Endpoint',
-         websocketUrl: `ws://localhost:${status.port}?type=terminal`,
+         message: 'Terminal WebSocket API - Status Endpoint',
+         websocketUrl: `ws://localhost:${status.port}`,
          ...status,
          platform: os.platform(),
          cwd: process.cwd(),
-         endpoints: {
-            terminal: `ws://localhost:${status.port}?type=terminal`,
-            sync: `ws://localhost:${status.port}?type=sync`,
-         },
       });
    } catch (error) {
       console.error('Error in terminal API GET:', error);
       return NextResponse.json(
          {
-            error: 'Failed to start terminal server',
+            error: 'Failed to get terminal server status',
             message: error instanceof Error ? error.message : 'Unknown error',
          },
          { status: 500 }
@@ -58,11 +60,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       switch (action) {
          case 'status':
             try {
-               const server = await ensureServerStarted();
-               const status = server.getStatus();
+               const server = getServerInstance();
+               if (!server) {
+                  return NextResponse.json({
+                     status: 'unavailable',
+                     message: 'Terminal server not running - start the custom server',
+                     timestamp: Date.now(),
+                  });
+               }
 
+               const status = server.getStatus();
                return NextResponse.json({
-                  status: 'healthy',
+                  status: status.active ? 'healthy' : 'inactive',
                   ...status,
                   platform: os.platform(),
                   timestamp: Date.now(),
@@ -79,56 +88,33 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             }
 
          case 'start':
-            try {
-               const server = await ensureServerStarted();
-               const status = server.getStatus();
-
-               return NextResponse.json({
-                  message: 'WebSocket server started',
-                  ...status,
+            return NextResponse.json(
+               {
+                  error: 'Server startup disabled',
+                  message:
+                     'Terminal server is managed by the custom server. Use `pnpm dev` to start all services.',
                   timestamp: Date.now(),
-                  endpoints: {
-                     terminal: `ws://localhost:${status.port}?type=terminal`,
-                     sync: `ws://localhost:${status.port}?type=sync`,
-                  },
-               });
-            } catch (error) {
-               return NextResponse.json(
-                  {
-                     error: 'Failed to start terminal server',
-                     message: error instanceof Error ? error.message : 'Unknown error',
-                     timestamp: Date.now(),
-                  },
-                  { status: 500 }
-               );
-            }
+               },
+               { status: 400 }
+            );
 
          case 'stop':
-            try {
-               const server = getTerminalServer();
-               await server.stop();
-               serverInitialized = false;
-
-               return NextResponse.json({
-                  message: 'WebSocket server stopped',
+            return NextResponse.json(
+               {
+                  error: 'Server shutdown disabled',
+                  message:
+                     'Terminal server is managed by the custom server. Stop the custom server to shutdown all services.',
                   timestamp: Date.now(),
-               });
-            } catch (error) {
-               return NextResponse.json(
-                  {
-                     error: 'Failed to stop WebSocket server',
-                     message: error instanceof Error ? error.message : 'Unknown error',
-                     timestamp: Date.now(),
-                  },
-                  { status: 500 }
-               );
-            }
+               },
+               { status: 400 }
+            );
 
          default:
             return NextResponse.json(
                {
                   error: 'Invalid action',
-                  availableActions: ['status', 'start', 'stop'],
+                  availableActions: ['status'],
+                  note: 'start/stop actions are disabled - use custom server instead',
                },
                { status: 400 }
             );

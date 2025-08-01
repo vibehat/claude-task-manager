@@ -67,16 +67,16 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
       [toggleMaximize]
    );
 
-   // Render terminals bar (Facebook chat style) - show all terminals
-   const visibleTerminals = terminals.filter((t) => !t.isMinimized);
-
    return (
       <div className={cn('fixed inset-0 pointer-events-none z-40', className)}>
-         {/* Render visible terminals with animations */}
-         {visibleTerminals.map((terminal) => (
+         {/* Render all terminals - keep them alive even when minimized */}
+         {terminals.map((terminal) => (
             <div
                key={terminal.id}
-               className="absolute pointer-events-auto terminal-transition terminal-entering"
+               className={cn(
+                  'absolute pointer-events-auto terminal-transition',
+                  terminal.isMinimized ? 'opacity-0 pointer-events-none' : 'terminal-entering'
+               )}
                style={{
                   left: terminal.position.x,
                   top: terminal.position.y,
@@ -104,7 +104,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
                      <div
                         key={terminal.id}
                         className={cn(
-                           'border rounded-t-xl shadow-lg cursor-pointer transition-all duration-200 ease-out',
+                           'border rounded-t-xl shadow-lg cursor-pointer transition-all duration-200 ease-in-out',
                            'w-56 h-14 flex items-center justify-between px-4 py-3 relative overflow-hidden',
                            'chat-tab-stagger',
                            // Different styles for minimized vs active terminals
@@ -125,7 +125,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
                         }
                         style={{
                            zIndex: 50 - index, // Stack order for overlapping effect
-                           animationDelay: `${index * 100}ms`, // Stagger animation
+                           animationDelay: `${index * 50}ms`, // Stagger animation
                         }}
                      >
                         {/* Chat icon and title */}
@@ -159,7 +159,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
 
                         {/* Close button */}
                         <button
-                           className="ml-3 hover:bg-muted rounded-full p-1.5 transition-all duration-200 opacity-70 hover:opacity-100 relative z-10"
+                           className="ml-3 hover:bg-muted rounded-full p-1.5 transition-opacity duration-200 opacity-70 hover:opacity-100 relative z-10"
                            onClick={(e) => {
                               e.stopPropagation();
                               handleTerminalClose(terminal.id);
