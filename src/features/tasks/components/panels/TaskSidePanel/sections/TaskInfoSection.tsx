@@ -4,108 +4,204 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { FileText, TestTube, Edit2 } from 'lucide-react';
-import { MarkdownEditor } from '../../../editors/MarkdownEditor';
+import { RichMarkdownEditor, MarkdownViewer } from '../../../editors/RichMarkdownEditor';
 import type { Task } from '@/libs/client/types';
 
 interface TaskInfoSectionProps {
    task: Task;
    onDescriptionSave?: (value: string) => void;
+   onDetailsSave?: (value: string) => void;
+   onTestStrategySave?: (value: string) => void;
    disabled?: boolean;
 }
 
 export function TaskInfoSection({
    task,
    onDescriptionSave,
+   onDetailsSave,
+   onTestStrategySave,
    disabled = false,
 }: TaskInfoSectionProps): React.JSX.Element {
-   const [description, setDescription] = useState(task.description || '');
+   const [combinedContent, setCombinedContent] = useState('');
    const [isEditing, setIsEditing] = useState(false);
 
+   // Combine all fields into a single markdown document
+   const combineFields = (): string => {
+      const sections = [];
+
+      if (task.description) {
+         sections.push(`## Description\n\n${task.description}`);
+      } else {
+         sections.push(`## Description\n\n_No description provided_`);
+      }
+
+      if (task.details || isEditing) {
+         sections.push(
+            `## Implementation Details\n\n${task.details || '_No implementation details provided_'}`
+         );
+      }
+
+      if (task.testStrategy || isEditing) {
+         sections.push(`## Test Strategy\n\n${task.testStrategy || '_No test strategy provided_'}`);
+      }
+
+      return sections.join('\n\n');
+   };
+
+   // Split combined content back into individual fields
+   const splitContent = (
+      content: string
+   ): { description: string; details: string; testStrategy: string } => {
+      const sections = content.split(/^## /gm).filter(Boolean);
+      let description = '';
+      let details = '';
+      let testStrategy = '';
+
+      sections.forEach((section) => {
+         const lines = section.split('\n');
+         const header = lines[0].toLowerCase();
+         const body = lines.slice(2).join('\n').trim(); // Skip header and empty line
+
+         if (header.includes('description')) {
+            description = body === '_No description provided_' ? '' : body;
+         } else if (header.includes('implementation') || header.includes('details')) {
+            details = body === '_No implementation details provided_' ? '' : body;
+         } else if (header.includes('test') || header.includes('strategy')) {
+            testStrategy = body === '_No test strategy provided_' ? '' : body;
+         }
+      });
+
+      return { description, details, testStrategy };
+   };
+
    useEffect(() => {
-      setDescription(task.description || '');
-   }, [task.description]);
+      setCombinedContent(combineFields());
+   }, [task.description, task.details, task.testStrategy]);
 
    const handleSave = (): void => {
+      const { description, details, testStrategy } = splitContent(combinedContent);
+
+      // Call the respective save handlers
       if (description !== task.description && onDescriptionSave) {
          onDescriptionSave(description);
       }
+      if (details !== task.details && onDetailsSave) {
+         onDetailsSave(details);
+      }
+      if (testStrategy !== task.testStrategy && onTestStrategySave) {
+         onTestStrategySave(testStrategy);
+      }
+
       setIsEditing(false);
    };
 
    const handleCancel = (): void => {
-      setDescription(task.description || '');
+      setCombinedContent(combineFields());
       setIsEditing(false);
+   };
+
+   const handleEdit = (): void => {
+      setCombinedContent(combineFields());
+      setIsEditing(true);
    };
 
    return (
       <div className="space-y-4">
-         {/* Description Section */}
-         <div className="space-y-3">
-            <div className="flex items-center justify-between">
-               <Label className="text-sm font-medium">Description</Label>
-               {!isEditing && (
-                  <Button
-                     variant="ghost"
-                     size="sm"
-                     onClick={() => setIsEditing(true)}
-                     disabled={disabled}
-                     className="h-7 px-2"
-                  >
-                     <Edit2 className="h-3 w-3 mr-1" />
-                     Edit
-                  </Button>
-               )}
-            </div>
-
+         {/* Header with Edit/Save/Cancel controls */}
+         <div className="flex items-center justify-between">
+            <Label className="text-sm font-medium">Task Details</Label>
             {isEditing ? (
-               <div className="space-y-3">
-                  <MarkdownEditor
-                     value={description}
-                     onChange={setDescription}
-                     placeholder="Add a description..."
-                     disabled={disabled}
-                  />
-                  <div className="flex justify-end gap-2">
-                     <Button variant="outline" size="sm" onClick={handleCancel} className="h-7">
-                        Cancel
-                     </Button>
-                     <Button size="sm" onClick={handleSave} className="h-7">
-                        Save
-                     </Button>
-                  </div>
+               <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={handleCancel} className="h-7">
+                     Cancel
+                  </Button>
+                  <Button size="sm" onClick={handleSave} className="h-7">
+                     Save
+                  </Button>
                </div>
             ) : (
-               <div className="text-sm text-foreground/80 leading-relaxed">
-                  {task.description || (
-                     <span className="text-muted-foreground italic">No description provided</span>
-                  )}
-               </div>
+               <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleEdit}
+                  disabled={disabled}
+                  className="h-7 px-2"
+               >
+                  <Edit2 className="h-3 w-3 mr-1" />
+                  Edit
+               </Button>
             )}
          </div>
 
-         {/* Implementation Details Section */}
-         {task.details && (
-            <div className="space-y-2">
-               <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-blue-500" />
-                  <Label className="text-sm font-medium text-blue-600">
-                     Implementation Details
-                  </Label>
-               </div>
-               <p className="text-sm text-foreground/80 leading-relaxed pl-6">{task.details}</p>
-            </div>
-         )}
+         {/* Content Area */}
+         {isEditing ? (
+            <div className="space-y-3">
+               <RichMarkdownEditor
+                  value={combinedContent}
+                  onChange={setCombinedContent}
+                  placeholder="## Description
 
-         {/* Test Strategy Section */}
-         {task.testStrategy && (
-            <div className="space-y-2">
-               <div className="flex items-center gap-2">
-                  <TestTube className="h-4 w-4 text-green-500" />
-                  <Label className="text-sm font-medium text-green-600">Test Strategy</Label>
+Add a description...
+
+## Implementation Details
+
+Add implementation details...
+
+## Test Strategy
+
+Add test strategy..."
+                  disabled={disabled}
+                  height={400}
+                  preview="edit"
+                  visibleDragBar={false}
+               />
+            </div>
+         ) : (
+            <div className="space-y-6">
+               {/* Description Section */}
+               <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                     <FileText className="h-4 w-4 text-foreground" />
+                     <Label className="text-sm font-medium">Description</Label>
+                  </div>
+                  <div className="text-sm">
+                     {task.description ? (
+                        <MarkdownViewer source={task.description} />
+                     ) : (
+                        <span className="text-muted-foreground italic">
+                           No description provided
+                        </span>
+                     )}
+                  </div>
                </div>
-               <p className="text-sm text-foreground/80 leading-relaxed pl-6">
-                  {task.testStrategy}
-               </p>
+
+               {/* Implementation Details Section */}
+               {task.details && (
+                  <div className="space-y-2">
+                     <div className="flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-blue-500" />
+                        <Label className="text-sm font-medium text-blue-600">
+                           Implementation Details
+                        </Label>
+                     </div>
+                     <div className="text-sm">
+                        <MarkdownViewer source={task.details} />
+                     </div>
+                  </div>
+               )}
+
+               {/* Test Strategy Section */}
+               {task.testStrategy && (
+                  <div className="space-y-2">
+                     <div className="flex items-center gap-2">
+                        <TestTube className="h-4 w-4 text-green-500" />
+                        <Label className="text-sm font-medium text-green-600">Test Strategy</Label>
+                     </div>
+                     <div className="text-sm">
+                        <MarkdownViewer source={task.testStrategy} />
+                     </div>
+                  </div>
+               )}
             </div>
          )}
       </div>

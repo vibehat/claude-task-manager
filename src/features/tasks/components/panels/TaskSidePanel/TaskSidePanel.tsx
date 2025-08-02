@@ -19,7 +19,7 @@ export function TaskSidePanel(): React.JSX.Element {
    const { updateTask } = useDataStore();
 
    const handleUpdateField = async (
-      field: 'title' | 'description',
+      field: 'title' | 'description' | 'details' | 'testStrategy',
       value: string
    ): Promise<void> => {
       if (!task) return;
@@ -28,9 +28,23 @@ export function TaskSidePanel(): React.JSX.Element {
          // Update the task using Zustand store
          await updateTask(task.id, { [field]: value });
 
-         toast.success(`${field === 'title' ? 'Title' : 'Description'} updated successfully`);
+         const fieldName = {
+            title: 'Title',
+            description: 'Description',
+            details: 'Implementation Details',
+            testStrategy: 'Test Strategy',
+         }[field];
+
+         toast.success(`${fieldName} updated successfully`);
       } catch (error) {
-         toast.error(`Failed to update ${field}`);
+         const fieldName = {
+            title: 'Title',
+            description: 'Description',
+            details: 'Implementation Details',
+            testStrategy: 'Test Strategy',
+         }[field];
+
+         toast.error(`Failed to update ${fieldName}`);
          console.error(`Update ${field} error:`, error);
       }
    };
@@ -41,6 +55,14 @@ export function TaskSidePanel(): React.JSX.Element {
 
    const handleDescriptionUpdate = (value: string): void => {
       handleUpdateField('description', value);
+   };
+
+   const handleDetailsUpdate = (value: string): void => {
+      handleUpdateField('details', value);
+   };
+
+   const handleTestStrategyUpdate = (value: string): void => {
+      handleUpdateField('testStrategy', value);
    };
 
    const handleLabelsUpdate = async (labelIds: string[]): Promise<void> => {
@@ -80,6 +102,8 @@ export function TaskSidePanel(): React.JSX.Element {
                   <TaskInfoSection
                      task={task}
                      onDescriptionSave={handleDescriptionUpdate}
+                     onDetailsSave={handleDetailsUpdate}
+                     onTestStrategySave={handleTestStrategyUpdate}
                      disabled={false}
                   />
 
