@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { useDataStore } from '@/libs/client/stores/dataStore';
@@ -13,10 +14,25 @@ import { TaskDetailsSection } from './sections/TaskDetailsSection';
 import { SubtasksSection } from './sections/SubtasksSection/SubtasksSection';
 
 export function TaskSidePanel(): React.JSX.Element {
-   const { isOpen, taskId, panelWidth, closePanel } = useTaskSidePanelStore();
+   const { isOpen, taskId, panelWidth, isFullscreen, closePanel, setFullscreen } =
+      useTaskSidePanelStore();
 
    const task = useTaskDetail(taskId);
    const { updateTask } = useDataStore();
+
+   // Keyboard shortcut to exit fullscreen
+   useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+         if (event.key === 'Escape' && isFullscreen && isOpen) {
+            setFullscreen(false);
+         }
+      };
+
+      if (isOpen && isFullscreen) {
+         document.addEventListener('keydown', handleKeyDown);
+         return () => document.removeEventListener('keydown', handleKeyDown);
+      }
+   }, [isOpen, isFullscreen, setFullscreen]);
 
    const handleUpdateField = async (
       field: 'title' | 'description' | 'details' | 'testStrategy',
@@ -83,38 +99,81 @@ export function TaskSidePanel(): React.JSX.Element {
       <AnimatePresence>
          {isOpen && task && (
             <motion.div
-               initial={{ x: panelWidth }}
+               initial={{ x: isFullscreen ? 0 : panelWidth }}
                animate={{ x: 0 }}
-               exit={{ x: panelWidth }}
+               exit={{ x: isFullscreen ? 0 : panelWidth }}
                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-               className="fixed top-0 right-0 h-full bg-background border-l shadow-lg z-50 overflow-y-auto"
-               style={{ width: panelWidth }}
+               className={`fixed top-0 h-full bg-background shadow-lg z-50 overflow-y-auto ${
+                  isFullscreen ? 'left-0 right-0 w-full border-none' : 'right-0 border-l'
+               }`}
+               style={{ width: isFullscreen ? '100vw' : panelWidth }}
             >
                <TaskHeader task={task} onClose={closePanel} />
 
-               <div className="p-6 space-y-6">
-                  <TaskTitleEditor
-                     initialValue={task.title}
-                     onBlur={handleTitleUpdate}
-                     disabled={false}
-                  />
+               {isFullscreen ? (
+                  /* Fullscreen 2-column layout */
+                  <div className="p-8">
+                     {/* Task Title - Full width */}
+                     <div className="mb-8">
+                        <TaskTitleEditor
+                           initialValue={task.title}
+                           onBlur={handleTitleUpdate}
+                           disabled={false}
+                        />
+                     </div>
 
-                  <TaskInfoSection
-                     task={task}
-                     onDescriptionSave={handleDescriptionUpdate}
-                     onDetailsSave={handleDetailsUpdate}
-                     onTestStrategySave={handleTestStrategyUpdate}
-                     disabled={false}
-                  />
+                     {/* 2-column layout */}
+                     <div
+                        className="grid grid-cols-3 gap-8"
+                        style={{ height: 'calc(100vh - 200px)' }}
+                     >
+                        {/* Left Column - Task Details & Subtasks (2/3 width) */}
+                        <div className="col-span-2 space-y-6 overflow-y-auto pr-4">
+                           <TaskInfoSection
+                              task={task}
+                              onDescriptionSave={handleDescriptionUpdate}
+                              onDetailsSave={handleDetailsUpdate}
+                              onTestStrategySave={handleTestStrategyUpdate}
+                              disabled={false}
+                           />
 
-                  <Separator />
+                           <Separator />
 
-                  <SubtasksSection task={task} disabled={false} />
+                           <SubtasksSection task={task} disabled={false} />
+                        </div>
 
-                  <Separator />
+                        {/* Right Column - Other Info (1/3 width) */}
+                        <div className="col-span-1 space-y-6 overflow-y-auto pl-4 border-l">
+                           <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
+                        </div>
+                     </div>
+                  </div>
+               ) : (
+                  /* Normal single column layout */
+                  <div className="p-6 space-y-6">
+                     <TaskTitleEditor
+                        initialValue={task.title}
+                        onBlur={handleTitleUpdate}
+                        disabled={false}
+                     />
 
-                  <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
-               </div>
+                     <TaskInfoSection
+                        task={task}
+                        onDescriptionSave={handleDescriptionUpdate}
+                        onDetailsSave={handleDetailsUpdate}
+                        onTestStrategySave={handleTestStrategyUpdate}
+                        disabled={false}
+                     />
+
+                     <Separator />
+
+                     <SubtasksSection task={task} disabled={false} />
+
+                     <Separator />
+
+                     <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
+                  </div>
+               )}
             </motion.div>
          )}
       </AnimatePresence>

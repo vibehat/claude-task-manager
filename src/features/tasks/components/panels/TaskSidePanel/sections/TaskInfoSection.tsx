@@ -164,7 +164,11 @@ Add test strategy..."
                      <FileText className="h-4 w-4 text-foreground" />
                      <Label className="text-sm font-medium">Description</Label>
                   </div>
-                  <div className="text-sm">
+                  <div
+                     className="text-sm cursor-pointer rounded p-2 hover:bg-muted/50 transition-colors"
+                     onDoubleClick={handleEdit}
+                     title="Double-click to edit"
+                  >
                      {task.description ? (
                         <MarkdownViewer source={task.description} />
                      ) : (
@@ -184,7 +188,11 @@ Add test strategy..."
                            Implementation Details
                         </Label>
                      </div>
-                     <div className="text-sm">
+                     <div
+                        className="text-sm cursor-pointer rounded p-2 hover:bg-muted/50 transition-colors"
+                        onDoubleClick={handleEdit}
+                        title="Double-click to edit"
+                     >
                         <MarkdownViewer source={task.details} />
                      </div>
                   </div>
@@ -197,7 +205,11 @@ Add test strategy..."
                         <TestTube className="h-4 w-4 text-green-500" />
                         <Label className="text-sm font-medium text-green-600">Test Strategy</Label>
                      </div>
-                     <div className="text-sm">
+                     <div
+                        className="text-sm cursor-pointer rounded p-2 hover:bg-muted/50 transition-colors"
+                        onDoubleClick={handleEdit}
+                        title="Double-click to edit"
+                     >
                         <MarkdownViewer source={task.testStrategy} />
                      </div>
                   </div>
