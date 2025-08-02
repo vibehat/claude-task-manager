@@ -9,12 +9,22 @@ import { CommandPaletteContent } from './components/CommandPaletteContent';
 import { CommandLoadingOverlay } from './components/CommandLoadingOverlay';
 import { useCommandPaletteState } from './hooks/useCommandPaletteState';
 
+export interface CommandPaletteInitialState {
+   commandId?: string;
+   inputValue?: string;
+   searchValue?: string;
+   selectedOptionId?: string;
+   autoExecute?: boolean; // Whether to auto-execute the selected option (default: true)
+}
+
 interface CommandPaletteProps {
    open: boolean;
    onOpenChange: (open: boolean) => void;
+   context?: Record<string, any>;
+   initialState?: CommandPaletteInitialState;
 }
 
-export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
+export function CommandPalette({ open, onOpenChange, context, initialState }: CommandPaletteProps) {
    const {
       // State
       search,
@@ -39,7 +49,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       handleBack,
       handleKeyDown,
       isCommandEnabled,
-   } = useCommandPaletteState({ open, onOpenChange });
+   } = useCommandPaletteState({ open, onOpenChange, context, initialState });
 
    return (
       <Dialog open={open} onOpenChange={onOpenChange}>

@@ -1,6 +1,6 @@
 'use client';
 
-import { SubtaskItem } from '../../../forms/SubtaskItem';
+import { SubtaskItem } from '../../../components/forms/SubtaskItem';
 import type { Task } from '@/libs/client/types';
 
 interface SubtasksSectionProps {

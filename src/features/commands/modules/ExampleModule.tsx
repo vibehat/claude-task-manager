@@ -285,6 +285,292 @@ export const exampleModule: CommandModule = {
             return { success: true };
          },
       }),
+
+      // External context aware command - shows current user role if provided
+      createActionCommand({
+         id: 'example:external-context-user',
+         title: (ctx) => {
+            const userRole = ctx.data['external.userRole'];
+            const userName = ctx.data['external.userName'];
+            if (userRole && userName) {
+               return `Welcome ${userName} (${userRole})`;
+            } else if (userRole) {
+               return `Current Role: ${userRole}`;
+            } else if (userName) {
+               return `Hello ${userName}`;
+            }
+            return 'User Context Demo';
+         },
+         description: (ctx) => {
+            const hasExternal = ctx.data['external.userRole'] || ctx.data['external.userName'];
+            return hasExternal
+               ? 'Command using external context data'
+               : 'Pass external context to see dynamic behavior';
+         },
+         icon: <SettingsIcon className="w-4 h-4" />,
+         group: 'Context Examples',
+         execute: async (_, ctx) => {
+            const userRole = ctx.data['external.userRole'];
+            const userName = ctx.data['external.userName'];
+
+            if (userRole || userName) {
+               toast.success(
+                  `External context detected - Role: ${userRole || 'none'}, Name: ${userName || 'none'}`
+               );
+            } else {
+               toast.info(
+                  'No external context provided. Try passing { userRole: "admin", userName: "John" }'
+               );
+            }
+            return { success: true };
+         },
+      }),
+
+      // Theme-aware command that shows different options based on theme
+      createSelectCommand({
+         id: 'example:theme-aware',
+         title: (ctx) => {
+            const theme = ctx.data['external.theme'] || 'system';
+            return `Theme Actions (${theme})`;
+         },
+         description: 'Different options based on current theme',
+         icon: <SettingsIcon className="w-4 h-4" />,
+         group: 'Context Examples',
+         visible: (ctx) => !!ctx.data['external.theme'],
+         options: async (ctx) => {
+            const theme = ctx.data['external.theme'];
+            const baseOptions = [{ id: 'toggle', title: 'Toggle Theme', value: 'toggle' }];
+
+            if (theme === 'dark') {
+               return [
+                  ...baseOptions,
+                  { id: 'light', title: 'Switch to Light', value: 'light' },
+                  { id: 'adjust-dark', title: 'Adjust Dark Settings', value: 'adjust-dark' },
+               ];
+            } else if (theme === 'light') {
+               return [
+                  ...baseOptions,
+                  { id: 'dark', title: 'Switch to Dark', value: 'dark' },
+                  { id: 'adjust-light', title: 'Adjust Light Settings', value: 'adjust-light' },
+               ];
+            } else {
+               return [
+                  ...baseOptions,
+                  { id: 'light', title: 'Set Light Theme', value: 'light' },
+                  { id: 'dark', title: 'Set Dark Theme', value: 'dark' },
+                  { id: 'auto', title: 'Use System Theme', value: 'auto' },
+               ];
+            }
+         },
+         execute: async (action, ctx) => {
+            const currentTheme = ctx.data['external.theme'];
+            toast.info(`Theme action: ${action} (current: ${currentTheme})`);
+            return { success: true };
+         },
+      }),
+
+      // Dynamic workspace command that changes based on external project context
+      createActionCommand({
+         id: 'example:workspace-context',
+         title: (ctx) => {
+            const projectName = ctx.data['external.projectName'];
+            const projectType = ctx.data['external.projectType'];
+
+            if (projectName && projectType) {
+               return `${projectName} (${projectType})`;
+            } else if (projectName) {
+               return `Project: ${projectName}`;
+            }
+            return 'Workspace Commands';
+         },
+         description: (ctx) => {
+            const projectName = ctx.data['external.projectName'];
+            return projectName
+               ? `Commands for ${projectName}`
+               : 'Pass project context to see specific commands';
+         },
+         icon: <FolderIcon className="w-4 h-4" />,
+         group: 'Context Examples',
+         execute: async (_, ctx) => {
+            const projectName = ctx.data['external.projectName'];
+            const projectType = ctx.data['external.projectType'];
+
+            if (projectName || projectType) {
+               return {
+                  success: true,
+                  nextCommand: createSelectCommand({
+                     id: 'example:project-actions',
+                     title: `${projectName || 'Project'} Actions`,
+                     type: 'select',
+                     options: async () => {
+                        const options = [
+                           { id: 'build', title: 'Build Project', value: 'build' },
+                           { id: 'test', title: 'Run Tests', value: 'test' },
+                           { id: 'deploy', title: 'Deploy', value: 'deploy' },
+                        ];
+
+                        // Add type-specific options
+                        if (projectType === 'react') {
+                           options.push(
+                              { id: 'dev', title: 'Start Dev Server', value: 'dev' },
+                              { id: 'storybook', title: 'Start Storybook', value: 'storybook' }
+                           );
+                        } else if (projectType === 'node') {
+                           options.push(
+                              { id: 'start', title: 'Start Server', value: 'start' },
+                              { id: 'debug', title: 'Debug Mode', value: 'debug' }
+                           );
+                        }
+
+                        return options;
+                     },
+                     execute: async (action) => {
+                        toast.success(`Running ${action} for ${projectName || 'project'}`);
+                        return { success: true };
+                     },
+                  }),
+               };
+            } else {
+               toast.info(
+                  'Pass project context like { projectName: "MyApp", projectType: "react" }'
+               );
+               return { success: true };
+            }
+         },
+      }),
+
+      // Commands specifically designed for demonstrating initial state
+      createInputCommand({
+         id: 'example:quick-note',
+         title: 'Quick Note',
+         description: 'Create a quick note with pre-filled content',
+         icon: <FileIcon className="w-4 h-4" />,
+         group: 'Initial State Examples',
+         inputConfig: {
+            placeholder: 'Enter your note...',
+            submitHint: 'Press Enter to save note',
+         },
+         execute: async (content) => {
+            toast.success(`Note saved: "${content}"`);
+            return { success: true };
+         },
+      }),
+
+      createSelectCommand({
+         id: 'example:environment-selector',
+         title: 'Deploy to Environment',
+         description: 'Select deployment environment (great for pre-selection)',
+         icon: <SettingsIcon className="w-4 h-4" />,
+         group: 'Initial State Examples',
+         options: async () => [
+            {
+               id: 'dev',
+               title: 'Development',
+               description: 'Deploy to dev environment',
+               value: 'dev',
+            },
+            {
+               id: 'staging',
+               title: 'Staging',
+               description: 'Deploy to staging environment',
+               value: 'staging',
+            },
+            {
+               id: 'prod',
+               title: 'Production',
+               description: 'Deploy to production environment',
+               value: 'prod',
+            },
+         ],
+         execute: async (environment) => {
+            toast.success(`Deploying to ${environment} environment`);
+            return { success: true };
+         },
+      }),
+
+      createInputWithActionsCommand({
+         id: 'example:issue-reporter',
+         title: 'Report Issue',
+         description: 'Report a bug or issue with pre-filled details',
+         icon: <PlusIcon className="w-4 h-4" />,
+         group: 'Initial State Examples',
+         inputConfig: {
+            placeholder: 'Describe the issue...',
+            validation: (value) => {
+               if (!value.trim()) return 'Issue description is required';
+               return undefined;
+            },
+         },
+         submitActions: [
+            {
+               id: 'bug',
+               title: 'Report as Bug',
+               description: 'File as a bug report',
+               value: 'bug',
+               icon: '🐛',
+            },
+            {
+               id: 'feature',
+               title: 'Request Feature',
+               description: 'File as a feature request',
+               value: 'feature',
+               icon: '✨',
+            },
+            {
+               id: 'question',
+               title: 'Ask Question',
+               description: 'File as a question',
+               value: 'question',
+               icon: '❓',
+            },
+         ],
+         execute: async (description, action) => {
+            toast.success(`${action.title}: "${description}"`);
+            return { success: true };
+         },
+      }),
+
+      // Command that demonstrates chaining with initial state
+      createCompositeCommand({
+         id: 'example:workflow-starter',
+         title: 'Start Workflow',
+         description: 'Initiate a multi-step workflow (can pre-select steps)',
+         icon: <SettingsIcon className="w-4 h-4" />,
+         group: 'Initial State Examples',
+         execute: async () => {
+            return {
+               success: true,
+               nextCommand: createSelectCommand({
+                  id: 'example:workflow-step-1',
+                  title: 'Choose Workflow Type',
+                  type: 'select',
+                  options: [
+                     { id: 'ci-cd', title: 'CI/CD Pipeline', value: 'ci-cd' },
+                     { id: 'data-sync', title: 'Data Synchronization', value: 'data-sync' },
+                     { id: 'backup', title: 'Backup Process', value: 'backup' },
+                  ],
+                  execute: async (workflowType) => {
+                     toast.info(`Starting ${workflowType} workflow`);
+                     return {
+                        success: true,
+                        nextCommand: createInputCommand({
+                           id: 'example:workflow-step-2',
+                           title: `Configure ${workflowType}`,
+                           type: 'input',
+                           inputConfig: {
+                              placeholder: `Enter ${workflowType} configuration...`,
+                           },
+                           execute: async (config) => {
+                              toast.success(`${workflowType} configured: ${config}`);
+                              return { success: true };
+                           },
+                        }),
+                     };
+                  },
+               }),
+            };
+         },
+      }),
    ],
 
    // Context extensions

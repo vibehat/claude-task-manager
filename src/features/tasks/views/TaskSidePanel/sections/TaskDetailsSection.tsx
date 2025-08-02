@@ -5,10 +5,10 @@ import { useDataStore } from '@/libs/client/stores/dataStore';
 import { format } from 'date-fns';
 import { Calendar, Clock, User, Flag, Folder, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { StatusSelector } from '../../../selectors/StatusSelector';
-import { PrioritySelector } from '../../../selectors/PrioritySelector';
-import { LabelSelector } from '../../../selectors/LabelSelector';
-import { AssigneeUser } from '../../../AssigneeUser';
+import { StatusSelector } from '../../../components/selectors/StatusSelector';
+import { PrioritySelector } from '../../../components/selectors/PrioritySelector';
+import { LabelSelector } from '../../../components/selectors/LabelSelector';
+import { AssigneeUser } from '../../../components/AssigneeUser';
 
 interface TaskDetailsSectionProps {
    task: Task;

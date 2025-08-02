@@ -1,5 +1,6 @@
 // Component-level exports
 export { CommandPalette } from './CommandPalette';
+export type { CommandPaletteInitialState } from './CommandPalette';
 
 // Providers
 export { CommandPaletteProvider } from './providers/CommandPaletteProvider';

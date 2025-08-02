@@ -6,18 +6,11 @@ import { useDataStore } from '@/libs/client/stores';
 import { TaskSidePanel } from './TaskSidePanel';
 
 export function TaskSidePanelProvider(): React.JSX.Element {
-   const { task, updateTask } = useTaskSidePanelStore();
+   const { taskId } = useTaskSidePanelStore();
    const { getTaskById } = useDataStore();
 
-   useEffect(() => {
-      if (task?.id) {
-         // Get the latest task data from the store
-         const latestTask = getTaskById(task.id);
-         if (latestTask) {
-            updateTask(latestTask);
-         }
-      }
-   }, [task?.id, getTaskById, updateTask]);
+   // Get the current task data
+   const task = taskId ? getTaskById(taskId) : null;
 
    return <TaskSidePanel />;
 }

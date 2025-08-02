@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { FileText, TestTube, Edit2 } from 'lucide-react';
-import { RichMarkdownEditor, MarkdownViewer } from '../../../editors/RichMarkdownEditor';
+import { RichMarkdownEditor, MarkdownViewer } from '../../../components/editors/RichMarkdownEditor';
 import type { Task } from '@/libs/client/types';
 
 interface TaskInfoSectionProps {

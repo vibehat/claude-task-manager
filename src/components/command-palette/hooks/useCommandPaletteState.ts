@@ -4,14 +4,23 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useCommandChain } from './useCommandChain';
 import { useCommandResolver } from './useCommandResolver';
 import { useCommandExecution } from './useCommandExecution';
+import { useCommandContext } from '../providers/CommandContextProvider';
 import type { Command, CommandOption, CommandMode } from '../types';
+import type { CommandPaletteInitialState } from '../CommandPalette';
 
 interface UseCommandPaletteStateProps {
    open: boolean;
    onOpenChange: (open: boolean) => void;
+   context?: Record<string, any>;
+   initialState?: CommandPaletteInitialState;
 }
 
-export function useCommandPaletteState({ open, onOpenChange }: UseCommandPaletteStateProps) {
+export function useCommandPaletteState({
+   open,
+   onOpenChange,
+   context: externalContext,
+   initialState,
+}: UseCommandPaletteStateProps) {
    // Local state
    const [search, setSearch] = useState('');
    const [inputValue, setInputValue] = useState('');
@@ -22,10 +31,49 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
    const [isLoadingActions, setIsLoadingActions] = useState(false);
 
    // Hooks
+   const { context: commandContext, updateContextData } = useCommandContext();
    const { breadcrumbs, goBack, executeCommandInChain } = useCommandChain();
-   const { searchCommands, resolveSelectOptions, resolveInputConfig, getContextualSuggestions } =
-      useCommandResolver();
+   const {
+      searchCommands,
+      resolveSelectOptions,
+      resolveInputConfig,
+      getContextualSuggestions,
+      getCommandById,
+   } = useCommandResolver();
    const { isExecuting, isCommandEnabled, execute } = useCommandExecution();
+
+   // Update context with external context data when it changes
+   useEffect(() => {
+      if (externalContext) {
+         Object.entries(externalContext).forEach(([key, value]) => {
+            updateContextData(`external.${key}`, value);
+         });
+      }
+   }, [externalContext, updateContextData]);
+
+   // Handle initial state when dialog opens
+   useEffect(() => {
+      if (open && initialState) {
+         // Set initial search value if provided
+         if (initialState.searchValue !== undefined) {
+            setSearch(initialState.searchValue);
+         }
+
+         // Set initial input value if provided
+         if (initialState.inputValue !== undefined) {
+            setInputValue(initialState.inputValue);
+         }
+
+         // Set initial command if provided
+         if (initialState.commandId) {
+            const command = getCommandById(initialState.commandId);
+            if (command) {
+               setCurrentCommand(command);
+               setSearch(''); // Clear search when selecting a command
+            }
+         }
+      }
+   }, [open, initialState, getCommandById]);
 
    // Derived state
    const mode: CommandMode = useMemo(() => {
@@ -47,6 +95,9 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       return currentCommand ? resolveInputConfig(currentCommand) : null;
    }, [currentCommand, resolveInputConfig]);
 
+   // Track if we should auto-select an option
+   const [shouldAutoSelectOption, setShouldAutoSelectOption] = useState<string | null>(null);
+
    // Load options for select commands
    useEffect(() => {
       if (currentCommand?.type === 'select') {
@@ -58,6 +109,45 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
          setSelectOptions([]);
       }
    }, [currentCommand, resolveSelectOptions]);
+
+   // Check for auto-selection when options are loaded and we have an initial state
+   useEffect(() => {
+      console.log('🔍 Auto-select check:', {
+         hasSelectedOptionId: !!initialState?.selectedOptionId,
+         autoExecute: initialState?.autoExecute,
+         selectOptionsCount: selectOptions.length,
+         isLoadingOptions,
+         commandType: currentCommand?.type,
+         open,
+         alreadyHasAutoSelect: !!shouldAutoSelectOption,
+      });
+
+      if (
+         initialState?.selectedOptionId &&
+         selectOptions.length > 0 &&
+         !isLoadingOptions &&
+         currentCommand?.type === 'select' &&
+         open &&
+         !shouldAutoSelectOption &&
+         initialState.autoExecute !== false // Only auto-select if autoExecute is not explicitly false
+      ) {
+         const selectedOption = selectOptions.find(
+            (opt) => opt.id === initialState.selectedOptionId
+         );
+         console.log('🎯 Setting auto-select for option:', selectedOption);
+
+         if (selectedOption) {
+            setShouldAutoSelectOption(selectedOption.id);
+         }
+      }
+   }, [
+      initialState,
+      selectOptions,
+      isLoadingOptions,
+      currentCommand?.type,
+      open,
+      shouldAutoSelectOption,
+   ]);
 
    // Load submit actions for input-with-actions commands
    useEffect(() => {
@@ -87,6 +177,7 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
          setInputValue('');
          setSelectOptions([]);
          setIsLoadingOptions(false);
+         setShouldAutoSelectOption(null);
       }
    }, [open]);
 
@@ -248,6 +339,65 @@ export function useCommandPaletteState({ open, onOpenChange }: UseCommandPalette
       },
       [currentCommand, mode, handleBack, handleInputSubmit]
    );
+
+   // Handle auto-selection of option when specified
+   useEffect(() => {
+      if (
+         shouldAutoSelectOption &&
+         selectOptions.length > 0 &&
+         !isLoadingOptions &&
+         currentCommand
+      ) {
+         const selectedOption = selectOptions.find((opt) => opt.id === shouldAutoSelectOption);
+
+         if (selectedOption) {
+            // Auto-select the option using the same logic as handleOptionSelect
+            const autoSelect = async () => {
+               console.log('🚀 Auto-selecting option:', selectedOption);
+               try {
+                  const result = await executeCommandInChain(currentCommand, selectedOption.value);
+                  console.log('✅ Auto-selection result:', result);
+                  if (result.success) {
+                     // Handle next command if there is one
+                     if (result.nextCommand) {
+                        const nextCommands = Array.isArray(result.nextCommand)
+                           ? result.nextCommand
+                           : [result.nextCommand];
+                        if (nextCommands.length === 1) {
+                           setCurrentCommand(nextCommands[0]);
+                           setSearch('');
+                           setInputValue('');
+                        } else {
+                           // Multiple commands - reset to search mode to show them
+                           setCurrentCommand(null);
+                           setSearch('');
+                           setInputValue('');
+                        }
+                     } else {
+                        // No next command, close the palette
+                        onOpenChange(false);
+                     }
+                  }
+               } catch (error) {
+                  console.error('Auto-selection failed:', error);
+               } finally {
+                  setShouldAutoSelectOption(null); // Clear the flag
+               }
+            };
+
+            // Execute after a delay to ensure UI is ready
+            const timeoutId = setTimeout(autoSelect, 300);
+            return () => clearTimeout(timeoutId);
+         }
+      }
+   }, [
+      shouldAutoSelectOption,
+      selectOptions,
+      isLoadingOptions,
+      currentCommand,
+      executeCommandInChain,
+      onOpenChange,
+   ]);
 
    return {
       // State

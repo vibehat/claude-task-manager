@@ -4,8 +4,8 @@ import type { Task } from '@/libs/client/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { X, Maximize2, Minimize2 } from 'lucide-react';
-import { StatusSelector } from '../../selectors/StatusSelector';
-import { PrioritySelector } from '../../selectors/PrioritySelector';
+import { StatusSelector } from '../../components/selectors/StatusSelector';
+import { PrioritySelector } from '../../components/selectors/PrioritySelector';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 
