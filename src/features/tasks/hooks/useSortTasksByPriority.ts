@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useDataStore } from '@/libs/client/stores';
 import type { Task } from '@/libs/client/types';
 
 export function useSortTasksByPriority(tasks: Task[]): Task[] {

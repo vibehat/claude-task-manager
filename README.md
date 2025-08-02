@@ -22,7 +22,7 @@ claude-task-manager is a comprehensive web interface that brings all the power o
 
 - **🎨 Modern UI/UX**: Clean, responsive interface inspired by Linear's design philosophy
 - **🤖 Complete Claude Task Master Integration**: Full coverage of all CLI functionality
-- **📊 Visual Task Management**: Interactive dashboards, kanban boards, and project views
+- **📊 Visual Task Management**: Interactive dashboards, kanban boards, and tag views
 - **🔄 Real-time Updates**: Live synchronization with your task master data
 - **🎭 Multi-Model AI Support**: Configure and manage multiple AI providers seamlessly
 - **💻 Integrated Terminal**: Built-in terminal for direct CLI access within the interface
@@ -122,7 +122,7 @@ claude-task-manager/
 │   │   └── icons/        # Icon components
 │   ├── features/          # Feature-based modules
 │   │   ├── issues/       # Issue/task management
-│   │   ├── projects/     # Project management
+│   │   ├── tags/        # Tag management
 │   │   ├── teams/        # Team management
 │   │   ├── members/      # Member management
 │   │   └── terminal/     # Terminal feature
@@ -161,7 +161,7 @@ claude-task-manager/
 - **Full CLI Access**: Direct access to Claude Task Master CLI within the interface
 - **Command History**: Persistent command history with search functionality
 - **Multiple Sessions**: Support for multiple terminal sessions
-- **Context Awareness**: Terminal aware of current project and task context
+- **Context Awareness**: Terminal aware of current tag and task context
 - **Visual Output**: Enhanced output formatting for better readability
 
 ### ⚙️ Configuration Management
@@ -180,7 +180,7 @@ This UI provides comprehensive coverage of all Claude Task Master CLI functional
 
 | CLI Command                      | UI Feature               | Description                             |
 | -------------------------------- | ------------------------ | --------------------------------------- |
-| `task-master init`               | **Project Setup Wizard** | Interactive project initialization      |
+| `task-master init`               | **Tag Setup Wizard**     | Interactive tag initialization          |
 | `task-master parse-prd`          | **PRD Upload Interface** | Drag-and-drop PRD parsing with preview  |
 | `task-master list`               | **Task Dashboard**       | Comprehensive task listing with filters |
 | `task-master next`               | **Next Task Widget**     | Priority-based task recommendations     |
@@ -196,7 +196,7 @@ This UI provides comprehensive coverage of all Claude Task Master CLI functional
 
 - **Dependency Visualization**: Interactive dependency graphs and management
 - **Progress Tracking**: Visual progress indicators and milestone tracking
-- **Template Management**: Create and manage task and project templates
+- **Template Management**: Create and manage task and tag templates
 - **Terminal Integration**: Direct CLI access with enhanced UI integration
 - **Real-time Sync**: Live updates between UI and CLI operations
 - **API Integration**: RESTful API for external integrations
@@ -338,13 +338,13 @@ pnpm format       # Format code with Prettier
 - [ ] Advanced terminal features with command autocomplete
 - [ ] Task dependency visualization
 - [ ] Real-time collaboration features
-- [ ] Enhanced project templates
+- [ ] Enhanced tag templates
 
 ### Phase 3: AI Enhancements 📋
 
 - [ ] AI-powered task suggestions
 - [ ] Natural language task creation
-- [ ] Intelligent project insights
+- [ ] Intelligent tag insights
 - [ ] Automated task breakdown
 
 ### Phase 4: Advanced Integration 🔮

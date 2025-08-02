@@ -69,7 +69,10 @@ export default function RootLayout({
          <head>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
          </head>
-         <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
+         <body
+            data-color-mode="dark"
+            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+         >
             <DataInitializer>
                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                   <TaskMasterSyncProvider>

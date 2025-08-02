@@ -11,7 +11,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { AssigneeUser } from '../selectors/AssigneeUser';
 import { LabelBadge } from '../badges/LabelBadge';
 import { PrioritySelector } from '../selectors/PrioritySelector';
-import { ProjectBadge } from '../badges/ProjectBadge';
+import { TagBadge } from '../badges/TagBadge';
 import { StatusSelector } from '../selectors/StatusSelector';
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/ContextMenu';
 import { TaskContextMenu } from './TaskContextMenu';

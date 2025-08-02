@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useAllLabels } from '@/libs/client/stores';
 import { CheckIcon, Tag, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/libs/client/utils';
@@ -35,7 +35,7 @@ export function LabelSelector({
 }: LabelSelectorProps): React.JSX.Element {
    const [open, setOpen] = useState<boolean>(false);
    const [searchValue, setSearchValue] = useState<string>('');
-   const { labels } = useDataStore();
+   const labels = useAllLabels();
    const labelsLoading = false;
    const createLoading = false;
 

@@ -5,7 +5,7 @@ export * from './stores/persistenceStore';
 // Hooks
 export * from './hooks/useTasks';
 export * from './hooks/useUsers';
-export * from './hooks/useProjects';
+export * from './hooks/useTags';
 export * from './hooks/useLabels';
 export * from './hooks/useStatuses';
 export * from './hooks/usePriorities';

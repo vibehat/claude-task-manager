@@ -57,7 +57,7 @@ export const usePersistenceStore = create<PersistenceState>()(
             const dataStore = useDataStore.getState();
             const dataToSave = {
                users: dataStore.users,
-               projects: dataStore.projects,
+               tags: dataStore.tags,
                labels: dataStore.labels,
                statuses: dataStore.statuses,
                priorities: dataStore.priorities,
@@ -90,10 +90,10 @@ export const usePersistenceStore = create<PersistenceState>()(
                         createdAt: new Date(user.createdAt),
                         updatedAt: new Date(user.updatedAt),
                      })),
-                     projects: parsedData.projects.map((project: any) => ({
-                        ...project,
-                        createdAt: new Date(project.createdAt),
-                        updatedAt: new Date(project.updatedAt),
+                     tags: parsedData.tags.map((tag: any) => ({
+                        ...tag,
+                        createdAt: new Date(tag.createdAt),
+                        updatedAt: new Date(tag.updatedAt),
                      })),
                      labels: parsedData.labels.map((label: any) => ({
                         ...label,
@@ -125,7 +125,7 @@ export const usePersistenceStore = create<PersistenceState>()(
                   // Update data store
                   useDataStore.setState({
                      users: processedData.users,
-                     projects: processedData.projects,
+                     tags: processedData.tags,
                      labels: processedData.labels,
                      statuses: processedData.statuses,
                      priorities: processedData.priorities,
@@ -158,7 +158,7 @@ export const usePersistenceStore = create<PersistenceState>()(
             const dataStore = useDataStore.getState();
             const dataToExport = {
                users: dataStore.users,
-               projects: dataStore.projects,
+               tags: dataStore.tags,
                labels: dataStore.labels,
                statuses: dataStore.statuses,
                priorities: dataStore.priorities,

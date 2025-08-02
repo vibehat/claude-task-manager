@@ -28,7 +28,7 @@ import type { User } from './users';
 import { users } from './users';
 import type { Priority } from './priorities';
 import { priorities } from './priorities';
-export interface Project {
+export interface Tag {
    id: string;
    name: string;
    status: Status;
@@ -52,29 +52,29 @@ export const health: Health[] = [
       id: 'no-update',
       name: 'No Update',
       color: '#FF0000',
-      description: 'The project has not been updated in the last 30 days.',
+      description: 'The tag has not been updated in the last 30 days.',
    },
    {
       id: 'off-track',
       name: 'Off Track',
       color: '#FF0000',
-      description: 'The project is not on track and may be delayed.',
+      description: 'The tag is not on track and may be delayed.',
    },
    {
       id: 'on-track',
       name: 'On Track',
       color: '#00FF00',
-      description: 'The project is on track and on schedule.',
+      description: 'The tag is on track and on schedule.',
    },
    {
       id: 'at-risk',
       name: 'At Risk',
       color: '#FF0000',
-      description: 'The project is at risk and may be delayed.',
+      description: 'The tag is at risk and may be delayed.',
    },
 ];
 
-export const projects: Project[] = [
+export const tags: Tag[] = [
    {
       id: '1',
       name: 'LNDev UI - Core Components',

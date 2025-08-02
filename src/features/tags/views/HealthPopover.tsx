@@ -3,16 +3,16 @@
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CircleCheck, CircleX, AlertCircle, HelpCircle, Bell } from 'lucide-react';
-import type { Project } from '@/mock-data/projects';
+import type { Tag } from '@/mock-data/tags';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { cn } from '@/libs/client/utils';
 
 interface HealthPopoverProps {
-   project: Project;
+   tag: Tag;
 }
 
-export function HealthPopover({ project }: HealthPopoverProps): React.JSX.Element {
+export function HealthPopover({ tag }: HealthPopoverProps): React.JSX.Element {
    const getHealthIcon = (healthId: string): React.JSX.Element => {
       switch (healthId) {
          case 'on-track':
@@ -37,10 +37,8 @@ export function HealthPopover({ project }: HealthPopoverProps): React.JSX.Elemen
                size="sm"
                variant="ghost"
             >
-               {getHealthIcon(project.health.id)}
-               <span className="text-xs mt-[1px] ml-0.5 hidden xl:inline">
-                  {project.health.name}
-               </span>
+               {getHealthIcon(tag.health.id)}
+               <span className="text-xs mt-[1px] ml-0.5 hidden xl:inline">{tag.health.name}</span>
             </Button>
          </PopoverTrigger>
          <PopoverContent
@@ -49,10 +47,8 @@ export function HealthPopover({ project }: HealthPopoverProps): React.JSX.Elemen
          >
             <div className="flex items-center justify-between border-b p-3">
                <div className="flex items-center gap-2">
-                  {project.icon && (
-                     <project.icon className="size-4 shrink-0 text-muted-foreground" />
-                  )}
-                  <h4 className="font-medium text-sm">{project.name}</h4>
+                  {tag.icon && <tag.icon className="size-4 shrink-0 text-muted-foreground" />}
+                  <h4 className="font-medium text-sm">{tag.name}</h4>
                </div>
                <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
@@ -71,24 +67,24 @@ export function HealthPopover({ project }: HealthPopoverProps): React.JSX.Elemen
             <div className="p-3 space-y-3">
                <div className="flex items-center justify-start gap-3">
                   <div className="flex items-center gap-2">
-                     {getHealthIcon(project.health.id)}
-                     <span className="text-sm">{project.health.name}</span>
+                     {getHealthIcon(tag.health.id)}
+                     <span className="text-sm">{tag.health.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
                      <Avatar className="size-5">
-                        <AvatarImage src={project.lead.avatarUrl} alt={project.lead.name} />
-                        <AvatarFallback>{project.lead.name.charAt(0)}</AvatarFallback>
+                        <AvatarImage src={tag.lead.avatarUrl} alt={tag.lead.name} />
+                        <AvatarFallback>{tag.lead.name.charAt(0)}</AvatarFallback>
                      </Avatar>
-                     <span className="text-xs text-muted-foreground">{project.lead.name}</span>
+                     <span className="text-xs text-muted-foreground">{tag.lead.name}</span>
                      <span className="text-xs text-muted-foreground">·</span>
                      <span className="text-xs text-muted-foreground">
-                        {new Date(project.startDate).toLocaleDateString()}
+                        {new Date(tag.startDate).toLocaleDateString()}
                      </span>
                   </div>
                </div>
 
                <div>
-                  <p className="text-sm text-muted-foreground">{project.health.description}</p>
+                  <p className="text-sm text-muted-foreground">{tag.health.description}</p>
                </div>
             </div>
          </PopoverContent>

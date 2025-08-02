@@ -13,7 +13,13 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filterStore';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import {
+   useAllStatuses,
+   useAllPriorities,
+   useAllUsers,
+   useAllLabels,
+   useAllTags,
+} from '@/libs/client/stores';
 import { useTaskStatusIcon } from '../../hooks/useTaskStatusIcon';
 import { getPriorityIcon } from '../../constants/NoPriorityIcon';
 
@@ -45,7 +51,7 @@ import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 // Define filter types
-type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'project';
+type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'tag';
 
 export function Filter(): React.JSX.Element {
    const [open, setOpen] = useState<boolean>(false);
@@ -54,7 +60,11 @@ export function Filter(): React.JSX.Element {
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
 
    // Get data from store
-   const { statuses: allStatus, priorities, users, labels, projects } = useDataStore();
+   const allStatus = useAllStatuses();
+   const priorities = useAllPriorities();
+   const users = useAllUsers();
+   const labels = useAllLabels();
+   const tags = useAllTags();
 
    // TODO: Now using local data
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
@@ -147,17 +157,17 @@ export function Filter(): React.JSX.Element {
                            </div>
                         </CommandItem>
                         <CommandItem
-                           onSelect={() => setActiveFilter('project')}
+                           onSelect={() => setActiveFilter('tag')}
                            className="flex items-center justify-between cursor-pointer"
                         >
                            <span className="flex items-center gap-2">
                               <Folder className="size-4 text-muted-foreground" />
-                              Project
+                              Tag
                            </span>
                            <div className="flex items-center">
-                              {filters.project.length > 0 && (
+                              {filters.tag.length > 0 && (
                                  <span className="text-xs text-muted-foreground mr-1">
-                                    {filters.project.length}
+                                    {filters.tag.length}
                                  </span>
                               )}
                               <ChevronRight className="size-4" />
@@ -352,7 +362,7 @@ export function Filter(): React.JSX.Element {
                      </CommandGroup>
                   </CommandList>
                </Command>
-            ) : activeFilter === 'project' ? (
+            ) : activeFilter === 'tag' ? (
                <Command>
                   <div className="flex items-center border-b p-2">
                      <Button
@@ -363,24 +373,24 @@ export function Filter(): React.JSX.Element {
                      >
                         <ChevronRight className="size-4 rotate-180" />
                      </Button>
-                     <span className="ml-2 font-medium">Project</span>
+                     <span className="ml-2 font-medium">Tag</span>
                   </div>
-                  <CommandInput placeholder="Search projects..." />
+                  <CommandInput placeholder="Search tags..." />
                   <CommandList>
-                     <CommandEmpty>No projects found.</CommandEmpty>
+                     <CommandEmpty>No tags found.</CommandEmpty>
                      <CommandGroup>
-                        {projects.map((project) => (
+                        {tags.map((tag) => (
                            <CommandItem
-                              key={project.id}
-                              value={project.id}
-                              onSelect={() => toggleFilter('project', project.id)}
+                              key={tag.id}
+                              value={tag.id}
+                              onSelect={() => toggleFilter('tag', tag.id)}
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
                                  <Folder className="size-4" />
-                                 {project.name}
+                                 {tag.name}
                               </div>
-                              {filters.project.includes(project.id) && (
+                              {filters.tag.includes(tag.id) && (
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">

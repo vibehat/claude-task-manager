@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDataStore } from '../stores/dataStore';
+import { useDataStore, useAllLabels, useLabelDetail } from '../stores';
 import type { Label } from '../types/dataModels';
 
 export function useLabels() {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { labels, isInitialized, initialize } = useDataStore();
+   const labels = useAllLabels();
+   const { isInitialized, initialize } = useDataStore();
 
    useEffect(() => {
       if (!isInitialized) {
@@ -29,11 +30,10 @@ export function useLabels() {
 }
 
 export function useLabel(id: string | undefined) {
-   const { getLabelById } = useDataStore();
-   const label = id ? getLabelById(id) : undefined;
+   const label = useLabelDetail(id || '');
 
    return {
-      data: label,
+      data: id ? label : undefined,
       loading: false,
       error: undefined,
    };

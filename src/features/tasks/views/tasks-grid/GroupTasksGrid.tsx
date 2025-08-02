@@ -1,7 +1,7 @@
 'use client';
 
 import type { Task, TaskStatus, TaskWhereInput } from '@/libs/client/types';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useDataStore } from '@/libs/client/stores';
 import { Plus } from 'lucide-react';
 import type { FC } from 'react';
 import { useRef } from 'react';

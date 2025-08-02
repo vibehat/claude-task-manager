@@ -476,7 +476,7 @@ Returns detailed server health and system information.
          "size": 15000
       },
       "taskManagerFile": {
-         "path": "D:\\project\\taskmanager.json",
+         "path": "D:\\project\\.taskmaster\\manager\\manager.json",
          "exists": true,
          "size": 8500
       }

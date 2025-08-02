@@ -1,5 +1,5 @@
-import type { Project } from './projects';
-import { projects } from './projects';
+import type { Tag } from './tags';
+import { tags } from './tags';
 import type { User } from './users';
 import { users } from './users';
 
@@ -10,7 +10,7 @@ export interface Team {
    joined: boolean;
    color: string;
    members: User[];
-   projects: Project[];
+   tags: Tag[];
 }
 
 export const teams: Team[] = [
@@ -21,7 +21,7 @@ export const teams: Team[] = [
       joined: true,
       color: '#FF0000',
       members: [users[8], users[10], users[2], users[3], users[4]],
-      projects: [projects[5], projects[8], projects[3]],
+      tags: [tags[5], tags[8], tags[3]],
    },
    {
       id: 'DESIGN',
@@ -30,7 +30,7 @@ export const teams: Team[] = [
       joined: true,
       color: '#00FF00',
       members: [users[7], users[3]],
-      projects: [projects[1], projects[1], projects[2], projects[3]],
+      tags: [tags[1], tags[1], tags[2], tags[3]],
    },
    {
       id: 'PERF',
@@ -39,7 +39,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#0000FF',
       members: [users[5], users[0], users[1], users[2], users[3], users[4], users[6]],
-      projects: [projects[8], projects[8]],
+      tags: [tags[8], tags[8]],
    },
    {
       id: 'UX',
@@ -48,7 +48,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#FF00FF',
       members: [users[3]],
-      projects: [projects[1], projects[1], projects[2], projects[3]],
+      tags: [tags[1], tags[1], tags[2], tags[3]],
    },
    {
       id: 'DATA',
@@ -57,7 +57,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#0000FF',
       members: [users[8], users[9], users[10]],
-      projects: [projects[4]],
+      tags: [tags[4]],
    },
    {
       id: 'MOBILE',
@@ -66,7 +66,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#0000FF',
       members: [],
-      projects: [],
+      tags: [],
    },
    {
       id: 'WEB',
@@ -75,7 +75,7 @@ export const teams: Team[] = [
       joined: true,
       color: '#0000FF',
       members: [users[8], users[9], users[10], users[11]],
-      projects: [projects[1], projects[2]],
+      tags: [tags[1], tags[2]],
    },
    {
       id: 'UI',
@@ -84,7 +84,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#FF00FF',
       members: [users[6], users[7], users[2], users[3], users[4], users[5]],
-      projects: [projects[1], projects[0], projects[2]],
+      tags: [tags[1], tags[0], tags[2]],
    },
    {
       id: 'CLOUD',
@@ -93,7 +93,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#4A90E2',
       members: [users[1], users[5], users[11], users[9]],
-      projects: [projects[6], projects[7]],
+      tags: [tags[6], tags[7]],
    },
    {
       id: 'SECURITY',
@@ -102,7 +102,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#2E2E2E',
       members: [users[4], users[8], users[11]],
-      projects: [projects[0], projects[5], projects[8]],
+      tags: [tags[0], tags[5], tags[8]],
    },
    {
       id: 'AI',
@@ -111,7 +111,7 @@ export const teams: Team[] = [
       joined: true,
       color: '#9B59B6',
       members: [users[2], users[10], users[7], users[5]],
-      projects: [projects[4], projects[8]],
+      tags: [tags[4], tags[8]],
    },
    {
       id: 'QA',
@@ -120,7 +120,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#F1C40F',
       members: [users[3], users[6], users[1]],
-      projects: [projects[2], projects[3], projects[7]],
+      tags: [tags[2], tags[3], tags[7]],
    },
    {
       id: 'DEVOPS',
@@ -129,7 +129,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#E67E22',
       members: [users[0], users[4], users[9]],
-      projects: [projects[5], projects[6]],
+      tags: [tags[5], tags[6]],
    },
    {
       id: 'FRONTEND',
@@ -138,7 +138,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#1ABC9C',
       members: [users[7], users[3], users[11], users[2]],
-      projects: [projects[1], projects[2]],
+      tags: [tags[1], tags[2]],
    },
    {
       id: 'BACKEND',
@@ -147,7 +147,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#34495E',
       members: [users[0], users[8], users[10]],
-      projects: [projects[0], projects[5], projects[8]],
+      tags: [tags[0], tags[5], tags[8]],
    },
    {
       id: 'PRODUCT',
@@ -156,7 +156,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#C0392B',
       members: [users[1], users[6], users[9]],
-      projects: [projects[3], projects[4]],
+      tags: [tags[3], tags[4]],
    },
    {
       id: 'ANALYTICS',
@@ -165,7 +165,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#7F8C8D',
       members: [users[5], users[10], users[8]],
-      projects: [projects[4], projects[7]],
+      tags: [tags[4], tags[7]],
    },
    {
       id: 'INNO',
@@ -174,7 +174,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#F39C12',
       members: [users[2], users[7], users[11], users[4]],
-      projects: [projects[8], projects[8]],
+      tags: [tags[8], tags[8]],
    },
    {
       id: 'API',
@@ -183,7 +183,7 @@ export const teams: Team[] = [
       joined: false,
       color: '#16A085',
       members: [users[0], users[8], users[10], users[4]],
-      projects: [projects[0], projects[5]],
+      tags: [tags[0], tags[5]],
    },
    {
       id: 'UXR',
@@ -192,6 +192,6 @@ export const teams: Team[] = [
       joined: false,
       color: '#8E44AD',
       members: [users[3], users[6], users[9], users[7]],
-      projects: [projects[1], projects[3], projects[4]],
+      tags: [tags[1], tags[3], tags[4]],
    },
 ];

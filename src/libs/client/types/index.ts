@@ -1,8 +1,8 @@
 // Re-export all types from dataModels for easy imports
-export type { User, Project, Label, TaskStatus, TaskPriority, Task, Subtask } from './dataModels';
+export type { User, Tag, Label, TaskStatus, TaskPriority, Task, Subtask } from './dataModels';
 
 // Import types for legacy compatibility
-import type { User, Project, Label, TaskStatus, TaskPriority, Task } from './dataModels';
+import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from './dataModels';
 
 // Legacy type aliases for compatibility
 export type GetTasksQuery = {
@@ -16,7 +16,7 @@ export type GetTaskStatusesQuery = {
 export type TaskDetailsFragment = Task & {
    subtasks?: Task[];
    assignee?: User;
-   project?: Project;
+   tag?: Tag;
    labels?: Label[];
    priority?: TaskPriority;
    status?: TaskStatus;
@@ -28,6 +28,6 @@ export interface TaskWhereInput {
    statusId?: { in: string[]; equals?: string };
    assigneeId?: { in: string[]; equals?: string };
    priorityId?: { in: string[]; equals?: string };
-   projectId?: { in: string[]; equals?: string };
+   tagId?: { in: string[]; equals?: string };
    labels?: { some: { labelId: { in: string[] } } };
 }

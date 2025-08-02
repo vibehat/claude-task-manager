@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useDataStore } from '../stores/dataStore';
+import { useDataStore, useAllTags, useTagDetail } from '../stores';
 
-export function useProjects() {
+export function useTags() {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { projects, isInitialized, initialize } = useDataStore();
+   const tags = useAllTags();
+   const { isInitialized, initialize } = useDataStore();
 
    useEffect(() => {
       if (!isInitialized) {
@@ -21,18 +22,17 @@ export function useProjects() {
    }, [isInitialized]);
 
    return {
-      data: projects,
+      data: tags,
       loading,
       error,
    };
 }
 
-export function useProject(id: string | undefined) {
-   const { getProjectById } = useDataStore();
-   const project = id ? getProjectById(id) : undefined;
+export function useTag(id: string | undefined) {
+   const tag = useTagDetail(id || '');
 
    return {
-      data: project,
+      data: id ? tag : undefined,
       loading: false,
       error: undefined,
    };

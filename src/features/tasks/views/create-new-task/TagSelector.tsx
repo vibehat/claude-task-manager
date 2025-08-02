@@ -11,36 +11,36 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 // import { useIssuesStore } from '@/store/issues-store';
-import type { Project } from '@/mock-data/projects';
-import { projects } from '@/mock-data/projects';
-import { Box, CheckIcon, FolderIcon } from 'lucide-react';
+import type { Tag } from '@/mock-data/tags';
+import { tags } from '@/mock-data/tags';
+import { Box, CheckIcon, TagIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
-interface ProjectSelectorProps {
-   project: Project | undefined;
-   onChange: (project: Project | undefined) => void;
+interface TagSelectorProps {
+   tag: Tag | undefined;
+   onChange: (tag: Tag | undefined) => void;
 }
 
-export function ProjectSelector({ project, onChange }: ProjectSelectorProps): React.JSX.Element {
+export function TagSelector({ tag, onChange }: TagSelectorProps): React.JSX.Element {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string | undefined>(project?.id);
+   const [value, setValue] = useState<string | undefined>(tag?.id);
 
-   // const { filterByProject } = useIssuesStore();
+   // const { filterByTag } = useIssuesStore();
 
    useEffect(() => {
-      setValue(project?.id);
-   }, [project]);
+      setValue(tag?.id);
+   }, [tag]);
 
-   const handleProjectChange = (projectId: string): void => {
-      if (projectId === 'no-project') {
+   const handleTagChange = (tagId: string): void => {
+      if (tagId === 'no-tag') {
          setValue(undefined);
          onChange(undefined);
       } else {
-         setValue(projectId);
-         const newProject = projects.find((p) => p.id === projectId);
-         if (newProject) {
-            onChange(newProject);
+         setValue(tagId);
+         const newTag = tags.find((t) => t.id === tagId);
+         if (newTag) {
+            onChange(newTag);
          }
       }
       setOpen(false);
@@ -60,9 +60,9 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): Re
                >
                   {value ? (
                      ((): React.JSX.Element => {
-                        const selectedProject = projects.find((p) => p.id === value);
-                        if (selectedProject) {
-                           const Icon = selectedProject.icon;
+                        const selectedTag = tags.find((t) => t.id === value);
+                        if (selectedTag) {
+                           const Icon = selectedTag.icon;
                            return <Icon className="size-4" />;
                         }
                         return <Box className="size-4" />;
@@ -70,7 +70,7 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): Re
                   ) : (
                      <Box className="size-4" />
                   )}
-                  <span>{value ? projects.find((p) => p.id === value)?.name : 'No project'}</span>
+                  <span>{value ? tags.find((t) => t.id === value)?.name : 'No tag'}</span>
                </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -78,33 +78,33 @@ export function ProjectSelector({ project, onChange }: ProjectSelectorProps): Re
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set project..." />
+                  <CommandInput placeholder="Set tag..." />
                   <CommandList>
-                     <CommandEmpty>No projects found.</CommandEmpty>
+                     <CommandEmpty>No tags found.</CommandEmpty>
                      <CommandGroup>
                         <CommandItem
-                           value="no-project"
-                           onSelect={() => handleProjectChange('no-project')}
+                           value="no-tag"
+                           onSelect={() => handleTagChange('no-tag')}
                            className="flex items-center justify-between"
                         >
                            <div className="flex items-center gap-2">
-                              <FolderIcon className="size-4" />
-                              No Project
+                              <TagIcon className="size-4" />
+                              No Tag
                            </div>
                            {value === undefined && <CheckIcon size={16} className="ml-auto" />}
                         </CommandItem>
-                        {projects.map((project) => (
+                        {tags.map((tag) => (
                            <CommandItem
-                              key={project.id}
-                              value={project.id}
-                              onSelect={() => handleProjectChange(project.id)}
+                              key={tag.id}
+                              value={tag.id}
+                              onSelect={() => handleTagChange(tag.id)}
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <project.icon className="size-4" />
-                                 {project.name}
+                                 <tag.icon className="size-4" />
+                                 {tag.name}
                               </div>
-                              {value === project.id && <CheckIcon size={16} className="ml-auto" />}
+                              {value === tag.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
                                  {0 /* TODO: Now using local data*/}
                               </span>

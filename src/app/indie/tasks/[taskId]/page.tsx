@@ -18,12 +18,11 @@ export default function TaskDetailPage(): React.JSX.Element {
 
    // Fetch single issue using Zustand
    const { data: task, loading, error } = useTask(taskId);
-   const { getUserById, getProjectById, getStatusById, getPriorityById, getLabelById } =
-      useDataStore();
+   const { getUserById, getTagById, getStatusById, getPriorityById, getLabelById } = useDataStore();
 
    // Get related data
    const assignee = task?.assigneeId ? getUserById(task.assigneeId) : null;
-   const project = task?.projectId ? getProjectById(task.projectId) : null;
+   const tag = task?.tagId ? getTagById(task.tagId) : null;
    const status = task?.statusId ? getStatusById(task.statusId) : null;
    const priority = task?.priorityId ? getPriorityById(task.priorityId) : null;
    const labels = task?.labelIds.map((id) => getLabelById(id)).filter(Boolean) || [];
@@ -176,18 +175,18 @@ export default function TaskDetailPage(): React.JSX.Element {
                </CardContent>
             </Card>
 
-            {/* Project Information */}
-            {project && (
+            {/* Tag Information */}
+            {tag && (
                <Card>
                   <CardHeader>
-                     <CardTitle>Project</CardTitle>
+                     <CardTitle>Tag</CardTitle>
                   </CardHeader>
                   <CardContent>
                      <div className="flex items-center space-x-3">
                         <div className="w-4 h-4 rounded-full bg-gray-500" />
                         <div>
-                           <p className="text-sm font-medium">{project.name}</p>
-                           <p className="text-xs text-muted-foreground">Project</p>
+                           <p className="text-sm font-medium">{tag.name}</p>
+                           <p className="text-xs text-muted-foreground">Tag</p>
                         </div>
                      </div>
                   </CardContent>

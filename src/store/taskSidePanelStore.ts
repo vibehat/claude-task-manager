@@ -3,18 +3,20 @@ import type { Task, TaskDetailsFragment } from '@/libs/client/types';
 
 interface TaskSidePanelStore {
    isOpen: boolean;
-   task: TaskDetailsFragment | null;
+   taskId: string | null;
    panelWidth: number;
    openPanel: (task: Task | TaskDetailsFragment) => void;
    closePanel: () => void;
-   updateTask: (task: TaskDetailsFragment) => void;
+   setTaskId: (taskId: string) => void;
 }
 
 export const useTaskSidePanelStore = create<TaskSidePanelStore>((set) => ({
    isOpen: false,
-   task: null,
+   taskId: null,
    panelWidth: 600,
-   openPanel: (task) => set({ isOpen: true, task: task as TaskDetailsFragment }),
-   closePanel: () => set({ isOpen: false, task: null }),
-   updateTask: (task) => set({ task }),
+   openPanel: (task) => {
+      set({ isOpen: true, taskId: task.id });
+   },
+   closePanel: () => set({ isOpen: false, taskId: null }),
+   setTaskId: (taskId) => set({ taskId }),
 }));

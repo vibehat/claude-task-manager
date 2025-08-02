@@ -88,14 +88,14 @@ export function TaskDetailsSection({
                </div>
             </div>
 
-            {/* Project */}
-            {task.projectId && (
+            {/* Tag */}
+            {task.tagId && (
                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                      <Folder className="h-4 w-4" />
-                     <span>Project</span>
+                     <span>Tag</span>
                   </div>
-                  <Badge variant="outline">Project ID: {task.projectId}</Badge>
+                  <Badge variant="outline">Tag ID: {task.tagId}</Badge>
                </div>
             )}
 

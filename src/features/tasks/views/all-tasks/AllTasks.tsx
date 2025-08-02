@@ -3,7 +3,7 @@
 import { useStatuses } from '@/libs/client/hooks/useStatuses';
 import { useSearchStore } from '../../store/searchStore';
 import { useViewStore } from '@/store/viewStore';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useDataStore, useAllTasks } from '@/libs/client/stores';
 import SearchTasks from './SearchTasks';
 import { TaskListView } from '../tasks-list';
 import { TaskGridView } from '../tasks-grid';
@@ -20,7 +20,16 @@ function AllTasks(): React.JSX.Element {
    const { data: statuses, loading: statusesLoading, error: statusesError } = useStatuses();
 
    // Get all tasks from the data store
-   const allTasks = useDataStore((state) => state.tasks);
+   const allTasks = useAllTasks();
+   const isInitialized = useDataStore((state) => state.isInitialized);
+   const isLoading = useDataStore((state) => state.isLoading);
+
+   console.log('[AllTasks] Store state:', {
+      allTasksLength: allTasks.length,
+      isInitialized,
+      isLoading,
+      sampleTaskIds: allTasks.slice(0, 3).map((t) => t.id),
+   });
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
@@ -67,11 +76,14 @@ function AllTasks(): React.JSX.Element {
       hasTasksInAnyStatus,
    });
 
-   // Show loading state while fetching statuses
-   if (statusesLoading) {
+   // Show loading state while fetching statuses OR while store is initializing
+   if (statusesLoading || isLoading || !isInitialized) {
       return (
          <div className="flex items-center justify-center h-64">
-            <div className="text-sm text-muted-foreground">Loading...</div>
+            <div className="text-sm text-muted-foreground">
+               Loading... (statuses: {statusesLoading ? 'loading' : 'ready'}, store:{' '}
+               {isLoading ? 'loading' : isInitialized ? 'ready' : 'not initialized'})
+            </div>
          </div>
       );
    }

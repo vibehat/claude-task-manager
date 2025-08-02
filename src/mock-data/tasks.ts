@@ -3,8 +3,8 @@ import type { LabelInterface } from './labels';
 import { labels } from './labels';
 import type { Priority } from './priorities';
 import { priorities } from './priorities';
-import type { Project } from './projects';
-import { projects } from './projects';
+import type { Tag } from './tags';
+import { tags } from './tags';
 import type { Status } from './StatusIcon';
 import { status } from './StatusIcon';
 import type { User } from './users';
@@ -21,7 +21,7 @@ export interface Task {
    labels: LabelInterface[];
    createdAt: string;
    cycleId: string;
-   project?: Project;
+   tag?: Tag;
    subtasks?: string[];
    rank: string;
    dueDate?: string;
@@ -52,7 +52,7 @@ export const tasks: Task[] = [
       labels: [labels[0]],
       createdAt: '2025-03-08',
       cycleId: '42',
-      project: projects[0],
+      tag: tags[0],
       rank: ranks[0],
    },
    {
@@ -80,7 +80,7 @@ export const tasks: Task[] = [
       labels: [labels[2]],
       createdAt: '2025-03-14',
       cycleId: '42',
-      project: projects[1],
+      tag: tags[1],
       rank: ranks[2],
    },
    {
@@ -94,7 +94,7 @@ export const tasks: Task[] = [
       labels: [labels[3]],
       createdAt: '2025-03-09',
       cycleId: '42',
-      project: projects[2],
+      tag: tags[2],
       rank: ranks[3],
    },
    {
@@ -108,7 +108,7 @@ export const tasks: Task[] = [
       labels: [labels[4]],
       createdAt: '2025-03-10',
       cycleId: '42',
-      project: projects[4],
+      tag: tags[4],
       subtasks: ['8', '9'],
       rank: ranks[4],
    },
@@ -123,7 +123,7 @@ export const tasks: Task[] = [
       labels: [labels[5]],
       createdAt: '2025-03-11',
       cycleId: '42',
-      project: projects[5],
+      tag: tags[5],
       rank: ranks[5],
    },
    {
@@ -137,7 +137,7 @@ export const tasks: Task[] = [
       labels: [labels[6]],
       createdAt: '2025-03-12',
       cycleId: '42',
-      project: projects[5],
+      tag: tags[5],
       rank: ranks[6],
    },
    {
@@ -151,7 +151,7 @@ export const tasks: Task[] = [
       labels: [labels[7]],
       createdAt: '2025-03-13',
       cycleId: '42',
-      project: projects[6],
+      tag: tags[6],
       rank: ranks[7],
    },
    {
@@ -165,7 +165,7 @@ export const tasks: Task[] = [
       labels: [labels[8]],
       createdAt: '2025-03-14',
       cycleId: '42',
-      project: projects[6],
+      tag: tags[6],
       rank: ranks[8],
    },
    {
@@ -179,7 +179,7 @@ export const tasks: Task[] = [
       labels: [labels[9]],
       createdAt: '2025-03-15',
       cycleId: '42',
-      project: projects[7],
+      tag: tags[7],
       rank: ranks[9],
    },
    {
@@ -193,7 +193,7 @@ export const tasks: Task[] = [
       labels: [labels[10]],
       createdAt: '2025-03-16',
       cycleId: '42',
-      project: projects[7],
+      tag: tags[7],
       rank: ranks[10],
    },
    {
@@ -207,7 +207,7 @@ export const tasks: Task[] = [
       labels: [labels[9]],
       createdAt: '2025-03-17',
       cycleId: '42',
-      project: projects[8],
+      tag: tags[8],
       rank: ranks[11],
    },
    {
@@ -221,7 +221,7 @@ export const tasks: Task[] = [
       labels: [labels[3]],
       createdAt: '2025-03-18',
       cycleId: '42',
-      project: projects[8],
+      tag: tags[8],
       rank: ranks[12],
    },
    {
@@ -235,7 +235,7 @@ export const tasks: Task[] = [
       labels: [labels[9]],
       createdAt: '2025-03-19',
       cycleId: '42',
-      project: projects[9],
+      tag: tags[9],
       rank: ranks[13],
    },
    {
@@ -249,7 +249,7 @@ export const tasks: Task[] = [
       labels: [labels[4]],
       createdAt: '2025-03-20',
       cycleId: '42',
-      project: projects[9],
+      tag: tags[9],
       rank: ranks[14],
    },
    {
@@ -263,7 +263,7 @@ export const tasks: Task[] = [
       labels: [labels[5]],
       createdAt: '2025-03-21',
       cycleId: '42',
-      project: projects[9],
+      tag: tags[9],
       rank: ranks[15],
    },
    {
@@ -277,7 +277,7 @@ export const tasks: Task[] = [
       labels: [labels[3]],
       createdAt: '2025-03-22',
       cycleId: '42',
-      project: projects[0],
+      tag: tags[0],
       rank: ranks[16],
    },
    {
@@ -291,7 +291,7 @@ export const tasks: Task[] = [
       labels: [labels[6]],
       createdAt: '2025-03-23',
       cycleId: '42',
-      project: projects[0],
+      tag: tags[0],
       rank: ranks[17],
    },
    {
@@ -305,7 +305,7 @@ export const tasks: Task[] = [
       labels: [labels[7]],
       createdAt: '2025-03-24',
       cycleId: '42',
-      project: projects[0],
+      tag: tags[0],
       rank: ranks[18],
    },
    {
@@ -319,7 +319,7 @@ export const tasks: Task[] = [
       labels: [labels[5]],
       createdAt: '2025-03-25',
       cycleId: '42',
-      project: projects[0],
+      tag: tags[0],
       rank: ranks[19],
    },
    {
@@ -333,7 +333,7 @@ export const tasks: Task[] = [
       labels: [labels[5]],
       createdAt: '2025-03-26',
       cycleId: '42',
-      project: projects[1],
+      tag: tags[1],
       rank: ranks[20],
    },
    {
@@ -347,7 +347,7 @@ export const tasks: Task[] = [
       labels: [labels[5]],
       createdAt: '2025-03-27',
       cycleId: '42',
-      project: projects[1],
+      tag: tags[1],
       rank: ranks[21],
    },
    {
@@ -361,7 +361,7 @@ export const tasks: Task[] = [
       labels: [labels[8]],
       createdAt: '2025-03-28',
       cycleId: '42',
-      project: projects[4],
+      tag: tags[4],
       rank: ranks[22],
    },
    {
@@ -375,7 +375,7 @@ export const tasks: Task[] = [
       labels: [labels[9]],
       createdAt: '2025-03-29',
       cycleId: '42',
-      project: projects[3],
+      tag: tags[3],
       rank: ranks[23],
    },
    {
@@ -389,7 +389,7 @@ export const tasks: Task[] = [
       labels: [labels[6]],
       createdAt: '2025-03-30',
       cycleId: '42',
-      project: projects[3],
+      tag: tags[3],
       rank: ranks[24],
    },
    {
@@ -403,7 +403,7 @@ export const tasks: Task[] = [
       labels: [labels[7]],
       createdAt: '2025-03-31',
       cycleId: '42',
-      project: projects[6],
+      tag: tags[6],
       rank: ranks[25],
    },
    {
@@ -417,7 +417,7 @@ export const tasks: Task[] = [
       labels: [labels[8]],
       createdAt: '2025-04-01',
       cycleId: '42',
-      project: projects[6],
+      tag: tags[6],
       rank: ranks[26],
    },
    {
@@ -431,7 +431,7 @@ export const tasks: Task[] = [
       labels: [labels[5]],
       createdAt: '2025-04-02',
       cycleId: '42',
-      project: projects[5],
+      tag: tags[5],
       rank: ranks[27],
    },
    {
@@ -445,7 +445,7 @@ export const tasks: Task[] = [
       labels: [labels[9]],
       createdAt: '2025-04-03',
       cycleId: '42',
-      project: projects[5],
+      tag: tags[5],
       rank: ranks[28],
    },
    {
@@ -459,7 +459,7 @@ export const tasks: Task[] = [
       labels: [labels[8]],
       createdAt: '2025-04-04',
       cycleId: '42',
-      project: projects[1],
+      tag: tags[1],
       rank: ranks[29],
    },
 ];

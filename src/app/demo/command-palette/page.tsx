@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
    CommandPalette,
@@ -17,6 +18,12 @@ function CommandPaletteDemo() {
 
    return (
       <div className="container mx-auto py-10">
+         <Link
+            href="/demo"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4"
+         >
+            ← Back to Demo Gallery
+         </Link>
          <h1 className="text-3xl font-bold mb-6">Command Palette Demo</h1>
 
          <div className="space-y-4">

@@ -1,11 +1,11 @@
 'use client';
 
-import { CreateNewIssue } from '@/components/layout/sidebar/create-new-issue';
+import { CreateNewTask } from '@/features/tasks/views/create-new-task';
 
 export function CreateTaskModalProvider(): React.JSX.Element {
    return (
       <div className="hidden">
-         <CreateNewIssue />
+         <CreateNewTask />
       </div>
    );
 }

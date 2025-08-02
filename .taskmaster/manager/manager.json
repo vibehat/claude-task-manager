@@ -25,9 +25,9 @@
          "updatedAt": "2025-01-01T00:00:00.000Z"
       }
    ],
-   "projects": [
+   "tags": [
       {
-         "id": "project-personal",
+         "id": "tag-personal",
          "name": "Personal Tasks",
          "description": "Individual task management",
          "teamId": "team-individual",
@@ -164,7 +164,7 @@
    "taskExtra": {},
    "metadata": {
       "created": "2025-07-31T00:00:00.000Z",
-      "updated": "2025-08-01T09:09:55.502Z",
+      "updated": "2025-08-01T21:52:17.026Z",
       "description": "UI data for TaskMaster integration"
    }
 }

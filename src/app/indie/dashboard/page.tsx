@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useAllTasks, useAllStatuses, useAllPriorities } from '@/libs/client/stores';
 import { Badge } from '@/components/ui/badge';
 import {
    CalendarIcon,
@@ -17,7 +17,9 @@ import Link from 'next/link';
 import { IndieLayout } from '@/components/layout/IndieLayout';
 
 export default function IndieDashboardPage(): React.JSX.Element {
-   const { tasks, statuses, priorities } = useDataStore();
+   const tasks = useAllTasks();
+   const statuses = useAllStatuses();
+   const priorities = useAllPriorities();
 
    // Get recent tasks (last 5)
    const recentTasks = useMemo(() => {

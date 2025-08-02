@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useDataStore } from '@/libs/client/stores';
 import { TaskSidePanel } from './TaskSidePanel';
 
 export function TaskSidePanelProvider(): React.JSX.Element {

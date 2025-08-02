@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/SidebarProvider';
-import { projects } from '@/mock-data/projects';
+import { tags } from '@/mock-data/tags';
 import { Plus } from 'lucide-react';
 
 export default function HeaderNav(): React.JSX.Element {
@@ -11,14 +11,14 @@ export default function HeaderNav(): React.JSX.Element {
          <div className="flex items-center gap-2">
             <SidebarTrigger className="" />
             <div className="flex items-center gap-1">
-               <span className="text-sm font-medium">Projects</span>
-               <span className="text-xs bg-accent rounded-md px-1.5 py-1">{projects.length}</span>
+               <span className="text-sm font-medium">Tags</span>
+               <span className="text-xs bg-accent rounded-md px-1.5 py-1">{tags.length}</span>
             </div>
          </div>
          <div className="flex items-center gap-2">
             <Button className="relative" size="xs" variant="secondary">
                <Plus className="size-4" />
-               <span className="hidden sm:inline ml-1">Create project</span>
+               <span className="hidden sm:inline ml-1">Create tag</span>
             </Button>
          </div>
       </div>

@@ -1,5 +1,11 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useDataStore } from '../stores/dataStore';
+import {
+   useDataStore,
+   useAllTasks,
+   useTaskDetail,
+   useSubtasks,
+   useSearchTasks as useSearchTasksSelector,
+} from '../stores';
 import { useTasksFilterStore } from '@/features/tasks/store/taskFilterStore';
 import type { Task } from '../types/dataModels';
 
@@ -20,7 +26,8 @@ export function useTasks(options: UseTasksOptions = {}): UseTasksResult {
    const [loading, setLoading] = useState(!skip);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { tasks, isInitialized, initialize } = useDataStore();
+   const tasks = useAllTasks();
+   const { isInitialized, initialize } = useDataStore();
    const where = useTasksFilterStore((state) => state.where);
 
    // Initialize data if needed
@@ -66,10 +73,8 @@ export function useTasks(options: UseTasksOptions = {}): UseTasksResult {
          );
       }
 
-      if (where.projectId?.in) {
-         result = result.filter(
-            (task) => task.projectId && where.projectId.in.includes(task.projectId)
-         );
+      if (where.tagId?.in) {
+         result = result.filter((task) => task.tagId && where.tagId.in.includes(task.tagId));
       }
 
       if (where.labels?.some?.labelId?.in) {
@@ -120,7 +125,8 @@ export function useSearchTasks(query: string, options: UseTasksOptions = {}) {
    const [loading, setLoading] = useState(!skip);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { searchTasks, isInitialized, initialize } = useDataStore();
+   const searchTasksResults = useSearchTasksSelector(query);
+   const { isInitialized, initialize } = useDataStore();
 
    // Initialize data if needed
    useEffect(() => {
@@ -141,9 +147,8 @@ export function useSearchTasks(query: string, options: UseTasksOptions = {}) {
       if (!isInitialized || skip || !query) return undefined;
 
       // Filter for parent tasks only
-      const searchResults = searchTasks(query);
-      return searchResults.filter((task) => !task.parentTaskId);
-   }, [searchTasks, query, isInitialized, skip]);
+      return searchTasksResults.filter((task) => !task.parentTaskId);
+   }, [searchTasksResults, query, isInitialized, skip]);
 
    const refetch = async () => {
       setLoading(true);
@@ -170,7 +175,9 @@ export function useTask(id: string | undefined) {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { getTaskById, getSubtasks, isInitialized, initialize } = useDataStore();
+   const task = useTaskDetail(id || '');
+   const subtasks = useSubtasks(id || '');
+   const { isInitialized, initialize } = useDataStore();
 
    // Initialize data if needed
    useEffect(() => {
@@ -186,12 +193,9 @@ export function useTask(id: string | undefined) {
       }
    }, [id, isInitialized]);
 
-   const task = id ? getTaskById(id) : undefined;
-   const subtasks = id ? getSubtasks(id) : [];
-
    return {
-      data: task,
-      subtasks,
+      data: id ? task : undefined,
+      subtasks: id ? subtasks : [],
       loading,
       error,
    };

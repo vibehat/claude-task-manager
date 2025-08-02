@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { TaskWhereInput } from '@/libs/client/types';
 
-export type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'project';
+export type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'tag';
 
 export interface FilterState {
    // Direct TaskWhereInput storage
@@ -44,8 +44,8 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
                case 'priority':
                   delete newWhere.priorityId;
                   break;
-               case 'project':
-                  delete newWhere.projectId;
+               case 'tag':
+                  delete newWhere.tagId;
                   break;
                case 'labels':
                   delete newWhere.labels;
@@ -63,8 +63,8 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
                case 'priority':
                   newWhere.priorityId = { in: ids };
                   break;
-               case 'project':
-                  newWhere.projectId = { in: ids };
+               case 'tag':
+                  newWhere.tagId = { in: ids };
                   break;
                case 'labels':
                   newWhere.labels = { some: { labelId: { in: ids } } };
@@ -115,7 +115,7 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
       if (where.statusId?.in) count += where.statusId.in.length;
       if (where.assigneeId?.in) count += where.assigneeId.in.length;
       if (where.priorityId?.in) count += where.priorityId.in.length;
-      if (where.projectId?.in) count += where.projectId.in.length;
+      if (where.tagId?.in) count += where.tagId.in.length;
       if (where.labels?.some?.labelId?.in) count += where.labels.some.labelId.in.length;
 
       return count;
@@ -131,8 +131,8 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
             return where.assigneeId?.in || [];
          case 'priority':
             return where.priorityId?.in || [];
-         case 'project':
-            return where.projectId?.in || [];
+         case 'tag':
+            return where.tagId?.in || [];
          case 'labels':
             return where.labels?.some?.labelId?.in || [];
          default:

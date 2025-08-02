@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import type { TaskPriority } from '@/libs/client/types';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useDataStore, useAllPriorities } from '@/libs/client/stores';
 import { getPriorityIcon } from '@/features/tasks/constants/NoPriorityIcon';
 
 const getPriorityIconName = (name: string): string => {
@@ -42,7 +42,8 @@ export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): R
    const priorityId = typeof priority === 'string' ? priority : priority?.id;
    const [value, setValue] = useState<string>(priorityId || 'no-priority');
 
-   const { updateTask, priorities } = useDataStore();
+   const { updateTask } = useDataStore();
+   const priorities = useAllPriorities();
 
    useEffect(() => {
       setValue(priorityId || 'no-priority');

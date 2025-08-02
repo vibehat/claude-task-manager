@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
    ChevronRight,
+   ChevronDown,
    Circle,
    CheckCircle2,
    CircleDot,
@@ -14,9 +15,12 @@ import {
    XCircle,
    Edit2,
    Trash2,
+   FileText,
+   TestTube,
 } from 'lucide-react';
 import { cn } from '@/libs/client/utils';
 import { toast } from 'sonner';
+import { motion, AnimatePresence } from 'motion/react';
 import { SubtaskEditForm } from './SubtaskEditForm';
 
 interface SubtaskItemProps {
@@ -25,8 +29,9 @@ interface SubtaskItemProps {
    disabled?: boolean;
 }
 
-export function SubtaskItem({ subtask, parentTask, disabled }: SubtaskItemProps) {
+export function SubtaskItem({ subtask, parentTask: _parentTask, disabled }: SubtaskItemProps) {
    const [isEditing, setIsEditing] = useState(false);
+   const [isExpanded, setIsExpanded] = useState(false);
    const deleting = false;
 
    // Get assignee data - TODO: implement proper assignee logic
@@ -34,28 +39,36 @@ export function SubtaskItem({ subtask, parentTask, disabled }: SubtaskItemProps)
 
    const getStatusIcon = (status?: string | null) => {
       switch (status) {
-         case 'completed':
+         case 'done':
             return <CheckCircle2 className="h-4 w-4 text-green-500" />;
          case 'in-progress':
             return <CircleDot className="h-4 w-4 text-blue-500" />;
-         case 'paused':
+         case 'review':
             return <PauseCircle className="h-4 w-4 text-yellow-500" />;
          case 'cancelled':
             return <XCircle className="h-4 w-4 text-red-500" />;
+         case 'pending':
+            return <Circle className="h-4 w-4 text-blue-400" />;
          default:
             return <Circle className="h-4 w-4 text-muted-foreground" />;
       }
    };
 
-   const handleClick = (e: React.MouseEvent) => {
-      // Don't open panel if clicking edit/delete buttons or if editing
+   const handleTitleClick = (e: React.MouseEvent) => {
+      e.stopPropagation();
       if (isEditing || disabled) return;
+      setIsExpanded(!isExpanded);
+   };
 
+   const handleClick = (e: React.MouseEvent) => {
+      // Don't toggle expansion if clicking buttons
       const target = e.target as HTMLElement;
       if (target.closest('button')) return;
 
-      // TODO: implement navigation to subtask
-      console.log('Navigate to subtask:', subtask);
+      // Allow clicking anywhere on the card to expand/collapse
+      if (!isEditing && !disabled) {
+         setIsExpanded(!isExpanded);
+      }
    };
 
    const handleEdit = (e: React.MouseEvent) => {
@@ -112,7 +125,12 @@ export function SubtaskItem({ subtask, parentTask, disabled }: SubtaskItemProps)
                <div className="flex items-center gap-3 flex-1 min-w-0">
                   {getStatusIcon(subtask?.statusId)}
                   <span className="text-xs text-muted-foreground font-mono">{subtask?.id}</span>
-                  <h4 className="text-sm font-medium line-clamp-1 flex-1">{subtask?.title}</h4>
+                  <button
+                     className="text-sm font-medium line-clamp-1 flex-1 text-left hover:underline"
+                     onClick={handleTitleClick}
+                  >
+                     {subtask?.title}
+                  </button>
                </div>
 
                <div className="flex items-center flex-shrink-0">
@@ -146,9 +164,80 @@ export function SubtaskItem({ subtask, parentTask, disabled }: SubtaskItemProps)
                      </Button>
                   </div>
 
-                  <ChevronRight className="h-2.5 w-2.5 text-muted-foreground" />
+                  {isExpanded ? (
+                     <ChevronDown className="h-2.5 w-2.5 text-muted-foreground" />
+                  ) : (
+                     <ChevronRight className="h-2.5 w-2.5 text-muted-foreground" />
+                  )}
                </div>
             </div>
+
+            {/* Expanded Content */}
+            <AnimatePresence>
+               {isExpanded && (
+                  <motion.div
+                     initial={{ height: 0, opacity: 0 }}
+                     animate={{ height: 'auto', opacity: 1 }}
+                     exit={{ height: 0, opacity: 0 }}
+                     transition={{ duration: 0.2, ease: 'easeInOut' }}
+                     className="overflow-hidden"
+                  >
+                     <div className="mt-4 pt-4 border-t border-border/50 space-y-3">
+                        {/* Description */}
+                        {subtask?.description && (
+                           <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                 <FileText className="h-3 w-3 text-muted-foreground" />
+                                 <span className="text-xs font-medium text-muted-foreground">
+                                    Description
+                                 </span>
+                              </div>
+                              <p className="text-xs text-foreground/80 leading-relaxed pl-5">
+                                 {subtask.description}
+                              </p>
+                           </div>
+                        )}
+
+                        {/* Details */}
+                        {subtask?.details && (
+                           <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                 <FileText className="h-3 w-3 text-blue-500" />
+                                 <span className="text-xs font-medium text-blue-600">
+                                    Implementation Details
+                                 </span>
+                              </div>
+                              <p className="text-xs text-foreground/80 leading-relaxed pl-5">
+                                 {subtask.details}
+                              </p>
+                           </div>
+                        )}
+
+                        {/* Test Strategy */}
+                        {subtask?.testStrategy && (
+                           <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                 <TestTube className="h-3 w-3 text-green-500" />
+                                 <span className="text-xs font-medium text-green-600">
+                                    Test Strategy
+                                 </span>
+                              </div>
+                              <p className="text-xs text-foreground/80 leading-relaxed pl-5">
+                                 {subtask.testStrategy}
+                              </p>
+                           </div>
+                        )}
+
+                        {/* Show a message if no additional info is available */}
+                        {!subtask?.description && !subtask?.details && !subtask?.testStrategy && (
+                           <div className="text-xs text-muted-foreground italic pl-5">
+                              No additional details available
+                           </div>
+                        )}
+                     </div>
+                  </motion.div>
+               )}
+            </AnimatePresence>
          </CardContent>
       </Card>
    );

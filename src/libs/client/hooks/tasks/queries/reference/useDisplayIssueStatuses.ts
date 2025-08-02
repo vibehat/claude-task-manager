@@ -1,7 +1,7 @@
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useAllStatuses } from '@/libs/client/stores';
 
 export function useDisplayIssueStatuses() {
-   const { statuses } = useDataStore();
+   const statuses = useAllStatuses();
    return {
       data: { issueStatuses: statuses },
       loading: false,

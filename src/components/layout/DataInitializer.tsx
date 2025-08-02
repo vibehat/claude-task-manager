@@ -28,7 +28,7 @@ export function DataInitializer({ children }: { children: React.ReactNode }) {
 
          console.log('[DataInitializer] After localStorage load:', {
             isInitialized: currentState.isInitialized,
-            statusCount: currentState.statuses.length,
+            statusCount: Object.keys(currentState.statusEntities).length,
          });
 
          // If no valid data was loaded from localStorage, initialize with API data

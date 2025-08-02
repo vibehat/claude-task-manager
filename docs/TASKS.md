@@ -1,11 +1,11 @@
-# Claude Task Master UI - Project Tasks Documentation
+# Claude Task Master UI - Tag Tasks Documentation
 
 <div align="center">
   <h2>📋 Complete Task Breakdown & Implementation Guide</h2>
   <p><em>Generated on: July 26, 2025</em></p>
 </div>
 
-## 📊 Project Overview
+## 📊 Tag Overview
 
 **Current Status**: 50% Complete (3 of 6 active tasks done)
 
@@ -30,11 +30,11 @@
 
 ## ✅ COMPLETED TASKS
 
-### Task #1: Setup Next.js 15 Project Foundation
+### Task #1: Setup Next.js 15 Tag Foundation
 
 **Status**: ✅ Done | **Priority**: High | **Dependencies**: None
 
-**Description**: Initialize the Next.js 15 project with App Router, TypeScript, Tailwind CSS 4, and essential development tools
+**Description**: Initialize the Next.js 15 tag with App Router, TypeScript, Tailwind CSS 4, and essential development tools
 
 **Implementation Completed**:
 
@@ -42,7 +42,7 @@
 - ✅ TypeScript strict mode configuration
 - ✅ Tailwind CSS 4 with custom design system
 - ✅ Essential tooling (ESLint, Prettier, Husky)
-- ✅ Project structure with proper directories
+- ✅ Tag structure with proper directories
 
 ---
 
@@ -99,7 +99,7 @@ Create comprehensive Node.js integration layer with Next.js API routes to interf
 
 **Core Components**:
 
-- TypeScript interfaces (Task, Project, Config, Status)
+- TypeScript interfaces (Task, Tag, Config, Status)
 - File system watchers with chokidar
 - child_process integration for CLI commands
 - WebSocket connections for live updates
@@ -140,7 +140,7 @@ Create comprehensive Node.js integration layer with Next.js API routes to interf
 
 2. **Implement TypeScript Interfaces** (📋 Pending)
 
-   - Define Task, Project, Config, Status interfaces
+   - Define Task, Tag, Config, Status interfaces
    - Validation schemas and type guards
    - Support nested subtask structures
 
@@ -259,7 +259,7 @@ _Run `task-master expand --id=5 --num=8` to generate detailed subtasks_
 
 #### Description
 
-Create a comprehensive system for managing multiple AI agents working on the same project simultaneously
+Create a comprehensive system for managing multiple AI agents working on the same tag simultaneously
 
 #### Technical Specifications
 
@@ -300,14 +300,14 @@ _Run `task-master expand --id=6 --num=10` to generate detailed subtasks_
 
 ---
 
-### Task #7: Build PRD Parsing and Project Setup Interface
+### Task #7: Build PRD Parsing and Tag Setup Interface
 
 **Status**: 📋 Pending | **Priority**: Medium | **Complexity**: 6/10
 **Dependencies**: Task #4 (✅ Complete), Task #5 (📋 Pending)
 
 #### Description
 
-Create an intuitive interface for uploading and parsing Product Requirements Documents to automatically generate project tasks
+Create an intuitive interface for uploading and parsing Product Requirements Documents to automatically generate tag tasks
 
 #### Technical Specifications
 
@@ -321,15 +321,15 @@ Create an intuitive interface for uploading and parsing Product Requirements Doc
 
 - Integration with AI providers for document analysis
 - Task generation from PRD content
-- Project structure recommendations
+- Tag structure recommendations
 - Template management system
 
-**Project Setup Wizard**:
+**Tag Setup Wizard**:
 
-- Step-by-step project initialization
+- Step-by-step tag initialization
 - Task review and modification interface
 - Dependency mapping and validation
-- Project configuration and settings
+- Tag configuration and settings
 
 #### Recommended Subtasks (7 subtasks needed)
 
@@ -427,7 +427,7 @@ Task #3 (✅) → Task #4 (✅) → Task #7 (📋)
 ## 📚 Additional Resources
 
 - **Task Master CLI**: [Official Documentation](https://github.com/eyaltoledano/claude-task-master)
-- **Project Repository**: Current implementation and progress
+- **Tag Repository**: Current implementation and progress
 - **Architecture Documentation**: Technical implementation details
 - **API Reference**: Integration endpoints and data structures
 

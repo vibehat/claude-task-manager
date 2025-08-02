@@ -67,7 +67,8 @@ export function useTaskMasterCLI() {
                   return (
                      key.includes('/api/taskmaster/cli') ||
                      key.includes('/api/taskmaster/raw-data') ||
-                     key.includes('/api/taskmaster/data')
+                     key.includes('/api/taskmaster/tasks') ||
+                     key.includes('/api/taskmaster/task-manager')
                   );
                }
                return false;

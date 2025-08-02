@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import type { TaskStatus } from '@/libs/client/types';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useAllStatuses } from '@/libs/client/stores';
 import { useTaskStatusIcon } from '@/features/tasks/hooks/useTaskStatusIcon';
 import { useTaskMasterCLI } from '@/hooks/useTaskMasterCLI';
 import { CheckIcon } from 'lucide-react';
@@ -28,7 +28,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
    const statusId = typeof status === 'string' ? status : status?.id;
    const [value, setValue] = useState<string>(statusId || 'to-do');
 
-   const { statuses } = useDataStore();
+   const statuses = useAllStatuses();
    const { execute, isExecuting } = useTaskMasterCLI();
 
    useEffect(() => {

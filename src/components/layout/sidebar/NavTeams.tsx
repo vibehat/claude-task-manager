@@ -118,9 +118,9 @@ export function NavTeams(): React.JSX.Element {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href={`/${DEFAULT_CONFIG.DEFAULT_ORG_ID}/projects`}>
+                                 <Link href={`/${DEFAULT_CONFIG.DEFAULT_ORG_ID}/tags`}>
                                     <Box size={14} />
-                                    <span>Projects</span>
+                                    <span>Tags</span>
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>

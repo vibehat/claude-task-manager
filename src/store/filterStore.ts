@@ -7,20 +7,14 @@ export interface FilterState {
       assignee: string[];
       priority: string[];
       labels: string[];
-      project: string[];
+      tag: string[];
    };
 
    // Actions
-   setFilter: (
-      type: 'status' | 'assignee' | 'priority' | 'labels' | 'project',
-      ids: string[]
-   ) => void;
-   toggleFilter: (
-      type: 'status' | 'assignee' | 'priority' | 'labels' | 'project',
-      id: string
-   ) => void;
+   setFilter: (type: 'status' | 'assignee' | 'priority' | 'labels' | 'tag', ids: string[]) => void;
+   toggleFilter: (type: 'status' | 'assignee' | 'priority' | 'labels' | 'tag', id: string) => void;
    clearFilters: () => void;
-   clearFilterType: (type: 'status' | 'assignee' | 'priority' | 'labels' | 'project') => void;
+   clearFilterType: (type: 'status' | 'assignee' | 'priority' | 'labels' | 'tag') => void;
 
    // Utility
    hasActiveFilters: () => boolean;
@@ -34,7 +28,7 @@ export const useFilterStore = create<FilterState>((set, get) => ({
       assignee: [],
       priority: [],
       labels: [],
-      project: [],
+      tag: [],
    },
 
    // Actions
@@ -70,7 +64,7 @@ export const useFilterStore = create<FilterState>((set, get) => ({
             assignee: [],
             priority: [],
             labels: [],
-            project: [],
+            tag: [],
          },
       });
    },

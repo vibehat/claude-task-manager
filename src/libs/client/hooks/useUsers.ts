@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useDataStore } from '../stores/dataStore';
+import { useDataStore, useAllUsers, useUserDetail } from '../stores';
 
 export function useUsers() {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const { users, isInitialized, initialize } = useDataStore();
+   const users = useAllUsers();
+   const { isInitialized, initialize } = useDataStore();
 
    useEffect(() => {
       if (!isInitialized) {
@@ -28,11 +29,10 @@ export function useUsers() {
 }
 
 export function useUser(id: string | undefined) {
-   const { getUserById } = useDataStore();
-   const user = id ? getUserById(id) : undefined;
+   const user = useUserDetail(id || '');
 
    return {
-      data: user,
+      data: id ? user : undefined,
       loading: false,
       error: undefined,
    };

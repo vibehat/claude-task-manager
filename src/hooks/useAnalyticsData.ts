@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useAllTasks, useAllStatuses } from '@/libs/client/stores';
 import { ComplexityReport, TaskMasterData } from './useTaskMasterData';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
@@ -48,7 +48,8 @@ export function useComplexityAnalytics(complexityReport: ComplexityReport | null
 }
 
 export function useCompletionAnalytics() {
-   const { tasks, statuses } = useDataStore();
+   const tasks = useAllTasks();
+   const statuses = useAllStatuses();
 
    return useMemo(() => {
       // Calculate task metrics

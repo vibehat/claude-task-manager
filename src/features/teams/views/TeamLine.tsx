@@ -1,6 +1,6 @@
 import type { Team } from '@/mock-data/teams';
 import { MembersTooltip } from './MembersTooltip';
-import { ProjectsTooltip } from './ProjectsTooltip';
+import { TagsTooltip } from './TagsTooltip';
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -36,7 +36,7 @@ export default function TeamLine({ team }: TeamLineProps): React.JSX.Element {
             {team.members.length > 0 && <MembersTooltip members={team.members} />}
          </div>
          <div className="hidden sm:flex sm:w-[20%] md:w-[15%] text-xs text-muted-foreground">
-            {team.projects.length > 0 && <ProjectsTooltip projects={team.projects} />}
+            {team.tags.length > 0 && <TagsTooltip tags={team.tags} />}
          </div>
       </div>
    );

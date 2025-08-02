@@ -3,21 +3,19 @@
 import { Separator } from '@/components/ui/separator';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { useDataStore } from '@/libs/client/stores/dataStore';
+import { useTaskDetail } from '@/hooks/useTaskDetail';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
 import { TaskHeader } from './TaskHeader';
 import { TaskTitleEditor } from './TaskTitleEditor';
-import { TaskDescriptionSection } from './sections/TaskDescriptionSection';
+import { TaskInfoSection } from './sections/TaskInfoSection';
 import { TaskDetailsSection } from './sections/TaskDetailsSection';
-import { SubtasksSection } from './sections/SubtasksSection';
+import { SubtasksSection } from './sections/SubtasksSection/SubtasksSection';
+
 export function TaskSidePanel(): React.JSX.Element {
-   const {
-      isOpen,
-      task,
-      panelWidth,
-      closePanel,
-      updateTask: updateTaskInStore,
-   } = useTaskSidePanelStore();
+   const { isOpen, taskId, panelWidth, closePanel } = useTaskSidePanelStore();
+
+   const task = useTaskDetail(taskId);
    const { updateTask } = useDataStore();
 
    const handleUpdateField = async (
@@ -29,9 +27,6 @@ export function TaskSidePanel(): React.JSX.Element {
       try {
          // Update the task using Zustand store
          await updateTask(task.id, { [field]: value });
-
-         // Update the task in the side panel store with the updated value
-         updateTaskInStore({ ...task, [field]: value });
 
          toast.success(`${field === 'title' ? 'Title' : 'Description'} updated successfully`);
       } catch (error) {
@@ -48,22 +43,12 @@ export function TaskSidePanel(): React.JSX.Element {
       handleUpdateField('description', value);
    };
 
-   const handleSubtaskUpdate = (subtaskId: string, description: string): void => {
-      // For now, just show a toast since we'd need a separate mutation for subtasks
-      // This could be extended to call a subtask update mutation
-      toast.info(`Subtask ${subtaskId} update requested`);
-      console.log(`Updating subtask ${subtaskId} with description:`, description);
-   };
-
    const handleLabelsUpdate = async (labelIds: string[]): Promise<void> => {
       if (!task) return;
 
       try {
          // Update the task using Zustand store
          await updateTask(task.id, { labelIds });
-
-         // Update the task in the side panel store with the updated labels
-         updateTaskInStore({ ...task, labelIds });
 
          toast.success('Labels updated successfully');
       } catch (error) {
@@ -92,19 +77,15 @@ export function TaskSidePanel(): React.JSX.Element {
                      disabled={false}
                   />
 
-                  <TaskDescriptionSection
-                     initialValue={task.description || ''}
-                     onSave={handleDescriptionUpdate}
+                  <TaskInfoSection
+                     task={task}
+                     onDescriptionSave={handleDescriptionUpdate}
                      disabled={false}
                   />
 
                   <Separator />
 
-                  <SubtasksSection
-                     task={task}
-                     onSubtaskUpdate={handleSubtaskUpdate}
-                     disabled={false}
-                  />
+                  <SubtasksSection task={task} disabled={false} />
 
                   <Separator />
 

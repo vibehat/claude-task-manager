@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDataStore } from '../stores/dataStore';
+import { useDataStore, useAllTasks } from '../stores';
 import type { Task } from '../types/dataModels';
 
 // TODO: Implement SyncOptions type when syncService is created
@@ -58,13 +58,14 @@ export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTa
       taskMasterError,
       isRealTimeSyncActive,
       isLoading,
-      tasks,
       enableTaskMasterSync,
       disableTaskMasterSync,
       forceSyncTaskMaster,
       toggleRealTimeSync: storeToggleRealTimeSync,
       getTaskMasterStats,
    } = useDataStore();
+
+   const tasks = useAllTasks();
 
    // Filter TaskMaster tasks
    const taskMasterTasks = useMemo(() => {

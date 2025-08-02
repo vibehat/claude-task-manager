@@ -7,7 +7,7 @@ export interface User {
    updatedAt: Date;
 }
 
-export interface Project {
+export interface Tag {
    id: string;
    name: string;
    description: string;
@@ -47,10 +47,12 @@ export interface Task {
    id: string;
    title: string;
    description?: string;
+   details?: string; // Additional implementation details from TaskMaster
+   testStrategy?: string; // Test strategy from TaskMaster
    statusId: string;
    priorityId?: string;
    assigneeId?: string;
-   projectId?: string;
+   tagId?: string;
    parentTaskId?: string;
    labelIds: string[];
    taskId?: number;

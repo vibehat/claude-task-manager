@@ -18,7 +18,7 @@ import {
    DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/SidebarProvider';
-import { CreateNewIssue } from './create-new-issue';
+import { CreateNewTask } from '@/features/tasks/views/create-new-task';
 import { ThemeToggle } from '../ThemeToggle';
 import Link from 'next/link';
 import { DEFAULT_CONFIG } from '@/libs/config/defaults';
@@ -48,7 +48,7 @@ export function OrgSwitcher(): React.JSX.Element {
 
                   <ThemeToggle />
 
-                  <CreateNewIssue />
+                  <CreateNewTask />
                </div>
                <DropdownMenuContent
                   className="w-[--radix-dropdown-menu-trigger-width] min-w-60 rounded-lg"

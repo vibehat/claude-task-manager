@@ -1,4 +1,4 @@
-import type { User, Project, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
+import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 
 export interface TaskExtra {
    createdAt?: string;
@@ -10,7 +10,7 @@ export interface TaskExtra {
 
 export interface TaskManagerData {
    users: User[];
-   projects: Project[];
+   tags: Tag[];
    labels: Label[];
    statuses: TaskStatus[];
    priorities: TaskPriority[];
@@ -37,29 +37,199 @@ class TaskManagerDataService {
 
    async readTaskManagerData(): Promise<TaskManagerData | null> {
       try {
-         console.log('[TaskManagerDataService] Starting fetch to /api/taskmaster/data...');
-         const response = await fetch('/api/taskmaster/data');
-         console.log('[TaskManagerDataService] Fetch response:', {
-            ok: response.ok,
-            status: response.status,
-            statusText: response.statusText,
+         console.log('[TaskManagerDataService] Starting fetch from multiple endpoints...');
+
+         // Fetch from both endpoints in parallel
+         const [taskManagerResponse, tasksResponse] = await Promise.all([
+            fetch('/api/taskmaster/task-manager'),
+            fetch('/api/taskmaster/tasks'),
+         ]);
+
+         let baseData: TaskManagerData | null = null;
+         let taskMasterTasks: any[] = [];
+
+         // Try to get task manager data (metadata, users, projects, etc.)
+         if (taskManagerResponse.ok) {
+            baseData = await taskManagerResponse.json();
+            console.log('[TaskManagerDataService] Loaded task manager data');
+         } else {
+            console.log('TaskManager data not found, using defaults');
+         }
+
+         // Try to get TaskMaster CLI tasks
+         if (tasksResponse.ok) {
+            const tasksData = await tasksResponse.json();
+            taskMasterTasks = tasksData.master?.tasks || [];
+            console.log(
+               `[TaskManagerDataService] Found ${taskMasterTasks.length} TaskMaster CLI tasks`
+            );
+            console.log('[TaskManagerDataService] Sample task:', taskMasterTasks[0]);
+         } else {
+            console.log('TaskMaster CLI data not found, status:', tasksResponse.status);
+         }
+
+         // If neither source has data, return null
+         if (!baseData && taskMasterTasks.length === 0) {
+            console.log('No data available from either source');
+            return null;
+         }
+
+         // Use base data or create minimal structure
+         const finalData: TaskManagerData = baseData || {
+            users: [
+               {
+                  id: 'user-1',
+                  name: 'You',
+                  email: 'user@example.com',
+                  avatarUrl: '',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+            ],
+            tags: [
+               {
+                  id: 'tag-personal',
+                  name: 'Personal Tasks',
+                  description: 'Individual task management',
+                  teamId: 'team-individual',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+            ],
+            labels: [
+               {
+                  id: 'label-taskmaster',
+                  name: 'TaskMaster',
+                  color: '#3498db',
+                  description: 'Tasks from TaskMaster CLI',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+            ],
+            statuses: [
+               {
+                  id: 'pending',
+                  name: 'Pending',
+                  color: '#3498db',
+                  order: 0,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'in-progress',
+                  name: 'In Progress',
+                  color: '#f39c12',
+                  order: 1,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'review',
+                  name: 'Review',
+                  color: '#9b59b6',
+                  order: 2,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'done',
+                  name: 'Done',
+                  color: '#2ecc71',
+                  order: 3,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'deferred',
+                  name: 'Deferred',
+                  color: '#95a5a6',
+                  order: 4,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'cancelled',
+                  name: 'Cancelled',
+                  color: '#e74c3c',
+                  order: 5,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+            ],
+            priorities: [
+               {
+                  id: 'priority-0',
+                  name: 'no_priority',
+                  value: 0,
+                  color: '#95a5a6',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'priority-1',
+                  name: 'urgent',
+                  value: 4,
+                  color: '#e74c3c',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'priority-2',
+                  name: 'high',
+                  value: 3,
+                  color: '#e67e22',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'priority-3',
+                  name: 'medium',
+                  value: 2,
+                  color: '#f39c12',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+               {
+                  id: 'priority-4',
+                  name: 'low',
+                  value: 1,
+                  color: '#3498db',
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+               },
+            ],
+            tasks: [],
+            metadata: {
+               created: new Date().toISOString(),
+               updated: new Date().toISOString(),
+               description: 'Merged TaskMaster UI and CLI data',
+            },
+         };
+
+         // Convert TaskMaster CLI tasks to UI format
+         const convertedTasks = this.convertTaskMasterTasks(taskMasterTasks);
+         console.log(
+            `[TaskManagerDataService] Converted ${convertedTasks.length} TaskMaster tasks`
+         );
+
+         // Reconstruct UI tasks from taskExtra data (if any)
+         const uiTasks = this.reconstructUITasksFromExtra(finalData.taskExtra);
+         console.log(`[TaskManagerDataService] Reconstructed ${uiTasks.length} UI tasks`);
+
+         // Combine all tasks
+         finalData.tasks = [...uiTasks, ...convertedTasks];
+         console.log(`[TaskManagerDataService] Final combined tasks: ${finalData.tasks.length}`);
+
+         console.log('[TaskManagerDataService] Successfully merged data:', {
+            hasStatuses: !!finalData.statuses,
+            statusCount: finalData.statuses?.length,
+            hasUsers: !!finalData.users,
+            totalTasks: finalData.tasks.length,
+            uiTasks: uiTasks.length,
+            taskMasterTasks: convertedTasks.length,
          });
 
-         if (!response.ok) {
-            if (response.status === 404) {
-               console.log('TaskManager data file not found');
-               return null;
-            }
-            throw new Error(`Failed to fetch TaskManager data: ${response.statusText}`);
-         }
-         const data = await response.json();
-         console.log('[TaskManagerDataService] Successfully parsed data:', {
-            hasStatuses: !!data.statuses,
-            statusCount: data.statuses?.length,
-            hasUsers: !!data.users,
-            hasTasks: !!data.tasks,
-         });
-         return data as TaskManagerData;
+         return finalData;
       } catch (error) {
          console.error('[TaskManagerDataService] Failed to read TaskManager data:', error);
          return null;
@@ -68,19 +238,10 @@ class TaskManagerDataService {
 
    async writeTaskManagerData(data: TaskManagerData): Promise<boolean> {
       try {
-         const response = await fetch('/api/taskmaster/data', {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-         });
-
-         if (!response.ok) {
-            throw new Error(`Failed to update TaskManager data: ${response.statusText}`);
-         }
-
-         return true;
+         console.warn(
+            '[TaskManagerDataService] Write operations are no longer supported. Client should manage data locally and use TaskMaster CLI APIs for task operations.'
+         );
+         return false;
       } catch (error) {
          console.warn('Failed to write TaskManager data:', error);
          return false;
@@ -89,7 +250,7 @@ class TaskManagerDataService {
 
    async isAvailable(): Promise<boolean> {
       try {
-         const response = await fetch('/api/taskmaster/data');
+         const response = await fetch('/api/taskmaster/task-manager');
          return response.ok;
       } catch (error) {
          console.warn('Failed to check TaskManager data availability:', error);
@@ -143,33 +304,31 @@ class TaskManagerDataService {
       return await this.writeTaskManagerData(data);
    }
 
-   async addProject(
-      project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>
-   ): Promise<Project | null> {
+   async addTag(tag: Omit<Tag, 'id' | 'createdAt' | 'updatedAt'>): Promise<Tag | null> {
       const data = await this.readTaskManagerData();
       if (!data) return null;
 
-      const newProject: Project = {
-         ...project,
-         id: `project-${Date.now()}`,
+      const newTag: Tag = {
+         ...tag,
+         id: `tag-${Date.now()}`,
          createdAt: new Date(),
          updatedAt: new Date(),
       };
 
-      data.projects.push(newProject);
+      data.tags.push(newTag);
       const success = await this.writeTaskManagerData(data);
-      return success ? newProject : null;
+      return success ? newTag : null;
    }
 
-   async updateProject(id: string, updates: Partial<Project>): Promise<boolean> {
+   async updateTag(id: string, updates: Partial<Tag>): Promise<boolean> {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      const projectIndex = data.projects.findIndex((project) => project.id === id);
-      if (projectIndex === -1) return false;
+      const tagIndex = data.tags.findIndex((tag) => tag.id === id);
+      if (tagIndex === -1) return false;
 
-      data.projects[projectIndex] = {
-         ...data.projects[projectIndex],
+      data.tags[tagIndex] = {
+         ...data.tags[tagIndex],
          ...updates,
          updatedAt: new Date(),
       };
@@ -177,14 +336,14 @@ class TaskManagerDataService {
       return await this.writeTaskManagerData(data);
    }
 
-   async deleteProject(id: string): Promise<boolean> {
+   async deleteTag(id: string): Promise<boolean> {
       const data = await this.readTaskManagerData();
       if (!data) return false;
 
-      data.projects = data.projects.filter((project) => project.id !== id);
-      // Also remove project from additional tasks
+      data.tags = data.tags.filter((tag) => tag.id !== id);
+      // Also remove tag from additional tasks
       data.tasks = data.tasks.map((task) =>
-         task.projectId === id ? { ...task, projectId: undefined } : task
+         task.tagId === id ? { ...task, tagId: undefined } : task
       );
 
       return await this.writeTaskManagerData(data);
@@ -296,6 +455,107 @@ class TaskManagerDataService {
       }
 
       return await this.writeTaskManagerData(data);
+   }
+
+   // Helper methods for converting TaskMaster data (moved from removed API route)
+   private convertTaskMasterTasks(taskMasterTasks: any[]): Task[] {
+      const now = new Date();
+      const convertedTasks: Task[] = [];
+
+      // Create priority mapping for TaskMaster data
+      const priorityMapping: Record<string, string> = {
+         urgent: 'priority-1',
+         high: 'priority-2',
+         medium: 'priority-3',
+         low: 'priority-4',
+      };
+
+      for (const tmTask of taskMasterTasks) {
+         // Convert parent task
+         const parentTask: Task = {
+            id: `tm-${tmTask.id}`,
+            title: tmTask.title,
+            description: tmTask.description || '',
+            details: tmTask.details,
+            testStrategy: tmTask.testStrategy,
+            statusId: tmTask.status, // Use TaskMaster status directly
+            priorityId: priorityMapping[tmTask.priority] || 'priority-3', // default to medium
+            assigneeId: undefined,
+            tagId: 'tag-personal', // default tag for TaskMaster tasks
+            parentTaskId: undefined,
+            labelIds: [],
+            taskId: tmTask.id,
+            subtaskId: undefined,
+            orderIndex: tmTask.id,
+            createdAt: now,
+            updatedAt: now,
+         };
+         convertedTasks.push(parentTask);
+
+         // Convert subtasks
+         if (tmTask.subtasks) {
+            for (const subtask of tmTask.subtasks) {
+               const convertedSubtask: Task = {
+                  id: `tm-${tmTask.id}.${subtask.id}`,
+                  title: subtask.title,
+                  description: subtask.description || '',
+                  details: subtask.details,
+                  testStrategy: subtask.testStrategy,
+                  statusId: subtask.status, // Use TaskMaster status directly
+                  priorityId: priorityMapping[tmTask.priority] || 'priority-3', // inherit from parent
+                  assigneeId: undefined,
+                  tagId: 'tag-personal',
+                  parentTaskId: `tm-${tmTask.id}`,
+                  labelIds: [],
+                  taskId: tmTask.id,
+                  subtaskId: `${subtask.id}`,
+                  orderIndex: subtask.id,
+                  createdAt: now,
+                  updatedAt: now,
+               };
+               convertedTasks.push(convertedSubtask);
+            }
+         }
+      }
+
+      return convertedTasks;
+   }
+
+   private reconstructUITasksFromExtra(taskExtra?: Record<string, TaskExtra>): Task[] {
+      if (!taskExtra) return [];
+
+      const now = new Date();
+      const uiTasks: Task[] = [];
+
+      // Only reconstruct tasks that are not TaskMaster CLI tasks (don't have tm- prefix)
+      for (const [taskId, extra] of Object.entries(taskExtra)) {
+         if (taskId.startsWith('tm-')) continue;
+
+         // Reconstruct basic UI task structure from metadata
+         // Only reconstruct if metadata contains actual task data (has title, statusId, etc.)
+         if (extra.metadata && extra.metadata.title && extra.metadata.statusId) {
+            const task: Task = {
+               id: taskId,
+               title: extra.metadata.title,
+               description: extra.metadata.description || '',
+               statusId: extra.metadata.statusId,
+               priorityId: extra.metadata.priorityId || 'priority-3',
+               assigneeId: extra.metadata.assigneeId,
+               tagId: extra.metadata.tagId || 'tag-personal',
+               parentTaskId: extra.metadata.parentTaskId,
+               labelIds: extra.metadata.labelIds || [],
+               taskId: extra.metadata.taskId,
+               subtaskId: extra.metadata.subtaskId,
+               orderIndex: extra.metadata.orderIndex || 0,
+               createdAt: extra.createdAt ? new Date(extra.createdAt) : now,
+               updatedAt: extra.updatedAt ? new Date(extra.updatedAt) : now,
+            };
+            uiTasks.push(task);
+         }
+         // Skip entries that don't have proper task metadata (like orphaned data)
+      }
+
+      return uiTasks;
    }
 }
 
