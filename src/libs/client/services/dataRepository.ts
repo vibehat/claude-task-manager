@@ -1,4 +1,4 @@
-import type { TaskManagerData, TaskMasterResponse } from './types';
+import type { TaskManagerData, TaskMasterResponse, TaskMasterState } from './types';
 
 export class DataRepository {
    async fetchTaskManagerData(): Promise<TaskManagerData | null> {
@@ -29,6 +29,22 @@ export class DataRepository {
          return tasksData;
       } catch (error) {
          console.error('[DataRepository] Failed to fetch TaskMaster data:', error);
+         return null;
+      }
+   }
+
+   async fetchTaskMasterState(): Promise<TaskMasterState | null> {
+      try {
+         const response = await fetch('/api/taskmaster/state');
+         if (!response.ok) {
+            console.log('TaskMaster state data not found, status:', response.status);
+            return null;
+         }
+         const stateData: TaskMasterState = await response.json();
+         console.log('[DataRepository] Found TaskMaster state data');
+         return stateData;
+      } catch (error) {
+         console.error('[DataRepository] Failed to fetch TaskMaster state:', error);
          return null;
       }
    }

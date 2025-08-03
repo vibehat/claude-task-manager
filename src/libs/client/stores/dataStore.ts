@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
+import type { TaskMasterState } from '../services/types';
 import { taskManagerDataService } from '../services/taskManagerDataService';
 import type { FuzzySearchIndex } from '../utils/fuzzy-search';
 import { createFuzzySearchIndex, type FuzzySearchResult } from '../utils/fuzzy-search';
@@ -12,6 +13,9 @@ interface DataState {
    statusEntities: Record<string, TaskStatus>;
    priorityEntities: Record<string, TaskPriority>;
    taskEntities: Record<string, Task>;
+
+   // TaskMaster state
+   taskMasterState: TaskMasterState | null;
 
    // Search infrastructure
    fuzzySearchIndex: FuzzySearchIndex;
@@ -74,6 +78,12 @@ interface DataState {
    searchTasks: (query: string) => Task[];
    fuzzySearchTasks: (query: string, maxResults?: number) => FuzzySearchResult[];
 
+   // TaskMaster state selectors
+   getTaskMasterState: () => TaskMasterState | null;
+   getCurrentTag: () => string | null;
+   getLastSwitched: () => string | null;
+   getBranchTagMapping: () => Record<string, string>;
+
    // TaskMaster sync actions
    enableTaskMasterSync: () => Promise<void>;
    disableTaskMasterSync: () => Promise<void>;
@@ -94,6 +104,7 @@ export const useDataStore = create<DataState>()(
       statusEntities: {},
       priorityEntities: {},
       taskEntities: {},
+      taskMasterState: null,
       fuzzySearchIndex: createFuzzySearchIndex(),
       isLoading: false,
       isInitialized: false,
@@ -189,6 +200,7 @@ export const useDataStore = create<DataState>()(
                   statusEntities,
                   priorityEntities,
                   taskEntities,
+                  taskMasterState: taskManagerData.taskMasterState || null,
                   isLoading: false,
                   isInitialized: true,
                });
@@ -277,6 +289,7 @@ export const useDataStore = create<DataState>()(
             statusEntities: {},
             priorityEntities: {},
             taskEntities: {},
+            taskMasterState: null,
             isInitialized: false,
          });
       },
@@ -615,6 +628,26 @@ export const useDataStore = create<DataState>()(
          }
 
          return state.fuzzySearchIndex.search(query, maxResults);
+      },
+
+      // TaskMaster state selectors
+      getTaskMasterState: () => {
+         return get().taskMasterState;
+      },
+
+      getCurrentTag: () => {
+         const state = get().taskMasterState;
+         return state?.currentTag || null;
+      },
+
+      getLastSwitched: () => {
+         const state = get().taskMasterState;
+         return state?.lastSwitched || null;
+      },
+
+      getBranchTagMapping: () => {
+         const state = get().taskMasterState;
+         return state?.branchTagMapping || {};
       },
 
       // TaskMaster sync implementations (placeholder implementations)

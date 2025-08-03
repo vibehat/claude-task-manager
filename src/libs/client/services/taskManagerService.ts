@@ -1,4 +1,4 @@
-import type { TaskManagerData } from './types';
+import type { TaskManagerData, TaskMasterState } from './types';
 import { DataRepository } from './dataRepository';
 import { TaskConverter } from './taskConverter';
 import { TagExtractor } from './tagExtractor';
@@ -19,15 +19,21 @@ export async function syncTaskMasterData(): Promise<TaskManagerData | null> {
       const dataRepository = new DataRepository();
       console.log('[syncTaskMasterData] Starting sync...');
 
-      // Fetch from both endpoints in parallel
+      // Fetch from all endpoints in parallel
       const [baseData, taskMasterData] = await Promise.all([
          dataRepository.fetchTaskManagerData(),
          dataRepository.fetchTaskMasterData(),
       ]);
 
-      // If neither source has data, return null
-      if (!baseData && !taskMasterData) {
-         console.log('No data available from either source');
+      // Fetch state data separately only if baseData doesn't include it
+      let taskMasterState = baseData?.taskMasterState || null;
+      if (!taskMasterState) {
+         taskMasterState = await dataRepository.fetchTaskMasterState();
+      }
+
+      // If no data is available from any source, return null
+      if (!baseData && !taskMasterData && !taskMasterState) {
+         console.log('No data available from any source');
          return null;
       }
 
@@ -83,6 +89,14 @@ export async function syncTaskMasterData(): Promise<TaskManagerData | null> {
          );
       }
 
+      // Add TaskMaster state data if available and not already present
+      if (taskMasterState && !finalData.taskMasterState) {
+         finalData.taskMasterState = taskMasterState;
+         console.log('[syncTaskMasterData] Added TaskMaster state data from separate endpoint');
+      } else if (finalData.taskMasterState) {
+         console.log('[syncTaskMasterData] TaskMaster state data already included in base data');
+      }
+
       return finalData;
    } catch (error) {
       console.error('[syncTaskMasterData] Sync failed:', error);
@@ -124,6 +138,7 @@ function createDefaultData(): TaskManagerData {
       priorities: DEFAULT_PRIORITIES,
       tasks: [],
       tagExtra: {},
+      taskMasterState: undefined,
       metadata: {
          created: new Date().toISOString(),
          updated: new Date().toISOString(),

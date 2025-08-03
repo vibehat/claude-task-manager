@@ -31,6 +31,7 @@ export interface TaskManagerData {
    tasks?: Task[];
    taskExtra?: Record<string, TaskExtra>;
    tagExtra?: Record<string, TagExtra>;
+   taskMasterState?: TaskMasterState;
    metadata: {
       created: string;
       updated: string;
@@ -62,4 +63,11 @@ export interface TaskMasterResponse {
    [tagName: string]: {
       tasks: TaskMasterTask[];
    };
+}
+
+export interface TaskMasterState {
+   currentTag: string;
+   lastSwitched: string;
+   branchTagMapping: Record<string, string>;
+   migrationNoticeShown: boolean;
 }
