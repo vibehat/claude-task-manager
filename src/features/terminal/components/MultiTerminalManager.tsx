@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useCallback } from 'react';
-import { PersistentTerminal } from './PersistentTerminal';
+import { MultiTerminalWrapper } from './MultiTerminalWrapper';
 import { useMultiTerminalStore } from '@/store/multiTerminalStore';
 import { cn } from '@/libs/client/utils';
 
@@ -75,7 +75,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
                key={terminal.id}
                className={cn(
                   'absolute pointer-events-auto terminal-transition',
-                  terminal.isMinimized ? 'opacity-0 pointer-events-none' : 'terminal-entering'
+                  terminal.isMinimized ? 'hidden' : 'terminal-entering'
                )}
                style={{
                   left: terminal.position.x,
@@ -85,7 +85,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
                   height: terminal.isMaximized ? 'calc(100vh - 32px)' : terminal.size.height,
                }}
             >
-               <PersistentTerminal
+               <MultiTerminalWrapper
                   terminalId={terminal.id}
                   onClose={handleTerminalClose}
                   onMinimize={handleTerminalMinimize}
@@ -159,7 +159,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
 
                         {/* Close button */}
                         <button
-                           className="ml-3 hover:bg-muted rounded-full p-1.5 transition-opacity duration-200 opacity-70 hover:opacity-100 relative z-10"
+                           className="ml-3 hover:bg-muted rounded-full p-1.5 transition-opacity duration-200 opacity-70 hover:opacity-100 relative z-10 cursor-pointer"
                            onClick={(e) => {
                               e.stopPropagation();
                               handleTerminalClose(terminal.id);
@@ -167,7 +167,7 @@ export function MultiTerminalManager({ className }: MultiTerminalManagerProps) {
                            title="Close terminal"
                         >
                            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 13.41 12z" />
                            </svg>
                         </button>
                      </div>

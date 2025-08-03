@@ -417,3 +417,7 @@ input[type='search'] {
 .chat-tab-stagger:nth-child(5) {
    animation-delay: 200ms;
 }
+
+button {
+   cursor: pointer;
+}

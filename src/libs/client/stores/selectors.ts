@@ -147,7 +147,7 @@ export const useTaskMasterTasks = (): Task[] => {
    const taskEntities = useDataStore((state) => state.taskEntities);
    return useMemo(() => {
       const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => task.id.startsWith('tm-'));
+      return tasks.filter((task) => task.taskId !== undefined);
    }, [taskEntities]);
 };
 
@@ -155,6 +155,6 @@ export const useUITasks = (): Task[] => {
    const taskEntities = useDataStore((state) => state.taskEntities);
    return useMemo(() => {
       const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => !task.id.startsWith('tm-'));
+      return tasks.filter((task) => task.taskId === undefined);
    }, [taskEntities]);
 };

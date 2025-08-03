@@ -182,8 +182,8 @@ export const useDataStore = create<DataState>()(
                });
 
                const allTasks = Object.values(taskEntities);
-               const taskMasterTasks = allTasks.filter((task) => task.id.startsWith('tm-'));
-               const uiTasks = allTasks.filter((task) => !task.id.startsWith('tm-'));
+               const taskMasterTasks = allTasks.filter((task) => task.taskId !== undefined);
+               const uiTasks = allTasks.filter((task) => task.taskId === undefined);
                const parentTasks = allTasks.filter((task) => !task.parentTaskId);
 
                console.log(`[DataStore] Initialized with ${allTasks.length} total tasks:`);

@@ -9,7 +9,7 @@ import { resolveDynamicValue } from '../types/command.types';
 
 export function useCommandResolver() {
    const { context } = useCommandContext();
-   const { getAllCommands } = useCommandModules();
+   const { getAllCommands, registeredModules } = useCommandModules();
    const { isCommandVisible, isCommandEnabled, getResolvedCommand } = useCommandExecution();
 
    // Get all available commands filtered by visibility
@@ -47,7 +47,6 @@ export function useCommandResolver() {
 
          // If no matches found, add Claude fallback command
          if (matchingCommands.length === 0) {
-            const { registeredModules } = useCommandModules();
             const fallbackCommands: Command[] = [];
 
             registeredModules.forEach((module) => {
@@ -68,7 +67,7 @@ export function useCommandResolver() {
 
          return matchingCommands;
       },
-      [availableCommands, context]
+      [availableCommands, context, registeredModules]
    );
 
    // Group commands by their group property
@@ -123,7 +122,7 @@ export function useCommandResolver() {
 
    // Get command suggestions based on context
    const getContextualSuggestions = useCallback(
-      (limit: number = 20): Command[] => {
+      (limit = 20): Command[] => {
          const suggestions: Command[] = [];
 
          // Get last executed command

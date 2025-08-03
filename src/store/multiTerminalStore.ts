@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { v4 as uuid } from 'uuid';
+import type { TerminalMessage, TerminalSession } from '@/features/terminal/types/terminal';
+import { TerminalConnectionStatus } from '@/features/terminal/types/terminal';
+import { getWebSocketUrl } from '@/features/terminal/utils/terminalConfig';
 
 export interface TerminalInstance {
    id: string;
@@ -24,6 +27,16 @@ export interface TerminalInstance {
    // Persistence state
    isRestored?: boolean;
    lastConnectedAt?: Date;
+   // Socket state
+   connectionStatus: TerminalConnectionStatus;
+   error?: string;
+}
+
+export interface TerminalConnectionData {
+   websocket: WebSocket | null;
+   session: TerminalSession | null;
+   reconnectAttempts: number;
+   reconnectTimeout: NodeJS.Timeout | null;
 }
 
 interface MultiTerminalStore {
@@ -34,6 +47,8 @@ interface MultiTerminalStore {
    // Persistence state
    lastSavedAt?: Date;
    isHydrated: boolean;
+   // Socket management
+   connections: Map<string, TerminalConnectionData>;
 
    // Terminal management
    createTerminal: (title?: string) => string;
@@ -56,6 +71,26 @@ interface MultiTerminalStore {
    updateTerminalTitle: (id: string, title: string) => void;
    updateTerminalSession: (id: string, sessionId: string, shell?: string, cwd?: string) => void;
 
+   // Socket management
+   connectTerminal: (
+      id: string,
+      options?: { sessionId?: string; clientId?: string }
+   ) => Promise<void>;
+   disconnectTerminal: (id: string) => void;
+   sendInput: (id: string, data: string) => void;
+   reconnectTerminal: (id: string) => Promise<void>;
+   resizeTerminal: (id: string, cols: number, rows: number) => void;
+   broadcastToAll: (data: any) => void;
+   getConnectionStatus: (id: string) => TerminalConnectionStatus;
+   getSession: (id: string) => TerminalSession | null;
+   getError: (id: string) => string | null;
+   clearError: (id: string) => void;
+   getWebSocket: (id: string) => WebSocket | null;
+
+   // Helper functions (internal)
+   handleTerminalMessage: (id: string, message: TerminalMessage) => void;
+   attemptReconnect: (id: string) => void;
+
    // Utility functions
    getTerminalById: (id: string) => TerminalInstance | undefined;
    getVisibleTerminals: () => TerminalInstance[];
@@ -74,6 +109,10 @@ interface MultiTerminalStore {
 const TERMINAL_SPACING = 24; // More spacing for cleaner look
 const BASE_Z_INDEX = 1000;
 
+// Socket management constants
+const MAX_RECONNECT_ATTEMPTS = 5;
+const RECONNECT_DELAY = 1000;
+
 // Chat positioning constraints
 const CHAT_MIN_WIDTH = 360;
 const CHAT_MAX_WIDTH = 800;
@@ -90,6 +129,7 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
          baseZIndex: BASE_Z_INDEX,
          maxZIndex: BASE_Z_INDEX,
          isHydrated: false,
+         connections: new Map<string, TerminalConnectionData>(),
 
          createTerminal: (title = 'Terminal') => {
             const id = uuid();
@@ -127,7 +167,16 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
                createdAt: now,
                lastActiveAt: now,
                isRestored: false,
+               connectionStatus: TerminalConnectionStatus.DISCONNECTED,
             };
+
+            // Initialize connection data
+            get().connections.set(id, {
+               websocket: null,
+               session: null,
+               reconnectAttempts: 0,
+               reconnectTimeout: null,
+            });
 
             // Chat-like behavior: minimize all existing visible terminals before adding new one
             const updatedTerminals = terminals.map((terminal) => ({
@@ -146,6 +195,10 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
          },
 
          closeTerminal: (id: string) => {
+            // Cleanup connection first
+            get().disconnectTerminal(id);
+            get().connections.delete(id);
+
             set((state) => ({
                terminals: state.terminals.filter((t) => t.id !== id),
                activeTerminalId:
@@ -160,6 +213,8 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
          setActiveTerminal: (id: string) => {
             const terminal = get().getTerminalById(id);
             if (!terminal) return;
+
+            console.log('setActiveTerminal', id);
 
             get().bringTerminalToFront(id);
 
@@ -210,23 +265,11 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
             );
 
             if (terminal.isMinimized) {
-               // Restore the terminal without affecting other terminals
-               const terminals = get().terminals;
-               const updatedTerminals = terminals.map((t) => ({
-                  ...t,
-                  isMinimized: t.id === id ? false : t.isMinimized,
-                  isMaximized: t.id === id ? false : t.isMaximized,
-               }));
-
-               set(() => ({
-                  terminals: updatedTerminals,
-                  activeTerminalId: id,
-               }));
-
-               // Update last active time and bring to front
+               // Restore the terminal - this will make it visible and active
                get().setActiveTerminal(id);
                get().bringTerminalToFront(id);
             } else {
+               // Just minimize, don't set as active
                get().minimizeTerminal(id);
             }
          },
@@ -344,6 +387,363 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
             return { width: optimalWidth, height: optimalHeight };
          },
 
+         // Socket Management Functions
+         connectTerminal: async (
+            id: string,
+            options?: { sessionId?: string; clientId?: string }
+         ) => {
+            const terminal = get().getTerminalById(id);
+            const connectionData = get().connections.get(id);
+
+            if (!terminal || !connectionData) {
+               console.error(`Terminal ${id} not found`);
+               return;
+            }
+
+            // If already connected or connecting, skip
+            if (
+               terminal.connectionStatus === TerminalConnectionStatus.CONNECTED ||
+               terminal.connectionStatus === TerminalConnectionStatus.CONNECTING
+            ) {
+               return;
+            }
+
+            // Update status to connecting
+            set((state) => ({
+               terminals: state.terminals.map((t) =>
+                  t.id === id
+                     ? {
+                          ...t,
+                          connectionStatus: TerminalConnectionStatus.CONNECTING,
+                          error: undefined,
+                       }
+                     : t
+               ),
+            }));
+
+            try {
+               let websocketUrl = await getWebSocketUrl();
+
+               // Add session restoration parameters if available
+               if (options?.sessionId || options?.clientId) {
+                  const urlParams = new URLSearchParams();
+                  if (options.sessionId) urlParams.set('sessionId', options.sessionId);
+                  if (options.clientId) urlParams.set('clientId', options.clientId);
+                  websocketUrl += `?${urlParams.toString()}`;
+               }
+
+               const ws = new WebSocket(websocketUrl);
+               connectionData.websocket = ws;
+               connectionData.reconnectAttempts = 0;
+
+               return new Promise<void>((resolve, reject) => {
+                  ws.onopen = () => {
+                     console.log(`Terminal ${id} WebSocket connected`);
+                     set((state) => ({
+                        terminals: state.terminals.map((t) =>
+                           t.id === id
+                              ? { ...t, connectionStatus: TerminalConnectionStatus.CONNECTED }
+                              : t
+                        ),
+                     }));
+                     resolve();
+                  };
+
+                  ws.onmessage = (event) => {
+                     try {
+                        const message: TerminalMessage = JSON.parse(event.data);
+                        get().handleTerminalMessage(id, message);
+                     } catch (err) {
+                        console.error(`Terminal ${id} message parse error:`, err);
+                     }
+                  };
+
+                  ws.onclose = (event) => {
+                     console.log(`Terminal ${id} WebSocket closed:`, event.code, event.reason);
+                     set((state) => ({
+                        terminals: state.terminals.map((t) =>
+                           t.id === id
+                              ? { ...t, connectionStatus: TerminalConnectionStatus.DISCONNECTED }
+                              : t
+                        ),
+                     }));
+
+                     connectionData.websocket = null;
+
+                     // Attempt reconnection if not intentionally closed
+                     if (
+                        event.code !== 1000 &&
+                        connectionData.reconnectAttempts < MAX_RECONNECT_ATTEMPTS
+                     ) {
+                        get().attemptReconnect(id);
+                     }
+                  };
+
+                  ws.onerror = (error) => {
+                     console.error(`Terminal ${id} WebSocket error:`, error);
+                     const errorMsg = 'WebSocket connection error';
+                     set((state) => ({
+                        terminals: state.terminals.map((t) =>
+                           t.id === id
+                              ? {
+                                   ...t,
+                                   connectionStatus: TerminalConnectionStatus.ERROR,
+                                   error: errorMsg,
+                                }
+                              : t
+                        ),
+                     }));
+                     reject(new Error(errorMsg));
+                  };
+               });
+            } catch (err) {
+               const errorMsg =
+                  err instanceof Error ? err.message : 'Failed to connect to terminal';
+               set((state) => ({
+                  terminals: state.terminals.map((t) =>
+                     t.id === id
+                        ? {
+                             ...t,
+                             connectionStatus: TerminalConnectionStatus.ERROR,
+                             error: errorMsg,
+                          }
+                        : t
+                  ),
+               }));
+               throw new Error(errorMsg);
+            }
+         },
+
+         disconnectTerminal: (id: string) => {
+            const connectionData = get().connections.get(id);
+            if (!connectionData) return;
+
+            // Clear reconnect timeout
+            if (connectionData.reconnectTimeout) {
+               clearTimeout(connectionData.reconnectTimeout);
+               connectionData.reconnectTimeout = null;
+            }
+
+            // Close websocket
+            if (connectionData.websocket) {
+               connectionData.websocket.close(1000, 'Intentional disconnect');
+               connectionData.websocket = null;
+            }
+
+            // Update terminal status
+            set((state) => ({
+               terminals: state.terminals.map((t) =>
+                  t.id === id
+                     ? {
+                          ...t,
+                          connectionStatus: TerminalConnectionStatus.DISCONNECTED,
+                          error: undefined,
+                       }
+                     : t
+               ),
+            }));
+
+            // Reset connection data
+            connectionData.session = null;
+            connectionData.reconnectAttempts = 0;
+         },
+
+         sendInput: (id: string, data: string) => {
+            const connectionData = get().connections.get(id);
+            const terminal = get().getTerminalById(id);
+
+            if (!connectionData?.websocket || !terminal) {
+               console.warn(`Cannot send input to terminal ${id}: not connected`);
+               return;
+            }
+
+            if (connectionData.websocket.readyState === WebSocket.OPEN) {
+               connectionData.websocket.send(
+                  JSON.stringify({
+                     type: 'input',
+                     data,
+                  })
+               );
+            } else {
+               console.warn(
+                  `Terminal ${id} WebSocket not open:`,
+                  connectionData.websocket.readyState
+               );
+            }
+         },
+
+         reconnectTerminal: async (id: string) => {
+            const terminal = get().getTerminalById(id);
+            if (!terminal) return;
+
+            console.log(`Manual reconnect requested for terminal ${id}`);
+            get().disconnectTerminal(id);
+
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            return get().connectTerminal(id, {
+               sessionId: terminal.sessionId,
+               clientId: id,
+            });
+         },
+
+         resizeTerminal: (id: string, cols: number, rows: number) => {
+            const connectionData = get().connections.get(id);
+
+            if (
+               connectionData?.websocket &&
+               connectionData.websocket.readyState === WebSocket.OPEN
+            ) {
+               connectionData.websocket.send(
+                  JSON.stringify({
+                     type: 'resize',
+                     data: { cols, rows },
+                  })
+               );
+            }
+         },
+
+         broadcastToAll: (data: any) => {
+            get().connections.forEach((connectionData) => {
+               if (
+                  connectionData.websocket &&
+                  connectionData.websocket.readyState === WebSocket.OPEN
+               ) {
+                  connectionData.websocket.send(JSON.stringify(data));
+               }
+            });
+         },
+
+         getConnectionStatus: (id: string) => {
+            const terminal = get().getTerminalById(id);
+            return terminal?.connectionStatus || TerminalConnectionStatus.DISCONNECTED;
+         },
+
+         getSession: (id: string) => {
+            const connectionData = get().connections.get(id);
+            return connectionData?.session || null;
+         },
+
+         getError: (id: string) => {
+            const terminal = get().getTerminalById(id);
+            return terminal?.error || null;
+         },
+
+         clearError: (id: string) => {
+            set((state) => ({
+               terminals: state.terminals.map((t) =>
+                  t.id === id ? { ...t, error: undefined } : t
+               ),
+            }));
+         },
+
+         getWebSocket: (id: string) => {
+            const connectionData = get().connections.get(id);
+            return connectionData?.websocket || null;
+         },
+
+         // Helper function to handle terminal messages (simplified - only connection/session management)
+         handleTerminalMessage: (id: string, message: TerminalMessage) => {
+            const connectionData = get().connections.get(id);
+            if (!connectionData) return;
+
+            switch (message.type) {
+               case 'connected':
+                  if (message.sessionId && message.shell && message.platform) {
+                     connectionData.session = {
+                        sessionId: message.sessionId,
+                        shell: message.shell,
+                        platform: message.platform,
+                        cwd: message.cwd || '',
+                        connected: true,
+                     };
+                     get().updateTerminalSession(id, message.sessionId, message.shell, message.cwd);
+                  }
+                  break;
+
+               case 'session-restored':
+                  console.log(`Session restored for terminal ${id}: ${message.sessionId}`);
+                  if (message.sessionId && message.shell && message.platform) {
+                     connectionData.session = {
+                        sessionId: message.sessionId,
+                        shell: message.shell,
+                        platform: message.platform,
+                        cwd: message.cwd || '',
+                        connected: true,
+                     };
+                     get().updateTerminalSession(id, message.sessionId, message.shell, message.cwd);
+                     get().markTerminalAsRestored(id);
+                  }
+                  break;
+
+               case 'exit':
+                  console.log(`Terminal ${id} process exited with code:`, message.exitCode);
+                  if (connectionData.session) {
+                     connectionData.session.connected = false;
+                  }
+                  break;
+
+               case 'error':
+                  const errorMsg = message.message || 'Terminal error occurred';
+                  set((state) => ({
+                     terminals: state.terminals.map((t) =>
+                        t.id === id ? { ...t, error: errorMsg } : t
+                     ),
+                  }));
+                  break;
+
+               case 'data':
+                  // Store no longer handles data messages - components access WebSocket directly
+                  break;
+
+               default:
+                  console.warn(`Unknown message type for terminal ${id}:`, message.type);
+            }
+         },
+
+         // Helper function for reconnection attempts
+         attemptReconnect: (id: string) => {
+            const connectionData = get().connections.get(id);
+            if (!connectionData) return;
+
+            if (connectionData.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+               set((state) => ({
+                  terminals: state.terminals.map((t) =>
+                     t.id === id
+                        ? {
+                             ...t,
+                             connectionStatus: TerminalConnectionStatus.ERROR,
+                             error: 'Maximum reconnection attempts reached',
+                          }
+                        : t
+                  ),
+               }));
+               return;
+            }
+
+            connectionData.reconnectAttempts++;
+            set((state) => ({
+               terminals: state.terminals.map((t) =>
+                  t.id === id
+                     ? { ...t, connectionStatus: TerminalConnectionStatus.RECONNECTING }
+                     : t
+               ),
+            }));
+
+            connectionData.reconnectTimeout = setTimeout(() => {
+               console.log(
+                  `Reconnection attempt ${connectionData.reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS} for terminal ${id}`
+               );
+               get()
+                  .connectTerminal(id, {
+                     sessionId: get().getTerminalById(id)?.sessionId,
+                     clientId: id,
+                  })
+                  .catch((error) => {
+                     console.error(`Reconnection failed for terminal ${id}:`, error);
+                  });
+            }, RECONNECT_DELAY * connectionData.reconnectAttempts);
+         },
+
          // Mark terminal as successfully restored/reconnected
          markTerminalAsRestored: (id: string) => {
             set((state) => ({
@@ -456,11 +856,15 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
                createdAt: terminal.createdAt,
                lastActiveAt: terminal.lastActiveAt,
                lastConnectedAt: terminal.lastConnectedAt,
+               // Reset connection status on serialization - will reconnect on startup
+               connectionStatus: TerminalConnectionStatus.DISCONNECTED,
+               error: undefined,
             })),
             activeTerminalId: state.activeTerminalId,
             baseZIndex: state.baseZIndex,
             maxZIndex: state.maxZIndex,
             lastSavedAt: state.lastSavedAt,
+            // Exclude connections Map from serialization (contains WebSocket objects)
          }),
          onRehydrateStorage: () => (state) => {
             if (state) {
@@ -472,10 +876,25 @@ export const useMultiTerminalStore = create<MultiTerminalStore>()(
                   lastConnectedAt: terminal.lastConnectedAt
                      ? new Date(terminal.lastConnectedAt)
                      : undefined,
+                  // Ensure connection status is disconnected on rehydration
+                  connectionStatus: TerminalConnectionStatus.DISCONNECTED,
+                  error: undefined,
                }));
 
                state.terminals = rehydratedTerminals;
                state.lastSavedAt = state.lastSavedAt ? new Date(state.lastSavedAt) : undefined;
+
+               // Initialize connections Map for all terminals
+               state.connections = new Map<string, TerminalConnectionData>();
+               rehydratedTerminals.forEach((terminal) => {
+                  state.connections.set(terminal.id, {
+                     websocket: null,
+                     session: null,
+                     reconnectAttempts: 0,
+                     reconnectTimeout: null,
+                  });
+               });
+
                state.hydrateTerminals();
 
                // Note: Safe startup check is handled by TerminalStartupManager in DataInitializer

@@ -1,518 +1,380 @@
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 import * as os from 'os';
 import * as http from 'http';
+import * as fs from 'fs';
 import { spawn } from 'child_process';
 
 // Try to import node-pty with fallback
-let pty: typeof import('node-pty') | null = null;
+let pty: any = null;
 try {
    pty = require('node-pty');
-   console.log('node-pty loaded successfully');
-} catch (error) {
-   console.warn(
-      'node-pty not available, falling back to child_process:',
-      error instanceof Error ? error.message : 'Unknown error'
-   );
+   console.log('✅ node-pty loaded');
+} catch {
+   console.log('⚠️  Using child_process fallback');
 }
 
-interface TerminalSession {
-   ptyProcess: any; // Can be either pty.IPty or ChildProcess
-   sessionId: string;
+interface Session {
+   id: string;
+   process: any;
+   clients: Set<WebSocket>;
    createdAt: Date;
    lastActiveAt: Date;
    usingPty: boolean;
-   clientId?: string;
-   isActive: boolean;
+   shell: string;
 }
 
-class TerminalWebSocketServer {
+class TerminalServer {
    private wss: WebSocketServer | null = null;
    private server: http.Server | null = null;
-   private sessions = new Map<string, TerminalSession>();
+   private sessions = new Map<string, Session>();
+   private cleanupTimer: NodeJS.Timeout | null = null;
    private port: number;
 
-   constructor(port: number = 3001) {
+   constructor(port = 3001) {
       this.port = port;
    }
 
-   start(): Promise<void> {
+   async start(): Promise<void> {
       return new Promise((resolve, reject) => {
-         try {
-            // Create HTTP server
-            this.server = http.createServer();
+         this.server = http.createServer();
+         this.wss = new WebSocketServer({ server: this.server });
 
-            // Create WebSocket server
-            this.wss = new WebSocketServer({
-               server: this.server,
-               perMessageDeflate: false,
-            });
+         this.wss.on('connection', (ws, req) => {
+            const url = new URL(req.url || '', `http://${req.headers.host}`);
+            const sessionId = url.searchParams.get('sessionId') || this.generateId();
+            const requestedShell = url.searchParams.get('shell');
+            this.handleConnection(ws, sessionId, requestedShell);
+         });
 
-            this.wss.on('connection', (ws, request) => {
-               this.handleConnection(ws, request);
-            });
+         this.server.listen(this.port, () => {
+            console.log(`🚀 Terminal server on port ${this.port}`);
+            this.startCleanup();
+            resolve();
+         });
 
-            this.wss.on('error', (error) => {
-               console.error('WebSocket server error:', error);
-            });
-
-            this.server.listen(this.port, () => {
-               console.log(`Terminal WebSocket server listening on port ${this.port}`);
-               resolve();
-            });
-
-            this.server.on('error', (error) => {
-               console.error('HTTP server error:', error);
-               reject(error);
-            });
-         } catch (error) {
-            reject(error);
-         }
+         this.server.on('error', reject);
       });
    }
 
-   private handleConnection(ws: any, request: http.IncomingMessage) {
-      console.log('New terminal connection established');
+   private generateId(): string {
+      return Math.random().toString(36).substring(2, 10);
+   }
 
-      // Extract client ID from query params if available (for session restoration)
-      const url = new URL(request.url || '', `http://${request.headers.host}`);
-      const existingSessionId = url.searchParams.get('sessionId');
-      const clientId = url.searchParams.get('clientId');
+   private handleConnection(ws: WebSocket, sessionId: string, requestedShell?: string | null) {
+      let session = this.sessions.get(sessionId);
 
-      // Try to restore existing session or create new one
-      let sessionId = existingSessionId;
-      let existingSession = existingSessionId ? this.sessions.get(existingSessionId) : null;
-
-      if (existingSession && existingSession.isActive) {
-         console.log(`🔄 Attempting to restore session ${existingSessionId}`);
-         // Update session activity
-         existingSession.lastActiveAt = new Date();
-         existingSession.clientId = clientId || existingSession.clientId;
-
-         // Send restoration confirmation
-         ws.send(
-            JSON.stringify({
-               type: 'session-restored',
-               sessionId: existingSessionId,
-               shell: 'bash', // You might want to store this in the session
-               platform: os.platform(),
-               cwd: process.cwd(),
-               usingPty: existingSession.usingPty,
-               ptySupport: pty !== null,
-            })
-         );
-
-         this.attachToExistingSession(ws, existingSession);
-         return;
+      if (session) {
+         // Attach to existing session
+         console.log(`🔄 Reconnecting to session ${sessionId} (${session.shell})`);
+         session.clients.add(ws);
+         session.lastActiveAt = new Date();
+         this.send(ws, {
+            type: 'connected',
+            sessionId,
+            shell: session.shell,
+            usingPty: session.usingPty,
+         });
+      } else {
+         // Create new session
+         const shell = this.resolveShell(requestedShell);
+         console.log(`🆕 Creating session ${sessionId} with ${shell}`);
+         session = this.createSession(sessionId, shell);
+         if (!session) {
+            this.send(ws, { type: 'error', message: `Failed to create session with ${shell}` });
+            ws.close();
+            return;
+         }
+         session.clients.add(ws);
       }
 
-      // Generate new session ID if not restoring
-      if (!sessionId) {
-         sessionId = Math.random().toString(36).substring(2, 15);
+      this.setupClient(ws, session);
+   }
+
+   private resolveShell(requested?: string | null): string {
+      const platform = os.platform();
+      const isWindows = platform === 'win32';
+
+      // Available shells by platform with multiple possible paths
+      const shellPaths: Record<string, string[]> = {
+         // Cross-platform
+         bash: isWindows
+            ? [
+                 'C:\\Program Files\\Git\\bin\\bash.exe',
+                 'C:\\msys64\\usr\\bin\\bash.exe',
+                 'bash.exe',
+              ]
+            : ['/bin/bash', '/usr/bin/bash', '/usr/local/bin/bash'],
+         sh: isWindows
+            ? ['C:\\Program Files\\Git\\bin\\sh.exe', 'C:\\msys64\\usr\\bin\\sh.exe', 'sh.exe']
+            : ['/bin/sh', '/usr/bin/sh'],
+         zsh: isWindows
+            ? ['C:\\msys64\\usr\\bin\\zsh.exe', 'zsh.exe']
+            : ['/bin/zsh', '/usr/bin/zsh', '/usr/local/bin/zsh'],
+
+         // Windows specific
+         cmd: ['cmd.exe'],
+         powershell: ['powershell.exe'],
+         pwsh: ['pwsh.exe'],
+         gitbash: [
+            'C:\\Program Files\\Git\\bin\\bash.exe',
+            'C:\\Program Files (x86)\\Git\\bin\\bash.exe',
+         ],
+      };
+
+      // Default shells by platform
+      const defaultShell = isWindows ? 'powershell' : 'bash';
+
+      if (!requested) {
+         return this.findShellExecutable(shellPaths[defaultShell]) || shellPaths[defaultShell][0];
       }
 
-      // Determine shell based on platform
-      const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+      const normalized = requested.toLowerCase();
 
+      // Direct match
+      if (shellPaths[normalized]) {
+         return this.findShellExecutable(shellPaths[normalized]) || shellPaths[normalized][0];
+      }
+
+      // Partial matches
+      if (normalized.includes('bash'))
+         return this.findShellExecutable(shellPaths['bash']) || shellPaths['bash'][0];
+      if (normalized.includes('zsh'))
+         return this.findShellExecutable(shellPaths['zsh']) || shellPaths['zsh'][0];
+      if (normalized.includes('power'))
+         return this.findShellExecutable(shellPaths['powershell']) || shellPaths['powershell'][0];
+      if (normalized.includes('cmd')) return shellPaths['cmd'][0];
+      if (normalized.includes('git'))
+         return this.findShellExecutable(shellPaths['gitbash']) || shellPaths['gitbash'][0];
+
+      console.warn(`⚠️  Unknown shell '${requested}', using default: ${defaultShell}`);
+      return this.findShellExecutable(shellPaths[defaultShell]) || shellPaths[defaultShell][0];
+   }
+
+   private findShellExecutable(paths: string[]): string | null {
+      for (const path of paths) {
+         try {
+            if (fs.existsSync(path)) {
+               return path;
+            }
+         } catch (error) {
+            // Continue to next path
+         }
+      }
+      return null;
+   }
+
+   private getAvailableShells(): string[] {
+      const available = [];
+      const platform = os.platform();
+      const isWindows = platform === 'win32';
+
+      const shellsToCheck = ['bash', 'sh', 'zsh', 'cmd', 'powershell', 'pwsh', 'gitbash'];
+
+      for (const shell of shellsToCheck) {
+         if (shell === 'cmd' && isWindows) {
+            available.push(shell);
+         } else if ((shell === 'powershell' || shell === 'pwsh') && isWindows) {
+            available.push(shell);
+         } else {
+            const executable = this.resolveShell(shell);
+            if (executable && fs.existsSync(executable)) {
+               available.push(shell);
+            }
+         }
+      }
+
+      return available;
+   }
+
+   private createSession(sessionId: string, shell: string): Session | null {
       try {
-         let ptyProcess: any;
+         let terminalProcess: any;
          let usingPty = false;
 
+         // Try PTY first
          if (pty) {
-            // Use node-pty if available
             try {
-               console.log(`Spawning PTY with shell: ${shell}, cwd: ${process.cwd()}`);
-               ptyProcess = pty.spawn(shell, [], {
+               terminalProcess = pty.spawn(shell, [], {
                   name: 'xterm-color',
                   cols: 80,
                   rows: 30,
-                  cwd: process.env.PWD || process.cwd(),
-                  env: {
-                     ...process.env,
-                     TERM: 'xterm-color',
-                     PS1: '$ ', // Simple prompt
-                  },
+                  cwd: process.cwd(),
+                  env: { ...process.env, TERM: 'xterm-color' },
                });
                usingPty = true;
-               console.log(`Created pty terminal session ${sessionId} with ${shell}`);
-
-               // Log PTY events for debugging
-               ptyProcess.onSpawn?.(() => {
-                  console.log(`PTY process spawned for session ${sessionId}`);
-               });
-
-               // Send initial command to trigger prompt
-               setTimeout(() => {
-                  console.log(`Sending initial newline to PTY session ${sessionId}`);
-                  ptyProcess.write('\r');
-               }, 100);
-            } catch (ptyError) {
-               console.warn('Failed to create pty, falling back to child_process:', ptyError);
-               pty = null; // Disable pty for future sessions
+               console.log(`✅ PTY session ${sessionId} with ${shell}`);
+            } catch (error) {
+               console.log(`⚠️  PTY failed for ${shell}, using child_process`);
             }
          }
 
-         if (!pty) {
-            // Fallback to child_process
-            ptyProcess = spawn(shell, [], {
+         // Fallback to child_process
+         if (!usingPty) {
+            terminalProcess = spawn(shell, [], {
                cwd: process.cwd(),
                env: process.env,
                stdio: ['pipe', 'pipe', 'pipe'],
             });
-            usingPty = false;
-            console.log(`Created child_process terminal session ${sessionId} with ${shell}`);
+            console.log(`✅ Child process session ${sessionId} with ${shell}`);
          }
 
-         // Store session
-         const session: TerminalSession = {
-            ptyProcess,
-            sessionId,
+         const session: Session = {
+            id: sessionId,
+            process: terminalProcess,
+            clients: new Set(),
             createdAt: new Date(),
             lastActiveAt: new Date(),
             usingPty,
-            clientId,
-            isActive: true,
+            shell,
          };
+
          this.sessions.set(sessionId, session);
-
-         // Handle terminal data output
-         if (usingPty) {
-            ptyProcess.onData((data: string) => {
-               console.log(`PTY output for session ${sessionId}:`, JSON.stringify(data));
-               if (ws.readyState === ws.OPEN) {
-                  console.log(`Sending PTY data to WebSocket:`, JSON.stringify(data));
-                  ws.send(
-                     JSON.stringify({
-                        type: 'data',
-                        data: data,
-                     })
-                  );
-               } else {
-                  console.warn(
-                     `WebSocket not open, cannot send PTY data. State: ${ws.readyState}. Stopping terminal process.`
-                  );
-                  // Stop the terminal process if WebSocket is closed
-                  this.cleanupSession(sessionId);
-               }
-            });
-
-            // Handle terminal exit
-            ptyProcess.onExit((exitCode: any) => {
-               console.log(`Terminal session ${sessionId} exited with code:`, exitCode);
-               if (ws.readyState === ws.OPEN) {
-                  ws.send(
-                     JSON.stringify({
-                        type: 'exit',
-                        exitCode: exitCode.exitCode,
-                     })
-                  );
-               }
-               this.sessions.delete(sessionId);
-            });
-         } else {
-            // Handle child_process stdout/stderr
-            ptyProcess.stdout?.on('data', (data: Buffer) => {
-               const dataStr = data.toString();
-               console.log(
-                  `Child process stdout for session ${sessionId}:`,
-                  JSON.stringify(dataStr)
-               );
-               if (ws.readyState === ws.OPEN) {
-                  console.log(`Sending stdout data to WebSocket:`, JSON.stringify(dataStr));
-                  ws.send(
-                     JSON.stringify({
-                        type: 'data',
-                        data: dataStr,
-                     })
-                  );
-               } else {
-                  console.warn(
-                     `WebSocket not open, cannot send stdout data. State: ${ws.readyState}. Stopping terminal process.`
-                  );
-                  // Stop the terminal process if WebSocket is closed
-                  this.cleanupSession(sessionId);
-               }
-            });
-
-            ptyProcess.stderr?.on('data', (data: Buffer) => {
-               const dataStr = data.toString();
-               console.log(
-                  `Child process stderr for session ${sessionId}:`,
-                  JSON.stringify(dataStr)
-               );
-               if (ws.readyState === ws.OPEN) {
-                  console.log(`Sending stderr data to WebSocket:`, JSON.stringify(dataStr));
-                  ws.send(
-                     JSON.stringify({
-                        type: 'data',
-                        data: dataStr,
-                     })
-                  );
-               } else {
-                  console.warn(
-                     `WebSocket not open, cannot send stderr data. State: ${ws.readyState}. Stopping terminal process.`
-                  );
-                  // Stop the terminal process if WebSocket is closed
-                  this.cleanupSession(sessionId);
-               }
-            });
-
-            ptyProcess.on('exit', (exitCode: number | null) => {
-               console.log(`Terminal session ${sessionId} exited with code:`, exitCode);
-               if (ws.readyState === ws.OPEN) {
-                  ws.send(
-                     JSON.stringify({
-                        type: 'exit',
-                        exitCode: exitCode || 0,
-                     })
-                  );
-               }
-               this.sessions.delete(sessionId);
-            });
-         }
-
-         // Handle WebSocket messages
-         ws.on('message', (message: Buffer) => {
-            try {
-               const { type, data } = JSON.parse(message.toString());
-
-               switch (type) {
-                  case 'input':
-                     // Write input to terminal
-                     console.log(
-                        `Writing input to PTY (${usingPty ? 'pty' : 'child_process'}):`,
-                        JSON.stringify(data)
-                     );
-                     if (usingPty) {
-                        ptyProcess.write(data);
-                     } else {
-                        ptyProcess.stdin?.write(data);
-                     }
-                     break;
-
-                  case 'resize':
-                     // Resize terminal (only works with pty)
-                     if (usingPty) {
-                        const { cols, rows } = data;
-                        if (cols > 0 && rows > 0 && cols < 1000 && rows < 1000) {
-                           console.log(`Resizing PTY to ${cols}x${rows}`);
-                           ptyProcess.resize(cols, rows);
-                        } else {
-                           console.warn('Invalid resize dimensions:', { cols, rows });
-                        }
-                     } else {
-                        console.warn('Terminal resize not supported with child_process fallback');
-                     }
-                     break;
-
-                  default:
-                     console.warn('Unknown message type:', type);
-               }
-            } catch (error) {
-               console.error('Error processing WebSocket message:', error);
-            }
-         });
-
-         // Handle WebSocket close
-         ws.on('close', () => {
-            console.log(`Terminal session ${sessionId} disconnected`);
-
-            // Mark session as inactive for potential restoration
-            const session = this.sessions.get(sessionId);
-            if (session) {
-               session.isActive = false;
-               session.lastActiveAt = new Date();
-               console.log(`Session ${sessionId} marked inactive for potential restoration`);
-            }
-
-            // Clean up session after a shorter delay to prevent resource leaks
-            setTimeout(() => {
-               this.cleanupStaleSession(sessionId);
-            }, 5000); // Reduced to 5 seconds to prevent accumulation of orphaned processes
-         });
-
-         // Handle WebSocket errors
-         ws.on('error', (error: Error) => {
-            console.error('WebSocket error:', error);
-
-            // Mark as inactive on error
-            const session = this.sessions.get(sessionId);
-            if (session) {
-               session.isActive = false;
-            }
-         });
-
-         // Send initial connection confirmation
-         ws.send(
-            JSON.stringify({
-               type: 'connected',
-               sessionId,
-               shell,
-               platform: os.platform(),
-               cwd: process.cwd(),
-               usingPty,
-               ptySupport: pty !== null,
-            })
-         );
-
-         // Send a test welcome message to verify the data flow works
-         setTimeout(() => {
-            console.log(`Sending welcome message to session ${sessionId}`);
-            if (ws.readyState === ws.OPEN) {
-               ws.send(
-                  JSON.stringify({
-                     type: 'data',
-                     data: `Welcome to terminal session ${sessionId}!\r\n$ `,
-                  })
-               );
-            }
-         }, 500);
+         this.setupProcess(session);
+         return session;
       } catch (error) {
-         console.error('Error creating terminal session:', error);
-         ws.send(
-            JSON.stringify({
-               type: 'error',
-               message: 'Failed to create terminal session',
-            })
-         );
-         ws.close();
+         console.error(`❌ Failed to create session with ${shell}:`, error);
+         return null;
       }
    }
 
-   private cleanupSession(sessionId: string) {
-      const session = this.sessions.get(sessionId);
-      if (session) {
-         try {
-            if (session.usingPty) {
-               session.ptyProcess.kill();
-            } else {
-               session.ptyProcess.kill('SIGTERM');
-            }
-         } catch (error) {
-            console.error('Error killing process:', error);
-         }
-         this.sessions.delete(sessionId);
-      }
-   }
-
-   private cleanupStaleSession(sessionId: string) {
-      const session = this.sessions.get(sessionId);
-      if (session && !session.isActive) {
-         const timeSinceLastActive = new Date().getTime() - session.lastActiveAt.getTime();
-         const STALE_THRESHOLD = 30000; // 30 seconds
-
-         if (timeSinceLastActive > STALE_THRESHOLD) {
-            console.log(`🧹 Cleaning up stale session ${sessionId}`);
-            this.cleanupSession(sessionId);
-         }
-      }
-   }
-
-   private attachToExistingSession(ws: any, session: TerminalSession) {
-      const sessionId = session.sessionId;
-
-      // Handle terminal data output for restored session
+   private setupProcess(session: Session) {
       if (session.usingPty) {
-         session.ptyProcess.onData((data: string) => {
-            if (ws.readyState === ws.OPEN) {
-               ws.send(JSON.stringify({ type: 'data', data }));
-            }
+         session.process.onData((data: string) => {
+            this.broadcast(session, { type: 'data', data });
+         });
+
+         session.process.onExit((code: any) => {
+            console.log(`💀 Session ${session.id} exited`);
+            this.broadcast(session, { type: 'exit', code: code?.exitCode || 0 });
+            this.sessions.delete(session.id);
          });
       } else {
-         // For child_process, we need to re-attach listeners
-         session.ptyProcess.stdout?.on('data', (data: Buffer) => {
-            if (ws.readyState === ws.OPEN) {
-               ws.send(JSON.stringify({ type: 'data', data: data.toString() }));
-            }
+         session.process.stdout?.on('data', (data: Buffer) => {
+            this.broadcast(session, { type: 'data', data: data.toString() });
          });
 
-         session.ptyProcess.stderr?.on('data', (data: Buffer) => {
-            if (ws.readyState === ws.OPEN) {
-               ws.send(JSON.stringify({ type: 'data', data: data.toString() }));
-            }
+         session.process.stderr?.on('data', (data: Buffer) => {
+            this.broadcast(session, { type: 'data', data: data.toString() });
+         });
+
+         session.process.on('exit', (code: number | null) => {
+            console.log(`💀 Session ${session.id} exited`);
+            this.broadcast(session, { type: 'exit', code: code || 0 });
+            this.sessions.delete(session.id);
          });
       }
+   }
 
-      // Handle WebSocket messages for restored session
-      ws.on('message', (message: Buffer) => {
+   private setupClient(ws: WebSocket, session: Session) {
+      ws.on('message', (data) => {
          try {
-            const { type, data } = JSON.parse(message.toString());
-
-            // Update activity timestamp
+            const { type, data: payload } = JSON.parse(data.toString());
             session.lastActiveAt = new Date();
 
-            switch (type) {
-               case 'input':
-                  if (session.usingPty) {
-                     session.ptyProcess.write(data);
-                  } else {
-                     session.ptyProcess.stdin?.write(data);
-                  }
-                  break;
-
-               case 'resize':
-                  if (session.usingPty) {
-                     const { cols, rows } = data;
-                     if (cols && rows) {
-                        session.ptyProcess.resize(cols, rows);
-                     }
-                  }
-                  break;
-
-               default:
-                  console.warn('Unknown message type:', type);
+            if (type === 'input') {
+               if (session.usingPty) {
+                  session.process.write(payload);
+               } else {
+                  session.process.stdin?.write(payload);
+               }
+            } else if (type === 'resize' && session.usingPty) {
+               const { cols, rows } = payload;
+               if (cols > 0 && rows > 0) {
+                  session.process.resize(cols, rows);
+               }
             }
          } catch (error) {
-            console.error('Error processing WebSocket message for restored session:', error);
+            console.error('❌ Message error:', error);
          }
       });
 
-      // Handle close for restored session
       ws.on('close', () => {
-         console.log(`Restored terminal session ${sessionId} disconnected`);
-         session.isActive = false;
+         console.log(`🔌 Client disconnected from ${session.id}`);
+         session.clients.delete(ws);
          session.lastActiveAt = new Date();
-
-         setTimeout(() => {
-            this.cleanupStaleSession(sessionId);
-         }, 5000); // Reduced to 5 seconds
       });
 
-      ws.on('error', (error: Error) => {
-         console.error('WebSocket error in restored session:', error);
-         session.isActive = false;
+      ws.on('error', (error) => {
+         console.error('❌ WebSocket error:', error);
+         session.clients.delete(ws);
       });
+   }
+
+   private send(ws: WebSocket, message: any) {
+      if (ws.readyState === WebSocket.OPEN) {
+         ws.send(JSON.stringify(message));
+      }
+   }
+
+   private broadcast(session: Session, message: any) {
+      const payload = JSON.stringify(message);
+      session.clients.forEach((client) => {
+         if (client.readyState === WebSocket.OPEN) {
+            client.send(payload);
+         }
+      });
+   }
+
+   private startCleanup() {
+      this.cleanupTimer = setInterval(() => {
+         const now = Date.now();
+         const stale = [];
+
+         for (const [id, session] of this.sessions) {
+            const inactive = now - session.lastActiveAt.getTime() > 300000; // 5 min
+            const noClients = session.clients.size === 0;
+
+            if (inactive && noClients) {
+               stale.push(id);
+            }
+         }
+
+         stale.forEach((id) => {
+            console.log(`🧹 Cleaning up session ${id}`);
+            const session = this.sessions.get(id);
+            if (session) {
+               session.clients.forEach((client) => client.close());
+               session.process.kill?.();
+               this.sessions.delete(id);
+            }
+         });
+      }, 30000); // Every 30 seconds
    }
 
    getStatus() {
       return {
-         active: this.wss !== null,
          port: this.port,
-         activeSessions: this.sessions.size,
-         sessions: Array.from(this.sessions.values()).map((session) => ({
-            sessionId: session.sessionId,
-            createdAt: session.createdAt,
+         sessions: this.sessions.size,
+         availableShells: this.getAvailableShells(),
+         platform: os.platform(),
+         details: Array.from(this.sessions.values()).map((s) => ({
+            id: s.id,
+            shell: s.shell,
+            clients: s.clients.size,
+            usingPty: s.usingPty,
+            created: s.createdAt,
          })),
       };
    }
 
-   stop(): Promise<void> {
+   async stop(): Promise<void> {
       return new Promise((resolve) => {
-         // Cleanup all sessions
-         this.sessions.forEach((session, sessionId) => {
-            this.cleanupSession(sessionId);
+         console.log('🛑 Stopping server...');
+
+         if (this.cleanupTimer) {
+            clearInterval(this.cleanupTimer);
+         }
+
+         this.sessions.forEach((session) => {
+            session.clients.forEach((client) => client.close());
+            session.process.kill?.();
          });
+         this.sessions.clear();
 
          if (this.wss) {
             this.wss.close(() => {
-               console.log('WebSocket server closed');
-               this.wss = null;
-
                if (this.server) {
-                  this.server.close(() => {
-                     console.log('HTTP server closed');
-                     this.server = null;
-                     resolve();
-                  });
+                  this.server.close(() => resolve());
                } else {
                   resolve();
                }
@@ -524,38 +386,29 @@ class TerminalWebSocketServer {
    }
 }
 
-// Global instance
-let terminalServer: TerminalWebSocketServer | null = null;
+// Singleton
+let server: TerminalServer | null = null;
 
-export function getTerminalServer(): TerminalWebSocketServer {
-   if (!terminalServer) {
-      terminalServer = new TerminalWebSocketServer();
+export function getTerminalServer(): TerminalServer {
+   if (!server) {
+      server = new TerminalServer();
    }
-   return terminalServer;
-}
-
-export async function startTerminalServer(): Promise<TerminalWebSocketServer> {
-   const server = getTerminalServer();
-   await server.start();
    return server;
 }
 
-// Cleanup on process exit
-process.on('exit', () => {
-   if (terminalServer) {
-      terminalServer.stop();
+export async function startTerminalServer(): Promise<TerminalServer> {
+   const s = getTerminalServer();
+   await s.start();
+   return s;
+}
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+   console.log('🛑 SIGINT received...');
+   if (server) {
+      await server.stop();
    }
+   process.exit(0);
 });
 
-process.on('SIGINT', () => {
-   console.log('Received SIGINT, shutting down terminal server...');
-   if (terminalServer) {
-      terminalServer.stop().then(() => {
-         process.exit(0);
-      });
-   } else {
-      process.exit(0);
-   }
-});
-
-export default TerminalWebSocketServer;
+export default TerminalServer;

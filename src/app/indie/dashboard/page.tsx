@@ -15,6 +15,7 @@ import {
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { IndieLayout } from '@/components/layout/IndieLayout';
+import { formatTaskIdForDisplay } from '@/libs/client/utils';
 
 export default function IndieDashboardPage(): React.JSX.Element {
    const tasks = useAllTasks();
@@ -149,7 +150,9 @@ export default function IndieDashboardPage(): React.JSX.Element {
                                  />
                                  <div>
                                     <p className="text-sm font-medium">{task.title}</p>
-                                    <p className="text-xs text-muted-foreground">{task.id}</p>
+                                    <p className="text-xs text-muted-foreground">
+                                       {formatTaskIdForDisplay(task.id)}
+                                    </p>
                                  </div>
                               </div>
                               <div className="flex items-center space-x-2">

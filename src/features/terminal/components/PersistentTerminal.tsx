@@ -30,15 +30,12 @@ export function PersistentTerminal({
    const resizeObserverRef = useRef<ResizeObserver | null>(null);
    const [isDragging, setIsDragging] = useState(false);
    const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-   const [isRestoring, setIsRestoring] = useState(false);
-   const reconnectAttemptRef = useRef(0);
-   const maxReconnectAttempts = 3;
 
    // Get terminal instance from store
    const terminalInstance = terminalId ? multiTerminalStore.getTerminalById(terminalId) : null;
 
-   // Create individual terminal hook - must be called before early returns
-   const individualTerminal = useTerminal({
+   // Create terminal hook - must be called before early returns
+   const individualTerminal = useTerminal(terminalId || '', {
       theme: theme as 'light' | 'dark' | 'auto',
       fontSize: 14,
       fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
@@ -169,24 +166,19 @@ export function PersistentTerminal({
    // Handle reconnect with restoration awareness
    const handleReconnect = useCallback(() => {
       console.log(`🔄 Manual reconnect requested for terminal ${terminalId}`);
-      setIsRestoring(true);
-      reconnectAttemptRef.current = 0;
 
-      disconnect();
-      setTimeout(() => {
-         connect()
-            .then(() => {
-               if (terminalInstance) {
-                  multiTerminalStore.markTerminalAsRestored(terminalId);
-               }
-               setIsRestoring(false);
-            })
-            .catch((error) => {
-               console.error(`Failed to manually reconnect terminal ${terminalId}:`, error);
-               setIsRestoring(false);
-            });
-      }, 500);
-   }, [connect, disconnect, terminalId, terminalInstance?.sessionId]);
+      // Use store's reconnect method which handles the full reconnection logic
+      multiTerminalStore
+         .reconnectTerminal(terminalId)
+         .then(() => {
+            if (terminalInstance) {
+               multiTerminalStore.markTerminalAsRestored(terminalId);
+            }
+         })
+         .catch((error) => {
+            console.error(`Failed to manually reconnect terminal ${terminalId}:`, error);
+         });
+   }, [multiTerminalStore, terminalId, terminalInstance]);
 
    // Handle minimize/maximize
    const handleMinimize = useCallback(() => {
@@ -254,76 +246,18 @@ export function PersistentTerminal({
       }
    }, [isDragging, handleMouseMove, handleMouseUp]);
 
-   // Smart auto-connect/restoration logic
+   // Auto-connect logic is now handled by the useTerminalAdapter and store
    useEffect(() => {
-      if (!terminalInstance) return;
+      if (!terminalInstance || !terminalId) return;
 
-      // Prevent infinite loops by checking if we're already connecting/restoring/connected
-      if (
-         connectionStatus === TerminalConnectionStatus.CONNECTING ||
-         connectionStatus === TerminalConnectionStatus.CONNECTED ||
-         isRestoring
-      ) {
-         return;
+      // Auto-connect for fresh terminals
+      if (connectionStatus === TerminalConnectionStatus.DISCONNECTED) {
+         console.log(`🔗 Auto-connecting terminal ${terminalId} via adapter`);
+         connect().catch((error) => {
+            console.error(`❌ Failed to auto-connect terminal ${terminalId}:`, error);
+         });
       }
-
-      const shouldConnect = connectionStatus === TerminalConnectionStatus.DISCONNECTED;
-      const isRestoredSession = terminalInstance.isRestored;
-
-      if (shouldConnect && !isRestoredSession) {
-         // Fresh connection - immediate connect
-         console.log(`🔗 Auto-connecting fresh terminal ${terminalId}`);
-         connect()
-            .then(() => {
-               // Mark as restored after successful connection
-               multiTerminalStore.markTerminalAsRestored(terminalId);
-            })
-            .catch((error) => {
-               console.error(`❌ Failed to connect fresh terminal ${terminalId}:`, error);
-            });
-      } else if (
-         shouldConnect &&
-         isRestoredSession &&
-         reconnectAttemptRef.current < maxReconnectAttempts
-      ) {
-         // Restored session needs careful reconnection
-         console.log(
-            `🔄 Auto-restoring terminal ${terminalId} (attempt ${reconnectAttemptRef.current + 1})`
-         );
-         setIsRestoring(true);
-         reconnectAttemptRef.current += 1;
-
-         // Delay for restored sessions to avoid overwhelming the server
-         const delay = Math.min(1000 * reconnectAttemptRef.current, 5000);
-         setTimeout(() => {
-            connect()
-               .then(() => {
-                  console.log(`✅ Successfully restored terminal ${terminalId}`);
-                  multiTerminalStore.markTerminalAsRestored(terminalId);
-                  setIsRestoring(false);
-                  reconnectAttemptRef.current = 0;
-               })
-               .catch((error) => {
-                  console.error(
-                     `❌ Failed to restore terminal ${terminalId} (attempt ${reconnectAttemptRef.current}):`,
-                     error
-                  );
-                  setIsRestoring(false);
-
-                  if (reconnectAttemptRef.current >= maxReconnectAttempts) {
-                     console.warn(`🚫 Max reconnect attempts reached for terminal ${terminalId}`);
-                  }
-               });
-         }, delay);
-      }
-   }, [
-      connect,
-      connectionStatus,
-      terminalId,
-      terminalInstance?.isRestored,
-      terminalInstance?.sessionId,
-      isRestoring,
-   ]);
+   }, [terminalInstance, terminalId, connectionStatus, connect]);
 
    // Note: Safe startup check is now handled by TerminalStartupManager in DataInitializer
    // This avoids duplicate calls and infinite loops
@@ -368,9 +302,9 @@ export function PersistentTerminal({
                      Restored
                   </span>
                )}
-               {isRestoring && (
+               {connectionStatus === TerminalConnectionStatus.RECONNECTING && (
                   <span className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full">
-                     Restoring...
+                     Reconnecting...
                   </span>
                )}
             </div>
@@ -413,22 +347,18 @@ export function PersistentTerminal({
                />
 
                {/* Loading/Restoration Overlay */}
-               {(connectionStatus === TerminalConnectionStatus.CONNECTING || isRestoring) && (
+               {(connectionStatus === TerminalConnectionStatus.CONNECTING ||
+                  connectionStatus === TerminalConnectionStatus.RECONNECTING) && (
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
                      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
                         <div className="flex items-center space-x-3">
                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
                            <span className="text-sm font-medium">
-                              {isRestoring
-                                 ? 'Restoring terminal session...'
+                              {connectionStatus === TerminalConnectionStatus.RECONNECTING
+                                 ? 'Reconnecting to terminal...'
                                  : 'Connecting to terminal...'}
                            </span>
                         </div>
-                        {isRestoring && reconnectAttemptRef.current > 0 && (
-                           <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                              Attempt {reconnectAttemptRef.current + 1} of {maxReconnectAttempts}
-                           </div>
-                        )}
                      </div>
                   </div>
                )}

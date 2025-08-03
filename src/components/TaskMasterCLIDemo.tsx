@@ -8,6 +8,7 @@ import {
    useTaskMasterCLI,
    taskMasterCLI,
 } from '@/hooks/useTaskMasterCLI';
+import { formatTaskIdForDisplay } from '@/libs/client/utils';
 
 export function TaskMasterCLIDemo() {
    const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
@@ -103,7 +104,7 @@ export function TaskMasterCLIDemo() {
                                  </p>
                                  <div className="flex items-center gap-2 mt-2">
                                     <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                                       ID: {task.id}
+                                       {formatTaskIdForDisplay(task.id)}
                                     </span>
                                     <span
                                        className={`text-xs px-2 py-1 rounded text-white ${

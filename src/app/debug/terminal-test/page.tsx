@@ -5,6 +5,8 @@ import { useMultiTerminalStore } from '@/store/multiTerminalStore';
 import { Button } from '@/components/ui/button';
 import { TerminalProvider } from '@/features/terminal/contexts/TerminalContext';
 import { MultiTerminalManager } from '@/features/terminal/components/MultiTerminalManager';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default function TestTerminalPage() {
    const [mounted, setMounted] = useState(false);
@@ -20,6 +22,13 @@ export default function TestTerminalPage() {
 
    return (
       <div className="p-4 space-y-4">
+         <Link
+            href="/debug/index"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
+         >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Debug Tools
+         </Link>
          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
             <h1 className="text-2xl font-bold mb-4">Terminal Input & Persistence Test</h1>
 

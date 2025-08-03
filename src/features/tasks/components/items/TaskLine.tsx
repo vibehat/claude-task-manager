@@ -9,9 +9,11 @@ import { StatusSelector } from '../selectors/StatusSelector';
 import { LabelSelector } from '../selectors/LabelSelector';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Plus } from 'lucide-react';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { useDataStore } from '@/libs/client/stores/dataStore';
+import { formatTaskIdForDisplay } from '@/libs/client/utils';
 
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/ContextMenu';
 import { TaskContextMenu } from './TaskContextMenu';
@@ -52,18 +54,18 @@ export function TaskLine({
                //href={`/lndev-ui/task/${task.identifier}`}
                className="w-full flex items-center justify-start h-11 px-6 hover:bg-sidebar/50 group"
             >
-               <div className="flex items-center gap-0.5">
+               <div className="flex items-center gap-2">
                   <div onClick={(e) => e.stopPropagation()}>
                      <PrioritySelector priority={priority} taskId={task.id} />
                   </div>
-                  <span className="text-sm hidden sm:inline-block text-muted-foreground font-medium w-[66px] truncate shrink-0 mr-0.5">
-                     {task.id}
+                  <span className="text-sm font-mono font-medium text-gray-600 w-[66px] truncate shrink-0">
+                     {formatTaskIdForDisplay(task.id)}
                   </span>
                   <div onClick={(e) => e.stopPropagation()}>
                      <StatusSelector status={status} taskId={task.id} />
                   </div>
                </div>
-               <span className="min-w-0 flex items-center justify-start mr-1 ml-0.5">
+               <span className="min-w-0 flex items-center justify-start mr-1 ml-1">
                   <button
                      className="text-xs sm:text-sm font-medium sm:font-semibold truncate text-left hover:text-white hover:underline transition-all cursor-pointer"
                      onClick={(e) => {

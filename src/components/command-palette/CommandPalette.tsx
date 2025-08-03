@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogHeader } from '@/components/ui/dialog';
-import { Command } from '@/components/ui/command';
 import { CommandSearchInput } from './components/CommandSearchInput';
 import { CommandInputHint } from './components/CommandInputHint';
 import { CommandPaletteContent } from './components/CommandPaletteContent';
@@ -41,6 +40,7 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
       inputConfig,
       breadcrumbs,
       isExecuting,
+      activeIndex,
 
       // Handlers
       handleCommandSelect,
@@ -53,7 +53,7 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
 
    return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-         <DialogContent className="overflow-hidden p-0 max-w-6xl w-[95vw] max-h-[85vh] h-auto">
+         <DialogContent className="overflow-hidden p-0 !w-[650px] !max-w-[650px] max-h-[90vh] h-auto">
             <DialogHeader className="px-4 py-3 border-b border-border">
                <DialogTitle className="text-lg font-semibold flex items-center gap-2">
                   {currentCommand ? (
@@ -151,11 +151,7 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
                   </p>
                )}
             </DialogHeader>
-            <Command
-               shouldFilter={false}
-               onKeyDown={handleKeyDown}
-               className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 h-full"
-            >
+            <div className="h-full flex flex-col" onKeyDown={handleKeyDown}>
                {/* Command input */}
                <CommandSearchInput
                   mode={mode}
@@ -168,23 +164,26 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
                {mode === 'input' && <CommandInputHint hint={inputConfig?.submitHint} />}
 
                {/* Main content */}
-               <CommandPaletteContent
-                  mode={mode}
-                  displayCommands={displayCommands}
-                  onSelectCommand={handleCommandSelect}
-                  isCommandEnabled={isCommandEnabled}
-                  selectOptions={selectOptions}
-                  onSelectOption={handleOptionSelect}
-                  isLoadingOptions={isLoadingOptions}
-                  submitActions={submitActions}
-                  onSelectAction={handleActionSelect}
-                  isLoadingActions={isLoadingActions}
-                  searchValue={search}
-               />
+               <div className="max-h-[calc(100vh-10rem)] overflow-y-auto mx-1.5">
+                  <CommandPaletteContent
+                     mode={mode}
+                     displayCommands={displayCommands}
+                     onSelectCommand={handleCommandSelect}
+                     isCommandEnabled={isCommandEnabled}
+                     selectOptions={selectOptions}
+                     onSelectOption={handleOptionSelect}
+                     isLoadingOptions={isLoadingOptions}
+                     submitActions={submitActions}
+                     onSelectAction={handleActionSelect}
+                     isLoadingActions={isLoadingActions}
+                     searchValue={search}
+                     activeIndex={activeIndex}
+                  />
+               </div>
 
                {/* Loading overlay */}
                <CommandLoadingOverlay isLoading={isExecuting} message="Executing command..." />
-            </Command>
+            </div>
          </DialogContent>
       </Dialog>
    );

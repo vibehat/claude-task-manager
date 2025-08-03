@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { CommandList } from '@/components/ui/command';
 import { CommandEmptyState } from './CommandEmptyState';
 import { CommandSelectView } from './CommandSelectView';
 import { CommandSearchView } from './CommandSearchView';
@@ -28,6 +27,7 @@ interface CommandPaletteContentProps {
 
    // Common props
    searchValue: string;
+   activeIndex: number;
 }
 
 export function CommandPaletteContent({
@@ -42,6 +42,7 @@ export function CommandPaletteContent({
    onSelectAction,
    isLoadingActions = false,
    searchValue,
+   activeIndex,
 }: CommandPaletteContentProps) {
    // Determine if we should show empty state
    const shouldShowEmpty = useMemo(() => {
@@ -83,7 +84,7 @@ export function CommandPaletteContent({
    };
 
    return (
-      <CommandList className="max-h-[600px] min-h-[250px]">
+      <div className="min-h-[250px]">
          {/* Only show empty state when we actually want it */}
          {shouldShowEmpty && (
             <CommandEmptyState
@@ -101,6 +102,7 @@ export function CommandPaletteContent({
                options={selectOptions}
                isLoading={isLoadingOptions}
                onSelectOption={onSelectOption}
+               activeIndex={activeIndex}
             />
          )}
 
@@ -110,6 +112,7 @@ export function CommandPaletteContent({
                commands={displayCommands}
                onSelectCommand={onSelectCommand}
                isCommandEnabled={isCommandEnabled}
+               activeIndex={activeIndex}
             />
          )}
 
@@ -119,8 +122,9 @@ export function CommandPaletteContent({
                options={submitActions}
                isLoading={isLoadingActions}
                onSelectOption={onSelectAction}
+               activeIndex={activeIndex}
             />
          )}
-      </CommandList>
+      </div>
    );
 }

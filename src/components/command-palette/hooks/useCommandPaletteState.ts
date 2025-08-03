@@ -29,6 +29,7 @@ export function useCommandPaletteState({
    const [isLoadingOptions, setIsLoadingOptions] = useState(false);
    const [submitActions, setSubmitActions] = useState<CommandOption[]>([]);
    const [isLoadingActions, setIsLoadingActions] = useState(false);
+   const [activeIndex, setActiveIndex] = useState(0);
 
    // Hooks
    const { context: commandContext, updateContextData } = useCommandContext();
@@ -178,8 +179,38 @@ export function useCommandPaletteState({
          setSelectOptions([]);
          setIsLoadingOptions(false);
          setShouldAutoSelectOption(null);
+         setActiveIndex(0);
       }
    }, [open]);
+
+   // Reset active index when switching modes or updating lists
+   useEffect(() => {
+      setActiveIndex(0);
+   }, [mode, displayCommands, selectOptions, submitActions]);
+
+   // Get current items for navigation
+   const currentItems = useMemo(() => {
+      switch (mode) {
+         case 'search':
+            return displayCommands;
+         case 'select':
+            return selectOptions;
+         case 'input-with-actions':
+            return submitActions;
+         case 'input':
+         default:
+            return [];
+      }
+   }, [mode, displayCommands, selectOptions, submitActions]);
+
+   // Navigation helpers
+   const navigateUp = useCallback(() => {
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : Math.max(0, currentItems.length - 1)));
+   }, [currentItems.length]);
+
+   const navigateDown = useCallback(() => {
+      setActiveIndex((prev) => (prev < currentItems.length - 1 ? prev + 1 : 0));
+   }, [currentItems.length]);
 
    // Handle next command logic
    const handleNextCommand = useCallback(
@@ -323,6 +354,31 @@ export function useCommandPaletteState({
       }
    }, [currentCommand, breadcrumbs.length, goBack]);
 
+   // Select active item helper
+   const selectActiveItem = useCallback(() => {
+      const activeItem = currentItems[activeIndex];
+      if (!activeItem) return;
+
+      switch (mode) {
+         case 'search':
+            handleCommandSelect(activeItem as Command);
+            break;
+         case 'select':
+            handleOptionSelect(activeItem as CommandOption);
+            break;
+         case 'input-with-actions':
+            handleActionSelect(activeItem as CommandOption);
+            break;
+      }
+   }, [
+      currentItems,
+      activeIndex,
+      mode,
+      handleCommandSelect,
+      handleOptionSelect,
+      handleActionSelect,
+   ]);
+
    // Keyboard handler
    const handleKeyDown = useCallback(
       (e: React.KeyboardEvent) => {
@@ -331,13 +387,32 @@ export function useCommandPaletteState({
                handleBack();
                e.preventDefault();
             }
-         } else if (e.key === 'Enter' && mode === 'input') {
-            handleInputSubmit();
+         } else if (e.key === 'ArrowUp') {
+            navigateUp();
+            e.preventDefault();
+         } else if (e.key === 'ArrowDown') {
+            navigateDown();
+            e.preventDefault();
+         } else if (e.key === 'Enter') {
+            if (mode === 'input') {
+               handleInputSubmit();
+            } else if (currentItems.length > 0) {
+               selectActiveItem();
+            }
             e.preventDefault();
          }
          // Note: input-with-actions mode doesn't use Enter, user must select an action
       },
-      [currentCommand, mode, handleBack, handleInputSubmit]
+      [
+         currentCommand,
+         mode,
+         handleBack,
+         handleInputSubmit,
+         navigateUp,
+         navigateDown,
+         selectActiveItem,
+         currentItems.length,
+      ]
    );
 
    // Handle auto-selection of option when specified
@@ -415,6 +490,8 @@ export function useCommandPaletteState({
       inputConfig,
       breadcrumbs,
       isExecuting,
+      activeIndex,
+      currentItems,
 
       // Handlers
       handleCommandSelect,
@@ -424,5 +501,8 @@ export function useCommandPaletteState({
       handleBack,
       handleKeyDown,
       isCommandEnabled,
+      navigateUp,
+      navigateDown,
+      selectActiveItem,
    };
 }

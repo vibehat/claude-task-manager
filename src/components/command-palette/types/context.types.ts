@@ -101,6 +101,7 @@ export interface CommandOption {
    icon?: ReactNode;
    value: any;
    disabled?: boolean;
+   category?: string;
 }
 
 // Module system types

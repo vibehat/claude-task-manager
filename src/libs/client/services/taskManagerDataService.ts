@@ -473,7 +473,7 @@ class TaskManagerDataService {
       for (const tmTask of taskMasterTasks) {
          // Convert parent task
          const parentTask: Task = {
-            id: `tm-${tmTask.id}`,
+            id: tmTask.id,
             title: tmTask.title,
             description: tmTask.description || '',
             details: tmTask.details,
@@ -496,7 +496,7 @@ class TaskManagerDataService {
          if (tmTask.subtasks) {
             for (const subtask of tmTask.subtasks) {
                const convertedSubtask: Task = {
-                  id: `tm-${tmTask.id}.${subtask.id}`,
+                  id: `${tmTask.id}.${subtask.id}`,
                   title: subtask.title,
                   description: subtask.description || '',
                   details: subtask.details,
@@ -505,7 +505,7 @@ class TaskManagerDataService {
                   priorityId: priorityMapping[tmTask.priority] || 'priority-3', // inherit from parent
                   assigneeId: undefined,
                   tagId: 'tag-personal',
-                  parentTaskId: `tm-${tmTask.id}`,
+                  parentTaskId: tmTask.id,
                   labelIds: [],
                   taskId: tmTask.id,
                   subtaskId: `${subtask.id}`,
@@ -527,9 +527,9 @@ class TaskManagerDataService {
       const now = new Date();
       const uiTasks: Task[] = [];
 
-      // Only reconstruct tasks that are not TaskMaster CLI tasks (don't have tm- prefix)
+      // Only reconstruct tasks that are not TaskMaster CLI tasks (don't have taskId field)
       for (const [taskId, extra] of Object.entries(taskExtra)) {
-         if (taskId.startsWith('tm-')) continue;
+         if (extra.metadata && extra.metadata.taskId !== undefined) continue;
 
          // Reconstruct basic UI task structure from metadata
          // Only reconstruct if metadata contains actual task data (has title, statusId, etc.)

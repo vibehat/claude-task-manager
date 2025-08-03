@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useCallback, useState, useRef } from 'react';
-import { useTerminal } from '../hooks/useTerminal';
 import type { MultiTerminalInstance } from '../types/terminal';
 import {
    UseTerminalReturn,

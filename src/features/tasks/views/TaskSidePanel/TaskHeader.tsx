@@ -8,6 +8,7 @@ import { StatusSelector } from '../../components/selectors/StatusSelector';
 import { PrioritySelector } from '../../components/selectors/PrioritySelector';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
+import { formatTaskIdForDisplay } from '@/libs/client/utils';
 
 interface TaskHeaderProps {
    task: Task;
@@ -25,7 +26,7 @@ export function TaskHeader({ task, onClose }: TaskHeaderProps): React.JSX.Elemen
          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
                <Badge variant="secondary" className="font-mono text-xs">
-                  {task.id}
+                  {formatTaskIdForDisplay(task.id)}
                </Badge>
                <div className="flex items-center gap-2">
                   <StatusSelector status={status} taskId={task.id} />

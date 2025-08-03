@@ -41,7 +41,7 @@ function GroupTasksGrid({
    if (loading) {
       return (
          <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
-            <div className="sticky top-0 z-10 bg-container w-full rounded-t-md h-[50px]">
+            <div className="sticky top-0 z-[5] bg-container w-full rounded-t-md h-[50px]">
                <div
                   className="w-full h-full flex items-center justify-between px-3"
                   style={{
@@ -66,7 +66,7 @@ function GroupTasksGrid({
    if (error) {
       return (
          <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
-            <div className="sticky top-0 z-10 bg-container w-full rounded-t-md h-[50px]">
+            <div className="sticky top-0 z-[5] bg-container w-full rounded-t-md h-[50px]">
                <div
                   className="w-full h-full flex items-center justify-between px-3"
                   style={{
@@ -89,7 +89,7 @@ function GroupTasksGrid({
 
    return (
       <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
-         <div className="sticky top-0 z-10 bg-container w-full rounded-t-md h-[50px]">
+         <div className="sticky top-0 z-[5] bg-container w-full rounded-t-md h-[50px]">
             <div
                className="w-full h-full flex items-center justify-between px-3"
                style={{
@@ -158,7 +158,7 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; status: TaskStatusFromQuery }> 
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.1 }}
-                  className="fixed top-0 left-0 right-0 bottom-0 z-10 flex items-center justify-center pointer-events-none bg-background/90"
+                  className="fixed top-0 left-0 right-0 bottom-0 z-[5] flex items-center justify-center pointer-events-none bg-background/90"
                   style={{
                      width: ref.current?.getBoundingClientRect().width ?? '100%',
                      height: ref.current?.getBoundingClientRect().height ?? '100%',

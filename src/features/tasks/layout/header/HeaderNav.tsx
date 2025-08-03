@@ -6,7 +6,7 @@ import { SidebarTrigger } from '@/components/ui/SidebarProvider';
 import { useSearchStore } from '@/store/searchStore';
 import { SearchIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import Notifications from './notifications';
+import { TerminalToggle } from '@/features/terminal';
 
 export default function HeaderNav(): React.JSX.Element {
    const { isSearchOpen, toggleSearch, closeSearch, setSearchQuery, searchQuery } =
@@ -70,7 +70,7 @@ export default function HeaderNav(): React.JSX.Element {
                            }
                         }
                      }}
-                     placeholder="Search issues..."
+                     placeholder="Search tasks..."
                      className="pl-8 h-7 text-sm"
                      onKeyDown={(e) => {
                         if (e.key === 'Escape') {
@@ -94,7 +94,7 @@ export default function HeaderNav(): React.JSX.Element {
                   >
                      <SearchIcon className="h-4 w-4" />
                   </Button>
-                  <Notifications />
+                  <TerminalToggle />
                </>
             )}
          </div>

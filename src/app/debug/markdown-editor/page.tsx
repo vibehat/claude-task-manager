@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import MDEditor from '@uiw/react-md-editor';
+import { ArrowLeft } from 'lucide-react';
 // import '@uiw/react-md-editor/markdown-editor.css';
 // import '@uiw/react-md-editor/markdown.css';
 import { useTheme } from 'next-themes';
@@ -91,10 +92,11 @@ export default function MarkdownEditorDemo() {
          <div className="mx-auto max-w-7xl space-y-8">
             <div className="space-y-2">
                <Link
-                  href="/demo"
-                  className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4"
+                  href="/debug/index"
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
                >
-                  ← Back to Demo Gallery
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Debug & Demo Tools
                </Link>
                <h1 className="text-4xl font-bold tracking-tight">Markdown Editor Demo</h1>
                <p className="text-muted-foreground">

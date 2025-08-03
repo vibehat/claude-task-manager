@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useAllTasks, useAllStatuses } from '@/libs/client/stores';
-import { ComplexityReport, TaskMasterData } from './useTaskMasterData';
+import type { ComplexityReport, TaskMasterData } from './useTaskMasterData';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 

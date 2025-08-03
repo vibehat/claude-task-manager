@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useCallback } from 'react';
-import { useTerminal } from '../hooks/useTerminal';
+import { useIndividualTerminal } from '../hooks/useIndividualTerminal';
 import type { TerminalComponentProps } from '../types/terminal';
 import { TerminalConnectionStatus } from '../types/terminal';
 import { TerminalStatus } from './TerminalStatus';
@@ -31,7 +31,7 @@ export function Terminal({
       fit,
       isConnected,
       error,
-   } = useTerminal({
+   } = useIndividualTerminal({
       theme,
       fontSize,
       fontFamily,

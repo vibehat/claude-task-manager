@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Terminal } from '@xterm/xterm';
 import type { FitAddon } from '@xterm/addon-fit';
-import type { WebLinksAddon } from '@xterm/addon-web-links';
-import type { TerminalMessage, TerminalSession, UseTerminalReturn } from '../types/terminal';
-import { TerminalConnectionStatus, TerminalTheme } from '../types/terminal';
-import { getXTermConfig, getWebSocketUrl, getThemeForMode } from '../utils/terminalConfig';
+import type { UseTerminalReturn } from '../types/terminal';
+import { TerminalConnectionStatus } from '../types/terminal';
+import { getXTermConfig, getThemeForMode } from '../utils/terminalConfig';
+import { useMultiTerminalStore } from '@/store/multiTerminalStore';
 
 interface UseTerminalOptions {
    theme?: 'light' | 'dark' | 'auto';
@@ -20,7 +20,10 @@ interface UseTerminalOptions {
    onSessionRestored?: (sessionId: string) => void;
 }
 
-export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn {
+export function useTerminal(
+   terminalId: string,
+   options: UseTerminalOptions = {}
+): UseTerminalReturn {
    const {
       theme = 'auto',
       fontSize = 14,
@@ -33,45 +36,27 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
       onSessionRestored,
    } = options;
 
-   // State
-   const [connectionStatus, setConnectionStatus] = useState<TerminalConnectionStatus>(
-      TerminalConnectionStatus.DISCONNECTED
-   );
-   const [session, setSession] = useState<TerminalSession | null>(null);
-   const [error, setError] = useState<string | null>(null);
+   // Store access
+   const store = useMultiTerminalStore();
 
-   // Refs
+   // Local state for XTerm management
+   const [localError, setLocalError] = useState<string | null>(null);
    const terminalRef = useRef<Terminal | null>(null);
    const fitAddonRef = useRef<FitAddon | null>(null);
-   const webSocketRef = useRef<WebSocket | null>(null);
-   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-   const reconnectAttemptsRef = useRef(0);
+   const websocketRef = useRef<WebSocket | null>(null);
+   const messageHandlerRef = useRef<((event: MessageEvent) => void) | null>(null);
 
-   // Constants
-   const maxReconnectAttempts = 5;
-   const reconnectDelay = 1000;
+   // Get terminal data from store
+   const terminal = store.getTerminalById(terminalId);
+   const connectionStatus = store.getConnectionStatus(terminalId);
+   const session = store.getSession(terminalId);
+   const storeError = store.getError(terminalId);
+   const isConnected = connectionStatus === TerminalConnectionStatus.CONNECTED;
 
-   // Send input to terminal
-   const sendInput = useCallback((data: string) => {
-      console.log(
-         'Sending input to WebSocket:',
-         data,
-         'WebSocket state:',
-         webSocketRef.current?.readyState
-      ); // Debug logging
-      if (webSocketRef.current && webSocketRef.current.readyState === WebSocket.OPEN) {
-         webSocketRef.current.send(
-            JSON.stringify({
-               type: 'input',
-               data,
-            })
-         );
-      } else {
-         console.warn('WebSocket not available for input:', webSocketRef.current?.readyState);
-      }
-   }, []);
+   // Combined error state (local XTerm errors + store socket errors)
+   const error = localError || storeError;
 
-   // Initialize terminal
+   // Initialize terminal XTerm instance
    const initializeTerminal = useCallback(async () => {
       if (terminalRef.current) return terminalRef.current;
 
@@ -95,396 +80,123 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
          terminal.loadAddon(fitAddon);
          terminal.loadAddon(webLinksAddon);
 
-         console.log('Terminal created with DOM renderer - standard approach:', {
-            fitAddonLoaded: true,
-            webLinksAddonLoaded: true,
-            rendererType: config.rendererType,
-         });
+         console.log(`Terminal ${terminalId} created with XTerm instance`);
 
          terminalRef.current = terminal;
          fitAddonRef.current = fitAddon;
          return terminal;
-      } catch (error) {
-         console.error('Failed to initialize terminal:', error);
+      } catch (err) {
+         const errorMsg = `Failed to initialize terminal ${terminalId}`;
+         console.error(errorMsg, err);
+         setLocalError(errorMsg);
          return null;
       }
-   }, [theme, fontSize, fontFamily]);
+   }, [theme, fontSize, fontFamily, terminalId]);
 
    // Attach input handler to terminal
    const attachInputHandler = useCallback(() => {
-      if (!terminalRef.current) return null;
+      if (!terminalRef.current || !isConnected) return null;
 
-      console.log('Attaching input handler to terminal');
+      console.log(`Attaching input handler to terminal ${terminalId}`);
 
       // Remove existing handler if any
       if ((terminalRef.current as any)._inputDisposable) {
          (terminalRef.current as any)._inputDisposable.dispose();
       }
 
-      // Attach new input handler
+      // Attach new input handler that uses store's sendInput
       const disposable = terminalRef.current.onData((data) => {
-         console.log('Terminal input received:', data, 'Connection status:', connectionStatus);
-         sendInput(data);
+         console.log(`Terminal ${terminalId} input received:`, data);
+         store.sendInput(terminalId, data);
       });
 
       // Store disposable for cleanup
       (terminalRef.current as any)._inputDisposable = disposable;
       return disposable;
-   }, [sendInput, connectionStatus]);
+   }, [terminalId, isConnected, store]);
 
-   // Clear error
-   const clearError = useCallback(() => {
-      setError(null);
-   }, []);
+   // Subscribe to WebSocket messages directly
+   const subscribeToWebSocketMessages = useCallback(() => {
+      if (!terminalRef.current) return;
 
-   // Connect to WebSocket with optional session restoration
-   const connect = useCallback(async (): Promise<void> => {
-      if (
-         connectionStatus === TerminalConnectionStatus.CONNECTING ||
-         connectionStatus === TerminalConnectionStatus.CONNECTED
-      ) {
-         return Promise.resolve();
-      }
+      const websocket = store.getWebSocket(terminalId);
+      if (!websocket) return;
 
-      return new Promise<void>((resolve, reject) => {
-         const connectInternal = async () => {
-            try {
-               clearError();
-               setConnectionStatus(TerminalConnectionStatus.CONNECTING);
+      websocketRef.current = websocket;
 
-               let websocketUrl = await getWebSocketUrl();
+      // Create message handler for WebSocket data
+      const messageHandler = (event: MessageEvent) => {
+         try {
+            const message = JSON.parse(event.data);
 
-               // Add session restoration parameters if available
-               if (sessionId || clientId) {
-                  const urlParams = new URLSearchParams();
-                  if (sessionId) urlParams.set('sessionId', sessionId);
-                  if (clientId) urlParams.set('clientId', clientId);
-                  websocketUrl += `?${urlParams.toString()}`;
-                  console.log(`🔄 Attempting session restoration with URL: ${websocketUrl}`);
-               }
+            // Only handle data messages here - let store handle connection/session messages
+            if (message.type === 'data' && message.data && terminalRef.current) {
+               console.log(`Writing data to terminal ${terminalId}:`, JSON.stringify(message.data));
+               terminalRef.current.write(message.data);
 
-               const ws = new WebSocket(websocketUrl);
-               webSocketRef.current = ws;
-
-               ws.onopen = () => {
-                  console.log('Terminal WebSocket connected');
-                  setConnectionStatus(TerminalConnectionStatus.CONNECTED);
-                  reconnectAttemptsRef.current = 0;
-
-                  // Attach input handler now that we're connected
-                  setTimeout(() => {
-                     attachInputHandler();
-                  }, 100);
-
-                  onConnect?.();
-                  resolve();
-               };
-
-               ws.onmessage = (event) => {
-                  try {
-                     const message: TerminalMessage = JSON.parse(event.data);
-
-                     switch (message.type) {
-                        case 'connected':
-                           if (message.sessionId && message.shell && message.platform) {
-                              setSession({
-                                 sessionId: message.sessionId,
-                                 shell: message.shell,
-                                 platform: message.platform,
-                                 cwd: message.cwd || '',
-                                 connected: true,
-                              });
-                           }
-                           break;
-
-                        case 'session-restored':
-                           console.log(`✅ Session restored: ${message.sessionId}`);
-                           if (message.sessionId && message.shell && message.platform) {
-                              setSession({
-                                 sessionId: message.sessionId,
-                                 shell: message.shell,
-                                 platform: message.platform,
-                                 cwd: message.cwd || '',
-                                 connected: true,
-                              });
-                              onSessionRestored?.(message.sessionId);
-                           }
-                           break;
-
-                        case 'data':
-                           console.log('Received data from server:', JSON.stringify(message.data));
-                           if (terminalRef.current && message.data) {
-                              console.log('Writing data to xterm:', JSON.stringify(message.data));
-                              console.log('Terminal state:', {
-                                 cols: terminalRef.current.cols,
-                                 rows: terminalRef.current.rows,
-                                 element: terminalRef.current.element,
-                                 isOpen: !!terminalRef.current.element,
-                                 hasBuffer: !!terminalRef.current.buffer,
-                              });
-                              terminalRef.current.write(message.data);
-
-                              // Debug: Check DOM content after write - force execution
-                              setTimeout(() => {
-                                 console.log('=== DEBUGGING TERMINAL DOM CONTENT ===');
-                                 if (terminalRef.current && terminalRef.current.element) {
-                                    const canvas =
-                                       terminalRef.current.element?.querySelector('canvas');
-                                    const viewport =
-                                       terminalRef.current.element?.querySelector(
-                                          '.xterm-viewport'
-                                       );
-                                    const screen =
-                                       terminalRef.current.element?.querySelector('.xterm-screen');
-
-                                    const rows =
-                                       terminalRef.current.element?.querySelector('.xterm-rows');
-                                    const rowElements = rows?.querySelectorAll('.xterm-row');
-
-                                    console.log('DOM ROWS ANALYSIS:');
-                                    console.log('Total rows found:', rowElements?.length || 0);
-
-                                    // Log ALL row contents individually
-                                    if (rowElements && rowElements.length > 0) {
-                                       Array.from(rowElements).forEach((row, i) => {
-                                          const spans = row.querySelectorAll('span');
-                                          console.log(`Row ${i}:`, {
-                                             innerHTML: row.innerHTML,
-                                             textContent: row.textContent,
-                                             hasSpans: spans.length,
-                                             spanContents: Array.from(spans).map((span) => ({
-                                                text: span.textContent,
-                                                html: span.innerHTML,
-                                                classes: span.className,
-                                                styles: span.getAttribute('style'),
-                                             })),
-                                          });
-                                       });
-                                    } else {
-                                       console.log('NO ROWS FOUND!');
-                                    }
-
-                                    console.log(
-                                       'Terminal element innerHTML sample:',
-                                       terminalRef.current.element?.innerHTML?.slice(0, 1000)
-                                    );
-
-                                    // Check if canvas has actual content and positioning
-                                    if (canvas) {
-                                       const ctx = canvas.getContext('2d');
-                                       if (ctx) {
-                                          const imageData = ctx.getImageData(
-                                             0,
-                                             0,
-                                             Math.min(50, canvas.width),
-                                             Math.min(20, canvas.height)
-                                          );
-                                          const hasContent = imageData.data.some(
-                                             (pixel) => pixel !== 0
-                                          );
-
-                                          // Log actual canvas content as ASCII representation
-                                          const sampleWidth = Math.min(20, canvas.width);
-                                          const sampleHeight = Math.min(10, canvas.height);
-                                          const sampleData = ctx.getImageData(
-                                             0,
-                                             0,
-                                             sampleWidth,
-                                             sampleHeight
-                                          );
-                                          let canvasContent = '';
-                                          for (let y = 0; y < sampleHeight; y++) {
-                                             let row = '';
-                                             for (let x = 0; x < sampleWidth; x++) {
-                                                const i = (y * sampleWidth + x) * 4;
-                                                const r = sampleData.data[i];
-                                                const g = sampleData.data[i + 1];
-                                                const b = sampleData.data[i + 2];
-                                                const a = sampleData.data[i + 3];
-                                                // Convert to grayscale and check if it's visible
-                                                const gray = (r + g + b) / 3;
-                                                row +=
-                                                   a > 0 && gray > 50
-                                                      ? '#'
-                                                      : a > 0 && gray > 10
-                                                        ? '.'
-                                                        : ' ';
-                                             }
-                                             canvasContent += row + '\n';
-                                          }
-                                          console.log(
-                                             'Canvas visual content (20x10 sample):\n' +
-                                                canvasContent
-                                          );
-
-                                          const canvasRect = canvas.getBoundingClientRect();
-                                          const containerRect =
-                                             terminalRef.current.element?.getBoundingClientRect();
-
-                                          console.log('Canvas detailed check:', {
-                                             hasContent,
-                                             canvasVisible: canvas.style.visibility !== 'hidden',
-                                             canvasOpacity: canvas.style.opacity,
-                                             canvasDisplay: canvas.style.display,
-                                             canvasPosition: canvas.style.position,
-                                             canvasZIndex: canvas.style.zIndex,
-                                             canvasRect: {
-                                                top: canvasRect.top,
-                                                left: canvasRect.left,
-                                                width: canvasRect.width,
-                                                height: canvasRect.height,
-                                                visible:
-                                                   canvasRect.width > 0 && canvasRect.height > 0,
-                                             },
-                                             containerRect: containerRect
-                                                ? {
-                                                     top: containerRect.top,
-                                                     left: containerRect.left,
-                                                     width: containerRect.width,
-                                                     height: containerRect.height,
-                                                  }
-                                                : 'no container',
-                                             canvasInView:
-                                                canvasRect.top >= 0 &&
-                                                canvasRect.left >= 0 &&
-                                                canvasRect.top < window.innerHeight &&
-                                                canvasRect.left < window.innerWidth,
-                                          });
-                                       }
-                                    }
-                                 }
-                              }, 50);
-
-                              // Force refresh/focus after write
-                              setTimeout(() => {
-                                 if (terminalRef.current) {
-                                    console.log('Forcing terminal refresh and focus');
-                                    terminalRef.current.refresh(0, terminalRef.current.rows - 1);
-                                    terminalRef.current.focus();
-                                 }
-                              }, 10);
-                           } else {
-                              console.warn('Cannot write to terminal:', {
-                                 hasTerminal: !!terminalRef.current,
-                                 hasData: !!message.data,
-                              });
-                           }
-                           break;
-
-                        case 'exit':
-                           console.log('Terminal process exited with code:', message.exitCode);
-                           setSession((prev) => (prev ? { ...prev, connected: false } : null));
-                           break;
-
-                        case 'error':
-                           const errorMsg = message.message || 'Terminal error occurred';
-                           setError(errorMsg);
-                           onError?.(errorMsg);
-                           break;
-
-                        default:
-                           console.warn('Unknown message type:', message.type);
-                     }
-                  } catch (err) {
-                     console.error('Error parsing WebSocket message:', err);
+               // Force refresh after write
+               setTimeout(() => {
+                  if (terminalRef.current) {
+                     terminalRef.current.refresh(0, terminalRef.current.rows - 1);
+                     terminalRef.current.focus();
                   }
-               };
-
-               ws.onclose = (event) => {
-                  console.log('Terminal WebSocket closed:', event.code, event.reason);
-                  setConnectionStatus(TerminalConnectionStatus.DISCONNECTED);
-                  setSession((prev) => (prev ? { ...prev, connected: false } : null));
-                  webSocketRef.current = null;
-                  onDisconnect?.();
-
-                  // Attempt reconnection if not intentionally closed
-                  if (event.code !== 1000 && reconnectAttemptsRef.current < maxReconnectAttempts) {
-                     attemptReconnect();
-                  }
-               };
-
-               ws.onerror = (error) => {
-                  console.error('Terminal WebSocket error:', error);
-                  const errorMsg = 'WebSocket connection error';
-                  setError(errorMsg);
-                  setConnectionStatus(TerminalConnectionStatus.ERROR);
-                  onError?.(errorMsg);
-                  reject(new Error(errorMsg));
-               };
-            } catch (err) {
-               const errorMsg =
-                  err instanceof Error ? err.message : 'Failed to connect to terminal';
-               setError(errorMsg);
-               setConnectionStatus(TerminalConnectionStatus.ERROR);
-               onError?.(errorMsg);
-               reject(new Error(errorMsg));
+               }, 10);
             }
-         };
+         } catch (err) {
+            console.error(`Error handling WebSocket message for terminal ${terminalId}:`, err);
+         }
+      };
 
-         connectInternal();
-      });
-   }, [
-      connectionStatus,
-      sessionId,
-      clientId,
-      onConnect,
-      onDisconnect,
-      onError,
-      onSessionRestored,
-      clearError,
-      attachInputHandler,
-   ]);
+      // Store handler reference for cleanup
+      messageHandlerRef.current = messageHandler;
 
-   // Reconnection logic
-   const attemptReconnect = useCallback(() => {
-      if (reconnectAttemptsRef.current >= maxReconnectAttempts) {
-         setError('Maximum reconnection attempts reached');
-         return;
+      // Add listener to WebSocket
+      websocket.addEventListener('message', messageHandler);
+   }, [terminalId, store]);
+
+   // Connect to websocket through store
+   const connect = useCallback(async (): Promise<void> => {
+      try {
+         await store.connectTerminal(terminalId, {
+            sessionId,
+            clientId: clientId || terminalId,
+         });
+         onConnect?.();
+      } catch (err) {
+         const errorMsg = err instanceof Error ? err.message : 'Connection failed';
+         setLocalError(errorMsg);
+         onError?.(errorMsg);
+         throw err;
       }
+   }, [store, terminalId, sessionId, clientId, onConnect, onError]);
 
-      reconnectAttemptsRef.current++;
-      setConnectionStatus(TerminalConnectionStatus.RECONNECTING);
-
-      reconnectTimeoutRef.current = setTimeout(() => {
-         console.log(
-            `Reconnection attempt ${reconnectAttemptsRef.current}/${maxReconnectAttempts}`
-         );
-         connect();
-      }, reconnectDelay * reconnectAttemptsRef.current);
-   }, [connect]);
-
-   // Disconnect from WebSocket
+   // Disconnect from websocket through store
    const disconnect = useCallback(() => {
-      if (reconnectTimeoutRef.current) {
-         clearTimeout(reconnectTimeoutRef.current);
-         reconnectTimeoutRef.current = null;
-      }
+      store.disconnectTerminal(terminalId);
+      onDisconnect?.();
+   }, [store, terminalId, onDisconnect]);
 
-      if (webSocketRef.current) {
-         webSocketRef.current.close(1000, 'Intentional disconnect');
-         webSocketRef.current = null;
-      }
-
-      setConnectionStatus(TerminalConnectionStatus.DISCONNECTED);
-      setSession(null);
-      reconnectAttemptsRef.current = 0;
-   }, []);
+   // Send input through store
+   const sendInput = useCallback(
+      (data: string) => {
+         store.sendInput(terminalId, data);
+      },
+      [store, terminalId]
+   );
 
    // Resize terminal
-   const resize = useCallback((cols: number, rows: number) => {
-      if (webSocketRef.current && webSocketRef.current.readyState === WebSocket.OPEN) {
-         webSocketRef.current.send(
-            JSON.stringify({
-               type: 'resize',
-               data: { cols, rows },
-            })
-         );
-      }
+   const resize = useCallback(
+      (cols: number, rows: number) => {
+         // Resize XTerm instance
+         if (terminalRef.current) {
+            terminalRef.current.resize(cols, rows);
+         }
 
-      if (terminalRef.current) {
-         terminalRef.current.resize(cols, rows);
-      }
-   }, []);
+         // Send resize to server through store
+         store.resizeTerminal(terminalId, cols, rows);
+      },
+      [store, terminalId]
+   );
 
    // Clear terminal
    const clear = useCallback(() => {
@@ -507,23 +219,50 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
 
             // Validate dimensions before sending
             if (cols > 0 && rows > 0) {
-               console.log(`Fitting terminal to ${cols}x${rows}`);
+               console.log(`Fitting terminal ${terminalId} to ${cols}x${rows}`);
                resize(cols, rows);
             } else {
-               console.warn('Invalid terminal dimensions:', { cols, rows });
+               console.warn(`Invalid terminal dimensions for ${terminalId}:`, { cols, rows });
             }
          } catch (err) {
-            console.warn('Error fitting terminal:', err);
+            console.warn(`Error fitting terminal ${terminalId}:`, err);
          }
       }
-   }, [resize]);
+   }, [resize, terminalId]);
 
-   // Input handler is now set up during terminal initialization
+   // Clear local error
+   const clearError = useCallback(() => {
+      setLocalError(null);
+      store.clearError(terminalId);
+   }, [store, terminalId]);
+
+   // Subscribe to WebSocket messages when connected
+   useEffect(() => {
+      if (isConnected) {
+         subscribeToWebSocketMessages();
+         // Attach input handler when connected
+         setTimeout(() => {
+            attachInputHandler();
+         }, 100);
+      }
+   }, [isConnected, subscribeToWebSocketMessages, attachInputHandler]);
+
+   // Handle session restoration callback
+   useEffect(() => {
+      if (session && session.sessionId && onSessionRestored) {
+         onSessionRestored(session.sessionId);
+      }
+   }, [session, onSessionRestored]);
 
    // Cleanup on unmount
    useEffect(() => {
       return () => {
-         disconnect();
+         // Cleanup WebSocket message handler
+         if (websocketRef.current && messageHandlerRef.current) {
+            websocketRef.current.removeEventListener('message', messageHandlerRef.current);
+         }
+
+         // Cleanup XTerm instance
          if (terminalRef.current) {
             // Clean up input handler if it exists
             if ((terminalRef.current as any)._inputDisposable) {
@@ -533,8 +272,10 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
             terminalRef.current = null;
          }
          fitAddonRef.current = null;
+         websocketRef.current = null;
+         messageHandlerRef.current = null;
       };
-   }, [disconnect]);
+   }, []);
 
    return {
       terminal: terminalRef.current,
@@ -547,7 +288,7 @@ export function useTerminal(options: UseTerminalOptions = {}): UseTerminalReturn
       resize,
       clear,
       fit,
-      isConnected: connectionStatus === TerminalConnectionStatus.CONNECTED,
+      isConnected,
       error,
    };
 }

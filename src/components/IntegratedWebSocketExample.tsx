@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSignalSocket } from '../hooks/useSignalSocket';
-import { useTerminal } from '../features/terminal/hooks/useTerminal';
+import { useIndividualTerminal } from '../features/terminal/hooks/useIndividualTerminal';
 
 export function IntegratedWebSocketExample() {
    const [notifications, setNotifications] = useState<
@@ -69,7 +69,7 @@ export function IntegratedWebSocketExample() {
       disconnect: disconnectTerminal,
       fit,
       isConnected: terminalConnected,
-   } = useTerminal({
+   } = useIndividualTerminal({
       onConnect: () => {
          const notification = {
             id: Date.now(),
