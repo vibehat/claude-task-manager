@@ -1,92 +1,33 @@
 'use client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuLabel,
-   DropdownMenuSeparator,
-   DropdownMenuTrigger,
-} from '@/components/ui/DropdownMenu';
-import type { User } from '@/libs/client/types';
-import { CheckIcon, CircleUserRound, Send, UserIcon } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { DEFAULT_CONFIG } from '@/libs/config/defaults';
+
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import type { User } from '@/mock-data/users';
 
 interface AssigneeUserProps {
-   user: Pick<User, 'id' | 'name' | 'email' | 'avatarUrl'> | null | undefined;
+   user: User | null;
+   size?: 'sm' | 'md' | 'lg';
 }
 
-export function AssigneeUser({ user }: AssigneeUserProps): React.JSX.Element {
-   const [open, setOpen] = useState(false);
-   const [currentAssignee, setCurrentAssignee] = useState<
-      Pick<User, 'id' | 'name' | 'email' | 'avatarUrl'> | null | undefined
-   >(user);
+export function AssigneeUser({ user, size = 'sm' }: AssigneeUserProps): React.JSX.Element {
+   if (!user) {
+      return (
+         <Avatar className={size === 'sm' ? 'size-6' : size === 'md' ? 'size-8' : 'size-10'}>
+            <AvatarFallback className="text-xs">?</AvatarFallback>
+         </Avatar>
+      );
+   }
 
-   useEffect(() => {
-      setCurrentAssignee(user);
-   }, [user]);
-
-   const renderAvatar = (): React.JSX.Element => {
-      if (currentAssignee) {
-         return (
-            <Avatar className="size-6 shrink-0">
-               <AvatarImage
-                  src={currentAssignee.avatarUrl || undefined}
-                  alt={currentAssignee.name}
-               />
-               <AvatarFallback>{currentAssignee.name[0]}</AvatarFallback>
-            </Avatar>
-         );
-      } else {
-         return (
-            <div className="size-6 flex items-center justify-center">
-               <CircleUserRound className="size-5 text-zinc-600" />
-            </div>
-         );
-      }
-   };
+   const sizeClass = size === 'sm' ? 'size-6' : size === 'md' ? 'size-8' : 'size-10';
+   const initials = user.name
+      .split('.')
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('')
+      .slice(0, 2);
 
    return (
-      <DropdownMenu open={open} onOpenChange={setOpen}>
-         <DropdownMenuTrigger asChild>
-            <button className="relative w-fit focus:outline-none">
-               {renderAvatar()}
-               {currentAssignee && (
-                  <span className="border-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full border-2 bg-green-500">
-                     <span className="sr-only">online</span>
-                  </span>
-               )}
-            </button>
-         </DropdownMenuTrigger>
-         <DropdownMenuContent align="start" className="w-[206px]">
-            <DropdownMenuLabel>Assign to...</DropdownMenuLabel>
-            <DropdownMenuItem
-               onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentAssignee(null);
-                  setOpen(false);
-               }}
-            >
-               <div className="flex items-center gap-2">
-                  <UserIcon className="h-5 w-5" />
-                  <span>No assignee</span>
-               </div>
-               {!currentAssignee && <CheckIcon className="ml-auto h-4 w-4" />}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {/* TODO: Now using local data*/}
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel>New user</DropdownMenuLabel>
-            <DropdownMenuItem>
-               <div className="flex items-center gap-2">
-                  <Send className="h-4 w-4" />
-                  <span>Invite and assign...</span>
-               </div>
-            </DropdownMenuItem>
-         </DropdownMenuContent>
-      </DropdownMenu>
+      <Avatar className={sizeClass}>
+         <AvatarImage src={user.avatarUrl} alt={user.name} />
+         <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+      </Avatar>
    );
 }
-
-export default AssigneeUser;

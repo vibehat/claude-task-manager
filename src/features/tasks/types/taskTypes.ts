@@ -42,7 +42,6 @@ export interface Task {
    description: string;
    status: string;
    priority: string;
-   assignee?: User;
    labels: Label[];
    project?: Project;
    subtasks?: Task[];

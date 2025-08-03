@@ -318,17 +318,6 @@ export const useDataStore = create<DataState>()(
       deleteUser: (id) => {
          set((state) => {
             const { [id]: deleted, ...restUsers } = state.userEntities;
-            const updatedTaskEntities = { ...state.taskEntities };
-
-            // Remove user assignment from tasks
-            Object.keys(updatedTaskEntities).forEach((taskId) => {
-               if (updatedTaskEntities[taskId].assigneeId === id) {
-                  updatedTaskEntities[taskId] = {
-                     ...updatedTaskEntities[taskId],
-                     assigneeId: undefined,
-                  };
-               }
-            });
 
             return {
                userEntities: restUsers,

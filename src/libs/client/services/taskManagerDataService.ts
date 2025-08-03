@@ -296,10 +296,6 @@ class TaskManagerDataService {
       if (!data) return false;
 
       data.users = data.users.filter((user) => user.id !== id);
-      // Also unassign from additional tasks
-      data.tasks = data.tasks.map((task) =>
-         task.assigneeId === id ? { ...task, assigneeId: undefined } : task
-      );
 
       return await this.writeTaskManagerData(data);
    }
@@ -480,7 +476,6 @@ class TaskManagerDataService {
             testStrategy: tmTask.testStrategy,
             statusId: tmTask.status, // Use TaskMaster status directly
             priorityId: priorityMapping[tmTask.priority] || 'priority-3', // default to medium
-            assigneeId: undefined,
             tagId: 'tag-personal', // default tag for TaskMaster tasks
             parentTaskId: undefined,
             labelIds: [],
@@ -503,7 +498,6 @@ class TaskManagerDataService {
                   testStrategy: subtask.testStrategy,
                   statusId: subtask.status, // Use TaskMaster status directly
                   priorityId: priorityMapping[tmTask.priority] || 'priority-3', // inherit from parent
-                  assigneeId: undefined,
                   tagId: 'tag-personal',
                   parentTaskId: tmTask.id,
                   labelIds: [],
@@ -540,7 +534,6 @@ class TaskManagerDataService {
                description: extra.metadata.description || '',
                statusId: extra.metadata.statusId,
                priorityId: extra.metadata.priorityId || 'priority-3',
-               assigneeId: extra.metadata.assigneeId,
                tagId: extra.metadata.tagId || 'tag-personal',
                parentTaskId: extra.metadata.parentTaskId,
                labelIds: extra.metadata.labelIds || [],

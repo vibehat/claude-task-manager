@@ -34,9 +34,6 @@ export function SubtaskItem({ subtask, parentTask: _parentTask, disabled }: Subt
    const [isExpanded, setIsExpanded] = useState(false);
    const deleting = false;
 
-   // Get assignee data - TODO: implement proper assignee logic
-   const assignee = null;
-
    const getStatusIcon = (status?: string | null) => {
       switch (status) {
          case 'done':
@@ -134,15 +131,6 @@ export function SubtaskItem({ subtask, parentTask: _parentTask, disabled }: Subt
                </div>
 
                <div className="flex items-center flex-shrink-0">
-                  {assignee && (
-                     <Avatar className="h-4 w-4">
-                        <AvatarImage src={assignee.avatarUrl || undefined} />
-                        <AvatarFallback className="text-xs">
-                           {assignee.name?.charAt(0).toUpperCase() || '?'}
-                        </AvatarFallback>
-                     </Avatar>
-                  )}
-
                   <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
                      <Button
                         size="sm"

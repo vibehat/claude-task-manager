@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { TaskWhereInput } from '@/libs/client/types';
 
-export type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'tag';
+export type FilterType = 'status' | 'priority' | 'labels' | 'tag';
 
 export interface FilterState {
    // Direct TaskWhereInput storage
@@ -38,9 +38,6 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
                case 'status':
                   delete newWhere.statusId;
                   break;
-               case 'assignee':
-                  delete newWhere.assigneeId;
-                  break;
                case 'priority':
                   delete newWhere.priorityId;
                   break;
@@ -56,9 +53,6 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
             switch (type) {
                case 'status':
                   newWhere.statusId = { in: ids };
-                  break;
-               case 'assignee':
-                  newWhere.assigneeId = { in: ids };
                   break;
                case 'priority':
                   newWhere.priorityId = { in: ids };
@@ -113,7 +107,6 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
       let count = 0;
 
       if (where.statusId?.in) count += where.statusId.in.length;
-      if (where.assigneeId?.in) count += where.assigneeId.in.length;
       if (where.priorityId?.in) count += where.priorityId.in.length;
       if (where.tagId?.in) count += where.tagId.in.length;
       if (where.labels?.some?.labelId?.in) count += where.labels.some.labelId.in.length;
@@ -127,8 +120,6 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
       switch (type) {
          case 'status':
             return where.statusId?.in || [];
-         case 'assignee':
-            return where.assigneeId?.in || [];
          case 'priority':
             return where.priorityId?.in || [];
          case 'tag':

@@ -16,7 +16,6 @@ import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { StatusSelector } from './StatusSelector';
 import { PrioritySelector } from './PrioritySelector';
-import { AssigneeSelector } from './AssigneeSelector';
 import { TagSelector } from './TagSelector';
 import { LabelSelector } from './LabelSelector';
 import { ranks } from '@/mock-data/tasks';
@@ -66,7 +65,6 @@ export function CreateNewTask(): React.JSX.Element {
          title: '',
          description: '',
          status: defaultStatusValue,
-         assignee: null,
          priority: defaultPriority,
          labels: [],
          createdAt: new Date().toISOString(),
@@ -140,12 +138,6 @@ export function CreateNewTask(): React.JSX.Element {
                      priority={addTaskForm.priority}
                      onChange={(newPriority) =>
                         setAddTaskForm({ ...addTaskForm, priority: newPriority })
-                     }
-                  />
-                  <AssigneeSelector
-                     assignee={addTaskForm.assignee}
-                     onChange={(newAssignee) =>
-                        setAddTaskForm({ ...addTaskForm, assignee: newAssignee })
                      }
                   />
                   <TagSelector

@@ -51,7 +51,6 @@ export interface Task {
    testStrategy?: string; // Test strategy from TaskMaster
    statusId: string;
    priorityId?: string;
-   assigneeId?: string;
    tagId?: string;
    parentTaskId?: string;
    labelIds: string[];

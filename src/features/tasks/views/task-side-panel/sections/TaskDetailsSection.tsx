@@ -8,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { StatusSelector } from '../../../components/selectors/StatusSelector';
 import { PrioritySelector } from '../../../components/selectors/PrioritySelector';
 import { LabelSelector } from '../../../components/selectors/LabelSelector';
-import { AssigneeUser } from '../../../components/AssigneeUser';
 
 interface TaskDetailsSectionProps {
    task: Task;
@@ -22,7 +21,6 @@ export function TaskDetailsSection({
    const { getUserById, getStatusById, getPriorityById, getLabelById } = useDataStore();
 
    // Get related data
-   const assignee = task.assigneeId ? getUserById(task.assigneeId) : null;
    const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
    const status = getStatusById(task.statusId);
    const labels = task.labelIds
@@ -36,21 +34,6 @@ export function TaskDetailsSection({
          <h3 className="text-sm font-medium">Details</h3>
 
          <div className="grid gap-4">
-            {/* Assignee */}
-            <div className="flex items-center justify-between">
-               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <User className="h-4 w-4" />
-                  <span>Assignee</span>
-               </div>
-               <div className="flex items-center gap-2">
-                  {assignee ? (
-                     <AssigneeUser user={assignee as any} />
-                  ) : (
-                     <span className="text-sm text-muted-foreground">Unassigned</span>
-                  )}
-               </div>
-            </div>
-
             {/* Priority */}
             <div className="flex items-center justify-between">
                <div className="flex items-center gap-2 text-sm text-muted-foreground">

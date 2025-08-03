@@ -15,7 +15,6 @@ export type GetTaskStatusesQuery = {
 
 export type TaskDetailsFragment = Task & {
    subtasks?: Task[];
-   assignee?: User;
    tag?: Tag;
    labels?: Label[];
    priority?: TaskPriority;
@@ -26,7 +25,6 @@ export type TaskDetailsFragment = Task & {
 export interface TaskWhereInput {
    parentTaskId?: { equals: string | null };
    statusId?: { in: string[]; equals?: string };
-   assigneeId?: { in: string[]; equals?: string };
    priorityId?: { in: string[]; equals?: string };
    tagId?: { in: string[]; equals?: string };
    labels?: { some: { labelId: { in: string[] } } };

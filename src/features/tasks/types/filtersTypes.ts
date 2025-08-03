@@ -7,7 +7,6 @@ import type { Task } from './taskTypes';
 export interface TaskFilterInput {
    search?: string;
    statusIds?: string[];
-   assigneeIds?: string[];
    projectIds?: string[];
    priorityIds?: string[];
    labelIds?: string[];
@@ -76,7 +75,6 @@ export interface SearchResult {
 export interface SearchFacets {
    statuses: Array<{ id: string; name: string; count: number }>;
    priorities: Array<{ id: string; name: string; count: number }>;
-   assignees: Array<{ id: string; name: string; count: number }>;
    projects: Array<{ id: string; name: string; count: number }>;
    labels: Array<{ id: string; name: string; count: number }>;
 }

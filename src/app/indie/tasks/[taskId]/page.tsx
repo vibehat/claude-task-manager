@@ -21,7 +21,6 @@ export default function TaskDetailPage(): React.JSX.Element {
    const { getUserById, getTagById, getStatusById, getPriorityById, getLabelById } = useDataStore();
 
    // Get related data
-   const assignee = task?.assigneeId ? getUserById(task.assigneeId) : null;
    const tag = task?.tagId ? getTagById(task.tagId) : null;
    const status = task?.statusId ? getStatusById(task.statusId) : null;
    const priority = task?.priorityId ? getPriorityById(task.priorityId) : null;
@@ -80,36 +79,6 @@ export default function TaskDetailPage(): React.JSX.Element {
 
                {/* Task Meta Information */}
                <div className="grid gap-4 md:grid-cols-3">
-                  <Card>
-                     <CardHeader className="pb-3">
-                        <CardTitle className="text-sm font-medium flex items-center">
-                           <UserIcon className="mr-2 h-4 w-4" />
-                           Assignee
-                        </CardTitle>
-                     </CardHeader>
-                     <CardContent>
-                        <div className="flex items-center space-x-2">
-                           {assignee ? (
-                              <>
-                                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                                    <span className="text-xs font-semibold text-white">
-                                       {assignee.name.charAt(0).toUpperCase()}
-                                    </span>
-                                 </div>
-                                 <div>
-                                    <p className="text-sm font-medium">{assignee.name}</p>
-                                    <p className="text-xs text-muted-foreground">
-                                       {assignee.email}
-                                    </p>
-                                 </div>
-                              </>
-                           ) : (
-                              <p className="text-sm text-muted-foreground">Unassigned</p>
-                           )}
-                        </div>
-                     </CardContent>
-                  </Card>
-
                   <Card>
                      <CardHeader className="pb-3">
                         <CardTitle className="text-sm font-medium flex items-center">

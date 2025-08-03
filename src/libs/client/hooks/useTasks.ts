@@ -61,12 +61,6 @@ export function useTasks(options: UseTasksOptions = {}): UseTasksResult {
          );
       }
 
-      if (where.assigneeId?.in) {
-         result = result.filter(
-            (task) => task.assigneeId && where.assigneeId.in.includes(task.assigneeId)
-         );
-      }
-
       if (where.priorityId?.in) {
          result = result.filter(
             (task) => task.priorityId && where.priorityId.in.includes(task.priorityId)

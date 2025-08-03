@@ -51,7 +51,6 @@ export interface CreateTaskInput {
    description: string;
    projectId: string;
    statusId?: string;
-   assigneeId?: string;
    priorityId: string;
    labelIds?: string[];
    dueDate?: Date;
@@ -63,7 +62,6 @@ export interface UpdateTaskInput {
    title?: string;
    description?: string;
    statusId?: string;
-   assigneeId?: string;
    priorityId?: string;
    labelIds?: string[];
    dueDate?: Date;
@@ -101,6 +99,5 @@ export interface TaskSubscriptionFilter {
    taskIds?: string[];
    projectIds?: string[];
    statusIds?: string[];
-   assigneeIds?: string[];
    priorityIds?: string[];
 }

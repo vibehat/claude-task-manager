@@ -6,7 +6,7 @@ import type { TaskFilterInput } from './filtersTypes';
 
 export type ViewType = 'list' | 'grid' | 'kanban' | 'calendar';
 
-export type GroupByOption = 'status' | 'assignee' | 'priority' | 'project' | 'label' | 'none';
+export type GroupByOption = 'status' | 'priority' | 'project' | 'label' | 'none';
 
 export type SortOption = 'created' | 'updated' | 'priority' | 'title' | 'dueDate' | 'rank';
 
@@ -38,7 +38,6 @@ export interface ViewState {
 
 // Layout configurations
 export interface ListViewConfig {
-   showAssignee: boolean;
    showPriority: boolean;
    showStatus: boolean;
    showLabels: boolean;
@@ -56,9 +55,9 @@ export interface GridViewConfig {
 }
 
 export interface KanbanViewConfig {
-   groupBy: 'status' | 'assignee' | 'priority';
+   groupBy: 'status' | 'priority';
    showLimits: boolean;
-   swimlanes?: 'priority' | 'assignee' | 'project';
+   swimlanes?: 'priority' | 'project';
 }
 
 export interface CalendarViewConfig {

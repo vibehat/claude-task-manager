@@ -2,7 +2,6 @@
 
 import type { Task } from '@/libs/client/types';
 import { format } from 'date-fns';
-import { AssigneeUser } from '../AssigneeUser';
 import { LabelBadge } from '../badges/LabelBadge';
 import { PrioritySelector } from '../selectors/PrioritySelector';
 import { StatusSelector } from '../selectors/StatusSelector';
@@ -37,7 +36,6 @@ export function TaskLine({
    };
 
    // Get related data
-   const assignee = task.assigneeId ? getUserById(task.assigneeId) : null;
    const status = getStatusById(task.statusId);
    const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
    const labels = task.labelIds
@@ -97,7 +95,6 @@ export function TaskLine({
                   <span className="text-xs text-muted-foreground shrink-0 hidden sm:inline-block">
                      {format(new Date(task.createdAt), 'MMM dd')}
                   </span>
-                  <AssigneeUser user={assignee} />
                </div>
             </motion.div>
          </ContextMenuTrigger>
