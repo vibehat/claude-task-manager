@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import { FileText, TestTube, Edit2 } from 'lucide-react';
 import { RichMarkdownEditor, MarkdownViewer } from '../../../components/editors/RichMarkdownEditor';
 import type { Task } from '@/libs/client/types';
@@ -13,6 +14,35 @@ interface TaskInfoSectionProps {
    onDetailsSave?: (value: string) => void;
    onTestStrategySave?: (value: string) => void;
    disabled?: boolean;
+}
+
+// Safe MarkdownViewer wrapper with layout shift prevention
+function SafeMarkdownViewer({
+   source,
+   fallbackLines = 2,
+}: {
+   source: string;
+   fallbackLines?: number;
+}): React.JSX.Element {
+   const [isReady, setIsReady] = useState(false);
+
+   useEffect(() => {
+      // Small delay to ensure component is fully mounted
+      const timer = setTimeout(() => setIsReady(true), 100);
+      return () => clearTimeout(timer);
+   }, []);
+
+   if (!isReady) {
+      return (
+         <div className="space-y-2">
+            {Array.from({ length: fallbackLines }, (_, i) => (
+               <Skeleton key={i} className="h-4 w-full" />
+            ))}
+         </div>
+      );
+   }
+
+   return <MarkdownViewer source={source} />;
 }
 
 export function TaskInfoSection({
@@ -175,7 +205,10 @@ Add test strategy..."
                      title="Double-click to edit"
                   >
                      {task.description ? (
-                        <MarkdownViewer source={task.description} />
+                        <SafeMarkdownViewer
+                           source={task.description}
+                           fallbackLines={Math.max(1, Math.ceil(task.description.length / 80))}
+                        />
                      ) : (
                         <span className="text-muted-foreground italic">
                            No description provided
@@ -198,7 +231,10 @@ Add test strategy..."
                         onDoubleClick={handleEdit}
                         title="Double-click to edit"
                      >
-                        <MarkdownViewer source={task.details} />
+                        <SafeMarkdownViewer
+                           source={task.details}
+                           fallbackLines={Math.max(2, Math.ceil(task.details.length / 80))}
+                        />
                      </div>
                   </div>
                )}
@@ -215,7 +251,10 @@ Add test strategy..."
                         onDoubleClick={handleEdit}
                         title="Double-click to edit"
                      >
-                        <MarkdownViewer source={task.testStrategy} />
+                        <SafeMarkdownViewer
+                           source={task.testStrategy}
+                           fallbackLines={Math.max(2, Math.ceil(task.testStrategy.length / 80))}
+                        />
                      </div>
                   </div>
                )}
