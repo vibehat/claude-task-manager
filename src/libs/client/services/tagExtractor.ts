@@ -15,7 +15,7 @@ export class TagExtractor {
 
       // Extract tags from top-level keys
       Object.keys(taskMasterData).forEach((tagKey) => {
-         const tagId = `taskmaster-${tagKey}`;
+         const tagId = tagKey; // Use raw tag name as ID
          const tagName = tagKey; // Keep original tag name
          const taskCount = taskMasterData[tagKey]?.tasks?.length || 0;
          const description = `TaskMaster tag: ${tagName} (${taskCount} tasks)`;
@@ -78,6 +78,6 @@ export class TagExtractor {
     * Gets the appropriate tag ID for a task based on which tag context it belongs to
     */
    static getTaskTagId(tagContext: string): string {
-      return `taskmaster-${tagContext}`;
+      return tagContext; // Use raw tag context as ID
    }
 }

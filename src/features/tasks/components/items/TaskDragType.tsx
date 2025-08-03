@@ -8,7 +8,6 @@ import { useEffect, useRef } from 'react';
 import type { DragSourceMonitor } from 'react-dnd';
 import { useDrag, useDragLayer, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { AssigneeUser } from '../selectors/AssigneeUser';
 import { LabelBadge } from '../badges/LabelBadge';
 import { PrioritySelector } from '../selectors/PrioritySelector';
 import { TagBadge } from '../badges/TagBadge';
@@ -25,7 +24,6 @@ interface TaskGridProps {
 // Custom DragLayer component to render the drag preview
 function TaskDragPreview({ task }: { task: Task }): React.JSX.Element {
    const { getUserById, getStatusById, getPriorityById } = useDataStore();
-   const assignee = task.assigneeId ? getUserById(task.assigneeId) : null;
    const status = getStatusById(task.statusId);
    const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
    return (
@@ -48,7 +46,6 @@ function TaskDragPreview({ task }: { task: Task }): React.JSX.Element {
             <span className="text-xs text-muted-foreground">
                {format(new Date(task.createdAt), 'MMM dd')}
             </span>
-            <AssigneeUser user={assignee as any} />
          </div>
       </div>
    );
@@ -83,7 +80,6 @@ export function CustomDragLayer(): React.JSX.Element | null {
 export function TaskGrid({ task }: TaskGridProps): React.JSX.Element {
    const ref = useRef<HTMLDivElement>(null);
    const { getUserById, getStatusById, getPriorityById } = useDataStore();
-   const assignee = task.assigneeId ? getUserById(task.assigneeId) : null;
    const status = getStatusById(task.statusId);
    const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
 
@@ -136,7 +132,6 @@ export function TaskGrid({ task }: TaskGridProps): React.JSX.Element {
                   <span className="text-xs text-muted-foreground">
                      {format(new Date(task.createdAt), 'MMM dd')}
                   </span>
-                  <AssigneeUser user={assignee as any} />
                </div>
             </motion.div>
          </ContextMenuTrigger>

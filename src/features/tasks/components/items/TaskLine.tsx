@@ -7,9 +7,6 @@ import { PrioritySelector } from '../selectors/PrioritySelector';
 import { StatusSelector } from '../selectors/StatusSelector';
 import { LabelSelector } from '../selectors/LabelSelector';
 import { motion } from 'motion/react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Plus } from 'lucide-react';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { formatTaskIdForDisplay } from '@/libs/client/utils';
@@ -25,7 +22,7 @@ export function TaskLine({
    layoutId?: boolean;
 }): React.JSX.Element {
    const { openPanel } = useTaskSidePanelStore();
-   const { updateTask, getUserById, getStatusById, getPriorityById, getLabelById } = useDataStore();
+   const { updateTask, getStatusById, getPriorityById, getLabelById } = useDataStore();
 
    const handleLabelChange = async (labelIds: string[]): Promise<void> => {
       try {
@@ -53,12 +50,12 @@ export function TaskLine({
                className="w-full flex items-center justify-start h-11 px-6 hover:bg-sidebar/50 group"
             >
                <div className="flex items-center gap-2">
-                  <div onClick={(e) => e.stopPropagation()}>
-                     <PrioritySelector priority={priority} taskId={task.id} />
-                  </div>
                   <span className="text-sm font-mono font-medium text-gray-600 w-[66px] truncate shrink-0">
                      {formatTaskIdForDisplay(task.id)}
                   </span>
+                  <div onClick={(e) => e.stopPropagation()}>
+                     <PrioritySelector priority={priority} taskId={task.id} />
+                  </div>
                   <div onClick={(e) => e.stopPropagation()}>
                      <StatusSelector status={status} taskId={task.id} />
                   </div>

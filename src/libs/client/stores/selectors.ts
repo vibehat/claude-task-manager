@@ -80,19 +80,29 @@ export const useAllTags = (): Tag[] => {
 };
 
 export const useTagCounts = (): Record<string, number> => {
+   const tagExtra = useDataStore((state) => state.tagExtra);
    const taskEntities = useDataStore((state) => state.taskEntities);
+
    return useMemo(() => {
-      const tasks = Object.values(taskEntities);
       const tagCounts: Record<string, number> = {};
 
+      // First, use the efficient tagExtra data for TaskMaster tags
+      Object.entries(tagExtra).forEach(([tagId, extra]) => {
+         if (extra.metadata?.taskCount !== undefined) {
+            tagCounts[tagId] = extra.metadata.taskCount;
+         }
+      });
+
+      // For any remaining tags (UI-only tags), count parent tasks manually
+      const tasks = Object.values(taskEntities);
       tasks.forEach((task) => {
-         if (task.tagId) {
+         if (task.tagId && !task.parentTaskId && !tagCounts[task.tagId]) {
             tagCounts[task.tagId] = (tagCounts[task.tagId] || 0) + 1;
          }
       });
 
       return tagCounts;
-   }, [taskEntities]);
+   }, [tagExtra, taskEntities]);
 };
 
 // Label selectors
@@ -165,4 +175,9 @@ export const useUITasks = (): Task[] => {
       const tasks = Object.values(taskEntities);
       return tasks.filter((task) => task.taskId === undefined);
    }, [taskEntities]);
+};
+
+// TaskMaster state selectors
+export const useCurrentTag = (): string | null => {
+   return useDataStore((state) => state.getCurrentTag());
 };

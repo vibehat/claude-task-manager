@@ -16,7 +16,7 @@ import { status as allStatus } from '@/mock-data/StatusIcon';
 import { priorities } from '@/mock-data/priorities';
 import { labels } from '@/mock-data/labels';
 import { users } from '@/mock-data/users';
-import { useAllTags, useTagCounts } from '@/libs/client/stores';
+import { useAllTags, useTagCounts, useCurrentTag, useTagDetail } from '@/libs/client/stores';
 import {
    CheckIcon,
    ChevronRight,
@@ -26,6 +26,7 @@ import {
    BarChart3,
    Tag,
    Hash,
+   Star,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -40,6 +41,8 @@ export function Filter(): React.JSX.Element {
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
    const tags = useAllTags();
    const tagCounts = useTagCounts();
+   const currentTagId = useCurrentTag();
+   const currentTag = tags.find((tag) => tag.id === currentTagId);
 
    // TODO: Now using local data
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByTag } =
@@ -284,25 +287,45 @@ export function Filter(): React.JSX.Element {
                   <CommandList>
                      <CommandEmpty>No tags found.</CommandEmpty>
                      <CommandGroup>
-                        {tags.map((tag) => (
-                           <CommandItem
-                              key={tag.id}
-                              value={tag.id}
-                              onSelect={() => toggleFilter('tag', tag.id)}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 <Hash className="size-4" />
-                                 {tag.name}
-                              </div>
-                              {filters.tag.includes(tag.id) && (
-                                 <CheckIcon size={16} className="ml-auto" />
-                              )}
-                              <span className="text-muted-foreground text-xs">
-                                 {tagCounts[tag.id] || 0}
-                              </span>
-                           </CommandItem>
-                        ))}
+                        {tags.map((tag) => {
+                           const isCurrentTag = currentTagId && tag.id === currentTagId;
+                           return (
+                              <CommandItem
+                                 key={tag.id}
+                                 value={tag.id}
+                                 onSelect={() => toggleFilter('tag', tag.id)}
+                                 className="flex items-center justify-between"
+                              >
+                                 <div className="flex items-center gap-2">
+                                    <Hash
+                                       className={`size-4 ${isCurrentTag ? 'text-primary' : ''}`}
+                                    />
+                                    <div className="flex items-center gap-1">
+                                       <span
+                                          className={isCurrentTag ? 'text-primary font-medium' : ''}
+                                       >
+                                          {tag.name}
+                                       </span>
+                                       {isCurrentTag && (
+                                          <Star
+                                             className="size-3 flex-shrink-0"
+                                             style={{
+                                                color: 'var(--description-header)',
+                                                fill: 'var(--description-header)',
+                                             }}
+                                          />
+                                       )}
+                                    </div>
+                                 </div>
+                                 {filters.tag.includes(tag.id) && (
+                                    <CheckIcon size={16} className="ml-auto" />
+                                 )}
+                                 <span className="text-muted-foreground text-xs">
+                                    {tagCounts[tag.id] || 0}
+                                 </span>
+                              </CommandItem>
+                           );
+                        })}
                      </CommandGroup>
                   </CommandList>
                </Command>

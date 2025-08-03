@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
-import type { TaskMasterState } from '../services/types';
+import type { TaskMasterState, TagExtra } from '../services/types';
 import { taskManagerDataService } from '../services/taskManagerDataService';
 import type { FuzzySearchIndex } from '../utils/fuzzy-search';
 import { createFuzzySearchIndex, type FuzzySearchResult } from '../utils/fuzzy-search';
@@ -16,6 +16,9 @@ interface DataState {
 
    // TaskMaster state
    taskMasterState: TaskMasterState | null;
+
+   // Tag extra data for efficient tag counts
+   tagExtra: Record<string, TagExtra>;
 
    // Search infrastructure
    fuzzySearchIndex: FuzzySearchIndex;
@@ -105,6 +108,7 @@ export const useDataStore = create<DataState>()(
       priorityEntities: {},
       taskEntities: {},
       taskMasterState: null,
+      tagExtra: {},
       fuzzySearchIndex: createFuzzySearchIndex(),
       isLoading: false,
       isInitialized: false,
@@ -201,6 +205,7 @@ export const useDataStore = create<DataState>()(
                   priorityEntities,
                   taskEntities,
                   taskMasterState: taskManagerData.taskMasterState || null,
+                  tagExtra: taskManagerData.tagExtra || {},
                   isLoading: false,
                   isInitialized: true,
                });

@@ -9,9 +9,8 @@ import { useDrop } from 'react-dnd';
 import { Button } from '@/components/ui/button';
 import { useCreateTaskStore } from '@/store/createTaskStore';
 import { useSortTasksByPriority } from '@/features/tasks/hooks/useSortTasksByPriority';
-import { useEdges } from '@/hooks/useEdges';
 import { AnimatePresence, motion } from 'motion/react';
-import TaskGrid, { TaskDragType } from '../../components/items/TaskDragType';
+import TasksCard, { TaskDragType } from '../../components/items/TasksCard';
 import { useTaskStatusIcon } from '../../hooks/useTaskStatusIcon';
 import { EmptyStatusColumn } from '@/components/empty-states/EmptyStatusColumn';
 
@@ -172,7 +171,7 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; status: TaskStatusFromQuery }> 
             )}
          </AnimatePresence>
          {sortedTasks.length > 0 ? (
-            sortedTasks.map((task) => <TaskGrid key={task.id} task={task} />)
+            sortedTasks.map((task) => <TasksCard key={task.id} task={task} />)
          ) : (
             <EmptyStatusColumn status={status} variant="grid" />
          )}

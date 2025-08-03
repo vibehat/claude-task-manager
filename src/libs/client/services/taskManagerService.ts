@@ -66,7 +66,7 @@ export async function syncTaskMasterData(): Promise<TaskManagerData | null> {
             convertedTasks.push(...taggedTasks);
 
             // Update tagExtra with task counts
-            const tagId = `taskmaster-${tagKey}`;
+            const tagId = tagKey; // Use raw tag key as ID
             finalData.tagExtra[tagId] = {
                icon: 'tag',
                color: '#7f8c8d', // Default gray
