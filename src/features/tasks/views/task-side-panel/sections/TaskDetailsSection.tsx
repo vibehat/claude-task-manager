@@ -3,7 +3,7 @@
 import type { Task } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { format } from 'date-fns';
-import { Calendar, Clock, User, Flag, Folder, Tag } from 'lucide-react';
+import { Calendar, Clock, User, Flag, Hash, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { StatusSelector } from '../../../components/selectors/StatusSelector';
 import { PrioritySelector } from '../../../components/selectors/PrioritySelector';
@@ -75,7 +75,7 @@ export function TaskDetailsSection({
             {task.tagId && (
                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                     <Folder className="h-4 w-4" />
+                     <Hash className="h-4 w-4" />
                      <span>Tag</span>
                   </div>
                   <Badge variant="outline">Tag ID: {task.tagId}</Badge>

@@ -1,11 +1,8 @@
 import { create } from 'zustand';
 import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 import { taskManagerDataService } from '../services/taskManagerDataService';
-import {
-   FuzzySearchIndex,
-   createFuzzySearchIndex,
-   type FuzzySearchResult,
-} from '../utils/fuzzy-search';
+import type { FuzzySearchIndex } from '../utils/fuzzy-search';
+import { createFuzzySearchIndex, type FuzzySearchResult } from '../utils/fuzzy-search';
 
 interface DataState {
    // Normalized entities
@@ -32,6 +29,7 @@ interface DataState {
    // Actions
    initialize: () => Promise<void>;
    reset: () => void;
+   sync: () => Promise<void>;
 
    // User actions
    addUser: (user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => User;
@@ -72,7 +70,6 @@ interface DataState {
    getTasksByStatus: (statusId: string) => Task[];
    getParentTasksByStatus: (statusId: string) => Task[];
    getTasksByTag: (tagId: string) => Task[];
-   getTasksByAssignee: (assigneeId: string) => Task[];
    getSubtasks: (parentTaskId: string) => Task[];
    searchTasks: (query: string) => Task[];
    fuzzySearchTasks: (query: string, maxResults?: number) => FuzzySearchResult[];
@@ -295,7 +292,7 @@ export const useDataStore = create<DataState>()(
          set((state) => ({
             userEntities: { ...state.userEntities, [newUser.id]: newUser },
          }));
-         taskManagerDataService.addUser(userData).catch(console.warn);
+         // Local data managed in store - sync happens separately
          return newUser;
       },
 
@@ -312,7 +309,7 @@ export const useDataStore = create<DataState>()(
                   : state.userEntities[id],
             },
          }));
-         taskManagerDataService.updateUser(id, updates).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       deleteUser: (id) => {
@@ -321,10 +318,9 @@ export const useDataStore = create<DataState>()(
 
             return {
                userEntities: restUsers,
-               taskEntities: updatedTaskEntities,
             };
          });
-         taskManagerDataService.deleteUser(id).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       // Tag actions
@@ -338,7 +334,7 @@ export const useDataStore = create<DataState>()(
          set((state) => ({
             tagEntities: { ...state.tagEntities, [newTag.id]: newTag },
          }));
-         taskManagerDataService.addTag(tagData).catch(console.warn);
+         // Local data managed in store - sync happens separately
          return newTag;
       },
 
@@ -355,7 +351,7 @@ export const useDataStore = create<DataState>()(
                   : state.tagEntities[id],
             },
          }));
-         taskManagerDataService.updateTag(id, updates).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       deleteTag: (id) => {
@@ -378,7 +374,7 @@ export const useDataStore = create<DataState>()(
                taskEntities: updatedTaskEntities,
             };
          });
-         taskManagerDataService.deleteTag(id).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       // Label actions
@@ -392,7 +388,7 @@ export const useDataStore = create<DataState>()(
          set((state) => ({
             labelEntities: { ...state.labelEntities, [newLabel.id]: newLabel },
          }));
-         taskManagerDataService.addLabel(labelData).catch(console.warn);
+         // Local data managed in store - sync happens separately
          return newLabel;
       },
 
@@ -409,7 +405,7 @@ export const useDataStore = create<DataState>()(
                   : state.labelEntities[id],
             },
          }));
-         taskManagerDataService.updateLabel(id, updates).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       deleteLabel: (id) => {
@@ -434,7 +430,7 @@ export const useDataStore = create<DataState>()(
                taskEntities: updatedTaskEntities,
             };
          });
-         taskManagerDataService.deleteLabel(id).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       // Task actions - simplified for UI tasks only
@@ -455,7 +451,7 @@ export const useDataStore = create<DataState>()(
          set((state) => ({
             taskEntities: { ...state.taskEntities, [newTask.id]: newTask },
          }));
-         taskManagerDataService.addAdditionalTask(taskData).catch(console.warn);
+         // Local data managed in store - sync happens separately
          return newTask;
       },
 
@@ -480,7 +476,7 @@ export const useDataStore = create<DataState>()(
                [id]: updatedTask,
             },
          }));
-         taskManagerDataService.updateAdditionalTask(id, updates).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       deleteTask: (id) => {
@@ -500,7 +496,7 @@ export const useDataStore = create<DataState>()(
 
             return { taskEntities: updatedTaskEntities };
          });
-         taskManagerDataService.deleteAdditionalTask(id).catch(console.warn);
+         // Local data managed in store - sync happens separately
       },
 
       bulkUpdateTasks: (ids, updates) => {
@@ -586,11 +582,6 @@ export const useDataStore = create<DataState>()(
          return tasks.filter((task) => task.tagId === tagId);
       },
 
-      getTasksByAssignee: (assigneeId: string) => {
-         const tasks = Object.values(get().taskEntities) || [];
-         return tasks.filter((task) => task.assigneeId === assigneeId);
-      },
-
       getSubtasks: (parentTaskId: string) => {
          const tasks = Object.values(get().taskEntities) || [];
          return tasks.filter((task) => task.parentTaskId === parentTaskId);
@@ -647,107 +638,13 @@ export const useDataStore = create<DataState>()(
          });
       },
 
+      // Simple sync method - same logic as initialize but for manual sync
+      sync: async () => {
+         return get().initialize();
+      },
+
       forceSyncTaskMaster: async () => {
-         set({ taskMasterSyncStatus: 'syncing', taskMasterError: null });
-
-         try {
-            console.log('[DataStore] Force syncing TaskMaster data...');
-
-            // Reload data from TaskMaster
-            const taskManagerData = await taskManagerDataService.readTaskManagerData();
-
-            if (taskManagerData) {
-               // Convert date strings to Date objects and normalize to entities
-               const userEntities: Record<string, User> = {};
-               taskManagerData.users.forEach((user) => {
-                  userEntities[user.id] = {
-                     ...user,
-                     createdAt: new Date(user.createdAt),
-                     updatedAt: new Date(user.updatedAt),
-                  };
-               });
-
-               const tagEntities: Record<string, Tag> = {};
-               taskManagerData.tags.forEach((tag) => {
-                  tagEntities[tag.id] = {
-                     ...tag,
-                     createdAt: new Date(tag.createdAt),
-                     updatedAt: new Date(tag.updatedAt),
-                  };
-               });
-
-               const labelEntities: Record<string, Label> = {};
-               taskManagerData.labels.forEach((label) => {
-                  labelEntities[label.id] = {
-                     ...label,
-                     createdAt: new Date(label.createdAt),
-                     updatedAt: new Date(label.updatedAt),
-                  };
-               });
-
-               const statusEntities: Record<string, TaskStatus> = {};
-               taskManagerData.statuses.forEach((status) => {
-                  statusEntities[status.id] = {
-                     ...status,
-                     createdAt: new Date(status.createdAt),
-                     updatedAt: new Date(status.updatedAt),
-                  };
-               });
-
-               const priorityEntities: Record<string, TaskPriority> = {};
-               taskManagerData.priorities.forEach((priority) => {
-                  priorityEntities[priority.id] = {
-                     ...priority,
-                     createdAt: new Date(priority.createdAt),
-                     updatedAt: new Date(priority.updatedAt),
-                  };
-               });
-
-               const taskEntities: Record<string, Task> = {};
-               (taskManagerData.tasks || []).forEach((task) => {
-                  taskEntities[task.id] = {
-                     ...task,
-                     createdAt: new Date(task.createdAt),
-                     updatedAt: new Date(task.updatedAt),
-                  };
-               });
-
-               // Rebuild fuzzy search index with the new tasks
-               const fuzzySearchIndex = get().fuzzySearchIndex;
-               const allTasksArray = Object.values(taskEntities);
-               fuzzySearchIndex.buildIndex(allTasksArray);
-
-               // Update all data in one go
-               set({
-                  userEntities,
-                  tagEntities,
-                  labelEntities,
-                  statusEntities,
-                  priorityEntities,
-                  taskEntities,
-                  taskMasterSyncStatus: 'synced',
-                  taskMasterError: null,
-               });
-
-               const allTasks = Object.values(taskEntities);
-               console.log(
-                  `[DataStore] Successfully synced ${allTasks.length} tasks from TaskMaster`
-               );
-               console.log(`[DataStore] Task IDs: ${allTasks.map((t) => t.id).join(', ')}`);
-            } else {
-               set({
-                  taskMasterSyncStatus: 'error',
-                  taskMasterError: 'No TaskMaster data available',
-               });
-            }
-         } catch (error) {
-            console.error('[DataStore] Failed to force sync TaskMaster:', error);
-            set({
-               taskMasterSyncStatus: 'error',
-               taskMasterError: error instanceof Error ? error.message : 'Unknown sync error',
-            });
-            throw error;
-         }
+         return get().sync();
       },
 
       toggleRealTimeSync: async (enabled: boolean) => {

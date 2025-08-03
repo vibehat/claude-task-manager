@@ -11,13 +11,12 @@ import {
    CommandSeparator,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-// import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filterStore';
 import { status as allStatus } from '@/mock-data/StatusIcon';
 import { priorities } from '@/mock-data/priorities';
 import { labels } from '@/mock-data/labels';
-import { tags } from '@/mock-data/tags';
 import { users } from '@/mock-data/users';
+import { useAllTags, useTagCounts } from '@/libs/client/stores';
 import {
    CheckIcon,
    ChevronRight,
@@ -26,7 +25,7 @@ import {
    CircleCheck,
    BarChart3,
    Tag,
-   Folder,
+   Hash,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -39,6 +38,8 @@ export function Filter(): React.JSX.Element {
    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
 
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
+   const tags = useAllTags();
+   const tagCounts = useTagCounts();
 
    // TODO: Now using local data
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByTag } =
@@ -118,7 +119,7 @@ export function Filter(): React.JSX.Element {
                            className="flex items-center justify-between cursor-pointer"
                         >
                            <span className="flex items-center gap-2">
-                              <Folder className="size-4 text-muted-foreground" />
+                              <Hash className="size-4 text-muted-foreground" />
                               Tag
                            </span>
                            <div className="flex items-center">
@@ -291,14 +292,14 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <tag.icon className="size-4" />
+                                 <Hash className="size-4" />
                                  {tag.name}
                               </div>
                               {filters.tag.includes(tag.id) && (
                                  <CheckIcon size={16} className="ml-auto" />
                               )}
                               <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Now using local data*/}
+                                 {tagCounts[tag.id] || 0}
                               </span>
                            </CommandItem>
                         ))}

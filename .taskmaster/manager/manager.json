@@ -25,16 +25,6 @@
          "updatedAt": "2025-01-01T00:00:00.000Z"
       }
    ],
-   "tags": [
-      {
-         "id": "tag-personal",
-         "name": "Personal Tasks",
-         "description": "Individual task management",
-         "teamId": "team-individual",
-         "createdAt": "2025-01-01T00:00:00.000Z",
-         "updatedAt": "2025-01-01T00:00:00.000Z"
-      }
-   ],
    "labels": [
       {
          "id": "label-feature",
@@ -162,6 +152,16 @@
       }
    ],
    "taskExtra": {},
+   "tagExtra": {
+      "tag-personal": {
+         "icon": "user",
+         "color": "#3498db",
+         "metadata": {
+            "isDefault": true,
+            "visibility": "private"
+         }
+      }
+   },
    "metadata": {
       "created": "2025-07-31T00:00:00.000Z",
       "updated": "2025-08-01T21:52:17.026Z",

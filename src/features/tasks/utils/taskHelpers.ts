@@ -159,9 +159,6 @@ export function canEditTask(task: Task, userId: string, userRole: string): boole
    // Admin can edit all tasks
    if (userRole === 'ADMIN') return true;
 
-   // Assignee can edit their assigned tasks
-   if (task.assigneeId === userId) return true;
-
    // TODO: Project lead check needs proper implementation
    // if (task.project?.lead?.id === userId) return true;
 

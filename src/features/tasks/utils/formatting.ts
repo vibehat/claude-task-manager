@@ -145,14 +145,6 @@ export function formatDueDate(dueDate: Date | string | null): {
 }
 
 /**
- * Format assignee name
- */
-export function formatAssigneeName(assignee: { name: string; email: string } | null): string {
-   if (!assignee) return 'Unassigned';
-   return assignee.name || assignee.email;
-}
-
-/**
  * Format issue progress as percentage
  */
 export function formatTaskProgress(issue: Task): string {

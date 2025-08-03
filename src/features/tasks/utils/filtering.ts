@@ -31,13 +31,6 @@ export function filterTasks(issues: Task[], filters: TaskFilterInput): Task[] {
          if (!filters.priorityIds.includes(issue.priority)) return false;
       }
 
-      // Assignee filter
-      if (filters.assigneeIds && filters.assigneeIds.length > 0) {
-         if (!issue.assignee || !filters.assigneeIds.includes(issue.assignee.id)) {
-            return false;
-         }
-      }
-
       // Project filter
       if (filters.projectIds && filters.projectIds.length > 0) {
          if (!issue.project || !filters.projectIds.includes(issue.project.id)) {
@@ -110,10 +103,10 @@ export function filterTasks(issues: Task[], filters: TaskFilterInput): Task[] {
 export function createQuickFilter(type: string, value?: any): TaskFilterInput {
    switch (type) {
       case 'my-issues':
-         return { assigneeIds: [value] };
+         return {};
 
       case 'unassigned':
-         return { assigneeIds: [] };
+         return {};
 
       case 'overdue':
          return {
@@ -243,10 +236,6 @@ export function getFilterSummary(filters: TaskFilterInput): string[] {
 
    if (filters.priorityIds && filters.priorityIds.length > 0) {
       summary.push(`Priority: ${filters.priorityIds.join(', ')}`);
-   }
-
-   if (filters.assigneeIds && filters.assigneeIds.length > 0) {
-      summary.push(`Assignee: ${filters.assigneeIds.length} selected`);
    }
 
    if (filters.projectIds && filters.projectIds.length > 0) {

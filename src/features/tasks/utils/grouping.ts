@@ -21,8 +21,6 @@ export function groupTasks(issues: Task[], groupBy: GroupByOption): TaskGroup[] 
    switch (groupBy) {
       case 'status':
          return groupByStatus(issues);
-      case 'assignee':
-         return groupByAssignee(issues);
       case 'priority':
          return groupByPriority(issues);
       case 'project':
@@ -63,32 +61,6 @@ function groupByStatus(issues: Task[]): TaskGroup[] {
       count: groupTasks.length,
       color: getStatusColor(status),
    }));
-}
-
-/**
- * Group issues by assignee
- */
-function groupByAssignee(issues: Task[]): TaskGroup[] {
-   const groups = new Map<string, Task[]>();
-
-   issues.forEach((issue) => {
-      const assigneeId = issue.assignee?.id || 'unassigned';
-      if (!groups.has(assigneeId)) {
-         groups.set(assigneeId, []);
-      }
-      groups.get(assigneeId)!.push(issue);
-   });
-
-   return Array.from(groups.entries()).map(([assigneeId, groupTasks]) => {
-      const assignee = groupTasks[0]?.assignee;
-      return {
-         key: assigneeId,
-         label: assignee ? assignee.name : 'Unassigned',
-         issues: groupTasks,
-         count: groupTasks.length,
-         icon: assignee?.avatarUrl,
-      };
-   });
 }
 
 /**

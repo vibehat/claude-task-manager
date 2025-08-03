@@ -10,10 +10,9 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-// import { useIssuesStore } from '@/store/issues-store';
-import type { Tag } from '@/mock-data/tags';
-import { tags } from '@/mock-data/tags';
-import { Box, CheckIcon, TagIcon } from 'lucide-react';
+import type { Tag } from '@/libs/client/types/dataModels';
+import { useAllTags } from '@/libs/client/stores';
+import { Box, CheckIcon, TagIcon, Hash } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface TagSelectorProps {
@@ -25,8 +24,7 @@ export function TagSelector({ tag, onChange }: TagSelectorProps): React.JSX.Elem
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | undefined>(tag?.id);
-
-   // const { filterByTag } = useIssuesStore();
+   const tags = useAllTags();
 
    useEffect(() => {
       setValue(tag?.id);
@@ -58,18 +56,7 @@ export function TagSelector({ tag, onChange }: TagSelectorProps): React.JSX.Elem
                   role="combobox"
                   aria-expanded={open}
                >
-                  {value ? (
-                     ((): React.JSX.Element => {
-                        const selectedTag = tags.find((t) => t.id === value);
-                        if (selectedTag) {
-                           const Icon = selectedTag.icon;
-                           return <Icon className="size-4" />;
-                        }
-                        return <Box className="size-4" />;
-                     })()
-                  ) : (
-                     <Box className="size-4" />
-                  )}
+                  {value ? <Hash className="size-4" /> : <Box className="size-4" />}
                   <span>{value ? tags.find((t) => t.id === value)?.name : 'No tag'}</span>
                </Button>
             </PopoverTrigger>
@@ -101,13 +88,10 @@ export function TagSelector({ tag, onChange }: TagSelectorProps): React.JSX.Elem
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <tag.icon className="size-4" />
+                                 <Hash className="size-4" />
                                  {tag.name}
                               </div>
                               {value === tag.id && <CheckIcon size={16} className="ml-auto" />}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Now using local data*/}
-                              </span>
                            </CommandItem>
                         ))}
                      </CommandGroup>

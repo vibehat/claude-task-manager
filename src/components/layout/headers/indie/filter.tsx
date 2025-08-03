@@ -16,20 +16,17 @@ import { useFilterStore } from '@/store/filterStore';
 import { status as allStatus } from '@/mock-data/StatusIcon';
 import { priorities } from '@/mock-data/priorities';
 import { labels } from '@/mock-data/labels';
-import { tags } from '@/mock-data/tags';
-import { users } from '@/mock-data/users';
+import { useAllTags } from '@/libs/client/stores/selectors';
 import {
    CheckIcon,
    ChevronRight,
    ListFilter,
-   User,
    CircleCheck,
    BarChart3,
    Tag,
    Folder,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 // Define filter types
 type FilterType = 'status' | 'priority' | 'labels' | 'tag';
@@ -39,6 +36,7 @@ export function Filter(): React.JSX.Element {
    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
 
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
+   const tags = useAllTags();
 
    // TODO: Now using local data
    // const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
@@ -291,7 +289,7 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <tag.icon className="size-4" />
+                                 <Folder className="size-4 text-muted-foreground" />
                                  {tag.name}
                               </div>
                               {filters.tag.includes(tag.id) && (

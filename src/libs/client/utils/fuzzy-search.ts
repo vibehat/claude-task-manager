@@ -36,12 +36,12 @@ export interface FuzzySearchResult {
  */
 export class FuzzySearchIndex {
    private index: Map<string, FuzzyIndexEntry> = new Map();
-   private lastUpdate: number = 0;
+   private lastUpdate = 0;
 
    /**
     * Generate n-grams from text for faster fuzzy matching
     */
-   private generateNgrams(text: string, n: number = 2): Set<string> {
+   private generateNgrams(text: string, n = 2): Set<string> {
       const ngrams = new Set<string>();
       const cleaned = text.toLowerCase().replace(/[^a-z0-9]/g, '');
 
@@ -92,7 +92,7 @@ export class FuzzySearchIndex {
    /**
     * Fast fuzzy search using the index
     */
-   search(query: string, maxResults: number = 10): FuzzySearchResult[] {
+   search(query: string, maxResults = 10): FuzzySearchResult[] {
       const queryLower = query.toLowerCase();
       const queryNgrams = this.generateNgrams(query);
       const results: FuzzySearchResult[] = [];

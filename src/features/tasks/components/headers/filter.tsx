@@ -45,13 +45,13 @@ import {
    CircleCheck,
    BarChart3,
    Tag,
-   Folder,
+   Hash,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 // Define filter types
-type FilterType = 'status' | 'assignee' | 'priority' | 'labels' | 'tag';
+type FilterType = 'status' | 'priority' | 'labels' | 'tag';
 
 export function Filter(): React.JSX.Element {
    const [open, setOpen] = useState<boolean>(false);
@@ -105,19 +105,14 @@ export function Filter(): React.JSX.Element {
                               <ChevronRight className="size-4" />
                            </div>
                         </CommandItem>
-                        <CommandItem
-                           onSelect={() => setActiveFilter('assignee')}
-                           className="flex items-center justify-between cursor-pointer"
-                        >
+                        <CommandItem className="flex items-center justify-between cursor-pointer">
                            <span className="flex items-center gap-2">
                               <User className="size-4 text-muted-foreground" />
                               Assignee
                            </span>
                            <div className="flex items-center">
-                              {filters.assignee.length > 0 && (
-                                 <span className="text-xs text-muted-foreground mr-1">
-                                    {filters.assignee.length}
-                                 </span>
+                              {false && (
+                                 <span className="text-xs text-muted-foreground mr-1">0</span>
                               )}
                               <ChevronRight className="size-4" />
                            </div>
@@ -161,7 +156,7 @@ export function Filter(): React.JSX.Element {
                            className="flex items-center justify-between cursor-pointer"
                         >
                            <span className="flex items-center gap-2">
-                              <Folder className="size-4 text-muted-foreground" />
+                              <Hash className="size-4 text-muted-foreground" />
                               Tag
                            </span>
                            <div className="flex items-center">
@@ -213,67 +208,6 @@ export function Filter(): React.JSX.Element {
                               isSelected={filters.status.includes(item.id)}
                               onSelect={() => toggleFilter('status', item.id)}
                            />
-                        ))}
-                     </CommandGroup>
-                  </CommandList>
-               </Command>
-            ) : activeFilter === 'assignee' ? (
-               <Command>
-                  <div className="flex items-center border-b p-2">
-                     <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-6"
-                        onClick={() => setActiveFilter(null)}
-                     >
-                        <ChevronRight className="size-4 rotate-180" />
-                     </Button>
-                     <span className="ml-2 font-medium">Assignee</span>
-                  </div>
-                  <CommandInput placeholder="Search assignee..." />
-                  <CommandList>
-                     <CommandEmpty>No assignees found.</CommandEmpty>
-                     <CommandGroup>
-                        <CommandItem
-                           value="unassigned"
-                           onSelect={() => toggleFilter('assignee', 'unassigned')}
-                           className="flex items-center justify-between"
-                        >
-                           <div className="flex items-center gap-2">
-                              <User className="size-5" />
-                              Unassigned
-                           </div>
-                           {filters.assignee.includes('unassigned') && (
-                              <CheckIcon size={16} className="ml-auto" />
-                           )}
-                           <span className="text-muted-foreground text-xs">
-                              {0 /* TODO: Now using local data*/}
-                           </span>
-                        </CommandItem>
-                        {users.map((user) => (
-                           <CommandItem
-                              key={user.id}
-                              value={user.id}
-                              onSelect={() => toggleFilter('assignee', user.id)}
-                              className="flex items-center justify-between"
-                           >
-                              <div className="flex items-center gap-2">
-                                 <Avatar className="size-5">
-                                    <AvatarImage
-                                       src={user.avatarUrl || undefined}
-                                       alt={user.name}
-                                    />
-                                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                                 </Avatar>
-                                 {user.name}
-                              </div>
-                              {filters.assignee.includes(user.id) && (
-                                 <CheckIcon size={16} className="ml-auto" />
-                              )}
-                              <span className="text-muted-foreground text-xs">
-                                 {0 /* TODO: Now using local data*/}
-                              </span>
-                           </CommandItem>
                         ))}
                      </CommandGroup>
                   </CommandList>
@@ -387,7 +321,7 @@ export function Filter(): React.JSX.Element {
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <Folder className="size-4" />
+                                 <Hash className="size-4" />
                                  {tag.name}
                               </div>
                               {filters.tag.includes(tag.id) && (

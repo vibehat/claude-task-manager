@@ -31,14 +31,6 @@ export const useTasksByTag = (tagId: string): Task[] => {
    }, [taskEntities, tagId]);
 };
 
-export const useTasksByAssignee = (assigneeId: string): Task[] => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
-   return useMemo(() => {
-      const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => task.assigneeId === assigneeId);
-   }, [taskEntities, assigneeId]);
-};
-
 export const useSubtasks = (parentTaskId: string): Task[] => {
    const taskEntities = useDataStore((state) => state.taskEntities);
    return useMemo(() => {
@@ -85,6 +77,22 @@ export const useTagDetail = (id: string): Tag | undefined => {
 export const useAllTags = (): Tag[] => {
    const tagEntities = useDataStore((state) => state.tagEntities);
    return useMemo(() => Object.values(tagEntities), [tagEntities]);
+};
+
+export const useTagCounts = (): Record<string, number> => {
+   const taskEntities = useDataStore((state) => state.taskEntities);
+   return useMemo(() => {
+      const tasks = Object.values(taskEntities);
+      const tagCounts: Record<string, number> = {};
+
+      tasks.forEach((task) => {
+         if (task.tagId) {
+            tagCounts[task.tagId] = (tagCounts[task.tagId] || 0) + 1;
+         }
+      });
+
+      return tagCounts;
+   }, [taskEntities]);
 };
 
 // Label selectors

@@ -66,7 +66,6 @@ export const taskSearchModule: CommandModule = {
                // Get status and priority information for display
                const status = dataStore.getStatusById(task.statusId);
                const priority = dataStore.getPriorityById(task.priorityId || '');
-               const assignee = dataStore.getUserById(task.assigneeId || '');
 
                // Create concise description with truncation
                const maxDescLength = 60; // Limit description length
@@ -105,7 +104,6 @@ export const taskSearchModule: CommandModule = {
                if (matchType) statusInfo.push(matchType);
                if (status) statusInfo.push(status.name);
                if (priority) statusInfo.push(`${priority.name} priority`);
-               if (assignee) statusInfo.push(`@${assignee.name}`);
 
                const description =
                   statusInfo.length > 0
