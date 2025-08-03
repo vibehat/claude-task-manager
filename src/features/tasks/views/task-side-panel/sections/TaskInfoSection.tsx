@@ -7,6 +7,9 @@ import { FileText, TestTube, Edit2 } from 'lucide-react';
 import { RichMarkdownEditor, MarkdownViewer } from '../../../components/editors/RichMarkdownEditor';
 import type { Task } from '@/libs/client/types';
 
+// Color variables
+const DESCRIPTION_HEADER_COLOR = 'rgb(217, 119, 87)';
+
 interface TaskInfoSectionProps {
    task: Task;
    onDescriptionSave?: (value: string) => void;
@@ -161,8 +164,13 @@ Add test strategy..."
                {/* Description Section */}
                <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                     <FileText className="h-4 w-4 text-foreground" />
-                     <Label className="text-sm font-medium">Description</Label>
+                     <FileText className="h-4 w-4" style={{ color: DESCRIPTION_HEADER_COLOR }} />
+                     <Label
+                        className="text-sm font-medium"
+                        style={{ color: DESCRIPTION_HEADER_COLOR }}
+                     >
+                        Description
+                     </Label>
                   </div>
                   <div
                      className="text-sm cursor-pointer rounded p-2 hover:bg-muted/50 transition-colors"

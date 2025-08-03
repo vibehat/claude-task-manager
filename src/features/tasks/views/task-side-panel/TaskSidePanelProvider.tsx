@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
 import { useDataStore } from '@/libs/client/stores';
 import { TaskSidePanel } from './TaskSidePanel';
