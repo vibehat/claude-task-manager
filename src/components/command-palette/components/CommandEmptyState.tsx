@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { CommandEmpty } from '@/components/ui/command';
 import { Loader2Icon } from 'lucide-react';
 
 interface CommandEmptyStateProps {
@@ -16,17 +15,15 @@ export function CommandEmptyState({
    loadingMessage = 'Loading...',
 }: CommandEmptyStateProps) {
    return (
-      <CommandEmpty>
+      <div className="py-6 text-center">
          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-6 gap-2">
+            <div className="flex flex-col items-center justify-center gap-2">
                <Loader2Icon className="w-4 h-4 animate-spin" />
                <span className="text-sm text-muted-foreground">{loadingMessage}</span>
             </div>
          ) : (
-            <div className="text-center py-6">
-               <p className="text-sm text-muted-foreground">{emptyMessage}</p>
-            </div>
+            <p className="text-sm text-muted-foreground">{emptyMessage}</p>
          )}
-      </CommandEmpty>
+      </div>
    );
 }

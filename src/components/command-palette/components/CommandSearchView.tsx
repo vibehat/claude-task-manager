@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
+import { SearchResultsContainer } from './SearchResultsContainer';
 import type { Command } from '../types';
 
 interface CommandSearchViewProps {
@@ -8,6 +9,7 @@ interface CommandSearchViewProps {
    onSelectCommand: (command: Command) => void;
    isCommandEnabled: (command: Command) => boolean;
    activeIndex: number;
+   searchResultConfig?: Command['searchResultConfig'];
 }
 
 export function CommandSearchView({
@@ -15,10 +17,32 @@ export function CommandSearchView({
    onSelectCommand,
    isCommandEnabled,
    activeIndex,
+   searchResultConfig,
 }: CommandSearchViewProps) {
-   // Group commands by their group property
+   // Filter enabled commands
+   const enabledCommands = useMemo(() => {
+      return commands.filter((command) => isCommandEnabled(command));
+   }, [commands, isCommandEnabled]);
+
+   if (enabledCommands.length === 0) {
+      return null;
+   }
+
+   // Use custom display if searchResultConfig is provided
+   if (searchResultConfig) {
+      return (
+         <SearchResultsContainer
+            commands={enabledCommands}
+            onSelectCommand={onSelectCommand}
+            activeIndex={activeIndex}
+            searchResultConfig={searchResultConfig}
+         />
+      );
+   }
+
+   // Fallback to default grouped display
    const groupedCommands = useMemo(() => {
-      return commands.reduce(
+      return enabledCommands.reduce(
          (groups, command) => {
             const group = command.group || 'Commands';
             if (!groups[group]) groups[group] = [];
@@ -27,15 +51,10 @@ export function CommandSearchView({
          },
          {} as Record<string, Command[]>
       );
-   }, [commands]);
-
-   if (commands.length === 0) {
-      return null;
-   }
+   }, [enabledCommands]);
 
    const renderCommandIcon = (command: Command) => {
       if (!command.icon) {
-         // Default icon for commands without specific icon
          return (
             <svg
                width="16"
@@ -51,37 +70,35 @@ export function CommandSearchView({
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-               ></path>
+               />
                <path
                   d="M2.44446 10.4443H12.6667"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-               ></path>
+               />
                <path
                   d="M6.78491 2.44434L4.70135 13.5554"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-               ></path>
+               />
                <path
                   d="M11.2987 2.44434L9.21515 13.5554"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-               ></path>
+               />
             </svg>
          );
       }
 
       return (
          <div className="text-gray-500 dark:text-gray-400 h-4 w-4 shrink-0">
-            {typeof command.icon === 'function'
-               ? command.icon({} as any) // Context would be passed from parent
-               : command.icon}
+            {typeof command.icon === 'function' ? command.icon({} as any) : command.icon}
          </div>
       );
    };
@@ -92,16 +109,13 @@ export function CommandSearchView({
 
    const renderCommandDescription = (command: Command) => {
       if (!command.description) return null;
-
-      const description = typeof command.description === 'string' ? command.description : '';
-      return description;
+      return typeof command.description === 'string' ? command.description : '';
    };
 
    return (
       <>
          {Object.entries(groupedCommands).map(([group, groupCommands]) => {
             let currentIndex = 0;
-            // Calculate the starting index for this group
             for (const [prevGroup, prevCommands] of Object.entries(groupedCommands)) {
                if (prevGroup === group) break;
                currentIndex += prevCommands.length;
@@ -123,18 +137,13 @@ export function CommandSearchView({
                         >
                            <div
                               className={`cursor-pointer relative rounded-xl flex gap-3 px-2.5 py-2 items-center transition-colors ${
-                                 !isCommandEnabled(command)
-                                    ? 'opacity-50 cursor-not-allowed'
-                                    : isActive
-                                      ? 'bg-gray-50 dark:bg-gray-800/50'
-                                      : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                                 isActive
+                                    ? 'bg-gray-50 dark:bg-gray-800/50'
+                                    : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'
                               }`}
-                              onClick={() => isCommandEnabled(command) && onSelectCommand(command)}
+                              onClick={() => onSelectCommand(command)}
                               onKeyDown={(e) => {
-                                 if (
-                                    (e.key === 'Enter' || e.key === ' ') &&
-                                    isCommandEnabled(command)
-                                 ) {
+                                 if (e.key === 'Enter' || e.key === ' ') {
                                     e.preventDefault();
                                     onSelectCommand(command);
                                  }
@@ -146,57 +155,25 @@ export function CommandSearchView({
                                  <div className="flex gap-1 items-center">
                                     <div className="flex items-center min-w-0 flex-1">
                                        <div className="flex items-center min-w-0 flex-shrink">
-                                          <div className="[&_mark]:bg-transparent [&_mark_b]:font-medium [&_mark_b]:text-md [&_mark_b]:text-primary dark:[&_mark_b]:text-primary-light [&_span.font-medium]:text-primary dark:[&_span.font-medium]:text-primary-light text-xs text-gray-500 dark:text-gray-400 truncate">
+                                          <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
                                              {group}
                                           </div>
                                        </div>
-                                       {command.type === 'select' || command.type === 'input' ? (
-                                          <div className="flex items-center min-w-0 flex-shrink">
-                                             <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24"
-                                                width="16"
-                                                height="16"
-                                                fill="currentColor"
-                                                className="mx-0.5 flex-shrink-0 size-3 text-gray-500 dark:text-gray-400"
-                                             >
-                                                <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path>
-                                             </svg>
-                                             <div className="[&_mark]:bg-transparent [&_mark_b]:font-medium [&_mark_b]:text-md [&_mark_b]:text-primary dark:[&_mark_b]:text-primary-light [&_span.font-medium]:text-primary dark:[&_span.font-medium]:text-primary-light text-xs text-gray-500 dark:text-gray-400 truncate">
-                                                {renderCommandTitle(command)}
-                                             </div>
-                                          </div>
-                                       ) : null}
                                     </div>
                                  </div>
 
                                  <div className="flex gap-1 items-center text-gray-800 dark:text-gray-200">
-                                    <div className="truncate text-sm leading-[18px] text-gray-800 dark:text-gray-200 [&_mark]:bg-transparent [&_mark_b]:font-medium [&_mark_b]:text-md [&_mark_b]:text-primary dark:[&_mark_b]:text-primary-light [&_span.font-medium]:text-primary dark:[&_span.font-medium]:text-primary-light font-medium">
+                                    <div className="truncate text-sm leading-[18px] text-gray-800 dark:text-gray-200 font-medium">
                                        {renderCommandTitle(command)}
                                     </div>
                                  </div>
 
                                  {renderCommandDescription(command) && (
-                                    <p className="text-xs truncate w-full text-gray-500 [&_mark]:text-gray-500 [&_mark]:bg-transparent [&_mark_b]:font-normal [&_mark_b]:text-primary dark:[&_mark_b]:text-primary-light [&_b_mark]:font-normal [&_b_mark]:text-primary dark:[&_b_mark]:text-primary-light [&_span.font-medium]:text-primary dark:[&_span.font-medium]:text-primary-light">
+                                    <p className="text-xs truncate w-full text-gray-500">
                                        {renderCommandDescription(command)}
                                     </p>
                                  )}
                               </div>
-
-                              <svg
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 width="20"
-                                 height="20"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 strokeWidth="2"
-                                 strokeLinecap="round"
-                                 strokeLinejoin="round"
-                                 className="lucide lucide-chevron-right text-transparent"
-                              >
-                                 <path d="m9 18 6-6-6-6"></path>
-                              </svg>
                            </div>
                         </div>
                      );

@@ -188,6 +188,140 @@ function CommandPaletteDemo() {
                         Start Workflow
                      </Button>
                   </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">File Search</h3>
+                     <p className="text-xs text-muted-foreground mb-3">
+                        Search through project files
+                     </p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:file-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Search Files
+                     </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">Command Search</h3>
+                     <p className="text-xs text-muted-foreground mb-3">Search available commands</p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:command-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Search Commands
+                     </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">Dynamic Search</h3>
+                     <p className="text-xs text-muted-foreground mb-3">
+                        Context-aware search results
+                     </p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:dynamic-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Dynamic Search
+                     </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">Grid Layout</h3>
+                     <p className="text-xs text-muted-foreground mb-3">Search with grid display</p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:grid-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Grid Search
+                     </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">Table Layout</h3>
+                     <p className="text-xs text-muted-foreground mb-3">Search with table display</p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:table-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Table Search
+                     </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">Custom Renderer</h3>
+                     <p className="text-xs text-muted-foreground mb-3">
+                        Fully custom result display
+                     </p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:custom-render-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Custom Display
+                     </Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                     <h3 className="font-medium mb-2">Grouped Results</h3>
+                     <p className="text-xs text-muted-foreground mb-3">
+                        Search with custom grouping
+                     </p>
+                     <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                           setInitialState({
+                              commandId: 'example:grouped-search',
+                           });
+                           setOpen(true);
+                        }}
+                     >
+                        Grouped Search
+                     </Button>
+                  </div>
                </div>
 
                <div className="mt-4 text-xs text-muted-foreground p-3 bg-muted rounded-lg">
@@ -350,6 +484,44 @@ function CommandPaletteDemo() {
                         </li>
                         <li>
                            <strong>Set User Name</strong> - Dynamic title based on context
+                        </li>
+                     </ul>
+                  </div>
+                  <div className="space-y-2">
+                     <h3 className="font-medium text-sm">Search Commands</h3>
+                     <ul className="list-disc list-inside text-xs space-y-1 text-muted-foreground">
+                        <li>
+                           <strong>Search Files</strong> - Search through project files with
+                           real-time results
+                        </li>
+                        <li>
+                           <strong>Search Commands</strong> - Find available commands by name or
+                           description
+                        </li>
+                        <li>
+                           <strong>Dynamic Data Search</strong> - Context-aware search with
+                           project-specific results
+                        </li>
+                     </ul>
+                  </div>
+                  <div className="space-y-2">
+                     <h3 className="font-medium text-sm">Custom Display Options</h3>
+                     <ul className="list-disc list-inside text-xs space-y-1 text-muted-foreground">
+                        <li>
+                           <strong>Grid Layout</strong> - Display search results in a responsive
+                           grid format
+                        </li>
+                        <li>
+                           <strong>Table Layout</strong> - Show results in a structured table with
+                           multiple columns
+                        </li>
+                        <li>
+                           <strong>Custom Renderer</strong> - Fully custom component rendering for
+                           each result
+                        </li>
+                        <li>
+                           <strong>Grouped Results</strong> - Organize results by category with
+                           custom group headers
                         </li>
                      </ul>
                   </div>

@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { CommandEmptyState } from './CommandEmptyState';
 import { CommandSelectView } from './CommandSelectView';
 import { CommandSearchView } from './CommandSearchView';
+import { useCommandContext } from '../providers/CommandContextProvider';
 import type { Command, CommandOption } from '../types';
 import type { CommandMode } from './CommandSearchInput';
 
@@ -25,6 +26,13 @@ interface CommandPaletteContentProps {
    onSelectAction?: (action: CommandOption) => void;
    isLoadingActions?: boolean;
 
+   // Command search mode props
+   searchResults?: Command[];
+   isLoadingSearch?: boolean;
+   searchQuery?: string;
+   searchResultConfig?: Command['searchResultConfig'];
+   currentCommand?: Command | null;
+
    // Common props
    searchValue: string;
    activeIndex: number;
@@ -41,9 +49,16 @@ export function CommandPaletteContent({
    submitActions = [],
    onSelectAction,
    isLoadingActions = false,
+   searchResults = [],
+   isLoadingSearch = false,
+   searchQuery = '',
+   searchResultConfig,
+   currentCommand,
    searchValue,
    activeIndex,
 }: CommandPaletteContentProps) {
+   const { context: commandContext } = useCommandContext();
+
    // Determine if we should show empty state
    const shouldShowEmpty = useMemo(() => {
       switch (mode) {
@@ -56,6 +71,8 @@ export function CommandPaletteContent({
             return false; // Input mode doesn't show lists
          case 'input-with-actions':
             return submitActions.length === 0 && !isLoadingActions;
+         case 'command-search':
+            return searchQuery.trim() && searchResults.length === 0 && !isLoadingSearch;
          default:
             return true;
       }
@@ -64,15 +81,26 @@ export function CommandPaletteContent({
       displayCommands.length,
       selectOptions.length,
       submitActions.length,
+      searchResults.length,
       isLoadingOptions,
       isLoadingActions,
+      isLoadingSearch,
       searchValue,
+      searchQuery,
    ]);
 
    // Determine empty message based on context
    const getEmptyMessage = () => {
       if (mode === 'search' && searchValue.trim()) {
          return `No commands found for "${searchValue}"`;
+      }
+      if (mode === 'command-search' && searchQuery.trim()) {
+         // Check for custom empty state message in search config
+         if (currentCommand?.type === 'search' && currentCommand.searchConfig?.emptyStateMessage) {
+            const message = currentCommand.searchConfig.emptyStateMessage;
+            return typeof message === 'function' ? message(commandContext) : message;
+         }
+         return `No results found for "${searchQuery}"`;
       }
       if (mode === 'select') {
          return 'No options available';
@@ -88,10 +116,14 @@ export function CommandPaletteContent({
          {/* Only show empty state when we actually want it */}
          {shouldShowEmpty && (
             <CommandEmptyState
-               isLoading={isLoadingOptions || isLoadingActions}
+               isLoading={isLoadingOptions || isLoadingActions || isLoadingSearch}
                emptyMessage={getEmptyMessage()}
                loadingMessage={
-                  mode === 'input-with-actions' ? 'Loading actions...' : 'Loading options...'
+                  mode === 'command-search'
+                     ? 'Searching...'
+                     : mode === 'input-with-actions'
+                       ? 'Loading actions...'
+                       : 'Loading options...'
                }
             />
          )}
@@ -123,6 +155,17 @@ export function CommandPaletteContent({
                isLoading={isLoadingActions}
                onSelectOption={onSelectAction}
                activeIndex={activeIndex}
+            />
+         )}
+
+         {/* Command search mode - show search results */}
+         {mode === 'command-search' && (
+            <CommandSearchView
+               commands={searchResults}
+               onSelectCommand={onSelectCommand}
+               isCommandEnabled={isCommandEnabled}
+               activeIndex={activeIndex}
+               searchResultConfig={searchResultConfig}
             />
          )}
       </div>

@@ -29,6 +29,9 @@ export function useCommandPaletteState({
    const [isLoadingOptions, setIsLoadingOptions] = useState(false);
    const [submitActions, setSubmitActions] = useState<CommandOption[]>([]);
    const [isLoadingActions, setIsLoadingActions] = useState(false);
+   const [searchResults, setSearchResults] = useState<Command[]>([]);
+   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+   const [searchQuery, setSearchQuery] = useState('');
    const [activeIndex, setActiveIndex] = useState(0);
 
    // Hooks
@@ -82,6 +85,7 @@ export function useCommandPaletteState({
       if (currentCommand.type === 'select') return 'select';
       if (currentCommand.type === 'input') return 'input';
       if (currentCommand.type === 'input-with-actions') return 'input-with-actions';
+      if (currentCommand.type === 'search') return 'command-search';
       return 'search';
    }, [currentCommand]);
 
@@ -93,8 +97,23 @@ export function useCommandPaletteState({
    }, [mode, search, searchCommands, getContextualSuggestions]);
 
    const inputConfig = useMemo(() => {
-      return currentCommand ? resolveInputConfig(currentCommand) : null;
-   }, [currentCommand, resolveInputConfig]);
+      if (!currentCommand) return null;
+
+      // For search commands, use search config placeholder
+      if (currentCommand.type === 'search' && currentCommand.searchConfig) {
+         const placeholder = currentCommand.searchConfig.placeholder;
+         return {
+            placeholder:
+               typeof placeholder === 'function' ? placeholder(commandContext) : placeholder,
+         };
+      }
+
+      return resolveInputConfig(currentCommand);
+   }, [currentCommand, resolveInputConfig, commandContext]);
+
+   const searchResultConfig = useMemo(() => {
+      return currentCommand?.type === 'search' ? currentCommand.searchResultConfig : null;
+   }, [currentCommand]);
 
    // Track if we should auto-select an option
    const [shouldAutoSelectOption, setShouldAutoSelectOption] = useState<string | null>(null);
@@ -170,6 +189,40 @@ export function useCommandPaletteState({
       }
    }, [currentCommand, inputValue]);
 
+   // Handle search commands with debouncing
+   useEffect(() => {
+      if (currentCommand?.type === 'search' && currentCommand.searchHandler) {
+         const debounceMs = currentCommand.searchConfig?.debounceMs || 300;
+         const minQueryLength = currentCommand.searchConfig?.minQueryLength || 1;
+
+         if (searchQuery.length < minQueryLength) {
+            setSearchResults([]);
+            return;
+         }
+
+         setIsLoadingSearch(true);
+         const timeoutId = setTimeout(async () => {
+            try {
+               const results = await currentCommand.searchHandler!(searchQuery, commandContext);
+               const maxResults = currentCommand.searchConfig?.maxResults || 10;
+               setSearchResults(results.slice(0, maxResults));
+            } catch (error) {
+               console.error('Search failed:', error);
+               setSearchResults([]);
+            } finally {
+               setIsLoadingSearch(false);
+            }
+         }, debounceMs);
+
+         return () => {
+            clearTimeout(timeoutId);
+            setIsLoadingSearch(false);
+         };
+      } else {
+         setSearchResults([]);
+      }
+   }, [currentCommand, searchQuery, commandContext]);
+
    // Reset state when dialog closes
    useEffect(() => {
       if (!open) {
@@ -179,6 +232,9 @@ export function useCommandPaletteState({
          setSelectOptions([]);
          setIsLoadingOptions(false);
          setShouldAutoSelectOption(null);
+         setSearchResults([]);
+         setIsLoadingSearch(false);
+         setSearchQuery('');
          setActiveIndex(0);
       }
    }, [open]);
@@ -186,7 +242,7 @@ export function useCommandPaletteState({
    // Reset active index when switching modes or updating lists
    useEffect(() => {
       setActiveIndex(0);
-   }, [mode, displayCommands, selectOptions, submitActions]);
+   }, [mode, displayCommands, selectOptions, submitActions, searchResults]);
 
    // Get current items for navigation
    const currentItems = useMemo(() => {
@@ -197,11 +253,13 @@ export function useCommandPaletteState({
             return selectOptions;
          case 'input-with-actions':
             return submitActions;
+         case 'command-search':
+            return searchResults;
          case 'input':
          default:
             return [];
       }
-   }, [mode, displayCommands, selectOptions, submitActions]);
+   }, [mode, displayCommands, selectOptions, submitActions, searchResults]);
 
    // Navigation helpers
    const navigateUp = useCallback(() => {
@@ -252,10 +310,12 @@ export function useCommandPaletteState({
 
             case 'select':
             case 'input':
-            case 'input-with-actions': {
+            case 'input-with-actions':
+            case 'search': {
                setCurrentCommand(command);
                setSearch('');
                setInputValue('');
+               setSearchQuery('');
                break;
             }
 
@@ -349,10 +409,16 @@ export function useCommandPaletteState({
          setCurrentCommand(null);
          setSearch('');
          setInputValue('');
+         setSearchQuery('');
       } else if (breadcrumbs.length > 0) {
          goBack();
       }
    }, [currentCommand, breadcrumbs.length, goBack]);
+
+   // Search query handler for search commands
+   const handleSearchQueryChange = useCallback((query: string) => {
+      setSearchQuery(query);
+   }, []);
 
    // Select active item helper
    const selectActiveItem = useCallback(() => {
@@ -368,6 +434,9 @@ export function useCommandPaletteState({
             break;
          case 'input-with-actions':
             handleActionSelect(activeItem as CommandOption);
+            break;
+         case 'command-search':
+            handleCommandSelect(activeItem as Command);
             break;
       }
    }, [
@@ -485,6 +554,10 @@ export function useCommandPaletteState({
       isLoadingOptions,
       submitActions,
       isLoadingActions,
+      searchResults,
+      isLoadingSearch,
+      searchQuery,
+      searchResultConfig,
       mode,
       displayCommands,
       inputConfig,
@@ -500,6 +573,7 @@ export function useCommandPaletteState({
       handleInputSubmit,
       handleBack,
       handleKeyDown,
+      handleSearchQueryChange,
       isCommandEnabled,
       navigateUp,
       navigateDown,

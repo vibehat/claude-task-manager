@@ -7,6 +7,8 @@ A powerful, flexible command palette system built with React, TypeScript, and cm
 - **Context-Aware**: Commands have access to full execution history and shared state
 - **Multi-Step Flows**: Support for complex, multi-step command workflows
 - **Command Chaining**: Commands can return other commands for seamless workflows
+- **Dynamic Search**: Real-time search with results displayed as executable commands
+- **Custom Display**: Flexible result layouts including grid, table, and custom rendering
 - **Modular Architecture**: Plugin-like module system with dependencies
 - **Dynamic Resolution**: Commands adapt based on current context
 - **Type-Safe**: Full TypeScript support with comprehensive type definitions
@@ -114,6 +116,148 @@ const customContextualCommand = createContextualInputCommand({
 });
 ```
 
+### Search Commands
+
+Search commands provide dynamic search functionality where results are displayed as executable commands:
+
+```tsx
+import { createSearchCommand } from '@/components/command-palette';
+
+// Basic search command
+const fileSearchCommand = createSearchCommand({
+   id: 'file-search',
+   title: 'Search Files',
+   description: 'Search for files in your project',
+   searchConfig: {
+      placeholder: 'Enter filename...',
+      debounceMs: 250,
+      minQueryLength: 2,
+      maxResults: 10,
+      emptyStateMessage: 'No files found',
+   },
+   searchHandler: async (query, context) => {
+      // Return array of commands as search results
+      const files = await searchFiles(query);
+
+      return files.map((file) =>
+         createActionCommand({
+            id: `file:${file.path}`,
+            title: file.name,
+            description: file.path,
+            icon: '📄',
+            execute: async () => {
+               await openFile(file.path);
+               return { success: true };
+            },
+         })
+      );
+   },
+});
+
+// Search with custom display
+const customSearchCommand = createSearchCommand({
+   id: 'custom-search',
+   title: 'Team Members',
+   searchConfig: {
+      placeholder: 'Search team members...',
+      debounceMs: 200,
+      minQueryLength: 1,
+   },
+   searchResultConfig: {
+      // Choose display layout: 'list' | 'grid' | 'table' | 'custom'
+      layout: 'grid',
+      gridConfig: {
+         columns: 3,
+         gap: '1rem',
+      },
+      showMetadata: true,
+   },
+   searchHandler: async (query, context) => {
+      const members = await searchTeamMembers(query);
+      return members.map((member) =>
+         createActionCommand({
+            id: `member:${member.id}`,
+            title: member.name,
+            description: member.role,
+            icon: member.avatar,
+            group: member.department,
+            execute: async () => {
+               await openProfile(member.id);
+               return { success: true };
+            },
+         })
+      );
+   },
+});
+
+// Search with fully custom rendering
+const advancedSearchCommand = createSearchCommand({
+   id: 'advanced-search',
+   title: 'Advanced Search',
+   searchResultConfig: {
+      layout: 'custom',
+      customRenderer: (command, isActive, onSelect) => (
+         <div className={`custom-result ${isActive ? 'active' : ''}`} onClick={onSelect}>
+            <img src={command.icon} alt="" />
+            <div>
+               <h3>{command.title}</h3>
+               <p>{command.description}</p>
+            </div>
+         </div>
+      ),
+      groupBy: (command) => command.group,
+      groupRenderer: (groupName, commands) => (
+         <div className="group-header">
+            {groupName} ({commands.length})
+         </div>
+      ),
+   },
+   searchHandler: async (query, context) => {
+      // Your search logic here
+   },
+});
+```
+
+#### Search Display Options
+
+The `searchResultConfig` object allows extensive customization:
+
+```typescript
+searchResultConfig: {
+   // Layout type
+   layout: 'list' | 'grid' | 'table' | 'custom',
+
+   // Grid configuration
+   gridConfig: {
+      columns: number,
+      gap: string,
+      minItemWidth: string,
+   },
+
+   // Table configuration
+   tableConfig: {
+      columns: Array<{
+         key: string,
+         header: string,
+         width?: string,
+         render?: (command) => ReactNode,
+      }>,
+   },
+
+   // Custom rendering
+   customRenderer: (command, isActive, onSelect) => ReactNode,
+
+   // Styling
+   containerClassName: string,
+   itemClassName: string,
+
+   // Additional features
+   showMetadata: boolean,
+   groupBy: (command) => string,
+   groupRenderer: (groupName, commands) => ReactNode,
+}
+```
+
 ### Creating Modules
 
 ```tsx
@@ -168,13 +312,14 @@ const myModule: CommandModule = {
 
 ### Command Types
 
-| Type        | Description           | Use Case                  |
-| ----------- | --------------------- | ------------------------- |
-| `action`    | Execute immediately   | Simple operations         |
-| `select`    | Choose from options   | Selections, menus         |
-| `input`     | Text/number input     | Data entry, configuration |
-| `branch`    | Conditional execution | Context-dependent logic   |
-| `composite` | Returns more commands | Multi-step workflows      |
+| Type        | Description                 | Use Case                  |
+| ----------- | --------------------------- | ------------------------- |
+| `action`    | Execute immediately         | Simple operations         |
+| `select`    | Choose from options         | Selections, menus         |
+| `input`     | Text/number input           | Data entry, configuration |
+| `search`    | Dynamic search with results | File search, data lookup  |
+| `branch`    | Conditional execution       | Context-dependent logic   |
+| `composite` | Returns more commands       | Multi-step workflows      |
 
 ### Context Flow
 
@@ -258,6 +403,65 @@ const advancedModule: CommandModule = {
       return enhancedCommands(basicCommands);
    },
 };
+```
+
+### Advanced Search Examples
+
+```tsx
+// Table layout for database records
+const databaseSearchCommand = createSearchCommand({
+   id: 'db-search',
+   title: 'Database Search',
+   searchResultConfig: {
+      layout: 'table',
+      tableConfig: {
+         columns: [
+            { key: 'name', header: 'Name', width: '30%' },
+            { key: 'type', header: 'Type', width: '20%' },
+            { key: 'status', header: 'Status', width: '20%' },
+            { key: 'modified', header: 'Modified', width: '30%' },
+         ],
+      },
+   },
+   searchHandler: async (query) => {
+      const records = await searchDatabase(query);
+      return records.map((record) => ({
+         id: record.id,
+         title: record.name,
+         description: record.type,
+         metadata: {
+            status: record.status,
+            modified: record.lastModified,
+         },
+         execute: async () => openRecord(record.id),
+      }));
+   },
+});
+
+// Grouped search results
+const groupedSearchCommand = createSearchCommand({
+   id: 'grouped-search',
+   title: 'Categorized Search',
+   searchResultConfig: {
+      groupBy: (command) => command.group || 'Other',
+      groupRenderer: (groupName, commands) => (
+         <div className="group-header">
+            <span className="group-icon">{getGroupIcon(groupName)}</span>
+            <span className="group-name">{groupName}</span>
+            <span className="group-count">({commands.length})</span>
+         </div>
+      ),
+   },
+   searchHandler: async (query) => {
+      const results = await searchWithCategories(query);
+      return results.map((item) => ({
+         id: item.id,
+         title: item.name,
+         group: item.category,
+         execute: async () => handleItemSelection(item),
+      }));
+   },
+});
 ```
 
 ## 🔧 Customization

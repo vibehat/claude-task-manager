@@ -35,6 +35,10 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
       isLoadingOptions,
       submitActions,
       isLoadingActions,
+      searchResults,
+      isLoadingSearch,
+      searchQuery,
+      searchResultConfig,
       mode,
       displayCommands,
       inputConfig,
@@ -48,6 +52,7 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
       handleActionSelect,
       handleBack,
       handleKeyDown,
+      handleSearchQueryChange,
       isCommandEnabled,
    } = useCommandPaletteState({ open, onOpenChange, context, initialState });
 
@@ -155,8 +160,20 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
                {/* Command input */}
                <CommandSearchInput
                   mode={mode}
-                  value={mode === 'input' ? inputValue : search}
-                  onValueChange={mode === 'input' ? setInputValue : setSearch}
+                  value={
+                     mode === 'input'
+                        ? inputValue
+                        : mode === 'command-search'
+                          ? searchQuery
+                          : search
+                  }
+                  onValueChange={
+                     mode === 'input'
+                        ? setInputValue
+                        : mode === 'command-search'
+                          ? handleSearchQueryChange
+                          : setSearch
+                  }
                   inputPlaceholder={inputConfig?.placeholder}
                />
 
@@ -176,6 +193,11 @@ export function CommandPalette({ open, onOpenChange, context, initialState }: Co
                      submitActions={submitActions}
                      onSelectAction={handleActionSelect}
                      isLoadingActions={isLoadingActions}
+                     searchResults={searchResults}
+                     isLoadingSearch={isLoadingSearch}
+                     searchQuery={searchQuery}
+                     searchResultConfig={searchResultConfig}
+                     currentCommand={currentCommand}
                      searchValue={search}
                      activeIndex={activeIndex}
                   />

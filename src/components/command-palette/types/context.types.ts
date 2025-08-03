@@ -59,7 +59,7 @@ export interface Command {
    enabled?: (context: CommandContext) => boolean;
 
    // Command behavior
-   type: 'action' | 'select' | 'input' | 'input-with-actions' | 'branch' | 'composite';
+   type: 'action' | 'select' | 'input' | 'input-with-actions' | 'branch' | 'composite' | 'search';
 
    // For select commands
    options?: CommandOption[] | ((context: CommandContext) => Promise<CommandOption[]>);
@@ -84,6 +84,47 @@ export interface Command {
       condition: (context: CommandContext) => boolean;
       command: Command;
    }[];
+
+   // For search commands
+   searchConfig?: {
+      placeholder?: string | ((context: CommandContext) => string);
+      debounceMs?: number;
+      minQueryLength?: number;
+      emptyStateMessage?: string | ((context: CommandContext) => string);
+      maxResults?: number;
+   };
+   searchHandler?: (query: string, context: CommandContext) => Promise<Command[]>;
+
+   // Custom display configuration for search results
+   searchResultConfig?: {
+      // Custom renderer for individual search result items
+      customRenderer?: (command: Command, isActive: boolean, onSelect: () => void) => ReactNode;
+      // Layout mode for results
+      layout?: 'list' | 'grid' | 'table' | 'custom';
+      // Grid configuration (when layout is 'grid')
+      gridConfig?: {
+         columns?: number;
+         gap?: string;
+         minItemWidth?: string;
+      };
+      // Table configuration (when layout is 'table')
+      tableConfig?: {
+         columns: Array<{
+            key: string;
+            header: string;
+            width?: string;
+            render?: (command: Command) => ReactNode;
+         }>;
+      };
+      // Custom container styling
+      containerClassName?: string;
+      itemClassName?: string;
+      // Show additional metadata
+      showMetadata?: boolean;
+      // Custom grouping
+      groupBy?: (command: Command) => string;
+      groupRenderer?: (groupName: string, commands: Command[]) => ReactNode;
+   };
 
    // Execution
    execute: (input: any, context: CommandContext) => Promise<CommandResult>;

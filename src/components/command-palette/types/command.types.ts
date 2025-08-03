@@ -101,6 +101,30 @@ export function createCompositeCommand(
    return createCommand({ ...config, type: 'composite' });
 }
 
+export function createSearchCommand(
+   config: Omit<Command, 'type' | 'execute'> & {
+      type?: 'search';
+      searchConfig?: Command['searchConfig'];
+      searchResultConfig?: Command['searchResultConfig'];
+      searchHandler: Command['searchHandler'];
+   }
+): Command {
+   const { searchHandler, searchResultConfig, ...rest } = config;
+
+   return createCommand({
+      ...rest,
+      type: 'search',
+      searchHandler,
+      searchResultConfig,
+      // For search commands, execute handles the search query
+      execute: async (query: string, context: CommandContext) => {
+         // This execute function won't be called directly for search commands
+         // Instead, the searchHandler is used by the UI to get search results
+         return { success: true };
+      },
+   } as any);
+}
+
 // Command option helpers
 export function createOption(
    id: string,

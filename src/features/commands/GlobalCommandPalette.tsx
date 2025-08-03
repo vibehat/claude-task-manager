@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { CommandPalette } from '@/components/command-palette/CommandPalette';
 import { useCommandModules } from '@/components/command-palette';
-import { exampleModule } from './modules/ExampleModule';
-// import { taskMasterModule } from './modules/TaskMasterModule';
 import { claudeModule } from './modules/ClaudeModule';
 
 /**
@@ -21,10 +19,6 @@ export function GlobalCommandPalette() {
       const loadModules = async () => {
          try {
             console.log('Loading command modules...');
-            if (!isModuleLoaded('example')) {
-               await loadModule(exampleModule);
-               console.log('Example module loaded');
-            }
             // if (!isModuleLoaded('taskmaster')) {
             //    await loadModule(taskMasterModule);
             //    console.log('TaskMaster module loaded');
