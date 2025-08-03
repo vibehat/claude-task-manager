@@ -1,6 +1,11 @@
 import { create } from 'zustand';
 import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 import { taskManagerDataService } from '../services/taskManagerDataService';
+import {
+   FuzzySearchIndex,
+   createFuzzySearchIndex,
+   type FuzzySearchResult,
+} from '../utils/fuzzy-search';
 
 interface DataState {
    // Normalized entities
@@ -10,6 +15,9 @@ interface DataState {
    statusEntities: Record<string, TaskStatus>;
    priorityEntities: Record<string, TaskPriority>;
    taskEntities: Record<string, Task>;
+
+   // Search infrastructure
+   fuzzySearchIndex: FuzzySearchIndex;
 
    // Loading states
    isLoading: boolean;
@@ -67,6 +75,7 @@ interface DataState {
    getTasksByAssignee: (assigneeId: string) => Task[];
    getSubtasks: (parentTaskId: string) => Task[];
    searchTasks: (query: string) => Task[];
+   fuzzySearchTasks: (query: string, maxResults?: number) => FuzzySearchResult[];
 
    // TaskMaster sync actions
    enableTaskMasterSync: () => Promise<void>;
@@ -88,6 +97,7 @@ export const useDataStore = create<DataState>()(
       statusEntities: {},
       priorityEntities: {},
       taskEntities: {},
+      fuzzySearchIndex: createFuzzySearchIndex(),
       isLoading: false,
       isInitialized: false,
 
@@ -168,6 +178,11 @@ export const useDataStore = create<DataState>()(
                      updatedAt: new Date(task.updatedAt),
                   };
                });
+
+               // Build fuzzy search index with the new tasks
+               const fuzzySearchIndex = get().fuzzySearchIndex;
+               const allTasksArray = Object.values(taskEntities);
+               fuzzySearchIndex.buildIndex(allTasksArray);
 
                // Set final data state
                set({
@@ -444,6 +459,10 @@ export const useDataStore = create<DataState>()(
             createdAt: new Date(),
             updatedAt: new Date(),
          };
+
+         // Update search index
+         state.fuzzySearchIndex.updateTask(newTask);
+
          set((state) => ({
             taskEntities: { ...state.taskEntities, [newTask.id]: newTask },
          }));
@@ -452,28 +471,40 @@ export const useDataStore = create<DataState>()(
       },
 
       updateTask: async (id, updates) => {
+         const state = get();
+         const updatedTask = state.taskEntities[id]
+            ? {
+                 ...state.taskEntities[id],
+                 ...updates,
+                 updatedAt: new Date(),
+              }
+            : state.taskEntities[id];
+
+         // Update search index if task exists
+         if (updatedTask) {
+            state.fuzzySearchIndex.updateTask(updatedTask);
+         }
+
          set((state) => ({
             taskEntities: {
                ...state.taskEntities,
-               [id]: state.taskEntities[id]
-                  ? {
-                       ...state.taskEntities[id],
-                       ...updates,
-                       updatedAt: new Date(),
-                    }
-                  : state.taskEntities[id],
+               [id]: updatedTask,
             },
          }));
          taskManagerDataService.updateAdditionalTask(id, updates).catch(console.warn);
       },
 
       deleteTask: (id) => {
+         const state = get();
+
          set((state) => {
             const updatedTaskEntities = { ...state.taskEntities };
 
             // Delete the task and all its subtasks
             Object.keys(updatedTaskEntities).forEach((taskId) => {
                if (taskId === id || updatedTaskEntities[taskId].parentTaskId === id) {
+                  // Remove from search index
+                  state.fuzzySearchIndex.removeTask(taskId);
                   delete updatedTaskEntities[taskId];
                }
             });
@@ -583,9 +614,27 @@ export const useDataStore = create<DataState>()(
          const lowerQuery = query.toLowerCase();
          return tasks.filter(
             (task) =>
-               task.title.toLowerCase().includes(lowerQuery) ||
-               task.description?.toLowerCase().includes(lowerQuery)
+               String(task.title || '')
+                  .toLowerCase()
+                  .includes(lowerQuery) ||
+               String(task.description || '')
+                  .toLowerCase()
+                  .includes(lowerQuery)
          );
+      },
+
+      fuzzySearchTasks: (query: string, maxResults = 10) => {
+         if (!query.trim()) return [];
+
+         const state = get();
+         const allTasks = Object.values(state.taskEntities);
+
+         // Rebuild index if needed
+         if (state.fuzzySearchIndex.needsRebuild(allTasks.length)) {
+            state.fuzzySearchIndex.buildIndex(allTasks);
+         }
+
+         return state.fuzzySearchIndex.search(query, maxResults);
       },
 
       // TaskMaster sync implementations (placeholder implementations)
@@ -673,6 +722,11 @@ export const useDataStore = create<DataState>()(
                      updatedAt: new Date(task.updatedAt),
                   };
                });
+
+               // Rebuild fuzzy search index with the new tasks
+               const fuzzySearchIndex = get().fuzzySearchIndex;
+               const allTasksArray = Object.values(taskEntities);
+               fuzzySearchIndex.buildIndex(allTasksArray);
 
                // Update all data in one go
                set({

@@ -24,23 +24,7 @@ export function CommandSearchView({
       return commands.filter((command) => isCommandEnabled(command));
    }, [commands, isCommandEnabled]);
 
-   if (enabledCommands.length === 0) {
-      return null;
-   }
-
-   // Use custom display if searchResultConfig is provided
-   if (searchResultConfig) {
-      return (
-         <SearchResultsContainer
-            commands={enabledCommands}
-            onSelectCommand={onSelectCommand}
-            activeIndex={activeIndex}
-            searchResultConfig={searchResultConfig}
-         />
-      );
-   }
-
-   // Fallback to default grouped display
+   // Always compute grouped commands to avoid conditional hooks
    const groupedCommands = useMemo(() => {
       return enabledCommands.reduce(
          (groups, command) => {
@@ -112,6 +96,24 @@ export function CommandSearchView({
       return typeof command.description === 'string' ? command.description : '';
    };
 
+   // Early returns after all hooks are called
+   if (enabledCommands.length === 0) {
+      return null;
+   }
+
+   // Use custom display if searchResultConfig is provided
+   if (searchResultConfig) {
+      return (
+         <SearchResultsContainer
+            commands={enabledCommands}
+            onSelectCommand={onSelectCommand}
+            activeIndex={activeIndex}
+            searchResultConfig={searchResultConfig}
+         />
+      );
+   }
+
+   // Fallback to default grouped display
    return (
       <>
          {Object.entries(groupedCommands).map(([group, groupCommands]) => {
