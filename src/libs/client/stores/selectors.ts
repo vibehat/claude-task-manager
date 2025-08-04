@@ -1,5 +1,7 @@
 import { useDataStore } from './dataStore';
-import type { Task, User, Tag, Label, TaskStatus, TaskPriority } from '../types/dataModels';
+import { useFilterStore } from '../../../store/filterStore';
+import type { Task, Tag, Label, TaskStatus, TaskPriority } from '../types/dataModels';
+import type { TaskFilterInput } from '../../../features/tasks/types/filtersTypes';
 import { useMemo } from 'react';
 
 // Task selectors
@@ -7,36 +9,18 @@ export const useTaskDetail = (id: string): Task | undefined => {
    return useDataStore((state) => state.taskEntities[id]);
 };
 
-export const useTasksByStatus = (statusId: string): Task[] => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
+export const useTasksByStatus = (statusId: string, includeSubtasks = true): Task[] => {
+   const getTasksByStatus = useDataStore((state) => state.getTasksByStatus);
    return useMemo(() => {
-      const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => task.statusId === statusId);
-   }, [taskEntities, statusId]);
+      return getTasksByStatus(statusId, includeSubtasks);
+   }, [getTasksByStatus, statusId, includeSubtasks]);
 };
 
-export const useParentTasksByStatus = (statusId: string): Task[] => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
+export const useTasksByTag = (tagId: string, includeSubtasks = true): Task[] => {
+   const getTasksByTag = useDataStore((state) => state.getTasksByTag);
    return useMemo(() => {
-      const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => task.statusId === statusId && !task.parentTaskId);
-   }, [taskEntities, statusId]);
-};
-
-export const useTasksByTag = (tagId: string): Task[] => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
-   return useMemo(() => {
-      const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => task.tagId === tagId);
-   }, [taskEntities, tagId]);
-};
-
-export const useSubtasks = (parentTaskId: string): Task[] => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
-   return useMemo(() => {
-      const tasks = Object.values(taskEntities);
-      return tasks.filter((task) => task.parentTaskId === parentTaskId);
-   }, [taskEntities, parentTaskId]);
+      return getTasksByTag(tagId, includeSubtasks);
+   }, [getTasksByTag, tagId, includeSubtasks]);
 };
 
 export const useSearchTasks = (query: string): Task[] => {
@@ -55,18 +39,10 @@ export const useSearchTasks = (query: string): Task[] => {
 };
 
 export const useAllTasks = (): Task[] => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
-   return useMemo(() => Object.values(taskEntities), [taskEntities]);
-};
-
-// User selectors
-export const useUserDetail = (id: string): User | undefined => {
-   return useDataStore((state) => state.userEntities[id]);
-};
-
-export const useAllUsers = (): User[] => {
-   const userEntities = useDataStore((state) => state.userEntities);
-   return useMemo(() => Object.values(userEntities), [userEntities]);
+   const getAllTasks = useDataStore((state) => state.getAllTasks);
+   return useMemo(() => {
+      return getAllTasks();
+   }, [getAllTasks]);
 };
 
 // Tag selectors
@@ -80,29 +56,11 @@ export const useAllTags = (): Tag[] => {
 };
 
 export const useTagCounts = (): Record<string, number> => {
-   const tagExtra = useDataStore((state) => state.tagExtra);
-   const taskEntities = useDataStore((state) => state.taskEntities);
+   const getTagCounts = useDataStore((state) => state.getTagCounts);
 
    return useMemo(() => {
-      const tagCounts: Record<string, number> = {};
-
-      // First, use the efficient tagExtra data for TaskMaster tags
-      Object.entries(tagExtra).forEach(([tagId, extra]) => {
-         if (extra.metadata?.taskCount !== undefined) {
-            tagCounts[tagId] = extra.metadata.taskCount;
-         }
-      });
-
-      // For any remaining tags (UI-only tags), count parent tasks manually
-      const tasks = Object.values(taskEntities);
-      tasks.forEach((task) => {
-         if (task.tagId && !task.parentTaskId && !tagCounts[task.tagId]) {
-            tagCounts[task.tagId] = (tagCounts[task.tagId] || 0) + 1;
-         }
-      });
-
-      return tagCounts;
-   }, [tagExtra, taskEntities]);
+      return getTagCounts();
+   }, [getTagCounts]);
 };
 
 // Label selectors
@@ -137,28 +95,11 @@ export const useAllPriorities = (): TaskPriority[] => {
 
 // Computed selectors
 export const useTaskStats = () => {
-   const taskEntities = useDataStore((state) => state.taskEntities);
-   const statusEntities = useDataStore((state) => state.statusEntities);
+   const getTaskStats = useDataStore((state) => state.getTaskStats);
 
    return useMemo(() => {
-      const tasks = Object.values(taskEntities);
-      const statuses = Object.values(statusEntities);
-
-      const tasksByStatus = statuses.reduce(
-         (acc, status) => {
-            acc[status.id] = tasks.filter((task) => task.statusId === status.id).length;
-            return acc;
-         },
-         {} as Record<string, number>
-      );
-
-      return {
-         totalTasks: tasks.length,
-         totalParentTasks: tasks.filter((task) => !task.parentTaskId).length,
-         totalSubtasks: tasks.filter((task) => task.parentTaskId).length,
-         tasksByStatus,
-      };
-   }, [taskEntities, statusEntities]);
+      return getTaskStats();
+   }, [getTaskStats]);
 };
 
 export const useTaskMasterTasks = (): Task[] => {
@@ -181,3 +122,119 @@ export const useUITasks = (): Task[] => {
 export const useCurrentTag = (): string | null => {
    return useDataStore((state) => state.getCurrentTag());
 };
+
+// Filtered task hooks
+/**
+ * Hook to get filtered tasks based on current filter state
+ * @param baseFilters - Additional filters to apply (will be merged with filter store filters)
+ * @returns Filtered tasks array
+ */
+export function useFilteredTasks(baseFilters?: Partial<TaskFilterInput>): Task[] {
+   const getTasksByFilters = useDataStore((state) => state.getTasksByFilters);
+   const filters = useFilterStore((state) => state.filters);
+
+   return useMemo(() => {
+      // Convert filterStore filters to TaskFilterInput format
+      const taskFilters: TaskFilterInput = {
+         statusIds: filters.status.length > 0 ? filters.status : undefined,
+         priorityIds: filters.priority.length > 0 ? filters.priority : undefined,
+         labelIds: filters.labels.length > 0 ? filters.labels : undefined,
+         tagIds: filters.tag.length > 0 ? filters.tag : undefined,
+         ...baseFilters, // Allow overriding with base filters
+      };
+
+      return getTasksByFilters(taskFilters);
+   }, [getTasksByFilters, filters, baseFilters]);
+}
+
+/**
+ * Hook to get task count statistics after filtering
+ * @param baseFilters - Additional filters to apply
+ * @returns Object with task counts by status, priority, etc.
+ */
+export function useFilteredTaskStats(baseFilters?: Partial<TaskFilterInput>) {
+   const filteredTasks = useFilteredTasks(baseFilters);
+
+   return useMemo(() => {
+      const stats = {
+         total: filteredTasks.length,
+         byStatus: {} as Record<string, number>,
+         byPriority: {} as Record<string, number>,
+         byTag: {} as Record<string, number>,
+         parentTasks: 0,
+         subtasks: 0,
+      };
+
+      filteredTasks.forEach((task) => {
+         // Count by status
+         stats.byStatus[task.statusId] = (stats.byStatus[task.statusId] || 0) + 1;
+
+         // Count by priority
+         if (task.priorityId) {
+            stats.byPriority[task.priorityId] = (stats.byPriority[task.priorityId] || 0) + 1;
+         }
+
+         // Count by tag
+         if (task.tagId) {
+            stats.byTag[task.tagId] = (stats.byTag[task.tagId] || 0) + 1;
+         }
+
+         // Count parent tasks (all tasks are now parent tasks since parentTaskId is removed)
+         stats.parentTasks++;
+      });
+
+      return stats;
+   }, [filteredTasks]);
+}
+
+/**
+ * Hook to get tasks by priority using optimized caching
+ * @param priorityId - Priority ID to filter by
+ * @param includeSubtasks - Whether to include subtasks (default: true)
+ * @returns Tasks with the specified priority
+ */
+export function useTasksByPriority(priorityId: string, includeSubtasks = true): Task[] {
+   const getTasksByPriority = useDataStore((state) => state.getTasksByPriority);
+
+   return useMemo(() => {
+      return getTasksByPriority(priorityId, includeSubtasks);
+   }, [getTasksByPriority, priorityId, includeSubtasks]);
+}
+
+/**
+ * Hook to get tasks by label
+ * @param labelId - Label ID to filter by
+ * @param includeSubtasks - Whether to include subtasks (default: true)
+ * @returns Tasks with the specified label
+ */
+export function useTasksByLabel(labelId: string, includeSubtasks = true): Task[] {
+   const getTasksByLabel = useDataStore((state) => state.getTasksByLabel);
+
+   return useMemo(() => {
+      return getTasksByLabel(labelId, includeSubtasks);
+   }, [getTasksByLabel, labelId, includeSubtasks]);
+}
+
+/**
+ * Hook to get parent tasks using optimized caching
+ * @returns All parent tasks (tasks without parentTaskId)
+ */
+export function useParentTasks(): Task[] {
+   const getParentTasks = useDataStore((state) => state.getParentTasks);
+
+   return useMemo(() => {
+      return getParentTasks();
+   }, [getParentTasks]);
+}
+
+/**
+ * Hook to get subtasks for a given parent task
+ * @param parentTaskId - ID of the parent task
+ * @returns Array of subtasks for the given parent task
+ */
+export function useSubtasks(parentTaskId: string): Task['subtasks'] {
+   const task = useTaskDetail(parentTaskId);
+   return useMemo(() => {
+      return task?.subtasks || [];
+   }, [task?.subtasks]);
+}

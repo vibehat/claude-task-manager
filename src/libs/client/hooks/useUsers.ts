@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDataStore, useAllUsers, useUserDetail } from '../stores';
+import { useDataStore } from '../stores';
+// TODO: useAllUsers and useUserDetail are not implemented yet
 
 export function useUsers() {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<Error | undefined>(undefined);
 
-   const users = useAllUsers();
+   // const users = useAllUsers(); // TODO: Not implemented yet
+   const users: any[] = []; // Temporary empty array
    const { isInitialized, initialize } = useDataStore();
 
    useEffect(() => {
@@ -29,7 +31,8 @@ export function useUsers() {
 }
 
 export function useUser(id: string | undefined) {
-   const user = useUserDetail(id || '');
+   // const user = useUserDetail(id || ''); // TODO: Not implemented yet
+   const user = undefined; // Temporary
 
    return {
       data: id ? user : undefined,

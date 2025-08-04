@@ -14,7 +14,6 @@ export interface SubtaskWithProgress extends Subtask {
    progressPercentage: number;
    estimatedMinutes?: number;
    actualMinutes?: number;
-   parentTaskId: number;
 }
 
 // Task filtering and sorting interfaces

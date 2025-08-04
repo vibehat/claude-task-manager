@@ -14,7 +14,6 @@ export type GetTaskStatusesQuery = {
 };
 
 export type TaskDetailsFragment = Task & {
-   subtasks?: Task[];
    tag?: Tag;
    labels?: Label[];
    priority?: TaskPriority;
@@ -23,7 +22,6 @@ export type TaskDetailsFragment = Task & {
 
 // Where clause types for filtering
 export interface TaskWhereInput {
-   parentTaskId?: { equals: string | null };
    statusId?: { in: string[]; equals?: string };
    priorityId?: { in: string[]; equals?: string };
    tagId?: { in: string[]; equals?: string };

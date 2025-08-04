@@ -1,13 +1,13 @@
 import { create } from 'zustand';
-import type { User, Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
+import type { Tag, Label, TaskStatus, TaskPriority, Task } from '../types/dataModels';
 import type { TaskMasterState, TagExtra } from '../services/types';
 import { taskManagerDataService } from '../services/taskManagerDataService';
 import type { FuzzySearchIndex } from '../utils/fuzzy-search';
 import { createFuzzySearchIndex, type FuzzySearchResult } from '../utils/fuzzy-search';
+import type { TaskFilterInput } from '../../../features/tasks/types/filtersTypes';
 
 interface DataState {
    // Normalized entities
-   userEntities: Record<string, User>;
    tagEntities: Record<string, Tag>;
    labelEntities: Record<string, Label>;
    statusEntities: Record<string, TaskStatus>;
@@ -20,8 +20,30 @@ interface DataState {
    // Tag extra data for efficient tag counts
    tagExtra: Record<string, TagExtra>;
 
+   // Tasks grouped by tag (includes 'no-tag' for untagged tasks)
+   tasksByTag: Record<string, Task[]>;
+
+   // Tasks grouped by status
+   tasksByStatus: Record<string, Task[]>;
+
    // Search infrastructure
    fuzzySearchIndex: FuzzySearchIndex;
+
+   // Cache for expensive operations
+   _cache: {
+      tasksByStatus: Map<string, Task[]>;
+      tasksByTag: Map<string, Task[]>;
+      tasksByPriority: Map<string, Task[]>;
+      parentTasks: Task[];
+      tagCounts: Record<string, number>;
+      taskStats: {
+         totalTasks: number;
+         totalParentTasks: number;
+         totalSubtasks: number;
+         tasksByStatus: Record<string, number>;
+      };
+      lastCacheUpdate: number;
+   };
 
    // Loading states
    isLoading: boolean;
@@ -37,11 +59,6 @@ interface DataState {
    initialize: () => Promise<void>;
    reset: () => void;
    sync: () => Promise<void>;
-
-   // User actions
-   addUser: (user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => User;
-   updateUser: (id: string, updates: Partial<User>) => void;
-   deleteUser: (id: string) => void;
 
    // Tag actions
    addTag: (tag: Omit<Tag, 'id' | 'createdAt' | 'updatedAt'>) => Tag;
@@ -61,7 +78,6 @@ interface DataState {
 
    // Derived selectors - these will be available as hooks
    getAllTasks: () => Task[];
-   getAllUsers: () => User[];
    getAllTags: () => Tag[];
    getAllLabels: () => Label[];
    getAllStatuses: () => TaskStatus[];
@@ -69,17 +85,34 @@ interface DataState {
 
    // Legacy compatibility methods (computed getters)
    getTaskById: (id: string) => Task | undefined;
-   getUserById: (id: string) => User | undefined;
    getTagById: (id: string) => Tag | undefined;
    getLabelById: (id: string) => Label | undefined;
    getStatusById: (id: string) => TaskStatus | undefined;
    getPriorityById: (id: string) => TaskPriority | undefined;
-   getTasksByStatus: (statusId: string) => Task[];
-   getParentTasksByStatus: (statusId: string) => Task[];
-   getTasksByTag: (tagId: string) => Task[];
-   getSubtasks: (parentTaskId: string) => Task[];
+
+   // Optimized task selectors with caching
+   getTasksByStatus: (statusId: string, includeSubtasks?: boolean) => Task[];
+   getTasksByTag: (tagId: string, includeSubtasks?: boolean) => Task[];
+   getTasksByPriority: (priorityId: string, includeSubtasks?: boolean) => Task[];
+   getTasksByLabel: (labelId: string, includeSubtasks?: boolean) => Task[];
+   getParentTasks: () => Task[];
+
+   // Search methods
    searchTasks: (query: string) => Task[];
    fuzzySearchTasks: (query: string, maxResults?: number) => FuzzySearchResult[];
+   filterTasks: (tasks: Task[], filters: TaskFilterInput) => Task[];
+   getTasksByFilters: (filters: TaskFilterInput) => Task[];
+
+   // Cache management
+   _invalidateCache: () => void;
+   _rebuildCache: () => void;
+   getTagCounts: () => Record<string, number>;
+   getTaskStats: () => {
+      totalTasks: number;
+      totalParentTasks: number;
+      totalSubtasks: number;
+      tasksByStatus: Record<string, number>;
+   };
 
    // TaskMaster state selectors
    getTaskMasterState: () => TaskMasterState | null;
@@ -101,7 +134,6 @@ let isAutoInitialized = false;
 export const useDataStore = create<DataState>()(
    (set, get): DataState => ({
       // Initial state - normalized entities
-      userEntities: {},
       tagEntities: {},
       labelEntities: {},
       statusEntities: {},
@@ -109,7 +141,23 @@ export const useDataStore = create<DataState>()(
       taskEntities: {},
       taskMasterState: null,
       tagExtra: {},
+      tasksByTag: {},
+      tasksByStatus: {},
       fuzzySearchIndex: createFuzzySearchIndex(),
+      _cache: {
+         tasksByStatus: new Map(),
+         tasksByTag: new Map(),
+         tasksByPriority: new Map(),
+         parentTasks: [],
+         tagCounts: {},
+         taskStats: {
+            totalTasks: 0,
+            totalParentTasks: 0,
+            totalSubtasks: 0,
+            tasksByStatus: {},
+         },
+         lastCacheUpdate: 0,
+      },
       isLoading: false,
       isInitialized: false,
 
@@ -137,15 +185,6 @@ export const useDataStore = create<DataState>()(
 
             if (taskManagerData) {
                // Convert date strings to Date objects and normalize to entities
-               const userEntities: Record<string, User> = {};
-               taskManagerData.users.forEach((user) => {
-                  userEntities[user.id] = {
-                     ...user,
-                     createdAt: new Date(user.createdAt),
-                     updatedAt: new Date(user.updatedAt),
-                  };
-               });
-
                const tagEntities: Record<string, Tag> = {};
                taskManagerData.tags.forEach((tag) => {
                   tagEntities[tag.id] = {
@@ -198,7 +237,6 @@ export const useDataStore = create<DataState>()(
 
                // Set final data state
                set({
-                  userEntities,
                   tagEntities,
                   labelEntities,
                   statusEntities,
@@ -210,10 +248,13 @@ export const useDataStore = create<DataState>()(
                   isInitialized: true,
                });
 
+               // Invalidate cache to force rebuild with new data
+               get()._invalidateCache();
+
                const allTasks = Object.values(taskEntities);
                const taskMasterTasks = allTasks.filter((task) => task.taskId !== undefined);
                const uiTasks = allTasks.filter((task) => task.taskId === undefined);
-               const parentTasks = allTasks.filter((task) => !task.parentTaskId);
+               const parentTasks = allTasks; // All tasks are parent tasks now
 
                console.log(`[DataStore] Initialized with ${allTasks.length} total tasks:`);
                console.log(`[DataStore]   - ${taskMasterTasks.length} TaskMaster CLI tasks`);
@@ -288,57 +329,16 @@ export const useDataStore = create<DataState>()(
       // Reset all data
       reset: () => {
          set({
-            userEntities: {},
             tagEntities: {},
             labelEntities: {},
             statusEntities: {},
             priorityEntities: {},
             taskEntities: {},
             taskMasterState: null,
+            tasksByTag: {},
+            tasksByStatus: {},
             isInitialized: false,
          });
-      },
-
-      // User actions
-      addUser: (userData) => {
-         const newUser: User = {
-            ...userData,
-            id: `user-${Date.now()}`,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-         };
-         set((state) => ({
-            userEntities: { ...state.userEntities, [newUser.id]: newUser },
-         }));
-         // Local data managed in store - sync happens separately
-         return newUser;
-      },
-
-      updateUser: (id, updates) => {
-         set((state) => ({
-            userEntities: {
-               ...state.userEntities,
-               [id]: state.userEntities[id]
-                  ? {
-                       ...state.userEntities[id],
-                       ...updates,
-                       updatedAt: new Date(),
-                    }
-                  : state.userEntities[id],
-            },
-         }));
-         // Local data managed in store - sync happens separately
-      },
-
-      deleteUser: (id) => {
-         set((state) => {
-            const { [id]: deleted, ...restUsers } = state.userEntities;
-
-            return {
-               userEntities: restUsers,
-            };
-         });
-         // Local data managed in store - sync happens separately
       },
 
       // Tag actions
@@ -469,6 +469,10 @@ export const useDataStore = create<DataState>()(
          set((state) => ({
             taskEntities: { ...state.taskEntities, [newTask.id]: newTask },
          }));
+
+         // Invalidate cache since tasks changed
+         get()._invalidateCache();
+
          // Local data managed in store - sync happens separately
          return newTask;
       },
@@ -494,18 +498,20 @@ export const useDataStore = create<DataState>()(
                [id]: updatedTask,
             },
          }));
+
+         // Invalidate cache since tasks changed
+         get()._invalidateCache();
+
          // Local data managed in store - sync happens separately
       },
 
       deleteTask: (id) => {
-         const state = get();
-
          set((state) => {
             const updatedTaskEntities = { ...state.taskEntities };
 
             // Delete the task and all its subtasks
             Object.keys(updatedTaskEntities).forEach((taskId) => {
-               if (taskId === id || updatedTaskEntities[taskId].parentTaskId === id) {
+               if (taskId === id) {
                   // Remove from search index
                   state.fuzzySearchIndex.removeTask(taskId);
                   delete updatedTaskEntities[taskId];
@@ -514,6 +520,10 @@ export const useDataStore = create<DataState>()(
 
             return { taskEntities: updatedTaskEntities };
          });
+
+         // Invalidate cache since tasks changed
+         get()._invalidateCache();
+
          // Local data managed in store - sync happens separately
       },
 
@@ -533,15 +543,14 @@ export const useDataStore = create<DataState>()(
 
             return { taskEntities: updatedTaskEntities };
          });
+
+         // Invalidate cache since tasks changed
+         get()._invalidateCache();
       },
 
       // Derived selectors
       getAllTasks: () => {
          return Object.values(get().taskEntities);
-      },
-
-      getAllUsers: () => {
-         return Object.values(get().userEntities);
       },
 
       getAllTags: () => {
@@ -565,10 +574,6 @@ export const useDataStore = create<DataState>()(
          return get().taskEntities[id];
       },
 
-      getUserById: (id: string) => {
-         return get().userEntities[id];
-      },
-
       getTagById: (id: string) => {
          return get().tagEntities[id];
       },
@@ -585,24 +590,301 @@ export const useDataStore = create<DataState>()(
          return get().priorityEntities[id];
       },
 
-      getTasksByStatus: (statusId: string) => {
-         const tasks = Object.values(get().taskEntities) || [];
-         return tasks.filter((task) => task.statusId === statusId);
+      // Cache management
+      _invalidateCache: () => {
+         const state = get();
+         state._cache.tasksByStatus.clear();
+         state._cache.tasksByTag.clear();
+         state._cache.tasksByPriority.clear();
+         state._cache.parentTasks = [];
+         state._cache.tagCounts = {};
+         state._cache.taskStats = {
+            totalTasks: 0,
+            totalParentTasks: 0,
+            totalSubtasks: 0,
+            tasksByStatus: {},
+         };
+         state._cache.lastCacheUpdate = 0;
+
+         // Clear main tasksByTag and tasksByStatus properties
+         set({ tasksByTag: {}, tasksByStatus: {} });
       },
 
-      getParentTasksByStatus: (statusId: string) => {
-         const tasks = Object.values(get().taskEntities) || [];
-         return tasks.filter((task) => task.statusId === statusId && !task.parentTaskId);
+      _rebuildCache: () => {
+         const state = get();
+
+         // Prevent concurrent rebuilds and infinite loops
+         if (state._cache.lastCacheUpdate > 0 && Date.now() - state._cache.lastCacheUpdate < 1000) {
+            return;
+         }
+
+         const tasks = Object.values(state.taskEntities);
+
+         // Clear existing cache
+         state._cache.tasksByStatus.clear();
+         state._cache.tasksByTag.clear();
+         state._cache.tasksByPriority.clear();
+
+         // Clear and rebuild tasksByTag and tasksByStatus
+         const tasksByTag: Record<string, Task[]> = {};
+         const tasksByStatus: Record<string, Task[]> = {};
+
+         // Rebuild caches
+         const parentTasks: Task[] = [];
+
+         tasks.forEach((task) => {
+            // Cache by status
+            if (!state._cache.tasksByStatus.has(task.statusId)) {
+               state._cache.tasksByStatus.set(task.statusId, []);
+            }
+            state._cache.tasksByStatus.get(task.statusId)?.push(task);
+
+            // Also populate main tasksByStatus property
+            if (!tasksByStatus[task.statusId]) {
+               tasksByStatus[task.statusId] = [];
+            }
+            tasksByStatus[task.statusId].push(task);
+
+            // Cache by tag
+            if (task.tagId) {
+               if (!state._cache.tasksByTag.has(task.tagId)) {
+                  state._cache.tasksByTag.set(task.tagId, []);
+               }
+               state._cache.tasksByTag.get(task.tagId)?.push(task);
+
+               // Also populate main tasksByTag property
+               if (!tasksByTag[task.tagId]) {
+                  tasksByTag[task.tagId] = [];
+               }
+               tasksByTag[task.tagId].push(task);
+            }
+
+            // Cache by priority
+            if (task.priorityId) {
+               if (!state._cache.tasksByPriority.has(task.priorityId)) {
+                  state._cache.tasksByPriority.set(task.priorityId, []);
+               }
+               state._cache.tasksByPriority.get(task.priorityId)?.push(task);
+            }
+
+            // Cache parent tasks
+            // All tasks are parent tasks now (parentTaskId removed)
+            parentTasks.push(task);
+         });
+
+         // Add tasks without tags to tasksByTag
+         const tasksWithoutTag = tasks.filter((task) => !task.tagId);
+         if (tasksWithoutTag.length > 0) {
+            tasksByTag['no-tag'] = tasksWithoutTag;
+         }
+
+         state._cache.parentTasks = parentTasks;
+
+         // Build tag counts cache
+         const tagCounts: Record<string, number> = {};
+
+         // First, use the efficient tagExtra data for TaskMaster tags
+         Object.entries(state.tagExtra).forEach(([tagId, extra]) => {
+            if (extra.metadata?.taskCount !== undefined) {
+               tagCounts[tagId] = extra.metadata.taskCount;
+            }
+         });
+
+         // For any remaining tags (UI-only tags), count parent tasks manually
+         parentTasks.forEach((task: Task) => {
+            if (task.tagId && !tagCounts[task.tagId]) {
+               tagCounts[task.tagId] = (tagCounts[task.tagId] || 0) + 1;
+            }
+         });
+
+         state._cache.tagCounts = tagCounts;
+
+         // Build task stats cache
+         const tasksByStatusCounts: Record<string, number> = {};
+         state._cache.tasksByStatus.forEach((tasksArray, statusId) => {
+            tasksByStatusCounts[statusId] = tasksArray.length;
+         });
+
+         const taskStats = {
+            totalTasks: tasks.length,
+            totalParentTasks: parentTasks.length,
+            totalSubtasks: tasks.length - parentTasks.length,
+            tasksByStatus: tasksByStatusCounts,
+         };
+
+         state._cache.taskStats = taskStats;
+         state._cache.lastCacheUpdate = Date.now();
+
+         // Update state properties directly without triggering a re-render
+         // These are already being built from the source data, so we don't need to trigger updates
+         state.tasksByTag = tasksByTag;
+         state.tasksByStatus = tasksByStatus;
       },
 
-      getTasksByTag: (tagId: string) => {
-         const tasks = Object.values(get().taskEntities) || [];
-         return tasks.filter((task) => task.tagId === tagId);
+      // Optimized task selectors with caching
+      getTasksByStatus: (statusId: string, includeSubtasks = true) => {
+         const state = get();
+
+         // Return empty array if cache not built yet instead of rebuilding during render
+         if (state._cache.lastCacheUpdate === 0) {
+            return [];
+         }
+
+         const tasks = state._cache.tasksByStatus.get(statusId) || [];
+
+         if (!includeSubtasks) {
+            return tasks; // All tasks are parent tasks
+         }
+
+         return tasks;
       },
 
-      getSubtasks: (parentTaskId: string) => {
-         const tasks = Object.values(get().taskEntities) || [];
-         return tasks.filter((task) => task.parentTaskId === parentTaskId);
+      getTasksByTag: (tagId: string, includeSubtasks = true) => {
+         const state = get();
+
+         // Return empty array if cache not built yet instead of rebuilding during render
+         if (state._cache.lastCacheUpdate === 0) {
+            return [];
+         }
+
+         const tasks = state._cache.tasksByTag.get(tagId) || [];
+
+         if (!includeSubtasks) {
+            return tasks; // All tasks are parent tasks
+         }
+
+         return tasks;
+      },
+
+      getTasksByPriority: (priorityId: string, includeSubtasks = true) => {
+         const state = get();
+
+         // Return empty array if cache not built yet instead of rebuilding during render
+         if (state._cache.lastCacheUpdate === 0) {
+            return [];
+         }
+
+         const tasks = state._cache.tasksByPriority.get(priorityId) || [];
+
+         if (!includeSubtasks) {
+            return tasks; // All tasks are parent tasks
+         }
+
+         return tasks;
+      },
+
+      getTasksByLabel: (labelId: string, includeSubtasks = true) => {
+         const tasks = Object.values(get().taskEntities);
+         const filtered = tasks.filter((task) => task.labelIds.includes(labelId));
+
+         if (!includeSubtasks) {
+            return filtered; // All tasks are parent tasks
+         }
+
+         return filtered;
+      },
+
+      getParentTasks: () => {
+         const state = get();
+
+         // Return empty array if cache not built yet instead of rebuilding during render
+         if (state._cache.lastCacheUpdate === 0) {
+            return [];
+         }
+
+         return state._cache.parentTasks;
+      },
+
+      getTasksByFilters: (filters: TaskFilterInput) => {
+         const state = get();
+
+         // Check if there are any active filters
+         const hasActiveFilters =
+            filters.search ||
+            (filters.statusIds && filters.statusIds.length > 0) ||
+            (filters.priorityIds && filters.priorityIds.length > 0) ||
+            (filters.labelIds && filters.labelIds.length > 0) ||
+            (filters.tagIds && filters.tagIds.length > 0) ||
+            filters.createdAt;
+
+         // If no filters are active, return all tasks
+         if (!hasActiveFilters) {
+            return Object.values(state.taskEntities);
+         }
+
+         // Ensure cache is built for filtered access
+         if (state._cache.lastCacheUpdate === 0) {
+            // Build cache synchronously but avoid triggering state updates
+            state._rebuildCache();
+         }
+
+         // Use optimized selectors for single-filter cases
+         if (
+            filters.statusIds &&
+            filters.statusIds.length === 1 &&
+            !filters.search &&
+            !filters.priorityIds &&
+            !filters.labelIds &&
+            !filters.tagIds &&
+            !filters.createdAt
+         ) {
+            return state._cache.tasksByStatus.get(filters.statusIds[0]) || [];
+         }
+
+         if (
+            filters.tagIds &&
+            filters.tagIds.length === 1 &&
+            !filters.search &&
+            !filters.statusIds &&
+            !filters.priorityIds &&
+            !filters.labelIds &&
+            !filters.createdAt
+         ) {
+            return state._cache.tasksByTag.get(filters.tagIds[0]) || [];
+         }
+
+         if (
+            filters.priorityIds &&
+            filters.priorityIds.length === 1 &&
+            !filters.search &&
+            !filters.statusIds &&
+            !filters.tagIds &&
+            !filters.labelIds &&
+            !filters.createdAt
+         ) {
+            return state._cache.tasksByPriority.get(filters.priorityIds[0]) || [];
+         }
+
+         // For complex filters, use the full filtering logic
+         const tasks = Object.values(state.taskEntities);
+         return state.filterTasks(tasks, filters);
+      },
+
+      getTagCounts: () => {
+         const state = get();
+
+         // Return empty object if cache not built yet instead of rebuilding during render
+         if (state._cache.lastCacheUpdate === 0) {
+            return {};
+         }
+
+         return state._cache.tagCounts;
+      },
+
+      getTaskStats: () => {
+         const state = get();
+
+         // Return default stats if cache not built yet instead of rebuilding during render
+         if (state._cache.lastCacheUpdate === 0) {
+            return {
+               totalTasks: 0,
+               totalParentTasks: 0,
+               totalSubtasks: 0,
+               tasksByStatus: {},
+            };
+         }
+
+         return state._cache.taskStats;
       },
 
       searchTasks: (query: string) => {
@@ -633,6 +915,81 @@ export const useDataStore = create<DataState>()(
          }
 
          return state.fuzzySearchIndex.search(query, maxResults);
+      },
+
+      filterTasks: (tasks: Task[], filters: TaskFilterInput) => {
+         // Early return if no filters are active to avoid unnecessary processing
+         const hasActiveFilters =
+            filters.search ||
+            (filters.statusIds && filters.statusIds.length > 0) ||
+            (filters.priorityIds && filters.priorityIds.length > 0) ||
+            (filters.labelIds && filters.labelIds.length > 0) ||
+            (filters.tagIds && filters.tagIds.length > 0) ||
+            filters.createdAt;
+
+         if (!hasActiveFilters) {
+            return tasks;
+         }
+
+         // Pre-compute search term for performance
+         const searchTerm = filters.search?.toLowerCase();
+
+         // Create sets for O(1) lookup performance
+         const statusSet = filters.statusIds ? new Set(filters.statusIds) : null;
+         const prioritySet = filters.priorityIds ? new Set(filters.priorityIds) : null;
+         const labelSet = filters.labelIds ? new Set(filters.labelIds) : null;
+         const tagSet = filters.tagIds ? new Set(filters.tagIds) : null;
+
+         return tasks.filter((task) => {
+            // Text search - optimized with early exit
+            if (searchTerm) {
+               const titleMatch = task.title.toLowerCase().includes(searchTerm);
+               if (titleMatch) {
+                  // Continue with other filters if title matches
+               } else {
+                  const descMatch = task.description?.toLowerCase().includes(searchTerm);
+                  const idMatch = task.id.toLowerCase().includes(searchTerm);
+                  if (!descMatch && !idMatch) return false;
+               }
+            }
+
+            // Status filter - O(1) lookup
+            if (statusSet && !statusSet.has(task.statusId)) {
+               return false;
+            }
+
+            // Priority filter - O(1) lookup with null check
+            if (prioritySet && (!task.priorityId || !prioritySet.has(task.priorityId))) {
+               return false;
+            }
+
+            // Label filter - optimized with Set lookup
+            if (labelSet && !task.labelIds.some((labelId) => labelSet.has(labelId))) {
+               return false;
+            }
+
+            // Tag filter - O(1) lookup with null check
+            if (tagSet && (!task.tagId || !tagSet.has(task.tagId))) {
+               return false;
+            }
+
+            // Parent task filter removed - hierarchy now handled by taskId/subtaskId
+
+            // Created date filter - optimized date comparison
+            if (filters.createdAt) {
+               const taskTime = task.createdAt.getTime();
+
+               if (filters.createdAt.from && taskTime < filters.createdAt.from.getTime()) {
+                  return false;
+               }
+
+               if (filters.createdAt.to && taskTime > filters.createdAt.to.getTime()) {
+                  return false;
+               }
+            }
+
+            return true;
+         });
       },
 
       // TaskMaster state selectors
@@ -693,7 +1050,7 @@ export const useDataStore = create<DataState>()(
          const tasks = Object.values(get().taskEntities);
          return {
             totalTasks: tasks.length,
-            totalSubtasks: tasks.filter((t) => t.parentTaskId).length,
+            totalSubtasks: 0, // No subtasks anymore
             tasksByStatus: {},
             tasksByPriority: {},
          };

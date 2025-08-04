@@ -152,16 +152,7 @@
       }
    ],
    "taskExtra": {},
-   "tagExtra": {
-      "tag-personal": {
-         "icon": "user",
-         "color": "#3498db",
-         "metadata": {
-            "isDefault": true,
-            "visibility": "private"
-         }
-      }
-   },
+   "tagExtra": {},
    "metadata": {
       "created": "2025-07-31T00:00:00.000Z",
       "updated": "2025-08-01T21:52:17.026Z",

@@ -16,7 +16,7 @@ import { useFilterStore } from '@/store/filterStore';
 import {
    useAllStatuses,
    useAllPriorities,
-   useAllUsers,
+   // useAllUsers, // TODO: Not implemented yet
    useAllLabels,
    useAllTags,
 } from '@/libs/client/stores';
@@ -62,7 +62,7 @@ export function Filter(): React.JSX.Element {
    // Get data from store
    const allStatus = useAllStatuses();
    const priorities = useAllPriorities();
-   const users = useAllUsers();
+   // const users = useAllUsers(); // TODO: Not implemented yet
    const labels = useAllLabels();
    const tags = useAllTags();
 

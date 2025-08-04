@@ -55,7 +55,7 @@ export interface CreateTaskInput {
    labelIds?: string[];
    dueDate?: Date;
    rank?: string;
-   parentTaskId?: string;
+   // parentTaskId removed - tasks now use taskId/subtaskId for hierarchy
 }
 
 export interface UpdateTaskInput {
@@ -66,7 +66,7 @@ export interface UpdateTaskInput {
    labelIds?: string[];
    dueDate?: Date;
    rank?: string;
-   parentTaskId?: string;
+   // parentTaskId removed - tasks now use taskId/subtaskId for hierarchy
 }
 
 export interface BulkUpdateInput {

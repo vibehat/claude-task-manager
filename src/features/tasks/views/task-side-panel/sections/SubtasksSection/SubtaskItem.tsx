@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { TaskDetailsFragment } from '@/libs/client/types';
+import type { TaskDetailsFragment, Subtask } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { SubtaskEditForm } from './SubtaskEditForm';
 
 interface SubtaskItemProps {
-   subtask: TaskDetailsFragment['subtasks'][0];
+   subtask: Subtask;
    parentTask: TaskDetailsFragment;
    disabled?: boolean;
 }

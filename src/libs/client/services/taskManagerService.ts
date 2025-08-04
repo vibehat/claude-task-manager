@@ -1,4 +1,4 @@
-import type { TaskManagerData, TaskMasterState } from './types';
+import type { TaskManagerData } from './types';
 import { DataRepository } from './dataRepository';
 import { TaskConverter } from './taskConverter';
 import { TagExtractor } from './tagExtractor';
@@ -79,14 +79,6 @@ export async function syncTaskMasterData(): Promise<TaskManagerData | null> {
                },
             };
          }
-
-         // Reconstruct UI tasks and combine with TaskMaster tasks
-         const uiTasks = TaskConverter.reconstructUITasksFromExtra(finalData.taskExtra);
-         finalData.tasks = [...uiTasks, ...convertedTasks];
-
-         console.log(
-            `[syncTaskMasterData] Synced ${finalData.tasks.length} tasks (${uiTasks.length} UI + ${convertedTasks.length} TaskMaster)`
-         );
       }
 
       // Add TaskMaster state data if available and not already present

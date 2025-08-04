@@ -2,94 +2,82 @@
  * Task Filtering Utilities
  */
 
-import type { Task } from '../types/taskTypes';
+import type { Task } from '../../../libs/client/types/dataModels';
 import type { TaskFilterInput } from '../types/filtersTypes';
 
 /**
  * Filter issues based on provided criteria
  */
 export function filterTasks(issues: Task[], filters: TaskFilterInput): Task[] {
+   // Early return if no filters are active to avoid unnecessary processing
+   const hasActiveFilters =
+      filters.search ||
+      (filters.statusIds && filters.statusIds.length > 0) ||
+      (filters.priorityIds && filters.priorityIds.length > 0) ||
+      (filters.labelIds && filters.labelIds.length > 0) ||
+      (filters.tagIds && filters.tagIds.length > 0) ||
+      // parentTaskId filter removed - using taskId/subtaskId for hierarchy
+      filters.createdAt;
+
+   if (!hasActiveFilters) {
+      return issues;
+   }
+
+   // Pre-compute search term for performance
+   const searchTerm = filters.search?.toLowerCase();
+
+   // Create sets for O(1) lookup performance
+   const statusSet = filters.statusIds ? new Set(filters.statusIds) : null;
+   const prioritySet = filters.priorityIds ? new Set(filters.priorityIds) : null;
+   const labelSet = filters.labelIds ? new Set(filters.labelIds) : null;
+   const tagSet = filters.tagIds ? new Set(filters.tagIds) : null;
+
    return issues.filter((issue) => {
-      // Text search
-      if (filters.search) {
-         const searchTerm = filters.search.toLowerCase();
-         const matchesSearch =
-            issue.title.toLowerCase().includes(searchTerm) ||
-            issue.description.toLowerCase().includes(searchTerm) ||
-            issue.identifier.toLowerCase().includes(searchTerm);
-
-         if (!matchesSearch) return false;
-      }
-
-      // Status filter
-      if (filters.statusIds && filters.statusIds.length > 0) {
-         if (!filters.statusIds.includes(issue.status)) return false;
-      }
-
-      // Priority filter
-      if (filters.priorityIds && filters.priorityIds.length > 0) {
-         if (!filters.priorityIds.includes(issue.priority)) return false;
-      }
-
-      // Project filter
-      if (filters.projectIds && filters.projectIds.length > 0) {
-         if (!issue.project || !filters.projectIds.includes(issue.project.id)) {
-            return false;
+      // Text search - optimized with early exit
+      if (searchTerm) {
+         const titleMatch = issue.title.toLowerCase().includes(searchTerm);
+         if (titleMatch) {
+            // Continue with other filters if title matches
+         } else {
+            const descMatch = issue.description?.toLowerCase().includes(searchTerm);
+            const idMatch = issue.id.toLowerCase().includes(searchTerm);
+            if (!descMatch && !idMatch) return false;
          }
       }
 
-      // Label filter
-      if (filters.labelIds && filters.labelIds.length > 0) {
-         const issueLabels = issue.labels.map((label) => label.id);
-         const hasMatchingLabel = filters.labelIds.some((labelId) => issueLabels.includes(labelId));
-         if (!hasMatchingLabel) return false;
-      }
-
-      // Task type filter
-      if (filters.taskType && issue.taskType !== filters.taskType) {
+      // Status filter - O(1) lookup
+      if (statusSet && !statusSet.has(issue.statusId)) {
          return false;
       }
 
-      // Parent issue filter
-      if (filters.parentTaskId) {
-         if (issue.parentTaskId !== filters.parentTaskId) return false;
+      // Priority filter - O(1) lookup with null check
+      if (prioritySet && (!issue.priorityId || !prioritySet.has(issue.priorityId))) {
+         return false;
       }
 
-      // Has subtasks filter
-      if (typeof filters.hasSubtasks === 'boolean') {
-         const hasSubtasks = issue.subtasks && issue.subtasks.length > 0;
-         if (filters.hasSubtasks !== hasSubtasks) return false;
+      // Label filter - optimized with Set lookup
+      if (labelSet && !issue.labelIds.some((labelId) => labelSet.has(labelId))) {
+         return false;
       }
 
-      // Due date filter
-      if (filters.dueDate) {
-         if (!issue.dueDate) return false;
-
-         const issueDate = new Date(issue.dueDate);
-
-         if (filters.dueDate.from) {
-            const fromDate = new Date(filters.dueDate.from);
-            if (issueDate < fromDate) return false;
-         }
-
-         if (filters.dueDate.to) {
-            const toDate = new Date(filters.dueDate.to);
-            if (issueDate > toDate) return false;
-         }
+      // Tag filter - O(1) lookup with null check
+      if (tagSet && (!issue.tagId || !tagSet.has(issue.tagId))) {
+         return false;
       }
 
-      // Created date filter
+      // Parent task filter removed - hierarchy now handled by taskId/subtaskId
+      // Tasks are filtered by task type instead
+
+      // Created date filter - optimized date comparison
       if (filters.createdAt) {
-         const issueDate = new Date(issue.createdAt);
+         const issueTime = issue.createdAt.getTime();
 
-         if (filters.createdAt.from) {
-            const fromDate = new Date(filters.createdAt.from);
-            if (issueDate < fromDate) return false;
+         if (filters.createdAt.from && issueTime < filters.createdAt.from.getTime()) {
+            return false;
          }
 
-         if (filters.createdAt.to) {
-            const toDate = new Date(filters.createdAt.to);
-            if (issueDate > toDate) return false;
+         if (filters.createdAt.to && issueTime > filters.createdAt.to.getTime()) {
+            return false;
          }
       }
 

@@ -1,8 +1,8 @@
 'use client';
 
-import type { Task, TaskStatus, TaskWhereInput } from '@/libs/client/types';
+import type { Task, Tag, TaskWhereInput } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores';
-import { Plus } from 'lucide-react';
+import { Plus, Tag as TagIcon } from 'lucide-react';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
@@ -11,32 +11,35 @@ import { useCreateTaskStore } from '@/store/createTaskStore';
 import { useSortTasksByPriority } from '@/features/tasks/hooks/useSortTasksByPriority';
 import { AnimatePresence, motion } from 'motion/react';
 import TasksCard, { TaskDragType } from '../../components/items/TasksCard';
-import { useTaskStatusIcon } from '../../hooks/useTaskStatusIcon';
-import { EmptyStatusColumn } from '@/components/empty-states/EmptyStatusColumn';
+import { getTagColor } from '@/libs/client/utils/tagUtils';
 
-type TaskStatusFromQuery = TaskStatus;
 type TaskFromQuery = Task;
 
 interface GroupTasksGridProps {
-   status: TaskStatusFromQuery;
+   tag: Tag;
    tasks: TaskFromQuery[];
    additionalFilter?: TaskWhereInput;
+   groupIcon?: FC<React.SVGProps<SVGSVGElement>>;
 }
 
 function GroupTasksGrid({
-   status,
+   tag,
    tasks,
    additionalFilter,
+   groupIcon,
 }: GroupTasksGridProps): React.JSX.Element {
    const { openModal } = useCreateTaskStore();
-   const StatusIcon = useTaskStatusIcon(status);
+   const tagExtra = useDataStore((state) => state.tagExtra);
 
    // Use the pre-filtered issues passed as props
    const loading = false;
    const error = null;
    const count = tasks.length;
 
-   // Show loading state for this status
+   const tagColor = getTagColor(tag, tagExtra);
+   const IconComponent = groupIcon || TagIcon;
+
+   // Show loading state for this tag
    if (loading) {
       return (
          <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
@@ -44,12 +47,12 @@ function GroupTasksGrid({
                <div
                   className="w-full h-full flex items-center justify-between px-3"
                   style={{
-                     backgroundColor: `${status.color}10`,
+                     backgroundColor: `${tagColor}10`,
                   }}
                >
                   <div className="flex items-center gap-2">
-                     <StatusIcon />
-                     <span className="text-sm font-medium">{status.name}</span>
+                     <IconComponent className="size-4" />
+                     <span className="text-sm font-medium">{tag.name}</span>
                      <span className="text-sm text-muted-foreground">...</span>
                   </div>
                </div>
@@ -61,7 +64,7 @@ function GroupTasksGrid({
       );
    }
 
-   // Show error state for this status
+   // Show error state for this tag
    if (error) {
       return (
          <div className="overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col bg-container">
@@ -69,12 +72,12 @@ function GroupTasksGrid({
                <div
                   className="w-full h-full flex items-center justify-between px-3"
                   style={{
-                     backgroundColor: `${status.color}10`,
+                     backgroundColor: `${tagColor}10`,
                   }}
                >
                   <div className="flex items-center gap-2">
-                     <StatusIcon />
-                     <span className="text-sm font-medium">{status.name}</span>
+                     <IconComponent className="size-4" />
+                     <span className="text-sm font-medium">{tag.name}</span>
                      <span className="text-sm text-red-500">Error</span>
                   </div>
                </div>
@@ -92,12 +95,12 @@ function GroupTasksGrid({
             <div
                className="w-full h-full flex items-center justify-between px-3"
                style={{
-                  backgroundColor: `${status.color}10`,
+                  backgroundColor: `${tagColor}10`,
                }}
             >
                <div className="flex items-center gap-2">
-                  <StatusIcon />
-                  <span className="text-sm font-medium">{status.name}</span>
+                  <IconComponent className="size-4" />
+                  <span className="text-sm font-medium">{tag.name}</span>
                   <span className="text-sm text-muted-foreground">{count}</span>
                </div>
 
@@ -107,7 +110,7 @@ function GroupTasksGrid({
                   variant="ghost"
                   onClick={(e) => {
                      e.stopPropagation();
-                     openModal(status);
+                     openModal(undefined, tag);
                   }}
                >
                   <Plus className="size-4" />
@@ -115,14 +118,14 @@ function GroupTasksGrid({
             </div>
          </div>
 
-         <TaskGridList tasks={tasks} status={status} />
+         <TaskGridList tasks={tasks} tag={tag} />
       </div>
    );
 }
 
-const TaskGridList: FC<{ tasks: TaskFromQuery[]; status: TaskStatusFromQuery }> = ({
+const TaskGridList: FC<{ tasks: TaskFromQuery[]; tag: Tag }> = ({
    tasks,
-   status,
+   tag,
 }): React.JSX.Element => {
    const ref = useRef<HTMLDivElement>(null);
    const { updateTask } = useDataStore();
@@ -131,9 +134,9 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; status: TaskStatusFromQuery }> 
    const [{ isOver }, drop] = useDrop(() => ({
       accept: TaskDragType,
       drop(item: TaskFromQuery, monitor): void {
-         if (monitor.didDrop() && item.statusId !== status.id) {
+         if (monitor.didDrop() && item.tagId !== tag.id) {
             updateTask(item.id, {
-               statusId: status.id,
+               tagId: tag.id,
             });
          }
       },
@@ -173,7 +176,9 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; status: TaskStatusFromQuery }> 
          {sortedTasks.length > 0 ? (
             sortedTasks.map((task) => <TasksCard key={task.id} task={task} />)
          ) : (
-            <EmptyStatusColumn status={status} variant="grid" />
+            <div className="flex items-center justify-center h-32">
+               <span className="text-sm text-muted-foreground">No tasks in this tag</span>
+            </div>
          )}
       </div>
    );

@@ -51,9 +51,7 @@ export function useTasks(options: UseTasksOptions = {}): UseTasksResult {
       let result = [...tasks];
 
       // Apply filters
-      if (where.parentTaskId?.equals !== undefined) {
-         result = result.filter((task) => task.parentTaskId === where.parentTaskId.equals);
-      }
+      // parentTaskId filter removed - using taskId/subtaskId for hierarchy instead
 
       if (where.statusId?.in) {
          result = result.filter(
@@ -140,8 +138,9 @@ export function useSearchTasks(query: string, options: UseTasksOptions = {}) {
    const results = useMemo(() => {
       if (!isInitialized || skip || !query) return undefined;
 
-      // Filter for parent tasks only
-      return searchTasksResults.filter((task) => !task.parentTaskId);
+      // Filter tasks by type - main tasks vs subtasks
+      // parentTaskId field removed, using taskType or subtaskId to determine hierarchy
+      return searchTasksResults.filter((task) => !task.subtaskId);
    }, [searchTasksResults, query, isInitialized, skip]);
 
    const refetch = async () => {

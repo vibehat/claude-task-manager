@@ -1,28 +1,33 @@
 'use client';
 
-import type { TaskStatus, Task } from '@/libs/client/types/dataModels';
+import type { Tag, Task } from '@/libs/client/types/dataModels';
+import type { FC } from 'react';
 import { cn } from '@/libs/client/utils';
-import { Plus } from 'lucide-react';
+import { Plus, Tag as TagIcon } from 'lucide-react';
 import { useMemo } from 'react';
-import { useTaskStatusIcon } from '../../hooks/useTaskStatusIcon';
 import { Button } from '@/components/ui/button';
 import { useCreateTaskStore } from '@/store/createTaskStore';
 import { useSortTasksByPriority } from '@/features/tasks/hooks/useSortTasksByPriority';
 import { TaskLine } from '../../components/items/TaskLine';
-import { EmptyStatusColumn } from '@/components/empty-states/EmptyStatusColumn';
+import { useDataStore } from '@/libs/client/stores';
+import { getTagColor } from '@/libs/client/utils/tagUtils';
 
 interface GroupTasksListProps {
-   status: TaskStatus;
+   tag: Tag;
    tasks: Task[];
+   groupIcon?: FC<React.SVGProps<SVGSVGElement>>;
 }
 
-function GroupTasksList({ status, tasks }: GroupTasksListProps): React.JSX.Element {
+function GroupTasksList({ tag, tasks, groupIcon }: GroupTasksListProps): React.JSX.Element {
    const { openModal } = useCreateTaskStore();
-   const StatusIcon = useTaskStatusIcon(status);
+   const tagExtra = useDataStore((state) => state.tagExtra);
 
    // Sort the pre-filtered tasks by priority
    const sortedTasks = useSortTasksByPriority(tasks);
    const count = tasks.length;
+
+   const tagColor = getTagColor(tag, tagExtra);
+   const IconComponent = groupIcon || TagIcon;
 
    return (
       <div className="bg-container">
@@ -30,12 +35,12 @@ function GroupTasksList({ status, tasks }: GroupTasksListProps): React.JSX.Eleme
             <div
                className="w-full h-full flex items-center justify-between px-6"
                style={{
-                  backgroundColor: `${status.color}08`,
+                  backgroundColor: `${tagColor}08`,
                }}
             >
                <div className="flex items-center gap-2">
-                  <StatusIcon className="size-4" />
-                  <span className="text-sm font-medium">{status.name}</span>
+                  <IconComponent className="size-4" />
+                  <span className="text-sm font-medium">{tag.name}</span>
                   <span className="text-sm text-muted-foreground">{count}</span>
                </div>
 
@@ -45,7 +50,7 @@ function GroupTasksList({ status, tasks }: GroupTasksListProps): React.JSX.Eleme
                   variant="ghost"
                   onClick={(e) => {
                      e.stopPropagation();
-                     openModal(status);
+                     openModal(undefined, tag);
                   }}
                >
                   <Plus className="size-4" />
@@ -57,7 +62,9 @@ function GroupTasksList({ status, tasks }: GroupTasksListProps): React.JSX.Eleme
             {sortedTasks.length > 0 ? (
                sortedTasks.map((task) => <TaskLine key={task.id} task={task} layoutId={true} />)
             ) : (
-               <EmptyStatusColumn status={status} variant="list" />
+               <div className="flex items-center justify-center h-32">
+                  <span className="text-sm text-muted-foreground">No tasks in this tag</span>
+               </div>
             )}
          </div>
       </div>

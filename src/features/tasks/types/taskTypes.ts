@@ -46,7 +46,7 @@ export interface Task {
    project?: Project;
    subtasks?: Task[];
    parentTask?: Task;
-   parentTaskId?: string;
+   // parentTaskId removed - using taskId/subtaskId for hierarchy instead
    createdAt: Date;
    updatedAt: Date;
    dueDate?: Date;

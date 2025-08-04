@@ -52,10 +52,10 @@ export interface Task {
    statusId: string;
    priorityId?: string;
    tagId?: string;
-   parentTaskId?: string;
    labelIds: string[];
    taskId?: number;
    subtaskId?: string;
+   subtasks?: Subtask[]; // Subtasks as a property of the task
    orderIndex: number;
    createdAt: Date;
    updatedAt: Date;
@@ -65,7 +65,10 @@ export interface Subtask {
    id: string;
    title: string;
    description?: string;
-   parentTaskId: string;
+   details?: string; // Additional implementation details
+   testStrategy?: string; // Test strategy
+   statusId?: string; // Optional status for subtasks
+   // parentTaskId removed - using taskId/subtaskId hierarchy instead
    completed: boolean;
    orderIndex: number;
    createdAt: Date;

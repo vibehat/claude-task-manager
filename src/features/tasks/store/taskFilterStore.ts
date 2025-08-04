@@ -22,10 +22,9 @@ export interface FilterState {
 
 export const useTasksFilterStore = create<FilterState>((set, get) => ({
    // Initial state - direct TaskWhereInput
-   // Always filter for parent tasks only
-   where: {
-      parentTaskId: { equals: null },
-   },
+   // Filter for main tasks (no subtask hierarchy needed)
+   where: {},
+   // Note: parentTaskId filtering removed - using taskId/subtaskId for hierarchy
 
    // Actions
    setFilter: (type, ids) => {
@@ -66,8 +65,7 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
             }
          }
 
-         // Always keep parent task filter
-         newWhere.parentTaskId = { equals: null };
+         // Parent task filter removed - hierarchy handled by taskId/subtaskId
 
          return { where: newWhere };
       });
@@ -82,7 +80,8 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
    },
 
    clearFilters: () => {
-      set({ where: { parentTaskId: { equals: null } } });
+      set({ where: {} });
+      // Parent task filter removed - no longer needed
    },
 
    clearFilterType: (type) => {
@@ -90,15 +89,15 @@ export const useTasksFilterStore = create<FilterState>((set, get) => ({
    },
 
    setWhere: (where) => {
-      // Always include parent task filter
-      set({ where: { ...where, parentTaskId: { equals: null } } });
+      // No automatic parent task filter needed
+      set({ where });
    },
 
    // Utility
    hasActiveFilters: () => {
       const { where } = get();
-      // Don't count parentTaskId filter as an active filter since it's always there
-      const filterKeys = Object.keys(where).filter((key) => key !== 'parentTaskId');
+      // Count all filter keys as active filters
+      const filterKeys = Object.keys(where);
       return filterKeys.length > 0;
    },
 

@@ -252,7 +252,7 @@ export function TaskMasterSyncExample(): React.JSX.Element {
                                        {issue.subtaskId && `.${issue.subtaskId.split('.')[1]}`}
                                     </Badge>
                                  )}
-                                 {issue.parentTaskId && (
+                                 {issue.subtaskId && (
                                     <Badge variant="outline" className="text-xs">
                                        Subtask
                                     </Badge>

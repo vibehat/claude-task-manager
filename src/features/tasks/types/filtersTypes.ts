@@ -10,8 +10,8 @@ export interface TaskFilterInput {
    projectIds?: string[];
    priorityIds?: string[];
    labelIds?: string[];
+   tagIds?: string[];
    hasSubtasks?: boolean;
-   parentTaskId?: string;
    taskType?: string;
    dueDate?: {
       from?: Date;

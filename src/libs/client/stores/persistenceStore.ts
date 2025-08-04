@@ -56,12 +56,11 @@ export const usePersistenceStore = create<PersistenceState>()(
 
             const dataStore = useDataStore.getState();
             const dataToSave = {
-               users: dataStore.users,
-               tags: dataStore.tags,
-               labels: dataStore.labels,
-               statuses: dataStore.statuses,
-               priorities: dataStore.priorities,
-               tasks: dataStore.tasks,
+               tags: Object.values(dataStore.tagEntities),
+               labels: Object.values(dataStore.labelEntities),
+               statuses: Object.values(dataStore.statusEntities),
+               priorities: Object.values(dataStore.priorityEntities),
+               tasks: Object.values(dataStore.taskEntities),
                savedAt: new Date().toISOString(),
             };
 
@@ -85,11 +84,6 @@ export const usePersistenceStore = create<PersistenceState>()(
                   // Convert date strings back to Date objects
                   const processedData = {
                      ...parsedData,
-                     users: parsedData.users.map((user: any) => ({
-                        ...user,
-                        createdAt: new Date(user.createdAt),
-                        updatedAt: new Date(user.updatedAt),
-                     })),
                      tags: parsedData.tags.map((tag: any) => ({
                         ...tag,
                         createdAt: new Date(tag.createdAt),
@@ -122,14 +116,39 @@ export const usePersistenceStore = create<PersistenceState>()(
                   // Only mark as initialized if we have valid statuses data
                   const hasValidData = processedData.statuses && processedData.statuses.length > 0;
 
+                  // Create entities from arrays
+                  const tagEntities: Record<string, any> = {};
+                  processedData.tags.forEach((tag: any) => {
+                     tagEntities[tag.id] = tag;
+                  });
+
+                  const labelEntities: Record<string, any> = {};
+                  processedData.labels.forEach((label: any) => {
+                     labelEntities[label.id] = label;
+                  });
+
+                  const statusEntities: Record<string, any> = {};
+                  processedData.statuses.forEach((status: any) => {
+                     statusEntities[status.id] = status;
+                  });
+
+                  const priorityEntities: Record<string, any> = {};
+                  processedData.priorities.forEach((priority: any) => {
+                     priorityEntities[priority.id] = priority;
+                  });
+
+                  const taskEntities: Record<string, any> = {};
+                  processedData.tasks.forEach((task: any) => {
+                     taskEntities[task.id] = task;
+                  });
+
                   // Update data store
                   useDataStore.setState({
-                     users: processedData.users,
-                     tags: processedData.tags,
-                     labels: processedData.labels,
-                     statuses: processedData.statuses,
-                     priorities: processedData.priorities,
-                     tasks: processedData.tasks,
+                     tagEntities,
+                     labelEntities,
+                     statusEntities,
+                     priorityEntities,
+                     taskEntities,
                      isInitialized: hasValidData, // Only mark initialized if we have statuses
                   });
 
@@ -157,12 +176,11 @@ export const usePersistenceStore = create<PersistenceState>()(
          exportData: () => {
             const dataStore = useDataStore.getState();
             const dataToExport = {
-               users: dataStore.users,
-               tags: dataStore.tags,
-               labels: dataStore.labels,
-               statuses: dataStore.statuses,
-               priorities: dataStore.priorities,
-               tasks: dataStore.tasks,
+               tags: Object.values(dataStore.tagEntities),
+               labels: Object.values(dataStore.labelEntities),
+               statuses: Object.values(dataStore.statusEntities),
+               priorities: Object.values(dataStore.priorityEntities),
+               tasks: Object.values(dataStore.taskEntities),
                exportedAt: new Date().toISOString(),
                version: '1.0.0',
             };
@@ -176,7 +194,7 @@ export const usePersistenceStore = create<PersistenceState>()(
                const parsedData = JSON.parse(jsonData);
 
                // Validate the data structure
-               if (!parsedData.users || !parsedData.tasks || !parsedData.statuses) {
+               if (!parsedData.tasks || !parsedData.statuses) {
                   throw new Error('Invalid data format');
                }
 

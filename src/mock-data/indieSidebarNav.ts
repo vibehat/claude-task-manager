@@ -6,6 +6,7 @@ import {
    Calendar,
    Clock,
    Terminal,
+   Target,
    type LucideIcon,
 } from 'lucide-react';
 
@@ -39,23 +40,17 @@ export const indieDashboardItems: IndieNavItem[] = [
 
 export const indieTaskItems: IndieNavItem[] = [
    {
+      name: 'Current Tasks',
+      url: '/indie/current-tasks',
+      icon: Target,
+      description: 'Tasks for the current tag only',
+   },
+   {
       name: 'All Tasks',
       url: '/indie/tasks',
       icon: CheckSquare,
       description: 'View and manage all tasks',
-   },
-   {
-      name: 'Schedule',
-      url: '/indie/schedule',
-      icon: Calendar,
-      description: 'Task timeline and deadlines',
-   },
-   {
-      name: 'Recent',
-      url: '/indie/recent',
-      icon: Clock,
-      description: 'Recently viewed tasks',
-   },
+   }
 ];
 
 export const indieDevItems: IndieNavItem[] = [

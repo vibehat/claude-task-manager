@@ -50,7 +50,7 @@ const iconMapById: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
    'canceled': PausedIcon,
 };
 
-export function useTaskStatusIcon(
+export function getTaskStatusIcon(
    status: Pick<TaskStatus, 'id' | 'name'>
 ): FC<React.SVGProps<SVGSVGElement>> {
    // Try mapping by ID first (more reliable)
@@ -67,4 +67,10 @@ export function useTaskStatusIcon(
 
    // Default fallback
    return ToDoIcon;
+}
+
+export function useTaskStatusIcon(
+   status: Pick<TaskStatus, 'id' | 'name'>
+): FC<React.SVGProps<SVGSVGElement>> {
+   return getTaskStatusIcon(status);
 }
