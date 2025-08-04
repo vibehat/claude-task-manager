@@ -20,20 +20,20 @@ A powerful, flexible command palette system built with React, TypeScript, and cm
 
 ```tsx
 import {
-   CommandPalette,
-   CommandPaletteProvider,
-   exampleModule,
+  CommandPalette,
+  CommandPaletteProvider,
+  exampleModule,
 } from '@/components/command-palette';
 
 function App() {
-   const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-   return (
-      <CommandPaletteProvider modules={[exampleModule]}>
-         <button onClick={() => setOpen(true)}>Open Command Palette</button>
-         <CommandPalette open={open} onOpenChange={setOpen} />
-      </CommandPaletteProvider>
-   );
+  return (
+    <CommandPaletteProvider modules={[exampleModule]}>
+      <button onClick={() => setOpen(true)}>Open Command Palette</button>
+      <CommandPalette open={open} onOpenChange={setOpen} />
+    </CommandPaletteProvider>
+  );
 }
 ```
 
@@ -41,78 +41,78 @@ function App() {
 
 ```tsx
 import {
-   createActionCommand,
-   createSelectCommand,
-   createInputCommand,
-   createContextualInputCommand,
+  createActionCommand,
+  createSelectCommand,
+  createInputCommand,
+  createContextualInputCommand,
 } from '@/components/command-palette';
 
 // Simple action command
 const helloCommand = createActionCommand({
-   id: 'hello',
-   title: 'Hello World',
-   execute: async () => {
-      console.log('Hello!');
-      return { success: true };
-   },
+  id: 'hello',
+  title: 'Hello World',
+  execute: async () => {
+    console.log('Hello!');
+    return { success: true };
+  },
 });
 
 // Select command with options
 const selectCommand = createSelectCommand({
-   id: 'select-item',
-   title: 'Select Item',
-   options: [
-      { id: '1', title: 'Option 1', value: 'one' },
-      { id: '2', title: 'Option 2', value: 'two' },
-   ],
-   execute: async (value) => {
-      console.log('Selected:', value);
-      return { success: true };
-   },
+  id: 'select-item',
+  title: 'Select Item',
+  options: [
+    { id: '1', title: 'Option 1', value: 'one' },
+    { id: '2', title: 'Option 2', value: 'two' },
+  ],
+  execute: async (value) => {
+    console.log('Selected:', value);
+    return { success: true };
+  },
 });
 
 // Input command with validation
 const inputCommand = createInputCommand({
-   id: 'create-item',
-   title: 'Create Item',
-   inputConfig: {
-      placeholder: 'Enter name...',
-      validation: (value) => (value.length < 3 ? 'Too short' : undefined),
-   },
-   execute: async (name) => {
-      console.log('Created:', name);
-      return { success: true };
-   },
+  id: 'create-item',
+  title: 'Create Item',
+  inputConfig: {
+    placeholder: 'Enter name...',
+    validation: (value) => (value.length < 3 ? 'Too short' : undefined),
+  },
+  execute: async (name) => {
+    console.log('Created:', name);
+    return { success: true };
+  },
 });
 
 // Contextual input command - shows "Create Item: 'user input...'" in title
 const contextualInputCommand = createContextualInputCommand({
-   id: 'create-item-contextual',
-   title: 'Create Item',
-   inputConfig: {
-      placeholder: 'Enter name...',
-      submitHint: 'Press Enter to create',
-      validation: (value) => (value.length < 3 ? 'Too short' : undefined),
-   },
-   execute: async (name) => {
-      console.log('Created:', name);
-      return { success: true };
-   },
+  id: 'create-item-contextual',
+  title: 'Create Item',
+  inputConfig: {
+    placeholder: 'Enter name...',
+    submitHint: 'Press Enter to create',
+    validation: (value) => (value.length < 3 ? 'Too short' : undefined),
+  },
+  execute: async (name) => {
+    console.log('Created:', name);
+    return { success: true };
+  },
 });
 
 // Contextual input with custom format
 const customContextualCommand = createContextualInputCommand({
-   id: 'create-item-custom',
-   title: 'Create New Item',
-   contextFormat: (title, value) => `${title}: "${value}"...`,
-   inputConfig: {
-      placeholder: 'Enter name...',
-      validation: (value) => (value.length < 3 ? 'Too short' : undefined),
-   },
-   execute: async (name) => {
-      console.log('Created:', name);
-      return { success: true };
-   },
+  id: 'create-item-custom',
+  title: 'Create New Item',
+  contextFormat: (title, value) => `${title}: "${value}"...`,
+  inputConfig: {
+    placeholder: 'Enter name...',
+    validation: (value) => (value.length < 3 ? 'Too short' : undefined),
+  },
+  execute: async (name) => {
+    console.log('Created:', name);
+    return { success: true };
+  },
 });
 ```
 
@@ -125,96 +125,96 @@ import { createSearchCommand } from '@/components/command-palette';
 
 // Basic search command
 const fileSearchCommand = createSearchCommand({
-   id: 'file-search',
-   title: 'Search Files',
-   description: 'Search for files in your project',
-   searchConfig: {
-      placeholder: 'Enter filename...',
-      debounceMs: 250,
-      minQueryLength: 2,
-      maxResults: 10,
-      emptyStateMessage: 'No files found',
-   },
-   searchHandler: async (query, context) => {
-      // Return array of commands as search results
-      const files = await searchFiles(query);
+  id: 'file-search',
+  title: 'Search Files',
+  description: 'Search for files in your project',
+  searchConfig: {
+    placeholder: 'Enter filename...',
+    debounceMs: 250,
+    minQueryLength: 2,
+    maxResults: 10,
+    emptyStateMessage: 'No files found',
+  },
+  searchHandler: async (query, context) => {
+    // Return array of commands as search results
+    const files = await searchFiles(query);
 
-      return files.map((file) =>
-         createActionCommand({
-            id: `file:${file.path}`,
-            title: file.name,
-            description: file.path,
-            icon: '📄',
-            execute: async () => {
-               await openFile(file.path);
-               return { success: true };
-            },
-         })
-      );
-   },
+    return files.map((file) =>
+      createActionCommand({
+        id: `file:${file.path}`,
+        title: file.name,
+        description: file.path,
+        icon: '📄',
+        execute: async () => {
+          await openFile(file.path);
+          return { success: true };
+        },
+      })
+    );
+  },
 });
 
 // Search with custom display
 const customSearchCommand = createSearchCommand({
-   id: 'custom-search',
-   title: 'Team Members',
-   searchConfig: {
-      placeholder: 'Search team members...',
-      debounceMs: 200,
-      minQueryLength: 1,
-   },
-   searchResultConfig: {
-      // Choose display layout: 'list' | 'grid' | 'table' | 'custom'
-      layout: 'grid',
-      gridConfig: {
-         columns: 3,
-         gap: '1rem',
-      },
-      showMetadata: true,
-   },
-   searchHandler: async (query, context) => {
-      const members = await searchTeamMembers(query);
-      return members.map((member) =>
-         createActionCommand({
-            id: `member:${member.id}`,
-            title: member.name,
-            description: member.role,
-            icon: member.avatar,
-            group: member.department,
-            execute: async () => {
-               await openProfile(member.id);
-               return { success: true };
-            },
-         })
-      );
-   },
+  id: 'custom-search',
+  title: 'Team Members',
+  searchConfig: {
+    placeholder: 'Search team members...',
+    debounceMs: 200,
+    minQueryLength: 1,
+  },
+  searchResultConfig: {
+    // Choose display layout: 'list' | 'grid' | 'table' | 'custom'
+    layout: 'grid',
+    gridConfig: {
+      columns: 3,
+      gap: '1rem',
+    },
+    showMetadata: true,
+  },
+  searchHandler: async (query, context) => {
+    const members = await searchTeamMembers(query);
+    return members.map((member) =>
+      createActionCommand({
+        id: `member:${member.id}`,
+        title: member.name,
+        description: member.role,
+        icon: member.avatar,
+        group: member.department,
+        execute: async () => {
+          await openProfile(member.id);
+          return { success: true };
+        },
+      })
+    );
+  },
 });
 
 // Search with fully custom rendering
 const advancedSearchCommand = createSearchCommand({
-   id: 'advanced-search',
-   title: 'Advanced Search',
-   searchResultConfig: {
-      layout: 'custom',
-      customRenderer: (command, isActive, onSelect) => (
-         <div className={`custom-result ${isActive ? 'active' : ''}`} onClick={onSelect}>
-            <img src={command.icon} alt="" />
-            <div>
-               <h3>{command.title}</h3>
-               <p>{command.description}</p>
-            </div>
-         </div>
-      ),
-      groupBy: (command) => command.group,
-      groupRenderer: (groupName, commands) => (
-         <div className="group-header">
-            {groupName} ({commands.length})
-         </div>
-      ),
-   },
-   searchHandler: async (query, context) => {
-      // Your search logic here
-   },
+  id: 'advanced-search',
+  title: 'Advanced Search',
+  searchResultConfig: {
+    layout: 'custom',
+    customRenderer: (command, isActive, onSelect) => (
+      <div className={`custom-result ${isActive ? 'active' : ''}`} onClick={onSelect}>
+        <img src={command.icon} alt="" />
+        <div>
+          <h3>{command.title}</h3>
+          <p>{command.description}</p>
+        </div>
+      </div>
+    ),
+    groupBy: (command) => command.group,
+    groupRenderer: (groupName, commands) => (
+      <div className="group-header">
+        {groupName} ({commands.length})
+      </div>
+    ),
+  },
+  searchHandler: async (query, context) => {
+    // Your search logic here
+  },
 });
 ```
 
@@ -264,39 +264,39 @@ searchResultConfig: {
 import { CommandModule } from '@/components/command-palette';
 
 const myModule: CommandModule = {
-   id: 'my-module',
-   name: 'My Module',
-   version: '1.0.0',
+  id: 'my-module',
+  name: 'My Module',
+  version: '1.0.0',
 
-   commands: (context) => [
-      // Context-aware command
-      {
-         id: 'context-aware',
-         title: (ctx) => (ctx.data.userName ? `Hello, ${ctx.data.userName}!` : 'Set Name'),
-         visible: (ctx) => !ctx.data.hidden,
-         type: 'action',
-         execute: async (_, ctx) => {
-            // Access context data
-            console.log('Context:', ctx.data);
-            return { success: true };
-         },
+  commands: (context) => [
+    // Context-aware command
+    {
+      id: 'context-aware',
+      title: (ctx) => (ctx.data.userName ? `Hello, ${ctx.data.userName}!` : 'Set Name'),
+      visible: (ctx) => !ctx.data.hidden,
+      type: 'action',
+      execute: async (_, ctx) => {
+        // Access context data
+        console.log('Context:', ctx.data);
+        return { success: true };
       },
-   ],
+    },
+  ],
 
-   // Extend context with data and methods
-   contextExtensions: {
-      data: {
-         myModuleData: 'some data',
-      },
-      methods: {
-         refresh: () => console.log('Refreshing...'),
-      },
-   },
+  // Extend context with data and methods
+  contextExtensions: {
+    data: {
+      myModuleData: 'some data',
+    },
+    methods: {
+      refresh: () => console.log('Refreshing...'),
+    },
+  },
 
-   // React to command executions
-   onCommandExecute: (command, result, context) => {
-      console.log(`Command ${command.id} executed:`, result);
-   },
+  // React to command executions
+  onCommandExecute: (command, result, context) => {
+    console.log(`Command ${command.id} executed:`, result);
+  },
 };
 ```
 
@@ -335,33 +335,33 @@ User Input → Command Resolver → Command Executor → Context Update → Next
 
 ```tsx
 const multiStepCommand = createCompositeCommand({
-   id: 'multi-step',
-   title: 'Multi-Step Process',
-   execute: async () => {
-      return {
-         success: true,
-         nextCommand: createSelectCommand({
-            id: 'step-2',
-            title: 'Choose Type',
-            options: [
-               /* ... */
-            ],
-            execute: async (type) => {
-               return {
-                  success: true,
-                  nextCommand: createInputCommand({
-                     id: 'step-3',
-                     title: 'Enter Name',
-                     execute: async (name) => {
-                        // Final step
-                        return { success: true };
-                     },
-                  }),
-               };
-            },
-         }),
-      };
-   },
+  id: 'multi-step',
+  title: 'Multi-Step Process',
+  execute: async () => {
+    return {
+      success: true,
+      nextCommand: createSelectCommand({
+        id: 'step-2',
+        title: 'Choose Type',
+        options: [
+          /* ... */
+        ],
+        execute: async (type) => {
+          return {
+            success: true,
+            nextCommand: createInputCommand({
+              id: 'step-3',
+              title: 'Enter Name',
+              execute: async (name) => {
+                // Final step
+                return { success: true };
+              },
+            }),
+          };
+        },
+      }),
+    };
+  },
 });
 ```
 
@@ -369,18 +369,18 @@ const multiStepCommand = createCompositeCommand({
 
 ```tsx
 const smartCommand: Command = {
-   id: 'smart',
-   title: (ctx) => (ctx.data.selectedItem ? 'Edit Item' : 'Select Item First'),
-   visible: (ctx) => ctx.data.showAdvanced,
-   enabled: (ctx) => !!ctx.data.selectedItem,
-   type: 'action',
-   execute: async (_, ctx) => {
-      // Access full context
-      const item = ctx.data.selectedItem;
-      const history = ctx.chain.map((c) => c.command.id);
+  id: 'smart',
+  title: (ctx) => (ctx.data.selectedItem ? 'Edit Item' : 'Select Item First'),
+  visible: (ctx) => ctx.data.showAdvanced,
+  enabled: (ctx) => !!ctx.data.selectedItem,
+  type: 'action',
+  execute: async (_, ctx) => {
+    // Access full context
+    const item = ctx.data.selectedItem;
+    const history = ctx.chain.map((c) => c.command.id);
 
-      return { success: true };
-   },
+    return { success: true };
+  },
 };
 ```
 
@@ -388,20 +388,20 @@ const smartCommand: Command = {
 
 ```tsx
 const advancedModule: CommandModule = {
-   id: 'advanced',
-   name: 'Advanced Features',
-   dependencies: ['basic-module'], // Must be loaded first
+  id: 'advanced',
+  name: 'Advanced Features',
+  dependencies: ['basic-module'], // Must be loaded first
 
-   initialize: async (context) => {
-      // Access dependent module data
-      const basicData = context.data['basic-module.data'];
-   },
+  initialize: async (context) => {
+    // Access dependent module data
+    const basicData = context.data['basic-module.data'];
+  },
 
-   commands: (context) => {
-      // Generate commands based on other modules
-      const basicCommands = context.modules.get('basic-module')?.commands;
-      return enhancedCommands(basicCommands);
-   },
+  commands: (context) => {
+    // Generate commands based on other modules
+    const basicCommands = context.modules.get('basic-module')?.commands;
+    return enhancedCommands(basicCommands);
+  },
 };
 ```
 
@@ -410,57 +410,57 @@ const advancedModule: CommandModule = {
 ```tsx
 // Table layout for database records
 const databaseSearchCommand = createSearchCommand({
-   id: 'db-search',
-   title: 'Database Search',
-   searchResultConfig: {
-      layout: 'table',
-      tableConfig: {
-         columns: [
-            { key: 'name', header: 'Name', width: '30%' },
-            { key: 'type', header: 'Type', width: '20%' },
-            { key: 'status', header: 'Status', width: '20%' },
-            { key: 'modified', header: 'Modified', width: '30%' },
-         ],
+  id: 'db-search',
+  title: 'Database Search',
+  searchResultConfig: {
+    layout: 'table',
+    tableConfig: {
+      columns: [
+        { key: 'name', header: 'Name', width: '30%' },
+        { key: 'type', header: 'Type', width: '20%' },
+        { key: 'status', header: 'Status', width: '20%' },
+        { key: 'modified', header: 'Modified', width: '30%' },
+      ],
+    },
+  },
+  searchHandler: async (query) => {
+    const records = await searchDatabase(query);
+    return records.map((record) => ({
+      id: record.id,
+      title: record.name,
+      description: record.type,
+      metadata: {
+        status: record.status,
+        modified: record.lastModified,
       },
-   },
-   searchHandler: async (query) => {
-      const records = await searchDatabase(query);
-      return records.map((record) => ({
-         id: record.id,
-         title: record.name,
-         description: record.type,
-         metadata: {
-            status: record.status,
-            modified: record.lastModified,
-         },
-         execute: async () => openRecord(record.id),
-      }));
-   },
+      execute: async () => openRecord(record.id),
+    }));
+  },
 });
 
 // Grouped search results
 const groupedSearchCommand = createSearchCommand({
-   id: 'grouped-search',
-   title: 'Categorized Search',
-   searchResultConfig: {
-      groupBy: (command) => command.group || 'Other',
-      groupRenderer: (groupName, commands) => (
-         <div className="group-header">
-            <span className="group-icon">{getGroupIcon(groupName)}</span>
-            <span className="group-name">{groupName}</span>
-            <span className="group-count">({commands.length})</span>
-         </div>
-      ),
-   },
-   searchHandler: async (query) => {
-      const results = await searchWithCategories(query);
-      return results.map((item) => ({
-         id: item.id,
-         title: item.name,
-         group: item.category,
-         execute: async () => handleItemSelection(item),
-      }));
-   },
+  id: 'grouped-search',
+  title: 'Categorized Search',
+  searchResultConfig: {
+    groupBy: (command) => command.group || 'Other',
+    groupRenderer: (groupName, commands) => (
+      <div className="group-header">
+        <span className="group-icon">{getGroupIcon(groupName)}</span>
+        <span className="group-name">{groupName}</span>
+        <span className="group-count">({commands.length})</span>
+      </div>
+    ),
+  },
+  searchHandler: async (query) => {
+    const results = await searchWithCategories(query);
+    return results.map((item) => ({
+      id: item.id,
+      title: item.name,
+      group: item.category,
+      execute: async () => handleItemSelection(item),
+    }));
+  },
 });
 ```
 
@@ -470,11 +470,11 @@ const groupedSearchCommand = createSearchCommand({
 
 ```tsx
 const customStepCommand: Command = {
-   id: 'custom',
-   title: 'Custom Step',
-   type: 'select',
-   options: async () => loadCustomOptions(),
-   // Custom rendering handled by CommandPalette
+  id: 'custom',
+  title: 'Custom Step',
+  type: 'select',
+  options: async () => loadCustomOptions(),
+  // Custom rendering handled by CommandPalette
 };
 ```
 
@@ -482,18 +482,18 @@ const customStepCommand: Command = {
 
 ```tsx
 const moduleWithEvents: CommandModule = {
-   // ...
-   onCommandExecute: (command, result, context) => {
-      if (result.success && command.id.startsWith('data-')) {
-         // Refresh data after data commands
-         context.methods.refreshData();
-      }
-   },
+  // ...
+  onCommandExecute: (command, result, context) => {
+    if (result.success && command.id.startsWith('data-')) {
+      // Refresh data after data commands
+      context.methods.refreshData();
+    }
+  },
 
-   onContextChange: (context) => {
-      // React to context changes
-      console.log('Context updated:', context.data);
-   },
+  onContextChange: (context) => {
+    // React to context changes
+    console.log('Context updated:', context.data);
+  },
 };
 ```
 
@@ -503,14 +503,14 @@ const moduleWithEvents: CommandModule = {
 import { renderWithCommandPalette } from '@/components/command-palette/test-utils';
 
 test('command execution', async () => {
-   const mockModule = {
-      id: 'test',
-      commands: [mockCommand],
-   };
+  const mockModule = {
+    id: 'test',
+    commands: [mockCommand],
+  };
 
-   const { executeCommand } = renderWithCommandPalette({ modules: [mockModule] });
+  const { executeCommand } = renderWithCommandPalette({ modules: [mockModule] });
 
-   const result = await executeCommand(mockCommand);
-   expect(result.success).toBe(true);
+  const result = await executeCommand(mockCommand);
+  expect(result.success).toBe(true);
 });
 ```

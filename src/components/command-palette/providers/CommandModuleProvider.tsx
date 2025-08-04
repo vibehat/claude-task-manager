@@ -1,214 +1,214 @@
 'use client';
 
 import React, {
-   createContext,
-   useContext,
-   useState,
-   useCallback,
-   useEffect,
-   type ReactNode,
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
 } from 'react';
 import type { Command, CommandModule, ExtendedCommandModule, ModuleRegistry } from '../types';
 import { useCommandContext } from './CommandContextProvider';
 
 interface CommandModuleContextValue {
-   registry: ModuleRegistry;
-   registeredModules: CommandModule[];
-   loadModule: (module: CommandModule | ExtendedCommandModule) => Promise<void>;
-   unloadModule: (moduleId: string) => Promise<void>;
-   getModuleCommands: (moduleId: string) => Command[];
-   getAllCommands: () => Command[];
-   isModuleLoaded: (moduleId: string) => boolean;
+  registry: ModuleRegistry;
+  registeredModules: CommandModule[];
+  loadModule: (module: CommandModule | ExtendedCommandModule) => Promise<void>;
+  unloadModule: (moduleId: string) => Promise<void>;
+  getModuleCommands: (moduleId: string) => Command[];
+  getAllCommands: () => Command[];
+  isModuleLoaded: (moduleId: string) => boolean;
 }
 
 const CommandModuleContext = createContext<CommandModuleContextValue | null>(null);
 
 interface CommandModuleProviderProps {
-   children: ReactNode;
-   initialModules?: (CommandModule | ExtendedCommandModule)[];
-   autoLoadModules?: boolean;
+  children: ReactNode;
+  initialModules?: (CommandModule | ExtendedCommandModule)[];
+  autoLoadModules?: boolean;
 }
 
 export function CommandModuleProvider({
-   children,
-   initialModules = [],
-   autoLoadModules = true,
+  children,
+  initialModules = [],
+  autoLoadModules = true,
 }: CommandModuleProviderProps) {
-   const { context, registerModule, unregisterModule } = useCommandContext();
-   const [loadedModules, setLoadedModules] = useState<Map<string, CommandModule>>(new Map());
+  const { context, registerModule, unregisterModule } = useCommandContext();
+  const [loadedModules, setLoadedModules] = useState<Map<string, CommandModule>>(new Map());
 
-   // Initialize modules on mount
-   useEffect(() => {
-      if (autoLoadModules && initialModules.length > 0) {
-         Promise.all(initialModules.map((module) => loadModule(module as CommandModule))).catch(
-            console.error
-         );
-      }
-   }, []); // Only run on mount
+  // Initialize modules on mount
+  useEffect(() => {
+    if (autoLoadModules && initialModules.length > 0) {
+      Promise.all(initialModules.map((module) => loadModule(module as CommandModule))).catch(
+        console.error
+      );
+    }
+  }, []); // Only run on mount
 
-   // Create module registry
-   const registry: ModuleRegistry = {
-      modules: loadedModules,
-      register: (module) => loadModule(module),
-      unregister: (moduleId) => unloadModule(moduleId),
-      get: (moduleId) => loadedModules.get(moduleId),
-      getAll: () => Array.from(loadedModules.values()),
-      getDependencies: (moduleId) => {
-         const module = loadedModules.get(moduleId);
-         if (!module || !module.dependencies) return [];
+  // Create module registry
+  const registry: ModuleRegistry = {
+    modules: loadedModules,
+    register: (module) => loadModule(module),
+    unregister: (moduleId) => unloadModule(moduleId),
+    get: (moduleId) => loadedModules.get(moduleId),
+    getAll: () => Array.from(loadedModules.values()),
+    getDependencies: (moduleId) => {
+      const commandModule = loadedModules.get(moduleId);
+      if (!commandModule || !commandModule.dependencies) return [];
 
-         return module.dependencies
-            .map((depId) => loadedModules.get(depId))
-            .filter((dep): dep is CommandModule => dep !== undefined);
-      },
-   };
+      return commandModule.dependencies
+        .map((depId) => loadedModules.get(depId))
+        .filter((dep): dep is CommandModule => dep !== undefined);
+    },
+  };
 
-   // Load a module
-   const loadModule = useCallback(
-      async (module: CommandModule) => {
-         try {
-            // Check if already loaded
-            if (loadedModules.has(module.id)) {
-               console.warn(`Module ${module.id} is already loaded`);
-               return;
-            }
+  // Load a module
+  const loadModule = useCallback(
+    async (module: CommandModule) => {
+      try {
+        // Check if already loaded
+        if (loadedModules.has(module.id)) {
+          console.warn(`Module ${module.id} is already loaded`);
+          return;
+        }
 
-            // Check dependencies
-            if (module.dependencies) {
-               const missingDeps = module.dependencies.filter((depId) => !loadedModules.has(depId));
-               if (missingDeps.length > 0) {
-                  throw new Error(
-                     `Module ${module.id} has missing dependencies: ${missingDeps.join(', ')}`
-                  );
-               }
-            }
-
-            // Register with command context
-            await registerModule(module);
-
-            // Add to loaded modules
-            setLoadedModules((prev) => {
-               const newModules = new Map(prev);
-               newModules.set(module.id, module);
-               return newModules;
-            });
-
-            // Call onInstall if available (for extended modules)
-            const extendedModule = module as any;
-            if (extendedModule.onInstall) {
-               await extendedModule.onInstall(context);
-            }
-
-            console.log(`Module ${module.id} loaded successfully`);
-         } catch (error) {
-            console.error(`Failed to load module ${module.id}:`, error);
-            throw error;
-         }
-      },
-      [context, loadedModules, registerModule]
-   );
-
-   // Unload a module
-   const unloadModule = useCallback(
-      async (moduleId: string) => {
-         try {
-            const module = loadedModules.get(moduleId);
-            if (!module) {
-               console.warn(`Module ${moduleId} is not loaded`);
-               return;
-            }
-
-            // Check if other modules depend on this one
-            const dependentModules = Array.from(loadedModules.values()).filter((m) =>
-               m.dependencies?.includes(moduleId)
+        // Check dependencies
+        if (module.dependencies) {
+          const missingDeps = module.dependencies.filter((depId) => !loadedModules.has(depId));
+          if (missingDeps.length > 0) {
+            throw new Error(
+              `Module ${module.id} has missing dependencies: ${missingDeps.join(', ')}`
             );
+          }
+        }
 
-            if (dependentModules.length > 0) {
-               throw new Error(
-                  `Cannot unload module ${moduleId}: ${dependentModules.map((m) => m.id).join(', ')} depend on it`
-               );
-            }
+        // Register with command context
+        await registerModule(module);
 
-            // Call onUninstall if available (for extended modules)
-            const extendedModule = module as any;
-            if (extendedModule.onUninstall) {
-               await extendedModule.onUninstall(context);
-            }
+        // Add to loaded modules
+        setLoadedModules((prev) => {
+          const newModules = new Map(prev);
+          newModules.set(module.id, module);
+          return newModules;
+        });
 
-            // Unregister from command context
-            await unregisterModule(moduleId);
+        // Call onInstall if available (for extended modules)
+        const extendedModule = module as any;
+        if (extendedModule.onInstall) {
+          await extendedModule.onInstall(context);
+        }
 
-            // Remove from loaded modules
-            setLoadedModules((prev) => {
-               const newModules = new Map(prev);
-               newModules.delete(moduleId);
-               return newModules;
-            });
+        console.log(`Module ${module.id} loaded successfully`);
+      } catch (error) {
+        console.error(`Failed to load module ${module.id}:`, error);
+        throw error;
+      }
+    },
+    [context, loadedModules, registerModule]
+  );
 
-            console.log(`Module ${moduleId} unloaded successfully`);
-         } catch (error) {
-            console.error(`Failed to unload module ${moduleId}:`, error);
-            throw error;
-         }
-      },
-      [context, loadedModules, unregisterModule]
-   );
+  // Unload a module
+  const unloadModule = useCallback(
+    async (moduleId: string) => {
+      try {
+        const commandModule = loadedModules.get(moduleId);
+        if (!module) {
+          console.warn(`Module ${moduleId} is not loaded`);
+          return;
+        }
 
-   // Get commands from a specific module
-   const getModuleCommands = useCallback(
-      (moduleId: string): Command[] => {
-         const module = loadedModules.get(moduleId);
-         if (!module) return [];
+        // Check if other modules depend on this one
+        const dependentModules = Array.from(loadedModules.values()).filter((m) =>
+          m.dependencies?.includes(moduleId)
+        );
 
-         const commands =
-            typeof module.commands === 'function' ? module.commands(context) : module.commands;
+        if (dependentModules.length > 0) {
+          throw new Error(
+            `Cannot unload module ${moduleId}: ${dependentModules.map((m) => m.id).join(', ')} depend on it`
+          );
+        }
 
-         return commands || [];
-      },
-      [context, loadedModules]
-   );
+        // Call onUninstall if available (for extended modules)
+        const extendedModule = module as any;
+        if (extendedModule.onUninstall) {
+          await extendedModule.onUninstall(context);
+        }
 
-   // Get all commands from all loaded modules
-   const getAllCommands = useCallback((): Command[] => {
-      const allCommands: Command[] = [];
+        // Unregister from command context
+        await unregisterModule(moduleId);
 
-      loadedModules.forEach((module) => {
-         const commands =
-            typeof module.commands === 'function' ? module.commands(context) : module.commands;
+        // Remove from loaded modules
+        setLoadedModules((prev) => {
+          const newModules = new Map(prev);
+          newModules.delete(moduleId);
+          return newModules;
+        });
 
-         if (commands) {
-            allCommands.push(...commands);
-         }
-      });
+        console.log(`Module ${moduleId} unloaded successfully`);
+      } catch (error) {
+        console.error(`Failed to unload module ${moduleId}:`, error);
+        throw error;
+      }
+    },
+    [context, loadedModules, unregisterModule]
+  );
 
-      return allCommands;
-   }, [context, loadedModules]);
+  // Get commands from a specific module
+  const getModuleCommands = useCallback(
+    (moduleId: string): Command[] => {
+      const commandModule = loadedModules.get(moduleId);
+      if (!module) return [];
 
-   // Check if a module is loaded
-   const isModuleLoaded = useCallback(
-      (moduleId: string): boolean => {
-         return loadedModules.has(moduleId);
-      },
-      [loadedModules]
-   );
+      const commands =
+        typeof module.commands === 'function' ? module.commands(context) : module.commands;
 
-   const value: CommandModuleContextValue = {
-      registry,
-      registeredModules: Array.from(loadedModules.values()),
-      loadModule,
-      unloadModule,
-      getModuleCommands,
-      getAllCommands,
-      isModuleLoaded,
-   };
+      return commands || [];
+    },
+    [context, loadedModules]
+  );
 
-   return <CommandModuleContext.Provider value={value}>{children}</CommandModuleContext.Provider>;
+  // Get all commands from all loaded modules
+  const getAllCommands = useCallback((): Command[] => {
+    const allCommands: Command[] = [];
+
+    loadedModules.forEach((module) => {
+      const commands =
+        typeof module.commands === 'function' ? module.commands(context) : module.commands;
+
+      if (commands) {
+        allCommands.push(...commands);
+      }
+    });
+
+    return allCommands;
+  }, [context, loadedModules]);
+
+  // Check if a module is loaded
+  const isModuleLoaded = useCallback(
+    (moduleId: string): boolean => {
+      return loadedModules.has(moduleId);
+    },
+    [loadedModules]
+  );
+
+  const value: CommandModuleContextValue = {
+    registry,
+    registeredModules: Array.from(loadedModules.values()),
+    loadModule,
+    unloadModule,
+    getModuleCommands,
+    getAllCommands,
+    isModuleLoaded,
+  };
+
+  return <CommandModuleContext.Provider value={value}>{children}</CommandModuleContext.Provider>;
 }
 
 export function useCommandModules() {
-   const context = useContext(CommandModuleContext);
-   if (!context) {
-      throw new Error('useCommandModules must be used within CommandModuleProvider');
-   }
-   return context;
+  const context = useContext(CommandModuleContext);
+  if (!context) {
+    throw new Error('useCommandModules must be used within CommandModuleProvider');
+  }
+  return context;
 }

@@ -12,46 +12,46 @@ import { createMockTagWithColor } from '@/libs/client/utils/tagUtils';
 import type { GroupItem } from '../../types/groupTypes';
 
 interface TaskGridViewProps {
-   groupedTasks: Record<string, Task[]>;
-   groups?: GroupItem[];
+  groupedTasks: Record<string, Task[]>;
+  groups?: GroupItem[];
 }
 
 const TaskGridView: FC<TaskGridViewProps> = ({ groupedTasks, groups }) => {
-   const { where } = useTasksFilterStore();
+  const { where } = useTasksFilterStore();
 
-   const orderedGroups =
-      groups || Object.entries(groupedTasks).map(([key]) => ({ key, label: key }) as GroupItem);
+  const orderedGroups =
+    groups || Object.entries(groupedTasks).map(([key]) => ({ key, label: key }) as GroupItem);
 
-   return (
-      <div className={cn('w-full h-full overflow-x-auto')}>
-         <DndProvider backend={HTML5Backend}>
-            <CustomDragLayer />
-            <div className={cn('flex h-full gap-3 px-2 py-2 min-w-max')}>
-               {orderedGroups.map((group) => {
-                  const groupKey = group.key;
-                  const tasks = groupedTasks[groupKey] || [];
-                  if (tasks.length === 0) return null;
+  return (
+    <div className={cn('w-full h-full overflow-x-auto')}>
+      <DndProvider backend={HTML5Backend}>
+        <CustomDragLayer />
+        <div className={cn('flex h-full gap-3 px-2 py-2 min-w-max')}>
+          {orderedGroups.map((group) => {
+            const groupKey = group.key;
+            const tasks = groupedTasks[groupKey] || [];
+            if (tasks.length === 0) return null;
 
-                  // Create a mock tag for the group
-                  const tag =
-                     groupKey === 'no-tag'
-                        ? createMockTagWithColor('no-tag', 'No Tag', '#6b7280')
-                        : createMockTagWithColor(groupKey, group.label, '#6b7280');
+            // Create a mock tag for the group
+            const tag =
+              groupKey === 'no-tag'
+                ? createMockTagWithColor('no-tag', 'No Tag', '#6b7280')
+                : createMockTagWithColor(groupKey, group.label, '#6b7280');
 
-                  return (
-                     <GroupTasksGrid
-                        key={groupKey}
-                        tag={tag}
-                        tasks={tasks}
-                        additionalFilter={where}
-                        groupIcon={group.icon}
-                     />
-                  );
-               })}
-            </div>
-         </DndProvider>
-      </div>
-   );
+            return (
+              <GroupTasksGrid
+                key={groupKey}
+                tag={tag}
+                tasks={tasks}
+                additionalFilter={where}
+                groupIcon={group.icon}
+              />
+            );
+          })}
+        </div>
+      </DndProvider>
+    </div>
+  );
 };
 
 export default TaskGridView;

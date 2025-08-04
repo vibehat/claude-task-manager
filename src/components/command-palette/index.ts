@@ -14,4 +14,13 @@ export { useCommandExecution } from './hooks/useCommandExecution';
 export { useCommandPaletteState } from './hooks/useCommandPaletteState';
 
 // Component types
-export * from './types';
+export {
+  CommandMode,
+  createActionCommand,
+  createSelectCommand,
+  createInputCommand,
+  createContextualInputCommand,
+  createInputWithActionsCommand,
+  createCompositeCommand,
+  createSearchCommand,
+} from './types';

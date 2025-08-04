@@ -14,25 +14,25 @@ The `release.json` file now has a cleaner structure that separates:
 
 ```json
 {
-   "authorBaseURL": "https://github.com/",
-   "repoBaseURL": "https://github.com/Pay-Direction/paydirection-apiservices/",
-   "ignoredAuthors": ["github-actions[bot]"],
-   "refs": [
-      {
-         "name": "PD Board",
-         "prefix": "PD-",
-         "ticketBaseURL": "https://pd-tracker.com/browse/"
-      }
-   ],
-   "types": {
-      /* commit types */
-   },
-   "scopes": {
-      /* technical scopes */
-   },
-   "features": {
-      /* business features */
-   }
+  "authorBaseURL": "https://github.com/",
+  "repoBaseURL": "https://github.com/Pay-Direction/paydirection-apiservices/",
+  "ignoredAuthors": ["github-actions[bot]"],
+  "refs": [
+    {
+      "name": "PD Board",
+      "prefix": "PD-",
+      "ticketBaseURL": "https://pd-tracker.com/browse/"
+    }
+  ],
+  "types": {
+    /* commit types */
+  },
+  "scopes": {
+    /* technical scopes */
+  },
+  "features": {
+    /* business features */
+  }
 }
 ```
 
@@ -206,16 +206,16 @@ To add new scopes or features:
 
 ```json
 {
-   "scopes": {
-      "newTechArea": {
-         "label": "New Technical Area"
-      }
-   },
-   "features": {
-      "newFeature": {
-         "label": "New Feature Domain"
-      }
-   }
+  "scopes": {
+    "newTechArea": {
+      "label": "New Technical Area"
+    }
+  },
+  "features": {
+    "newFeature": {
+      "label": "New Feature Domain"
+    }
+  }
 }
 ```
 

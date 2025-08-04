@@ -6,266 +6,266 @@ import type { Task } from '../types/taskTypes';
 import type { GroupByOption } from '../types/viewsTypes';
 
 export interface TaskGroup {
-   key: string;
-   label: string;
-   issues: Task[];
-   count: number;
-   color?: string;
-   icon?: string;
+  key: string;
+  label: string;
+  issues: Task[];
+  count: number;
+  color?: string;
+  icon?: string;
 }
 
 /**
  * Group issues by the specified criteria
  */
 export function groupTasks(issues: Task[], groupBy: GroupByOption): TaskGroup[] {
-   switch (groupBy) {
-      case 'status':
-         return groupByStatus(issues);
-      case 'priority':
-         return groupByPriority(issues);
-      case 'project':
-         return groupByProject(issues);
-      case 'label':
-         return groupByLabel(issues);
-      case 'none':
-      default:
-         return [
-            {
-               key: 'all',
-               label: 'All Tasks',
-               issues,
-               count: issues.length,
-            },
-         ];
-   }
+  switch (groupBy) {
+    case 'status':
+      return groupByStatus(issues);
+    case 'priority':
+      return groupByPriority(issues);
+    case 'project':
+      return groupByProject(issues);
+    case 'label':
+      return groupByLabel(issues);
+    case 'none':
+    default:
+      return [
+        {
+          key: 'all',
+          label: 'All Tasks',
+          issues,
+          count: issues.length,
+        },
+      ];
+  }
 }
 
 /**
  * Group issues by status
  */
 function groupByStatus(issues: Task[]): TaskGroup[] {
-   const groups = new Map<string, Task[]>();
+  const groups = new Map<string, Task[]>();
 
-   issues.forEach((issue) => {
-      const status = issue.status || 'No Status';
-      if (!groups.has(status)) {
-         groups.set(status, []);
-      }
-      groups.get(status)!.push(issue);
-   });
+  issues.forEach((issue) => {
+    const status = issue.status || 'No Status';
+    if (!groups.has(status)) {
+      groups.set(status, []);
+    }
+    groups.get(status)!.push(issue);
+  });
 
-   return Array.from(groups.entries()).map(([status, groupTasks]) => ({
-      key: status,
-      label: formatStatusLabel(status),
-      issues: groupTasks,
-      count: groupTasks.length,
-      color: getStatusColor(status),
-   }));
+  return Array.from(groups.entries()).map(([status, groupTasks]) => ({
+    key: status,
+    label: formatStatusLabel(status),
+    issues: groupTasks,
+    count: groupTasks.length,
+    color: getStatusColor(status),
+  }));
 }
 
 /**
  * Group issues by priority
  */
 function groupByPriority(issues: Task[]): TaskGroup[] {
-   const priorityOrder = ['URGENT', 'HIGH', 'MEDIUM', 'LOW', 'No Priority'];
-   const groups = new Map<string, Task[]>();
+  const priorityOrder = ['URGENT', 'HIGH', 'MEDIUM', 'LOW', 'No Priority'];
+  const groups = new Map<string, Task[]>();
 
-   issues.forEach((issue) => {
-      const priority = issue.priority || 'No Priority';
-      if (!groups.has(priority)) {
-         groups.set(priority, []);
-      }
-      groups.get(priority)!.push(issue);
-   });
+  issues.forEach((issue) => {
+    const priority = issue.priority || 'No Priority';
+    if (!groups.has(priority)) {
+      groups.set(priority, []);
+    }
+    groups.get(priority)!.push(issue);
+  });
 
-   // Sort groups by priority order
-   const sortedGroups = priorityOrder
-      .filter((priority) => groups.has(priority))
-      .map((priority) => [priority, groups.get(priority)!] as [string, Task[]]);
+  // Sort groups by priority order
+  const sortedGroups = priorityOrder
+    .filter((priority) => groups.has(priority))
+    .map((priority) => [priority, groups.get(priority)!] as [string, Task[]]);
 
-   return sortedGroups.map(([priority, groupTasks]) => ({
-      key: priority,
-      label: formatPriorityLabel(priority),
-      issues: groupTasks,
-      count: groupTasks.length,
-      color: getPriorityColor(priority),
-   }));
+  return sortedGroups.map(([priority, groupTasks]) => ({
+    key: priority,
+    label: formatPriorityLabel(priority),
+    issues: groupTasks,
+    count: groupTasks.length,
+    color: getPriorityColor(priority),
+  }));
 }
 
 /**
  * Group issues by project
  */
 function groupByProject(issues: Task[]): TaskGroup[] {
-   const groups = new Map<string, Task[]>();
+  const groups = new Map<string, Task[]>();
 
-   issues.forEach((issue) => {
-      const projectId = issue.project?.id || 'no-project';
-      if (!groups.has(projectId)) {
-         groups.set(projectId, []);
-      }
-      groups.get(projectId)!.push(issue);
-   });
+  issues.forEach((issue) => {
+    const projectId = issue.project?.id || 'no-project';
+    if (!groups.has(projectId)) {
+      groups.set(projectId, []);
+    }
+    groups.get(projectId)!.push(issue);
+  });
 
-   return Array.from(groups.entries()).map(([projectId, groupTasks]) => {
-      const project = groupTasks[0]?.project;
-      return {
-         key: projectId,
-         label: project ? project.name : 'No Project',
-         issues: groupTasks,
-         count: groupTasks.length,
-         color: project?.color,
-         icon: project?.icon,
-      };
-   });
+  return Array.from(groups.entries()).map(([projectId, groupTasks]) => {
+    const project = groupTasks[0]?.project;
+    return {
+      key: projectId,
+      label: project ? project.name : 'No Project',
+      issues: groupTasks,
+      count: groupTasks.length,
+      color: project?.color,
+      icon: project?.icon,
+    };
+  });
 }
 
 /**
  * Group issues by label (first label or no label)
  */
 function groupByLabel(issues: Task[]): TaskGroup[] {
-   const groups = new Map<string, Task[]>();
+  const groups = new Map<string, Task[]>();
 
-   issues.forEach((issue) => {
-      const firstLabel = issue.labels?.[0];
-      const labelId = firstLabel?.id || 'no-label';
+  issues.forEach((issue) => {
+    const firstLabel = issue.labels?.[0];
+    const labelId = firstLabel?.id || 'no-label';
 
-      if (!groups.has(labelId)) {
-         groups.set(labelId, []);
-      }
-      groups.get(labelId)!.push(issue);
-   });
+    if (!groups.has(labelId)) {
+      groups.set(labelId, []);
+    }
+    groups.get(labelId)!.push(issue);
+  });
 
-   return Array.from(groups.entries()).map(([labelId, groupTasks]) => {
-      const label = groupTasks[0]?.labels?.[0];
-      return {
-         key: labelId,
-         label: label ? label.name : 'No Label',
-         issues: groupTasks,
-         count: groupTasks.length,
-         color: label?.color,
-      };
-   });
+  return Array.from(groups.entries()).map(([labelId, groupTasks]) => {
+    const label = groupTasks[0]?.labels?.[0];
+    return {
+      key: labelId,
+      label: label ? label.name : 'No Label',
+      issues: groupTasks,
+      count: groupTasks.length,
+      color: label?.color,
+    };
+  });
 }
 
 /**
  * Format status label for display
  */
 function formatStatusLabel(status: string): string {
-   const statusLabels: Record<string, string> = {
-      OPEN: 'Open',
-      TODO: 'To Do',
-      IN_PROGRESS: 'In Progress',
-      DOING: 'Doing',
-      REVIEW: 'In Review',
-      DONE: 'Done',
-      COMPLETED: 'Completed',
-      CANCELLED: 'Cancelled',
-      BLOCKED: 'Blocked',
-   };
-   return statusLabels[status] || status;
+  const statusLabels: Record<string, string> = {
+    OPEN: 'Open',
+    TODO: 'To Do',
+    IN_PROGRESS: 'In Progress',
+    DOING: 'Doing',
+    REVIEW: 'In Review',
+    DONE: 'Done',
+    COMPLETED: 'Completed',
+    CANCELLED: 'Cancelled',
+    BLOCKED: 'Blocked',
+  };
+  return statusLabels[status] || status;
 }
 
 /**
  * Format priority label for display
  */
 function formatPriorityLabel(priority: string): string {
-   const priorityLabels: Record<string, string> = {
-      LOW: 'Low Priority',
-      MEDIUM: 'Medium Priority',
-      HIGH: 'High Priority',
-      URGENT: 'Urgent',
-      CRITICAL: 'Critical',
-   };
-   return priorityLabels[priority] || priority;
+  const priorityLabels: Record<string, string> = {
+    LOW: 'Low Priority',
+    MEDIUM: 'Medium Priority',
+    HIGH: 'High Priority',
+    URGENT: 'Urgent',
+    CRITICAL: 'Critical',
+  };
+  return priorityLabels[priority] || priority;
 }
 
 /**
  * Get status color
  */
 function getStatusColor(status: string): string {
-   const statusColors: Record<string, string> = {
-      OPEN: '#94a3b8',
-      TODO: '#94a3b8',
-      IN_PROGRESS: '#f59e0b',
-      DOING: '#f59e0b',
-      REVIEW: '#8b5cf6',
-      DONE: '#10b981',
-      COMPLETED: '#10b981',
-      CANCELLED: '#ef4444',
-      BLOCKED: '#ef4444',
-   };
-   return statusColors[status] || '#6b7280';
+  const statusColors: Record<string, string> = {
+    OPEN: '#94a3b8',
+    TODO: '#94a3b8',
+    IN_PROGRESS: '#f59e0b',
+    DOING: '#f59e0b',
+    REVIEW: '#8b5cf6',
+    DONE: '#10b981',
+    COMPLETED: '#10b981',
+    CANCELLED: '#ef4444',
+    BLOCKED: '#ef4444',
+  };
+  return statusColors[status] || '#6b7280';
 }
 
 /**
  * Get priority color
  */
 function getPriorityColor(priority: string): string {
-   const priorityColors: Record<string, string> = {
-      LOW: '#10b981',
-      MEDIUM: '#f59e0b',
-      HIGH: '#f97316',
-      URGENT: '#ef4444',
-      CRITICAL: '#dc2626',
-   };
-   return priorityColors[priority] || '#6b7280';
+  const priorityColors: Record<string, string> = {
+    LOW: '#10b981',
+    MEDIUM: '#f59e0b',
+    HIGH: '#f97316',
+    URGENT: '#ef4444',
+    CRITICAL: '#dc2626',
+  };
+  return priorityColors[priority] || '#6b7280';
 }
 
 /**
  * Sort groups by a specific criteria
  */
 export function sortGroups(
-   groups: TaskGroup[],
-   sortBy: 'name' | 'count' | 'priority' = 'name',
-   direction: 'asc' | 'desc' = 'asc'
+  groups: TaskGroup[],
+  sortBy: 'name' | 'count' | 'priority' = 'name',
+  direction: 'asc' | 'desc' = 'asc'
 ): TaskGroup[] {
-   return [...groups].sort((a, b) => {
-      let comparison = 0;
+  return [...groups].sort((a, b) => {
+    let comparison = 0;
 
-      switch (sortBy) {
-         case 'name':
-            comparison = a.label.localeCompare(b.label);
-            break;
-         case 'count':
-            comparison = a.count - b.count;
-            break;
-         case 'priority':
-            // Custom priority order for status groups
-            const priorityOrder = ['URGENT', 'HIGH', 'MEDIUM', 'LOW'];
-            const aPriority = priorityOrder.indexOf(a.key);
-            const bPriority = priorityOrder.indexOf(b.key);
-            comparison = aPriority - bPriority;
-            break;
-      }
+    switch (sortBy) {
+      case 'name':
+        comparison = a.label.localeCompare(b.label);
+        break;
+      case 'count':
+        comparison = a.count - b.count;
+        break;
+      case 'priority':
+        // Custom priority order for status groups
+        const priorityOrder = ['URGENT', 'HIGH', 'MEDIUM', 'LOW'];
+        const aPriority = priorityOrder.indexOf(a.key);
+        const bPriority = priorityOrder.indexOf(b.key);
+        comparison = aPriority - bPriority;
+        break;
+    }
 
-      return direction === 'desc' ? -comparison : comparison;
-   });
+    return direction === 'desc' ? -comparison : comparison;
+  });
 }
 
 /**
  * Filter groups by minimum count
  */
 export function filterGroupsByCount(groups: TaskGroup[], minCount = 1): TaskGroup[] {
-   return groups.filter((group) => group.count >= minCount);
+  return groups.filter((group) => group.count >= minCount);
 }
 
 /**
  * Get group statistics
  */
 export function getGroupStats(groups: TaskGroup[]) {
-   const totalTasks = groups.reduce((sum, group) => sum + group.count, 0);
-   const totalGroups = groups.length;
-   const averagePerGroup = totalGroups > 0 ? Math.round(totalTasks / totalGroups) : 0;
-   const largestGroup = groups.reduce(
-      (max, group) => (group.count > max.count ? group : max),
-      groups[0] || { count: 0, label: '' }
-   );
+  const totalTasks = groups.reduce((sum, group) => sum + group.count, 0);
+  const totalGroups = groups.length;
+  const averagePerGroup = totalGroups > 0 ? Math.round(totalTasks / totalGroups) : 0;
+  const largestGroup = groups.reduce(
+    (max, group) => (group.count > max.count ? group : max),
+    groups[0] || { count: 0, label: '' }
+  );
 
-   return {
-      totalTasks,
-      totalGroups,
-      averagePerGroup,
-      largestGroup: largestGroup.label,
-      largestGroupCount: largestGroup.count,
-   };
+  return {
+    totalTasks,
+    totalGroups,
+    averagePerGroup,
+    largestGroup: largestGroup.label,
+    largestGroupCount: largestGroup.count,
+  };
 }

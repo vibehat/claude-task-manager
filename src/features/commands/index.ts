@@ -6,4 +6,4 @@ export { exampleModule } from './modules/ExampleModule';
 export { claudeModule } from './modules/ClaudeModule';
 
 // Re-export component types and utilities for convenience
-export * from './types';
+export {} from './types';

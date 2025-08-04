@@ -186,10 +186,10 @@ Create comprehensive Node.js integration layer with Next.js API routes to interf
    - CLI command allowlist validation
    - File path sanitization and rate limiting
 
-10.   **Implement Performance Optimization** (📋 Pending)
-      - Caching layers and pagination
-      - WebSocket message batching optimization
-      - Performance monitoring implementation
+10. **Implement Performance Optimization** (📋 Pending)
+    - Caching layers and pagination
+    - WebSocket message batching optimization
+    - Performance monitoring implementation
 
 ---
 

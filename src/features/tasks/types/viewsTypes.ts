@@ -11,73 +11,73 @@ export type GroupByOption = 'status' | 'priority' | 'project' | 'label' | 'none'
 export type SortOption = 'created' | 'updated' | 'priority' | 'title' | 'dueDate' | 'rank';
 
 export interface ViewConfig {
-   id: string;
-   name: string;
-   type: ViewType;
-   groupBy: GroupByOption;
-   sortBy: SortOption;
-   sortDirection: 'asc' | 'desc';
-   filters: TaskFilterInput;
-   isDefault?: boolean;
-   isPublic?: boolean;
-   createdBy?: string;
-   createdAt: Date;
-   updatedAt: Date;
+  id: string;
+  name: string;
+  type: ViewType;
+  groupBy: GroupByOption;
+  sortBy: SortOption;
+  sortDirection: 'asc' | 'desc';
+  filters: TaskFilterInput;
+  isDefault?: boolean;
+  isPublic?: boolean;
+  createdBy?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ViewState {
-   currentView: ViewType;
-   groupBy: GroupByOption;
-   sortBy: SortOption;
-   sortDirection: 'asc' | 'desc';
-   showCompletedIssues: boolean;
-   showSubIssues: boolean;
-   compactMode: boolean;
-   gridColumns: number;
+  currentView: ViewType;
+  groupBy: GroupByOption;
+  sortBy: SortOption;
+  sortDirection: 'asc' | 'desc';
+  showCompletedIssues: boolean;
+  showSubIssues: boolean;
+  compactMode: boolean;
+  gridColumns: number;
 }
 
 // Layout configurations
 export interface ListViewConfig {
-   showPriority: boolean;
-   showStatus: boolean;
-   showLabels: boolean;
-   showDueDate: boolean;
-   showProject: boolean;
-   showCreatedDate: boolean;
-   showUpdatedDate: boolean;
+  showPriority: boolean;
+  showStatus: boolean;
+  showLabels: boolean;
+  showDueDate: boolean;
+  showProject: boolean;
+  showCreatedDate: boolean;
+  showUpdatedDate: boolean;
 }
 
 export interface GridViewConfig {
-   columns: number;
-   cardSize: 'small' | 'medium' | 'large';
-   showSubIssues: boolean;
-   showDescription: boolean;
+  columns: number;
+  cardSize: 'small' | 'medium' | 'large';
+  showSubIssues: boolean;
+  showDescription: boolean;
 }
 
 export interface KanbanViewConfig {
-   groupBy: 'status' | 'priority';
-   showLimits: boolean;
-   swimlanes?: 'priority' | 'project';
+  groupBy: 'status' | 'priority';
+  showLimits: boolean;
+  swimlanes?: 'priority' | 'project';
 }
 
 export interface CalendarViewConfig {
-   dateField: 'dueDate' | 'createdAt' | 'updatedAt';
-   showWeekends: boolean;
-   startWeek: 'monday' | 'sunday';
+  dateField: 'dueDate' | 'createdAt' | 'updatedAt';
+  showWeekends: boolean;
+  startWeek: 'monday' | 'sunday';
 }
 
 // Selection types
 export interface SelectionState {
-   selectedIssueIds: string[];
-   lastSelectedId?: string;
-   isSelectionMode: boolean;
+  selectedIssueIds: string[];
+  lastSelectedId?: string;
+  isSelectionMode: boolean;
 }
 
 export interface BulkAction {
-   id: string;
-   name: string;
-   icon?: string;
-   action: (issueIds: string[]) => Promise<void>;
-   requiresConfirmation?: boolean;
-   confirmationMessage?: string;
+  id: string;
+  name: string;
+  icon?: string;
+  action: (issueIds: string[]) => Promise<void>;
+  requiresConfirmation?: boolean;
+  confirmationMessage?: string;
 }

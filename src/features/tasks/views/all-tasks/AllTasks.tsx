@@ -14,92 +14,92 @@ import { EmptyTasksState } from '@/components/empty-states/EmptyTasksState';
 import type { GroupItem } from '../../types/groupTypes';
 
 function AllTasks(): React.JSX.Element {
-   const { isSearchOpen, searchQuery } = useSearchStore();
-   const { viewType } = useViewStore();
+  const { isSearchOpen, searchQuery } = useSearchStore();
+  const { viewType } = useViewStore();
 
-   // Fetch tags from Zustand store
-   const { data: tags, loading: tagsLoading, error: tagsError } = useTags();
+  // Fetch tags from Zustand store
+  const { data: tags, loading: tagsLoading, error: tagsError } = useTags();
 
-   // Get store loading state
-   const isInitialized = useDataStore((state) => state.isInitialized);
-   const isLoading = useDataStore((state) => state.isLoading);
+  // Get store loading state
+  const isInitialized = useDataStore((state) => state.isInitialized);
+  const isLoading = useDataStore((state) => state.isLoading);
 
-   const isSearching = isSearchOpen && searchQuery.trim() !== '';
-   const isViewTypeGrid = viewType === 'grid';
+  const isSearching = isSearchOpen && searchQuery.trim() !== '';
+  const isViewTypeGrid = viewType === 'grid';
 
-   // Get filtered and grouped tasks by tag
-   const { groupedTasks, isEmpty } = useFilteredTasksByTag();
+  // Get filtered and grouped tasks by tag
+  const { groupedTasks, isEmpty } = useFilteredTasksByTag();
 
-   // Create tag groups for display
-   const groupTags = useMemo((): GroupItem[] => {
-      if (!tags) return [];
+  // Create tag groups for display
+  const groupTags = useMemo((): GroupItem[] => {
+    if (!tags) return [];
 
-      // Include 'no-tag' group if there are tasks without tags
-      const tagGroups: GroupItem[] = [...tags]
-         .sort((a, b) => a.name.localeCompare(b.name))
-         .map((tag) => ({
-            key: tag.id,
-            label: tag.name,
-         }));
+    // Include 'no-tag' group if there are tasks without tags
+    const tagGroups: GroupItem[] = [...tags]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((tag) => ({
+        key: tag.id,
+        label: tag.name,
+      }));
 
-      // Add 'no-tag' group if it exists in groupedTasks
-      if (groupedTasks['no-tag'] && groupedTasks['no-tag'].length > 0) {
-         tagGroups.push({
-            key: 'no-tag',
-            label: 'No Tag',
-         });
-      }
+    // Add 'no-tag' group if it exists in groupedTasks
+    if (groupedTasks['no-tag'] && groupedTasks['no-tag'].length > 0) {
+      tagGroups.push({
+        key: 'no-tag',
+        label: 'No Tag',
+      });
+    }
 
-      return tagGroups;
-   }, [tags, groupedTasks]);
+    return tagGroups;
+  }, [tags, groupedTasks]);
 
-   // Show loading state while fetching tags OR while store is initializing
-   if (tagsLoading || isLoading || !isInitialized) {
-      return (
-         <div className="flex items-center justify-center h-64">
-            <div className="text-sm text-muted-foreground">
-               Loading... (tags: {tagsLoading ? 'loading' : 'ready'}, store:{' '}
-               {isLoading ? 'loading' : isInitialized ? 'ready' : 'not initialized'})
-            </div>
-         </div>
-      );
-   }
-
-   // Show error state if tags failed to load
-   if (tagsError) {
-      return (
-         <div className="flex items-center justify-center h-64">
-            <div className="text-sm text-red-500">Error loading tags: {tagsError.message}</div>
-         </div>
-      );
-   }
-
-   // Show empty state only if we have no tasks after filtering
-   if (isEmpty) {
-      return (
-         <div className={cn('w-full h-full')}>
-            <EmptyTasksState variant="no-tasks" />
-         </div>
-      );
-   }
-
-   return (
-      <div className={cn('w-full h-full')}>
-         {isSearching ? (
-            <SearchTasksView />
-         ) : isViewTypeGrid ? (
-            <TaskGridView groups={groupTags} groupedTasks={groupedTasks} />
-         ) : (
-            <TaskListView groups={groupTags} groupedTasks={groupedTasks} />
-         )}
+  // Show loading state while fetching tags OR while store is initializing
+  if (tagsLoading || isLoading || !isInitialized) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-sm text-muted-foreground">
+          Loading... (tags: {tagsLoading ? 'loading' : 'ready'}, store:{' '}
+          {isLoading ? 'loading' : isInitialized ? 'ready' : 'not initialized'})
+        </div>
       </div>
-   );
+    );
+  }
+
+  // Show error state if tags failed to load
+  if (tagsError) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-sm text-red-500">Error loading tags: {tagsError.message}</div>
+      </div>
+    );
+  }
+
+  // Show empty state only if we have no tasks after filtering
+  if (isEmpty) {
+    return (
+      <div className={cn('w-full h-full')}>
+        <EmptyTasksState variant="no-tasks" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn('w-full h-full')}>
+      {isSearching ? (
+        <SearchTasksView />
+      ) : isViewTypeGrid ? (
+        <TaskGridView groups={groupTags} groupedTasks={groupedTasks} />
+      ) : (
+        <TaskListView groups={groupTags} groupedTasks={groupedTasks} />
+      )}
+    </div>
+  );
 }
 
 const SearchTasksView = (): React.JSX.Element => (
-   <div className="px-6 mb-6">
-      <SearchTasks />
-   </div>
+  <div className="px-6 mb-6">
+    <SearchTasks />
+  </div>
 );
 
 export default AllTasks;

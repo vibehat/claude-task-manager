@@ -88,16 +88,16 @@ Organized by status or priority:
 ### In Progress
 
 - [ ] 🔄 #5 **Implement user authentication** (60% complete)
-   - Dependencies: API design (#3 ✅)
-   - Subtasks: 4 (2 completed)
-   - Est: 8h / Spent: 5h
+  - Dependencies: API design (#3 ✅)
+  - Subtasks: 4 (2 completed)
+  - Est: 8h / Spent: 5h
 
 ### Pending (High Priority)
 
 - [ ] ⚡ #8 **Create dashboard UI**
-   - Blocked by: #5
-   - Complexity: High
-   - Est: 12h
+  - Blocked by: #5
+  - Complexity: High
+  - Est: 12h
 ```
 
 ## Customization

@@ -49,18 +49,18 @@ pnpm test
 
 ```typescript
 describe('My Module', () => {
-   it('should have required methods', () => {
-      expect(typeof MyModule.mainFunction).toBe('function');
-   });
+  it('should have required methods', () => {
+    expect(typeof MyModule.mainFunction).toBe('function');
+  });
 
-   it('should handle happy path', () => {
-      const result = MyModule.mainFunction('input');
-      expect(result).toBeDefined();
-   });
+  it('should handle happy path', () => {
+    const result = MyModule.mainFunction('input');
+    expect(result).toBeDefined();
+  });
 
-   it('should validate inputs', () => {
-      expect(() => MyModule.mainFunction(null)).toThrow();
-   });
+  it('should validate inputs', () => {
+    expect(() => MyModule.mainFunction(null)).toThrow();
+  });
 });
 ```
 

@@ -56,9 +56,9 @@ useCommandPaletteState Hook (180 lines)
 
 ```tsx
 interface CommandPaletteHeaderProps {
-   currentCommand: Command | null;
-   breadcrumbsLength: number;
-   onBack: () => void;
+  currentCommand: Command | null;
+  breadcrumbsLength: number;
+  onBack: () => void;
 }
 ```
 
@@ -82,10 +82,10 @@ interface CommandPaletteHeaderProps {
 
 ```tsx
 interface CommandSearchInputProps {
-   mode: CommandMode; // 'search' | 'select' | 'input'
-   value: string;
-   onValueChange: (value: string) => void;
-   inputPlaceholder?: string;
+  mode: CommandMode; // 'search' | 'select' | 'input'
+  value: string;
+  onValueChange: (value: string) => void;
+  inputPlaceholder?: string;
 }
 ```
 
@@ -109,7 +109,7 @@ interface CommandSearchInputProps {
 
 ```tsx
 interface CommandInputHintProps {
-   hint?: string; // Default: "Press ↓ to submit"
+  hint?: string; // Default: "Press ↓ to submit"
 }
 ```
 
@@ -134,14 +134,14 @@ interface CommandInputHintProps {
 
 ```tsx
 interface CommandPaletteContentProps {
-   mode: CommandMode;
-   displayCommands: Command[];
-   onSelectCommand: (command: Command) => void;
-   isCommandEnabled: (command: Command) => boolean;
-   selectOptions: CommandOption[];
-   onSelectOption: (option: CommandOption) => void;
-   isLoadingOptions: boolean;
-   searchValue: string;
+  mode: CommandMode;
+  displayCommands: Command[];
+  onSelectCommand: (command: Command) => void;
+  isCommandEnabled: (command: Command) => boolean;
+  selectOptions: CommandOption[];
+  onSelectOption: (option: CommandOption) => void;
+  isLoadingOptions: boolean;
+  searchValue: string;
 }
 ```
 
@@ -165,9 +165,9 @@ interface CommandPaletteContentProps {
 
 ```tsx
 interface CommandEmptyStateProps {
-   isLoading: boolean;
-   emptyMessage?: string;
-   loadingMessage?: string;
+  isLoading: boolean;
+  emptyMessage?: string;
+  loadingMessage?: string;
 }
 ```
 
@@ -192,9 +192,9 @@ interface CommandEmptyStateProps {
 
 ```tsx
 interface CommandSelectViewProps {
-   options: CommandOption[];
-   isLoading: boolean;
-   onSelectOption: (option: CommandOption) => void;
+  options: CommandOption[];
+  isLoading: boolean;
+  onSelectOption: (option: CommandOption) => void;
 }
 ```
 
@@ -221,9 +221,9 @@ interface CommandSelectViewProps {
 
 ```tsx
 interface CommandSearchViewProps {
-   commands: Command[];
-   onSelectCommand: (command: Command) => void;
-   isCommandEnabled: (command: Command) => boolean;
+  commands: Command[];
+  onSelectCommand: (command: Command) => void;
+  isCommandEnabled: (command: Command) => boolean;
 }
 ```
 
@@ -249,8 +249,8 @@ interface CommandSearchViewProps {
 
 ```tsx
 interface CommandLoadingOverlayProps {
-   isLoading: boolean;
-   message?: string;
+  isLoading: boolean;
+  message?: string;
 }
 ```
 
@@ -269,7 +269,7 @@ interface CommandLoadingOverlayProps {
 ```tsx
 // All logic in one component - everything re-renders on any state change
 function CommandPalette() {
-   // 350+ lines of mixed logic
+  // 350+ lines of mixed logic
 }
 ```
 
@@ -278,11 +278,11 @@ function CommandPalette() {
 ```tsx
 // Each component only re-renders when its specific props change
 const CommandPaletteHeader = React.memo(({ currentCommand, breadcrumbsLength, onBack }) => {
-   // Only re-renders when these props change
+  // Only re-renders when these props change
 });
 
 const CommandSearchView = React.memo(({ commands, onSelectCommand, isCommandEnabled }) => {
-   // Only re-renders when commands or handlers change
+  // Only re-renders when commands or handlers change
 });
 ```
 
@@ -297,14 +297,14 @@ const CommandSearchView = React.memo(({ commands, onSelectCommand, isCommandEnab
 ```tsx
 // Memoized expensive operations
 const displayCommands = useMemo(() => {
-   if (mode === 'search') {
-      return search ? searchCommands(search) : getContextualSuggestions(20);
-   }
-   return [];
+  if (mode === 'search') {
+    return search ? searchCommands(search) : getContextualSuggestions(20);
+  }
+  return [];
 }, [mode, search, searchCommands, getContextualSuggestions]);
 
 const inputConfig = useMemo(() => {
-   return currentCommand ? resolveInputConfig(currentCommand) : null;
+  return currentCommand ? resolveInputConfig(currentCommand) : null;
 }, [currentCommand, resolveInputConfig]);
 ```
 
@@ -314,10 +314,10 @@ const inputConfig = useMemo(() => {
 
 ```tsx
 const handleCommandSelect = useCallback(
-   async (command: Command) => {
-      // Handler logic with stable reference
-   },
-   [execute, isCommandEnabled, handleNextCommand]
+  async (command: Command) => {
+    // Handler logic with stable reference
+  },
+  [execute, isCommandEnabled, handleNextCommand]
 );
 ```
 
@@ -326,10 +326,10 @@ const handleCommandSelect = useCallback(
 ```tsx
 // Single keyboard handler for the entire palette
 const handleKeyDown = useCallback(
-   (e: React.KeyboardEvent) => {
-      // Handle all keyboard events in one place
-   },
-   [currentCommand, mode, handleBack, handleInputSubmit]
+  (e: React.KeyboardEvent) => {
+    // Handle all keyboard events in one place
+  },
+  [currentCommand, mode, handleBack, handleInputSubmit]
 );
 ```
 
@@ -444,9 +444,9 @@ CommandPalette.tsx (90 lines) - Main coordinator
 import { CommandPalette } from '@/components/command-palette';
 
 function App() {
-   const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-   return <CommandPalette open={open} onOpenChange={setOpen} />;
+  return <CommandPalette open={open} onOpenChange={setOpen} />;
 }
 ```
 
@@ -455,27 +455,27 @@ function App() {
 ```tsx
 // Use individual components for custom layouts
 import {
-   CommandSearchInput,
-   CommandSearchView,
-   CommandPaletteHeader,
+  CommandSearchInput,
+  CommandSearchView,
+  CommandPaletteHeader,
 } from '@/components/command-palette/components';
 
 function CustomCommandInterface() {
-   return (
-      <div className="custom-layout">
-         <CommandPaletteHeader
-            currentCommand={currentCommand}
-            breadcrumbsLength={breadcrumbs.length}
-            onBack={handleBack}
-         />
-         <CommandSearchInput mode="search" value={search} onValueChange={setSearch} />
-         <CommandSearchView
-            commands={commands}
-            onSelectCommand={handleSelect}
-            isCommandEnabled={isEnabled}
-         />
-      </div>
-   );
+  return (
+    <div className="custom-layout">
+      <CommandPaletteHeader
+        currentCommand={currentCommand}
+        breadcrumbsLength={breadcrumbs.length}
+        onBack={handleBack}
+      />
+      <CommandSearchInput mode="search" value={search} onValueChange={setSearch} />
+      <CommandSearchView
+        commands={commands}
+        onSelectCommand={handleSelect}
+        isCommandEnabled={isEnabled}
+      />
+    </div>
+  );
 }
 ```
 
@@ -486,26 +486,26 @@ import { render, screen } from '@testing-library/react';
 import { CommandPaletteHeader } from '@/components/command-palette/components';
 
 test('shows back button when command is active', () => {
-   render(
-      <CommandPaletteHeader currentCommand={mockCommand} breadcrumbsLength={0} onBack={jest.fn()} />
-   );
+  render(
+    <CommandPaletteHeader currentCommand={mockCommand} breadcrumbsLength={0} onBack={jest.fn()} />
+  );
 
-   expect(screen.getByLabelText('Go back')).toBeInTheDocument();
+  expect(screen.getByLabelText('Go back')).toBeInTheDocument();
 });
 
 test('CommandSearchView renders commands efficiently', async () => {
-   const start = performance.now();
+  const start = performance.now();
 
-   render(
-      <CommandSearchView
-         commands={generateMockCommands(1000)}
-         onSelectCommand={jest.fn()}
-         isCommandEnabled={() => true}
-      />
-   );
+  render(
+    <CommandSearchView
+      commands={generateMockCommands(1000)}
+      onSelectCommand={jest.fn()}
+      isCommandEnabled={() => true}
+    />
+  );
 
-   const end = performance.now();
-   expect(end - start).toBeLessThan(100); // Should render in <100ms
+  const end = performance.now();
+  expect(end - start).toBeLessThan(100); // Should render in <100ms
 });
 ```
 
@@ -527,11 +527,11 @@ function CommandSearchInput({ mode, value, onValueChange }) {
 ```tsx
 // Bad - mixed concerns
 function CommandPalette() {
-   // Search logic
-   // Selection logic
-   // Input logic
-   // Rendering logic
-   // Event handling
+  // Search logic
+  // Selection logic
+  // Input logic
+  // Rendering logic
+  // Event handling
 }
 ```
 
@@ -542,11 +542,11 @@ function CommandPalette() {
 ```tsx
 // Good - batched updates
 const handleNextCommand = useCallback((nextCommand) => {
-   if (nextCommands.length === 1) {
-      setCurrentCommand(nextCommands[0]);
-      setSearch('');
-      setInputValue('');
-   }
+  if (nextCommands.length === 1) {
+    setCurrentCommand(nextCommands[0]);
+    setSearch('');
+    setInputValue('');
+  }
 }, []);
 ```
 
@@ -564,18 +564,18 @@ setTimeout(() => setInputValue(''), 0);
 ```tsx
 // Hook to monitor component renders
 function useRenderCount(componentName: string) {
-   const renderCount = useRef(0);
-   renderCount.current++;
+  const renderCount = useRef(0);
+  renderCount.current++;
 
-   useEffect(() => {
-      console.log(`${componentName} rendered ${renderCount.current} times`);
-   });
+  useEffect(() => {
+    console.log(`${componentName} rendered ${renderCount.current} times`);
+  });
 }
 
 // Usage in components
 function CommandPaletteHeader(props) {
-   useRenderCount('CommandPaletteHeader');
-   // Component logic...
+  useRenderCount('CommandPaletteHeader');
+  // Component logic...
 }
 ```
 
@@ -598,17 +598,17 @@ The modular structure enables:
 import { FixedSizeList as List } from 'react-window';
 
 function VirtualizedCommandList({ commands }) {
-   const Row = ({ index, style }) => (
-      <div style={style}>
-         <CommandItem command={commands[index]} />
-      </div>
-   );
+  const Row = ({ index, style }) => (
+    <div style={style}>
+      <CommandItem command={commands[index]} />
+    </div>
+  );
 
-   return (
-      <List height={400} itemCount={commands.length} itemSize={50}>
-         {Row}
-      </List>
-   );
+  return (
+    <List height={400} itemCount={commands.length} itemSize={50}>
+      {Row}
+    </List>
+  );
 }
 ```
 
@@ -617,24 +617,24 @@ function VirtualizedCommandList({ commands }) {
 ```tsx
 // worker.ts
 self.onmessage = function (e) {
-   const { commands, searchTerm } = e.data;
-   const filtered = performExpensiveFiltering(commands, searchTerm);
-   self.postMessage(filtered);
+  const { commands, searchTerm } = e.data;
+  const filtered = performExpensiveFiltering(commands, searchTerm);
+  self.postMessage(filtered);
 };
 
 // Component
 const useWorkerSearch = (commands, searchTerm) => {
-   const [results, setResults] = useState([]);
+  const [results, setResults] = useState([]);
 
-   useEffect(() => {
-      const worker = new Worker('/search-worker.js');
-      worker.postMessage({ commands, searchTerm });
-      worker.onmessage = (e) => setResults(e.data);
+  useEffect(() => {
+    const worker = new Worker('/search-worker.js');
+    worker.postMessage({ commands, searchTerm });
+    worker.onmessage = (e) => setResults(e.data);
 
-      return () => worker.terminate();
-   }, [commands, searchTerm]);
+    return () => worker.terminate();
+  }, [commands, searchTerm]);
 
-   return results;
+  return results;
 };
 ```
 

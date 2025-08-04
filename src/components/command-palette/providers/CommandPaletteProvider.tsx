@@ -6,19 +6,19 @@ import { CommandModuleProvider } from './CommandModuleProvider';
 import type { CommandModule, CommandContext } from '../types';
 
 interface CommandPaletteProviderProps {
-   children: ReactNode;
-   modules?: CommandModule[];
-   initialContext?: Partial<CommandContext>;
+  children: ReactNode;
+  modules?: CommandModule[];
+  initialContext?: Partial<CommandContext>;
 }
 
 export function CommandPaletteProvider({
-   children,
-   modules = [],
-   initialContext,
+  children,
+  modules = [],
+  initialContext,
 }: CommandPaletteProviderProps) {
-   return (
-      <CommandContextProvider initialContext={initialContext}>
-         <CommandModuleProvider initialModules={modules}>{children}</CommandModuleProvider>
-      </CommandContextProvider>
-   );
+  return (
+    <CommandContextProvider initialContext={initialContext}>
+      <CommandModuleProvider initialModules={modules}>{children}</CommandModuleProvider>
+    </CommandContextProvider>
+  );
 }

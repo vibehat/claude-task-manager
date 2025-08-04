@@ -3,7 +3,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-   return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs));
 }
 
 /**
@@ -18,10 +18,10 @@ export { LexoRank };
  * @returns Formatted task ID for display (e.g., '#1.2')
  */
 export function formatTaskIdForDisplay(taskId: string | number): string {
-   // Convert to string first to handle numbers
-   const taskIdStr = String(taskId);
-   // Remove 'tm-' prefix if it exists
-   const cleanId = taskIdStr.startsWith('tm-') ? taskIdStr.slice(3) : taskIdStr;
-   // Add '#' prefix for display
-   return `#${cleanId}`;
+  // Convert to string first to handle numbers
+  const taskIdStr = String(taskId);
+  // Remove 'tm-' prefix if it exists
+  const cleanId = taskIdStr.startsWith('tm-') ? taskIdStr.slice(3) : taskIdStr;
+  // Add '#' prefix for display
+  return `#${cleanId}`;
 }

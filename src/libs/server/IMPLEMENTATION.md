@@ -177,13 +177,13 @@ Updated existing Task Master API endpoints to use the new server library:
 
 ```typescript
 interface CommandResult {
-   stdout: string;
-   stderr: string;
-   exitCode: number;
+  stdout: string;
+  stderr: string;
+  exitCode: number;
 }
 
 interface ParsedCommandResult<T = unknown> extends CommandResult {
-   parsed?: T;
+  parsed?: T;
 }
 ```
 

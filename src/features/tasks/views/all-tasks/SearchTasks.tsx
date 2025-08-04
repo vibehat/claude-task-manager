@@ -5,50 +5,48 @@ import { useSearchStore } from '@/store/searchStore';
 import { TaskLine } from '../../components/items/TaskLine';
 
 function SearchTasks(): React.JSX.Element {
-   const { searchQuery, isSearchOpen } = useSearchStore();
+  const { searchQuery, isSearchOpen } = useSearchStore();
 
-   // Use GraphQL search with skip when query is empty
-   const { data, loading, error } = useSearchTasks({
-      query: searchQuery,
-      skip: searchQuery.trim() === '',
-   });
+  // Use GraphQL search with skip when query is empty
+  const { data, loading, error } = useSearchTasks({
+    query: searchQuery,
+    skip: searchQuery.trim() === '',
+  });
 
-   const searchResults = data?.searchTasks || [];
+  const searchResults = data?.searchTasks || [];
 
-   if (!isSearchOpen) {
-      return <></>;
-   }
+  if (!isSearchOpen) {
+    return <></>;
+  }
 
-   return (
-      <div className="w-full">
-         {searchQuery.trim() !== '' && (
-            <div>
-               {loading ? (
-                  <div className="text-center py-8 text-muted-foreground">Searching...</div>
-               ) : error ? (
-                  <div className="text-center py-8 text-red-500">
-                     Error searching: {error.message}
-                  </div>
-               ) : searchResults.length > 0 ? (
-                  <div className="border rounded-md mt-4">
-                     <div className="py-2 px-4 border-b bg-muted/50">
-                        <h3 className="text-sm font-medium">Results ({searchResults.length})</h3>
-                     </div>
-                     <div className="divide-y">
-                        {searchResults.map((task) => (
-                           <TaskLine key={task.id} task={task} layoutId={false} />
-                        ))}
-                     </div>
-                  </div>
-               ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                     No results found for &quot;{searchQuery}&quot;
-                  </div>
-               )}
+  return (
+    <div className="w-full">
+      {searchQuery.trim() !== '' && (
+        <div>
+          {loading ? (
+            <div className="text-center py-8 text-muted-foreground">Searching...</div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-500">Error searching: {error.message}</div>
+          ) : searchResults.length > 0 ? (
+            <div className="border rounded-md mt-4">
+              <div className="py-2 px-4 border-b bg-muted/50">
+                <h3 className="text-sm font-medium">Results ({searchResults.length})</h3>
+              </div>
+              <div className="divide-y">
+                {searchResults.map((task) => (
+                  <TaskLine key={task.id} task={task} layoutId={false} />
+                ))}
+              </div>
             </div>
-         )}
-      </div>
-   );
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              No results found for &quot;{searchQuery}&quot;
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default SearchTasks;

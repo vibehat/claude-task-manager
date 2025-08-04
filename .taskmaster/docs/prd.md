@@ -283,13 +283,13 @@ Create a revolutionary individual project management experience that seamlessly 
 
 ```typescript
 interface Project {
-   id: string;
-   name: string;
-   description: string;
-   createdAt: Date;
-   updatedAt: Date;
-   settings: ProjectSettings;
-   statistics: ProjectStats;
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  settings: ProjectSettings;
+  statistics: ProjectStats;
 }
 ```
 
@@ -297,22 +297,22 @@ interface Project {
 
 ```typescript
 interface Task {
-   id: string;
-   title: string;
-   description: string;
-   status: 'pending' | 'in-progress' | 'completed' | 'blocked';
-   priority: 'low' | 'medium' | 'high' | 'urgent';
-   assignee: string; // human or agent ID
-   parentId?: string;
-   subtasks: Task[];
-   dependencies: string[];
-   createdAt: Date;
-   updatedAt: Date;
-   dueDate?: Date;
-   timeEstimate?: number;
-   timeSpent?: number;
-   tags: string[];
-   linkedDocs: string[];
+  id: string;
+  title: string;
+  description: string;
+  status: 'pending' | 'in-progress' | 'completed' | 'blocked';
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  assignee: string; // human or agent ID
+  parentId?: string;
+  subtasks: Task[];
+  dependencies: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  dueDate?: Date;
+  timeEstimate?: number;
+  timeSpent?: number;
+  tags: string[];
+  linkedDocs: string[];
 }
 ```
 
@@ -320,18 +320,18 @@ interface Task {
 
 ```typescript
 interface Agent {
-   id: string;
-   name: string;
-   type: 'code' | 'docs' | 'test' | 'design' | 'research';
-   capabilities: string[];
-   status: 'idle' | 'working' | 'offline';
-   currentTask?: string;
-   performance: {
-      tasksCompleted: number;
-      averageTime: number;
-      successRate: number;
-   };
-   configuration: Record<string, any>;
+  id: string;
+  name: string;
+  type: 'code' | 'docs' | 'test' | 'design' | 'research';
+  capabilities: string[];
+  status: 'idle' | 'working' | 'offline';
+  currentTask?: string;
+  performance: {
+    tasksCompleted: number;
+    averageTime: number;
+    successRate: number;
+  };
+  configuration: Record<string, any>;
 }
 ```
 
@@ -339,16 +339,16 @@ interface Agent {
 
 ```typescript
 interface Document {
-   id: string;
-   title: string;
-   slug: string;
-   content: string;
-   type: 'readme' | 'guide' | 'api' | 'notes';
-   linkedTasks: string[];
-   version: number;
-   createdAt: Date;
-   updatedAt: Date;
-   author: string; // human or agent ID
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  type: 'readme' | 'guide' | 'api' | 'notes';
+  linkedTasks: string[];
+  version: number;
+  createdAt: Date;
+  updatedAt: Date;
+  author: string; // human or agent ID
 }
 ```
 

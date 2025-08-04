@@ -9,574 +9,568 @@ import type { Command, CommandOption, CommandMode } from '../types';
 import type { CommandPaletteInitialState } from '../CommandPalette';
 
 interface UseCommandPaletteStateProps {
-   open: boolean;
-   onOpenChange: (open: boolean) => void;
-   context?: Record<string, any>;
-   initialState?: CommandPaletteInitialState;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  context?: Record<string, any>;
+  initialState?: CommandPaletteInitialState;
 }
 
 export function useCommandPaletteState({
-   open,
-   onOpenChange,
-   context: externalContext,
-   initialState,
+  open,
+  onOpenChange,
+  context: externalContext,
+  initialState,
 }: UseCommandPaletteStateProps) {
-   // Local state
-   const [search, setSearch] = useState('');
-   const [inputValue, setInputValue] = useState('');
-   const [currentCommand, setCurrentCommand] = useState<Command | null>(null);
-   const [selectOptions, setSelectOptions] = useState<CommandOption[]>([]);
-   const [isLoadingOptions, setIsLoadingOptions] = useState(false);
-   const [submitActions, setSubmitActions] = useState<CommandOption[]>([]);
-   const [isLoadingActions, setIsLoadingActions] = useState(false);
-   const [searchResults, setSearchResults] = useState<Command[]>([]);
-   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
-   const [searchQuery, setSearchQuery] = useState('');
-   const [activeIndex, setActiveIndex] = useState(0);
+  // Local state
+  const [search, setSearch] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [currentCommand, setCurrentCommand] = useState<Command | null>(null);
+  const [selectOptions, setSelectOptions] = useState<CommandOption[]>([]);
+  const [isLoadingOptions, setIsLoadingOptions] = useState(false);
+  const [submitActions, setSubmitActions] = useState<CommandOption[]>([]);
+  const [isLoadingActions, setIsLoadingActions] = useState(false);
+  const [searchResults, setSearchResults] = useState<Command[]>([]);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeIndex, setActiveIndex] = useState(0);
 
-   // Hooks
-   const { context: commandContext, updateContextData } = useCommandContext();
-   const { breadcrumbs, goBack, executeCommandInChain } = useCommandChain();
-   const {
-      searchCommands,
-      resolveSelectOptions,
-      resolveInputConfig,
-      getContextualSuggestions,
-      getCommandById,
-   } = useCommandResolver();
-   const { isExecuting, isCommandEnabled, execute } = useCommandExecution();
+  // Hooks
+  const { context: commandContext, updateContextData } = useCommandContext();
+  const { breadcrumbs, goBack, executeCommandInChain } = useCommandChain();
+  const {
+    searchCommands,
+    resolveSelectOptions,
+    resolveInputConfig,
+    getContextualSuggestions,
+    getCommandById,
+  } = useCommandResolver();
+  const { isExecuting, isCommandEnabled, execute } = useCommandExecution();
 
-   // Update context with external context data when it changes
-   useEffect(() => {
-      if (externalContext) {
-         Object.entries(externalContext).forEach(([key, value]) => {
-            updateContextData(`external.${key}`, value);
-         });
-      }
-   }, [externalContext, updateContextData]);
-
-   // Handle initial state when dialog opens
-   useEffect(() => {
-      if (open && initialState) {
-         // Set initial search value if provided
-         if (initialState.searchValue !== undefined) {
-            setSearch(initialState.searchValue);
-         }
-
-         // Set initial input value if provided
-         if (initialState.inputValue !== undefined) {
-            setInputValue(initialState.inputValue);
-         }
-
-         // Set initial command if provided
-         if (initialState.commandId) {
-            const command = getCommandById(initialState.commandId);
-            if (command) {
-               setCurrentCommand(command);
-               setSearch(''); // Clear search when selecting a command
-            }
-         }
-      }
-   }, [open, initialState, getCommandById]);
-
-   // Derived state
-   const mode: CommandMode = useMemo(() => {
-      if (!currentCommand) return 'search';
-      if (currentCommand.type === 'select') return 'select';
-      if (currentCommand.type === 'input') return 'input';
-      if (currentCommand.type === 'input-with-actions') return 'input-with-actions';
-      if (currentCommand.type === 'search') return 'command-search';
-      return 'search';
-   }, [currentCommand]);
-
-   const displayCommands = useMemo(() => {
-      if (mode === 'search') {
-         return search ? searchCommands(search) : getContextualSuggestions(20);
-      }
-      return [];
-   }, [mode, search, searchCommands, getContextualSuggestions]);
-
-   const inputConfig = useMemo(() => {
-      if (!currentCommand) return null;
-
-      // For search commands, use search config placeholder
-      if (currentCommand.type === 'search' && currentCommand.searchConfig) {
-         const placeholder = currentCommand.searchConfig.placeholder;
-         return {
-            placeholder:
-               typeof placeholder === 'function' ? placeholder(commandContext) : placeholder,
-         };
-      }
-
-      return resolveInputConfig(currentCommand);
-   }, [currentCommand, resolveInputConfig, commandContext]);
-
-   const searchResultConfig = useMemo(() => {
-      return currentCommand?.type === 'search' ? currentCommand.searchResultConfig : null;
-   }, [currentCommand]);
-
-   // Track if we should auto-select an option
-   const [shouldAutoSelectOption, setShouldAutoSelectOption] = useState<string | null>(null);
-
-   // Load options for select commands
-   useEffect(() => {
-      if (currentCommand?.type === 'select') {
-         setIsLoadingOptions(true);
-         resolveSelectOptions(currentCommand)
-            .then(setSelectOptions)
-            .finally(() => setIsLoadingOptions(false));
-      } else {
-         setSelectOptions([]);
-      }
-   }, [currentCommand, resolveSelectOptions]);
-
-   // Check for auto-selection when options are loaded and we have an initial state
-   useEffect(() => {
-      console.log('🔍 Auto-select check:', {
-         hasSelectedOptionId: !!initialState?.selectedOptionId,
-         autoExecute: initialState?.autoExecute,
-         selectOptionsCount: selectOptions.length,
-         isLoadingOptions,
-         commandType: currentCommand?.type,
-         open,
-         alreadyHasAutoSelect: !!shouldAutoSelectOption,
+  // Update context with external context data when it changes
+  useEffect(() => {
+    if (externalContext) {
+      Object.entries(externalContext).forEach(([key, value]) => {
+        updateContextData(`external.${key}`, value);
       });
+    }
+  }, [externalContext, updateContextData]);
 
-      if (
-         initialState?.selectedOptionId &&
-         selectOptions.length > 0 &&
-         !isLoadingOptions &&
-         currentCommand?.type === 'select' &&
-         open &&
-         !shouldAutoSelectOption &&
-         initialState.autoExecute !== false // Only auto-select if autoExecute is not explicitly false
-      ) {
-         const selectedOption = selectOptions.find(
-            (opt) => opt.id === initialState.selectedOptionId
-         );
-         console.log('🎯 Setting auto-select for option:', selectedOption);
-
-         if (selectedOption) {
-            setShouldAutoSelectOption(selectedOption.id);
-         }
+  // Handle initial state when dialog opens
+  useEffect(() => {
+    if (open && initialState) {
+      // Set initial search value if provided
+      if (initialState.searchValue !== undefined) {
+        setSearch(initialState.searchValue);
       }
-   }, [
-      initialState,
-      selectOptions,
+
+      // Set initial input value if provided
+      if (initialState.inputValue !== undefined) {
+        setInputValue(initialState.inputValue);
+      }
+
+      // Set initial command if provided
+      if (initialState.commandId) {
+        const command = getCommandById(initialState.commandId);
+        if (command) {
+          setCurrentCommand(command);
+          setSearch(''); // Clear search when selecting a command
+        }
+      }
+    }
+  }, [open, initialState, getCommandById]);
+
+  // Derived state
+  const mode: CommandMode = useMemo(() => {
+    if (!currentCommand) return 'search';
+    if (currentCommand.type === 'select') return 'select';
+    if (currentCommand.type === 'input') return 'input';
+    if (currentCommand.type === 'input-with-actions') return 'input-with-actions';
+    if (currentCommand.type === 'search') return 'command-search';
+    return 'search';
+  }, [currentCommand]);
+
+  const displayCommands = useMemo(() => {
+    if (mode === 'search') {
+      return search ? searchCommands(search) : getContextualSuggestions(20);
+    }
+    return [];
+  }, [mode, search, searchCommands, getContextualSuggestions]);
+
+  const inputConfig = useMemo(() => {
+    if (!currentCommand) return null;
+
+    // For search commands, use search config placeholder
+    if (currentCommand.type === 'search' && currentCommand.searchConfig) {
+      const placeholder = currentCommand.searchConfig.placeholder;
+      return {
+        placeholder: typeof placeholder === 'function' ? placeholder(commandContext) : placeholder,
+      };
+    }
+
+    return resolveInputConfig(currentCommand);
+  }, [currentCommand, resolveInputConfig, commandContext]);
+
+  const searchResultConfig = useMemo(() => {
+    return currentCommand?.type === 'search' ? currentCommand.searchResultConfig : null;
+  }, [currentCommand]);
+
+  // Track if we should auto-select an option
+  const [shouldAutoSelectOption, setShouldAutoSelectOption] = useState<string | null>(null);
+
+  // Load options for select commands
+  useEffect(() => {
+    if (currentCommand?.type === 'select') {
+      setIsLoadingOptions(true);
+      resolveSelectOptions(currentCommand)
+        .then(setSelectOptions)
+        .finally(() => setIsLoadingOptions(false));
+    } else {
+      setSelectOptions([]);
+    }
+  }, [currentCommand, resolveSelectOptions]);
+
+  // Check for auto-selection when options are loaded and we have an initial state
+  useEffect(() => {
+    console.log('🔍 Auto-select check:', {
+      hasSelectedOptionId: !!initialState?.selectedOptionId,
+      autoExecute: initialState?.autoExecute,
+      selectOptionsCount: selectOptions.length,
       isLoadingOptions,
-      currentCommand?.type,
+      commandType: currentCommand?.type,
       open,
-      shouldAutoSelectOption,
-   ]);
+      alreadyHasAutoSelect: !!shouldAutoSelectOption,
+    });
 
-   // Load submit actions for input-with-actions commands
-   useEffect(() => {
-      if (currentCommand?.type === 'input-with-actions' && currentCommand.submitActions) {
-         setIsLoadingActions(true);
+    if (
+      initialState?.selectedOptionId &&
+      selectOptions.length > 0 &&
+      !isLoadingOptions &&
+      currentCommand?.type === 'select' &&
+      open &&
+      !shouldAutoSelectOption &&
+      initialState.autoExecute !== false // Only auto-select if autoExecute is not explicitly false
+    ) {
+      const selectedOption = selectOptions.find((opt) => opt.id === initialState.selectedOptionId);
+      console.log('🎯 Setting auto-select for option:', selectedOption);
 
-         const loadActions = async () => {
-            if (typeof currentCommand.submitActions === 'function') {
-               return await currentCommand.submitActions(inputValue, {} as any);
-            }
-            return currentCommand.submitActions || [];
-         };
-
-         loadActions()
-            .then(setSubmitActions)
-            .finally(() => setIsLoadingActions(false));
-      } else {
-         setSubmitActions([]);
+      if (selectedOption) {
+        setShouldAutoSelectOption(selectedOption.id);
       }
-   }, [currentCommand, inputValue]);
+    }
+  }, [
+    initialState,
+    selectOptions,
+    isLoadingOptions,
+    currentCommand?.type,
+    open,
+    shouldAutoSelectOption,
+  ]);
 
-   // Handle search commands with debouncing
-   useEffect(() => {
-      if (currentCommand?.type === 'search' && currentCommand.searchHandler) {
-         const debounceMs = currentCommand.searchConfig?.debounceMs || 300;
-         const minQueryLength = currentCommand.searchConfig?.minQueryLength || 1;
+  // Load submit actions for input-with-actions commands
+  useEffect(() => {
+    if (currentCommand?.type === 'input-with-actions' && currentCommand.submitActions) {
+      setIsLoadingActions(true);
 
-         if (searchQuery.length < minQueryLength) {
-            setSearchResults([]);
-            return;
-         }
+      const loadActions = async () => {
+        if (typeof currentCommand.submitActions === 'function') {
+          return await currentCommand.submitActions(inputValue, {} as any);
+        }
+        return currentCommand.submitActions || [];
+      };
 
-         setIsLoadingSearch(true);
-         const timeoutId = setTimeout(async () => {
-            try {
-               const results = await currentCommand.searchHandler!(searchQuery, commandContext);
-               const maxResults = currentCommand.searchConfig?.maxResults || 10;
-               setSearchResults(results.slice(0, maxResults));
-            } catch (error) {
-               console.error('Search failed:', error);
-               setSearchResults([]);
-            } finally {
-               setIsLoadingSearch(false);
-            }
-         }, debounceMs);
+      loadActions()
+        .then(setSubmitActions)
+        .finally(() => setIsLoadingActions(false));
+    } else {
+      setSubmitActions([]);
+    }
+  }, [currentCommand, inputValue]);
 
-         return () => {
-            clearTimeout(timeoutId);
-            setIsLoadingSearch(false);
-         };
-      } else {
-         setSearchResults([]);
+  // Handle search commands with debouncing
+  useEffect(() => {
+    if (currentCommand?.type === 'search' && currentCommand.searchHandler) {
+      const debounceMs = currentCommand.searchConfig?.debounceMs || 300;
+      const minQueryLength = currentCommand.searchConfig?.minQueryLength || 1;
+
+      if (searchQuery.length < minQueryLength) {
+        setSearchResults([]);
+        return;
       }
-   }, [currentCommand, searchQuery, commandContext]);
 
-   // Reset state when dialog closes
-   useEffect(() => {
-      if (!open) {
-         setCurrentCommand(null);
-         setSearch('');
-         setInputValue('');
-         setSelectOptions([]);
-         setIsLoadingOptions(false);
-         setShouldAutoSelectOption(null);
-         setSearchResults([]);
-         setIsLoadingSearch(false);
-         setSearchQuery('');
-         setActiveIndex(0);
-      }
-   }, [open]);
+      setIsLoadingSearch(true);
+      const timeoutId = setTimeout(async () => {
+        try {
+          const results = await currentCommand.searchHandler!(searchQuery, commandContext);
+          const maxResults = currentCommand.searchConfig?.maxResults || 10;
+          setSearchResults(results.slice(0, maxResults));
+        } catch (error) {
+          console.error('Search failed:', error);
+          setSearchResults([]);
+        } finally {
+          setIsLoadingSearch(false);
+        }
+      }, debounceMs);
 
-   // Reset active index when switching modes or updating lists
-   useEffect(() => {
+      return () => {
+        clearTimeout(timeoutId);
+        setIsLoadingSearch(false);
+      };
+    } else {
+      setSearchResults([]);
+    }
+  }, [currentCommand, searchQuery, commandContext]);
+
+  // Reset state when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setCurrentCommand(null);
+      setSearch('');
+      setInputValue('');
+      setSelectOptions([]);
+      setIsLoadingOptions(false);
+      setShouldAutoSelectOption(null);
+      setSearchResults([]);
+      setIsLoadingSearch(false);
+      setSearchQuery('');
       setActiveIndex(0);
-   }, [mode, displayCommands, selectOptions, submitActions, searchResults]);
+    }
+  }, [open]);
 
-   // Get current items for navigation
-   const currentItems = useMemo(() => {
-      switch (mode) {
-         case 'search':
-            return displayCommands;
-         case 'select':
-            return selectOptions;
-         case 'input-with-actions':
-            return submitActions;
-         case 'command-search':
-            return searchResults;
-         case 'input':
-         default:
-            return [];
+  // Reset active index when switching modes or updating lists
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [mode, displayCommands, selectOptions, submitActions, searchResults]);
+
+  // Get current items for navigation
+  const currentItems = useMemo(() => {
+    switch (mode) {
+      case 'search':
+        return displayCommands;
+      case 'select':
+        return selectOptions;
+      case 'input-with-actions':
+        return submitActions;
+      case 'command-search':
+        return searchResults;
+      case 'input':
+      default:
+        return [];
+    }
+  }, [mode, displayCommands, selectOptions, submitActions, searchResults]);
+
+  // Navigation helpers
+  const navigateUp = useCallback(() => {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : Math.max(0, currentItems.length - 1)));
+  }, [currentItems.length]);
+
+  const navigateDown = useCallback(() => {
+    setActiveIndex((prev) => (prev < currentItems.length - 1 ? prev + 1 : 0));
+  }, [currentItems.length]);
+
+  // Handle next command logic
+  const handleNextCommand = useCallback(
+    (nextCommand: Command | Command[] | undefined) => {
+      if (!nextCommand) {
+        onOpenChange(false);
+        return;
       }
-   }, [mode, displayCommands, selectOptions, submitActions, searchResults]);
 
-   // Navigation helpers
-   const navigateUp = useCallback(() => {
-      setActiveIndex((prev) => (prev > 0 ? prev - 1 : Math.max(0, currentItems.length - 1)));
-   }, [currentItems.length]);
+      const nextCommands = Array.isArray(nextCommand) ? nextCommand : [nextCommand];
 
-   const navigateDown = useCallback(() => {
-      setActiveIndex((prev) => (prev < currentItems.length - 1 ? prev + 1 : 0));
-   }, [currentItems.length]);
+      if (nextCommands.length === 1) {
+        setCurrentCommand(nextCommands[0]);
+        setSearch('');
+        setInputValue('');
+      } else {
+        // Multiple commands - reset to search mode to show them
+        setCurrentCommand(null);
+        setSearch('');
+        setInputValue('');
+      }
+    },
+    [onOpenChange]
+  );
 
-   // Handle next command logic
-   const handleNextCommand = useCallback(
-      (nextCommand: Command | Command[] | undefined) => {
-         if (!nextCommand) {
-            onOpenChange(false);
-            return;
-         }
+  // Command selection handler
+  const handleCommandSelect = useCallback(
+    async (command: Command) => {
+      if (!isCommandEnabled(command)) return;
 
-         const nextCommands = Array.isArray(nextCommand) ? nextCommand : [nextCommand];
-
-         if (nextCommands.length === 1) {
-            setCurrentCommand(nextCommands[0]);
-            setSearch('');
-            setInputValue('');
-         } else {
-            // Multiple commands - reset to search mode to show them
-            setCurrentCommand(null);
-            setSearch('');
-            setInputValue('');
-         }
-      },
-      [onOpenChange]
-   );
-
-   // Command selection handler
-   const handleCommandSelect = useCallback(
-      async (command: Command) => {
-         if (!isCommandEnabled(command)) return;
-
-         switch (command.type) {
-            case 'action': {
-               const result = await execute(command);
-               if (result.success) {
-                  handleNextCommand(result.nextCommand);
-               }
-               break;
-            }
-
-            case 'select':
-            case 'input':
-            case 'input-with-actions':
-            case 'search': {
-               setCurrentCommand(command);
-               setSearch('');
-               setInputValue('');
-               setSearchQuery('');
-               break;
-            }
-
-            case 'branch':
-            case 'composite': {
-               const result = await execute(command);
-               if (result.success) {
-                  handleNextCommand(result.nextCommand);
-               }
-               break;
-            }
-         }
-      },
-      [execute, isCommandEnabled, handleNextCommand]
-   );
-
-   // Option selection handler
-   const handleOptionSelect = useCallback(
-      async (option: CommandOption) => {
-         if (!currentCommand) return;
-
-         const result = await executeCommandInChain(currentCommand, option.value);
-
-         if (result.success) {
+      switch (command.type) {
+        case 'action': {
+          const result = await execute(command);
+          if (result.success) {
             handleNextCommand(result.nextCommand);
-         }
-      },
-      [currentCommand, executeCommandInChain, handleNextCommand]
-   );
+          }
+          break;
+        }
 
-   // Input submission handler (for regular input commands)
-   const handleInputSubmit = useCallback(async () => {
-      if (!currentCommand || !inputValue.trim()) return;
+        case 'select':
+        case 'input':
+        case 'input-with-actions':
+        case 'search': {
+          setCurrentCommand(command);
+          setSearch('');
+          setInputValue('');
+          setSearchQuery('');
+          break;
+        }
 
-      // Validate input
-      if (inputConfig?.validation) {
-         const error = inputConfig.validation(inputValue, {} as any);
-         if (error) {
-            // TODO: Show error state
-            console.error('Validation error:', error);
-            return;
-         }
+        case 'branch':
+        case 'composite': {
+          const result = await execute(command);
+          if (result.success) {
+            handleNextCommand(result.nextCommand);
+          }
+          break;
+        }
+      }
+    },
+    [execute, isCommandEnabled, handleNextCommand]
+  );
+
+  // Option selection handler
+  const handleOptionSelect = useCallback(
+    async (option: CommandOption) => {
+      if (!currentCommand) return;
+
+      const result = await executeCommandInChain(currentCommand, option.value);
+
+      if (result.success) {
+        handleNextCommand(result.nextCommand);
+      }
+    },
+    [currentCommand, executeCommandInChain, handleNextCommand]
+  );
+
+  // Input submission handler (for regular input commands)
+  const handleInputSubmit = useCallback(async () => {
+    if (!currentCommand || !inputValue.trim()) return;
+
+    // Validate input
+    if (inputConfig && 'validation' in inputConfig && inputConfig.validation) {
+      const error = inputConfig.validation(inputValue, {} as any);
+      if (error) {
+        // TODO: Show error state
+        console.error('Validation error:', error);
+        return;
+      }
+    }
+
+    // Transform input if needed
+    const finalValue =
+      inputConfig && 'transform' in inputConfig && inputConfig.transform
+        ? inputConfig.transform(inputValue, {} as any)
+        : inputValue;
+
+    const result = await executeCommandInChain(currentCommand, finalValue);
+
+    if (result.success) {
+      handleNextCommand(result.nextCommand);
+    }
+  }, [currentCommand, inputValue, inputConfig, executeCommandInChain, handleNextCommand]);
+
+  // Action selection handler (for input-with-actions commands)
+  const handleActionSelect = useCallback(
+    async (action: CommandOption) => {
+      if (!currentCommand || currentCommand.type !== 'input-with-actions') return;
+
+      // Validate input first
+      if (inputConfig && 'validation' in inputConfig && inputConfig.validation) {
+        const error = inputConfig.validation(inputValue, {} as any);
+        if (error) {
+          // TODO: Show error state
+          console.error('Validation error:', error);
+          return;
+        }
       }
 
       // Transform input if needed
-      const finalValue = inputConfig?.transform
-         ? inputConfig.transform(inputValue, {} as any)
-         : inputValue;
+      const finalValue =
+        inputConfig && 'transform' in inputConfig && inputConfig.transform
+          ? inputConfig.transform(inputValue, {} as any)
+          : inputValue;
 
-      const result = await executeCommandInChain(currentCommand, finalValue);
+      // Execute with both input value and selected action
+      const params = { inputValue: finalValue, action };
+      const result = await executeCommandInChain(currentCommand, params);
 
       if (result.success) {
-         handleNextCommand(result.nextCommand);
+        handleNextCommand(result.nextCommand);
       }
-   }, [currentCommand, inputValue, inputConfig, executeCommandInChain, handleNextCommand]);
+    },
+    [currentCommand, inputValue, inputConfig, executeCommandInChain, handleNextCommand]
+  );
 
-   // Action selection handler (for input-with-actions commands)
-   const handleActionSelect = useCallback(
-      async (action: CommandOption) => {
-         if (!currentCommand || currentCommand.type !== 'input-with-actions') return;
+  // Back navigation handler
+  const handleBack = useCallback(() => {
+    if (currentCommand) {
+      setCurrentCommand(null);
+      setSearch('');
+      setInputValue('');
+      setSearchQuery('');
+    } else if (breadcrumbs.length > 0) {
+      goBack();
+    }
+  }, [currentCommand, breadcrumbs.length, goBack]);
 
-         // Validate input first
-         if (inputConfig?.validation) {
-            const error = inputConfig.validation(inputValue, {} as any);
-            if (error) {
-               // TODO: Show error state
-               console.error('Validation error:', error);
-               return;
-            }
-         }
+  // Search query handler for search commands
+  const handleSearchQueryChange = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
 
-         // Transform input if needed
-         const finalValue = inputConfig?.transform
-            ? inputConfig.transform(inputValue, {} as any)
-            : inputValue;
+  // Select active item helper
+  const selectActiveItem = useCallback(() => {
+    const activeItem = currentItems[activeIndex];
+    if (!activeItem) return;
 
-         // Execute with both input value and selected action
-         const params = { inputValue: finalValue, action };
-         const result = await executeCommandInChain(currentCommand, params);
+    switch (mode) {
+      case 'search':
+        handleCommandSelect(activeItem as Command);
+        break;
+      case 'select':
+        handleOptionSelect(activeItem as CommandOption);
+        break;
+      case 'input-with-actions':
+        handleActionSelect(activeItem as CommandOption);
+        break;
+      case 'command-search':
+        handleCommandSelect(activeItem as Command);
+        break;
+    }
+  }, [
+    currentItems,
+    activeIndex,
+    mode,
+    handleCommandSelect,
+    handleOptionSelect,
+    handleActionSelect,
+  ]);
 
-         if (result.success) {
-            handleNextCommand(result.nextCommand);
-         }
-      },
-      [currentCommand, inputValue, inputConfig, executeCommandInChain, handleNextCommand]
-   );
-
-   // Back navigation handler
-   const handleBack = useCallback(() => {
-      if (currentCommand) {
-         setCurrentCommand(null);
-         setSearch('');
-         setInputValue('');
-         setSearchQuery('');
-      } else if (breadcrumbs.length > 0) {
-         goBack();
+  // Keyboard handler
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (currentCommand) {
+          handleBack();
+          e.preventDefault();
+        }
+      } else if (e.key === 'ArrowUp') {
+        navigateUp();
+        e.preventDefault();
+      } else if (e.key === 'ArrowDown') {
+        navigateDown();
+        e.preventDefault();
+      } else if (e.key === 'Enter') {
+        if (mode === 'input') {
+          handleInputSubmit();
+        } else if (currentItems.length > 0) {
+          selectActiveItem();
+        }
+        e.preventDefault();
       }
-   }, [currentCommand, breadcrumbs.length, goBack]);
-
-   // Search query handler for search commands
-   const handleSearchQueryChange = useCallback((query: string) => {
-      setSearchQuery(query);
-   }, []);
-
-   // Select active item helper
-   const selectActiveItem = useCallback(() => {
-      const activeItem = currentItems[activeIndex];
-      if (!activeItem) return;
-
-      switch (mode) {
-         case 'search':
-            handleCommandSelect(activeItem as Command);
-            break;
-         case 'select':
-            handleOptionSelect(activeItem as CommandOption);
-            break;
-         case 'input-with-actions':
-            handleActionSelect(activeItem as CommandOption);
-            break;
-         case 'command-search':
-            handleCommandSelect(activeItem as Command);
-            break;
-      }
-   }, [
-      currentItems,
-      activeIndex,
-      mode,
-      handleCommandSelect,
-      handleOptionSelect,
-      handleActionSelect,
-   ]);
-
-   // Keyboard handler
-   const handleKeyDown = useCallback(
-      (e: React.KeyboardEvent) => {
-         if (e.key === 'Escape') {
-            if (currentCommand) {
-               handleBack();
-               e.preventDefault();
-            }
-         } else if (e.key === 'ArrowUp') {
-            navigateUp();
-            e.preventDefault();
-         } else if (e.key === 'ArrowDown') {
-            navigateDown();
-            e.preventDefault();
-         } else if (e.key === 'Enter') {
-            if (mode === 'input') {
-               handleInputSubmit();
-            } else if (currentItems.length > 0) {
-               selectActiveItem();
-            }
-            e.preventDefault();
-         }
-         // Note: input-with-actions mode doesn't use Enter, user must select an action
-      },
-      [
-         currentCommand,
-         mode,
-         handleBack,
-         handleInputSubmit,
-         navigateUp,
-         navigateDown,
-         selectActiveItem,
-         currentItems.length,
-      ]
-   );
-
-   // Handle auto-selection of option when specified
-   useEffect(() => {
-      if (
-         shouldAutoSelectOption &&
-         selectOptions.length > 0 &&
-         !isLoadingOptions &&
-         currentCommand
-      ) {
-         const selectedOption = selectOptions.find((opt) => opt.id === shouldAutoSelectOption);
-
-         if (selectedOption) {
-            // Auto-select the option using the same logic as handleOptionSelect
-            const autoSelect = async () => {
-               console.log('🚀 Auto-selecting option:', selectedOption);
-               try {
-                  const result = await executeCommandInChain(currentCommand, selectedOption.value);
-                  console.log('✅ Auto-selection result:', result);
-                  if (result.success) {
-                     // Handle next command if there is one
-                     if (result.nextCommand) {
-                        const nextCommands = Array.isArray(result.nextCommand)
-                           ? result.nextCommand
-                           : [result.nextCommand];
-                        if (nextCommands.length === 1) {
-                           setCurrentCommand(nextCommands[0]);
-                           setSearch('');
-                           setInputValue('');
-                        } else {
-                           // Multiple commands - reset to search mode to show them
-                           setCurrentCommand(null);
-                           setSearch('');
-                           setInputValue('');
-                        }
-                     } else {
-                        // No next command, close the palette
-                        onOpenChange(false);
-                     }
-                  }
-               } catch (error) {
-                  console.error('Auto-selection failed:', error);
-               } finally {
-                  setShouldAutoSelectOption(null); // Clear the flag
-               }
-            };
-
-            // Execute after a delay to ensure UI is ready
-            const timeoutId = setTimeout(autoSelect, 300);
-            return () => clearTimeout(timeoutId);
-         }
-      }
-   }, [
-      shouldAutoSelectOption,
-      selectOptions,
-      isLoadingOptions,
+      // Note: input-with-actions mode doesn't use Enter, user must select an action
+    },
+    [
       currentCommand,
-      executeCommandInChain,
-      onOpenChange,
-   ]);
-
-   return {
-      // State
-      search,
-      setSearch,
-      inputValue,
-      setInputValue,
-      currentCommand,
-      selectOptions,
-      isLoadingOptions,
-      submitActions,
-      isLoadingActions,
-      searchResults,
-      isLoadingSearch,
-      searchQuery,
-      searchResultConfig,
       mode,
-      displayCommands,
-      inputConfig,
-      breadcrumbs,
-      isExecuting,
-      activeIndex,
-      currentItems,
-
-      // Handlers
-      handleCommandSelect,
-      handleOptionSelect,
-      handleActionSelect,
-      handleInputSubmit,
       handleBack,
-      handleKeyDown,
-      handleSearchQueryChange,
-      isCommandEnabled,
+      handleInputSubmit,
       navigateUp,
       navigateDown,
       selectActiveItem,
-   };
+      currentItems.length,
+    ]
+  );
+
+  // Handle auto-selection of option when specified
+  useEffect(() => {
+    if (shouldAutoSelectOption && selectOptions.length > 0 && !isLoadingOptions && currentCommand) {
+      const selectedOption = selectOptions.find((opt) => opt.id === shouldAutoSelectOption);
+
+      if (selectedOption) {
+        // Auto-select the option using the same logic as handleOptionSelect
+        const autoSelect = async () => {
+          console.log('🚀 Auto-selecting option:', selectedOption);
+          try {
+            const result = await executeCommandInChain(currentCommand, selectedOption.value);
+            console.log('✅ Auto-selection result:', result);
+            if (result.success) {
+              // Handle next command if there is one
+              if (result.nextCommand) {
+                const nextCommands = Array.isArray(result.nextCommand)
+                  ? result.nextCommand
+                  : [result.nextCommand];
+                if (nextCommands.length === 1) {
+                  setCurrentCommand(nextCommands[0]);
+                  setSearch('');
+                  setInputValue('');
+                } else {
+                  // Multiple commands - reset to search mode to show them
+                  setCurrentCommand(null);
+                  setSearch('');
+                  setInputValue('');
+                }
+              } else {
+                // No next command, close the palette
+                onOpenChange(false);
+              }
+            }
+          } catch (error) {
+            console.error('Auto-selection failed:', error);
+          } finally {
+            setShouldAutoSelectOption(null); // Clear the flag
+          }
+        };
+
+        // Execute after a delay to ensure UI is ready
+        const timeoutId = setTimeout(autoSelect, 300);
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, [
+    shouldAutoSelectOption,
+    selectOptions,
+    isLoadingOptions,
+    currentCommand,
+    executeCommandInChain,
+    onOpenChange,
+  ]);
+
+  return {
+    // State
+    search,
+    setSearch,
+    inputValue,
+    setInputValue,
+    currentCommand,
+    selectOptions,
+    isLoadingOptions,
+    submitActions,
+    isLoadingActions,
+    searchResults,
+    isLoadingSearch,
+    searchQuery,
+    searchResultConfig,
+    mode,
+    displayCommands,
+    inputConfig,
+    breadcrumbs,
+    isExecuting,
+    activeIndex,
+    currentItems,
+
+    // Handlers
+    handleCommandSelect,
+    handleOptionSelect,
+    handleActionSelect,
+    handleInputSubmit,
+    handleBack,
+    handleKeyDown,
+    handleSearchQueryChange,
+    isCommandEnabled,
+    navigateUp,
+    navigateDown,
+    selectActiveItem,
+  };
 }

@@ -1,230 +1,230 @@
 export const BacklogIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#bec2c8"
-            strokeWidth="2"
-            strokeDasharray="1.4 1.74"
-            strokeDashoffset="0.65"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#bec2c8"
-            strokeWidth="4"
-            strokeDasharray="0 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#bec2c8"
+        strokeWidth="2"
+        strokeDasharray="1.4 1.74"
+        strokeDashoffset="0.65"
+      ></circle>
+      <circle
+        className="progress"
+        cx="7"
+        cy="7"
+        r="2"
+        fill="none"
+        stroke="#bec2c8"
+        strokeWidth="4"
+        strokeDasharray="0 100"
+        strokeDashoffset="0"
+        transform="rotate(-90 7 7)"
+      ></circle>
+    </svg>
+  );
 };
 
 export const PausedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#0ea5e9"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#0ea5e9"
-            strokeWidth="4"
-            strokeDasharray="6.2517693806436885 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#0ea5e9"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <circle
+        className="progress"
+        cx="7"
+        cy="7"
+        r="2"
+        fill="none"
+        stroke="#0ea5e9"
+        strokeWidth="4"
+        strokeDasharray="6.2517693806436885 100"
+        strokeDashoffset="0"
+        transform="rotate(-90 7 7)"
+      ></circle>
+    </svg>
+  );
 };
 
 export const ToDoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#e2e2e2"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#e2e2e2"
-            strokeWidth="4"
-            strokeDasharray="0 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#e2e2e2"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <circle
+        className="progress"
+        cx="7"
+        cy="7"
+        r="2"
+        fill="none"
+        stroke="#e2e2e2"
+        strokeWidth="4"
+        strokeDasharray="0 100"
+        strokeDashoffset="0"
+        transform="rotate(-90 7 7)"
+      ></circle>
+    </svg>
+  );
 };
 
 export const InProgressIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#facc15"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#facc15"
-            strokeWidth="4"
-            strokeDasharray="2.0839231268812295 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#facc15"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <circle
+        className="progress"
+        cx="7"
+        cy="7"
+        r="2"
+        fill="none"
+        stroke="#facc15"
+        strokeWidth="4"
+        strokeDasharray="2.0839231268812295 100"
+        strokeDashoffset="0"
+        transform="rotate(-90 7 7)"
+      ></circle>
+    </svg>
+  );
 };
 
 export const TechnicalReviewIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#22c55e"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#22c55e"
-            strokeWidth="4"
-            strokeDasharray="4.167846253762459 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#22c55e"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <circle
+        className="progress"
+        cx="7"
+        cy="7"
+        r="2"
+        fill="none"
+        stroke="#22c55e"
+        strokeWidth="4"
+        strokeDasharray="4.167846253762459 100"
+        strokeDashoffset="0"
+        transform="rotate(-90 7 7)"
+      ></circle>
+    </svg>
+  );
 };
 
 export const CompletedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#8b5cf6"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <path
-            d="M4.5 7L6.5 9L9.5 5"
-            stroke="#8b5cf6"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-         />
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#8b5cf6"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <path
+        d="M4.5 7L6.5 9L9.5 5"
+        stroke="#8b5cf6"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 };
 
 export const BlockedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#ef4444"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <path
-            d="M5 5L9 9M9 5L5 9"
-            stroke="#ef4444"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-         />
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#ef4444"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <path
+        d="M5 5L9 9M9 5L5 9"
+        stroke="#ef4444"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 };
 
 export const DeferredIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#6b7280"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <rect x="5" y="5" width="1.5" height="4" fill="#6b7280" rx="0.75" />
-         <rect x="7.5" y="5" width="1.5" height="4" fill="#6b7280" rx="0.75" />
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#6b7280"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <rect x="5" y="5" width="1.5" height="4" fill="#6b7280" rx="0.75" />
+      <rect x="7.5" y="5" width="1.5" height="4" fill="#6b7280" rx="0.75" />
+    </svg>
+  );
 };
 
 export const ReviewIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#f59e0b"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle cx="7" cy="5.5" r="1" fill="#f59e0b" />
-         <path d="M7 7.5V10" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-   );
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...props}>
+      <circle
+        cx="7"
+        cy="7"
+        r="6"
+        fill="none"
+        stroke="#f59e0b"
+        strokeWidth="2"
+        strokeDasharray="3.14 0"
+        strokeDashoffset="-0.7"
+      ></circle>
+      <circle cx="7" cy="5.5" r="1" fill="#f59e0b" />
+      <path d="M7 7.5V10" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
 };

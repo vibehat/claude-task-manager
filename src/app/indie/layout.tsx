@@ -3,14 +3,14 @@ import type { Metadata } from 'next';
 import { TerminalProviderWrapper } from '@/features/terminal';
 
 export const metadata: Metadata = {
-   title: 'Individual Mode | Circle',
-   description: 'Individual project management mode for focused personal productivity',
+  title: 'Individual Mode | Circle',
+  description: 'Individual project management mode for focused personal productivity',
 };
 
 interface IndieLayoutPageProps {
-   children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function IndieLayoutPage({ children }: IndieLayoutPageProps): React.JSX.Element {
-   return <TerminalProviderWrapper>{children}</TerminalProviderWrapper>;
+  return <TerminalProviderWrapper>{children}</TerminalProviderWrapper>;
 }

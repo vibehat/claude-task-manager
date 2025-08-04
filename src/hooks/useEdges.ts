@@ -7,13 +7,13 @@ export function useEdges<T>(data: { nodes?: T[] } | null | undefined): T[];
 export function useEdges<T>(data: T[] | null | undefined): T[];
 export function useEdges<T>(data: { nodes?: T[] } | T[] | null | undefined): T[];
 export function useEdges<T>(data: any): T[] {
-   return useMemo(() => {
-      if (!data) {
-         return [];
-      }
-      if (Array.isArray(data)) {
-         return data;
-      }
-      return data.nodes || [];
-   }, [data]);
+  return useMemo(() => {
+    if (!data) {
+      return [];
+    }
+    if (Array.isArray(data)) {
+      return data;
+    }
+    return data.nodes || [];
+  }, [data]);
 }

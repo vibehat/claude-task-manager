@@ -33,7 +33,7 @@ const isInitialized = await taskMasterCLI.isInitialized();
 
 // Initialize Task Master
 if (!isInitialized) {
-   await taskMasterCLI.init();
+  await taskMasterCLI.init();
 }
 
 // List all tasks
@@ -51,9 +51,9 @@ const { parsed: task } = await taskMasterCLI.showTask('1.2');
 ```typescript
 // Add a new task
 const { parsed: newTask } = await taskMasterCLI.addTask({
-   title: 'Implement feature',
-   description: 'Add user authentication',
-   priority: 'high',
+  title: 'Implement feature',
+  description: 'Add user authentication',
+  priority: 'high',
 });
 
 // Update task status
@@ -75,8 +75,8 @@ const watcher = new TaskMasterWatcher();
 
 // Listen for changes
 watcher.on('file-change', async (event) => {
-   console.log('Tasks updated:', event.timestamp);
-   const tasks = await watcher.getTasksData();
+  console.log('Tasks updated:', event.timestamp);
+  const tasks = await watcher.getTasksData();
 });
 
 // Start watching
@@ -95,13 +95,13 @@ import { taskMasterCLI } from '@/libs/server';
 const app = express();
 
 app.get('/api/taskmaster/tasks', async (req, res) => {
-   const { parsed: tasks } = await taskMasterCLI.listTasks();
-   res.json({ tasks: tasks || [] });
+  const { parsed: tasks } = await taskMasterCLI.listTasks();
+  res.json({ tasks: tasks || [] });
 });
 
 app.put('/api/taskmaster/tasks/:id/status', async (req, res) => {
-   await taskMasterCLI.setTaskStatus(req.params.id, req.body.status);
-   res.json({ success: true });
+  await taskMasterCLI.setTaskStatus(req.params.id, req.body.status);
+  res.json({ success: true });
 });
 ```
 
@@ -176,13 +176,13 @@ All command methods return a `CommandResult` or `ParsedCommandResult`:
 
 ```typescript
 interface CommandResult {
-   stdout: string;
-   stderr: string;
-   exitCode: number;
+  stdout: string;
+  stderr: string;
+  exitCode: number;
 }
 
 interface ParsedCommandResult<T> extends CommandResult {
-   parsed?: T; // Parsed JSON output
+  parsed?: T; // Parsed JSON output
 }
 ```
 
@@ -190,12 +190,12 @@ interface ParsedCommandResult<T> extends CommandResult {
 
 ```typescript
 try {
-   const result = await taskMasterCLI.showTask('1.2');
-   if (result.exitCode !== 0) {
-      console.error('Command failed:', result.stderr);
-   }
+  const result = await taskMasterCLI.showTask('1.2');
+  if (result.exitCode !== 0) {
+    console.error('Command failed:', result.stderr);
+  }
 } catch (error) {
-   console.error('Execution error:', error);
+  console.error('Execution error:', error);
 }
 ```
 

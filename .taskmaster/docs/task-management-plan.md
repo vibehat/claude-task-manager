@@ -19,9 +19,9 @@ Based on the existing project structure and focusing only on layout and task man
 
 - Create `IndieSidebar` component in `/components/layout/sidebar/indie-sidebar.tsx`
 - Build navigation data in `/mock-data/indie-sidebar-nav.ts` with:
-   - Dashboard
-   - Tasks (reusing existing issue components)
-   - Settings
+  - Dashboard
+  - Tasks (reusing existing issue components)
+  - Settings
 - Implement mode switcher to toggle between team and individual modes
 - Reuse existing sidebar UI components and patterns
 
@@ -41,15 +41,15 @@ Based on the existing project structure and focusing only on layout and task man
 **Description**: Build a flexible issue UI component that handles both tasks and subtasks with hierarchical structure
 
 - Create `TaskItem` component in `/components/common/tasks/task-item.tsx` that can:
-   - Display as a main task or subtask based on hierarchy level
-   - Show nested subtasks with proper indentation/visual hierarchy
-   - Handle task data with `subtasks: Task[]` array
-   - Support expand/collapse for subtask visibility
-   - Provide different visual treatments for different nesting levels
+  - Display as a main task or subtask based on hierarchy level
+  - Show nested subtasks with proper indentation/visual hierarchy
+  - Handle task data with `subtasks: Task[]` array
+  - Support expand/collapse for subtask visibility
+  - Provide different visual treatments for different nesting levels
 - Extend existing Issue interface to include:
-   - `parentId?: string` for parent task reference
-   - `subtasks: Task[]` for child tasks
-   - `depth: number` for nesting level indication
+  - `parentId?: string` for parent task reference
+  - `subtasks: Task[]` for child tasks
+  - `depth: number` for nesting level indication
 - Implement recursive rendering for unlimited subtask nesting
 - Add visual indicators for task hierarchy (indentation, icons, borders)
 

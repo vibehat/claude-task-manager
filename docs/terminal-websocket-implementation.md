@@ -14,16 +14,16 @@ The core React hook that manages the terminal lifecycle:
 
 ```typescript
 const {
-   terminal, // xterm.js Terminal instance
-   initializeTerminal, // Initialize terminal
-   connectionStatus, // WebSocket connection status
-   session, // Terminal session info
-   connect, // Connect to WebSocket
-   disconnect, // Disconnect from WebSocket
-   sendInput, // Send input to terminal
-   fit, // Fit terminal to container
-   isConnected, // Connection state boolean
-   error, // Error state
+  terminal, // xterm.js Terminal instance
+  initializeTerminal, // Initialize terminal
+  connectionStatus, // WebSocket connection status
+  session, // Terminal session info
+  connect, // Connect to WebSocket
+  disconnect, // Disconnect from WebSocket
+  sendInput, // Send input to terminal
+  fit, // Fit terminal to container
+  isConnected, // Connection state boolean
+  error, // Error state
 } = useTerminal(options);
 ```
 
@@ -216,12 +216,12 @@ const { sendInput, isConnected } = useTerminal();
 
 // Execute a command
 if (isConnected) {
-   sendInput('ls -la\r'); // Note: \r for Enter key
+  sendInput('ls -la\r'); // Note: \r for Enter key
 }
 
 // Clear terminal
 if (terminal) {
-   terminal.clear();
+  terminal.clear();
 }
 ```
 
@@ -246,12 +246,12 @@ The WebSocket URL defaults to `ws://localhost:3001` but can be configured:
 ```typescript
 // In terminalConfig.ts
 export async function getWebSocketUrl(): Promise<string> {
-   if (typeof window !== 'undefined') {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const host = process.env.NEXT_PUBLIC_TERMINAL_HOST || 'localhost:3001';
-      return `${protocol}//${host}`;
-   }
-   return 'ws://localhost:3001';
+  if (typeof window !== 'undefined') {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = process.env.NEXT_PUBLIC_TERMINAL_HOST || 'localhost:3001';
+    return `${protocol}//${host}`;
+  }
+  return 'ws://localhost:3001';
 }
 ```
 
@@ -259,15 +259,15 @@ export async function getWebSocketUrl(): Promise<string> {
 
 ```typescript
 interface UseTerminalOptions {
-   theme?: 'light' | 'dark' | 'auto'; // Terminal theme
-   fontSize?: number; // Font size (default: 14)
-   fontFamily?: string; // Font family
-   sessionId?: string; // Restore specific session
-   clientId?: string; // Client identifier
-   onConnect?: () => void; // Connection callback
-   onDisconnect?: () => void; // Disconnection callback
-   onError?: (error: string) => void; // Error callback
-   onSessionRestored?: (id: string) => void; // Session restored callback
+  theme?: 'light' | 'dark' | 'auto'; // Terminal theme
+  fontSize?: number; // Font size (default: 14)
+  fontFamily?: string; // Font family
+  sessionId?: string; // Restore specific session
+  clientId?: string; // Client identifier
+  onConnect?: () => void; // Connection callback
+  onDisconnect?: () => void; // Disconnection callback
+  onError?: (error: string) => void; // Error callback
+  onSessionRestored?: (id: string) => void; // Session restored callback
 }
 ```
 

@@ -1,1 +1,1 @@
-export * from './taskmaster';
+export { CommandResult, ParsedCommandResult, TaskMasterCLI, taskMasterCLI } from './taskmaster';

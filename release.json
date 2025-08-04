@@ -1,316 +1,316 @@
 {
-   "authorBaseURL": "https://github.com/",
-   "repoBaseURL": "https://github.com/Pay-Direction/paydirection-apiservices/",
-   "featuresRoots": ["apps/frontend/src/features"],
-   "ignoredAuthors": ["github-actions[bot]"],
-   "refs": [
-      {
-         "name": "PD Board",
-         "prefix": "PD-",
-         "ticketBaseURL": "https://pd-tracker.com/browse/"
+  "authorBaseURL": "https://github.com/",
+  "repoBaseURL": "https://github.com/Pay-Direction/paydirection-apiservices/",
+  "featuresRoots": ["apps/frontend/src/features"],
+  "ignoredAuthors": ["github-actions[bot]"],
+  "refs": [
+    {
+      "name": "PD Board",
+      "prefix": "PD-",
+      "ticketBaseURL": "https://pd-tracker.com/browse/"
+    },
+    {
+      "name": "PIW Board",
+      "prefix": "PIW-",
+      "ticketBaseURL": "https://abc-tracker.com/tickets/"
+    }
+  ],
+  "types": {
+    "feat": {
+      "note": "Features",
+      "label": "Feature",
+      "icon": "✨",
+      "hidden": false,
+      "description": "A new feature for the end user."
+    },
+    "bug": {
+      "note": "Bug Fixes",
+      "label": "Client Bug",
+      "icon": "🐞",
+      "hidden": false,
+      "description": "A bug fix reported by clients or users."
+    },
+    "fix": {
+      "note": "Other Fixes",
+      "label": "Internal Fix",
+      "icon": "🛠️",
+      "hidden": false,
+      "description": "Internal fix found during development or QA; not user-reported."
+    },
+    "hotfix": {
+      "note": "Hotfixes",
+      "label": "Hotfix",
+      "icon": "🔥",
+      "hidden": false,
+      "description": "Critical fix deployed quickly to patch urgent issues."
+    },
+    "enhance": {
+      "note": "Enhancements",
+      "label": "Enhancement",
+      "icon": "🔧",
+      "hidden": false,
+      "description": "Improvements to existing functionality without adding new features."
+    },
+    "docs": {
+      "note": null,
+      "label": "Docs",
+      "icon": "📝",
+      "hidden": true,
+      "description": "Changes or additions to documentation."
+    },
+    "refactor": {
+      "note": "Refactor",
+      "label": "Refactor",
+      "icon": "♻️",
+      "hidden": false,
+      "description": "Code restructuring without changing its external behavior."
+    },
+    "style": {
+      "note": null,
+      "label": "Style",
+      "icon": "🎨",
+      "hidden": true,
+      "description": "Code style changes (e.g. formatting, white-space, etc.)."
+    },
+    "test": {
+      "note": null,
+      "label": "Tests",
+      "icon": "🧪",
+      "hidden": true,
+      "description": "Adding or updating tests."
+    },
+    "perf": {
+      "note": "Performance Improvements",
+      "label": "Perf",
+      "icon": "⚡",
+      "hidden": false,
+      "description": "Changes that improve performance."
+    },
+    "build": {
+      "note": null,
+      "label": "Build",
+      "icon": "🏗️",
+      "hidden": true,
+      "description": "Changes that affect the build system or external dependencies."
+    },
+    "chore": {
+      "note": null,
+      "label": "Chore",
+      "icon": "🧹",
+      "hidden": false,
+      "description": "Routine tasks, maintenance or non-functional changes."
+    },
+    "revert": {
+      "note": null,
+      "label": "Revert",
+      "icon": "⏪",
+      "hidden": true,
+      "description": "Reverts a previous commit."
+    },
+    "other": {
+      "note": "Others",
+      "label": "Other",
+      "icon": "📦",
+      "hidden": false,
+      "description": "Changes that don't fall into other predefined types."
+    }
+  },
+  "scopes": {
+    "api": {
+      "label": "API"
+    },
+    "auth": {
+      "label": "Authentication"
+    },
+    "ci": {
+      "label": "CI/CD"
+    },
+    "core": {
+      "label": "Core Logic"
+    },
+    "database": {
+      "label": "Database"
+    },
+    "docs": {
+      "label": "Documentation"
+    },
+    "general": {
+      "label": "General"
+    },
+    "graphql": {
+      "label": "GraphQL"
+    },
+    "integration": {
+      "label": "Integration"
+    },
+    "maintenance": {
+      "label": "Maintenance"
+    },
+    "release": {
+      "label": "Release Process"
+    },
+    "security": {
+      "label": "Security"
+    },
+    "styles": {
+      "label": "Styles"
+    },
+    "ui": {
+      "label": "UI/UX"
+    },
+    "ux": {
+      "label": "User Experience"
+    },
+    "common-ui": {
+      "label": "Common UI"
+    }
+  },
+  "labels": {
+    "scope": {
+      "API": {
+        "changed-files": ["apps/api/**"]
       },
-      {
-         "name": "PIW Board",
-         "prefix": "PIW-",
-         "ticketBaseURL": "https://abc-tracker.com/tickets/"
+      "Gateway": {
+        "changed-files": ["apps/gateway/**"]
+      },
+      "Packages": {
+        "changed-files": ["packages/**"]
+      },
+      "Infrastructure": {
+        "changed-files": ["infra/**"]
+      },
+      "Config": {
+        "changed-files": ["**/*.config.*", "**/*.env", "apps/**/config/**"]
+      },
+      "Docs": {
+        "changed-files": ["docs/**", "**/*.md", "README.md"]
+      },
+      "Tests": {
+        "changed-files": ["**/*.spec.ts", "**/__tests__/**"]
+      },
+      "Dependencies": {
+        "changed-files": ["package.json", "yarn.lock"]
+      },
+      "CICD": {
+        "changed-files": [".github/**"]
+      },
+      "Scripts": {
+        "changed-files": ["scripts/**"]
+      },
+      "UI/UX": {
+        "changed-files": ["packages/ui/**"]
+      },
+      "Features": {
+        "changed-files": ["apps/frontend/src/features/**"]
+      },
+      "Services": {
+        "changed-files": ["apps/frontend/src/services/**"]
+      },
+      "GraphQL": {
+        "changed-files": ["**/graphql/**"]
+      },
+      "Hooks": {
+        "changed-files": ["**/hooks/**"]
+      },
+      "Components": {
+        "changed-files": ["**/components/**"]
+      },
+      "Views": {
+        "changed-files": ["**/views/**"]
+      },
+      "Stores": {
+        "changed-files": ["**/stores/**"]
+      },
+      "Storybook": {
+        "changed-files": ["**/*.stories.ts", "**/*.stories.tsx"]
       }
-   ],
-   "types": {
-      "feat": {
-         "note": "Features",
-         "label": "Feature",
-         "icon": "✨",
-         "hidden": false,
-         "description": "A new feature for the end user."
+    },
+    "features": {
+      "account": {
+        "changed-files": ["apps/frontend/src/features/account/**"]
       },
-      "bug": {
-         "note": "Bug Fixes",
-         "label": "Client Bug",
-         "icon": "🐞",
-         "hidden": false,
-         "description": "A bug fix reported by clients or users."
+      "buy-rates": {
+        "changed-files": ["apps/frontend/src/features/buy-rates/**"]
       },
-      "fix": {
-         "note": "Other Fixes",
-         "label": "Internal Fix",
-         "icon": "🛠️",
-         "hidden": false,
-         "description": "Internal fix found during development or QA; not user-reported."
+      "client-settlements": {
+        "changed-files": ["apps/frontend/src/features/client-settlements/**"]
       },
-      "hotfix": {
-         "note": "Hotfixes",
-         "label": "Hotfix",
-         "icon": "🔥",
-         "hidden": false,
-         "description": "Critical fix deployed quickly to patch urgent issues."
+      "export-matrix": {
+        "changed-files": ["apps/frontend/src/features/export-matrix/**"]
       },
-      "enhance": {
-         "note": "Enhancements",
-         "label": "Enhancement",
-         "icon": "🔧",
-         "hidden": false,
-         "description": "Improvements to existing functionality without adding new features."
-      },
-      "docs": {
-         "note": null,
-         "label": "Docs",
-         "icon": "📝",
-         "hidden": true,
-         "description": "Changes or additions to documentation."
-      },
-      "refactor": {
-         "note": "Refactor",
-         "label": "Refactor",
-         "icon": "♻️",
-         "hidden": false,
-         "description": "Code restructuring without changing its external behavior."
-      },
-      "style": {
-         "note": null,
-         "label": "Style",
-         "icon": "🎨",
-         "hidden": true,
-         "description": "Code style changes (e.g. formatting, white-space, etc.)."
-      },
-      "test": {
-         "note": null,
-         "label": "Tests",
-         "icon": "🧪",
-         "hidden": true,
-         "description": "Adding or updating tests."
-      },
-      "perf": {
-         "note": "Performance Improvements",
-         "label": "Perf",
-         "icon": "⚡",
-         "hidden": false,
-         "description": "Changes that improve performance."
-      },
-      "build": {
-         "note": null,
-         "label": "Build",
-         "icon": "🏗️",
-         "hidden": true,
-         "description": "Changes that affect the build system or external dependencies."
-      },
-      "chore": {
-         "note": null,
-         "label": "Chore",
-         "icon": "🧹",
-         "hidden": false,
-         "description": "Routine tasks, maintenance or non-functional changes."
-      },
-      "revert": {
-         "note": null,
-         "label": "Revert",
-         "icon": "⏪",
-         "hidden": true,
-         "description": "Reverts a previous commit."
-      },
-      "other": {
-         "note": "Others",
-         "label": "Other",
-         "icon": "📦",
-         "hidden": false,
-         "description": "Changes that don't fall into other predefined types."
-      }
-   },
-   "scopes": {
-      "api": {
-         "label": "API"
-      },
-      "auth": {
-         "label": "Authentication"
-      },
-      "ci": {
-         "label": "CI/CD"
-      },
-      "core": {
-         "label": "Core Logic"
-      },
-      "database": {
-         "label": "Database"
-      },
-      "docs": {
-         "label": "Documentation"
-      },
-      "general": {
-         "label": "General"
-      },
-      "graphql": {
-         "label": "GraphQL"
+      "global-modal": {
+        "changed-files": ["apps/frontend/src/features/global-modal/**"]
       },
       "integration": {
-         "label": "Integration"
+        "changed-files": ["apps/frontend/src/features/integration/**"]
       },
       "maintenance": {
-         "label": "Maintenance"
+        "changed-files": ["apps/frontend/src/features/maintenance/**"]
       },
-      "release": {
-         "label": "Release Process"
+      "manage-subscription": {
+        "changed-files": ["apps/frontend/src/features/manage-subscription/**"]
       },
-      "security": {
-         "label": "Security"
+      "matrix": {
+        "changed-files": ["apps/frontend/src/features/matrix/**"]
       },
-      "styles": {
-         "label": "Styles"
+      "sell-rates": {
+        "changed-files": ["apps/frontend/src/features/sell-rates/**"]
       },
-      "ui": {
-         "label": "UI/UX"
-      },
-      "ux": {
-         "label": "User Experience"
-      },
-      "common-ui": {
-         "label": "Common UI"
+      "subscription": {
+        "changed-files": ["apps/frontend/src/features/subscription/**"]
       }
-   },
-   "labels": {
-      "scope": {
-         "API": {
-            "changed-files": ["apps/api/**"]
-         },
-         "Gateway": {
-            "changed-files": ["apps/gateway/**"]
-         },
-         "Packages": {
-            "changed-files": ["packages/**"]
-         },
-         "Infrastructure": {
-            "changed-files": ["infra/**"]
-         },
-         "Config": {
-            "changed-files": ["**/*.config.*", "**/*.env", "apps/**/config/**"]
-         },
-         "Docs": {
-            "changed-files": ["docs/**", "**/*.md", "README.md"]
-         },
-         "Tests": {
-            "changed-files": ["**/*.spec.ts", "**/__tests__/**"]
-         },
-         "Dependencies": {
-            "changed-files": ["package.json", "yarn.lock"]
-         },
-         "CICD": {
-            "changed-files": [".github/**"]
-         },
-         "Scripts": {
-            "changed-files": ["scripts/**"]
-         },
-         "UI/UX": {
-            "changed-files": ["packages/ui/**"]
-         },
-         "Features": {
-            "changed-files": ["apps/frontend/src/features/**"]
-         },
-         "Services": {
-            "changed-files": ["apps/frontend/src/services/**"]
-         },
-         "GraphQL": {
-            "changed-files": ["**/graphql/**"]
-         },
-         "Hooks": {
-            "changed-files": ["**/hooks/**"]
-         },
-         "Components": {
-            "changed-files": ["**/components/**"]
-         },
-         "Views": {
-            "changed-files": ["**/views/**"]
-         },
-         "Stores": {
-            "changed-files": ["**/stores/**"]
-         },
-         "Storybook": {
-            "changed-files": ["**/*.stories.ts", "**/*.stories.tsx"]
-         }
+    },
+    "changeType": {
+      "Feature": {
+        "head-branch": ["^feat", ".*feature.*"]
       },
-      "features": {
-         "account": {
-            "changed-files": ["apps/frontend/src/features/account/**"]
-         },
-         "buy-rates": {
-            "changed-files": ["apps/frontend/src/features/buy-rates/**"]
-         },
-         "client-settlements": {
-            "changed-files": ["apps/frontend/src/features/client-settlements/**"]
-         },
-         "export-matrix": {
-            "changed-files": ["apps/frontend/src/features/export-matrix/**"]
-         },
-         "global-modal": {
-            "changed-files": ["apps/frontend/src/features/global-modal/**"]
-         },
-         "integration": {
-            "changed-files": ["apps/frontend/src/features/integration/**"]
-         },
-         "maintenance": {
-            "changed-files": ["apps/frontend/src/features/maintenance/**"]
-         },
-         "manage-subscription": {
-            "changed-files": ["apps/frontend/src/features/manage-subscription/**"]
-         },
-         "matrix": {
-            "changed-files": ["apps/frontend/src/features/matrix/**"]
-         },
-         "sell-rates": {
-            "changed-files": ["apps/frontend/src/features/sell-rates/**"]
-         },
-         "subscription": {
-            "changed-files": ["apps/frontend/src/features/subscription/**"]
-         }
+      "Fix": {
+        "head-branch": ["^fix", ".*bug.*"]
       },
-      "changeType": {
-         "Feature": {
-            "head-branch": ["^feat", ".*feature.*"]
-         },
-         "Fix": {
-            "head-branch": ["^fix", ".*bug.*"]
-         },
-         "Refactor": {
-            "head-branch": ["^refactor", ".*refactor.*"]
-         },
-         "Chore": {
-            "head-branch": ["^chore", ".*chore.*"]
-         }
+      "Refactor": {
+        "head-branch": ["^refactor", ".*refactor.*"]
       },
-      "risk": {
-         "Migration": {
-            "changed-files": ["**/migrations/**", "**/migrate.ts", "**/*.migration.ts"]
-         },
-         "Event": {
-            "changed-files": ["**/events/**", "**/*.event.ts"]
-         },
-         "Scheduler": {
-            "changed-files": ["**/schedulers/**", "**/*.scheduler.ts"]
-         },
-         "Subscriber": {
-            "changed-files": ["**/subscribers/**", "**/*.subscriber.ts"]
-         },
-         "Schema": {
-            "changed-files": ["**/schemas/**", "**/*.schema.ts"]
-         },
-         "Security": {
-            "changed-files": ["**/auth/**", "**/guard/**", "**/authz/**"]
-         },
-         "Breaking": {
-            "head-branch": [".*breaking.*", "^breaking"],
-            "changed-files": ["BREAKING_CHANGE.md"]
-         }
-      },
-      "gitFlow": {
-         "MergeBack": {
-            "head-branch": ["^sync", "sync-.*", "merge-.*"]
-         },
-         "Release": {
-            "base-branch": ["^main$"]
-         },
-         "WIP": {
-            "head-branch": ["^wip", ".*wip.*"]
-         },
-         "Beta": {
-            "head-branch": [".*-beta.*"]
-         }
+      "Chore": {
+        "head-branch": ["^chore", ".*chore.*"]
       }
-   }
+    },
+    "risk": {
+      "Migration": {
+        "changed-files": ["**/migrations/**", "**/migrate.ts", "**/*.migration.ts"]
+      },
+      "Event": {
+        "changed-files": ["**/events/**", "**/*.event.ts"]
+      },
+      "Scheduler": {
+        "changed-files": ["**/schedulers/**", "**/*.scheduler.ts"]
+      },
+      "Subscriber": {
+        "changed-files": ["**/subscribers/**", "**/*.subscriber.ts"]
+      },
+      "Schema": {
+        "changed-files": ["**/schemas/**", "**/*.schema.ts"]
+      },
+      "Security": {
+        "changed-files": ["**/auth/**", "**/guard/**", "**/authz/**"]
+      },
+      "Breaking": {
+        "head-branch": [".*breaking.*", "^breaking"],
+        "changed-files": ["BREAKING_CHANGE.md"]
+      }
+    },
+    "gitFlow": {
+      "MergeBack": {
+        "head-branch": ["^sync", "sync-.*", "merge-.*"]
+      },
+      "Release": {
+        "base-branch": ["^main$"]
+      },
+      "WIP": {
+        "head-branch": ["^wip", ".*wip.*"]
+      },
+      "Beta": {
+        "head-branch": [".*-beta.*"]
+      }
+    }
+  }
 }

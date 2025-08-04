@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import {
-   Command,
-   CommandEmpty,
-   CommandGroup,
-   CommandInput,
-   CommandItem,
-   CommandList,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import type { TaskPriority } from '@/libs/client/types';
@@ -15,109 +15,109 @@ import { useDataStore, useAllPriorities } from '@/libs/client/stores';
 import { getPriorityIcon } from '@/features/tasks/constants/NoPriorityIcon';
 
 const getPriorityIconName = (name: string): string => {
-   switch (name.toLowerCase()) {
-      case 'urgent':
-         return 'UrgentPriorityIcon';
-      case 'high':
-         return 'HighPriorityIcon';
-      case 'medium':
-         return 'MediumPriorityIcon';
-      case 'low':
-         return 'LowPriorityIcon';
-      default:
-         return 'NoPriorityIcon';
-   }
+  switch (name.toLowerCase()) {
+    case 'urgent':
+      return 'UrgentPriorityIcon';
+    case 'high':
+      return 'HighPriorityIcon';
+    case 'medium':
+      return 'MediumPriorityIcon';
+    case 'low':
+      return 'LowPriorityIcon';
+    default:
+      return 'NoPriorityIcon';
+  }
 };
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
-   priority: Pick<TaskPriority, 'id' | 'name'> | string | null | undefined;
-   taskId?: string;
+  priority: Pick<TaskPriority, 'id' | 'name'> | string | null | undefined;
+  taskId?: string;
 }
 
 export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): React.JSX.Element {
-   const id = useId();
-   const [open, setOpen] = useState<boolean>(false);
-   const priorityId = typeof priority === 'string' ? priority : priority?.id;
-   const [value, setValue] = useState<string>(priorityId || 'no-priority');
+  const id = useId();
+  const [open, setOpen] = useState<boolean>(false);
+  const priorityId = typeof priority === 'string' ? priority : priority?.id;
+  const [value, setValue] = useState<string>(priorityId || 'no-priority');
 
-   const { updateTask } = useDataStore();
-   const priorities = useAllPriorities();
+  const { updateTask } = useDataStore();
+  const priorities = useAllPriorities();
 
-   useEffect(() => {
-      setValue(priorityId || 'no-priority');
-   }, [priorityId]);
+  useEffect(() => {
+    setValue(priorityId || 'no-priority');
+  }, [priorityId]);
 
-   const handlePriorityChange = async (priorityId: string): Promise<void> => {
-      setValue(priorityId);
-      setOpen(false);
+  const handlePriorityChange = async (priorityId: string): Promise<void> => {
+    setValue(priorityId);
+    setOpen(false);
 
-      if (taskId) {
-         try {
-            await updateTask(taskId, { priorityId });
-         } catch (error) {
-            console.error('Failed to update task priority:', error);
-         }
+    if (taskId) {
+      try {
+        await updateTask(taskId, { priorityId });
+      } catch (error) {
+        console.error('Failed to update task priority:', error);
       }
-   };
+    }
+  };
 
-   return (
-      <div className="*:not-first:mt-2">
-         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-               <Button
-                  id={id}
-                  className="size-7 flex items-center justify-center"
-                  size="icon"
-                  variant="ghost"
-                  role="combobox"
-                  aria-expanded={open}
-               >
-                  {((): React.JSX.Element => {
-                     const selectedItem = priorities.find((item) => item.id === value);
-                     if (selectedItem) {
-                        const Icon = getPriorityIcon(getPriorityIconName(selectedItem.name));
-                        return <Icon className="text-muted-foreground size-4" />;
-                     }
-                     return <></>;
-                  })()}
-               </Button>
-            </PopoverTrigger>
-            <PopoverContent
-               className="border-input w-full min-w-[var(--radix-popper-anchor-width)] p-0"
-               align="start"
-            >
-               <Command>
-                  <CommandInput placeholder="Set priority..." />
-                  <CommandList>
-                     <CommandEmpty>No priority found.</CommandEmpty>
-                     <CommandGroup>
-                        {priorities.map((item) => {
-                           const Icon = getPriorityIcon(getPriorityIconName(item.name));
-                           return (
-                              <CommandItem
-                                 key={item.id}
-                                 value={item.id}
-                                 onSelect={handlePriorityChange}
-                                 className="flex items-center justify-between"
-                              >
-                                 <div className="flex items-center gap-2">
-                                    <Icon className="text-muted-foreground size-4" />
-                                    {item.name}
-                                 </div>
-                                 {value === item.id && <CheckIcon size={16} className="ml-auto" />}
-                                 <span className="text-muted-foreground text-xs">{0}</span>
-                              </CommandItem>
-                           );
-                        })}
-                     </CommandGroup>
-                  </CommandList>
-               </Command>
-            </PopoverContent>
-         </Popover>
-      </div>
-   );
+  return (
+    <div className="*:not-first:mt-2">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            id={id}
+            className="size-7 flex items-center justify-center"
+            size="icon"
+            variant="ghost"
+            role="combobox"
+            aria-expanded={open}
+          >
+            {((): React.JSX.Element => {
+              const selectedItem = priorities.find((item) => item.id === value);
+              if (selectedItem) {
+                const Icon = getPriorityIcon(getPriorityIconName(selectedItem.name));
+                return <Icon className="text-muted-foreground size-4" />;
+              }
+              return <></>;
+            })()}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="border-input w-full min-w-[var(--radix-popper-anchor-width)] p-0"
+          align="start"
+        >
+          <Command>
+            <CommandInput placeholder="Set priority..." />
+            <CommandList>
+              <CommandEmpty>No priority found.</CommandEmpty>
+              <CommandGroup>
+                {priorities.map((item) => {
+                  const Icon = getPriorityIcon(getPriorityIconName(item.name));
+                  return (
+                    <CommandItem
+                      key={item.id}
+                      value={item.id}
+                      onSelect={handlePriorityChange}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon className="text-muted-foreground size-4" />
+                        {item.name}
+                      </div>
+                      {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+                      <span className="text-muted-foreground text-xs">{0}</span>
+                    </CommandItem>
+                  );
+                })}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
 }
 
 export default PrioritySelector;

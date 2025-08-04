@@ -34,22 +34,22 @@ import { DebugTerminal } from '@/components/debug/DebugTerminal';
 
 ```tsx
 function TerminalLauncher() {
-   const [command, setCommand] = useState('');
-   const [key, setKey] = useState(0);
+  const [command, setCommand] = useState('');
+  const [key, setKey] = useState(0);
 
-   const launchCommand = (cmd: string) => {
-      setCommand(cmd);
-      setKey((k) => k + 1); // Force remount
-   };
+  const launchCommand = (cmd: string) => {
+    setCommand(cmd);
+    setKey((k) => k + 1); // Force remount
+  };
 
-   return (
-      <div>
-         <button onClick={() => launchCommand('git status')}>Git Status</button>
-         <button onClick={() => launchCommand('ls -la')}>List Files</button>
+  return (
+    <div>
+      <button onClick={() => launchCommand('git status')}>Git Status</button>
+      <button onClick={() => launchCommand('ls -la')}>List Files</button>
 
-         <DebugTerminal key={key} initialCommand={command || undefined} />
-      </div>
-   );
+      <DebugTerminal key={key} initialCommand={command || undefined} />
+    </div>
+  );
 }
 ```
 

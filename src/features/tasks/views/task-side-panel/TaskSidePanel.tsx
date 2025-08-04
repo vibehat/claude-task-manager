@@ -14,168 +14,165 @@ import { TaskDetailsSection } from './sections/TaskDetailsSection';
 import { SubtasksSection } from './sections/SubtasksSection/SubtasksSection';
 
 export function TaskSidePanel(): React.JSX.Element {
-   const { isOpen, taskId, panelWidth, isFullscreen, closePanel, setFullscreen } =
-      useTaskSidePanelStore();
+  const { isOpen, taskId, panelWidth, isFullscreen, closePanel, setFullscreen } =
+    useTaskSidePanelStore();
 
-   const task = useTaskDetail(taskId);
-   const { updateTask } = useDataStore();
+  const task = useTaskDetail(taskId);
+  const { updateTask } = useDataStore();
 
-   // Keyboard shortcut to exit fullscreen
-   useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-         if (event.key === 'Escape' && isFullscreen && isOpen) {
-            setFullscreen(false);
-         }
-      };
-
-      if (isOpen && isFullscreen) {
-         document.addEventListener('keydown', handleKeyDown);
-         return () => document.removeEventListener('keydown', handleKeyDown);
+  // Keyboard shortcut to exit fullscreen
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isFullscreen && isOpen) {
+        setFullscreen(false);
       }
-   }, [isOpen, isFullscreen, setFullscreen]);
+    };
 
-   const handleUpdateField = async (
-      field: 'title' | 'description' | 'details' | 'testStrategy',
-      value: string
-   ): Promise<void> => {
-      if (!task) return;
+    if (isOpen && isFullscreen) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isOpen, isFullscreen, setFullscreen]);
 
-      try {
-         // Update the task using Zustand store
-         await updateTask(task.id, { [field]: value });
+  const handleUpdateField = async (
+    field: 'title' | 'description' | 'details' | 'testStrategy',
+    value: string
+  ): Promise<void> => {
+    if (!task) return;
 
-         const fieldName = {
-            title: 'Title',
-            description: 'Description',
-            details: 'Implementation Details',
-            testStrategy: 'Test Strategy',
-         }[field];
+    try {
+      // Update the task using Zustand store
+      await updateTask(task.id, { [field]: value });
 
-         toast.success(`${fieldName} updated successfully`);
-      } catch (error) {
-         const fieldName = {
-            title: 'Title',
-            description: 'Description',
-            details: 'Implementation Details',
-            testStrategy: 'Test Strategy',
-         }[field];
+      const fieldName = {
+        title: 'Title',
+        description: 'Description',
+        details: 'Implementation Details',
+        testStrategy: 'Test Strategy',
+      }[field];
 
-         toast.error(`Failed to update ${fieldName}`);
-         console.error(`Update ${field} error:`, error);
-      }
-   };
+      toast.success(`${fieldName} updated successfully`);
+    } catch (error) {
+      const fieldName = {
+        title: 'Title',
+        description: 'Description',
+        details: 'Implementation Details',
+        testStrategy: 'Test Strategy',
+      }[field];
 
-   const handleTitleUpdate = (value: string): void => {
-      handleUpdateField('title', value);
-   };
+      toast.error(`Failed to update ${fieldName}`);
+      console.error(`Update ${field} error:`, error);
+    }
+  };
 
-   const handleDescriptionUpdate = (value: string): void => {
-      handleUpdateField('description', value);
-   };
+  const handleTitleUpdate = (value: string): void => {
+    handleUpdateField('title', value);
+  };
 
-   const handleDetailsUpdate = (value: string): void => {
-      handleUpdateField('details', value);
-   };
+  const handleDescriptionUpdate = (value: string): void => {
+    handleUpdateField('description', value);
+  };
 
-   const handleTestStrategyUpdate = (value: string): void => {
-      handleUpdateField('testStrategy', value);
-   };
+  const handleDetailsUpdate = (value: string): void => {
+    handleUpdateField('details', value);
+  };
 
-   const handleLabelsUpdate = async (labelIds: string[]): Promise<void> => {
-      if (!task) return;
+  const handleTestStrategyUpdate = (value: string): void => {
+    handleUpdateField('testStrategy', value);
+  };
 
-      try {
-         // Update the task using Zustand store
-         await updateTask(task.id, { labelIds });
+  const handleLabelsUpdate = async (labelIds: string[]): Promise<void> => {
+    if (!task) return;
 
-         toast.success('Labels updated successfully');
-      } catch (error) {
-         toast.error('Failed to update labels');
-         console.error('Update labels error:', error);
-      }
-   };
+    try {
+      // Update the task using Zustand store
+      await updateTask(task.id, { labelIds });
 
-   return (
-      <AnimatePresence>
-         {isOpen && task && (
-            <motion.div
-               initial={{ x: isFullscreen ? 0 : panelWidth }}
-               animate={{ x: 0 }}
-               exit={{ x: isFullscreen ? 0 : panelWidth }}
-               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-               className={`fixed top-0 h-full bg-background shadow-lg z-50 overflow-y-auto ${
-                  isFullscreen ? 'left-0 right-0 w-full border-none' : 'right-0 border-l'
-               }`}
-               style={{ width: isFullscreen ? '100vw' : panelWidth }}
-            >
-               <TaskHeader task={task} onClose={closePanel} />
+      toast.success('Labels updated successfully');
+    } catch (error) {
+      toast.error('Failed to update labels');
+      console.error('Update labels error:', error);
+    }
+  };
 
-               {isFullscreen ? (
-                  /* Fullscreen 2-column layout */
-                  <div className="p-8">
-                     {/* Task Title - Full width */}
-                     <div className="mb-8">
-                        <TaskTitleEditor
-                           initialValue={task.title}
-                           onBlur={handleTitleUpdate}
-                           disabled={false}
-                        />
-                     </div>
+  return (
+    <AnimatePresence>
+      {isOpen && task && (
+        <motion.div
+          initial={{ x: isFullscreen ? 0 : panelWidth }}
+          animate={{ x: 0 }}
+          exit={{ x: isFullscreen ? 0 : panelWidth }}
+          transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+          className={`fixed top-0 h-full bg-background shadow-lg z-50 overflow-y-auto ${
+            isFullscreen ? 'left-0 right-0 w-full border-none' : 'right-0 border-l'
+          }`}
+          style={{ width: isFullscreen ? '100vw' : panelWidth }}
+        >
+          <TaskHeader task={task} onClose={closePanel} />
 
-                     {/* 2-column layout */}
-                     <div
-                        className="grid grid-cols-3 gap-8"
-                        style={{ height: 'calc(100vh - 200px)' }}
-                     >
-                        {/* Left Column - Task Details & Subtasks (2/3 width) */}
-                        <div className="col-span-2 space-y-6 overflow-y-auto pr-4">
-                           <TaskInfoSection
-                              task={task}
-                              onDescriptionSave={handleDescriptionUpdate}
-                              onDetailsSave={handleDetailsUpdate}
-                              onTestStrategySave={handleTestStrategyUpdate}
-                              disabled={false}
-                           />
+          {isFullscreen ? (
+            /* Fullscreen 2-column layout */
+            <div className="p-8">
+              {/* Task Title - Full width */}
+              <div className="mb-8">
+                <TaskTitleEditor
+                  initialValue={task.title}
+                  onBlur={handleTitleUpdate}
+                  disabled={false}
+                />
+              </div>
 
-                           <Separator />
+              {/* 2-column layout */}
+              <div className="grid grid-cols-3 gap-8" style={{ height: 'calc(100vh - 200px)' }}>
+                {/* Left Column - Task Details & Subtasks (2/3 width) */}
+                <div className="col-span-2 space-y-6 overflow-y-auto pr-4">
+                  <TaskInfoSection
+                    task={task}
+                    onDescriptionSave={handleDescriptionUpdate}
+                    onDetailsSave={handleDetailsUpdate}
+                    onTestStrategySave={handleTestStrategyUpdate}
+                    disabled={false}
+                  />
 
-                           <SubtasksSection task={task} disabled={false} />
-                        </div>
+                  <Separator />
 
-                        {/* Right Column - Other Info (1/3 width) */}
-                        <div className="col-span-1 space-y-6 overflow-y-auto pl-4 border-l">
-                           <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
-                        </div>
-                     </div>
-                  </div>
-               ) : (
-                  /* Normal single column layout */
-                  <div className="p-6 space-y-6">
-                     <TaskTitleEditor
-                        initialValue={task.title}
-                        onBlur={handleTitleUpdate}
-                        disabled={false}
-                     />
+                  <SubtasksSection task={task} disabled={false} />
+                </div>
 
-                     <TaskInfoSection
-                        task={task}
-                        onDescriptionSave={handleDescriptionUpdate}
-                        onDetailsSave={handleDetailsUpdate}
-                        onTestStrategySave={handleTestStrategyUpdate}
-                        disabled={false}
-                     />
+                {/* Right Column - Other Info (1/3 width) */}
+                <div className="col-span-1 space-y-6 overflow-y-auto pl-4 border-l">
+                  <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Normal single column layout */
+            <div className="p-6 space-y-6">
+              <TaskTitleEditor
+                initialValue={task.title}
+                onBlur={handleTitleUpdate}
+                disabled={false}
+              />
 
-                     <Separator />
+              <TaskInfoSection
+                task={task}
+                onDescriptionSave={handleDescriptionUpdate}
+                onDetailsSave={handleDetailsUpdate}
+                onTestStrategySave={handleTestStrategyUpdate}
+                disabled={false}
+              />
 
-                     <SubtasksSection task={task} disabled={false} />
+              <Separator />
 
-                     <Separator />
+              <SubtasksSection task={task} disabled={false} />
 
-                     <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
-                  </div>
-               )}
-            </motion.div>
-         )}
-      </AnimatePresence>
-   );
+              <Separator />
+
+              <TaskDetailsSection task={task} onLabelsUpdate={handleLabelsUpdate} />
+            </div>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }

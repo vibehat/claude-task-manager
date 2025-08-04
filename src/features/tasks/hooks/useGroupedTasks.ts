@@ -10,48 +10,48 @@ export type GroupByKey = 'status' | 'priority' | 'tag' | 'label';
  * @returns Record of grouped tasks
  */
 export function useGroupedTasks(tasks: Task[], groupBy: GroupByKey): Record<string, Task[]> {
-   return useMemo(() => {
-      const grouped: Record<string, Task[]> = {};
+  return useMemo(() => {
+    const grouped: Record<string, Task[]> = {};
 
-      tasks.forEach((task) => {
-         let groupKey: string | undefined;
+    tasks.forEach((task) => {
+      let groupKey: string | undefined;
 
-         switch (groupBy) {
-            case 'status':
-               groupKey = task.statusId;
-               break;
-            case 'priority':
-               groupKey = task.priorityId;
-               break;
-            case 'tag':
-               groupKey = task.tagId || 'no-tag';
-               break;
-            case 'label':
-               // For labels, we need to handle multiple labels per task
-               if (task.labelIds && task.labelIds.length > 0) {
-                  task.labelIds.forEach((labelId) => {
-                     if (!grouped[labelId]) {
-                        grouped[labelId] = [];
-                     }
-                     grouped[labelId].push(task);
-                  });
-                  return; // Skip the default grouping below
-               } else {
-                  groupKey = 'no-label';
-               }
-               break;
-         }
+      switch (groupBy) {
+        case 'status':
+          groupKey = task.statusId;
+          break;
+        case 'priority':
+          groupKey = task.priorityId;
+          break;
+        case 'tag':
+          groupKey = task.tagId || 'no-tag';
+          break;
+        case 'label':
+          // For labels, we need to handle multiple labels per task
+          if (task.labelIds && task.labelIds.length > 0) {
+            task.labelIds.forEach((labelId) => {
+              if (!grouped[labelId]) {
+                grouped[labelId] = [];
+              }
+              grouped[labelId].push(task);
+            });
+            return; // Skip the default grouping below
+          } else {
+            groupKey = 'no-label';
+          }
+          break;
+      }
 
-         if (groupKey) {
-            if (!grouped[groupKey]) {
-               grouped[groupKey] = [];
-            }
-            grouped[groupKey].push(task);
-         }
-      });
+      if (groupKey) {
+        if (!grouped[groupKey]) {
+          grouped[groupKey] = [];
+        }
+        grouped[groupKey].push(task);
+      }
+    });
 
-      return grouped;
-   }, [tasks, groupBy]);
+    return grouped;
+  }, [tasks, groupBy]);
 }
 
 /**
@@ -60,7 +60,7 @@ export function useGroupedTasks(tasks: Task[], groupBy: GroupByKey): Record<stri
  * @returns Record of tasks grouped by status ID
  */
 export function useGroupedTasksByStatus(tasks: Task[]): Record<string, Task[]> {
-   return useGroupedTasks(tasks, 'status');
+  return useGroupedTasks(tasks, 'status');
 }
 
 /**
@@ -69,7 +69,7 @@ export function useGroupedTasksByStatus(tasks: Task[]): Record<string, Task[]> {
  * @returns Record of tasks grouped by priority ID
  */
 export function useGroupedTasksByPriority(tasks: Task[]): Record<string, Task[]> {
-   return useGroupedTasks(tasks, 'priority');
+  return useGroupedTasks(tasks, 'priority');
 }
 
 /**
@@ -78,7 +78,7 @@ export function useGroupedTasksByPriority(tasks: Task[]): Record<string, Task[]>
  * @returns Record of tasks grouped by tag ID (includes 'no-tag' group)
  */
 export function useGroupedTasksByTag(tasks: Task[]): Record<string, Task[]> {
-   return useGroupedTasks(tasks, 'tag');
+  return useGroupedTasks(tasks, 'tag');
 }
 
 /**
@@ -88,5 +88,5 @@ export function useGroupedTasksByTag(tasks: Task[]): Record<string, Task[]> {
  * @returns Record of tasks grouped by label ID (includes 'no-label' group)
  */
 export function useGroupedTasksByLabel(tasks: Task[]): Record<string, Task[]> {
-   return useGroupedTasks(tasks, 'label');
+  return useGroupedTasks(tasks, 'label');
 }

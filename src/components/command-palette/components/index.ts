@@ -8,5 +8,5 @@ export { CommandEmptyState } from './CommandEmptyState';
 export { CommandLoadingOverlay } from './CommandLoadingOverlay';
 export { CommandPaletteContent } from './CommandPaletteContent';
 
-// Re-export types
-export type { CommandMode } from './CommandSearchInput';
+// Re-export types from main types file
+export type { CommandMode } from '../types';

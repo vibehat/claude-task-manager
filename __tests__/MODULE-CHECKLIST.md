@@ -48,8 +48,8 @@
 
 ```typescript
 it('should format data correctly', () => {
-   const result = formatDate('2024-01-01');
-   expect(result).toBe('Jan 1, 2024');
+  const result = formatDate('2024-01-01');
+  expect(result).toBe('Jan 1, 2024');
 });
 ```
 
@@ -57,8 +57,8 @@ it('should format data correctly', () => {
 
 ```typescript
 it('should validate email format', () => {
-   expect(validateEmail('test@example.com')).toBe(true);
-   expect(validateEmail('invalid')).toBe(false);
+  expect(validateEmail('test@example.com')).toBe(true);
+  expect(validateEmail('invalid')).toBe(false);
 });
 ```
 
@@ -66,8 +66,8 @@ it('should validate email format', () => {
 
 ```typescript
 it('should calculate total correctly', () => {
-   const items = [{ price: 10 }, { price: 20 }];
-   expect(calculateTotal(items)).toBe(30);
+  const items = [{ price: 10 }, { price: 20 }];
+  expect(calculateTotal(items)).toBe(30);
 });
 ```
 
@@ -76,8 +76,8 @@ it('should calculate total correctly', () => {
 ```typescript
 jest.mock('axios');
 it('should have required methods', () => {
-   expect(typeof ApiClient.get).toBe('function');
-   expect(typeof ApiClient.post).toBe('function');
+  expect(typeof ApiClient.get).toBe('function');
+  expect(typeof ApiClient.post).toBe('function');
 });
 ```
 

@@ -56,7 +56,7 @@
     "@typescript-eslint/prefer-includes": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
     "@typescript-eslint/no-useless-constructor": "error",
-    "@typescript-eslint/no-empty-function": "error",
+    "@typescript-eslint/no-empty-function": "off",
     
     // Additional any-catching rules
     "no-var": "error",

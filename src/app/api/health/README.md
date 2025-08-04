@@ -11,10 +11,10 @@ Health check endpoint with multiple response formats.
 #### Query Parameters
 
 - `format` - Response format (default: `basic`)
-   - `basic` - Simple health status
-   - `detailed` - Detailed system information
-   - `readiness` - Kubernetes readiness probe format
-   - `liveness` - Kubernetes liveness probe format
+  - `basic` - Simple health status
+  - `detailed` - Detailed system information
+  - `readiness` - Kubernetes readiness probe format
+  - `liveness` - Kubernetes liveness probe format
 
 #### Examples
 
@@ -26,9 +26,9 @@ curl http://localhost:3000/api/health
 
 ```json
 {
-   "status": "healthy",
-   "timestamp": 1703123456789,
-   "uptime": 3600.123
+  "status": "healthy",
+  "timestamp": 1703123456789,
+  "uptime": 3600.123
 }
 ```
 
@@ -40,20 +40,20 @@ curl http://localhost:3000/api/health?format=detailed
 
 ```json
 {
-   "status": "healthy",
-   "timestamp": 1703123456789,
-   "uptime": 3600.123,
-   "memory": {
-      "rss": 123456789,
-      "heapTotal": 67108864,
-      "heapUsed": 45678901,
-      "external": 2345678
-   },
-   "version": "v18.17.0",
-   "platform": "darwin",
-   "arch": "arm64",
-   "env": "development",
-   "pid": 12345
+  "status": "healthy",
+  "timestamp": 1703123456789,
+  "uptime": 3600.123,
+  "memory": {
+    "rss": 123456789,
+    "heapTotal": 67108864,
+    "heapUsed": 45678901,
+    "external": 2345678
+  },
+  "version": "v18.17.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "env": "development",
+  "pid": 12345
 }
 ```
 
@@ -65,13 +65,13 @@ curl http://localhost:3000/api/health?format=readiness
 
 ```json
 {
-   "status": "ready",
-   "timestamp": 1703123456789,
-   "checks": {
-      "database": "ok",
-      "filesystem": "ok",
-      "memory": "ok"
-   }
+  "status": "ready",
+  "timestamp": 1703123456789,
+  "checks": {
+    "database": "ok",
+    "filesystem": "ok",
+    "memory": "ok"
+  }
 }
 ```
 
@@ -83,9 +83,9 @@ curl http://localhost:3000/api/health?format=liveness
 
 ```json
 {
-   "status": "alive",
-   "timestamp": 1703123456789,
-   "uptime": 3600.123
+  "status": "alive",
+  "timestamp": 1703123456789,
+  "uptime": 3600.123
 }
 ```
 
@@ -108,7 +108,7 @@ Custom health check with specific test requests.
 
 ```json
 {
-   "checks": ["memory", "uptime", "version"]
+  "checks": ["memory", "uptime", "version"]
 }
 ```
 
@@ -116,28 +116,28 @@ Custom health check with specific test requests.
 
 ```json
 {
-   "status": "healthy",
-   "timestamp": 1703123456789,
-   "requestedChecks": ["memory", "uptime", "version"],
-   "results": {
-      "memory": {
-         "status": "ok",
-         "heapUsed": 45678901,
-         "heapTotal": 67108864,
-         "rss": 123456789
-      },
-      "uptime": {
-         "status": "ok",
-         "seconds": 3600.123,
-         "formatted": "1h 0m 0s"
-      },
-      "version": {
-         "status": "ok",
-         "node": "v18.17.0",
-         "platform": "darwin",
-         "arch": "arm64"
-      }
-   }
+  "status": "healthy",
+  "timestamp": 1703123456789,
+  "requestedChecks": ["memory", "uptime", "version"],
+  "results": {
+    "memory": {
+      "status": "ok",
+      "heapUsed": 45678901,
+      "heapTotal": 67108864,
+      "rss": 123456789
+    },
+    "uptime": {
+      "status": "ok",
+      "seconds": 3600.123,
+      "formatted": "1h 0m 0s"
+    },
+    "version": {
+      "status": "ok",
+      "node": "v18.17.0",
+      "platform": "darwin",
+      "arch": "arm64"
+    }
+  }
 }
 ```
 
@@ -147,40 +147,40 @@ Custom health check with specific test requests.
 
 ```yaml
 livenessProbe:
-   httpGet:
-      path: /api/health?format=liveness
-      port: 3000
-   initialDelaySeconds: 30
-   periodSeconds: 10
-   timeoutSeconds: 5
-   failureThreshold: 3
+  httpGet:
+    path: /api/health?format=liveness
+    port: 3000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
 ```
 
 ### Readiness Probe
 
 ```yaml
 readinessProbe:
-   httpGet:
-      path: /api/health?format=readiness
-      port: 3000
-   initialDelaySeconds: 5
-   periodSeconds: 5
-   timeoutSeconds: 3
-   successThreshold: 1
-   failureThreshold: 3
+  httpGet:
+    path: /api/health?format=readiness
+    port: 3000
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 3
 ```
 
 ### Startup Probe
 
 ```yaml
 startupProbe:
-   httpGet:
-      path: /api/health
-      port: 3000
-   initialDelaySeconds: 10
-   periodSeconds: 5
-   timeoutSeconds: 3
-   failureThreshold: 10
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 10
 ```
 
 ## Docker Healthcheck

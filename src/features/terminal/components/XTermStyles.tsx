@@ -4,7 +4,7 @@
 import '@/styles/xterm.css';
 
 export function XTermStyles() {
-   // This component just ensures the CSS is loaded
-   // The actual import happens at the top of the file
-   return null;
+  // This component just ensures the CSS is loaded
+  // The actual import happens at the top of the file
+  return null;
 }

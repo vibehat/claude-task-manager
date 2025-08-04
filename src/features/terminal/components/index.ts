@@ -6,7 +6,7 @@ export { MultiTerminalManager } from './MultiTerminalManager';
 export { MultiTerminalWrapper } from './MultiTerminalWrapper';
 export { XTermStyles } from './XTermStyles';
 export type {
-   TerminalComponentProps,
-   TerminalStatusProps,
-   PersistentTerminalProps,
+  TerminalComponentProps,
+  TerminalStatusProps,
+  PersistentTerminalProps,
 } from '../types/terminal';

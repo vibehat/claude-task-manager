@@ -3,40 +3,40 @@ import { useDataStore } from '../stores';
 // TODO: useAllUsers and useUserDetail are not implemented yet
 
 export function useUsers() {
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState<Error | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | undefined>(undefined);
 
-   // const users = useAllUsers(); // TODO: Not implemented yet
-   const users: any[] = []; // Temporary empty array
-   const { isInitialized, initialize } = useDataStore();
+  // const users = useAllUsers(); // TODO: Not implemented yet
+  const users: any[] = []; // Temporary empty array
+  const { isInitialized, initialize } = useDataStore();
 
-   useEffect(() => {
-      if (!isInitialized) {
-         initialize()
-            .then(() => setLoading(false))
-            .catch((err) => {
-               setError(err);
-               setLoading(false);
-            });
-      } else {
-         setLoading(false);
-      }
-   }, [isInitialized]);
+  useEffect(() => {
+    if (!isInitialized) {
+      initialize()
+        .then(() => setLoading(false))
+        .catch((err) => {
+          setError(err);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [isInitialized]);
 
-   return {
-      data: users,
-      loading,
-      error,
-   };
+  return {
+    data: users,
+    loading,
+    error,
+  };
 }
 
 export function useUser(id: string | undefined) {
-   // const user = useUserDetail(id || ''); // TODO: Not implemented yet
-   const user = undefined; // Temporary
+  // const user = useUserDetail(id || ''); // TODO: Not implemented yet
+  const user = undefined; // Temporary
 
-   return {
-      data: id ? user : undefined,
-      loading: false,
-      error: undefined,
-   };
+  return {
+    data: id ? user : undefined,
+    loading: false,
+    error: undefined,
+  };
 }

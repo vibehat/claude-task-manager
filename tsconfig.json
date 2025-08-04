@@ -1,54 +1,58 @@
 {
-   "compilerOptions": {
-      "target": "ES2017",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": false,
-      "noEmit": true,
-      "esModuleInterop": true,
-      "module": "esnext",
-      "moduleResolution": "bundler",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "jsx": "preserve",
-      "incremental": true,
-      "noImplicitAny": false,
-      "noImplicitReturns": false,
-      "noImplicitThis": false,
-      "noUncheckedIndexedAccess": false,
-      "plugins": [
-         {
-            "name": "next"
-         }
-      ],
-      "paths": {
-         "@/*": ["./src/*"]
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+    "noUncheckedIndexedAccess": false,
+    "plugins": [
+      {
+        "name": "next"
       }
-   },
-   "include": [
-      "next-env.d.ts",
-      "src/app/**/*.ts",
-      "src/app/**/*.tsx",
-      "src/components/**/*.ts",
-      "src/components/**/*.tsx",
-      "src/libs/client/**/*.ts",
-      "src/libs/client/**/*.tsx",
-      "src/libs/server/**/*.ts",
-      "src/features/**/*.ts",
-      "src/features/**/*.tsx",
-      "src/hooks/**/*.ts",
-      "src/store/**/*.ts",
-      ".next/types/**/*.ts"
-   ],
-   "exclude": [
-      "node_modules",
-      ".next",
-      "coverage",
-      "**/*.test.ts",
-      "**/*.spec.ts",
-      "__tests__",
-      "scripts",
-      "**/mock-data/**/*"
-   ]
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "next.config.ts",
+    "server.ts",
+    "server/**/*.ts",
+    "src/app/**/*.ts",
+    "src/app/**/*.tsx",
+    "src/components/**/*.ts",
+    "src/components/**/*.tsx",
+    "src/libs/client/**/*.ts",
+    "src/libs/client/**/*.tsx",
+    "src/libs/server/**/*.ts",
+    "src/features/**/*.ts",
+    "src/features/**/*.tsx",
+    "src/hooks/**/*.ts",
+    "src/store/**/*.ts",
+    "src/types/**/*.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "coverage",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "__tests__",
+    "scripts",
+    "**/mock-data/**/*"
+  ]
 }
