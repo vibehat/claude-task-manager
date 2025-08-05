@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IndieLayout } from '@/components/layout/IndieLayout';
+import { WorkspaceLayout } from '@/components/layout/WorkspaceLayout';
 import { useTerminalContext } from '@/features/terminal';
 import { useMultiTerminalStore } from '@/store/multiTerminalStore';
 import { Terminal as TerminalIcon, Plus, Minimize2, Maximize2, X, Clock } from 'lucide-react';
@@ -300,15 +300,15 @@ export default function TerminalPage(): React.JSX.Element {
 
   if (hasProviderError) {
     return (
-      <IndieLayout>
+      <WorkspaceLayout>
         <TerminalPageError />
-      </IndieLayout>
+      </WorkspaceLayout>
     );
   }
 
   return (
-    <IndieLayout>
+    <WorkspaceLayout>
       <TerminalPageContent />
-    </IndieLayout>
+    </WorkspaceLayout>
   );
 }

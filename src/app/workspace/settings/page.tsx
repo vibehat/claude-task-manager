@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { IndieLayout } from '@/components/layout/IndieLayout';
+import { WorkspaceLayout } from '@/components/layout/WorkspaceLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,7 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { BellIcon, UserIcon, PaletteIcon, DownloadIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 
-export default function IndieSettingsPage(): React.JSX.Element {
+export default function WorkspaceSettingsPage(): React.JSX.Element {
   const [notifications, setNotifications] = useState({
     email: true,
     desktop: false,
@@ -42,7 +42,7 @@ export default function IndieSettingsPage(): React.JSX.Element {
   };
 
   return (
-    <IndieLayout>
+    <WorkspaceLayout>
       <div className="p-6 space-y-6 max-w-4xl">
         {/* Header */}
         <div>
@@ -272,6 +272,6 @@ export default function IndieSettingsPage(): React.JSX.Element {
           </CardContent>
         </Card>
       </div>
-    </IndieLayout>
+    </WorkspaceLayout>
   );
 }

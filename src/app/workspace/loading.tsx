@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function IndieLoading(): React.JSX.Element {
+export default function WorkspaceLoading(): React.JSX.Element {
   return (
     <div className="p-6 space-y-6">
       {/* Header Skeleton */}

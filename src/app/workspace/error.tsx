@@ -2,18 +2,19 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangleIcon, RefreshCwIcon, ArrowLeftIcon } from 'lucide-react';
+import { AlertTriangleIcon, RefreshCwIcon, HomeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect } from 'react';
 
-interface SettingsErrorProps {
+interface WorkspaceErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
 }
 
-export default function SettingsError({ error, reset }: SettingsErrorProps): React.JSX.Element {
+export default function WorkspaceError({ error, reset }: WorkspaceErrorProps): React.JSX.Element {
   useEffect(() => {
-    console.error('Settings page error:', error);
+    // Log the error to an error reporting service
+    console.error('Workspace error:', error);
   }, [error]);
 
   return (
@@ -23,9 +24,9 @@ export default function SettingsError({ error, reset }: SettingsErrorProps): Rea
           <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4">
             <AlertTriangleIcon className="w-6 h-6 text-red-600 dark:text-red-400" />
           </div>
-          <CardTitle>Settings unavailable</CardTitle>
+          <CardTitle>Something went wrong!</CardTitle>
           <CardDescription>
-            We couldn&apos;t load your settings. Please try again in a moment.
+            An error occurred while loading your workspace. This could be a temporary issue.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -38,15 +39,21 @@ export default function SettingsError({ error, reset }: SettingsErrorProps): Rea
           <div className="flex flex-col gap-2">
             <Button onClick={reset} className="w-full">
               <RefreshCwIcon className="mr-2 h-4 w-4" />
-              Reload Settings
+              Try Again
             </Button>
 
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/indie">
-                <ArrowLeftIcon className="mr-2 h-4 w-4" />
-                Back to Dashboard
+              <Link href="/">
+                <HomeIcon className="mr-2 h-4 w-4" />
+                Go Home
               </Link>
             </Button>
+          </div>
+
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">
+              If this problem persists, please contact support.
+            </p>
           </div>
         </CardContent>
       </Card>

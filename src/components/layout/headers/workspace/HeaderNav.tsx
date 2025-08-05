@@ -26,11 +26,11 @@ export default function HeaderNav({
 
   // Get page title based on current route
   const getPageTitle = (): string => {
-    if (pathname.includes('/indie/dashboard')) return 'Dashboard';
-    if (pathname.includes('/indie/tasks')) return 'Tasks';
-    if (pathname.includes('/indie/terminal')) return 'Terminal';
-    if (pathname.includes('/indie/settings')) return 'Settings';
-    return 'Individual Mode';
+    if (pathname.includes('/workspace/dashboard')) return 'Dashboard';
+    if (pathname.includes('/workspace/tasks')) return 'Tasks';
+    if (pathname.includes('/workspace/terminal')) return 'Terminal';
+    if (pathname.includes('/workspace/settings')) return 'Settings';
+    return 'Workspace';
   };
 
   useEffect(() => {

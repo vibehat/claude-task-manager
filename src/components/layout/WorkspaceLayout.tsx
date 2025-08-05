@@ -8,13 +8,13 @@ import {
   TaskSidePanelProvider,
 } from '@/features/tasks';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
-import { IndieProjectProvider } from '@/libs/client/contexts/IndieProjectProvider';
-import { IndieSidebar } from '@/components/layout/sidebar/IndieSidebar';
+import { WorkspaceProjectProvider } from '@/libs/client/contexts/WorkspaceProjectProvider';
+import { WorkspaceSidebar } from '@/components/layout/sidebar/WorkspaceSidebar';
 import { cn } from '@/libs/client/utils';
-import IndieHeader from '@/components/layout/headers/indie/IndieHeader';
+import WorkspaceHeader from '@/components/layout/headers/workspace/WorkspaceHeader';
 import { TerminalToggle, MultiTerminalManager } from '@/features/terminal';
 
-interface IndieLayoutProps {
+interface WorkspaceLayoutProps {
   children: React.ReactNode;
   header?: React.ReactNode;
   headerActions?: React.ReactNode;
@@ -24,7 +24,7 @@ interface IndieLayoutProps {
   className?: string;
 }
 
-export function IndieLayout({
+export function WorkspaceLayout({
   children,
   header,
   headerActions,
@@ -32,7 +32,7 @@ export function IndieLayout({
   filterOptions,
   headersNumber = 2,
   className,
-}: IndieLayoutProps): React.JSX.Element {
+}: WorkspaceLayoutProps): React.JSX.Element {
   const { isOpen, panelWidth } = useTaskSidePanelStore();
 
   const height = {
@@ -50,16 +50,20 @@ export function IndieLayout({
 
   // Use provided header or create default shared header
   const headerElement = header || (
-    <IndieHeader actions={defaultActions} showSearch={showSearch} filterOptions={filterOptions} />
+    <WorkspaceHeader
+      actions={defaultActions}
+      showSearch={showSearch}
+      filterOptions={filterOptions}
+    />
   );
 
   return (
-    <IndieProjectProvider>
+    <WorkspaceProjectProvider>
       <SidebarProvider>
         <CreateTaskModalProvider />
         <UpdateTaskModalProvider />
         <TaskSidePanelProvider />
-        <IndieSidebar />
+        <WorkspaceSidebar />
         <SidebarInset
           style={{
             marginRight: isOpen ? `${panelWidth}px` : '0',
@@ -77,8 +81,8 @@ export function IndieLayout({
         {/* Multi-Terminal Manager */}
         <MultiTerminalManager />
       </SidebarProvider>
-    </IndieProjectProvider>
+    </WorkspaceProjectProvider>
   );
 }
 
-export default IndieLayout;
+export default WorkspaceLayout;

@@ -1,6 +1,6 @@
 'use client';
 
-import { IndieLayout } from '@/components/layout/IndieLayout';
+import { WorkspaceLayout } from '@/components/layout/WorkspaceLayout';
 import { Separator } from '@/components/ui/separator';
 import { useTaskMasterData } from '@/hooks/useTaskMasterData';
 import {
@@ -12,12 +12,12 @@ import {
 } from '@/components/analytics';
 import { BrainIcon, TrendingUpIcon, NetworkIcon, SettingsIcon } from 'lucide-react';
 
-export default function IndieAnalyticsPage(): React.JSX.Element {
+export default function WorkspaceAnalyticsPage(): React.JSX.Element {
   const { complexityReport, taskMasterData, loading, error } = useTaskMasterData();
 
   if (error) {
     return (
-      <IndieLayout>
+      <WorkspaceLayout>
         <div className="p-6">
           <div className="text-center py-12">
             <h1 className="text-2xl font-bold text-red-600 mb-2">Analytics Error</h1>
@@ -27,12 +27,12 @@ export default function IndieAnalyticsPage(): React.JSX.Element {
             </p>
           </div>
         </div>
-      </IndieLayout>
+      </WorkspaceLayout>
     );
   }
 
   return (
-    <IndieLayout>
+    <WorkspaceLayout>
       <div className="p-6 space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -117,6 +117,6 @@ export default function IndieAnalyticsPage(): React.JSX.Element {
           <DependencyPlaceholder />
         </section>
       </div>
-    </IndieLayout>
+    </WorkspaceLayout>
   );
 }

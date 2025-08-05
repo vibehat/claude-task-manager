@@ -18,14 +18,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/SidebarProvider';
-import { indieNavigationSections } from '@/mock-data/indieSidebarNav';
+import { workspaceNavigationSections } from '@/mock-data/workspaceSidebarNav';
 import Link from 'next/link';
 
-interface IndieSidebarProps extends React.ComponentProps<typeof Sidebar> {
+interface WorkspaceSidebarProps extends React.ComponentProps<typeof Sidebar> {
   className?: string;
 }
 
-export function IndieSidebar({ className, ...props }: IndieSidebarProps): React.JSX.Element {
+export function WorkspaceSidebar({
+  className,
+  ...props
+}: WorkspaceSidebarProps): React.JSX.Element {
   return (
     <Sidebar collapsible="offcanvas" className={className} {...props}>
       <SidebarHeader>
@@ -35,7 +38,7 @@ export function IndieSidebar({ className, ...props }: IndieSidebarProps): React.
       </SidebarHeader>
 
       <SidebarContent>
-        {indieNavigationSections.map((section) => (
+        {workspaceNavigationSections.map((section) => (
           <SidebarGroup key={section.label}>
             <SidebarGroupLabel>{section.label}</SidebarGroupLabel>
             <SidebarMenu>
@@ -82,4 +85,4 @@ export function IndieSidebar({ className, ...props }: IndieSidebarProps): React.
   );
 }
 
-export default IndieSidebar;
+export default WorkspaceSidebar;

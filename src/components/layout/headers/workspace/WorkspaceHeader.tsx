@@ -1,17 +1,17 @@
 import React from 'react';
 import HeaderNav from './HeaderNav';
 
-interface IndieHeaderProps {
+interface WorkspaceHeaderProps {
   actions?: React.ReactNode;
   showSearch?: boolean;
   filterOptions?: React.ReactNode;
 }
 
-export default function IndieHeader({
+export default function WorkspaceHeader({
   actions,
   showSearch = false,
   filterOptions,
-}: IndieHeaderProps): React.JSX.Element {
+}: WorkspaceHeaderProps): React.JSX.Element {
   return (
     <div className="w-full flex flex-col items-center">
       <HeaderNav showSearch={showSearch} actions={actions} />

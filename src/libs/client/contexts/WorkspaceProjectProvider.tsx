@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useDataStore } from '../stores/dataStore';
 
-interface IndieProject {
+interface WorkspaceProject {
   id: string;
   name: string;
   description?: string;
@@ -11,30 +11,30 @@ interface IndieProject {
   updatedAt: Date;
 }
 
-interface IndieProjectContextValue {
-  currentProject: IndieProject | null;
-  projects: IndieProject[];
+interface WorkspaceProjectContextValue {
+  currentProject: WorkspaceProject | null;
+  projects: WorkspaceProject[];
   isLoading: boolean;
   error: string | null;
-  setCurrentProject: (project: IndieProject | null) => void;
-  addProject: (project: Omit<IndieProject, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  setCurrentProject: (project: WorkspaceProject | null) => void;
+  addProject: (project: Omit<WorkspaceProject, 'id' | 'createdAt' | 'updatedAt'>) => void;
   updateProject: (
     id: string,
-    updates: Partial<Omit<IndieProject, 'id' | 'createdAt' | 'updatedAt'>>
+    updates: Partial<Omit<WorkspaceProject, 'id' | 'createdAt' | 'updatedAt'>>
   ) => void;
   deleteProject: (id: string) => void;
   refreshProjects: () => Promise<void>;
 }
 
-const IndieProjectContext = React.createContext<IndieProjectContextValue | null>(null);
+const WorkspaceProjectContext = React.createContext<WorkspaceProjectContextValue | null>(null);
 
-interface IndieProjectProviderProps {
+interface WorkspaceProjectProviderProps {
   children: React.ReactNode;
 }
 
-export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
-  const [currentProject, setCurrentProject] = React.useState<IndieProject | null>(null);
-  const [projects, setProjects] = React.useState<IndieProject[]>([]);
+export function WorkspaceProjectProvider({ children }: WorkspaceProjectProviderProps) {
+  const [currentProject, setCurrentProject] = React.useState<WorkspaceProject | null>(null);
+  const [projects, setProjects] = React.useState<WorkspaceProject[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -49,8 +49,8 @@ export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
   }, [isInitialized]);
 
   const addProject = React.useCallback(
-    (projectData: Omit<IndieProject, 'id' | 'createdAt' | 'updatedAt'>) => {
-      const newProject: IndieProject = {
+    (projectData: Omit<WorkspaceProject, 'id' | 'createdAt' | 'updatedAt'>) => {
+      const newProject: WorkspaceProject = {
         ...projectData,
         id: crypto.randomUUID(),
         createdAt: new Date(),
@@ -66,7 +66,7 @@ export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
   );
 
   const updateProject = React.useCallback(
-    (id: string, updates: Partial<Omit<IndieProject, 'id' | 'createdAt' | 'updatedAt'>>) => {
+    (id: string, updates: Partial<Omit<WorkspaceProject, 'id' | 'createdAt' | 'updatedAt'>>) => {
       setProjects((prev) =>
         prev.map((project) =>
           project.id === id ? { ...project, ...updates, updatedAt: new Date() } : project
@@ -104,7 +104,7 @@ export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
     }
   }, []);
 
-  const value: IndieProjectContextValue = {
+  const value: WorkspaceProjectContextValue = {
     currentProject,
     projects,
     isLoading,
@@ -116,15 +116,17 @@ export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
     refreshProjects,
   };
 
-  return <IndieProjectContext.Provider value={value}>{children}</IndieProjectContext.Provider>;
+  return (
+    <WorkspaceProjectContext.Provider value={value}>{children}</WorkspaceProjectContext.Provider>
+  );
 }
 
-export function useIndieProject(): IndieProjectContextValue {
-  const context = React.useContext(IndieProjectContext);
+export function useWorkspaceProject(): WorkspaceProjectContextValue {
+  const context = React.useContext(WorkspaceProjectContext);
   if (!context) {
-    throw new Error('useIndieProject must be used within an IndieProjectProvider');
+    throw new Error('useWorkspaceProject must be used within a WorkspaceProjectProvider');
   }
   return context;
 }
 
-export type { IndieProject, IndieProjectContextValue };
+export type { WorkspaceProject, WorkspaceProjectContextValue };

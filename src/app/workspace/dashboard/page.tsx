@@ -14,10 +14,10 @@ import {
 } from 'lucide-react';
 import { useMemo } from 'react';
 import Link from 'next/link';
-import { IndieLayout } from '@/components/layout/IndieLayout';
+import { WorkspaceLayout } from '@/components/layout/WorkspaceLayout';
 import { formatTaskIdForDisplay } from '@/libs/client/utils';
 
-export default function IndieDashboardPage(): React.JSX.Element {
+export default function WorkspaceDashboardPage(): React.JSX.Element {
   const tasks = useDataStore((state) => state.allTasks);
 
   // Get recent tasks (last 5)
@@ -44,19 +44,19 @@ export default function IndieDashboardPage(): React.JSX.Element {
   }, [tasks]);
 
   return (
-    <IndieLayout>
+    <WorkspaceLayout>
       <div className="p-6 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome to your individual workspace. Manage your tasks and track your progress.
+              Welcome to your workspace. Manage your tasks and track your progress.
             </p>
           </div>
           <div className="flex gap-2">
             <Button asChild>
-              <Link href="/indie/tasks">
+              <Link href="/workspace/tasks">
                 <CircleIcon className="mr-2 h-4 w-4" />
                 View All Tasks
               </Link>
@@ -164,7 +164,7 @@ export default function IndieDashboardPage(): React.JSX.Element {
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start" asChild>
-                <Link href="/indie/tasks">
+                <Link href="/workspace/tasks">
                   <CircleIcon className="mr-2 h-4 w-4" />
                   View All Tasks
                 </Link>
@@ -174,7 +174,7 @@ export default function IndieDashboardPage(): React.JSX.Element {
                 Create New Task
               </Button>
               <Button variant="outline" className="w-full justify-start" asChild>
-                <Link href="/indie/settings">
+                <Link href="/workspace/settings">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   Settings
                 </Link>
@@ -183,6 +183,6 @@ export default function IndieDashboardPage(): React.JSX.Element {
           </Card>
         </div>
       </div>
-    </IndieLayout>
+    </WorkspaceLayout>
   );
 }

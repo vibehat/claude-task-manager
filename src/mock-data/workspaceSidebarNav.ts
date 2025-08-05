@@ -10,7 +10,7 @@ import {
    type LucideIcon,
 } from 'lucide-react';
 
-export interface IndieNavItem {
+export interface WorkspaceNavItem {
    name: string;
    url: string;
    icon: LucideIcon;
@@ -18,82 +18,82 @@ export interface IndieNavItem {
    badge?: number | string;
 }
 
-export interface IndieNavSection {
+export interface WorkspaceNavSection {
    label: string;
-   items: IndieNavItem[];
+   items: WorkspaceNavItem[];
 }
 
-export const indieDashboardItems: IndieNavItem[] = [
+export const workspaceDashboardItems: WorkspaceNavItem[] = [
    {
       name: 'Dashboard',
-      url: '/indie',
+      url: '/workspace',
       icon: Home,
       description: 'Project overview and progress',
    },
    {
       name: 'Analytics',
-      url: '/indie/analytics',
+      url: '/workspace/analytics',
       icon: BarChart3,
       description: 'Task completion and productivity insights',
    },
 ];
 
-export const indieTaskItems: IndieNavItem[] = [
+export const workspaceTaskItems: WorkspaceNavItem[] = [
    {
       name: 'Current Tasks',
-      url: '/indie/current-tasks',
+      url: '/workspace/current-tasks',
       icon: Target,
       description: 'Tasks for the current tag only',
    },
    {
       name: 'All Tasks',
-      url: '/indie/tasks',
+      url: '/workspace/tasks',
       icon: CheckSquare,
       description: 'View and manage all tasks',
    }
 ];
 
-export const indieDevItems: IndieNavItem[] = [
+export const workspaceDevItems: WorkspaceNavItem[] = [
    {
       name: 'Terminal',
-      url: '/indie/terminal',
+      url: '/workspace/terminal',
       icon: Terminal,
       description: 'Interactive terminal for commands and Task Master CLI',
    },
 ];
 
-export const indieSettingsItems: IndieNavItem[] = [
+export const workspaceSettingsItems: WorkspaceNavItem[] = [
    {
       name: 'Settings',
-      url: '/indie/settings',
+      url: '/workspace/settings',
       icon: Settings,
-      description: 'Individual mode preferences',
+      description: 'Workspace preferences',
    },
 ];
 
-export const indieNavigationSections: IndieNavSection[] = [
+export const workspaceNavigationSections: WorkspaceNavSection[] = [
    {
       label: 'Overview',
-      items: indieDashboardItems,
+      items: workspaceDashboardItems,
    },
    {
       label: 'Tasks',
-      items: indieTaskItems,
+      items: workspaceTaskItems,
    },
    {
       label: 'Development',
-      items: indieDevItems,
+      items: workspaceDevItems,
    },
    {
       label: 'Settings',
-      items: indieSettingsItems,
+      items: workspaceSettingsItems,
    },
 ];
 
 // Flattened navigation items for easier access
-export const allIndieNavItems: IndieNavItem[] = [
-   ...indieDashboardItems,
-   ...indieTaskItems,
-   ...indieDevItems,
-   ...indieSettingsItems,
+export const allWorkspaceNavItems: WorkspaceNavItem[] = [
+   ...workspaceDashboardItems,
+   ...workspaceTaskItems,
+   ...workspaceDevItems,
+   ...workspaceSettingsItems,
 ];
