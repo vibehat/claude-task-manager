@@ -51,8 +51,13 @@ const iconMapById: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
 };
 
 export function getTaskStatusIcon(
-  status: Pick<TaskStatus, 'id' | 'name'>
+  status: Pick<TaskStatus, 'id' | 'name'> | undefined | null
 ): FC<React.SVGProps<SVGSVGElement>> {
+  // Handle undefined/null status
+  if (!status) {
+    return ToDoIcon;
+  }
+
   // Try mapping by ID first (more reliable)
   const iconById = iconMapById[status.id];
   if (iconById) {
@@ -70,7 +75,7 @@ export function getTaskStatusIcon(
 }
 
 export function useTaskStatusIcon(
-  status: Pick<TaskStatus, 'id' | 'name'>
+  status: Pick<TaskStatus, 'id' | 'name'> | undefined | null
 ): FC<React.SVGProps<SVGSVGElement>> {
   return getTaskStatusIcon(status);
 }

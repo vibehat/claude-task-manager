@@ -18,26 +18,26 @@ import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
-  status: Pick<TaskStatus, 'id' | 'name' | 'color'> | string | null | undefined;
+  status: TaskStatus | null | undefined;
   taskId: string;
 }
 
 export function StatusSelector({ status, taskId }: StatusSelectorProps): React.JSX.Element {
   const id = useId();
   const [open, setOpen] = useState<boolean>(false);
-  const statusId = typeof status === 'string' ? status : status?.id;
-  const [value, setValue] = useState<string>(statusId || 'to-do');
+  // Status is a TaskStatus object or null/undefined
+  const [value, setValue] = useState<string>(status?.name || 'pending');
 
   const statuses = useAllStatuses();
   const { execute, isExecuting } = useTaskMasterCLI();
 
   useEffect(() => {
-    setValue(statusId || 'to-do');
-  }, [statusId]);
+    setValue(status?.name || 'pending');
+  }, [status?.name]);
 
-  const handleStatusChange = async (statusId: string): Promise<void> => {
+  const handleStatusChange = async (statusName: string): Promise<void> => {
     const previousValue = value;
-    setValue(statusId);
+    setValue(statusName);
     setOpen(false);
 
     if (taskId) {
@@ -45,7 +45,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
         // No mapping needed - use TaskMaster status directly
         const result = await execute({
           command: 'set-status',
-          options: { id: taskId, status: statusId },
+          options: { id: taskId, status: statusName },
         });
 
         if (!result.success) {
@@ -59,7 +59,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps): React.J
     }
   };
 
-  const selectedItem = statuses.find((item) => item.id === value);
+  const selectedItem = statuses.find((item) => item.name.toLowerCase() === value.toLowerCase());
   const statusIcon = useTaskStatusIcon(selectedItem);
   const StatusIcon = selectedItem ? statusIcon : null;
 
@@ -121,12 +121,18 @@ function StatusSelectorItem({ item, value, onSelect }: StatusSelectorItemProps) 
   const StatusIcon = useTaskStatusIcon(item);
 
   return (
-    <CommandItem value={item.id} onSelect={onSelect} className="flex items-center justify-between">
+    <CommandItem
+      value={item.name}
+      onSelect={onSelect}
+      className="flex items-center justify-between"
+    >
       <div className="flex items-center gap-2">
         <StatusIcon />
         {item.name}
       </div>
-      {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+      {value.toLowerCase() === item.name.toLowerCase() && (
+        <CheckIcon size={16} className="ml-auto" />
+      )}
       <span className="text-muted-foreground text-xs">{0}</span>
     </CommandItem>
   );

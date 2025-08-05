@@ -2,6 +2,9 @@
 export { useDataStore, createDataStore } from './dataStore';
 export { useFuzzySearchStore } from './fuzzySearchStore';
 
+// Import useDataStore for internal use in selector hooks
+import { useDataStore } from './dataStore';
+
 // Re-export types
 export type {
   TaskMasterTask,
@@ -20,31 +23,30 @@ export type {
 // Hook-based selectors for commonly used data
 // Note: These are temporary implementations until proper selectors are implemented
 export const useAllLabels = () => {
-  // Return empty array for now to fix TypeScript errors
-  return [];
+  return useDataStore((state) => state.allLabels);
 };
 
 export const useAllStatuses = () => {
-  // Return empty array for now to fix TypeScript errors
-  return [];
+  return useDataStore((state) => state.allStatuses);
 };
 
 export const useAllPriorities = () => {
-  // Return empty array for now to fix TypeScript errors
-  return [];
+  return useDataStore((state) => state.allPriorities);
 };
 
 export const useAllTags = () => {
-  // Return empty array for now to fix TypeScript errors
-  return [];
+  return useDataStore((state) => state.allTagsObjects);
 };
 
 export const useTagCounts = () => {
-  // Return empty object for now to fix TypeScript errors
-  return {};
+  const tasksByTag = useDataStore((state) => state.tasksByTag);
+  const counts: Record<string, number> = {};
+  Object.entries(tasksByTag).forEach(([tagName, tasks]) => {
+    counts[tagName] = tasks.length;
+  });
+  return counts;
 };
 
 export const useCurrentTag = () => {
-  // Return null for now to fix TypeScript errors
-  return null;
+  return useDataStore((state) => state.taskMasterState?.currentTag || null);
 };

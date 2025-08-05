@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import type { TaskMasterTask, SimpleDataState, User, Label, Status, Priority, Tag } from './types';
-import type { Task } from '../types/dataModels';
 import type { TaskMasterDataService } from '../services/taskMasterDataService';
 import { ApiTaskMasterDataService } from '../services/taskMasterDataService';
 
@@ -40,9 +39,16 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
 
       // Precomputed simple lists (for UI rendering or dropdowns)
       allTasks: [],
+      allLabels: [],
       allStatuses: [],
       allPriorities: [],
       allTags: [], // First-level keys from tasks.json (tag names)
+      allTagsObjects: [], // Tag objects for UI components
+
+      // Computed grouped data
+      tasksByTag: {},
+      tasksByStatus: {},
+      tasksByPriority: {},
 
       // -----------------------------
       // Simple loading states
@@ -175,10 +181,54 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
 
           // Precomputed simple lists
           newState.allTasks = taskIds.map((id) => tasksById[id]);
+          const allLabels = newState.managerData?.labels || [];
           const allStatuses = newState.managerData?.statuses || [];
           const allPriorities = newState.managerData?.priorities || [];
+          const allTagsObjects = newState.managerData?.tags || [];
+
+          console.log('[SimpleDataStore] Manager data statuses:', {
+            hasManagerData: !!newState.managerData,
+            statusesLength: newState.managerData?.statuses?.length || 0,
+            statuses: newState.managerData?.statuses,
+          });
+
+          newState.allLabels = allLabels;
           newState.allStatuses = allStatuses;
           newState.allPriorities = allPriorities;
+          newState.allTagsObjects = allTagsObjects;
+
+          // Compute grouped data
+          const tasksByTag: Record<string, TaskMasterTask[]> = {};
+          const tasksByStatus: Record<string, TaskMasterTask[]> = {};
+          const tasksByPriority: Record<string, TaskMasterTask[]> = {};
+
+          // Tasks grouped by tag (using taskMasterTasks structure)
+          if (newState.taskMasterTasks) {
+            Object.entries(newState.taskMasterTasks).forEach(([tagName, tagData]) => {
+              if (tagData.tasks && tagData.tasks.length > 0) {
+                tasksByTag[tagName] = [...tagData.tasks];
+              }
+            });
+          }
+
+          // Tasks grouped by status and priority
+          newState.allTasks.forEach((task) => {
+            // Group by status
+            if (!tasksByStatus[task.status]) {
+              tasksByStatus[task.status] = [];
+            }
+            tasksByStatus[task.status].push(task);
+
+            // Group by priority
+            if (!tasksByPriority[task.priority]) {
+              tasksByPriority[task.priority] = [];
+            }
+            tasksByPriority[task.priority].push(task);
+          });
+
+          newState.tasksByTag = tasksByTag;
+          newState.tasksByStatus = tasksByStatus;
+          newState.tasksByPriority = tasksByPriority;
 
           console.log(
             `[SimpleDataStore] Normalized ${taskIds.length} tasks from ${allTags.length} tags`
@@ -211,9 +261,14 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
             tagIds: [],
             tagsById: {},
             allTasks: [],
+            allLabels: [],
             allStatuses: [],
             allPriorities: [],
             allTags: [],
+            allTagsObjects: [],
+            tasksByTag: {},
+            tasksByStatus: {},
+            tasksByPriority: {},
           });
         }
       },
@@ -236,9 +291,14 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
           tagIds: [],
           tagsById: {},
           allTasks: [],
+          allLabels: [],
           allStatuses: [],
           allPriorities: [],
           allTags: [],
+          allTagsObjects: [],
+          tasksByTag: {},
+          tasksByStatus: {},
+          tasksByPriority: {},
           isInitialized: false,
           isLoading: false,
         });

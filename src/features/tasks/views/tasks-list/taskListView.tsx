@@ -33,11 +33,14 @@ const TaskListView: FC<TaskListViewProps> = ({ groupedTasks, groups, loading, er
   const orderedGroups =
     groups || Object.entries(groupedTasks).map(([key]) => ({ key, label: key }) as GroupItem);
 
+  console.log('TaskListView render:', { orderedGroups, groupedTasks });
+
   return (
     <div className="w-full h-full">
       {orderedGroups.map((group) => {
         const groupKey = group.key;
         const tasks = groupedTasks[groupKey] || [];
+        console.log(`Group ${groupKey}:`, tasks.length, 'tasks');
         if (tasks.length === 0) return null;
 
         // Create a mock tag for backward compatibility with existing GroupTasksList

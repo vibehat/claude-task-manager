@@ -132,9 +132,16 @@ export interface SimpleDataState {
 
   // Precomputed simple lists (for UI rendering or dropdowns)
   allTasks: TaskMasterTask[];
+  allLabels: Label[];
   allStatuses: Status[];
   allPriorities: Priority[];
   allTags: string[]; // First-level keys from tasks.json (tag names)
+  allTagsObjects: Tag[]; // Tag objects for UI components
+
+  // Computed grouped data
+  tasksByTag: Record<string, TaskMasterTask[]>;
+  tasksByStatus: Record<string, TaskMasterTask[]>;
+  tasksByPriority: Record<string, TaskMasterTask[]>;
 
   // -----------------------------
   // Simple loading states

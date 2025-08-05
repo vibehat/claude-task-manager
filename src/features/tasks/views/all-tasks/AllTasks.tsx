@@ -32,26 +32,32 @@ function AllTasks(): React.JSX.Element {
 
   // Create tag groups for display
   const groupTags = useMemo((): GroupItem[] => {
-    if (!tags) return [];
+    const tagGroups: GroupItem[] = [];
 
-    // Include 'no-tag' group if there are tasks without tags
-    const tagGroups: GroupItem[] = [...tags]
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((tag) => ({
-        key: tag.id,
-        label: tag.name,
-      }));
+    // Only include tags that have tasks in groupedTasks
+    Object.keys(groupedTasks).forEach((tagName) => {
+      if (groupedTasks[tagName].length > 0) {
+        if (tagName === 'no-tag') {
+          tagGroups.push({
+            key: 'no-tag',
+            label: 'No Tag',
+          });
+        } else {
+          tagGroups.push({
+            key: tagName,
+            label: tagName,
+          });
+        }
+      }
+    });
 
-    // Add 'no-tag' group if it exists in groupedTasks
-    if (groupedTasks['no-tag'] && groupedTasks['no-tag'].length > 0) {
-      tagGroups.push({
-        key: 'no-tag',
-        label: 'No Tag',
-      });
-    }
-
-    return tagGroups;
-  }, [tags, groupedTasks]);
+    // Sort alphabetically with 'No Tag' at the end
+    return tagGroups.sort((a, b) => {
+      if (a.key === 'no-tag') return 1;
+      if (b.key === 'no-tag') return -1;
+      return a.label.localeCompare(b.label);
+    });
+  }, [groupedTasks]);
 
   // Show loading state while fetching tags OR while store is initializing
   if (tagsLoading || isLoading || !isInitialized) {

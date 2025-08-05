@@ -14,7 +14,7 @@ export function useStatuses() {
         setError(err);
       });
     }
-  }, [isInitialized, initialize]);
+  }, [isInitialized]);
 
   // Debug logging for troubleshooting
   useEffect(() => {

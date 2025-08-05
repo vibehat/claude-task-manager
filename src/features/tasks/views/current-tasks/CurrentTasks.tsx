@@ -42,13 +42,15 @@ function CurrentTasks(): React.JSX.Element {
     currentTag ? { tagIds: [currentTag] } : undefined
   );
 
+  console.log({ groupedTasks, statuses });
+
   // Create status groups with icons
   const statusGroups = useMemo((): GroupItem[] => {
     if (!sortedStatuses) return [];
 
     return sortedStatuses.map((status) => {
       return {
-        key: status.id,
+        key: status.name.toLowerCase(),
         label: status.name,
         icon: getTaskStatusIcon(status),
       };

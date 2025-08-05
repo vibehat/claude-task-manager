@@ -4,7 +4,10 @@ import type { TagExtra } from '../services/types';
 /**
  * Get the color for a tag from TagExtra data
  */
-export function getTagColor(tag: Tag, tagExtra: Record<string, TagExtra>): string {
+export function getTagColor(tag: Tag, tagExtra: Record<string, TagExtra> | null): string {
+  if (!tagExtra) {
+    return '#6b7280'; // Default gray color when no tagExtra provided
+  }
   const extra = tagExtra[tag.id];
   return extra?.color || '#6b7280'; // Default gray color
 }

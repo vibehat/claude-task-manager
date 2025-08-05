@@ -28,7 +28,7 @@ export class ApiTaskMasterDataService implements TaskMasterDataService {
           paths: [
             '.taskmaster/tasks/tasks.json',
             '.taskmaster/state.json',
-            '.taskmaster/task-manager.json',
+            '.taskmaster/manager/manager.json',
           ],
         }),
       });
@@ -40,30 +40,42 @@ export class ApiTaskMasterDataService implements TaskMasterDataService {
 
       const data = await response.json();
 
+      // The API returns { files: [...] } format, convert to path-keyed object
+      const fileMap: Record<string, string> = {};
+      if (data.files && Array.isArray(data.files)) {
+        data.files.forEach((file: any) => {
+          if (file.content && !file.error) {
+            fileMap[file.path] = file.content;
+          } else if (file.error) {
+            result.errors.push(`Failed to load ${file.path}: ${file.error}`);
+          }
+        });
+      }
+
       // Parse tasks.json
-      if (data['.taskmaster/tasks/tasks.json']) {
+      if (fileMap['.taskmaster/tasks/tasks.json']) {
         try {
-          result.taskMasterTasks = JSON.parse(data['.taskmaster/tasks/tasks.json']);
+          result.taskMasterTasks = JSON.parse(fileMap['.taskmaster/tasks/tasks.json']);
         } catch (error) {
           result.errors.push(`Failed to parse tasks.json: ${error}`);
         }
       }
 
       // Parse state.json
-      if (data['.taskmaster/state.json']) {
+      if (fileMap['.taskmaster/state.json']) {
         try {
-          result.taskMasterState = JSON.parse(data['.taskmaster/state.json']);
+          result.taskMasterState = JSON.parse(fileMap['.taskmaster/state.json']);
         } catch (error) {
           result.errors.push(`Failed to parse state.json: ${error}`);
         }
       }
 
-      // Parse task-manager.json
-      if (data['.taskmaster/task-manager.json']) {
+      // Parse manager.json
+      if (fileMap['.taskmaster/manager/manager.json']) {
         try {
-          result.managerData = JSON.parse(data['.taskmaster/task-manager.json']);
+          result.managerData = JSON.parse(fileMap['.taskmaster/manager/manager.json']);
         } catch (error) {
-          result.errors.push(`Failed to parse task-manager.json: ${error}`);
+          result.errors.push(`Failed to parse manager.json: ${error}`);
         }
       }
     } catch (error) {

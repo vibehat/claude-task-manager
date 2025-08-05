@@ -32,30 +32,30 @@ import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
-  priority: TaskPriority | string | null | undefined;
+  priority: string | null | undefined;
   taskId?: string;
 }
 
 export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): React.JSX.Element {
   const id = useId();
   const [open, setOpen] = useState<boolean>(false);
-  const priorityId = typeof priority === 'string' ? priority : priority;
-  const [value, setValue] = useState<string>(priorityId || 'no-priority');
+  // Priority is now always a string or null/undefined
+  const [value, setValue] = useState<string>(priority || 'no-priority');
 
   const updateTask = useDataStore((state) => state.updateTask);
   const priorities = useAllPriorities();
 
   useEffect(() => {
-    setValue(priorityId || 'no-priority');
-  }, [priorityId]);
+    setValue(priority || 'no-priority');
+  }, [priority]);
 
-  const handlePriorityChange = async (priorityId: string): Promise<void> => {
-    setValue(priorityId);
+  const handlePriorityChange = async (priorityName: string): Promise<void> => {
+    setValue(priorityName);
     setOpen(false);
 
     if (taskId) {
       try {
-        await updateTask(taskId, { priority: priorityId });
+        await updateTask(taskId, { priority: priorityName });
       } catch (error) {
         console.error('Failed to update task priority:', error);
       }
@@ -75,7 +75,9 @@ export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): R
             aria-expanded={open}
           >
             {((): React.JSX.Element => {
-              const selectedItem = priorities.find((item) => item.id === value);
+              const selectedItem = priorities.find(
+                (item) => item.name.toLowerCase() === value.toLowerCase()
+              );
               if (selectedItem) {
                 const Icon = getPriorityIcon(getPriorityIconName(selectedItem.name));
                 return <Icon className="text-muted-foreground size-4" />;
@@ -98,7 +100,7 @@ export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): R
                   return (
                     <CommandItem
                       key={item.id}
-                      value={item.id}
+                      value={item.name}
                       onSelect={handlePriorityChange}
                       className="flex items-center justify-between"
                     >
@@ -106,7 +108,9 @@ export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): R
                         <Icon className="text-muted-foreground size-4" />
                         {item.name}
                       </div>
-                      {value === item.id && <CheckIcon size={16} className="ml-auto" />}
+                      {value.toLowerCase() === item.name.toLowerCase() && (
+                        <CheckIcon size={16} className="ml-auto" />
+                      )}
                       <span className="text-muted-foreground text-xs">{0}</span>
                     </CommandItem>
                   );
