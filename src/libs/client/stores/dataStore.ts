@@ -93,16 +93,21 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
             errors: result.errors.length,
           });
 
-          // Normalize TaskMasterTasks
+          // Normalize TaskMasterTasks (deduplicate by ID)
           const taskIds: string[] = [];
           const tasksById: Record<string, TaskMasterTask> = {};
+          const seenTaskIds = new Set<string>();
+
           if (newState.taskMasterTasks) {
             Object.values(newState.taskMasterTasks).forEach((tagData) => {
               if (tagData.tasks) {
                 tagData.tasks.forEach((task) => {
                   const taskId = task.id.toString();
-                  taskIds.push(taskId);
-                  tasksById[taskId] = task;
+                  if (!seenTaskIds.has(taskId)) {
+                    seenTaskIds.add(taskId);
+                    taskIds.push(taskId);
+                    tasksById[taskId] = task;
+                  }
                 });
               }
             });
@@ -202,11 +207,16 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
           const tasksByStatus: Record<string, TaskMasterTask[]> = {};
           const tasksByPriority: Record<string, TaskMasterTask[]> = {};
 
-          // Tasks grouped by tag (using taskMasterTasks structure)
+          // Tasks grouped by tag (using taskMasterTasks structure, deduplicated)
           if (newState.taskMasterTasks) {
             Object.entries(newState.taskMasterTasks).forEach(([tagName, tagData]) => {
               if (tagData.tasks && tagData.tasks.length > 0) {
-                tasksByTag[tagName] = [...tagData.tasks];
+                // Deduplicate tasks by ID within each tag
+                const uniqueTasks = tagData.tasks.filter(
+                  (task, index, arr) =>
+                    arr.findIndex((t) => t.id.toString() === task.id.toString()) === index
+                );
+                tasksByTag[tagName] = uniqueTasks;
               }
             });
           }

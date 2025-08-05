@@ -45,6 +45,9 @@ export function TaskLine({
   // TaskMasterTask doesn't have labelIds - empty arrays for now
   const labels: any[] = [];
   const labelData: any[] = [];
+
+  console.log('TaskLine render:', { taskId: task.id, title: task.title });
+
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>
@@ -66,7 +69,7 @@ export function TaskLine({
           </div>
           <span className="min-w-0 flex items-center justify-start mr-1 ml-1">
             <button
-              className="text-xs sm:text-sm font-medium sm:font-semibold truncate text-left hover:text-white hover:underline transition-all cursor-pointer"
+              className="text-xs sm:text-sm font-medium sm:font-semibold truncate text-left text-foreground hover:text-primary hover:underline transition-all cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();

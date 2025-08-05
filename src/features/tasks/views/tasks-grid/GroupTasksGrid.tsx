@@ -149,7 +149,11 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; tag: Tag }> = ({
   }));
   drop(ref);
 
-  const sortedTasks = useSortTasksByPriority(tasks || []);
+  // Deduplicate tasks by ID first, then sort by priority
+  const uniqueTasks = (tasks || []).filter(
+    (task, index, arr) => arr.findIndex((t) => t.id.toString() === task.id.toString()) === index
+  );
+  const sortedTasks = useSortTasksByPriority(uniqueTasks);
 
   return (
     <div

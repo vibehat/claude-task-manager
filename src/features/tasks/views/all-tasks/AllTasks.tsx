@@ -30,6 +30,8 @@ function AllTasks(): React.JSX.Element {
   // Get filtered and grouped tasks by tag
   const { groupedTasks, isEmpty } = useFilteredTasksByTag();
 
+  console.log('AllTasks - groupedTasks:', groupedTasks);
+
   // Create tag groups for display
   const groupTags = useMemo((): GroupItem[] => {
     const tagGroups: GroupItem[] = [];

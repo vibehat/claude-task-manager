@@ -21,9 +21,12 @@ function GroupTasksList({ tag, tasks, groupIcon }: GroupTasksListProps): React.J
   // TODO: Fix tagExtra property or use alternative approach
   const tagExtra = null;
 
-  // Sort the pre-filtered tasks by priority
-  const sortedTasks = useSortTasksByPriority(tasks);
-  const count = tasks.length;
+  // Deduplicate tasks by ID first, then sort by priority
+  const uniqueTasks = tasks.filter(
+    (task, index, arr) => arr.findIndex((t) => t.id.toString() === task.id.toString()) === index
+  );
+  const sortedTasks = useSortTasksByPriority(uniqueTasks);
+  const count = uniqueTasks.length;
 
   const tagColor = getTagColor(tag, tagExtra);
   const IconComponent = groupIcon || TagIcon;
