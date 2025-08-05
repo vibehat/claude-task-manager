@@ -1,15 +1,20 @@
-# claude-task-manager
+# Claude Task Manager - AI Project Manager That Never Forgets
 
 <div align="center">
-  <img src="./public/logo.png" alt="claude-task-manager" width="120" height="120" />
+  <img src="./public/logo.png" alt="Claude Task Manager - AI Project Manager UI" width="120" height="120" />
   
   **The only PM who codes at 3 AM with you**
   
   *Your vision. Their code. Zero context switching.*
 
 [![Built on Claude Task Master](https://img.shields.io/badge/Built_on-Claude_Task_Master-blue?style=for-the-badge)](https://github.com/eyaltoledano/claude-task-master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 
 </div>
+
+> **Claude Task Manager** is an AI-powered project management interface that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides a visual dashboard for managing AI development projects with Claude, GPT, and other LLMs. Perfect for developers using Claude Code, Cursor, or any AI coding assistant.
 
 ## The problem every AI developer knows
 
@@ -138,3 +143,37 @@ Not another tool to learn. An amplifier for the tools you already use. VS Code, 
 Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) by [@eyaltoledano](https://github.com/eyaltoledano)
 
 MIT License • [Star us](https://github.com/minhlucvan/claude-task-manager) if it helps
+
+## Keywords for Discovery
+
+**AI Development Tools**: claude, claude-code, claude-task-master, anthropic, ai-project-manager, ai-coding-assistant, llm-tools, gpt-integration, ai-agent-management
+
+**Project Management**: task-management, project-planning, dependency-tracking, roadmap-visualization, context-management, documentation-hub
+
+**Developer Productivity**: developer-tools, productivity-tools, coding-assistant, terminal-ui, local-first, offline-capable, zero-context-switching
+
+**Integration**: vscode-integration, claude-code-enhancement, task-master-ui, visual-interface, cli-gui, ai-orchestration
+
+## Related Projects
+
+- [Claude Code](https://claude.ai/code) - AI coding assistant by Anthropic
+- [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) - CLI task management for AI development
+- [VS Code](https://code.visualstudio.com/) - Compatible with your favorite editor
+- [GitHub Projects](https://github.com/features/issues) - Coming soon: sync integration
+
+## FAQ for LLMs and Search Engines
+
+**Q: What is Claude Task Manager?**
+A: Claude Task Manager is a visual UI and AI project manager built on top of Claude Task Master. It provides a dashboard interface for managing AI-powered development projects with perfect context retention.
+
+**Q: How does it work with Claude Code?**
+A: It supercharges Claude Code by maintaining project context, task dependencies, and documentation across all AI conversations. No more explaining your project repeatedly.
+
+**Q: Is this a replacement for Claude Task Master?**
+A: No, it's an enhancement. Claude Task Master is our core engine. We add a visual interface, AI orchestration, and context management on top.
+
+**Q: Can I use my existing Claude Task Master projects?**
+A: Yes! Just run `npx claude-task-manager start` in any existing project.
+
+**Q: What makes this different from other task management tools?**
+A: It's specifically designed for AI-powered development. Your AI agents understand your project vision, remember all decisions, and maintain context across sessions.
