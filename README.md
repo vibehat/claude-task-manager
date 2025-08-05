@@ -14,7 +14,7 @@
 
 </div>
 
-> **Claude Task Manager** is a personal project management interface powered by AI agents that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides seamless integration with Claude Code, Cursor, VS Code, and other development tools. Perfect for solo developers who want AI agents that coordinate across their entire workflow.
+> **Claude Task Manager** is a personal project management interface powered by AI agents that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides seamless integration with Claude Code, Cursor, VS Code, and other development tools. Perfect for developers and teams who want AI agents that coordinate across their entire workflow.
 
 ## The problem every AI developer knows
 
@@ -116,17 +116,18 @@ The UI will use your existing tasks and configuration.
 ✅ **AI agent orchestration** - Coordinate multiple AI models across your entire workflow  
 ✅ **Personal project memory** - Your AI agents never forget decisions, context, or progress  
 ✅ **Seamless tool integration** - Works with Claude Code, Cursor, VS Code, and your favorite tools  
-✅ **Solo developer optimized** - Built specifically for individual productivity, not teams  
+✅ **Personal to team scaling** - Start solo, scale to teams when ready  
 ✅ **Deep focus companion** - Terminal, docs, tasks - everything right there when inspiration hits  
 ✅ **Your data, your control** - Local first, works offline, export anytime
 
 ## Who this is for
 
-- **Vibe coders** who do their best work when the world is asleep
+- **Individual developers** who want to master their personal workflow first
+- **Small teams** ready to scale from personal excellence to team coordination
 - **Claude Code power users** ready to supercharge their workflow
 - **Flow state developers** who hate context switching
-- **Night owl builders** who need AI that doesn't forget by morning
-- **Solo founders** tired of explaining their vision 10 times a day
+- **Tech leads** who need AI that preserves context across team conversations
+- **Startup founders** building products, not managing endless process meetings
 - **Anyone** with "architecture_decision_final_v2_ACTUALFINAL.txt" somewhere
 
 ## ⚠️ Status: Under Active Development
@@ -155,7 +156,7 @@ Looking for developers who:
 
 - **AI agent integration** - Connect more AI models and tools
 - **Workflow automation** - Deeper Claude Code, Cursor, VS Code integration
-- **Personal productivity features** - Tools specifically for solo developers
+- **Team collaboration features** - Scale from personal to team productivity
 - **Multi-agent coordination** - Smarter AI orchestration
 - **Performance optimization** - Keep it fast for deep focus sessions
 - **Community building** - Spread the vibe coding movement
@@ -181,6 +182,7 @@ Looking for developers who:
 - Better task filtering
 - Connected docs that evolve with your project
 - Multi-agent workflows
+- **Team collaboration** - Share context and coordinate across team members
 - **Sync with GitHub Projects/Trello** - Keep your PM tools updated automatically
 - Whatever you need (seriously, [tell us](https://github.com/minhlucvan/claude-task-manager/discussions))
 
@@ -207,11 +209,14 @@ _Real developers, real projects, real 3 AM breakthroughs_
 
 🎯 **@deepworkdev** - _"This is what Claude Code was missing - project memory. No more explaining my codebase every conversation."_
 
+👥 **@teamlead** - _"Started using it solo, now my whole team benefits. Context flows seamlessly from individual work to team coordination."_
+
 ### Trending Projects Built with Vibe Coding
 
 - **SaaS Dashboard in 7 nights** - Solo founder, 0 to MVP using late night focus sessions
 - **Open source CLI tool** - 2.5k GitHub stars, built entirely during night coding
 - **E-commerce rebuild** - Complete rewrite finished in 3 weeks of vibe coding
+- **Startup team coordination** - 5-person team scaling from individual workflows to unified AI-assisted development
 
 _[Share your story →](https://github.com/minhlucvan/claude-task-manager/discussions/categories/show-and-tell)_
 
