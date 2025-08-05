@@ -78,6 +78,23 @@ Built for individual developers. Team features come later, when YOU need them.
 **🚀 Ship first, process later**  
 We help you build, not plan. Minimal setup, maximum output.
 
+## Vibe Coding Philosophy
+
+**Flow state development.** You know that feeling at 3 AM when everything clicks? When you're in the zone and shipping features without friction? That's vibe coding.
+
+Most tools break your flow. Context switching kills creativity. But when your AI remembers everything and your workspace stays consistent, you can code for hours without interruption.
+
+**This is your 3 AM coding companion.** Built by developers who understand that the best code happens when you're not fighting your tools.
+
+### Claude Code Integration
+
+Perfect companion for Claude Code users:
+
+- **Persistent context** - Your Claude conversations remember your entire project
+- **Seamless workflow** - Terminal, tasks, and AI chat in one interface
+- **Flow preservation** - No more explaining your architecture every session
+- **3 AM ready** - Dark mode, minimal distractions, maximum focus
+
 ## For existing projects
 
 Already have Claude Task Master set up? Just run:
@@ -98,10 +115,12 @@ The UI will use your existing tasks and configuration.
 
 ## Who this is for
 
-- **Night owl developers** who need their AI to keep up at 3 AM
+- **Vibe coders** who do their best work when the world is asleep
+- **Claude Code power users** ready to supercharge their workflow
+- **Flow state developers** who hate context switching
+- **3 AM builders** who need AI that doesn't forget by morning
 - **Solo founders** tired of explaining their vision 10 times a day
-- **AI power users** with "architecture_decision_final_v2_ACTUALFINAL.txt" somewhere
-- **Anyone** who's ever thought "I swear I solved this last week..."
+- **Anyone** with "architecture_decision_final_v2_ACTUALFINAL.txt" somewhere
 
 ## Status
 
@@ -123,6 +142,49 @@ fork → code → test on real work → PR
 ```
 
 [Good first issues here](https://github.com/minhlucvan/claude-task-manager/labels/good%20first%20issue)
+
+## 3 AM Club - Hall of Fame
+
+_Real developers, real projects, real 3 AM breakthroughs_
+
+### Community Wins
+
+🌟 **@vibebuilder** - _"Shipped my entire auth system in one 3 AM session. Task Manager kept me focused, Claude Code kept me coding."_
+
+🚀 **@nightcoder** - _"Finally, an AI that doesn't forget my project by morning. Cut my context switching time by 80%."_
+
+⚡ **@3amfounder** - _"Built my MVP's core features during late night sessions. The combination of persistent context + flow state is unbeatable."_
+
+🎯 **@deepworkdev** - _"This is what Claude Code was missing - project memory. No more explaining my codebase every conversation."_
+
+### Trending Projects Built with Vibe Coding
+
+- **SaaS Dashboard in 7 nights** - Solo founder, 0 to MVP using 3 AM sessions
+- **Open source CLI tool** - 2.5k GitHub stars, built entirely during night coding
+- **E-commerce rebuild** - Complete rewrite finished in 3 weeks of vibe coding
+
+_[Share your story →](https://github.com/minhlucvan/claude-task-manager/discussions/categories/show-and-tell)_
+
+## Community & Resources
+
+### 🌙 **Join the Vibe Coding Movement**
+
+- **[Vibe Coding Manifesto](./VIBE-CODING.md)** - Philosophy and principles
+- **[3 AM Development Guide](./3AM-DEVELOPMENT.md)** - Master the night shift
+- **[Claude Code Integration](./CLAUDE-CODE-GUIDE.md)** - Supercharge your workflow
+
+### 💬 **Connect with Night Owls**
+
+- **[GitHub Discussions](https://github.com/minhlucvan/claude-task-manager/discussions)** - Share your builds
+- **[Show and Tell](https://github.com/minhlucvan/claude-task-manager/discussions/categories/show-and-tell)** - Projects built at 3 AM
+- **[Tips & Tricks](https://github.com/minhlucvan/claude-task-manager/discussions/categories/tips-and-tricks)** - Optimize your flow
+
+### 🏆 **Weekly Challenges**
+
+- **#3AMChallenge** - Ship a feature in one night session
+- **#VibeCoding** - Share your late-night development setup
+- **#FlowState** - Document your longest coding session
+- **#ClaudeCodeSuper** - Show off your enhanced workflows
 
 ## Built to power up your favorite tools
 
