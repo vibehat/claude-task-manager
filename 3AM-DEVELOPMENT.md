@@ -2,13 +2,15 @@
 
 > _"The world is quiet. Your mind is clear. Your code is beautiful."_
 
+> **Note**: This guide covers deep focus development during quiet hours. For AI-powered development approaches, see our [Vibe Coding Guide](./VIBE-CODING.md) which covers using LLMs to generate code from natural language prompts.
+
 ## The Magic of 3 AM Coding
 
 **3 AM isn't just a time. It's a state of mind.**
 
 When the world sleeps, developers come alive. No meetings. No interruptions. No context switching. Just pure, unfiltered creativity flowing through your keyboard.
 
-This is your guide to mastering 3 AM development.
+This is your guide to mastering deep focus development during the quiet hours.
 
 ## Why 3 AM?
 
@@ -276,4 +278,4 @@ _Start tonight._
 
 ## Tags
 
-`#3AMDevelopment #VibeCoding #FlowState #NightOwlDevelopers #DeepWork`
+`#3AMDevelopment #DeepFocusFlow #FlowState #NightOwlDevelopers #DeepWork`

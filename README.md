@@ -3,9 +3,9 @@
 <div align="center">
   <img src="./public/logo.png" alt="Claude Task Manager - AI Project Manager UI" width="120" height="120" />
   
-  **The only PM who codes at 3 AM with you**
+  **Personal AI project manager with persistent context**
   
-  *Your vision. Their code. Zero context switching.*
+  *Seamless integration with Claude Code, VS Code, and Cursor*
 
 [![Built on Claude Task Master](https://img.shields.io/badge/Built_on-Claude_Task_Master-blue?style=for-the-badge)](https://github.com/eyaltoledano/claude-task-master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -14,11 +14,11 @@
 
 </div>
 
-> **Claude Task Manager** is a personal project management interface powered by AI agents that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides seamless integration with Claude Code, Cursor, VS Code, and other development tools. Perfect for developers and teams who want AI agents that coordinate across their entire workflow.
+> **Claude Task Manager** is a personal project management interface powered by AI agents that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides seamless integration with development tools like Claude Code, Cursor, and VS Code. Perfect for developers and teams who want AI agents that coordinate across their entire workflow.
 
-## The problem every AI developer knows
+## The Problem
 
-It's 9 AM. You open Claude.
+It's 9 AM. You open your AI coding assistant.
 
 _"So I'm building a..."_
 
@@ -26,11 +26,11 @@ _"So I'm building a..."_
 
 That database decision from last week? Lost in tab #7. The refactoring plan? Gone.
 
-Every conversation starts from zero.
+Every AI conversation starts from zero.
 
-## What we built
+## The Solution
 
-**Your AI project manager that never forgets**
+**An AI project manager that never forgets**
 
 <!-- <img src="./public/screenshot-dashboard.png" alt="Dashboard showing tasks, terminal, and docs side by side" /> -->
 
@@ -70,27 +70,27 @@ pnpm install && pnpm dev
 ## What makes this different
 
 **⚡ Minimal setup, maximum results**  
-One command gets you coding. No complex configurations, no learning curves, no BS. From `npx claude-task-manager init` to shipping features in under 2 minutes.
+One command gets you started. From `npx claude-task-manager init` to shipping features in under 2 minutes.
 
 **🎯 Personal productivity → Team collaboration**  
-Master your own workflow first. When you're ready to scale, seamlessly invite your team. Personal excellence drives team success.
+Master your own workflow first, then scale to team coordination. Excellence starts with individual mastery.
 
 **🏠 Local first, integration ready**  
-Your data stays on your machine. Your workflow stays fast. Connect to cloud tools when it makes sense, not because you have to.
+Your data stays on your machine. Connect to cloud tools when it makes sense, not because you have to.
 
 **🚀 Ship products, not processes**  
-You're the PM giving vision and requirements. AI agents review, implement, and ship. Focus on what matters: building things people want, not managing endless meetings about building things.
+Focus on building things people want. Let AI agents handle implementation details while you drive the vision.
 
 **💡 Smart by default, simple by design**  
-Advanced AI orchestration that feels effortless. Multiple agents coordinate behind the scenes while you stay in flow. Intelligence without complexity.
+Advanced orchestration that feels effortless. Multiple agents coordinate behind the scenes while you stay in flow.
 
-## Vibe Coding Philosophy
+## AI-Powered Development Philosophy
 
-**Flow state development.** You know that feeling when everything clicks? Whether it's 3 AM, 6 AM, or your peak focus time - when you're in the zone and shipping features without friction? That's vibe coding.
+**Seamless AI collaboration.** This tool embraces both traditional flow state development and modern vibe coding approaches. Whether you're doing deep focus coding during quiet hours or using AI to generate code from natural language prompts, we support your workflow.
 
-Most tools break your flow. Context switching kills creativity. But when your AI remembers everything and your workspace stays consistent, you can code for hours without interruption.
+Most tools break your flow. Context switching kills creativity. But when your AI remembers everything, generates code from your descriptions, and your workspace stays consistent, you can build faster without interruption.
 
-**This is your deep focus coding companion.** Built by developers who understand that the best code happens when you're not fighting your tools.
+**This is your AI-enhanced development companion.** Built by developers who understand that the best code happens when you're collaborating effectively with AI tools.
 
 ### Claude Code Integration
 
@@ -122,10 +122,10 @@ The UI will use your existing tasks and configuration.
 
 ## Who this is for
 
-- **Individual developers** who want to master their personal workflow first
+- **Individual developers** who want to master AI-assisted workflows
 - **Small teams** ready to scale from personal excellence to team coordination
 - **Claude Code power users** ready to supercharge their workflow
-- **Flow state developers** who hate context switching
+- **AI-powered developers** who want seamless LLM integration
 - **Tech leads** who need AI that preserves context across team conversations
 - **Startup founders** building products, not managing endless process meetings
 - **Anyone** with "architecture_decision_final_v2_ACTUALFINAL.txt" somewhere
@@ -147,9 +147,9 @@ The UI will use your existing tasks and configuration.
 
 Looking for developers who:
 
-- 🌙 **Understand vibe coding** - You've shipped features during deep focus sessions and loved it
+- 🤖 **Understand AI-powered development** - You use LLMs to generate code and love the productivity boost
 - 🎯 **Care about flow state** - You know the pain of context switching
-- 🤖 **Use AI daily** - Claude Code, Cursor, or similar tools are part of your workflow
+- 🔧 **Use AI daily** - Claude Code, Cursor, or similar tools are part of your workflow
 - 🛠️ **Want to build the future** - Help create the tools we all wish existed
 
 ### What we need help with:
@@ -201,31 +201,31 @@ _Real developers, real projects, real 3 AM breakthroughs_
 
 ### Community Wins
 
-🌟 **@vibebuilder** - _"Shipped my entire auth system in one deep focus session. Task Manager kept me focused, Claude Code kept me coding."_
+🌟 **@aibuilder** - _"Shipped my entire auth system using AI-generated code. Task Manager maintained context, Claude Code generated the implementation."_
 
-🚀 **@nightcoder** - _"Finally, an AI that doesn't forget my project by morning. Cut my context switching time by 80%."_
+🚀 **@contextcoder** - _"Finally, an AI that doesn't forget my project by morning. Cut my context switching time by 80%."_
 
-⚡ **@3amfounder** - _"Built my MVP's core features during late night sessions. The combination of persistent context + flow state is unbeatable."_
+⚡ **@aifoundner** - _"Built my MVP's core features using natural language prompts. The combination of persistent context + AI generation is unbeatable."_
 
 🎯 **@deepworkdev** - _"This is what Claude Code was missing - project memory. No more explaining my codebase every conversation."_
 
 👥 **@teamlead** - _"Started using it solo, now my whole team benefits. Context flows seamlessly from individual work to team coordination."_
 
-### Trending Projects Built with Vibe Coding
+### Trending Projects Built with AI-Enhanced Development
 
-- **SaaS Dashboard in 7 nights** - Solo founder, 0 to MVP using late night focus sessions
-- **Open source CLI tool** - 2.5k GitHub stars, built entirely during night coding
-- **E-commerce rebuild** - Complete rewrite finished in 3 weeks of vibe coding
+- **SaaS Dashboard in 7 nights** - Solo founder, 0 to MVP using AI code generation and deep focus sessions
+- **Open source CLI tool** - 2.5k GitHub stars, built using AI-assisted development
+- **E-commerce rebuild** - Complete rewrite finished in 3 weeks using vibe coding techniques
 - **Startup team coordination** - 5-person team scaling from individual workflows to unified AI-assisted development
 
 _[Share your story →](https://github.com/minhlucvan/claude-task-manager/discussions/categories/show-and-tell)_
 
 ## Community & Resources
 
-### 🌙 **Join the Vibe Coding Movement**
+### 🌙 **Join the AI-Enhanced Development Movement**
 
-- **[Vibe Coding Manifesto](./VIBE-CODING.md)** - Philosophy and principles
-- **[3 AM Development Guide](./3AM-DEVELOPMENT.md)** - Master the night shift
+- **[Vibe Coding Guide](./VIBE-CODING.md)** - AI-powered development with LLMs
+- **[3 AM Development Guide](./3AM-DEVELOPMENT.md)** - Master deep focus coding
 - **[Claude Code Integration](./CLAUDE-CODE-GUIDE.md)** - Supercharge your workflow
 
 ### 💬 **Connect with Night Owls**
@@ -237,7 +237,7 @@ _[Share your story →](https://github.com/minhlucvan/claude-task-manager/discus
 ### 🏆 **Weekly Challenges**
 
 - **#DeepFocusChallenge** - Ship a feature in one focused session
-- **#VibeCoding** - Share your late-night development setup
+- **#AIPoweredDev** - Share your AI-assisted development wins
 - **#FlowState** - Document your longest coding session
 - **#ClaudeCodeSuper** - Show off your enhanced workflows
 
@@ -261,17 +261,9 @@ Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master
 
 MIT License • [Star us](https://github.com/minhlucvan/claude-task-manager) if it helps
 
-## Keywords for Discovery
+## Technical Keywords
 
-**Personal Project Management**: personal-project-manager, ai-personal-assistant, solo-developer-tools, individual-productivity, personal-ai-workflow
-
-**AI Agents & Orchestration**: ai-agents, ai-agent-orchestration, multi-agent-workflow, llm-orchestration, ai-agent-coordination, ai-agent-management
-
-**Tool Integration**: integration, workflow-integration, tool-integration, ai-integration, vscode-integration, cursor-integration, ide-integration, claude-code-enhancement
-
-**AI Development**: claude, claude-code, claude-task-master, anthropic, ai-project-manager, ai-coding-assistant, llm-tools, gpt-integration
-
-**Developer Productivity**: developer-tools, productivity-tools, coding-assistant, terminal-ui, local-first, offline-capable, zero-context-switching, deep-work, distraction-free
+**For Search Engines & AI Models**: This is a personal project manager with AI agent orchestration for developers. It integrates with Claude Code, VS Code, Cursor and other development tools. Built for individual productivity and team collaboration with context-aware AI assistance. Features include task management, workflow integration, and local-first architecture.
 
 ## Related Projects
 
@@ -280,19 +272,16 @@ MIT License • [Star us](https://github.com/minhlucvan/claude-task-manager) if 
 - [VS Code](https://code.visualstudio.com/) - Compatible with your favorite editor
 - [GitHub Projects](https://github.com/features/issues) - Coming soon: sync integration
 
-## FAQ for LLMs and Search Engines
+## Frequently Asked Questions
 
-**Q: What is Claude Task Manager?**
-A: Claude Task Manager is a visual UI and AI project manager built on top of Claude Task Master. It provides a dashboard interface for managing AI-powered development projects with perfect context retention.
+**What is Claude Task Manager?**  
+A visual project manager built on Claude Task Master that provides persistent context for AI-powered development workflows.
 
-**Q: How does it work with Claude Code?**
-A: It supercharges Claude Code by maintaining project context, task dependencies, and documentation across all AI conversations. No more explaining your project repeatedly.
+**How does it integrate with Claude Code?**  
+It maintains project context, dependencies, and documentation across conversations, eliminating the need to re-explain your project setup.
 
-**Q: Is this a replacement for Claude Task Master?**
-A: No, it's an enhancement. Claude Task Master is our core engine. We add a visual interface, AI orchestration, and context management on top.
+**Can I use existing Claude Task Master projects?**  
+Yes! Run `npx claude-task-manager start` in any existing project directory.
 
-**Q: Can I use my existing Claude Task Master projects?**
-A: Yes! Just run `npx claude-task-manager start` in any existing project.
-
-**Q: What makes this different from other task management tools?**
-A: It's specifically designed for AI-powered development. Your AI agents understand your project vision, remember all decisions, and maintain context across sessions.
+**What makes this different from other project management tools?**  
+Purpose-built for AI development workflows with context preservation, agent orchestration, and seamless tool integration.
