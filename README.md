@@ -1,375 +1,270 @@
 # claude-task-manager
 
 <div align="center">
-  <img src="public/images/icon.svg" alt="claude-task-manager" width="120" height="120" />
+  <img src="./public/logo.png" alt="claude-task-manager" width="120" height="120" />
   
-  **A Professional Web Interface for Claude Task Master**
+  **A web interface for Claude Task Master**
   
-  *Transform your AI-powered task management with a modern, comprehensive UI inspired by Linear's design philosophy*
+  *Finally, a way to manage AI development that doesn't make you feel like you're juggling 20 browser tabs*
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com/)
+[![Development Status](https://img.shields.io/badge/Status-Active_Development-green?style=for-the-badge)](https://github.com/minhlucvan/claude-task-manager)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=for-the-badge)](https://github.com/minhlucvan/claude-task-manager/blob/master/CONTRIBUTING.md)
+[![Built on Claude Task Master](https://img.shields.io/badge/Built_on-Claude_Task_Master-blue?style=for-the-badge)](https://github.com/eyaltoledano/claude-task-master)
 
 </div>
 
-## 🎯 Overview
+## 🤔 You know the drill...
 
-claude-task-manager is a comprehensive web interface that brings all the power of [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) into a beautiful, intuitive dashboard. Built with modern web technologies and inspired by Linear's clean design patterns, this interface makes AI-powered task management accessible and efficient.
+You're deep in a coding session with Claude. Things are going great. Then you close the chat, grab some coffee, and when you come back... what were you working on again?
 
-### ✨ Key Features
+Or maybe you're switching between VS Code, three different Claude chats, your notes app, and trying to remember which AI conversation had that architecture decision you made two days ago.
 
-- **🎨 Modern UI/UX**: Clean, responsive interface inspired by Linear's design philosophy
-- **🤖 Complete Claude Task Master Integration**: Full coverage of all CLI functionality
-- **📊 Visual Task Management**: Interactive dashboards, kanban boards, and tag views
-- **🔄 Real-time Updates**: Live synchronization with your task master data
-- **🎭 Multi-Model AI Support**: Configure and manage multiple AI providers seamlessly
-- **💻 Integrated Terminal**: Built-in terminal for direct CLI access within the interface
-- **📱 Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
-- **🌙 Dark/Light Mode**: Complete theme support with system preferences detection
-- **⚡ Performance Optimized**: Built with Next.js 15 and modern optimization techniques
+Yeah, we've all been there.
 
-## 🚀 Getting Started
+## 💡 What if there was a better way?
 
-### Prerequisites
+This is a web interface built on top of [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) - that brilliant CLI tool that already solved the "what should I work on next?" problem for thousands of developers.
 
-- **Node.js** 18.17 or later
-- **pnpm** (recommended) or npm
-- **Claude Task Master** installed and configured
-- At least one AI provider API key (Claude, OpenAI, Gemini, etc.)
+Claude Task Master figured out how to turn your messy ideas into structured, actionable development plans. This interface just makes it easier to use without living in the terminal.
 
-### Installation
+## 🛠️ How it actually works
 
-1. **Clone the repository**
+**Claude Task Master** (the CLI tool) already does the heavy lifting:
 
-   ```bash
-   git clone https://github.com/minhlucvan/claude-task-manager.git
-   cd claude-task-manager
-   ```
+- Takes your requirements and breaks them into tasks
+- Manages dependencies between tasks
+- Keeps track of what you're working on
+- Integrates with multiple AI models
+- Maintains project context across sessions
 
-2. **Install dependencies**
+**This interface** just gives you a visual way to:
 
-   ```bash
-   pnpm install
-   # or
-   npm install
-   ```
+- See your tasks and progress at a glance
+- Upload and parse your PRDs without command line hassles
+- Switch between different AI models for different types of work
+- Keep your development context organized
+- Work with tasks without memorizing CLI commands
 
-3. **Configure your environment**
+Think of it as putting a nice UI on top of a tool that already works really well.
 
-   ```bash
-   cp .env.example .env.local
-   ```
+## 📝 The typical workflow
 
-   Edit `.env.local` with your configuration:
+### 1. **Write down what you're building**
 
-   ```env
-   # Task Master Integration
-   TASK_MASTER_API_URL=http://localhost:3001
+Instead of jumping straight into code, start with a Product Requirements Document. Just a text file explaining what you want to build and why. Nothing fancy.
 
-   # AI Provider Keys (at least one required)
-   ANTHROPIC_API_KEY=your_claude_key_here
-   OPENAI_API_KEY=your_openai_key_here
-   GOOGLE_API_KEY=your_gemini_key_here
-   PERPLEXITY_API_KEY=your_perplexity_key_here
-   ```
+### 2. **Let Claude Task Master break it down**
 
-4. **Start the development server**
+Upload your PRD and the system generates actual tasks with dependencies. Not vague "build user auth" tasks, but specific, implementable steps that make sense.
 
-   ```bash
-   pnpm dev
-   # or
-   npm run dev
-   ```
+### 3. **Pick a task and get to work**
 
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+The system tells you what to work on next based on dependencies and priorities. No more staring at your code wondering where to start.
 
-## 🏗️ Architecture
+### 4. **Keep context as you go**
 
-### Technology Stack
+Your progress, architectural decisions, and AI conversations all stay connected to your tasks. When you come back tomorrow, you'll remember what you were doing.
 
-- **Framework**: Next.js 15.2.4 with App Router
-- **Language**: TypeScript for type safety
-- **Styling**: Tailwind CSS 4 with custom design system
-- **Components**: Radix UI primitives with shadcn/ui
-- **State Management**: Zustand for lightweight state management
-- **Forms**: React Hook Form with Zod validation
-- **Icons**: Lucide React and Remix Icons
-- **Animation**: Motion (Framer Motion) for smooth interactions
-- **Terminal**: xterm.js for integrated terminal functionality
+## 🎯 What you get
 
-### Project Structure
+### **Project Planning That Actually Works**
 
-```
-claude-task-manager/
-├── src/                    # All source code
-│   ├── app/               # Next.js 15 App Router
-│   │   ├── [orgId]/      # Organization-scoped pages
-│   │   ├── indie/        # Individual mode pages
-│   │   │   ├── dashboard/ # Dashboard interface
-│   │   │   ├── tasks/     # Task management
-│   │   │   ├── terminal/  # Integrated terminal
-│   │   │   └── settings/  # Configuration
-│   │   ├── api/          # API endpoints
-│   │   └── globals.css   # Global styles
-│   ├── components/        # React components
-│   │   ├── ui/           # Base UI components (shadcn/ui)
-│   │   ├── layout/       # Layout and navigation
-│   │   │   ├── headers/  # Page headers with context
-│   │   │   └── sidebar/  # Navigation and quick actions
-│   │   └── icons/        # Icon components
-│   ├── features/          # Feature-based modules
-│   │   ├── issues/       # Issue/task management
-│   │   ├── tags/        # Tag management
-│   │   ├── teams/        # Team management
-│   │   ├── members/      # Member management
-│   │   └── terminal/     # Terminal feature
-│   ├── hooks/            # Custom React hooks
-│   ├── libs/             # Shared utilities and services
-│   ├── store/            # Zustand state management
-│   ├── mock-data/        # Development data
-│   └── styles/           # Additional styles
-├── public/                # Static assets
-├── scripts/               # Build and utility scripts
-└── docs/                  # Documentation
-```
+- Upload a PRD, get back a structured roadmap with real tasks
+- See which tasks depend on others so you don't build things in the wrong order
+- Track progress without losing sight of why you're building something
 
-## 🎛️ Core Features
+### **AI Integration That Makes Sense**
 
-### 📋 Task Management Interface
+- Use different AI models for different types of work (Claude for architecture, GPT for quick fixes, etc.)
+- All your AI conversations stay connected to the tasks they relate to
+- Built-in research tools when you need to figure out how to implement something
 
-- **Interactive Task Lists**: Drag-and-drop task organization
-- **Kanban Boards**: Visual workflow management with customizable columns
-- **Task Details**: Rich task editing with AI-enhanced descriptions
-- **Priority & Status Management**: Visual indicators and quick actions
-- **Advanced Filtering**: Search, sort, and filter by multiple criteria
-- **Bulk Operations**: Multi-select actions for efficient task management
+### **Development That Stays Organized**
 
-### 🤖 AI Integration Dashboard
+- Visual dashboard showing what's done, what's next, what's blocked
+- Terminal access when you need to run Claude Task Master commands directly
+- Everything syncs in real-time, so you're never looking at stale information
 
-- **Model Configuration**: Visual setup for multiple AI providers
-- **Real-time Model Status**: Monitor API connectivity and usage
-- **Research Tools**: Built-in research interface with context awareness
-- **PRD Parser**: Upload and parse Product Requirements Documents
-- **Task Generation**: AI-powered task creation from descriptions
-- **Smart Suggestions**: Context-aware task recommendations
+### **No Lock-in, No Surprises**
 
-### 💻 Integrated Terminal
+- Works with whatever editor you already use
+- Your data stays in standard formats you can export anytime
+- Built on Claude Task Master, so you get all the CLI functionality too
 
-- **Full CLI Access**: Direct access to Claude Task Master CLI within the interface
-- **Command History**: Persistent command history with search functionality
-- **Multiple Sessions**: Support for multiple terminal sessions
-- **Context Awareness**: Terminal aware of current tag and task context
-- **Visual Output**: Enhanced output formatting for better readability
+## 🚀 Want to try it?
 
-### ⚙️ Configuration Management
+### If you're building solo
 
-- **AI Provider Setup**: Streamlined API key management and model selection
-- **Project Settings**: Customize workflows, templates, and automation rules
-- **User Preferences**: Personal dashboard customization and theme selection
-- **Integration Settings**: Connect with external tools and services
-- **Backup & Export**: Data export and backup configuration
-
-## 🔧 Claude Task Master Integration
-
-This UI provides comprehensive coverage of all Claude Task Master CLI functionality:
-
-### Core Commands Coverage
-
-| CLI Command                      | UI Feature               | Description                             |
-| -------------------------------- | ------------------------ | --------------------------------------- |
-| `task-master init`               | **Tag Setup Wizard**     | Interactive tag initialization          |
-| `task-master parse-prd`          | **PRD Upload Interface** | Drag-and-drop PRD parsing with preview  |
-| `task-master list`               | **Task Dashboard**       | Comprehensive task listing with filters |
-| `task-master next`               | **Next Task Widget**     | Priority-based task recommendations     |
-| `task-master show <id>`          | **Task Detail View**     | Rich task information with editing      |
-| `task-master add-task`           | **Task Creation Modal**  | AI-enhanced task creation interface     |
-| `task-master expand`             | **Task Breakdown Tool**  | Interactive task subdivision            |
-| `task-master update-task`        | **Inline Task Editing**  | Real-time task updates                  |
-| `task-master research`           | **Research Panel**       | Built-in research tools with context    |
-| `task-master models`             | **Model Configuration**  | Visual AI provider management           |
-| `task-master analyze-complexity` | **Complexity Dashboard** | Visual complexity analysis and reports  |
-
-### Advanced Features
-
-- **Dependency Visualization**: Interactive dependency graphs and management
-- **Progress Tracking**: Visual progress indicators and milestone tracking
-- **Template Management**: Create and manage task and tag templates
-- **Terminal Integration**: Direct CLI access with enhanced UI integration
-- **Real-time Sync**: Live updates between UI and CLI operations
-- **API Integration**: RESTful API for external integrations
-
-## 🎨 Design System
-
-### Visual Identity
-
-- **Typography**: Inter font family with carefully chosen weights and sizes
-- **Color Palette**: Sophisticated color system with dark/light mode support
-- **Spacing**: Consistent 8px grid system for perfect alignment
-- **Elevation**: Subtle shadows and borders for depth perception
-- **Animation**: Smooth, purposeful animations that enhance user experience
-
-### Component Library
-
-Built on top of Radix UI primitives with custom styling:
-
-- **Forms**: Comprehensive form controls with validation
-- **Data Display**: Tables, cards, and list components
-- **Navigation**: Sidebars, breadcrumbs, and tab systems
-- **Feedback**: Alerts, toasts, and loading states
-- **Overlays**: Modals, popovers, and tooltips
-- **Input Controls**: Advanced selectors, date pickers, and editors
-
-## 📱 Responsive Design
-
-- **Mobile-First**: Optimized for mobile devices with progressive enhancement
-- **Tablet Support**: Dedicated layouts for tablet viewing and interaction
-- **Desktop Experience**: Full-featured desktop interface with keyboard shortcuts
-- **Accessibility**: WCAG 2.1 compliant with screen reader support
-- **Performance**: Optimized loading and interaction performance across devices
-
-## 🔒 Security & Privacy
-
-- **API Key Management**: Secure, encrypted storage of sensitive credentials
-- **Data Protection**: Local-first approach with optional cloud synchronization
-- **Access Control**: Role-based permissions and team access management
-- **Audit Logging**: Comprehensive activity logging for security monitoring
-- **Privacy Controls**: Granular privacy settings and data retention policies
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Connect your repository**
-
-   - Import your GitHub repository to Vercel
-   - Configure environment variables in the Vercel dashboard
-
-2. **Deploy**
-   ```bash
-   vercel --prod
-   ```
-
-### Self-Hosted
-
-1. **Build the application**
-
-   ```bash
-   pnpm build
-   ```
-
-2. **Start the production server**
-   ```bash
-   pnpm start
-   ```
-
-### Docker Deployment
-
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
-```
-
-## 🛠️ Development
-
-### Scripts
+You're probably juggling too many tabs and losing track of what you were working on. This might help.
 
 ```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm lint         # Run ESLint
-pnpm format       # Format code with Prettier
+git clone https://github.com/minhlucvan/claude-task-manager.git
+cd claude-task-manager
+pnpm install && pnpm dev
 ```
 
-### Contributing
+### If you're managing a technical team
 
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes**: Follow the established patterns and conventions
-4. **Test thoroughly**: Ensure all existing functionality continues to work
-5. **Commit your changes**: `git commit -m 'Add amazing feature'`
-6. **Push to the branch**: `git push origin feature/amazing-feature`
-7. **Open a Pull Request**: Describe your changes and their benefits
+Maybe you're tired of "what should we build next?" meetings and want better visibility into what everyone's actually working on.
 
-### Code Standards
+### If you're already using Claude Task Master
 
-- **TypeScript**: Strict type checking enabled
-- **ESLint**: Enforced code quality rules
-- **Prettier**: Consistent code formatting
-- **Conventional Commits**: Standardized commit messages
-- **Component Testing**: Jest and React Testing Library
+You know it works great, but maybe you'd prefer clicking around a UI instead of remembering CLI commands.
 
-## 📚 Documentation
+### Quick setup
 
-- **[User Guide](docs/USER_GUIDE.md)**: Complete user documentation
-- **[API Reference](docs/API.md)**: Integration API documentation
-- **[Development Guide](docs/DEVELOPMENT.md)**: Contributor guidelines
-- **[Deployment Guide](docs/DEPLOYMENT.md)**: Production deployment instructions
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)**: Common issues and solutions
+```bash
+# First, get Claude Task Master set up
+npm install -g claude-task-master
+task-master init
 
-## 🤝 Community & Support
+# Then run this interface
+git clone https://github.com/minhlucvan/claude-task-manager.git
+cd claude-task-manager
+cp .env.example .env.local # Add your AI API keys here
+pnpm install && pnpm dev
+```
 
-- **GitHub Issues**: [Report bugs and request features](https://github.com/minhlucvan/claude-task-manager/issues)
-- **Discussions**: [Join community discussions](https://github.com/minhlucvan/claude-task-manager/discussions)
-- **Discord**: [Join our Discord server](https://discord.gg/your-server)
-- **Documentation**: [Full documentation site](https://claude-task-manager.vercel.app/docs)
+Open `localhost:3000` and see if it makes sense for your workflow.
 
-## 📊 Roadmap
+## 💭 Why this matters
 
-### Phase 1: Core Interface ✅
+Look, we've all been there. You're using AI for development and it's great until you realize:
 
-- [x] Basic task management interface
-- [x] Claude Task Master CLI integration
-- [x] Responsive design implementation
-- [x] AI model configuration UI
-- [x] Integrated terminal functionality
+- You're constantly asking "what should I work on next?" instead of having a plan
+- You lose context every time you close a chat window
+- You're switching between 5 different AI conversations trying to remember what you decided
+- Your project feels scattered because there's no connecting thread between tasks
 
-### Phase 2: Enhanced Features 🚧
+**Claude Task Master already solved this problem.** It's a proven system that thousands of developers use to:
 
-- [ ] Advanced terminal features with command autocomplete
-- [ ] Task dependency visualization
-- [ ] Real-time collaboration features
-- [ ] Enhanced tag templates
+- Turn messy requirements into structured development plans
+- Keep track of what depends on what
+- Maintain context across long-term projects
+- Work systematically instead of randomly
 
-### Phase 3: AI Enhancements 📋
+This interface just makes it easier to use if you prefer clicking buttons to typing commands.
 
-- [ ] AI-powered task suggestions
-- [ ] Natural language task creation
-- [ ] Intelligent tag insights
-- [ ] Automated task breakdown
+The core insight is simple: **start with requirements, not code.** Write down what you're building and why, then let AI help you figure out the how. It's the difference between strategic development and just... fixing whatever seems broken today.
 
-### Phase 4: Advanced Integration 🔮
+## 🛠️ Who's using this?
 
-- [ ] External tool integrations
-- [ ] Custom workflow automation
-- [ ] Advanced reporting and analytics
-- [ ] Plugin system for extensibility
+### Solo developers building their own products
+
+_"I was spending half my morning just figuring out what to work on. Now I actually have a roadmap instead of just a pile of random tasks."_
+
+### Small technical teams
+
+_"We stopped having 'what should we build next?' meetings. Everyone can see what's next and how it connects to everything else."_
+
+### People already using Claude Task Master
+
+_"I love the CLI but sometimes I just want to see everything laid out visually. This scratches that itch perfectly."_
+
+The common thread? People who want to work systematically with AI instead of just bouncing around between random conversations.
+
+## 🔧 Development status
+
+This is pretty early stage stuff. The core functionality works (it's built on Claude Task Master, which definitely works), but we're still figuring out the best ways to present everything visually.
+
+**What that means:**
+
+- Things will change frequently as we learn what actually helps people
+- Some features might break or get redesigned based on feedback
+- Good time to influence how this develops if you have opinions about it
+
+If you're okay with that, come help us figure out what this should become.
+
+### 🤝 Ways to help
+
+**Use it and tell us what's confusing.** The biggest help right now is just trying it out and letting us know what doesn't make sense or could work better.
+
+**If you code:** Look at the GitHub issues. There are usually some good starter tasks marked.
+
+**If you don't code:** Your perspective on what's intuitive vs confusing is really valuable. Most of us building this are pretty deep in the CLI world.
+
+**If you're already using Claude Task Master:** You probably have opinions about what a UI for it should look like. Those opinions are exactly what we need to hear.
+
+## 🗺️ What's coming
+
+### ✅ **What works now**
+
+- Basic task management with visual interface for Claude Task Master
+- PRD upload and task generation
+- Multiple AI model support
+- Progress tracking and dependency visualization
+
+### 🚧 **Currently working on**
+
+- Better ways to organize and filter tasks
+- Documentation that stays connected to your tasks
+- Managing multiple AI agents for different types of work
+- Team collaboration features for when you're not working alone
+
+### 🔮 **Ideas for later**
+
+- Smarter suggestions based on your coding patterns
+- Natural language interface for creating tasks
+- Integration with more development tools
+- Analytics to help you understand your development patterns
+
+**Got different ideas?** [Let us know what you think](https://github.com/minhlucvan/claude-task-manager/discussions) - the roadmap changes based on what people actually want to use.
+
+### 🤝 Contributing
+
+Want to help? Cool.
+
+**Quick start:**
+
+1. Fork the repo
+2. Make your changes
+3. Test them with actual development work (not just toy examples)
+4. Open a PR and explain what problem you solved
+
+**Good first contributions:**
+
+- Try the tool and report what's confusing
+- Fix UI bugs or make things more intuitive
+- Add support for more AI models
+- Improve the documentation
+
+Look for [`good first issue`](https://github.com/minhlucvan/claude-task-manager/labels/good%20first%20issue) tags if you want something specific to work on.
+
+## 💬 Community
+
+**Places to hang out:**
+
+- **[GitHub Issues](https://github.com/minhlucvan/claude-task-manager/issues)** - Bug reports, feature requests, general discussion
+- **[GitHub Discussions](https://github.com/minhlucvan/claude-task-manager/discussions)** - Broader conversations about AI development workflows
+- **[Discord](https://discord.gg/your-server)** - Real-time chat if that's your thing
+
+**What people talk about:**
+
+- How they're using Claude Task Master + this interface
+- What's confusing or could work better
+- Ideas for new features
+- General AI development workflow stuff
+
+Come by if you want to chat about any of that.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-## 🙏 Acknowledgments
+## 🙏 Credits
 
-- **[Claude Task Master](https://github.com/eyaltoledano/claude-task-master)**: The powerful CLI tool that inspired this interface
-- **[Circle](https://github.com/ln-dev7/circle)**: Design inspiration and component patterns
-- **[Linear](https://linear.app)**: UI/UX design philosophy and inspiration
-- **[shadcn/ui](https://ui.shadcn.com/)**: Beautiful, accessible component library
-- **[Radix UI](https://www.radix-ui.com/)**: Primitive components foundation
+- **[Claude Task Master](https://github.com/eyaltoledano/claude-task-master)** - The brilliant CLI tool that this interface is built on
+- **[shadcn/ui](https://ui.shadcn.com/)** - UI components
+- **[Radix UI](https://www.radix-ui.com/)** - Primitive components
 
 ---
 
 <div align="center">
-  <p>Built with ❤️ for the AI-powered development community</p>
+  <p>Built by developers who got tired of losing track of their AI conversations.</p>
   
-  **[⭐ Star this project](https://github.com/minhlucvan/claude-task-manager)** if you find it useful!
+  <p>
+    <a href="https://github.com/minhlucvan/claude-task-manager">⭐ Star</a> • 
+    <a href="https://github.com/minhlucvan/claude-task-manager/fork">🍴 Fork</a> • 
+    <a href="https://github.com/minhlucvan/claude-task-manager/discussions">💬 Discuss</a>
+  </p>
 </div>
