@@ -56,9 +56,9 @@ export default function WorkspaceDashboardPage(): React.JSX.Element {
           </div>
           <div className="flex gap-2">
             <Button asChild>
-              <Link href="/workspace/tasks">
+              <Link href="/workspace/to-do">
                 <CircleIcon className="mr-2 h-4 w-4" />
-                View All Tasks
+                View To Do
               </Link>
             </Button>
             <Button variant="outline">
@@ -164,19 +164,21 @@ export default function WorkspaceDashboardPage(): React.JSX.Element {
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start" asChild>
-                <Link href="/workspace/tasks">
+                <Link href="/workspace/working-on">
                   <CircleIcon className="mr-2 h-4 w-4" />
-                  View All Tasks
+                  Working On
                 </Link>
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <PlusIcon className="mr-2 h-4 w-4" />
-                Create New Task
+              <Button variant="outline" className="w-full justify-start" asChild>
+                <Link href="/workspace/to-do">
+                  <PlusIcon className="mr-2 h-4 w-4" />
+                  To Do Tasks
+                </Link>
               </Button>
               <Button variant="outline" className="w-full justify-start" asChild>
-                <Link href="/workspace/settings">
+                <Link href="/workspace/my-settings">
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  Settings
+                  My Settings
                 </Link>
               </Button>
             </CardContent>

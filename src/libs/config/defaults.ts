@@ -14,7 +14,7 @@ export type DefaultConfig = typeof DEFAULT_CONFIG;
 
 // Helper function to get default route
 export function getDefaultRoute(): string {
-  return '/workspace';
+  return '/workspace/working-on';
 }
 
 // Helper function to get org route with default team
