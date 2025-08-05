@@ -5,3 +5,13 @@ pnpm-lock.yaml
 .github
 build
 dist
+generated/
+**/graphql-generated.ts
+libs/client/graphql-client/generated.ts
+libs/server/types/graphql-generated.ts
+prisma/migrations/
+libs/server/prisma/generated/
+scripts/
+mock-data/
+**/mock-data/
+libs/server/performance/

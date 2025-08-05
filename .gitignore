@@ -44,3 +44,34 @@ next-env.d.ts
 
 # editors
 .idea/
+
+# Logs
+logs
+*.log
+dev-debug.log
+# Dependency directories
+node_modules/
+# Environment variables
+.env
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+
+# Task files
+# tasks.json
+# tasks/ 
+
+/lib/prisma/generated
+
+# package manager
+# npm
+package-lock.json
+
+# Claude Code
+.claude/settings.local.json

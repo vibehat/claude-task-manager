@@ -1,0 +1,35 @@
+/* Minimal xterm.css for debugging */
+.xterm {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: 14px;
+  color: #f0f0f0;
+  background-color: #000000;
+  padding: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.xterm-viewport {
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: transparent;
+}
+
+.xterm-screen {
+  position: relative;
+}
+
+.xterm-rows {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.xterm-row {
+  white-space: nowrap;
+}
+
+.xterm-cursor {
+  position: absolute;
+  background-color: #f0f0f0;
+}

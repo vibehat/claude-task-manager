@@ -13,15 +13,15 @@ Each commit should use a predefined type that reflects the nature of the change:
 | ---------- | ---- | ------------ | ------------------------- | ---------------- | ------------------------------------------------------------------- |
 | `feat`     | ✨   | Feature      | Yes                       | Yes              | A new feature for the end user.                                     |
 | `bug`      | 🐞   | Client Bug   | Yes                       | Yes              | A bug fix reported by clients or users.                             |
-| `fix`      | 🛠️  | Internal Fix | Yes                       | Yes              | Internal fix found during development or QA; not user-reported.     |
+| `fix`      | 🛠️   | Internal Fix | Yes                       | Yes              | Internal fix found during development or QA; not user-reported.     |
 | `hotfix`   | 🔥   | Hotfix       | Yes                       | Yes              | Critical fix deployed quickly to patch urgent issues.               |
 | `enhance`  | 🔧   | Enhancement  | Yes                       | Yes              | Improvements to existing functionality without adding new features. |
 | `docs`     | 📝   | Docs         | No                        | No               | Changes or additions to documentation.                              |
-| `refactor` | ♻️  | Refactor     | Yes                       | Yes              | Code restructuring without changing its external behavior.          |
+| `refactor` | ♻️   | Refactor     | Yes                       | Yes              | Code restructuring without changing its external behavior.          |
 | `style`    | 🎨   | Style        | No                        | No               | Code style changes (e.g. formatting, white-space, etc.).            |
 | `test`     | 🧪   | Tests        | No                        | No               | Adding or updating tests.                                           |
 | `perf`     | ⚡   | Perf         | Yes                       | Yes              | Changes that improve performance.                                   |
-| `build`    | 🏗️  | Build        | No                        | No               | Changes that affect the build system or external dependencies.      |
+| `build`    | 🏗️   | Build        | No                        | No               | Changes that affect the build system or external dependencies.      |
 | `chore`    | 🧹   | Chore        | No                        | Yes              | Routine tasks, maintenance or non-functional changes.               |
 | `revert`   | ⏪   | Revert       | No                        | No               | Reverts a previous commit.                                          |
 | `other`    | 📦   | Other        | Yes                       | Yes              | Changes that don't fall into other predefined types.                |

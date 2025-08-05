@@ -15,12 +15,12 @@ v1.50.0-beta.1 → v1.50.0-rc.1 → v1.50.0
 
 ### 🎯 Release Types
 
-| Type | Pattern | Purpose | Trigger |
-|------|---------|---------|---------|
-| **Beta** | `v1.50.0-beta.1` | Development testing | Manual |
-| **RC** | `v1.50.0-rc.1` | Pre-production testing | Manual |
-| **Production** | `v1.50.0` | Live environment | Manual |
-| **Hotfix** | `v1.50.1` | Critical fixes | Manual |
+| Type           | Pattern          | Purpose                | Trigger |
+| -------------- | ---------------- | ---------------------- | ------- |
+| **Beta**       | `v1.50.0-beta.1` | Development testing    | Manual  |
+| **RC**         | `v1.50.0-rc.1`   | Pre-production testing | Manual  |
+| **Production** | `v1.50.0`        | Live environment       | Manual  |
+| **Hotfix**     | `v1.50.1`        | Critical fixes         | Manual  |
 
 ---
 
@@ -28,21 +28,21 @@ v1.50.0-beta.1 → v1.50.0-rc.1 → v1.50.0
 
 ### ✅ Available Features
 
-| Feature | Status | Description |
-|---------|--------|-------------|
-| **Manual Beta Bump** | ✅ Active | Manual beta creation via GitHub Actions |
-| **Release Notes Generation** | ✅ Active | Auto-generated from commit history |
-| **Dev Deployment** | ✅ Active | Triggers on beta tags |
-| **Prerelease GitHub Releases** | ✅ Active | Auto-marks beta/RC as prerelease |
-| **Semantic Version Validation** | ✅ Active | Validates all version transitions |
+| Feature                         | Status    | Description                             |
+| ------------------------------- | --------- | --------------------------------------- |
+| **Manual Beta Bump**            | ✅ Active | Manual beta creation via GitHub Actions |
+| **Release Notes Generation**    | ✅ Active | Auto-generated from commit history      |
+| **Dev Deployment**              | ✅ Active | Triggers on beta tags                   |
+| **Prerelease GitHub Releases**  | ✅ Active | Auto-marks beta/RC as prerelease        |
+| **Semantic Version Validation** | ✅ Active | Validates all version transitions       |
 
 ### 🔧 Available Workflows
 
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| **Release Beta Version** | Manual | Create beta versions with different increment types |
-| **Draft A Release** | Manual | Create RC or production release |
-| **Publish A Release** | Manual | Tag and publish to GitHub |
+| Workflow                 | Trigger | Purpose                                             |
+| ------------------------ | ------- | --------------------------------------------------- |
+| **Release Beta Version** | Manual  | Create beta versions with different increment types |
+| **Draft A Release**      | Manual  | Create RC or production release                     |
+| **Publish A Release**    | Manual  | Tag and publish to GitHub                           |
 
 ---
 
@@ -51,6 +51,7 @@ v1.50.0-beta.1 → v1.50.0-rc.1 → v1.50.0
 Before creating any release, ensure:
 
 ### 🔍 **Pre-Release Validation**
+
 - [ ] All tests are passing
 - [ ] Code has been reviewed and approved
 - [ ] No critical bugs in the target branch
@@ -58,12 +59,14 @@ Before creating any release, ensure:
 - [ ] Deployment environment is ready
 
 ### 📝 **Documentation**
+
 - [ ] CHANGELOG.md is updated (auto-generated)
 - [ ] Breaking changes are documented
 - [ ] Migration guides are prepared (if needed)
 - [ ] API documentation is current
 
 ### 🔒 **Security & Compliance**
+
 - [ ] Security scan completed
 - [ ] Dependencies are up to date
 - [ ] No exposed secrets or sensitive data
@@ -82,6 +85,7 @@ Before creating any release, ensure:
 #### **Method A: GitHub Actions (Recommended)**
 
 1. **Navigate to GitHub Actions**
+
    ```
    GitHub > Actions > Release Beta Version
    ```
@@ -102,6 +106,7 @@ Before creating any release, ensure:
 ```
 
 #### **What Happens Next**
+
 - ✅ Version bumped to new minor with beta suffix
 - ✅ Git tag created: `v1.50.0-beta.1`
 - ✅ GitHub Release marked as prerelease
@@ -120,6 +125,7 @@ Before creating any release, ensure:
 #### **Method A: GitHub Actions (Recommended)**
 
 1. **Navigate to GitHub Actions**
+
    ```
    GitHub > Actions > Release Beta Version
    ```
@@ -139,6 +145,7 @@ Before creating any release, ensure:
 ```
 
 #### **What Happens Next**
+
 - ✅ Version incremented to next beta number
 - ✅ Git tag created: `v1.49.7-beta.2`
 - ✅ GitHub Release marked as prerelease
@@ -156,11 +163,13 @@ Before creating any release, ensure:
 #### **Step 1: Draft Production Release**
 
 **GitHub Actions:**
+
 1. Navigate to `Actions > Draft A Release`
 2. **Release type**: `patch` (or `minor`/`major` as appropriate)
 3. Click `Run workflow`
 
 **Result:**
+
 - ✅ Release branch created: `release-v1.50.0`
 - ✅ Version bumped from beta to production version
 - ✅ Release notes generated automatically
@@ -181,6 +190,7 @@ Before creating any release, ensure:
 #### **Step 4: Review & Test**
 
 1. **Review Release Notes**
+
    - Check auto-generated release notes in `RELEASE_NOTES.md`
    - Edit and refine as necessary
    - Ensure all features and fixes are documented
@@ -200,6 +210,7 @@ Before creating any release, ensure:
 #### **Step 6: All Done! 🎉**
 
 Once merged to master:
+
 - ✅ Git tag automatically created: `v1.50.0`
 - ✅ GitHub Release published with notes
 - ✅ Production deployment triggered
@@ -235,6 +246,7 @@ git commit -m "hotfix(critical): fix payment processing issue [PD-1234]"
 #### **Step 3: Draft Patch Release & Check Release Branch Creation**
 
 **Via GitHub Actions:**
+
 1. Push your hotfix branch
 2. Go to `Actions > Draft A Release`
 3. **Release type**: `patch`
@@ -242,6 +254,7 @@ git commit -m "hotfix(critical): fix payment processing issue [PD-1234]"
 5. **Verify**: Check that release branch `release-v1.50.1` was created
 
 **Via Command Line:**
+
 ```bash
 ./scripts/release.sh patch
 # Result: 1.50.0 → 1.50.1
@@ -295,6 +308,7 @@ git push origin release-v1.50.1
 #### **What Happens After Merge**
 
 Once the release branch is merged to master:
+
 - ✅ Git tag automatically created: `v1.50.1`
 - ✅ GitHub Release published with notes
 - ✅ Production deployment triggered
@@ -312,7 +326,7 @@ Once the release branch is merged to master:
 # Result: v1.49.6 → v1.49.6-beta.1
 
 # Test RC creation
-./scripts/release.sh prerelease rc  
+./scripts/release.sh prerelease rc
 # Result: v1.49.6-beta.5 → v1.49.6-rc.1
 
 # Test production release
@@ -354,17 +368,17 @@ All version transitions are validated to ensure semantic versioning compliance:
 
 ### **Key Files & Workflows:**
 
-| File/Workflow | Purpose |
-|---------------|---------|
-| `.github/workflows/release-beta.yml` | Manual beta releases with increment options |
-| `.github/workflows/release-draft.yml` | Draft releases (supports prerelease) |
-| `.github/workflows/release-notes.yml` | Auto-generate release notes |
-| `.github/workflows/release-publish.yml` | Tag and publish releases |
-| `.github/workflows/build-and-deploy-to-gcp-dev-env.yaml` | Deploy to Dev |
-| `scripts/release.sh` | CLI script with prerelease support |
-| `scripts/bump-version.js` | Core version bumping logic |
-| `scripts/release-notes.js` | Changelog generation from commits |
-| `scripts/version-flow-demo.sh` | Complete flow demonstration |
+| File/Workflow                                            | Purpose                                     |
+| -------------------------------------------------------- | ------------------------------------------- |
+| `.github/workflows/release-beta.yml`                     | Manual beta releases with increment options |
+| `.github/workflows/release-draft.yml`                    | Draft releases (supports prerelease)        |
+| `.github/workflows/release-notes.yml`                    | Auto-generate release notes                 |
+| `.github/workflows/release-publish.yml`                  | Tag and publish releases                    |
+| `.github/workflows/build-and-deploy-to-gcp-dev-env.yaml` | Deploy to Dev                               |
+| `scripts/release.sh`                                     | CLI script with prerelease support          |
+| `scripts/bump-version.js`                                | Core version bumping logic                  |
+| `scripts/release-notes.js`                               | Changelog generation from commits           |
+| `scripts/version-flow-demo.sh`                           | Complete flow demonstration                 |
 
 ### Enhanced Files:
 
@@ -400,33 +414,37 @@ All version transitions are validated to ensure semantic versioning compliance:
 
 ### **GitHub Actions Workflows**
 
-| Workflow | Purpose | Trigger |
-|----------|---------|---------|
-| `Release Beta Version` | Create beta versions with increment options | Manual |
-| `Draft A Release` | Create release branches | Manual |
-| `Publish A Release` | Create tags and GitHub releases | Manual |
-| `Release Notes` | Generate changelog | Automatic on release branch |
+| Workflow               | Purpose                                     | Trigger                     |
+| ---------------------- | ------------------------------------------- | --------------------------- |
+| `Release Beta Version` | Create beta versions with increment options | Manual                      |
+| `Draft A Release`      | Create release branches                     | Manual                      |
+| `Publish A Release`    | Create tags and GitHub releases             | Manual                      |
+| `Release Notes`        | Generate changelog                          | Automatic on release branch |
 
 ---
 
 ## 🔄 Version Flow Examples
 
 ### **Standard Patch Flow**
+
 ```
 1.49.6 → 1.49.6-beta.1 → 1.49.6-beta.2 → 1.49.6-rc.1 → 1.49.7
 ```
 
 ### **Minor Version Flow**
+
 ```
 1.49.6 → 1.50.0-beta.0 → 1.50.0-beta.1 → 1.50.0-rc.1 → 1.50.0
 ```
 
 ### **Major Version Flow**
+
 ```
 1.49.6 → 2.0.0-beta.0 → 2.0.0-beta.1 → 2.0.0-rc.1 → 2.0.0
 ```
 
 ### **Hotfix Flow**
+
 ```
 1.50.0 (production) → 1.50.1 (hotfix) → 1.50.1 (deploy)
 ```
@@ -454,11 +472,13 @@ All version transitions are validated to ensure semantic versioning compliance:
 ## 🔄 Migration Notes
 
 ### ✅ Backward Compatibility:
+
 - All existing release workflows remain functional
 - No breaking changes to current processes
 - Beta flow is now manual for better control
 
 ### 🎯 Benefits:
+
 - **Controlled releases**: Manual beta creation prevents unwanted releases
 - **Better testing**: Clear Dev → PPE → PROD progression
 - **Safer releases**: Multiple validation stages
@@ -472,6 +492,7 @@ All version transitions are validated to ensure semantic versioning compliance:
 ### **Common Issues**
 
 **Problem**: Version bump fails
+
 ```bash
 # Solution: Check package.json and VERSION file sync
 git status
@@ -479,6 +500,7 @@ git checkout -- package.json VERSION
 ```
 
 **Problem**: Release notes are empty
+
 ```bash
 # Solution: Check commit history and format
 git log --oneline HEAD~10..HEAD
@@ -486,26 +508,31 @@ git log --oneline HEAD~10..HEAD
 ```
 
 **Problem**: GitHub Actions workflow fails
+
 ```bash
 # Solution: Check workflow permissions and branch protection
 # Ensure GITHUB_TOKEN has write permissions
 ```
 
 **Beta not auto-bumping?**
+
 - Check that PR was merged to `develop` branch
 - Verify `.github/workflows/release-beta.yml` is enabled
 
 **Release workflow failing?**
+
 - Ensure you have admin permissions
 - Check workflow logs in GitHub Actions
 
 **Version validation errors?**
+
 - Review semantic versioning rules above
 - Use local testing scripts to validate
 
 ### **Emergency Procedures**
 
 **Critical Hotfix Process:**
+
 1. Create hotfix branch immediately
 2. Apply minimal fix
 3. Skip normal review process (with approval)
@@ -513,6 +540,7 @@ git log --oneline HEAD~10..HEAD
 5. Follow up with proper documentation
 
 **Rollback Process:**
+
 1. Identify last known good version
 2. Revert deployment to previous tag
 3. Create hotfix for any critical issues
@@ -538,4 +566,4 @@ git log --oneline HEAD~10..HEAD
 
 **Remember**: Always test in staging before production, and monitor deployments closely! 🎯
 
-*Happy releasing with our enhanced beta → RC → production flow! ✨* 
+_Happy releasing with our enhanced beta → RC → production flow! ✨_

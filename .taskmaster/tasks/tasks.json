@@ -1,0 +1,736 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 28,
+        "title": "Create Individual Mode Layout System",
+        "description": "Implement core layout structure for individual project management mode with reusable components",
+        "details": "Create `/app/indie/layout.tsx` using Next.js 14+ app router pattern. Implement `IndieLayout` component in `/components/layout/indie-layout.tsx` that wraps content with existing `SidebarProvider` and maintains consistent styling with team mode. Use TypeScript with strict mode and follow existing component patterns. Implement individual mode project context using React Context API with proper TypeScript interfaces. Ensure responsive design using Tailwind CSS classes matching existing design system.",
+        "testStrategy": "Unit tests for IndieLayout component, integration tests for route rendering, visual regression tests for layout consistency across devices",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Next.js app router layout structure",
+            "description": "Implement `/app/indie/layout.tsx` using Next.js 14+ app router pattern with proper TypeScript configuration",
+            "dependencies": [],
+            "details": "Create the main layout file at `/app/indie/layout.tsx` following Next.js 14+ app router conventions. Set up proper TypeScript interfaces for layout props, implement metadata configuration, and ensure proper component structure with children prop handling. Follow existing app router patterns from team mode layouts.",
+            "status": "done",
+            "testStrategy": "Unit tests for layout component rendering, route configuration testing, TypeScript compilation verification"
+          },
+          {
+            "id": 2,
+            "title": "Build IndieLayout wrapper component",
+            "description": "Create reusable `IndieLayout` component in `/components/layout/indie-layout.tsx` with SidebarProvider integration",
+            "dependencies": ["28.1"],
+            "details": "Implement the main IndieLayout component that wraps content with existing SidebarProvider. Ensure consistent styling with team mode using shared design tokens and Tailwind CSS classes. Include proper TypeScript interfaces and props handling for children and layout configuration.",
+            "status": "done",
+            "testStrategy": "Component testing for layout rendering, SidebarProvider integration testing, responsive design testing across devices"
+          },
+          {
+            "id": 3,
+            "title": "Implement individual mode project context",
+            "description": "Create React Context API setup for individual project management with TypeScript interfaces",
+            "dependencies": ["28.2"],
+            "details": "Build React Context using createContext and useContext hooks with proper TypeScript interfaces for individual project state management. Include project selection, current project state, and project switching functionality. Implement context provider component with state management and proper error boundaries.",
+            "status": "done",
+            "testStrategy": "Context provider testing, state management testing, TypeScript interface validation, error boundary testing"
+          },
+          {
+            "id": 4,
+            "title": "Ensure responsive design consistency",
+            "description": "Apply responsive Tailwind CSS classes matching existing design system across all layout components",
+            "dependencies": ["28.2", "28.3"],
+            "details": "Implement responsive design using Tailwind CSS breakpoints and utility classes. Ensure layout adapts properly on mobile, tablet, and desktop screens. Apply consistent spacing, typography, and component sizing that matches the existing team mode design system.",
+            "status": "done",
+            "testStrategy": "Visual regression testing for layout consistency, responsive design testing across multiple device sizes, design system compliance verification"
+          },
+          {
+            "id": 5,
+            "title": "Integrate layout components and test end-to-end flow",
+            "description": "Connect all layout components together and verify complete individual mode layout functionality",
+            "dependencies": ["28.1", "28.2", "28.3", "28.4"],
+            "details": "Integrate the Next.js layout file with IndieLayout component and project context. Test complete user flow from route access to layout rendering. Ensure proper component composition, context propagation, and layout state management. Verify integration with existing SidebarProvider and design system.",
+            "status": "done",
+            "testStrategy": "End-to-end integration testing, user flow testing, layout state persistence testing, cross-browser compatibility testing"
+          }
+        ]
+      },
+      {
+        "id": 29,
+        "title": "Build Individual Mode Sidebar",
+        "description": "Create simplified sidebar navigation for individual project focus with mode switching capability",
+        "details": "Create `IndieSidebar` component in `/components/layout/sidebar/indie-sidebar.tsx` using existing sidebar UI patterns. Build navigation data structure in `/mock-data/indie-sidebar-nav.ts` with Dashboard, Tasks, and Settings sections. Implement mode switcher component using Radix UI Select or similar for toggling between team and individual modes. Reuse existing `NavItem`, `NavSection` components and Lucide React icons. Store mode preference in localStorage with proper TypeScript typing.",
+        "testStrategy": "Component testing for sidebar rendering, interaction testing for mode switcher, localStorage persistence testing, accessibility testing for navigation",
+        "priority": "high",
+        "dependencies": [28],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create IndieSidebar component structure",
+            "description": "Implement the main IndieSidebar component in /components/layout/sidebar/indie-sidebar.tsx with proper TypeScript interfaces and basic layout structure",
+            "dependencies": [],
+            "details": "Create IndieSidebar React component using TypeScript with proper prop interfaces. Implement basic component structure with header, navigation sections, and footer areas. Follow existing sidebar component patterns and ensure proper TypeScript strict mode compliance. Include proper JSX structure for rendering navigation items and mode switcher placement.",
+            "status": "done",
+            "testStrategy": "Unit tests for component rendering, TypeScript interface validation, and basic structure verification"
+          },
+          {
+            "id": 2,
+            "title": "Build indie sidebar navigation data structure",
+            "description": "Create navigation data structure in /mock-data/indie-sidebar-nav.ts with Dashboard, Tasks, and Settings sections",
+            "dependencies": ["29.1"],
+            "details": "Define TypeScript interfaces for navigation items and sections. Create mock data structure with Dashboard, Tasks, and Settings navigation items including proper icons from Lucide React, routes, and metadata. Ensure data structure is compatible with existing NavItem and NavSection components and follows established patterns.",
+            "status": "done",
+            "testStrategy": "Data structure validation testing, TypeScript interface compliance testing, and navigation item completeness verification"
+          },
+          {
+            "id": 3,
+            "title": "Implement mode switcher component",
+            "description": "Create mode switcher using Radix UI Select for toggling between team and individual modes with localStorage persistence",
+            "dependencies": ["29.1"],
+            "details": "Build mode switcher component using Radix UI Select with proper TypeScript interfaces. Implement toggle functionality between 'team' and 'individual' modes. Add localStorage integration for mode preference persistence with proper error handling and TypeScript typing. Include visual indicators for current mode and smooth transitions.",
+            "status": "done",
+            "testStrategy": "Mode switching functionality testing, localStorage persistence testing, and Radix UI Select interaction testing"
+          },
+          {
+            "id": 4,
+            "title": "Integrate navigation components and styling",
+            "description": "Integrate existing NavItem and NavSection components with indie navigation data and apply consistent styling",
+            "dependencies": ["29.2", "29.3"],
+            "details": "Import and configure existing NavItem and NavSection components to work with indie navigation data structure. Apply consistent styling using Tailwind CSS classes matching existing design system. Ensure proper spacing, typography, and visual hierarchy. Handle active states and hover effects consistent with team mode sidebar.",
+            "status": "done",
+            "testStrategy": "Component integration testing, visual consistency testing, and interaction state testing"
+          },
+          {
+            "id": 5,
+            "title": "Add responsive behavior and accessibility features",
+            "description": "Implement responsive design and accessibility features for the indie sidebar including keyboard navigation and screen reader support",
+            "dependencies": ["29.4"],
+            "details": "Add responsive behavior for mobile and tablet viewports using Tailwind CSS breakpoints. Implement proper ARIA labels, keyboard navigation support, and focus management. Ensure screen reader compatibility and proper semantic HTML structure. Add collapse/expand functionality for mobile devices matching existing sidebar patterns.",
+            "status": "done",
+            "testStrategy": "Responsive design testing across devices, accessibility testing with screen readers, and keyboard navigation testing"
+          }
+        ]
+      },
+      {
+        "id": 30,
+        "title": "Implement Individual Mode Routes",
+        "description": "Set up complete route structure for individual task management with proper page components",
+        "details": "Create Next.js 14 app router pages: `/app/indie/page.tsx` for dashboard, `/app/indie/tasks/page.tsx` reusing existing AllIssues component, `/app/indie/tasks/[taskId]/page.tsx` for task details with dynamic routing, and `/app/indie/settings/page.tsx` for individual settings. Implement proper metadata, loading states, and error boundaries. Use existing components where possible and ensure proper TypeScript interfaces for route params.",
+        "testStrategy": "Route testing with Next.js testing utilities, page load performance testing, error boundary testing, SEO metadata validation",
+        "priority": "medium",
+        "dependencies": [29],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Individual Dashboard Page",
+            "description": "Implement the main dashboard page at /app/indie/page.tsx with overview components and proper metadata",
+            "dependencies": [],
+            "details": "Create `/app/indie/page.tsx` with Next.js 14 app router pattern. Implement dashboard overview showing task summary, recent activity, and quick actions. Add proper metadata for SEO, loading states, and error boundaries. Use existing UI components and maintain TypeScript strict mode.",
+            "status": "done",
+            "testStrategy": "Unit tests for page component rendering, metadata validation, loading state testing, error boundary testing"
+          },
+          {
+            "id": 2,
+            "title": "Implement Tasks List Page",
+            "description": "Create tasks listing page at /app/indie/tasks/page.tsx reusing existing AllIssues component",
+            "dependencies": ["30.1"],
+            "details": "Create `/app/indie/tasks/page.tsx` that imports and configures the existing AllIssues component for individual mode. Ensure proper data filtering for individual tasks, implement search and filtering capabilities, and add proper page metadata and loading states.",
+            "status": "done",
+            "testStrategy": "Integration tests with AllIssues component, data filtering validation, search functionality testing, performance testing for large task lists"
+          },
+          {
+            "id": 3,
+            "title": "Create Dynamic Task Details Page",
+            "description": "Implement dynamic task details page at /app/indie/tasks/[taskId]/page.tsx with proper routing",
+            "dependencies": ["30.2"],
+            "details": "Create `/app/indie/tasks/[taskId]/page.tsx` with Next.js dynamic routing. Implement TypeScript interfaces for route params, fetch task details based on taskId parameter, handle 404 cases for non-existent tasks, and add proper metadata generation based on task data.",
+            "status": "done",
+            "testStrategy": "Dynamic route testing, parameter validation, 404 error handling, metadata generation testing, task data fetching validation"
+          },
+          {
+            "id": 4,
+            "title": "Implement Individual Settings Page",
+            "description": "Create settings page at /app/indie/settings/page.tsx for individual mode configuration",
+            "dependencies": ["30.1"],
+            "details": "Create `/app/indie/settings/page.tsx` with individual-specific settings like personal preferences, notification settings, and data export options. Implement form handling with proper validation, use existing UI components, and ensure settings persistence.",
+            "status": "done",
+            "testStrategy": "Form validation testing, settings persistence testing, UI component integration testing, accessibility testing for form elements"
+          },
+          {
+            "id": 5,
+            "title": "Add Route Error Boundaries and Loading States",
+            "description": "Implement comprehensive error boundaries and loading states across all individual mode pages",
+            "dependencies": ["30.1", "30.2", "30.3", "30.4"],
+            "details": "Add `error.tsx` and `loading.tsx` files for each route segment. Implement proper error handling with user-friendly error messages, recovery options, and error reporting. Create consistent loading states using existing UI components and ensure proper TypeScript typing.",
+            "status": "done",
+            "testStrategy": "Error boundary testing with simulated errors, loading state validation, user experience testing for error recovery, performance testing for loading states"
+          }
+        ]
+      },
+      {
+        "id": 31,
+        "title": "Create Unified Task/Subtask Component with Hierarchy",
+        "description": "Build flexible TaskItem component supporting unlimited hierarchical nesting with visual hierarchy indicators",
+        "details": "Create `TaskItem` component in `/components/common/tasks/task-item.tsx` with recursive rendering capability. Extend existing Issue interface to include `parentId?: string`, `subtasks: Task[]`, and `depth: number` properties. Implement visual hierarchy with CSS-in-JS or Tailwind classes for indentation (depth * 1rem), nested borders, and hierarchical icons. Use React.memo for performance optimization and implement expand/collapse state management with useState or Zustand. Support drag-and-drop reordering with @dnd-kit/core library.",
+        "testStrategy": "Component testing for hierarchy rendering, performance testing for large task trees, accessibility testing for screen readers, drag-and-drop interaction testing",
+        "priority": "high",
+        "dependencies": [30],
+        "status": "in-progress",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Enhanced Task Detail View with Subtask Management",
+        "description": "Create comprehensive task detail page with inline subtask creation and management capabilities",
+        "details": "Build task detail page reusing existing issue detail components. Implement inline subtask creation with form validation using react-hook-form and zod schemas. Add subtask reordering with @dnd-kit/sortable, maintaining parent-child relationships. Integrate existing `IssueContextMenu` for both tasks and subtasks with hierarchy-aware actions. Implement breadcrumb navigation using Next.js Link components showing full task hierarchy path.",
+        "testStrategy": "End-to-end testing for subtask CRUD operations, form validation testing, breadcrumb navigation testing, context menu functionality testing",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Individual Mode Dashboard with Hierarchical View",
+        "description": "Create project-focused dashboard displaying collapsible task tree with progress tracking",
+        "details": "Build dashboard component with collapsible task tree using Radix UI Collapsible or similar. Implement hierarchy-aware progress calculations including subtask completion percentages. Add quick action buttons for creating tasks and subtasks with modal dialogs using Radix UI Dialog. Display project statistics with charts using Recharts library. Use existing design tokens and maintain consistent styling with team mode dashboard.",
+        "testStrategy": "Dashboard rendering testing, progress calculation accuracy testing, quick action modal testing, chart rendering and data accuracy testing",
+        "priority": "medium",
+        "dependencies": [33],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Update Application Entry Point for Mode Detection",
+        "description": "Modify main routing logic to support individual mode detection and seamless mode switching",
+        "details": "Update `app/page.tsx` and `getDefaultRoute()` function to detect individual mode preference from localStorage or user settings. Implement route redirection logic for mode switching using Next.js redirect() or router.push(). Update existing navigation components to include mode context awareness. Ensure proper TypeScript typing for mode detection and maintain backward compatibility with existing team mode functionality.",
+        "testStrategy": "Route redirection testing, mode persistence testing, backward compatibility testing, navigation context testing",
+        "priority": "medium",
+        "dependencies": [34],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Performance Optimization and Final Integration",
+        "description": "Optimize hierarchical task rendering performance and ensure seamless integration with existing systems",
+        "details": "Implement React.memo, useMemo, and useCallback for hierarchical task components to prevent unnecessary re-renders. Add virtualization for large task lists using @tanstack/react-virtual. Implement lazy loading for deep task hierarchies with React.lazy and Suspense. Add performance monitoring with Next.js built-in metrics and ensure proper bundle splitting. Conduct comprehensive testing across all individual mode features and ensure backward compatibility with team mode.",
+        "testStrategy": "Performance benchmarking for large task hierarchies, memory usage testing, bundle size analysis, cross-mode compatibility testing, comprehensive end-to-end testing",
+        "priority": "low",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-26T00:47:21.699Z",
+      "updated": "2025-08-01T09:54:45.394Z",
+      "description": "Tasks for master context"
+    }
+  },
+  "individual-mode": {
+    "tasks": [
+      {
+        "id": 28,
+        "title": "Create Individual Mode Layout System",
+        "description": "Implement core layout structure for individual project management mode with reusable components",
+        "details": "Create `/app/indie/layout.tsx` using Next.js 14+ app router pattern. Implement `IndieLayout` component in `/components/layout/indie-layout.tsx` that wraps content with existing `SidebarProvider` and maintains consistent styling with team mode. Use TypeScript with strict mode and follow existing component patterns. Implement individual mode project context using React Context API with proper TypeScript interfaces. Ensure responsive design using Tailwind CSS classes matching existing design system.",
+        "testStrategy": "Unit tests for IndieLayout component, integration tests for route rendering, visual regression tests for layout consistency across devices",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Next.js app router layout structure",
+            "description": "Implement `/app/indie/layout.tsx` using Next.js 14+ app router pattern with proper TypeScript configuration",
+            "dependencies": [],
+            "details": "Create the main layout file at `/app/indie/layout.tsx` following Next.js 14+ app router conventions. Set up proper TypeScript interfaces for layout props, implement metadata configuration, and ensure proper component structure with children prop handling. Follow existing app router patterns from team mode layouts.",
+            "status": "done",
+            "testStrategy": "Unit tests for layout component rendering, route configuration testing, TypeScript compilation verification"
+          },
+          {
+            "id": 2,
+            "title": "Build IndieLayout wrapper component",
+            "description": "Create reusable `IndieLayout` component in `/components/layout/indie-layout.tsx` with SidebarProvider integration",
+            "dependencies": ["28.1"],
+            "details": "Implement the main IndieLayout component that wraps content with existing SidebarProvider. Ensure consistent styling with team mode using shared design tokens and Tailwind CSS classes. Include proper TypeScript interfaces and props handling for children and layout configuration.",
+            "status": "done",
+            "testStrategy": "Component testing for layout rendering, SidebarProvider integration testing, responsive design testing across devices"
+          },
+          {
+            "id": 3,
+            "title": "Implement individual mode project context",
+            "description": "Create React Context API setup for individual project management with TypeScript interfaces",
+            "dependencies": ["28.2"],
+            "details": "Build React Context using createContext and useContext hooks with proper TypeScript interfaces for individual project state management. Include project selection, current project state, and project switching functionality. Implement context provider component with state management and proper error boundaries.",
+            "status": "done",
+            "testStrategy": "Context provider testing, state management testing, TypeScript interface validation, error boundary testing"
+          },
+          {
+            "id": 4,
+            "title": "Ensure responsive design consistency",
+            "description": "Apply responsive Tailwind CSS classes matching existing design system across all layout components",
+            "dependencies": ["28.2", "28.3"],
+            "details": "Implement responsive design using Tailwind CSS breakpoints and utility classes. Ensure layout adapts properly on mobile, tablet, and desktop screens. Apply consistent spacing, typography, and component sizing that matches the existing team mode design system.",
+            "status": "done",
+            "testStrategy": "Visual regression testing for layout consistency, responsive design testing across multiple device sizes, design system compliance verification"
+          },
+          {
+            "id": 5,
+            "title": "Integrate layout components and test end-to-end flow",
+            "description": "Connect all layout components together and verify complete individual mode layout functionality",
+            "dependencies": ["28.1", "28.2", "28.3", "28.4"],
+            "details": "Integrate the Next.js layout file with IndieLayout component and project context. Test complete user flow from route access to layout rendering. Ensure proper component composition, context propagation, and layout state management. Verify integration with existing SidebarProvider and design system.",
+            "status": "done",
+            "testStrategy": "End-to-end integration testing, user flow testing, layout state persistence testing, cross-browser compatibility testing"
+          }
+        ]
+      },
+      {
+        "id": 29,
+        "title": "Build Individual Mode Sidebar",
+        "description": "Create simplified sidebar navigation for individual project focus with mode switching capability",
+        "details": "Create `IndieSidebar` component in `/components/layout/sidebar/indie-sidebar.tsx` using existing sidebar UI patterns. Build navigation data structure in `/mock-data/indie-sidebar-nav.ts` with Dashboard, Tasks, and Settings sections. Implement mode switcher component using Radix UI Select or similar for toggling between team and individual modes. Reuse existing `NavItem`, `NavSection` components and Lucide React icons. Store mode preference in localStorage with proper TypeScript typing.",
+        "testStrategy": "Component testing for sidebar rendering, interaction testing for mode switcher, localStorage persistence testing, accessibility testing for navigation",
+        "priority": "high",
+        "dependencies": [28],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create IndieSidebar component structure",
+            "description": "Implement the main IndieSidebar component in /components/layout/sidebar/indie-sidebar.tsx with proper TypeScript interfaces and basic layout structure",
+            "dependencies": [],
+            "details": "Create IndieSidebar React component using TypeScript with proper prop interfaces. Implement basic component structure with header, navigation sections, and footer areas. Follow existing sidebar component patterns and ensure proper TypeScript strict mode compliance. Include proper JSX structure for rendering navigation items and mode switcher placement.",
+            "status": "done",
+            "testStrategy": "Unit tests for component rendering, TypeScript interface validation, and basic structure verification"
+          },
+          {
+            "id": 2,
+            "title": "Build indie sidebar navigation data structure",
+            "description": "Create navigation data structure in /mock-data/indie-sidebar-nav.ts with Dashboard, Tasks, and Settings sections",
+            "dependencies": ["29.1"],
+            "details": "Define TypeScript interfaces for navigation items and sections. Create mock data structure with Dashboard, Tasks, and Settings navigation items including proper icons from Lucide React, routes, and metadata. Ensure data structure is compatible with existing NavItem and NavSection components and follows established patterns.",
+            "status": "done",
+            "testStrategy": "Data structure validation testing, TypeScript interface compliance testing, and navigation item completeness verification"
+          },
+          {
+            "id": 3,
+            "title": "Implement mode switcher component",
+            "description": "Create mode switcher using Radix UI Select for toggling between team and individual modes with localStorage persistence",
+            "dependencies": ["29.1"],
+            "details": "Build mode switcher component using Radix UI Select with proper TypeScript interfaces. Implement toggle functionality between 'team' and 'individual' modes. Add localStorage integration for mode preference persistence with proper error handling and TypeScript typing. Include visual indicators for current mode and smooth transitions.",
+            "status": "done",
+            "testStrategy": "Mode switching functionality testing, localStorage persistence testing, and Radix UI Select interaction testing"
+          },
+          {
+            "id": 4,
+            "title": "Integrate navigation components and styling",
+            "description": "Integrate existing NavItem and NavSection components with indie navigation data and apply consistent styling",
+            "dependencies": ["29.2", "29.3"],
+            "details": "Import and configure existing NavItem and NavSection components to work with indie navigation data structure. Apply consistent styling using Tailwind CSS classes matching existing design system. Ensure proper spacing, typography, and visual hierarchy. Handle active states and hover effects consistent with team mode sidebar.",
+            "status": "done",
+            "testStrategy": "Component integration testing, visual consistency testing, and interaction state testing"
+          },
+          {
+            "id": 5,
+            "title": "Add responsive behavior and accessibility features",
+            "description": "Implement responsive design and accessibility features for the indie sidebar including keyboard navigation and screen reader support",
+            "dependencies": ["29.4"],
+            "details": "Add responsive behavior for mobile and tablet viewports using Tailwind CSS breakpoints. Implement proper ARIA labels, keyboard navigation support, and focus management. Ensure screen reader compatibility and proper semantic HTML structure. Add collapse/expand functionality for mobile devices matching existing sidebar patterns.",
+            "status": "done",
+            "testStrategy": "Responsive design testing across devices, accessibility testing with screen readers, and keyboard navigation testing"
+          }
+        ]
+      },
+      {
+        "id": 30,
+        "title": "Implement Individual Mode Routes",
+        "description": "Set up complete route structure for individual task management with proper page components",
+        "details": "Create Next.js 14 app router pages: `/app/indie/page.tsx` for dashboard, `/app/indie/tasks/page.tsx` reusing existing AllIssues component, `/app/indie/tasks/[taskId]/page.tsx` for task details with dynamic routing, and `/app/indie/settings/page.tsx` for individual settings. Implement proper metadata, loading states, and error boundaries. Use existing components where possible and ensure proper TypeScript interfaces for route params.",
+        "testStrategy": "Route testing with Next.js testing utilities, page load performance testing, error boundary testing, SEO metadata validation",
+        "priority": "medium",
+        "dependencies": [29],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Individual Dashboard Page",
+            "description": "Implement the main dashboard page at /app/indie/page.tsx with overview components and proper metadata",
+            "dependencies": [],
+            "details": "Create `/app/indie/page.tsx` with Next.js 14 app router pattern. Implement dashboard overview showing task summary, recent activity, and quick actions. Add proper metadata for SEO, loading states, and error boundaries. Use existing UI components and maintain TypeScript strict mode.",
+            "status": "done",
+            "testStrategy": "Unit tests for page component rendering, metadata validation, loading state testing, error boundary testing"
+          },
+          {
+            "id": 2,
+            "title": "Implement Tasks List Page",
+            "description": "Create tasks listing page at /app/indie/tasks/page.tsx reusing existing AllIssues component",
+            "dependencies": ["30.1"],
+            "details": "Create `/app/indie/tasks/page.tsx` that imports and configures the existing AllIssues component for individual mode. Ensure proper data filtering for individual tasks, implement search and filtering capabilities, and add proper page metadata and loading states.",
+            "status": "done",
+            "testStrategy": "Integration tests with AllIssues component, data filtering validation, search functionality testing, performance testing for large task lists"
+          },
+          {
+            "id": 3,
+            "title": "Create Dynamic Task Details Page",
+            "description": "Implement dynamic task details page at /app/indie/tasks/[taskId]/page.tsx with proper routing",
+            "dependencies": ["30.2"],
+            "details": "Create `/app/indie/tasks/[taskId]/page.tsx` with Next.js dynamic routing. Implement TypeScript interfaces for route params, fetch task details based on taskId parameter, handle 404 cases for non-existent tasks, and add proper metadata generation based on task data.",
+            "status": "done",
+            "testStrategy": "Dynamic route testing, parameter validation, 404 error handling, metadata generation testing, task data fetching validation"
+          },
+          {
+            "id": 4,
+            "title": "Implement Individual Settings Page",
+            "description": "Create settings page at /app/indie/settings/page.tsx for individual mode configuration",
+            "dependencies": ["30.1"],
+            "details": "Create `/app/indie/settings/page.tsx` with individual-specific settings like personal preferences, notification settings, and data export options. Implement form handling with proper validation, use existing UI components, and ensure settings persistence.",
+            "status": "done",
+            "testStrategy": "Form validation testing, settings persistence testing, UI component integration testing, accessibility testing for form elements"
+          },
+          {
+            "id": 5,
+            "title": "Add Route Error Boundaries and Loading States",
+            "description": "Implement comprehensive error boundaries and loading states across all individual mode pages",
+            "dependencies": ["30.1", "30.2", "30.3", "30.4"],
+            "details": "Add `error.tsx` and `loading.tsx` files for each route segment. Implement proper error handling with user-friendly error messages, recovery options, and error reporting. Create consistent loading states using existing UI components and ensure proper TypeScript typing.",
+            "status": "done",
+            "testStrategy": "Error boundary testing with simulated errors, loading state validation, user experience testing for error recovery, performance testing for loading states"
+          }
+        ]
+      },
+      {
+        "id": 31,
+        "title": "Create Unified Task/Subtask Component with Hierarchy",
+        "description": "Build flexible TaskItem component supporting unlimited hierarchical nesting with visual hierarchy indicators",
+        "details": "Create `TaskItem` component in `/components/common/tasks/task-item.tsx` with recursive rendering capability. Extend existing Issue interface to include `parentId?: string`, `subtasks: Task[]`, and `depth: number` properties. Implement visual hierarchy with CSS-in-JS or Tailwind classes for indentation (depth * 1rem), nested borders, and hierarchical icons. Use React.memo for performance optimization and implement expand/collapse state management with useState or Zustand. Support drag-and-drop reordering with @dnd-kit/core library.",
+        "testStrategy": "Component testing for hierarchy rendering, performance testing for large task trees, accessibility testing for screen readers, drag-and-drop interaction testing",
+        "priority": "high",
+        "dependencies": [30],
+        "status": "in-progress",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Enhanced Task Detail View with Subtask Management",
+        "description": "Create comprehensive task detail page with inline subtask creation and management capabilities",
+        "details": "Build task detail page reusing existing issue detail components. Implement inline subtask creation with form validation using react-hook-form and zod schemas. Add subtask reordering with @dnd-kit/sortable, maintaining parent-child relationships. Integrate existing `IssueContextMenu` for both tasks and subtasks with hierarchy-aware actions. Implement breadcrumb navigation using Next.js Link components showing full task hierarchy path.",
+        "testStrategy": "End-to-end testing for subtask CRUD operations, form validation testing, breadcrumb navigation testing, context menu functionality testing",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Individual Mode Dashboard with Hierarchical View",
+        "description": "Create project-focused dashboard displaying collapsible task tree with progress tracking",
+        "details": "Build dashboard component with collapsible task tree using Radix UI Collapsible or similar. Implement hierarchy-aware progress calculations including subtask completion percentages. Add quick action buttons for creating tasks and subtasks with modal dialogs using Radix UI Dialog. Display project statistics with charts using Recharts library. Use existing design tokens and maintain consistent styling with team mode dashboard.",
+        "testStrategy": "Dashboard rendering testing, progress calculation accuracy testing, quick action modal testing, chart rendering and data accuracy testing",
+        "priority": "medium",
+        "dependencies": [33],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Update Application Entry Point for Mode Detection",
+        "description": "Modify main routing logic to support individual mode detection and seamless mode switching",
+        "details": "Update `app/page.tsx` and `getDefaultRoute()` function to detect individual mode preference from localStorage or user settings. Implement route redirection logic for mode switching using Next.js redirect() or router.push(). Update existing navigation components to include mode context awareness. Ensure proper TypeScript typing for mode detection and maintain backward compatibility with existing team mode functionality.",
+        "testStrategy": "Route redirection testing, mode persistence testing, backward compatibility testing, navigation context testing",
+        "priority": "medium",
+        "dependencies": [34],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Performance Optimization and Final Integration",
+        "description": "Optimize hierarchical task rendering performance and ensure seamless integration with existing systems",
+        "details": "Implement React.memo, useMemo, and useCallback for hierarchical task components to prevent unnecessary re-renders. Add virtualization for large task lists using @tanstack/react-virtual. Implement lazy loading for deep task hierarchies with React.lazy and Suspense. Add performance monitoring with Next.js built-in metrics and ensure proper bundle splitting. Conduct comprehensive testing across all individual mode features and ensure backward compatibility with team mode.",
+        "testStrategy": "Performance benchmarking for large task hierarchies, memory usage testing, bundle size analysis, cross-mode compatibility testing, comprehensive end-to-end testing",
+        "priority": "low",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-01T14:32:48.600Z",
+      "updated": "2025-08-01T14:32:48.600Z",
+      "description": "Tasks related to building the individual project management mode UI"
+    }
+  },
+  "ui-components": {
+    "tasks": [
+      {
+        "id": 40,
+        "title": "Design System Component Library",
+        "description": "Create comprehensive component library with consistent design tokens and patterns",
+        "details": "Build reusable UI components using Radix UI primitives and Tailwind CSS. Include Button, Input, Modal, Dropdown, Table, and Form components with proper TypeScript interfaces. Implement design tokens for colors, spacing, typography, and shadows. Create Storybook documentation with interactive examples and usage guidelines. Ensure accessibility compliance (WCAG 2.1 AA) and support for dark mode.",
+        "testStrategy": "Unit tests for component behavior, visual regression tests with Chromatic, accessibility tests with axe-core, Storybook interaction tests",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create design token system",
+            "description": "Define and implement design tokens for colors, typography, spacing, and other design properties",
+            "dependencies": [],
+            "details": "Create CSS custom properties or JavaScript objects for design tokens including color palettes (primary, secondary, neutral, semantic colors), typography scale, spacing scale, border radius, shadows, and breakpoints. Ensure tokens support both light and dark themes.",
+            "status": "done",
+            "testStrategy": "Token validation tests, theme switching tests, design consistency verification"
+          },
+          {
+            "id": 2,
+            "title": "Implement core UI components",
+            "description": "Build essential UI components (Button, Input, Modal, Dropdown) with proper TypeScript interfaces",
+            "dependencies": ["40.1"],
+            "details": "Create Button component with variants (primary, secondary, ghost, destructive), sizes (small, medium, large), and states (loading, disabled). Implement Input component with validation states, icons, and helper text. Build Modal component with proper focus management and escape key handling. Create Dropdown component with keyboard navigation.",
+            "status": "in-progress",
+            "testStrategy": "Component rendering tests, interaction tests, keyboard navigation tests, focus management tests"
+          },
+          {
+            "id": 3,
+            "title": "Set up Storybook documentation",
+            "description": "Configure Storybook with component documentation, controls, and interactive examples",
+            "dependencies": ["40.2"],
+            "details": "Install and configure Storybook 7+ with TypeScript support. Create stories for all components with controls, documentation, and usage examples. Add accessibility addon, viewport addon, and dark mode toggle. Set up automatic deployment to Chromatic for visual testing.",
+            "status": "pending",
+            "testStrategy": "Story rendering tests, Storybook build verification, documentation completeness checks"
+          }
+        ]
+      },
+      {
+        "id": 41,
+        "title": "Responsive Data Table Component",
+        "description": "Build advanced data table with sorting, filtering, pagination, and responsive design",
+        "details": "Create DataTable component using @tanstack/react-table for data manipulation. Support column sorting, filtering, pagination, and row selection. Implement responsive design with horizontal scrolling on mobile and column hiding. Add export functionality (CSV, JSON) and bulk actions. Include loading states, empty states, and error handling.",
+        "testStrategy": "Table functionality tests, responsive design tests, performance tests with large datasets, accessibility tests for table navigation",
+        "priority": "medium",
+        "dependencies": [40],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-01T14:32:52.560Z",
+      "updated": "2025-08-03T22:00:00.000Z",
+      "description": "Tasks focused on UI component development and implementation"
+    }
+  },
+  "layout-routing": {
+    "tasks": [
+      {
+        "id": 42,
+        "title": "Advanced Routing System with Middleware",
+        "description": "Implement sophisticated routing with authentication, authorization, and middleware support",
+        "details": "Create Next.js 14 middleware for route protection, authentication checks, and role-based access control. Implement route groups for different user types (admin, user, guest). Add breadcrumb navigation system with dynamic route detection. Create error pages (404, 500, 403) with proper error boundaries and recovery options. Support internationalization routing with locale detection.",
+        "testStrategy": "Route protection tests, middleware functionality tests, breadcrumb navigation tests, error page rendering tests, i18n routing tests",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create authentication middleware",
+            "description": "Implement Next.js middleware for route authentication and authorization",
+            "dependencies": [],
+            "details": "Create middleware.ts file with authentication checks, JWT token validation, and role-based route protection. Handle redirect logic for unauthorized access and maintain original destination URLs for post-login redirection.",
+            "status": "pending",
+            "testStrategy": "Authentication flow tests, token validation tests, redirect logic tests"
+          },
+          {
+            "id": 2,
+            "title": "Build dynamic breadcrumb system",
+            "description": "Create breadcrumb navigation that automatically adapts to route structure",
+            "dependencies": [],
+            "details": "Implement breadcrumb component that uses Next.js router to generate navigation path. Support custom breadcrumb labels, route parameters, and nested routes. Add skip links for accessibility.",
+            "status": "pending",
+            "testStrategy": "Breadcrumb generation tests, navigation tests, accessibility tests"
+          }
+        ]
+      },
+      {
+        "id": 43,
+        "title": "Responsive Layout System",
+        "description": "Create flexible layout system supporting multiple device sizes and orientations",
+        "details": "Build responsive layout components using CSS Grid and Flexbox with Tailwind CSS. Support sidebar layouts, dashboard layouts, and mobile-first responsive design. Implement layout persistence across page navigation and device orientation changes. Add layout customization options for users.",
+        "testStrategy": "Layout rendering tests across devices, orientation change tests, layout persistence tests, customization functionality tests",
+        "priority": "medium",
+        "dependencies": [42],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-01T14:32:56.361Z",
+      "updated": "2025-08-03T22:00:00.000Z",
+      "description": "Tasks related to layout systems and routing implementation"
+    }
+  },
+  "performance": {
+    "tasks": [
+      {
+        "id": 44,
+        "title": "Core Web Vitals Optimization",
+        "description": "Optimize application performance to achieve excellent Core Web Vitals scores",
+        "details": "Implement performance optimizations to achieve LCP < 2.5s, FID < 100ms, and CLS < 0.1. Use Next.js Image component for optimized image loading, implement code splitting with dynamic imports, optimize CSS delivery with critical CSS inlining, and set up proper caching strategies. Add performance monitoring with Real User Monitoring (RUM) and synthetic testing.",
+        "testStrategy": "Lighthouse performance audits, Core Web Vitals testing, real user monitoring validation, performance regression testing",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement image optimization strategy",
+            "description": "Optimize all images using Next.js Image component and implement lazy loading",
+            "dependencies": [],
+            "details": "Replace all img tags with Next.js Image component, implement proper sizing and aspect ratios, add lazy loading for below-the-fold images, and set up image CDN with automatic format optimization (WebP, AVIF).",
+            "status": "done",
+            "testStrategy": "Image loading performance tests, format optimization validation, lazy loading behavior tests"
+          },
+          {
+            "id": 2,
+            "title": "Implement code splitting and lazy loading",
+            "description": "Split code bundles and implement lazy loading for non-critical components",
+            "dependencies": [],
+            "details": "Use React.lazy and Suspense for route-based code splitting, implement dynamic imports for heavy components, create loading skeletons for better perceived performance, and optimize bundle sizes with proper chunk splitting.",
+            "status": "in-progress",
+            "testStrategy": "Bundle size analysis, lazy loading functionality tests, loading state tests"
+          }
+        ]
+      },
+      {
+        "id": 45,
+        "title": "Database Query Optimization",
+        "description": "Optimize database queries and implement efficient caching strategies",
+        "details": "Analyze and optimize slow database queries using query execution plans. Implement database indexing strategy for frequently accessed data. Set up Redis caching for expensive queries and session storage. Add query result pagination for large datasets and implement database connection pooling.",
+        "testStrategy": "Query performance benchmarks, caching effectiveness tests, database load testing, connection pool monitoring",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Real-time Performance Monitoring",
+        "description": "Implement comprehensive performance monitoring and alerting system",
+        "details": "Set up application performance monitoring (APM) with tools like New Relic or DataDog. Implement custom performance metrics collection, error tracking, and user experience monitoring. Create performance dashboards and set up alerts for performance regressions. Add performance budgets to CI/CD pipeline.",
+        "testStrategy": "Monitoring system integration tests, alert functionality tests, performance budget enforcement tests, dashboard accuracy validation",
+        "priority": "medium",
+        "dependencies": [44],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-01T14:32:59.876Z",
+      "updated": "2025-08-03T22:00:00.000Z",
+      "description": "Tasks focused on performance optimization and system integration"
+    }
+  },
+  "user-auth": {
+    "tasks": [
+      {
+        "id": 47,
+        "title": "JWT Authentication System",
+        "description": "Implement secure JWT-based authentication with refresh token support",
+        "details": "Build complete JWT authentication system with access and refresh tokens. Implement secure token storage, automatic token refresh, and proper logout functionality. Add JWT middleware for protected routes, token blacklisting for security, and proper error handling for expired tokens. Include password hashing with bcrypt and rate limiting for login attempts.",
+        "testStrategy": "JWT token validation tests, authentication flow tests, token refresh mechanism tests, security penetration testing, rate limiting tests",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement JWT token generation and validation",
+            "description": "Create JWT service for token generation, validation, and refresh logic",
+            "dependencies": [],
+            "details": "Set up JWT library, create token service with access/refresh token generation, implement token validation middleware, and add token expiration handling with proper error responses.",
+            "status": "in-progress",
+            "testStrategy": "Token generation tests, validation middleware tests, expiration handling tests"
+          },
+          {
+            "id": 2,
+            "title": "Secure password hashing and validation",
+            "description": "Implement bcrypt password hashing with proper salt rounds and validation",
+            "dependencies": [],
+            "details": "Use bcrypt for password hashing with appropriate salt rounds (12+), implement password validation with complexity requirements, add password update functionality, and ensure secure password comparison methods.",
+            "status": "pending",
+            "testStrategy": "Password hashing tests, validation tests, security strength tests"
+          }
+        ]
+      },
+      {
+        "id": 48,
+        "title": "Multi-Factor Authentication (2FA)",
+        "description": "Add two-factor authentication support with TOTP and backup codes",
+        "details": "Implement Time-based One-Time Password (TOTP) using libraries like speakeasy. Create QR code generation for authenticator app setup, backup recovery codes system, and 2FA verification flow. Add SMS-based 2FA as alternative option and proper user onboarding for 2FA setup.",
+        "testStrategy": "TOTP generation and validation tests, QR code generation tests, backup codes functionality tests, SMS 2FA integration tests",
+        "priority": "high",
+        "dependencies": [47],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "OAuth Social Login Integration",
+        "description": "Integrate OAuth providers for social authentication (Google, GitHub, etc.)",
+        "details": "Set up OAuth 2.0 integration with popular providers (Google, GitHub, LinkedIn). Implement OAuth callback handling, user account linking/creation flow, and proper scope management. Add social account disconnection functionality and handle OAuth errors gracefully. Ensure proper user data privacy and consent management.",
+        "testStrategy": "OAuth flow integration tests, callback handling tests, account linking tests, error handling tests, privacy compliance validation",
+        "priority": "medium",
+        "dependencies": [47],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "Password Reset and Recovery System",
+        "description": "Implement secure password reset flow with email verification",
+        "details": "Create password reset system with secure token generation, email verification flow, and token expiration. Implement rate limiting for reset requests, secure password update process, and proper notification system. Add password reset history tracking and ensure tokens are single-use only.",
+        "testStrategy": "Password reset flow tests, email verification tests, token security tests, rate limiting tests, notification system tests",
+        "priority": "medium",
+        "dependencies": [47],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "Role-Based Access Control (RBAC)",
+        "description": "Implement comprehensive role-based permission system",
+        "details": "Design and implement RBAC system with roles, permissions, and resource-based access control. Create role hierarchy, permission inheritance, and dynamic permission checking. Add role management interface for administrators and audit logging for permission changes. Implement route-level and component-level access control.",
+        "testStrategy": "Permission checking tests, role hierarchy tests, access control middleware tests, audit logging tests, UI permission tests",
+        "priority": "high",
+        "dependencies": [47],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "Session Management and Security",
+        "description": "Implement secure session management with proper security measures",
+        "details": "Set up secure session management with Redis or database storage. Implement session fixation protection, concurrent session limits, and proper session invalidation. Add device tracking, location-based security alerts, and suspicious activity detection. Include CSRF protection and secure cookie configuration.",
+        "testStrategy": "Session security tests, concurrent session tests, CSRF protection tests, device tracking tests, security alert tests",
+        "priority": "high",
+        "dependencies": [47],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-01T21:38:00.645Z",
+      "updated": "2025-08-03T22:00:00.000Z",
+      "description": "Comprehensive user authentication and security system tasks"
+    }
+  }
+}
