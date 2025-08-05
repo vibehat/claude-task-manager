@@ -113,7 +113,7 @@ export function CommandModuleProvider({
     async (moduleId: string) => {
       try {
         const commandModule = loadedModules.get(moduleId);
-        if (!module) {
+        if (!commandModule) {
           console.warn(`Module ${moduleId} is not loaded`);
           return;
         }
@@ -130,7 +130,7 @@ export function CommandModuleProvider({
         }
 
         // Call onUninstall if available (for extended modules)
-        const extendedModule = module as any;
+        const extendedModule = commandModule as any;
         if (extendedModule.onUninstall) {
           await extendedModule.onUninstall(context);
         }
@@ -158,10 +158,12 @@ export function CommandModuleProvider({
   const getModuleCommands = useCallback(
     (moduleId: string): Command[] => {
       const commandModule = loadedModules.get(moduleId);
-      if (!module) return [];
+      if (!commandModule) return [];
 
       const commands =
-        typeof module.commands === 'function' ? module.commands(context) : module.commands;
+        typeof commandModule.commands === 'function'
+          ? commandModule.commands(context)
+          : commandModule.commands;
 
       return commands || [];
     },

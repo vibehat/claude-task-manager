@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 export function useStatuses() {
   const statuses = useDataStore((state) => state.allStatuses);
-  const { isInitialized, isLoading, initialize } = useDataStore();
+  const isInitialized = useDataStore((state) => state.isInitialized);
+  const isLoading = useDataStore((state) => state.isLoading);
+  const initialize = useDataStore((state) => state.initialize);
   const [error, setError] = useState<Error | undefined>(undefined);
 
   useEffect(() => {

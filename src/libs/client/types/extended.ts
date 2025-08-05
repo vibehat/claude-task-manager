@@ -256,3 +256,172 @@ export interface SystemEvent {
   timestamp: Date;
   source: string;
 }
+
+// Additional missing types
+export interface ExtendedTask extends Task {
+  progressPercentage?: number;
+  estimatedHours?: number;
+  actualHours?: number;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar?: string;
+}
+
+export interface ProjectStats {
+  totalTasks: number;
+  completedTasks: number;
+  inProgressTasks: number;
+  blockedTasks: number;
+}
+
+export interface FilterCriteria {
+  status?: string[];
+  priority?: string[];
+  assignee?: string[];
+  tags?: string[];
+}
+
+export interface SortCriteria {
+  field: string;
+  direction: 'asc' | 'desc';
+}
+
+export interface BulkAction {
+  type: string;
+  taskIds: string[];
+  data?: any;
+}
+
+export interface TaskActivity {
+  id: string;
+  taskId: string;
+  type: string;
+  description: string;
+  timestamp: Date;
+  user?: TeamMember;
+}
+
+export interface TaskComment {
+  id: string;
+  taskId: string;
+  content: string;
+  author: TeamMember;
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+export interface TaskAttachment {
+  id: string;
+  taskId: string;
+  filename: string;
+  size: number;
+  type: string;
+  url: string;
+  uploadedAt: Date;
+  uploadedBy: TeamMember;
+}
+
+export interface NotificationPreferences {
+  email: boolean;
+  push: boolean;
+  inApp: boolean;
+  frequency: 'immediate' | 'daily' | 'weekly';
+}
+
+export interface UserPreferences {
+  theme: 'light' | 'dark' | 'system';
+  language: string;
+  timezone: string;
+  notifications: NotificationPreferences;
+}
+
+export interface DashboardConfig {
+  widgets: string[];
+  layout: any;
+  refreshInterval: number;
+}
+
+export interface Theme {
+  name: string;
+  colors: Record<string, string>;
+  fonts: Record<string, string>;
+}
+
+export interface SearchResult {
+  type: 'task' | 'subtask' | 'comment';
+  id: string;
+  title: string;
+  snippet: string;
+  relevance: number;
+}
+
+export interface ExportFormat {
+  type: 'json' | 'csv' | 'xlsx' | 'pdf';
+  options?: Record<string, any>;
+}
+
+export interface ImportResult {
+  success: boolean;
+  imported: number;
+  failed: number;
+  errors: string[];
+}
+
+export interface BackupData {
+  tasks: Task[];
+  metadata: any;
+  createdAt: Date;
+  version: string;
+}
+
+export interface SystemHealth {
+  status: 'healthy' | 'warning' | 'error';
+  checks: Record<string, boolean>;
+  lastCheck: Date;
+}
+
+export interface AuditLog {
+  id: string;
+  action: string;
+  resource: string;
+  resourceId: string;
+  user: string;
+  timestamp: Date;
+  details: Record<string, any>;
+}
+
+export interface IntegrationConfig {
+  id: string;
+  name: string;
+  type: string;
+  settings: Record<string, any>;
+  enabled: boolean;
+}
+
+export interface WebhookConfig {
+  id: string;
+  url: string;
+  events: string[];
+  headers?: Record<string, string>;
+  secret?: string;
+  enabled: boolean;
+  createdAt: Date;
+  lastTriggered?: Date;
+}
+
+export interface RolePermissions {
+  role: string;
+  permissions: string[];
+}
+
+export interface AccessControl {
+  userId: string;
+  role: string;
+  permissions: string[];
+  resources: string[];
+}

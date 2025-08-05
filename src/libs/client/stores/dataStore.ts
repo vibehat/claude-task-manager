@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { TaskMasterTask, SimpleDataState, User, Label, Status, Priority, Tag } from './types';
+import type { Task } from '../types/dataModels';
 import type { TaskMasterDataService } from '../services/taskMasterDataService';
 import { ApiTaskMasterDataService } from '../services/taskMasterDataService';
 

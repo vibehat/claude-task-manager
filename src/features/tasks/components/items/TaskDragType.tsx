@@ -21,14 +21,14 @@ interface TaskGridProps {
 
 // Custom DragLayer component to render the drag preview
 function TaskDragPreview({ task }: { task: Task }): React.JSX.Element {
-  const { getUserById: _getUserById, getStatusById, getPriorityById } = useDataStore();
-  const status = getStatusById(task.statusId);
-  const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
+  const priority = useDataStore((state) => state.prioritiesById[task.priorityId]);
+  const status = useDataStore((state) => state.statusesById[task.statusId]);
+
   return (
     <div className="w-full p-3 bg-background rounded-md border border-border/50 overflow-hidden">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
-          <PrioritySelector priority={priority} taskId={task.id} />
+          <PrioritySelector priority={priority?.id} taskId={task.id} />
           <span className="text-xs text-muted-foreground font-medium">{task.id}</span>
         </div>
         <StatusSelector status={status} taskId={task.id} />
@@ -77,9 +77,8 @@ export function CustomDragLayer(): React.JSX.Element | null {
 
 export function TaskGrid({ task }: TaskGridProps): React.JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
-  const { getUserById: _getUserById, getStatusById, getPriorityById } = useDataStore();
-  const status = getStatusById(task.statusId);
-  const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
+  const priority = useDataStore((state) => state.prioritiesById[task.priorityId]);
+  const status = useDataStore((state) => state.statusesById[task.statusId]);
 
   // Set up drag functionality.
   const [{ isDragging }, drag, preview] = useDrag(() => ({
@@ -117,7 +116,7 @@ export function TaskGrid({ task }: TaskGridProps): React.JSX.Element {
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-1.5">
-              <PrioritySelector priority={priority} taskId={task.id} />
+              <PrioritySelector priority={priority?.id} taskId={task.id} />
               <span className="text-xs text-muted-foreground font-medium">{task.id}</span>
             </div>
             <StatusSelector status={status} taskId={task.id} />

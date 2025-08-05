@@ -1,13 +1,13 @@
 'use client';
 
-import type { Task } from '@/libs/client/types/dataModels';
+import type { TaskMasterTask } from '@/libs/client/types';
 import type { FC } from 'react';
 import GroupTasksList from './GroupTasksList';
 import { createMockTagWithColor } from '@/libs/client/utils/tagUtils';
 import type { GroupItem } from '../../types/groupTypes';
 
 interface TaskListViewProps {
-  groupedTasks: Record<string, Task[]>;
+  groupedTasks: Record<string, TaskMasterTask[]>;
   groups?: GroupItem[];
   loading?: boolean;
   error?: Error | null;

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { TaskDetailsFragment } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 import { GitBranch, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SubtaskCreateForm } from './SubtaskCreateForm';
@@ -9,7 +9,7 @@ import { SubtaskItem } from './SubtaskItem';
 import { EmptySubtasks } from './EmptySubtasks';
 
 interface SubtasksSectionProps {
-  task: TaskDetailsFragment;
+  task: TaskMasterTask;
   disabled?: boolean;
 }
 

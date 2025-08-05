@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { Subtask } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +10,7 @@ import { Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SubtaskEditFormProps {
-  subtask: Subtask;
+  subtask: TaskMasterTask;
   onSuccess: () => void;
   onCancel: () => void;
 }

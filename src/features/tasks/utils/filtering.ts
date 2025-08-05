@@ -70,7 +70,7 @@ export function filterTasks(issues: Task[], filters: TaskFilterInput): Task[] {
 
     // Created date filter - optimized date comparison
     if (filters.createdAt) {
-      const issueTime = issue.createdAt.getTime();
+      const issueTime = new Date(issue.createdAt).getTime();
 
       if (filters.createdAt.from && issueTime < filters.createdAt.from.getTime()) {
         return false;

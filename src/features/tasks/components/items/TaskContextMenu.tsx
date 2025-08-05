@@ -8,14 +8,14 @@ import {
 import { Pencil, Trash2, CheckCircle2, Play, Expand, X, MessageCircle } from 'lucide-react';
 import React from 'react';
 import { useTaskSidePanelStore } from '@/store/taskSidePanelStore';
-import type { Task } from '@/libs/client/types';
+import type { Task, TaskMasterTask } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { toast } from 'sonner';
 import { taskMasterCLI } from '@/hooks/useTaskMasterCLI';
 
 interface TaskContextMenuProps {
   taskId?: string;
-  task?: Task;
+  task?: Task | TaskMasterTask;
 }
 
 export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.JSX.Element {
@@ -39,9 +39,9 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
     if (!task) return;
 
     try {
-      if (task.taskId) {
+      if (task.id) {
         // TaskMaster task - set status to in-progress
-        const taskMasterId = task.subtaskId || task.taskId.toString();
+        const taskMasterId = String(task.id);
         const result = await taskMasterCLI.setStatus(taskMasterId, 'in-progress');
 
         if (result.success) {
@@ -64,9 +64,9 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
     if (!task) return;
 
     try {
-      if (task.taskId) {
+      if (task.id) {
         // TaskMaster task - expand into subtasks
-        const result = await taskMasterCLI.expand(task.taskId.toString());
+        const result = await taskMasterCLI.expand(task.id.toString());
 
         if (result.success) {
           toast.success('Task expanded into subtasks');
@@ -93,9 +93,9 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
     if (!confirmed) return;
 
     try {
-      if (task.taskId) {
+      if (task.id) {
         // TaskMaster task - set status to cancelled
-        const taskMasterId = task.subtaskId || task.taskId.toString();
+        const taskMasterId = String(task.id);
         const result = await taskMasterCLI.setStatus(taskMasterId, 'cancelled');
 
         if (result.success) {
@@ -133,9 +133,9 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
     if (!confirmed) return;
 
     try {
-      if (task.taskId) {
+      if (task.id) {
         // TaskMaster task
-        const taskMasterId = task.subtaskId || task.taskId.toString();
+        const taskMasterId = String(task.id);
         const result = await taskMasterCLI.removeTask(taskMasterId, true);
 
         if (result.success) {
@@ -146,7 +146,7 @@ export function TaskContextMenu({ taskId, task }: TaskContextMenuProps): React.J
       } else {
         // Regular task
         const { deleteTask } = useDataStore.getState();
-        deleteTask(task.id);
+        deleteTask(String(task.id));
         toast.success('Task deleted successfully');
       }
     } catch (error) {

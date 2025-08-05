@@ -20,7 +20,7 @@ export function useTaskMasterSync() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>({ connected: false });
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { forceSyncTaskMaster } = useDataStore();
+  const forceSyncTaskMaster = useDataStore((state) => state.forceSyncTaskMaster);
 
   const connect = async () => {
     try {

@@ -15,7 +15,7 @@ export function SubtasksSection({
   disabled = false,
 }: SubtasksSectionProps): React.JSX.Element | null {
   // If the task doesn't have a subtask, don't render anything
-  if (!task.subtaskId) {
+  if (!task.id) {
     return null;
   }
 

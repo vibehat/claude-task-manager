@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 
 export function UpdateTaskModal(): React.JSX.Element {
   const { isOpen, task, closeModal } = useUpdateTaskStore();
-  const { updateTask } = useDataStore();
+  const updateTask = useDataStore((state) => state.updateTask);
   const [updating, setUpdating] = useState(false);
 
   // Form state

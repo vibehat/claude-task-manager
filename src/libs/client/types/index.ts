@@ -1,29 +1,108 @@
-// Re-export all types from dataModels for easy imports
-export type { User, Tag, Label, TaskStatus, TaskPriority, Task, Subtask } from './dataModels';
+// Re-export all types from individual modules
+export type {
+  TaskMasterTask,
+  TaskMasterTasks,
+  TaskMasterState,
+  User,
+  Label,
+  Status,
+  Priority,
+  Tag,
+  Task,
+  ManagerData,
+  TaskStatus,
+} from './dataModels';
 
-// Import types for legacy compatibility
-import type { Tag, Label, TaskStatus, TaskPriority, Task } from './dataModels';
+// Import Task for type aliases
+import type { Task } from './dataModels';
 
-// Legacy type aliases for compatibility
-export type GetTasksQuery = {
-  tasks: Task[];
-};
+// Define TaskDetails as the new name for TaskDetailsFragment
+export type TaskDetails = Task;
+// Keep TaskDetailsFragment for backward compatibility (will be removed)
+export type TaskDetailsFragment = Task;
 
-export type GetTaskStatusesQuery = {
-  taskStatuses: TaskStatus[];
-};
-
-export type TaskDetailsFragment = Task & {
-  tag?: Tag;
-  labels?: Label[];
-  priority?: TaskPriority;
-  status?: TaskStatus;
-};
-
-// Where clause types for filtering
-export interface TaskWhereInput {
-  statusId?: { in: string[]; equals?: string };
-  priorityId?: { in: string[]; equals?: string };
-  tagId?: { in: string[]; equals?: string };
-  labels?: { some: { labelId: { in: string[] } } };
+// Query and filter types
+export interface GetTasksQuery {
+  where?: TaskWhereInput;
+  orderBy?: any;
+  limit?: number;
+  offset?: number;
 }
+
+export interface GetTaskStatusesQuery {
+  where?: any;
+  orderBy?: any;
+}
+
+export interface TaskWhereInput {
+  id?: string | string[] | { in: string[] };
+  title?: string;
+  statusId?: { in: string[] };
+  priorityId?: { in: string[] };
+  tagId?: { in: string[] };
+  assigneeId?: { in: string[] };
+  labelIds?: string | string[];
+  labels?: {
+    some?: {
+      labelId?: {
+        in?: string[];
+      };
+    };
+  };
+  createdAt?: {
+    gte?: string;
+    lte?: string;
+  };
+  updatedAt?: {
+    gte?: string;
+    lte?: string;
+  };
+}
+
+export type {
+  Task as TaskMasterTaskType,
+  Subtask,
+  TaskStatus as TaskMasterStatus,
+  TaskPriority,
+  TasksData,
+  ApiResponse,
+  TasksResponse,
+  TaskResponse,
+  CLIExecuteRequest,
+  CLIExecuteResponse,
+  FileWatchEvent,
+  TaskMasterConfig,
+  TaskFilter,
+  TaskUpdate,
+  CreateTaskRequest,
+  APIError,
+  TaskMasterAPIError,
+} from './taskmaster';
+
+export type {
+  ExtendedTask,
+  TaskAnalytics,
+  TeamMember,
+  ProjectStats,
+  FilterCriteria,
+  SortCriteria,
+  BulkAction,
+  TaskActivity,
+  TaskComment,
+  TaskAttachment,
+  NotificationPreferences,
+  UserPreferences,
+  ProjectSettings,
+  DashboardConfig,
+  Theme,
+  SearchResult,
+  ExportFormat,
+  ImportResult,
+  BackupData,
+  SystemHealth,
+  AuditLog,
+  IntegrationConfig,
+  WebhookConfig,
+  RolePermissions,
+  AccessControl,
+} from './extended';

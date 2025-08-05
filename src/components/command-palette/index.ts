@@ -15,7 +15,6 @@ export { useCommandPaletteState } from './hooks/useCommandPaletteState';
 
 // Component types
 export {
-  CommandMode,
   createActionCommand,
   createSelectCommand,
   createInputCommand,
@@ -24,3 +23,4 @@ export {
   createCompositeCommand,
   createSearchCommand,
 } from './types';
+export type { CommandMode } from './types';

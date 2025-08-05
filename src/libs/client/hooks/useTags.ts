@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDataStore, useAllTags, useTagDetail } from '../stores';
+import { useDataStore, useAllTags } from '../stores';
 
 export function useTags() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>(undefined);
 
   const tags = useAllTags();
-  const { isInitialized, initialize } = useDataStore();
+  const isInitialized = useDataStore((state) => state.isInitialized);
+  const initialize = useDataStore((state) => state.initialize);
 
   useEffect(() => {
     if (!isInitialized) {
@@ -29,7 +30,8 @@ export function useTags() {
 }
 
 export function useTag(id: string | undefined) {
-  const tag = useTagDetail(id || '');
+  // TODO: Implement useTagDetail in store
+  const tag = null; // Placeholder
 
   return {
     data: id ? tag : undefined,

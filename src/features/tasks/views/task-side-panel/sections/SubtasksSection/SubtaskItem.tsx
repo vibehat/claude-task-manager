@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { TaskDetailsFragment, Subtask } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -23,8 +23,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { SubtaskEditForm } from './SubtaskEditForm';
 
 interface SubtaskItemProps {
-  subtask: Subtask;
-  parentTask: TaskDetailsFragment;
+  subtask: TaskMasterTask;
+  parentTask: TaskMasterTask;
   disabled?: boolean;
 }
 
@@ -119,7 +119,7 @@ export function SubtaskItem({ subtask, parentTask: _parentTask, disabled }: Subt
       <CardContent className="px-1 py-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            {getStatusIcon(subtask?.statusId)}
+            {getStatusIcon(subtask?.status)}
             <span className="text-xs text-muted-foreground font-mono">{subtask?.id}</span>
             <button
               className="text-sm font-medium line-clamp-1 flex-1 text-left hover:underline"

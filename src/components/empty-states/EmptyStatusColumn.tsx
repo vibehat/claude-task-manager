@@ -3,10 +3,10 @@
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useCreateTaskStore } from '@/store/createTaskStore';
-import type { TaskStatus } from '@/libs/client/types/dataModels';
+import type { Status } from '@/libs/client/types/dataModels';
 
 interface EmptyStatusColumnProps {
-  status: TaskStatus;
+  status: Status;
   variant?: 'list' | 'grid';
 }
 

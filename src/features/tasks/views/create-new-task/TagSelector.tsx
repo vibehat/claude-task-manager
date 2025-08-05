@@ -10,8 +10,8 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import type { Tag } from '@/libs/client/types/dataModels';
-import { useAllTags } from '@/libs/client/stores';
+import type { Tag } from '@/mock-data/tags';
+import { tags } from '@/mock-data/tags';
 import { Box, CheckIcon, TagIcon, Hash } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
@@ -24,7 +24,7 @@ export function TagSelector({ tag, onChange }: TagSelectorProps): React.JSX.Elem
   const id = useId();
   const [open, setOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string | undefined>(tag?.id);
-  const tags = useAllTags();
+  // const tags = useAllTags(); // Using mock data for now
 
   useEffect(() => {
     setValue(tag?.id);

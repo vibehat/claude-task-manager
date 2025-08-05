@@ -1,3 +1,4 @@
+// Re-export components
 export {
   Terminal,
   TerminalStatus,
@@ -6,35 +7,37 @@ export {
   MultiTerminalManager,
   MultiTerminalWrapper,
   XTermStyles,
-  TerminalComponentProps,
-  TerminalStatusProps,
-  PersistentTerminalProps,
 } from './components';
-export { TerminalProvider, useTerminalContext } from './contexts/TerminalContext';
+
+// Re-export contexts
+export { default as TerminalProvider, useTerminalContext } from './contexts/TerminalContext';
+
+// Re-export hooks
 export { useTerminal } from './hooks/useTerminal';
 export { useIndividualTerminal } from './hooks/useIndividualTerminal';
-export {
-  TerminalMessage,
-  TerminalResizeData,
-  TerminalDimensions,
-  TerminalSession,
-  TerminalConnectionStatus,
-  TerminalConfig,
-  TerminalTheme,
-  TerminalServerStatus,
-  UseTerminalReturn,
+
+// Re-export types
+export type {
   TerminalComponentProps,
   TerminalStatusProps,
-  MultiTerminalInstance,
-  MultiTerminalContextValue,
   PersistentTerminalProps,
+  MultiTerminalInstance,
+  TerminalConfig,
+  TerminalMessage,
+  TerminalDimensions,
+  TerminalSession,
 } from './types/terminal';
+
+// Re-export utils
 export {
-  lightTheme,
-  darkTheme,
   defaultTerminalConfig,
   getXTermConfig,
   getThemeForMode,
-  getWebSocketUrl,
+  lightTheme,
+  darkTheme,
 } from './utils/terminalConfig';
-export { TerminalProviderWrapper } from './contexts/TerminalProviderWrapper';
+export {
+  TerminalStartupManager,
+  terminalStartupManager,
+  useTerminalStartup,
+} from './utils/terminalStartup';

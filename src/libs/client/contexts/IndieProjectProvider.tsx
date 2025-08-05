@@ -39,7 +39,8 @@ export function IndieProjectProvider({ children }: IndieProjectProviderProps) {
   const [error, setError] = React.useState<string | null>(null);
 
   // Initialize data store
-  const { initialize, isInitialized } = useDataStore();
+  const initialize = useDataStore((state) => state.initialize);
+  const isInitialized = useDataStore((state) => state.isInitialized);
 
   React.useEffect(() => {
     if (!isInitialized) {

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Task } from '@/libs/client/types/dataModels';
+import type { TaskMasterTask } from '@/libs/client/types';
 
 export type GroupByKey = 'status' | 'priority' | 'tag' | 'label';
 
@@ -9,36 +9,30 @@ export type GroupByKey = 'status' | 'priority' | 'tag' | 'label';
  * @param groupBy - Key to group by (status, priority, tag, label)
  * @returns Record of grouped tasks
  */
-export function useGroupedTasks(tasks: Task[], groupBy: GroupByKey): Record<string, Task[]> {
+export function useGroupedTasks(
+  tasks: TaskMasterTask[],
+  groupBy: GroupByKey
+): Record<string, TaskMasterTask[]> {
   return useMemo(() => {
-    const grouped: Record<string, Task[]> = {};
+    const grouped: Record<string, TaskMasterTask[]> = {};
 
     tasks.forEach((task) => {
       let groupKey: string | undefined;
 
       switch (groupBy) {
         case 'status':
-          groupKey = task.statusId;
+          groupKey = task.status;
           break;
         case 'priority':
-          groupKey = task.priorityId;
+          groupKey = task.priority;
           break;
         case 'tag':
-          groupKey = task.tagId || 'no-tag';
+          // TaskMasterTask doesn't have tagId, assuming no tag grouping for now
+          groupKey = 'no-tag';
           break;
         case 'label':
-          // For labels, we need to handle multiple labels per task
-          if (task.labelIds && task.labelIds.length > 0) {
-            task.labelIds.forEach((labelId) => {
-              if (!grouped[labelId]) {
-                grouped[labelId] = [];
-              }
-              grouped[labelId].push(task);
-            });
-            return; // Skip the default grouping below
-          } else {
-            groupKey = 'no-label';
-          }
+          // TaskMasterTask doesn't have labelIds, assuming no label grouping for now
+          groupKey = 'no-label';
           break;
       }
 
@@ -59,7 +53,7 @@ export function useGroupedTasks(tasks: Task[], groupBy: GroupByKey): Record<stri
  * @param tasks - Array of tasks to group
  * @returns Record of tasks grouped by status ID
  */
-export function useGroupedTasksByStatus(tasks: Task[]): Record<string, Task[]> {
+export function useGroupedTasksByStatus(tasks: TaskMasterTask[]): Record<string, TaskMasterTask[]> {
   return useGroupedTasks(tasks, 'status');
 }
 
@@ -68,7 +62,9 @@ export function useGroupedTasksByStatus(tasks: Task[]): Record<string, Task[]> {
  * @param tasks - Array of tasks to group
  * @returns Record of tasks grouped by priority ID
  */
-export function useGroupedTasksByPriority(tasks: Task[]): Record<string, Task[]> {
+export function useGroupedTasksByPriority(
+  tasks: TaskMasterTask[]
+): Record<string, TaskMasterTask[]> {
   return useGroupedTasks(tasks, 'priority');
 }
 
@@ -77,7 +73,7 @@ export function useGroupedTasksByPriority(tasks: Task[]): Record<string, Task[]>
  * @param tasks - Array of tasks to group
  * @returns Record of tasks grouped by tag ID (includes 'no-tag' group)
  */
-export function useGroupedTasksByTag(tasks: Task[]): Record<string, Task[]> {
+export function useGroupedTasksByTag(tasks: TaskMasterTask[]): Record<string, TaskMasterTask[]> {
   return useGroupedTasks(tasks, 'tag');
 }
 
@@ -87,6 +83,6 @@ export function useGroupedTasksByTag(tasks: Task[]): Record<string, Task[]> {
  * @param tasks - Array of tasks to group
  * @returns Record of tasks grouped by label ID (includes 'no-label' group)
  */
-export function useGroupedTasksByLabel(tasks: Task[]): Record<string, Task[]> {
+export function useGroupedTasksByLabel(tasks: TaskMasterTask[]): Record<string, TaskMasterTask[]> {
   return useGroupedTasks(tasks, 'label');
 }

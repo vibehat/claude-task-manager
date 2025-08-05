@@ -42,7 +42,7 @@ async function executeCLI(request: CLIRequest): Promise<CLIResult> {
 export function useTaskMasterCLI() {
   const [isExecuting, setIsExecuting] = useState(false);
   const [lastResult, setLastResult] = useState<CLIResult | null>(null);
-  const { forceSyncTaskMaster } = useDataStore();
+  const forceSyncTaskMaster = useDataStore((state) => state.forceSyncTaskMaster);
 
   const execute = async (request: CLIRequest) => {
     setIsExecuting(true);

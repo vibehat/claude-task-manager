@@ -6,10 +6,10 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FileText, TestTube, Edit2 } from 'lucide-react';
 import { RichMarkdownEditor, MarkdownViewer } from '../../../components/editors/RichMarkdownEditor';
-import type { Task } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 
 interface TaskInfoSectionProps {
-  task: Task;
+  task: TaskMasterTask;
   onDescriptionSave?: (value: string) => void;
   onDetailsSave?: (value: string) => void;
   onTestStrategySave?: (value: string) => void;

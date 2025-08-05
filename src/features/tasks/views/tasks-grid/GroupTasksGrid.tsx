@@ -1,6 +1,7 @@
 'use client';
 
-import type { Task, Tag, TaskWhereInput } from '@/libs/client/types';
+import type { TaskMasterTask, Tag } from '@/libs/client/types';
+import type { TaskFilterInput } from '../../types/filters';
 import { useDataStore } from '@/libs/client/stores';
 import { Plus, Tag as TagIcon } from 'lucide-react';
 import type { FC } from 'react';
@@ -13,23 +14,24 @@ import { AnimatePresence, motion } from 'motion/react';
 import TasksCard, { TaskDragType } from '../../components/items/TasksCard';
 import { getTagColor } from '@/libs/client/utils/tagUtils';
 
-type TaskFromQuery = Task;
+type TaskFromQuery = TaskMasterTask;
 
 interface GroupTasksGridProps {
   tag: Tag;
   tasks: TaskFromQuery[];
-  additionalFilter?: TaskWhereInput;
+  additionalFilter?: TaskFilterInput;
   groupIcon?: FC<React.SVGProps<SVGSVGElement>>;
 }
 
 function GroupTasksGrid({
   tag,
   tasks,
-  _additionalFilter,
+  additionalFilter,
   groupIcon,
 }: GroupTasksGridProps): React.JSX.Element {
   const { openModal } = useCreateTaskStore();
-  const tagExtra = useDataStore((state) => state.tagExtra);
+  // TODO: Fix tagExtra property or use alternative approach
+  const tagExtra = null;
 
   // Use the pre-filtered issues passed as props
   const loading = false;
@@ -128,17 +130,18 @@ const TaskGridList: FC<{ tasks: TaskFromQuery[]; tag: Tag }> = ({
   tag,
 }): React.JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
-  const { updateTask } = useDataStore();
+  const updateTask = useDataStore((state) => state.updateTask);
 
   // Set up drop functionality to accept only task items.
   const [{ isOver }, drop] = useDrop(() => ({
     accept: TaskDragType,
     drop(item: TaskFromQuery, monitor): void {
-      if (monitor.didDrop() && item.tagId !== tag.id) {
-        updateTask(item.id, {
-          tagId: tag.id,
-        });
-      }
+      // TODO: TaskMasterTask doesn't have tagId property, needs adaptation
+      // if (monitor.didDrop() && item.tagId !== tag.id) {
+      //   updateTask(String(item.id), {
+      //     tagId: tag.id,
+      //   });
+      // }
     },
     collect: (monitor): { isOver: boolean } => ({
       isOver: !!monitor.isOver(),

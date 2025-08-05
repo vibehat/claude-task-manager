@@ -93,8 +93,8 @@ export function ComplexityAnalysis({ complexityReport, loading = false }: Comple
         </CardHeader>
         <CardContent className="space-y-4">
           {mostComplex.length > 0 ? (
-            mostComplex.map((task) => (
-              <div key={task.taskId} className="flex items-center justify-between">
+            mostComplex.map((task, index) => (
+              <div key={index} className="flex items-center justify-between">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{task.taskTitle}</p>
                   <p className="text-xs text-muted-foreground">

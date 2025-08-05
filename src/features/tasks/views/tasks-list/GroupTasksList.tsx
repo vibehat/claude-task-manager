@@ -1,6 +1,6 @@
 'use client';
 
-import type { Tag, Task } from '@/libs/client/types/dataModels';
+import type { Tag, TaskMasterTask } from '@/libs/client/types';
 import type { FC } from 'react';
 import { Plus, Tag as TagIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,13 +12,14 @@ import { getTagColor } from '@/libs/client/utils/tagUtils';
 
 interface GroupTasksListProps {
   tag: Tag;
-  tasks: Task[];
+  tasks: TaskMasterTask[];
   groupIcon?: FC<React.SVGProps<SVGSVGElement>>;
 }
 
 function GroupTasksList({ tag, tasks, groupIcon }: GroupTasksListProps): React.JSX.Element {
   const { openModal } = useCreateTaskStore();
-  const tagExtra = useDataStore((state) => state.tagExtra);
+  // TODO: Fix tagExtra property or use alternative approach
+  const tagExtra = null;
 
   // Sort the pre-filtered tasks by priority
   const sortedTasks = useSortTasksByPriority(tasks);

@@ -3,7 +3,7 @@ export { useDataStore, createDataStore } from './dataStore';
 export { useFuzzySearchStore } from './fuzzySearchStore';
 
 // Re-export types
-export {
+export type {
   TaskMasterTask,
   TaskMasterTasks,
   TaskMasterState,

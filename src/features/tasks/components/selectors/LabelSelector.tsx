@@ -14,16 +14,10 @@ import { useAllLabels } from '@/libs/client/stores';
 import { CheckIcon, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/libs/client/utils';
+import type { Label } from '../../types/taskTypes';
 
 interface LabelSelectorProps {
-  selectedLabels: Array<{
-    id: string;
-    label: {
-      id: string;
-      name: string;
-      color: string;
-    };
-  }>;
+  selectedLabels: Label[];
   onChange: (labelIds: string[]) => void;
   disabled?: boolean;
 }
@@ -63,13 +57,13 @@ export function LabelSelector({
   };
 
   const handleLabelToggle = (label: { id: string; name: string; color: string }): void => {
-    const isSelected = selectedLabels.some((l) => l.label.id === label.id);
+    const isSelected = selectedLabels.some((l) => l.id === label.id);
     let newLabelIds: string[];
 
     if (isSelected) {
-      newLabelIds = selectedLabels.filter((l) => l.label.id !== label.id).map((l) => l.label.id);
+      newLabelIds = selectedLabels.filter((l) => l.id !== label.id).map((l) => l.id);
     } else {
-      newLabelIds = [...selectedLabels.map((l) => l.label.id), label.id];
+      newLabelIds = [...selectedLabels.map((l) => l.id), label.id];
     }
 
     onChange(newLabelIds);
@@ -117,10 +111,10 @@ export function LabelSelector({
                 >
                   <span
                     className="size-1.5 rounded-full shrink-0"
-                    style={{ backgroundColor: issueLabel.label.color }}
+                    style={{ backgroundColor: issueLabel.color }}
                     aria-hidden="true"
                   />
-                  <span className="truncate max-w-[80px]">{issueLabel.label.name}</span>
+                  <span className="truncate max-w-[80px]">{issueLabel.name}</span>
                 </div>
               ))}
             </div>
@@ -148,7 +142,7 @@ export function LabelSelector({
             )}
             <CommandGroup>
               {filteredLabels.map((label) => {
-                const isSelected = selectedLabels.some((l) => l.label.id === label.id);
+                const isSelected = selectedLabels.some((l) => l.id === label.id);
                 return (
                   <CommandItem
                     key={label.id}

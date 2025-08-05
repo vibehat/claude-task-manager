@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { TaskDetailsFragment } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,12 +10,12 @@ import { Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SubtaskCreateFormProps {
-  task: TaskDetailsFragment;
+  task: TaskMasterTask;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
-export function SubtaskCreateForm({ _task, onSuccess, onCancel }: SubtaskCreateFormProps) {
+export function SubtaskCreateForm({ onSuccess, onCancel }: SubtaskCreateFormProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);

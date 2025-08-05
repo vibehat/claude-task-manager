@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDataStore, useAllPriorities, usePriorityDetail } from '../stores';
+import { useDataStore, useAllPriorities } from '../stores';
 
 export function usePriorities() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>(undefined);
 
   const priorities = useAllPriorities();
-  const { isInitialized, initialize } = useDataStore();
+  const isInitialized = useDataStore((state) => state.isInitialized);
+  const initialize = useDataStore((state) => state.initialize);
 
   useEffect(() => {
     if (!isInitialized) {
@@ -29,10 +30,11 @@ export function usePriorities() {
 }
 
 export function usePriority(id: string | undefined) {
-  const priority = usePriorityDetail(id || '');
+  // TODO: Implement usePriorityDetail in store
+  // const priority = usePriorityDetail(id || '');
 
   return {
-    data: id ? priority : undefined,
+    data: id ? undefined : undefined, // TODO: return actual priority data
     loading: false,
     error: undefined,
   };

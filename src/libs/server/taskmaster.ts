@@ -351,7 +351,7 @@ export class TaskMasterCLI {
 export const taskMasterCLI = new TaskMasterCLI();
 
 // Re-export types for convenience
-export {
+export type {
   Task,
   Subtask,
   TaskStatus,

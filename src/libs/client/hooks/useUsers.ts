@@ -8,7 +8,8 @@ export function useUsers() {
 
   // const users = useAllUsers(); // TODO: Not implemented yet
   const users: any[] = []; // Temporary empty array
-  const { isInitialized, initialize } = useDataStore();
+  const isInitialized = useDataStore((state) => state.isInitialized);
+  const initialize = useDataStore((state) => state.initialize);
 
   useEffect(() => {
     if (!isInitialized) {

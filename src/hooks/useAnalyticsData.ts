@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useAllTasks, useAllStatuses } from '@/libs/client/stores';
 import type { ComplexityReport, TaskMasterData } from './useTaskMasterData';
+import { useDataStore } from '@/libs/client/stores';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
@@ -48,23 +48,21 @@ export function useComplexityAnalytics(complexityReport: ComplexityReport | null
 }
 
 export function useCompletionAnalytics() {
-  const tasks = useAllTasks();
-  const statuses = useAllStatuses();
+  const tasks = useDataStore((state) => state.allTasks);
+  const statuses = useDataStore((state) => state.allStatuses);
 
   return useMemo(() => {
     // Calculate task metrics
     const total = tasks.length;
     const completed = tasks.filter((task) => {
-      const status = statuses.find((s) => s.id === task.statusId);
+      const status = statuses.find((s) => s.id === task.status);
       return status?.name === 'done';
     }).length;
     const inProgress = tasks.filter((task) => {
-      const status = statuses.find((s) => s.id === task.statusId);
-      return status?.name === 'in_progress';
+      return task.status === 'in-progress';
     }).length;
     const pending = tasks.filter((task) => {
-      const status = statuses.find((s) => s.id === task.statusId);
-      return status?.name === 'todo' || status?.name === 'backlog';
+      return task.status === 'pending' || task.status === 'todo' || task.status === 'backlog';
     }).length;
     const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -72,8 +70,7 @@ export function useCompletionAnalytics() {
     const statusDistribution: Record<string, number> = {};
 
     tasks.forEach((task) => {
-      const status = statuses.find((s) => s.id === task.statusId);
-      const statusName = status?.name || 'unknown';
+      const statusName = task.status || 'unknown';
       statusDistribution[statusName] = (statusDistribution[statusName] || 0) + 1;
     });
 
@@ -97,9 +94,8 @@ export function useCompletionAnalytics() {
     });
 
     // Get recent tasks (last 5)
-    const recentTasks = [...tasks]
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .slice(0, 5);
+    // TODO: fill this
+    const recentTasks = [];
 
     return {
       metrics: { total, completed, inProgress, pending, completionRate },

@@ -1,6 +1,5 @@
 'use client';
 
-import type { Task } from '@/libs/client/types';
 import { useDataStore } from '@/libs/client/stores/dataStore';
 import { format } from 'date-fns';
 import { Calendar, Clock, Flag, Hash, Tag } from 'lucide-react';
@@ -8,9 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { StatusSelector } from '../../../components/selectors/StatusSelector';
 import { PrioritySelector } from '../../../components/selectors/PrioritySelector';
 import { LabelSelector } from '../../../components/selectors/LabelSelector';
+import type { TaskMasterTask } from '@/libs/client/stores/types';
 
 interface TaskDetailsSectionProps {
-  task: Task;
+  task: TaskMasterTask;
   onLabelsUpdate?: (labelIds: string[]) => void;
 }
 
@@ -18,17 +18,18 @@ export function TaskDetailsSection({
   task,
   onLabelsUpdate,
 }: TaskDetailsSectionProps): React.JSX.Element {
-  const { getUserById, getStatusById, getPriorityById, getLabelById } = useDataStore();
+  // TaskMasterTask has status and priority as strings, not IDs
+  const allStatuses = useDataStore((state) => state.allStatuses);
+  const allPriorities = useDataStore((state) => state.allPriorities);
 
-  // Get related data
-  const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
-  const status = getStatusById(task.statusId);
-  const labels = task.labelIds
-    .map((id) => {
-      const label = getLabelById(id);
-      return label ? { id, label } : null;
-    })
-    .filter(Boolean);
+  const status = allStatuses?.find((s) => s.name.toLowerCase() === task.status?.toLowerCase());
+  const priority = allPriorities?.find(
+    (p) => p.name.toLowerCase() === task.priority?.toLowerCase()
+  );
+
+  // TaskMasterTask doesn't have labelIds - this will need to be adapted later
+  const labels: any[] = [];
+
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-medium">Details</h3>
@@ -41,7 +42,7 @@ export function TaskDetailsSection({
             <span>Priority</span>
           </div>
           <div className="flex items-center gap-2">
-            <PrioritySelector priority={priority} taskId={task.id} />
+            <PrioritySelector priority={priority?.name} taskId={String(task.id)} />
           </div>
         </div>
 
@@ -52,7 +53,7 @@ export function TaskDetailsSection({
             <span>Status</span>
           </div>
           <div className="flex items-center gap-2">
-            <StatusSelector status={status} taskId={task.id} />
+            <StatusSelector status={status} taskId={String(task.id)} />
           </div>
         </div>
 
@@ -71,14 +72,14 @@ export function TaskDetailsSection({
           </div>
         </div>
 
-        {/* Tag */}
-        {task.tagId && (
+        {/* Tag - TaskMasterTask doesn't have tagId */}
+        {false && (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Hash className="h-4 w-4" />
               <span>Tag</span>
             </div>
-            <Badge variant="outline">Tag ID: {task.tagId}</Badge>
+            <Badge variant="outline">Tag ID: N/A</Badge>
           </div>
         )}
 
@@ -105,10 +106,8 @@ export function TaskDetailsSection({
             <span>Created</span>
           </div>
           <span className="text-sm text-muted-foreground">
-            {(() => {
-              const date = new Date(task.createdAt);
-              return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
-            })()}
+            {/* TaskMasterTask doesn't have createdAt */}
+            N/A
           </span>
         </div>
 
@@ -119,10 +118,8 @@ export function TaskDetailsSection({
             <span>Updated</span>
           </div>
           <span className="text-sm text-muted-foreground">
-            {(() => {
-              const date = new Date(task.updatedAt);
-              return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
-            })()}
+            {/* TaskMasterTask doesn't have updatedAt */}
+            N/A
           </span>
         </div>
       </div>

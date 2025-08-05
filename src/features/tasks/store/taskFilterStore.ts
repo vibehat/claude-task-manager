@@ -1,27 +1,11 @@
 import { create } from 'zustand';
-import type { TaskWhereInput } from '@/libs/client/types';
+import type { TaskFilterInput, FilterState, FilterType } from '../types/filters';
 
-export type FilterType = 'status' | 'priority' | 'labels' | 'tag';
-
-export interface FilterState {
-  // Direct TaskWhereInput storage
-  where: TaskWhereInput;
-
-  // Actions
-  setFilter: (type: FilterType, ids: string[]) => void;
-  toggleFilter: (type: FilterType, id: string) => void;
-  clearFilters: () => void;
-  clearFilterType: (type: FilterType) => void;
-  setWhere: (where: TaskWhereInput) => void;
-
-  // Utility
-  hasActiveFilters: () => boolean;
-  getActiveFiltersCount: () => number;
-  getFilterIds: (type: FilterType) => string[];
-}
+// Re-export types for convenience
+export type { TaskFilterInput, FilterState, FilterType };
 
 export const useTasksFilterStore = create<FilterState>((set, get) => ({
-  // Initial state - direct TaskWhereInput
+  // Initial state - direct TaskFilterInput
   // Filter for main tasks (no subtask hierarchy needed)
   where: {},
   // Note: parentTaskId filtering removed - using taskId/subtaskId for hierarchy

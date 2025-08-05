@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { TaskPriority } from '@/libs/client/types';
+import type { Priority } from '@/libs/client/types';
 import {
   NoPriorityIcon,
   UrgentPriorityIcon,
@@ -27,7 +27,7 @@ const iconMapById: Record<string, FC<React.SVGProps<SVGSVGElement>>> = {
 };
 
 export function getTaskPriorityIcon(
-  priority: Pick<TaskPriority, 'id' | 'name'>
+  priority: Pick<Priority, 'id' | 'name'>
 ): FC<React.SVGProps<SVGSVGElement>> {
   // Try mapping by ID first (more reliable)
   const iconById = iconMapById[priority.id];
@@ -46,7 +46,7 @@ export function getTaskPriorityIcon(
 }
 
 export function useTaskPriorityIcon(
-  priority: Pick<TaskPriority, 'id' | 'name'>
+  priority: Pick<Priority, 'id' | 'name'>
 ): FC<React.SVGProps<SVGSVGElement>> {
   return getTaskPriorityIcon(priority);
 }

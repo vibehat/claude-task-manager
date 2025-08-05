@@ -6,10 +6,10 @@ import {
   createInputWithActionsCommand,
   createCompositeCommand,
   createSearchCommand,
-  type CommandModule,
 } from '../types';
 import { toast } from 'sonner';
 import { FileIcon, FolderIcon, SettingsIcon, PlusIcon, StarIcon, UserIcon } from 'lucide-react';
+import type { CommandModule } from '@/components/command-palette/types';
 
 export const exampleModule: CommandModule = {
   id: 'example',

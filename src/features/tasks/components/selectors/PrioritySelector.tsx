@@ -32,17 +32,17 @@ import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
-  priority: Pick<TaskPriority, 'id' | 'name'> | string | null | undefined;
+  priority: TaskPriority | string | null | undefined;
   taskId?: string;
 }
 
 export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): React.JSX.Element {
   const id = useId();
   const [open, setOpen] = useState<boolean>(false);
-  const priorityId = typeof priority === 'string' ? priority : priority?.id;
+  const priorityId = typeof priority === 'string' ? priority : priority;
   const [value, setValue] = useState<string>(priorityId || 'no-priority');
 
-  const { updateTask } = useDataStore();
+  const updateTask = useDataStore((state) => state.updateTask);
   const priorities = useAllPriorities();
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function PrioritySelector({ priority, taskId }: PrioritySelectorProps): R
 
     if (taskId) {
       try {
-        await updateTask(taskId, { priorityId });
+        await updateTask(taskId, { priority: priorityId });
       } catch (error) {
         console.error('Failed to update task priority:', error);
       }

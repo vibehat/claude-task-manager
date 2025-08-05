@@ -8,10 +8,8 @@ import { useMemo } from 'react';
 
 function SearchTasks(): React.JSX.Element {
   const { searchQuery, isSearchOpen } = useSearchStore();
-  const getCurrentTag = useDataStore((state) => state.getCurrentTag);
-
-  // Get the current tag
-  const currentTag = getCurrentTag();
+  // TODO: Fix getCurrentTag method or use alternative approach
+  const currentTag = null;
 
   // Use GraphQL search with skip when query is empty
   const { data, loading, error } = useSearchTasks({

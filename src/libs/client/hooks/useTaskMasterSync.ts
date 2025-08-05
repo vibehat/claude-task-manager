@@ -1,245 +1,101 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDataStore, useAllTasks } from '../stores';
-import type { Task } from '../types/dataModels';
-
-// TODO: Implement SyncOptions type when syncService is created
-interface SyncOptions {
-  enableRealTimeSync?: boolean;
-  tagName?: string;
-}
+import { useCallback, useMemo } from 'react';
+import { useDataStore } from '../stores';
+import type { TaskMasterTask } from '../stores/types';
 
 export interface UseTaskMasterSyncResult {
   // State
-  isEnabled: boolean;
-  syncStatus: 'idle' | 'syncing' | 'synced' | 'error';
-  error: string | null;
-  isRealTimeSyncActive: boolean;
   isLoading: boolean;
+  isInitialized: boolean;
 
   // Data
-  taskMasterTasks: Task[];
-  taskMasterStats: {
+  tasks: TaskMasterTask[];
+  taskStats: {
     totalTasks: number;
     totalSubtasks: number;
     tasksByStatus: Record<string, number>;
     tasksByPriority: Record<string, number>;
-  } | null;
+  };
 
   // Actions
-  enableSync: (options?: SyncOptions) => Promise<void>;
-  disableSync: () => Promise<void>;
-  forceSync: (tagName?: string) => Promise<void>;
-  toggleRealTimeSync: (enabled: boolean, options?: SyncOptions) => Promise<void>;
-  refreshStats: (tagName?: string) => Promise<void>;
+  initialize: () => Promise<void>;
+  forceSync: () => Promise<void>;
+  reset: () => void;
 }
 
-export interface UseTaskMasterSyncOptions {
-  autoEnable?: boolean;
-  enableRealTimeSync?: boolean;
-  tagName?: string;
-  syncOptions?: SyncOptions;
-  onSyncComplete?: (tasks: Task[]) => void;
-  onSyncError?: (error: Error) => void;
-}
+export function useTaskMasterSync(): UseTaskMasterSyncResult {
+  const allTasks = useDataStore((state) => state.allTasks);
+  const isLoading = useDataStore((state) => state.isLoading);
+  const isInitialized = useDataStore((state) => state.isInitialized);
+  const initialize = useDataStore((state) => state.initialize);
+  const forceSyncTaskMaster = useDataStore((state) => state.forceSyncTaskMaster);
+  const reset = useDataStore((state) => state.reset);
 
-export function useTaskMasterSync(options: UseTaskMasterSyncOptions = {}): UseTaskMasterSyncResult {
-  const {
-    autoEnable = false,
-    enableRealTimeSync = true,
-    tagName = 'master',
-    syncOptions = {},
-    onSyncComplete,
-    onSyncError,
-  } = options;
+  // Calculate stats from current tasks
+  const taskStats = useMemo(() => {
+    const totalTasks = allTasks.length;
+    const totalSubtasks = allTasks.reduce((count, task) => count + (task.subtasks?.length || 0), 0);
 
-  const {
-    isTaskMasterEnabled,
-    taskMasterSyncStatus,
-    taskMasterError,
-    isRealTimeSyncActive,
-    isLoading,
-    enableTaskMasterSync,
-    disableTaskMasterSync,
-    forceSyncTaskMaster,
-    toggleRealTimeSync: storeToggleRealTimeSync,
-    getTaskMasterStats,
-  } = useDataStore();
+    const tasksByStatus: Record<string, number> = {};
+    const tasksByPriority: Record<string, number> = {};
 
-  const tasks = useAllTasks();
+    allTasks.forEach((task) => {
+      tasksByStatus[task.status] = (tasksByStatus[task.status] || 0) + 1;
+      tasksByPriority[task.priority] = (tasksByPriority[task.priority] || 0) + 1;
+    });
 
-  // Filter TaskMaster tasks
-  const taskMasterTasks = useMemo(() => {
-    return tasks.filter((task) => task.taskId !== undefined);
-  }, [tasks]);
+    return {
+      totalTasks,
+      totalSubtasks,
+      tasksByStatus,
+      tasksByPriority,
+    };
+  }, [allTasks]);
 
-  // Stats state
-  const [stats, setStats] = useState<UseTaskMasterSyncResult['taskMasterStats']>(null);
-
-  // Auto-enable sync on mount if requested
-  useEffect(() => {
-    if (autoEnable && !isTaskMasterEnabled && taskMasterSyncStatus === 'idle') {
-      enableSync({
-        ...syncOptions,
-        enableRealTimeSync,
-        tagName,
-      });
-    }
-  }, [autoEnable, isTaskMasterEnabled, taskMasterSyncStatus]);
-
-  // Handle sync callbacks
-  useEffect(() => {
-    if (taskMasterSyncStatus === 'synced' && onSyncComplete) {
-      onSyncComplete(taskMasterTasks);
-    }
-  }, [taskMasterSyncStatus, taskMasterTasks, onSyncComplete]);
-
-  useEffect(() => {
-    if (taskMasterSyncStatus === 'error' && taskMasterError && onSyncError) {
-      onSyncError(new Error(taskMasterError));
-    }
-  }, [taskMasterSyncStatus, taskMasterError, onSyncError]);
-
-  // Actions
-  const enableSync = useCallback(
-    async (_opts?: SyncOptions) => {
-      try {
-        await enableTaskMasterSync();
-      } catch (error) {
-        console.error('Failed to enable TaskMaster sync:', error);
-        onSyncError?.(error as Error);
-      }
-    },
-    [enableTaskMasterSync, syncOptions, onSyncError]
-  );
-
-  const disableSync = useCallback(async () => {
-    try {
-      await disableTaskMasterSync();
-      setStats(null);
-    } catch (error) {
-      console.error('Failed to disable TaskMaster sync:', error);
-      onSyncError?.(error as Error);
-    }
-  }, [disableTaskMasterSync, onSyncError]);
-
-  const forceSync = useCallback(
-    async (_tag?: string) => {
-      try {
-        await forceSyncTaskMaster();
-        // Refresh stats after sync
-        await refreshStats();
-      } catch (error) {
-        console.error('Failed to force sync TaskMaster:', error);
-        onSyncError?.(error as Error);
-        throw error;
-      }
-    },
-    [forceSyncTaskMaster, tagName, onSyncError]
-  );
-
-  const toggleRealTimeSync = useCallback(
-    async (enabled: boolean, _opts?: SyncOptions) => {
-      try {
-        await storeToggleRealTimeSync(enabled);
-      } catch (error) {
-        console.error('Failed to toggle real-time sync:', error);
-        onSyncError?.(error as Error);
-      }
-    },
-    [storeToggleRealTimeSync, syncOptions, onSyncError]
-  );
-
-  const refreshStats = useCallback(
-    async (_tag?: string) => {
-      if (!isTaskMasterEnabled) {
-        setStats(null);
-        return;
-      }
-
-      try {
-        const newStats = getTaskMasterStats();
-        setStats(newStats);
-      } catch (error) {
-        console.error('Failed to get TaskMaster stats:', error);
-        onSyncError?.(error as Error);
-      }
-    },
-    [isTaskMasterEnabled, getTaskMasterStats, tagName, onSyncError]
-  );
-
-  // Auto-refresh stats when sync completes
-  useEffect(() => {
-    if (taskMasterSyncStatus === 'synced') {
-      refreshStats();
-    }
-  }, [taskMasterSyncStatus, refreshStats]);
+  const forceSync = useCallback(async () => {
+    await forceSyncTaskMaster();
+  }, [forceSyncTaskMaster]);
 
   return {
     // State
-    isEnabled: isTaskMasterEnabled,
-    syncStatus: taskMasterSyncStatus,
-    error: taskMasterError,
-    isRealTimeSyncActive,
     isLoading,
+    isInitialized,
 
     // Data
-    taskMasterTasks,
-    taskMasterStats: stats,
+    tasks: allTasks,
+    taskStats,
 
     // Actions
-    enableSync,
-    disableSync,
+    initialize,
     forceSync,
-    toggleRealTimeSync,
-    refreshStats,
+    reset,
   };
 }
 
 // Additional hook for sync status indicator
 export function useTaskMasterSyncStatus() {
-  const { isTaskMasterEnabled, taskMasterSyncStatus, taskMasterError, isRealTimeSyncActive } =
-    useDataStore();
+  const isLoading = useDataStore((state) => state.isLoading);
+  const isInitialized = useDataStore((state) => state.isInitialized);
 
   const syncStatusText = useMemo(() => {
-    if (!isTaskMasterEnabled) return 'Disabled';
-
-    switch (taskMasterSyncStatus) {
-      case 'idle':
-        return 'Ready';
-      case 'syncing':
-        return 'Syncing...';
-      case 'synced':
-        return isRealTimeSyncActive ? 'Live' : 'Synced';
-      case 'error':
-        return 'Error';
-      default:
-        return 'Unknown';
-    }
-  }, [isTaskMasterEnabled, taskMasterSyncStatus, isRealTimeSyncActive]);
+    if (!isInitialized && isLoading) return 'Initializing...';
+    if (!isInitialized) return 'Not initialized';
+    if (isLoading) return 'Syncing...';
+    return 'Ready';
+  }, [isInitialized, isLoading]);
 
   const syncStatusColor = useMemo(() => {
-    if (!isTaskMasterEnabled) return 'gray';
-
-    switch (taskMasterSyncStatus) {
-      case 'idle':
-        return 'blue';
-      case 'syncing':
-        return 'yellow';
-      case 'synced':
-        return isRealTimeSyncActive ? 'green' : 'blue';
-      case 'error':
-        return 'red';
-      default:
-        return 'gray';
-    }
-  }, [isTaskMasterEnabled, taskMasterSyncStatus, isRealTimeSyncActive]);
+    if (!isInitialized && isLoading) return 'yellow';
+    if (!isInitialized) return 'gray';
+    if (isLoading) return 'yellow';
+    return 'green';
+  }, [isInitialized, isLoading]);
 
   return {
-    isEnabled: isTaskMasterEnabled,
-    status: taskMasterSyncStatus,
+    isEnabled: isInitialized,
+    status: isLoading ? 'syncing' : 'ready',
     statusText: syncStatusText,
     statusColor: syncStatusColor,
-    error: taskMasterError,
-    isRealTimeSyncActive,
+    error: null,
+    isActive: isInitialized,
   };
 }

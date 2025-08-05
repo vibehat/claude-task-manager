@@ -52,6 +52,8 @@ export interface Status {
   updatedAt: string;
 }
 
+export type TaskStatus = Status;
+
 export interface Priority {
   id: string;
   name: string;
@@ -75,6 +77,8 @@ export interface Task {
   id: string;
   title: string;
   description: string;
+  details?: string;
+  testStrategy?: string;
   statusId: string;
   priorityId?: string;
   tagId?: string;
@@ -92,7 +96,7 @@ export interface ManagerData {
   priorities: Priority[];
   tags: Tag[];
   tasks: Task[];
-  taskExtra?: Record<string, any>;
+  taskExtra?: Record<string, unknown>;
   metadata?: {
     created: string;
     updated: string;

@@ -18,7 +18,7 @@ export function createMockTagWithColor(id: string, name: string, color: string) 
     name,
     color,
     description: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
 }

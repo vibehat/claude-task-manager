@@ -6,13 +6,13 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import GroupTasksGrid from './GroupTasksGrid';
 import { cn } from '@/libs/client/utils';
 import { CustomDragLayer } from '../../components/items/TaskDragType';
-import type { Task } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 import { useTasksFilterStore } from '../../store/taskFilterStore';
 import { createMockTagWithColor } from '@/libs/client/utils/tagUtils';
 import type { GroupItem } from '../../types/groupTypes';
 
 interface TaskGridViewProps {
-  groupedTasks: Record<string, Task[]>;
+  groupedTasks: Record<string, TaskMasterTask[]>;
   groups?: GroupItem[];
 }
 

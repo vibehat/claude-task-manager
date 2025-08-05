@@ -110,7 +110,7 @@ pnpm start            # Start production server
 ### Code Organization
 
 - **Feature-based structure** - Group by feature, not by file type
-- **Barrel exports** - Use index.ts files for clean imports
+- **No barrel exports** - Avoid index.ts files for imports, use direct imports instead
 - **Consistent naming** - Components PascalCase, utilities camelCase, constants UPPER_SNAKE_CASE
 - **File naming** - File names must match their default export:
   - Components: `ComponentName.tsx` (matches `export default ComponentName`)

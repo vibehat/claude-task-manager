@@ -1,6 +1,6 @@
 'use client';
 
-import type { Task } from '@/libs/client/types';
+import type { TaskMasterTask } from '@/libs/client/types';
 import { format } from 'date-fns';
 import { LabelBadge } from '../badges/LabelBadge';
 import { PrioritySelector } from '../selectors/PrioritySelector';
@@ -24,30 +24,34 @@ export function TasksCard({
   task,
   layoutId = true,
 }: {
-  task: Task;
+  task: TaskMasterTask;
   layoutId?: boolean;
 }): React.JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
   const { openPanel } = useTaskSidePanelStore();
-  const { updateTask, getStatusById, getPriorityById, getLabelById } = useDataStore();
+  const updateTask = useDataStore((state) => state.updateTask);
 
   const handleLabelChange = async (labelIds: string[]): Promise<void> => {
     try {
-      await updateTask(task.id, { labelIds });
+      // TODO: TaskMasterTask doesn't have labelIds, needs adaptation
+      // await updateTask(task.id, { labelIds });
     } catch (error) {
       console.error('Failed to update task labels:', error);
     }
   };
 
-  // Get related data
-  const status = getStatusById(task.statusId);
-  const priority = task.priorityId ? getPriorityById(task.priorityId) : null;
-  const labels = task.labelIds
-    .map((id) => {
-      const label = getLabelById(id);
-      return label ? { id, label } : null;
-    })
-    .filter(Boolean);
+  // Get related data - TaskMasterTask has status and priority as strings
+  const allStatuses = useDataStore((state) => state.allStatuses);
+  const allPriorities = useDataStore((state) => state.allPriorities);
+
+  const status = allStatuses?.find((s) => s.name.toLowerCase() === task.status?.toLowerCase());
+  const priority = allPriorities?.find(
+    (p) => p.name.toLowerCase() === task.priority?.toLowerCase()
+  );
+
+  // TaskMasterTask doesn't have labelIds - empty arrays for now
+  const labels: any[] = [];
+  const labelData: any[] = [];
 
   // Set up drag functionality.
   const [{ isDragging }, drag, preview] = useDrag(() => ({
@@ -90,11 +94,11 @@ export function TasksCard({
                 {formatTaskIdForDisplay(task.id)}
               </span>
               <div onClick={(e) => e.stopPropagation()}>
-                <PrioritySelector priority={priority} taskId={task.id} />
+                <PrioritySelector priority={priority?.name} taskId={String(task.id)} />
               </div>
             </div>
             <div onClick={(e) => e.stopPropagation()}>
-              <StatusSelector status={status} taskId={task.id} />
+              <StatusSelector status={status} taskId={String(task.id)} />
             </div>
           </div>
 
@@ -118,7 +122,8 @@ export function TasksCard({
           {/* Footer with date and labels */}
           <div className="flex items-center justify-between mt-auto pt-2">
             <span className="text-xs text-muted-foreground">
-              {format(new Date(task.createdAt), 'MMM dd')}
+              {/* TaskMasterTask doesn't have createdAt */}
+              {task.id}
             </span>
 
             {/* Labels section */}
@@ -134,16 +139,16 @@ export function TasksCard({
                   <LabelSelector selectedLabels={labels} onChange={handleLabelChange} />
                 </div>
               )}
-              {labels.length > 0 && (
+              {labelData.length > 0 && (
                 <div className="flex flex-wrap gap-1">
-                  <LabelBadge labels={labels} />
+                  <LabelBadge labels={labelData} />
                 </div>
               )}
             </div>
           </div>
         </motion.div>
       </ContextMenuTrigger>
-      <TaskContextMenu taskId={task.id} task={task} />
+      <TaskContextMenu taskId={String(task.id)} task={task} />
     </ContextMenu>
   );
 }

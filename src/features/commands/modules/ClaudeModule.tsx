@@ -1,8 +1,9 @@
 'use client';
 
-import { createActionCommand, createInputCommand, type CommandModule } from '../types';
+import { createActionCommand, createInputCommand } from '../types';
 import { toast } from 'sonner';
 import { MessageCircleIcon } from 'lucide-react';
+import type { CommandModule } from '@/components/command-palette/types';
 
 export const claudeModule: CommandModule = {
   id: 'claude',
