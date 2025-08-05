@@ -1,4 +1,4 @@
-# Claude Task Manager - The Only PM Who Codes at 3 AM With You
+# Claude Task Manager
 
 <div align="center">
   <img src="./public/logo.png" alt="Claude Task Manager - AI Project Manager UI" width="120" height="120" />
