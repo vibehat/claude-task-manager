@@ -194,4 +194,4 @@ alias claude-feature="task-master next && task-master show $TASK_ID"
 
 ## Tags
 
-`#ClaudeCode #AIAssistedDevelopment #ProductivityHack #VibeCoding #ContextualAI`
+`#ClaudeCode #AIAssistedDevelopment #ProductivityHack #AIPoweredDevelopment #ContextualAI`

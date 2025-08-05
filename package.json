@@ -1,7 +1,7 @@
 {
   "name": "claude-task-manager",
   "version": "0.1.0",
-  "description": "The only PM who codes at 3 AM with you. AI project manager built on Claude Task Master. Your vision. Their code. Zero context switching.",
+  "description": "Personal AI project manager with persistent context for developers. Built on Claude Task Master with seamless integration for Claude Code, VS Code, and Cursor. Features AI agent orchestration, task management, and local-first architecture.",
   "keywords": [
     "claude",
     "claude-code",
@@ -22,7 +22,7 @@
     "vscode-integration",
     "cursor-integration",
     "ide-integration",
-    "vibe-coding",
+    "ai-powered-development",
     "3am-coding",
     "flow-state",
     "night-owl-development",
@@ -48,7 +48,12 @@
     "local-first",
     "claude-code-companion",
     "deep-work",
-    "distraction-free"
+    "distraction-free",
+    "persistent-context",
+    "ai-development-workflow",
+    "claude-code-integration",
+    "llm-assisted-coding",
+    "natural-language-programming"
   ],
   "private": true,
   "license": "MIT",
