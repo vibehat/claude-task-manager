@@ -143,6 +143,10 @@ export interface SimpleDataState {
   tasksByStatus: Record<string, TaskMasterTask[]>;
   tasksByPriority: Record<string, TaskMasterTask[]>;
 
+  // Current tag data (computed from taskMasterState)
+  currentTag: string | null;
+  tasksByCurrentTag: TaskMasterTask[];
+
   // -----------------------------
   // Simple loading states
   // -----------------------------
