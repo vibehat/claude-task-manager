@@ -1,7 +1,5 @@
-'use client';
-
-import { WorkingOnPage } from '@/features/working-on';
+import { WorkingOnPageClient } from '@/features/working-on/views/WorkingOnPageClient';
 
 export default function WorkingOnPageRoute(): React.JSX.Element {
-  return <WorkingOnPage />;
+  return <WorkingOnPageClient />;
 }
