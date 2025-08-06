@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { useCreateTaskStore } from '@/store/createTaskStore';
 import { useSortTasksByPriority } from '@/features/tasks/hooks/useSortTasksByPriority';
 import { TaskLine } from '../../components/items/TaskLine';
-import { useDataStore } from '@/libs/client/stores';
 import { getTagColor } from '@/libs/client/utils/tagUtils';
 
 interface GroupTasksListProps {

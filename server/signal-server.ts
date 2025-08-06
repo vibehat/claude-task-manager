@@ -14,7 +14,7 @@ class SignalWebSocketServer {
   private connections = new Map<string, SignalConnection>();
   private port: number;
 
-  constructor(port = 3002) {
+  constructor(port = 9002) {
     this.port = port;
   }
 
@@ -183,7 +183,7 @@ export function getSignalServer(port?: number): SignalWebSocketServer {
   return signalServer;
 }
 
-export async function startSignalServer(port = 3002): Promise<SignalWebSocketServer> {
+export async function startSignalServer(port = 9002): Promise<SignalWebSocketServer> {
   const server = getSignalServer(port);
   await server.start();
   return server;

@@ -84,7 +84,7 @@ export function HandoffInterface({ task, isOpen, onClose, onHandoff }: HandoffIn
     }
   };
 
-  const renderStars = (quality: number, max: number = 5) => {
+  const renderStars = (quality: number, max = 5) => {
     return Array.from({ length: max }, (_, i) => (
       <span key={i} className={i < quality ? 'text-yellow-400' : 'text-gray-300'}>
         ★

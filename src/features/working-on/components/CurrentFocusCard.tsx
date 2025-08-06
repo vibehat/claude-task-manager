@@ -11,15 +11,15 @@ import { cn } from '@/libs/client/utils';
 const getAIStatusColor = (status?: string) => {
   switch (status) {
     case 'implementing':
-      return 'bg-green-500';
+      return 'bg-emerald-500';
     case 'reviewing':
-      return 'bg-yellow-500';
+      return 'bg-amber-500';
     case 'blocked':
-      return 'bg-red-500';
+      return 'bg-destructive';
     case 'idle':
-      return 'bg-gray-500';
+      return 'bg-muted-foreground';
     default:
-      return 'bg-gray-400';
+      return 'bg-muted-foreground/60';
   }
 };
 
@@ -38,7 +38,7 @@ const getAIStatusText = (status?: string) => {
   }
 };
 
-const renderStars = (rating: number, max: number = 5, interactive: boolean = false) => {
+const renderStars = (rating: number, max = 5, interactive = false) => {
   return (
     <div className="flex items-center gap-1">
       {Array.from({ length: max }, (_, i) => (
@@ -46,8 +46,8 @@ const renderStars = (rating: number, max: number = 5, interactive: boolean = fal
           key={i}
           className={cn(
             'text-lg transition-colors',
-            i < rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600',
-            interactive && 'cursor-pointer hover:text-yellow-300'
+            i < rating ? 'text-amber-400' : 'text-muted-foreground/40',
+            interactive && 'cursor-pointer hover:text-amber-300'
           )}
         >
           ★
@@ -114,7 +114,7 @@ export function CurrentFocusCard({ task, aiSession, onAction }: CurrentFocusCard
 
         {/* AI Status Section */}
         {hasAISession ? (
-          <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10 rounded-lg border">
+          <div className="mb-4 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/10 dark:to-blue-900/10 rounded-lg border border-border">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div
@@ -158,7 +158,7 @@ export function CurrentFocusCard({ task, aiSession, onAction }: CurrentFocusCard
             </div>
 
             {lastActivity && (
-              <div className="p-3 bg-white/60 dark:bg-gray-800/60 rounded border">
+              <div className="p-3 bg-card/60 rounded border border-border">
                 <p className="text-sm">
                   <span className="font-medium">Latest:</span> {lastActivity.message}
                 </p>
@@ -207,27 +207,27 @@ export function CurrentFocusCard({ task, aiSession, onAction }: CurrentFocusCard
           <div className="mt-2 text-sm text-muted-foreground">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
                 <span>Task requirements clear</span>
                 <span className="ml-auto">✅</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
                 <span>Related files identified</span>
                 <span className="ml-auto">✅</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
                 <span>Dependencies mapped</span>
                 <span className="ml-auto">✅</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
                 <span>Testing strategy defined</span>
                 <span className="ml-auto">✅</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
                 <span>Architecture patterns could be clearer</span>
                 <span className="ml-auto">⚠️</span>
               </div>
@@ -240,7 +240,7 @@ export function CurrentFocusCard({ task, aiSession, onAction }: CurrentFocusCard
           <div className="mb-4">
             <span className="font-medium">Dependencies:</span>
             <div className="mt-1 flex items-center gap-2">
-              <span className="text-green-600 dark:text-green-400">✅</span>
+              <span className="text-emerald-600 dark:text-emerald-400">✅</span>
               <span className="text-sm">Task {task.dependencies.join(', ')} Complete</span>
             </div>
           </div>

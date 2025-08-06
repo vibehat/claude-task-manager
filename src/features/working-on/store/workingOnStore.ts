@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { shallow } from 'zustand/shallow';
 import type {
   WorkingOnState,
   Task,
@@ -8,14 +7,7 @@ import type {
   AIActivity,
   ContextItem,
 } from '../types/workingOnTypes';
-import {
-  dummyTasks,
-  dummyAISessions,
-  dummyContextItems,
-  dummyActivities,
-  getActiveTasks,
-  getBlockedTasks,
-} from '../data/dummyData';
+import { dummyTasks, dummyAISessions, dummyContextItems, getActiveTasks } from '../data/dummyData';
 
 // Task management slice
 const createTaskSlice = (set: any, get: any) => ({
@@ -167,7 +159,6 @@ const createContextSlice = (set: any, get: any) => ({
 // UI management slice
 const createUISlice = (set: any, get: any) => ({
   layout: 'desktop' as const,
-  commandPaletteOpen: false,
   contextViewOpen: false,
   handoffModalOpen: false,
   selectedTaskId: null,
@@ -176,12 +167,6 @@ const createUISlice = (set: any, get: any) => ({
     tasks: false,
     context: false,
     handoff: false,
-  },
-
-  toggleCommandPalette: () => {
-    set((state: WorkingOnState) => ({
-      commandPaletteOpen: !state.commandPaletteOpen,
-    }));
   },
 
   openContextView: (taskId: string) => {
@@ -268,7 +253,6 @@ export const selectBlockedTasks = (state: WorkingOnState) => {
 export const selectLoading = (state: WorkingOnState) => state.loading;
 
 export const selectUIState = (state: WorkingOnState) => ({
-  commandPaletteOpen: state.commandPaletteOpen,
   contextViewOpen: state.contextViewOpen,
   handoffModalOpen: state.handoffModalOpen,
   selectedTaskId: state.selectedTaskId,

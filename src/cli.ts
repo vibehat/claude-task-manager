@@ -39,8 +39,8 @@ program
   .command('start')
   .description('Start the Claude Task Manager application')
   .option('-p, --port <port>', 'specify port for main server', '3000')
-  .option('-tp, --terminal-port <port>', 'specify port for terminal WebSocket server', '3001')
-  .option('-sp, --signal-port <port>', 'specify port for signal WebSocket server', '3002')
+  .option('-tp, --terminal-port <port>', 'specify port for terminal WebSocket server', '9001')
+  .option('-sp, --signal-port <port>', 'specify port for signal WebSocket server', '9002')
   .option('-d, --dir <directory>', 'specify working directory', process.cwd())
   .option('--no-browser', 'do not open browser automatically')
   .action(async (options) => {
@@ -67,8 +67,8 @@ program
   .command('dev')
   .description('Start the application in development mode')
   .option('-p, --port <port>', 'specify port for main server', '3000')
-  .option('-tp, --terminal-port <port>', 'specify port for terminal WebSocket server', '3001')
-  .option('-sp, --signal-port <port>', 'specify port for signal WebSocket server', '3002')
+  .option('-tp, --terminal-port <port>', 'specify port for terminal WebSocket server', '9001')
+  .option('-sp, --signal-port <port>', 'specify port for signal WebSocket server', '9002')
   .option('-d, --dir <directory>', 'specify working directory', process.cwd())
   .action(async (options) => {
     console.log('🚀 Starting Claude Task Manager in development mode...');

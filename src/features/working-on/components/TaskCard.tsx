@@ -66,7 +66,7 @@ const getAgentBadge = (agent?: string) => {
   );
 };
 
-const renderStars = (rating: number, max: number = 5) => {
+const renderStars = (rating: number, max = 5) => {
   return Array.from({ length: max }, (_, i) => (
     <span key={i} className={i < rating ? 'text-yellow-400' : 'text-gray-300'}>
       ★

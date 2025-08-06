@@ -115,7 +115,7 @@ export function useSimpleTerminal() {
       addLog('Connecting to WebSocket...');
       setState((prev) => ({ ...prev, status: 'connecting' }));
 
-      const ws = new WebSocket('ws://localhost:3001');
+      const ws = new WebSocket('ws://localhost:9001');
       wsRef.current = ws;
 
       ws.onopen = () => {

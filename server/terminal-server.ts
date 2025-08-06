@@ -62,7 +62,7 @@ class TerminalServer {
   private cleanupTimer: NodeJS.Timeout | null = null;
   private port: number;
 
-  constructor(port = 3001) {
+  constructor(port = 9001) {
     this.port = port;
   }
 
@@ -442,7 +442,7 @@ export function getTerminalServer(port?: number): TerminalServer {
   return server;
 }
 
-export async function startTerminalServer(port = 3001): Promise<TerminalServer> {
+export async function startTerminalServer(port = 9001): Promise<TerminalServer> {
   const s = getTerminalServer(port);
   await s.start();
   return s;

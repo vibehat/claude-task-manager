@@ -24,7 +24,7 @@ const quickActions: QuickAction[] = [
     description: 'Get context',
     action: 'research',
     className:
-      'bg-purple-50 hover:bg-purple-100 dark:bg-purple-900/10 dark:hover:bg-purple-900/20 border-purple-200 dark:border-purple-800',
+      'bg-violet-50 hover:bg-violet-100 dark:bg-violet-900/10 dark:hover:bg-violet-900/20 border-violet-200 dark:border-violet-800',
   },
   {
     id: 'add-task',
@@ -42,7 +42,7 @@ const quickActions: QuickAction[] = [
     description: 'Task Master CLI',
     action: 'sync-tasks',
     className:
-      'bg-green-50 hover:bg-green-100 dark:bg-green-900/10 dark:hover:bg-green-900/20 border-green-200 dark:border-green-800',
+      'bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/10 dark:hover:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800',
   },
   {
     id: 'copy-context',
@@ -59,8 +59,7 @@ const quickActions: QuickAction[] = [
     label: 'Commands',
     description: 'Natural language',
     action: 'command-palette',
-    className:
-      'bg-gray-50 hover:bg-gray-100 dark:bg-gray-900/10 dark:hover:bg-gray-900/20 border-gray-200 dark:border-gray-800',
+    className: 'bg-muted hover:bg-muted/80 border-border',
   },
   {
     id: 'view-all',
@@ -153,8 +152,8 @@ export function QuickActionsPanel({ onAction }: QuickActionsPanelProps) {
             <div className="flex items-center justify-between">
               <span>Task Master CLI:</span>
               <span className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-green-600 dark:text-green-400">Connected</span>
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-emerald-600 dark:text-emerald-400">Connected</span>
               </span>
             </div>
             <div className="flex items-center justify-between">

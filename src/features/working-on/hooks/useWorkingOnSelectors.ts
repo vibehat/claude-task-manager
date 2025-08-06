@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useWorkingOnStore } from '../store/workingOnStore';
-import { shallow } from 'zustand/shallow';
 
 // Memoized selectors to prevent infinite loops
 export const useCurrentFocusTask = () => {
@@ -29,18 +28,14 @@ export const useBlockedTasks = () => {
 };
 
 export const useWorkingOnUI = () => {
-  return useWorkingOnStore(
-    (state) => ({
-      commandPaletteOpen: state.commandPaletteOpen,
-      contextViewOpen: state.contextViewOpen,
-      handoffModalOpen: state.handoffModalOpen,
-      selectedTaskId: state.selectedTaskId,
-      layout: state.layout,
-    }),
-    shallow
-  );
+  return useWorkingOnStore((state) => ({
+    contextViewOpen: state.contextViewOpen,
+    handoffModalOpen: state.handoffModalOpen,
+    selectedTaskId: state.selectedTaskId,
+    layout: state.layout,
+  }));
 };
 
 export const useWorkingOnLoading = () => {
-  return useWorkingOnStore((state) => state.loading, shallow);
+  return useWorkingOnStore((state) => state.loading);
 };

@@ -10,7 +10,6 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import type { TaskPriority } from '@/libs/client/types';
 import { useDataStore, useAllPriorities } from '@/libs/client/stores';
 import { getPriorityIcon } from '@/features/tasks/constants/NoPriorityIcon';
 

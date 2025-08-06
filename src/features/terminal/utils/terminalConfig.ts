@@ -51,7 +51,7 @@ export const darkTheme: TerminalTheme = {
 
 // Terminal configuration defaults
 export const defaultTerminalConfig: TerminalConfig = {
-  websocketUrl: 'ws://localhost:3001',
+  websocketUrl: 'ws://localhost:9001',
   reconnectAttempts: 5,
   reconnectDelay: 1000,
   fontSize: 14,

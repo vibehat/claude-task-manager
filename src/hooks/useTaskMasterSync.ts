@@ -25,7 +25,7 @@ export function useTaskMasterSync() {
   const connect = async () => {
     try {
       // Get WebSocket URL from the sync API
-      let wsUrl = `ws://localhost:3001?type=sync&clientId=${Date.now()}`; // Fallback
+      let wsUrl = `ws://localhost:9001?type=sync&clientId=${Date.now()}`; // Fallback
 
       try {
         const response = await fetch('/api/sync');

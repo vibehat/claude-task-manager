@@ -10,7 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { ContextViewProps } from '../types/workingOnTypes';
 import { useWorkingOnStore } from '../store/workingOnStore';
 import { dummyContextItems } from '../data/dummyData';
-import { cn } from '@/libs/client/utils';
 
 const getContextTypeIcon = (type: string) => {
   switch (type) {

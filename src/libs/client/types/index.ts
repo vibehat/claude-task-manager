@@ -106,3 +106,28 @@ export type {
   RolePermissions,
   AccessControl,
 } from './extended';
+
+export type {
+  ClaudeSession,
+  SessionMessage,
+  ClaudeProject,
+  ToolCall,
+  CodeBlock,
+  SessionMetadata,
+  SessionListQuery,
+  SessionSearchQuery,
+  SessionListResponse,
+  SessionDetailResponse,
+  ProjectListResponse,
+  SessionBookmarkRequest,
+  SessionArchiveRequest,
+  SessionExportOptions,
+  SessionAnalytics,
+  SearchResult as ClaudeSearchResult,
+  SearchResponse as ClaudeSearchResponse,
+  ClaudeHistoryError,
+  APIErrorResponse,
+  ClaudeHistoryConfig,
+  SessionTaskLink,
+  TaskMasterIntegration,
+} from './claude-history';

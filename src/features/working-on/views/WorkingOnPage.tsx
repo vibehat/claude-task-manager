@@ -2,21 +2,22 @@
 
 import React, { useEffect } from 'react';
 import { useWorkingOnStore } from '../store/workingOnStore';
+import { useCommandPaletteStore } from '@/store/commandPaletteStore';
 import {
   useCurrentFocusTask,
   useActiveTasks,
   useBlockedTasks,
 } from '../hooks/useWorkingOnSelectors';
 import { ActiveTasksPanel } from '../components/ActiveTasksPanel';
-import { CurrentFocusCard } from '../components/CurrentFocusCard';
 import { AIActivityFeed } from '../components/AIActivityFeed';
-import { CommandPalette } from '../components/CommandPalette';
 import { QuickActionsPanel } from '../components/QuickActionsPanel';
 import { BlockedTasksPanel } from '../components/BlockedTasksPanel';
 import { ContextView } from '../components/ContextView';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { dummyActivities } from '../data/dummyData';
-import { cn } from '@/libs/client/utils';
+import Link from 'next/link';
 
 export function WorkingOnPage() {
   const isMobile = useIsMobile();
@@ -25,14 +26,15 @@ export function WorkingOnPage() {
   const {
     currentFocusId,
     setCurrentFocus,
-    commandPaletteOpen,
     contextViewOpen,
     selectedTaskId,
-    toggleCommandPalette,
     openContextView,
     closeContextView,
     setLayout,
   } = useWorkingOnStore();
+
+  // Global command palette store
+  const { openCommandPalette } = useCommandPaletteStore();
 
   // Computed data
   const currentFocusTask = useCurrentFocusTask();
@@ -44,15 +46,11 @@ export function WorkingOnPage() {
     setLayout(isMobile ? 'mobile' : 'desktop');
   }, [isMobile, setLayout]);
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts (excluding Cmd+K which is handled globally)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        toggleCommandPalette();
-      }
       if (e.key === 'Escape') {
-        if (commandPaletteOpen || contextViewOpen) {
+        if (contextViewOpen) {
           closeContextView();
         }
       }
@@ -60,7 +58,7 @@ export function WorkingOnPage() {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [commandPaletteOpen, contextViewOpen, toggleCommandPalette, closeContextView]);
+  }, [contextViewOpen, closeContextView]);
 
   // Action handlers
   const handleTaskSelect = (taskId: string) => {
@@ -106,7 +104,7 @@ export function WorkingOnPage() {
         console.log('Copy context to clipboard');
         break;
       case 'command-palette':
-        toggleCommandPalette();
+        openCommandPalette();
         break;
       case 'view-all':
         console.log('View all tasks');
@@ -163,70 +161,50 @@ export function WorkingOnPage() {
   if (isMobile) {
     // Mobile layout - single column, stacked
     return (
-      <div className="min-h-screen bg-background">
-        {/* Mobile Header */}
-        <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b p-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl font-bold">Working On</h1>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={toggleCommandPalette}
-                className="p-2 hover:bg-muted rounded-md"
-                title="Command Palette (⌘K)"
-              >
-                ⌘
-              </button>
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            </div>
-          </div>
+      <div className="px-6 space-y-6">
+        {/* Current Focus */}
+        {currentFocusTask && (
+          <Card className="min-h-[200px]">
+            <CardContent className="p-6 text-center">
+              <div className="text-3xl mb-3">🎯</div>
+              <h3 className="font-semibold mb-2">Currently Focusing On</h3>
+              <p className="text-muted-foreground text-sm mb-4">
+                Task {currentFocusTask.id} - {currentFocusTask.title}
+              </p>
+              <Button asChild>
+                <Link href={`/workspace/task/${currentFocusTask.id}`}>View Full Details</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Active Tasks */}
+        <div className="min-h-[300px]">
+          <ActiveTasksPanel
+            tasks={activeTasks}
+            onTaskSelect={handleTaskSelect}
+            selectedTaskId={currentFocusId}
+          />
         </div>
 
-        {/* Mobile Content */}
-        <div className="p-4 space-y-4">
-          {/* Current Focus */}
-          {currentFocusTask && (
-            <div className="h-96">
-              <CurrentFocusCard
-                task={currentFocusTask}
-                aiSession={currentFocusTask.aiSession}
-                onAction={handleCurrentFocusAction}
-              />
-            </div>
-          )}
-
-          {/* Active Tasks */}
-          <div className="h-64">
-            <ActiveTasksPanel
-              tasks={activeTasks}
-              onTaskSelect={handleTaskSelect}
-              selectedTaskId={currentFocusId}
-            />
-          </div>
-
-          {/* Quick Actions */}
-          <div className="h-48">
-            <QuickActionsPanel onAction={handleQuickAction} />
-          </div>
-
-          {/* AI Activity Feed */}
-          <div className="h-64">
-            <AIActivityFeed activities={dummyActivities} maxItems={5} />
-          </div>
-
-          {/* Blocked Tasks */}
-          {blockedTasks.length > 0 && (
-            <div className="h-64">
-              <BlockedTasksPanel blockedTasks={blockedTasks} onTaskSelect={handleTaskSelect} />
-            </div>
-          )}
+        {/* Quick Actions */}
+        <div className="min-h-[200px]">
+          <QuickActionsPanel onAction={handleQuickAction} />
         </div>
+
+        {/* AI Activity Feed */}
+        <div className="min-h-[300px]">
+          <AIActivityFeed activities={dummyActivities} maxItems={5} />
+        </div>
+
+        {/* Blocked Tasks */}
+        {blockedTasks.length > 0 && (
+          <div className="min-h-[300px]">
+            <BlockedTasksPanel blockedTasks={blockedTasks} onTaskSelect={handleTaskSelect} />
+          </div>
+        )}
 
         {/* Modals */}
-        <CommandPalette
-          isOpen={commandPaletteOpen}
-          onClose={toggleCommandPalette}
-          currentContext={currentFocusId ? { taskId: currentFocusId } : undefined}
-        />
 
         {selectedTaskId && (
           <ContextView
@@ -239,93 +217,93 @@ export function WorkingOnPage() {
     );
   }
 
-  // Desktop layout - responsive grid
+  // Desktop layout - 2-column layout optimized for MacBook Pro 13"
   return (
-    <div className="min-h-screen bg-background">
-      {/* Desktop Header */}
-      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b">
-        <div className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold">Working On: JWT Authentication System</h1>
-              <p className="text-muted-foreground text-sm">
-                AI-agent collaboration orchestration hub
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={toggleCommandPalette}
-                className="flex items-center gap-2 px-3 py-2 hover:bg-muted rounded-md transition-colors"
-                title="Command Palette (⌘K)"
-              >
-                <span className="text-sm">Command Palette</span>
-                <kbd className="px-2 py-1 text-xs bg-muted rounded">⌘K</kbd>
-              </button>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-xs text-muted-foreground">Sync</span>
-              </div>
-              <button className="p-2 hover:bg-muted rounded-md" title="Settings">
-                ⚙️
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop Main Grid */}
-      <div className="p-6 gap-6 grid grid-cols-12 min-h-[calc(100vh-120px)]">
-        {/* Left Column - Active Tasks */}
-        <div className="col-span-3">
-          <ActiveTasksPanel
-            tasks={activeTasks}
-            onTaskSelect={handleTaskSelect}
-            selectedTaskId={currentFocusId}
-          />
-        </div>
-
-        {/* Middle Column - Current Focus */}
-        <div className="col-span-6">
-          {currentFocusTask ? (
-            <CurrentFocusCard
-              task={currentFocusTask}
-              aiSession={currentFocusTask.aiSession}
-              onAction={handleCurrentFocusAction}
+    <div className="px-6 space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[600px]">
+        {/* Left Panel - Task Management */}
+        <div className="space-y-6 min-h-[600px]">
+          {/* Active Tasks */}
+          <div>
+            <ActiveTasksPanel
+              tasks={activeTasks}
+              onTaskSelect={handleTaskSelect}
+              selectedTaskId={currentFocusId}
             />
-          ) : (
-            <div className="h-full flex items-center justify-center border-2 border-dashed border-muted-foreground/20 rounded-lg">
-              <div className="text-center">
-                <div className="text-4xl mb-2">🎯</div>
-                <p className="text-muted-foreground">No task selected</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Select a task from the active tasks panel
-                </p>
-              </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div>
+            <QuickActionsPanel onAction={handleQuickAction} />
+          </div>
+
+          {/* Blocked Tasks (if any exist) */}
+          {blockedTasks.length > 0 && (
+            <div>
+              <BlockedTasksPanel blockedTasks={blockedTasks} onTaskSelect={handleTaskSelect} />
             </div>
           )}
         </div>
 
-        {/* Right Column - AI Activity Feed */}
-        <div className="col-span-3">
-          <AIActivityFeed activities={dummyActivities} />
-        </div>
+        {/* Right Panel - Activity & Overview */}
+        <div className="space-y-6 min-h-[600px]">
+          {/* AI Activity Feed */}
+          <div>
+            <AIActivityFeed activities={dummyActivities} />
+          </div>
 
-        {/* Bottom Row - Quick Actions & Blocked Tasks */}
-        <div className="col-span-6">
-          <QuickActionsPanel onAction={handleQuickAction} />
-        </div>
+          {/* Task Overview Card */}
+          <div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">Working Session</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {currentFocusTask ? (
+                  <div className="text-center p-6">
+                    <div className="text-3xl mb-3">🎯</div>
+                    <h3 className="font-semibold mb-2">Currently Focusing On</h3>
+                    <p className="text-muted-foreground text-sm mb-4">
+                      Task {currentFocusTask.id} - {currentFocusTask.title}
+                    </p>
+                    <Button asChild>
+                      <Link href={`/workspace/task/${currentFocusTask.id}`}>View Full Details</Link>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="text-center p-6">
+                    <div className="text-3xl mb-3">💤</div>
+                    <h3 className="font-semibold mb-2">No Active Focus</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Select a task from the left panel to start working
+                    </p>
+                  </div>
+                )}
 
-        <div className="col-span-6">
-          <BlockedTasksPanel blockedTasks={blockedTasks} onTaskSelect={handleTaskSelect} />
+                {/* Quick Stats */}
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t">
+                  <div className="text-center">
+                    <div className="text-lg font-bold">{activeTasks.length}</div>
+                    <div className="text-xs text-muted-foreground">Active</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold">{blockedTasks.length}</div>
+                    <div className="text-xs text-muted-foreground">Blocked</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold">
+                      {activeTasks.filter((t) => t.aiSession).length}
+                    </div>
+                    <div className="text-xs text-muted-foreground">AI Active</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 
       {/* Modals */}
-      <CommandPalette
-        isOpen={commandPaletteOpen}
-        onClose={toggleCommandPalette}
-        currentContext={currentFocusId ? { taskId: currentFocusId } : undefined}
-      />
 
       {selectedTaskId && (
         <ContextView taskId={selectedTaskId} isOpen={contextViewOpen} onClose={closeContextView} />

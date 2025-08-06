@@ -68,7 +68,6 @@ export interface WorkingOnState {
 
   // UI State
   layout: 'desktop' | 'mobile';
-  commandPaletteOpen: boolean;
   contextViewOpen: boolean;
   handoffModalOpen: boolean;
   selectedTaskId: string | null;
@@ -84,17 +83,24 @@ export interface WorkingOnState {
   setCurrentFocus: (taskId: string) => void;
   updateTaskProgress: (taskId: string, progress: number) => void;
   addAIActivity: (sessionId: string, activity: AIActivity) => void;
-  toggleCommandPalette: () => void;
   openContextView: (taskId: string) => void;
   closeContextView: () => void;
   startAIHandoff: (taskId: string) => void;
   updateContextQuality: (taskId: string, quality: number) => void;
+  setLayout: (layout: 'desktop' | 'mobile') => void;
+  setLoading: (key: 'tasks' | 'context' | 'handoff', loading: boolean) => void;
+  closeHandoffModal: () => void;
+  startAISession: (taskId: string, agent: 'claude' | 'gpt' | 'gemini') => void;
+  stopAISession: (sessionId: string) => void;
+  addContextItem: (item: ContextItem) => void;
+  updateContextItem: (id: string, updates: Partial<ContextItem>) => void;
 
   // Computed Properties
   getActiveTasks: () => Task[];
   getBlockedTasks: () => Task[];
   getCurrentFocusTask: () => Task | null;
   getTaskById: (id: string) => Task | null;
+  getContextByTaskId: (taskId: string) => ContextItem[];
 }
 
 // Component Props
@@ -120,15 +126,6 @@ export interface AIActivityFeedProps {
   activities: AIActivity[];
   maxItems?: number;
   autoScroll?: boolean;
-}
-
-export interface CommandPaletteProps {
-  isOpen: boolean;
-  onClose: () => void;
-  currentContext?: {
-    taskId: string;
-    sessionId?: string;
-  };
 }
 
 export interface ContextViewProps {

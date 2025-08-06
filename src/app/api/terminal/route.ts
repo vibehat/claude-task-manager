@@ -22,7 +22,7 @@ export async function GET(_request: NextRequest): Promise<NextResponse> {
         {
           error: 'Terminal server not available',
           message: 'Make sure the custom server is running with all services',
-          websocketUrl: 'ws://localhost:3001',
+          websocketUrl: 'ws://localhost:9001',
           platform: os.platform(),
           cwd: process.cwd(),
         },

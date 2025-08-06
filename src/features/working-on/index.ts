@@ -1,16 +1,16 @@
 // Main exports for Working On feature
 export { WorkingOnPage } from './views/WorkingOnPage';
 export { WorkingOnPageClient } from './views/WorkingOnPageClient';
+export { TaskDetailPage } from './views/TaskDetailPage';
 
 // Components
 export { ActiveTasksPanel } from './components/ActiveTasksPanel';
-export { CurrentFocusCard } from './components/CurrentFocusCard';
 export { TaskCard } from './components/TaskCard';
 export { AIActivityFeed } from './components/AIActivityFeed';
-export { CommandPalette } from './components/CommandPalette';
 export { QuickActionsPanel } from './components/QuickActionsPanel';
 export { BlockedTasksPanel } from './components/BlockedTasksPanel';
 export { ContextView } from './components/ContextView';
+export { TaskInformation } from './components/TaskInformation';
 
 // Store
 export { useWorkingOnStore } from './store/workingOnStore';
@@ -36,7 +36,6 @@ export type {
   ActiveTasksPanelProps,
   CurrentFocusCardProps,
   AIActivityFeedProps,
-  CommandPaletteProps,
   ContextViewProps,
   QuickActionsPanelProps,
   BlockedTasksPanelProps,

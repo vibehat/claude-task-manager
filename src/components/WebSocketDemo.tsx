@@ -265,10 +265,10 @@ export function WebSocketDemo() {
         <h3 className="font-semibold mb-2">Connection Info:</h3>
         <div className="text-sm space-y-1">
           <div>
-            Signal WebSocket: <code>ws://localhost:3002</code>
+            Signal WebSocket: <code>ws://localhost:9002</code>
           </div>
           <div>
-            Terminal WebSocket: <code>ws://localhost:3001</code>
+            Terminal WebSocket: <code>ws://localhost:9001</code>
           </div>
         </div>
       </div>

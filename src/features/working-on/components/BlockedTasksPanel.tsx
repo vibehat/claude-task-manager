@@ -46,15 +46,15 @@ const getStatusIcon = (status: string) => {
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'done':
-      return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300';
+      return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-300';
     case 'in-progress':
       return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
     case 'pending':
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300';
+      return 'bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-300';
     case 'blocked':
       return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300';
     default:
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300';
+      return 'bg-muted text-muted-foreground';
   }
 };
 
@@ -134,9 +134,9 @@ export function BlockedTasksPanel({ blockedTasks, onTaskSelect }: BlockedTasksPa
                           task.priority === 'high' &&
                             'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300',
                           task.priority === 'medium' &&
-                            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300',
+                            'bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-300',
                           task.priority === 'low' &&
-                            'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
+                            'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-300'
                         )}
                       >
                         {task.priority}
@@ -167,11 +167,13 @@ export function BlockedTasksPanel({ blockedTasks, onTaskSelect }: BlockedTasksPa
 
                       {depStatus.progress > 0 && (
                         <div className="mt-1">
-                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1">
+                          <div className="w-full bg-muted rounded-full h-1">
                             <div
                               className={cn(
                                 'h-1 rounded-full transition-all duration-300',
-                                depStatus.status === 'in-progress' ? 'bg-blue-500' : 'bg-green-500'
+                                depStatus.status === 'in-progress'
+                                  ? 'bg-blue-500'
+                                  : 'bg-emerald-500'
                               )}
                               style={{ width: `${depStatus.progress}%` }}
                             />
@@ -200,7 +202,9 @@ export function BlockedTasksPanel({ blockedTasks, onTaskSelect }: BlockedTasksPa
                           <span
                             key={i}
                             className={
-                              i < task.contextQuality ? 'text-yellow-400' : 'text-gray-300'
+                              i < task.contextQuality
+                                ? 'text-amber-400'
+                                : 'text-muted-foreground/40'
                             }
                           >
                             ★
@@ -276,7 +280,7 @@ export function BlockedTasksPanel({ blockedTasks, onTaskSelect }: BlockedTasksPa
           <div className="text-xs text-muted-foreground text-center">
             <div className="flex items-center justify-center gap-2">
               <span>Auto-unblock when dependencies done</span>
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
             </div>
           </div>
         </div>

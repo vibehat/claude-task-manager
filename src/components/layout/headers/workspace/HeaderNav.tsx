@@ -28,6 +28,7 @@ export default function HeaderNav({
   const getPageTitle = (): string => {
     if (pathname.includes('/workspace/dashboard')) return 'Dashboard';
     if (pathname.includes('/workspace/tasks')) return 'Tasks';
+    if (pathname.includes('/workspace/working-on')) return 'Working On';
     if (pathname.includes('/workspace/terminal')) return 'Terminal';
     if (pathname.includes('/workspace/settings')) return 'Settings';
     return 'Workspace';

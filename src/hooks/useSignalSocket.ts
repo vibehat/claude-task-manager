@@ -22,7 +22,7 @@ export interface UseSignalSocketOptions {
 
 export function useSignalSocket(options: UseSignalSocketOptions = {}) {
   const {
-    url = 'ws://localhost:3002',
+    url = 'ws://localhost:9002',
     clientId = `client_${Date.now()}`,
     autoConnect = true,
     onMessage,
