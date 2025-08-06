@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   // Updated for Next.js 15
   serverExternalPackages: ['node-pty'],
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
   // Since Turbopack doesn't support watchOptions, rely on programmatic sync
   webpack: (config, { isServer, dev }) => {
     // Only apply webpack config in production or when not using Turbopack

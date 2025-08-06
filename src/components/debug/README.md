@@ -56,4 +56,4 @@ Then navigate to `/debug` to use the terminal.
 <DebugTerminal initialCommand="uname -a" />
 ```
 
-The terminal connects to the same PTY server as the main terminal demo at `ws://localhost:3001`.
+The terminal connects to the same PTY server as the main terminal demo at `ws://localhost:9001`.

@@ -50,6 +50,10 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
       tasksByStatus: {},
       tasksByPriority: {},
 
+      // Current tag data (computed from taskMasterState)
+      currentTag: null,
+      tasksByCurrentTag: [],
+
       // -----------------------------
       // Simple loading states
       // -----------------------------
@@ -240,8 +244,19 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
           newState.tasksByStatus = tasksByStatus;
           newState.tasksByPriority = tasksByPriority;
 
+          // Compute current tag data
+          const currentTag = newState.taskMasterState?.currentTag || null;
+          const tasksByCurrentTag =
+            currentTag && tasksByTag[currentTag] ? tasksByTag[currentTag] : [];
+
+          newState.currentTag = currentTag;
+          newState.tasksByCurrentTag = tasksByCurrentTag;
+
           console.log(
             `[SimpleDataStore] Normalized ${taskIds.length} tasks from ${allTags.length} tags`
+          );
+          console.log(
+            `[SimpleDataStore] Current tag: ${currentTag}, tasks in current tag: ${tasksByCurrentTag.length}`
           );
           console.log(
             `[SimpleDataStore] Normalized ${userIds.length} users, ${labelIds.length} labels, ${statusIds.length} statuses, ${priorityIds.length} priorities, ${tagIds.length} tags`
@@ -279,6 +294,8 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
             tasksByTag: {},
             tasksByStatus: {},
             tasksByPriority: {},
+            currentTag: null,
+            tasksByCurrentTag: [],
           });
         }
       },
@@ -309,6 +326,8 @@ export const createDataStore = (dataService?: TaskMasterDataService) => {
           tasksByTag: {},
           tasksByStatus: {},
           tasksByPriority: {},
+          currentTag: null,
+          tasksByCurrentTag: [],
           isInitialized: false,
           isLoading: false,
         });

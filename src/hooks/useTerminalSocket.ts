@@ -27,7 +27,7 @@ export interface UseTerminalSocketOptions {
 
 export function useTerminalSocket(options: UseTerminalSocketOptions = {}) {
   const {
-    url = 'ws://localhost:3001',
+    url = 'ws://localhost:9001',
     sessionId,
     clientId,
     autoConnect = true,
