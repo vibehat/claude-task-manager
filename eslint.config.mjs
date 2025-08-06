@@ -190,6 +190,6 @@ const eslintConfig = [...compat.extends('next/core-web-vitals', 'next/typescript
     'no-var': 'error',
     'prefer-const': 'error',
   },
-}, ...storybook.configs["flat/recommended"]];
+}, ...storybook.configs["flat/recommended"], ...storybook.configs["flat/recommended"]];
 
 export default eslintConfig;
