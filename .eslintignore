@@ -1,0 +1,10 @@
+# CLI files
+src/cli.ts
+src/lib/server-manager.ts
+
+# Build output
+dist/
+.next/
+
+# Dependencies
+node_modules/

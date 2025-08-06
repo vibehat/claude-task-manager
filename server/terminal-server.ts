@@ -435,15 +435,15 @@ class TerminalServer {
 // Singleton
 let server: TerminalServer | null = null;
 
-export function getTerminalServer(): TerminalServer {
+export function getTerminalServer(port?: number): TerminalServer {
   if (!server) {
-    server = new TerminalServer();
+    server = new TerminalServer(port);
   }
   return server;
 }
 
-export async function startTerminalServer(): Promise<TerminalServer> {
-  const s = getTerminalServer();
+export async function startTerminalServer(port = 3001): Promise<TerminalServer> {
+  const s = getTerminalServer(port);
   await s.start();
   return s;
 }

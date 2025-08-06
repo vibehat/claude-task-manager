@@ -55,7 +55,23 @@
     "llm-assisted-coding",
     "natural-language-programming"
   ],
-  "private": true,
+  "main": "dist/server.js",
+  "bin": {
+    "claude-task-manager": "./bin/claude-task-manager.js"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    ".next/",
+    "src/",
+    "server/",
+    "public/",
+    "next.config.ts",
+    "tsconfig.json",
+    "tsconfig.server.json",
+    "tailwind.config.ts",
+    "components.json"
+  ],
   "license": "MIT",
   "author": "minhlucvan",
   "repository": {
@@ -72,6 +88,8 @@
     "dev:terminal": "node scripts/start-websocket-server.js",
     "dev:signal": "node scripts/start-signal-server.js",
     "build": "next build && npx tsc --project tsconfig.server.json",
+    "build:cli": "npx tsc --project tsconfig.cli.json",
+    "prepublishOnly": "npm run build",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "lint": "next lint",
     "eslint": "eslint . --config eslint.config.mjs",
@@ -113,6 +131,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
+    "commander": "^14.0.0",
     "date-fns": "^4.1.0",
     "fuse.js": "^7.1.0",
     "lightningcss": "^1.30.1",
@@ -121,6 +140,7 @@
     "next": "15.2.4",
     "next-themes": "^0.4.4",
     "node-pty": "^1.0.0",
+    "open": "^10.2.0",
     "react": "^19.0.0",
     "react-day-picker": "8.10.1",
     "react-dnd": "^16.0.1",

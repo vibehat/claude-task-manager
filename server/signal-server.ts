@@ -176,15 +176,15 @@ class SignalWebSocketServer {
 // Global instance
 let signalServer: SignalWebSocketServer | null = null;
 
-export function getSignalServer(): SignalWebSocketServer {
+export function getSignalServer(port?: number): SignalWebSocketServer {
   if (!signalServer) {
-    signalServer = new SignalWebSocketServer();
+    signalServer = new SignalWebSocketServer(port);
   }
   return signalServer;
 }
 
-export async function startSignalServer(): Promise<SignalWebSocketServer> {
-  const server = getSignalServer();
+export async function startSignalServer(port = 3002): Promise<SignalWebSocketServer> {
+  const server = getSignalServer(port);
   await server.start();
   return server;
 }
