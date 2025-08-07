@@ -1,7 +1,7 @@
 # Claude Task Manager
 
 <div align="center">
-  <img src="./public/logo.png" alt="Claude Task Manager - AI Project Manager UI" width="120" height="120" />
+  <img src="./public/logo-transparent.png" alt="Claude Task Manager - AI Project Manager UI" width="120" height="120" />
   
   **Personal AI project manager with persistent context**
   
@@ -107,7 +107,7 @@ Your vision stays intact from day 1 to launch.
 - Create issues with ideas and feedback
 - Check out our research docs: [`docs/prd/main.md`](docs/prd/main.md)
 - Explore architecture: [`docs/architecture/diagrams.md`](docs/architecture/diagrams.md)
-- Review mockups: [`docs/mockups/`](docs/mockups/)
+- Review wireframes: [`docs/wireframes/`](docs/wireframes/)
 
 Every contribution helps shape this project. **Early contributors get to influence the core direction.**
 

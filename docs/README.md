@@ -36,11 +36,11 @@ This directory contains comprehensive project documentation organized by purpose
 - `feature-project-big-picture.md` - Project overview features
 - `feature-working-on.md` - Current work tracking features
 
-### `/mockups` - UI/UX Design Specifications
+### `/wireframes` - UI/UX Design Specifications
 
 - `/01-overview/` - Design principles and user flows
 - `/02-layouts/` - App layouts and component grids
-- `/03-features/` - Feature-specific mockups and designs
+- `/03-features/` - Feature-specific wireframes and designs
 - `/04-interactions/` - Interaction patterns and behaviors
 - `/05-responsive/` - Mobile and responsive adaptations
 - `/06-implementation/` - Component specifications
