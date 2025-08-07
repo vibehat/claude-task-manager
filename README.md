@@ -32,7 +32,60 @@ Every AI conversation starts from zero.
 
 **An AI project manager that never forgets**
 
-<!-- <img src="./public/screenshot-dashboard.png" alt="Dashboard showing tasks, terminal, and docs side by side" /> -->
+Beautiful UI layer over the powerful Task Master CLI engine:
+
+```mermaid
+graph TB
+    subgraph "Claude Task Manager UI (This Project)"
+        UI[Beautiful Web Interface]
+        TSL[Task Semantic Layer]
+        PC[Persistent Context Store]
+        SYNC[Task Master Sync Engine]
+    end
+
+    subgraph "Task Master CLI (Wrapped)"
+        TM_CLI[task-master commands]
+        TM_DATA[tasks.json & .md files]
+        TM_AI[AI-powered task generation]
+    end
+
+    subgraph "AI Agents"
+        CC[Claude Code]
+        RA[Research Agent]
+        PA[Planning Agent]
+    end
+
+    subgraph "Developer Experience"
+        DEV[Developer]
+        BROWSER[Web Browser]
+        TERMINAL[Terminal/Claude Code]
+    end
+
+    DEV --> BROWSER
+    BROWSER --> UI
+    UI --> TSL
+    TSL --> PC
+    TSL --> SYNC
+
+    SYNC <--> TM_CLI
+    SYNC <--> TM_DATA
+    TM_CLI <--> TM_AI
+
+    DEV --> TERMINAL
+    TERMINAL <--> CC
+    CC <--> TSL
+
+    TM_AI <--> RA
+    TM_AI <--> PA
+
+    style UI fill:#4A90E2
+    style TSL fill:#50C878
+    style PC fill:#FFB347
+    style SYNC fill:#DDA0DD
+    style TM_CLI fill:#2E7D32
+```
+
+**[📊 See complete workflow diagrams →](.taskmaster/docs/diagrams.md)**
 
 No more explaining context. No more lost decisions. Just building.
 

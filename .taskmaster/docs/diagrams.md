@@ -54,7 +54,7 @@ graph TB
     style TSL fill:#50C878
     style PC fill:#FFB347
     style SYNC fill:#DDA0DD
-    style TM_CLI fill:#B4E5FF
+    style TM_CLI fill:#2E7D32
 ```
 
 ## 1. Personal Feature Shipping Workflow with UI
