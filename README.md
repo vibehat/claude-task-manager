@@ -91,6 +91,26 @@ No more explaining context. No more lost decisions. Just building.
 
 Your vision stays intact from day 1 to launch.
 
+## ⚠️ Status: Under Active Development
+
+**We're in the early foundation stage** - building core philosophy, researching UI/UX approaches, and establishing the architectural foundation.
+
+🔬 **What we're doing now:**
+
+- Defining the vibehat development methodology
+- Researching optimal UI patterns for AI-assisted workflows
+- Building foundational architecture and components
+- Creating comprehensive documentation and mockups
+
+🤝 **Want to contribute?** We're looking for developers interested in shaping the future of AI development tools:
+
+- Create issues with ideas and feedback
+- Check out our research docs: [`.taskmaster/docs/prd.txt`](.taskmaster/docs/prd.txt)
+- Explore architecture: [`.taskmaster/docs/architecture/diagrams.md`](.taskmaster/docs/architecture/diagrams.md)
+- Review mockups: [`.taskmaster/docs/mockups/`](.taskmaster/docs/mockups/)
+
+Every contribution helps shape this project. **Early contributors get to influence the core direction.**
+
 ## How it works
 
 ### Quick start for any project
@@ -115,7 +135,7 @@ Opens in your browser. That's it.
 
 ```bash
 # Clone and run locally
-git clone https://github.com/minhlucvan/claude-task-manager.git
+git clone https://github.com/vibehat/claude-task-manager.git
 cd claude-task-manager
 pnpm install && pnpm dev
 ```
@@ -183,17 +203,6 @@ The UI will use your existing tasks and configuration.
 - **Startup founders** building products, not managing endless process meetings
 - **Anyone** with "architecture_decision_final_v2_ACTUALFINAL.txt" somewhere
 
-## ⚠️ Status: Under Active Development
-
-**Heads up!** This project is moving fast and breaking things (in the good way):
-
-- 🚧 **Expect breaking changes** - We're iterating rapidly based on community feedback
-- 🔧 **Things may break** - Features get refactored, APIs change, workflows evolve
-- 🚀 **Ship fast, fix faster** - Following the vibe coding philosophy of iteration over perfection
-- ✅ **Core is solid** - Built on rock-solid Claude Task Master foundation
-
-**Translation**: Perfect for vibe coders who love living on the edge, maybe not for production mission-critical stuff (yet).
-
 ## 🤝 Contributor Hunting!
 
 **We need night owls who get it.**
@@ -220,7 +229,7 @@ Looking for developers who:
 
 1. **Try it out** - Use it for your real projects
 2. **Share feedback** - What breaks your flow? What helps it?
-3. **Pick an issue** - [Good first issues here](https://github.com/minhlucvan/claude-task-manager/labels/good%20first%20issue)
+3. **Pick an issue** - [Good first issues here](https://github.com/vibehat/claude-task-manager/labels/good%20first%20issue)
 4. **Ship improvements** - Fork, code, PR, celebrate
 
 **New contributors get:**
@@ -237,7 +246,7 @@ Looking for developers who:
 - Multi-agent workflows
 - **Team collaboration** - Share context and coordinate across team members
 - **Sync with GitHub Projects/Trello** - Keep your PM tools updated automatically
-- Whatever you need (seriously, [tell us](https://github.com/minhlucvan/claude-task-manager/discussions))
+- Whatever you need (seriously, [tell us](https://github.com/vibehat/claude-task-manager/discussions))
 
 ## Contributing
 
@@ -246,32 +255,16 @@ Looking for developers who:
 fork → code → test on real work → PR
 ```
 
-[Good first issues here](https://github.com/minhlucvan/claude-task-manager/labels/good%20first%20issue)
+[Good first issues here](https://github.com/vibehat/claude-task-manager/labels/good%20first%20issue)
 
-## 3 AM Club - Hall of Fame
+## 🎩 Vibehat Collective
 
-_Real developers, real projects, real 3 AM breakthroughs_
+_"We put on our wizard hat and code." - The developers who get it._
 
-### Community Wins
+**Coming soon**: AI-powered development tools for the vibe coding community.  
+Building the future one commit at a time.
 
-🌟 **@aibuilder** - _"Shipped my entire auth system using AI-generated code. Task Manager maintained context, Claude Code generated the implementation."_
-
-🚀 **@contextcoder** - _"Finally, an AI that doesn't forget my project by morning. Cut my context switching time by 80%."_
-
-⚡ **@aifoundner** - _"Built my MVP's core features using natural language prompts. The combination of persistent context + AI generation is unbeatable."_
-
-🎯 **@deepworkdev** - _"This is what Claude Code was missing - project memory. No more explaining my codebase every conversation."_
-
-👥 **@teamlead** - _"Started using it solo, now my whole team benefits. Context flows seamlessly from individual work to team coordination."_
-
-### Trending Projects Built with AI-Enhanced Development
-
-- **SaaS Dashboard in 7 nights** - Solo founder, 0 to MVP using AI code generation and deep focus sessions
-- **Open source CLI tool** - 2.5k GitHub stars, built using AI-assisted development
-- **E-commerce rebuild** - Complete rewrite finished in 3 weeks using vibe coding techniques
-- **Startup team coordination** - 5-person team scaling from individual workflows to unified AI-assisted development
-
-_[Share your story →](https://github.com/minhlucvan/claude-task-manager/discussions/categories/show-and-tell)_
+_[Join the collective →](https://github.com/vibehat) when we're ready to ship something awesome._
 
 ## Community & Resources
 
@@ -283,9 +276,9 @@ _[Share your story →](https://github.com/minhlucvan/claude-task-manager/discus
 
 ### 💬 **Connect with Night Owls**
 
-- **[GitHub Discussions](https://github.com/minhlucvan/claude-task-manager/discussions)** - Share your builds
-- **[Show and Tell](https://github.com/minhlucvan/claude-task-manager/discussions/categories/show-and-tell)** - Projects built during deep focus
-- **[Tips & Tricks](https://github.com/minhlucvan/claude-task-manager/discussions/categories/tips-and-tricks)** - Optimize your flow
+- **[GitHub Discussions](https://github.com/vibehat/claude-task-manager/discussions)** - Share your builds
+- **[Show and Tell](https://github.com/vibehat/claude-task-manager/discussions/categories/show-and-tell)** - Projects built during deep focus
+- **[Tips & Tricks](https://github.com/vibehat/claude-task-manager/discussions/categories/tips-and-tricks)** - Optimize your flow
 
 ### 🏆 **Weekly Challenges**
 
@@ -312,7 +305,7 @@ Not another tool to learn. An amplifier for the tools you already use. VS Code, 
 
 Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master) by [@eyaltoledano](https://github.com/eyaltoledano)
 
-MIT License • [Star us](https://github.com/minhlucvan/claude-task-manager) if it helps
+MIT License • [Star us](https://github.com/vibehat/claude-task-manager) if it helps
 
 ## Technical Keywords
 

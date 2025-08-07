@@ -76,12 +76,12 @@
   "author": "minhlucvan",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/minhlucvan/claude-task-manager.git"
+    "url": "git+https://github.com/vibehat/claude-task-manager.git"
   },
   "bugs": {
-    "url": "https://github.com/minhlucvan/claude-task-manager/issues"
+    "url": "https://github.com/vibehat/claude-task-manager/issues"
   },
-  "homepage": "https://github.com/minhlucvan/claude-task-manager#readme",
+  "homepage": "https://github.com/vibehat/claude-task-manager#readme",
   "scripts": {
     "dev": "tsx watch server.ts",
     "dev:next": "next dev --turbopack",
