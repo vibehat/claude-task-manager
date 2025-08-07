@@ -1,0 +1,27 @@
+{
+  "name": "claude-task-manager-storybook",
+  "version": 2,
+  "buildCommand": "pnpm build-storybook",
+  "outputDirectory": "storybook-static",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "public": false,
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}

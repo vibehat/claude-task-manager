@@ -190,7 +190,7 @@ alias claude-feature="task-master next && task-master show $TASK_ID"
 
 **Ready to supercharge your Claude Code workflow?**
 
-[Get Started →](./README.md#how-it-works) | [Join the Community →](https://github.com/minhlucvan/claude-task-manager/discussions)
+[Get Started →](./README.md#how-it-works) | [Join the Community →](https://github.com/vibehat/claude-task-manager/discussions)
 
 ## Tags
 

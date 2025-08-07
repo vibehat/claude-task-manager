@@ -247,8 +247,8 @@ Claude Task Manager is an AI-powered project management interface that provides 
 
 ## Resources
 
-- [GitHub Issues](https://github.com/minhlucvan/claude-task-manager/issues)
-- [Discussions](https://github.com/minhlucvan/claude-task-manager/discussions)
+- [GitHub Issues](https://github.com/vibehat/claude-task-manager/issues)
+- [Discussions](https://github.com/vibehat/claude-task-manager/discussions)
 - [Contributing Guide](./CONTRIBUTING.md)
 - [Architecture Docs](./docs/ARCHITECTURE.md)
 
