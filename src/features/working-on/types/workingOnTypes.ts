@@ -1,179 +1,168 @@
-import type { TaskMasterTask } from '@/libs/client/stores/types';
+// Core Types for Working On Feature
 
-/**
- * Core interfaces for the Working On feature
- * Compatible with existing TaskMasterTask types from dataStore.ts
- */
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: 'pending' | 'in-progress' | 'done' | 'blocked' | 'cancelled';
+  priority: 'low' | 'medium' | 'high';
+  progress: number; // 0-100
+  estimatedTime: string;
+  dependencies: string[];
+  blockedTasks: string[];
+  tags: string[];
+  contextQuality: number; // 1-5 stars
+  aiSession?: AISession;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AISession {
+  id: string;
+  taskId: string;
+  agent: 'claude' | 'gpt' | 'gemini';
+  status: 'idle' | 'implementing' | 'reviewing' | 'blocked';
+  startTime: string;
+  lastActivity: string;
+  duration: string;
+  activities: AIActivity[];
+}
+
+export interface AIActivity {
+  id: string;
+  sessionId: string;
+  timestamp: string;
+  type: 'progress' | 'question' | 'completion' | 'error' | 'research';
+  message: string;
+  metadata?: {
+    filesChanged?: string[];
+    linesAdded?: number;
+    testsRun?: number;
+  };
+}
+
+export interface ContextItem {
+  id: string;
+  type: 'documentation' | 'note' | 'research' | 'decision';
+  title: string;
+  content: string;
+  relatedTasks: string[];
+  tags: string[];
+  createdAt: string;
+}
+
+export interface CommandSuggestion {
+  command: string;
+  description: string;
+  confidence: number;
+  contextRelevant: boolean;
+}
 
 export interface WorkingOnState {
-  // Current active task from existing dataStore
-  activeTask: TaskMasterTask | null;
-  isLoading: boolean;
+  // Core Data
+  tasks: Task[];
+  activeTasks: Task[];
+  currentFocusId: string | null;
+  aiSessions: AISession[];
+  contextItems: ContextItem[];
 
-  // Working On specific state
-  focusMode: boolean;
-  sessionStartTime: Date | null;
-  timeSpent: number; // in seconds
-  quickNotes: string;
-  lastActiveTask: TaskMasterTask | null;
+  // UI State
+  layout: 'desktop' | 'mobile';
+  contextViewOpen: boolean;
+  handoffModalOpen: boolean;
+  selectedTaskId: string | null;
 
-  // User preferences
-  preferences: WorkingOnPreferences;
-}
+  // Loading States
+  loading: {
+    tasks: boolean;
+    context: boolean;
+    handoff: boolean;
+  };
 
-export interface WorkingOnPreferences {
-  timerEnabled: boolean;
-  pomodoroLength: number; // in minutes
-  breakLength: number; // in minutes
-  autoStartTimer: boolean;
-  soundEnabled: boolean;
-}
-
-export interface SessionState {
-  isActive: boolean;
-  startTime: Date | null;
-  totalTime: number; // in seconds
-  isPaused: boolean;
-  pausedAt: Date | null;
-  resumedAt: Date | null;
-}
-
-export interface QuickNote {
-  id: string;
-  content: string;
-  timestamp: Date;
-  taskId: string;
-}
-
-export interface ActiveTaskDisplayProps {
-  task: TaskMasterTask | null;
-  isLoading: boolean;
-  onComplete?: () => void;
-  onEdit?: () => void;
-  onShowDetails?: () => void;
-}
-
-export interface ActiveTaskState {
-  showFullDescription: boolean;
-  isCompleting: boolean;
-  lastUpdated: Date;
-}
-
-export interface QuickActionBarProps {
-  task: TaskMasterTask;
-  onTaskComplete: (taskId: string) => void;
-  onTaskSwitch: (taskId: string) => void;
-  onAddNote: (note: string) => void;
-  onToggleFocus: () => void;
-}
-
-export interface ProgressIndicatorProps {
-  task: TaskMasterTask;
-  variant?: 'linear' | 'circular' | 'minimal';
-}
-
-export interface ProgressData {
-  completedSubtasks: number;
-  totalSubtasks: number;
-  percentage: number;
-  status: 'not-started' | 'in-progress' | 'nearly-complete' | 'complete';
-}
-
-export interface SessionTimerProps {
-  sessionState: SessionState;
-  onStart: () => void;
-  onPause: () => void;
-  onResume: () => void;
-  onStop: () => void;
-}
-
-export interface FocusModeProps {
-  isActive: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}
-
-export interface QuickNotesProps {
-  notes: QuickNote[];
-  currentNote: string;
-  onNoteChange: (note: string) => void;
-  onSaveNote: () => void;
-  isAutoSaving: boolean;
-}
-
-/**
- * Store interface for the Working On Zustand store
- */
-export interface WorkingOnStore extends WorkingOnState {
   // Actions
-  setActiveTask: (task: TaskMasterTask | null) => void;
-  setIsLoading: (loading: boolean) => void;
-  toggleFocusMode: () => void;
-  startSession: () => void;
-  endSession: () => void;
-  pauseSession: () => void;
-  resumeSession: () => void;
-  updateQuickNotes: (notes: string) => void;
-  addQuickNote: (content: string) => void;
-  updatePreferences: (preferences: Partial<WorkingOnPreferences>) => void;
+  setCurrentFocus: (taskId: string) => void;
+  updateTaskProgress: (taskId: string, progress: number) => void;
+  addAIActivity: (sessionId: string, activity: AIActivity) => void;
+  openContextView: (taskId: string) => void;
+  closeContextView: () => void;
+  startAIHandoff: (taskId: string) => void;
+  updateContextQuality: (taskId: string, quality: number) => void;
+  setLayout: (layout: 'desktop' | 'mobile') => void;
+  setLoading: (key: 'tasks' | 'context' | 'handoff', loading: boolean) => void;
+  closeHandoffModal: () => void;
+  startAISession: (taskId: string, agent: 'claude' | 'gpt' | 'gemini') => void;
+  stopAISession: (sessionId: string) => void;
+  addContextItem: (item: ContextItem) => void;
+  updateContextItem: (id: string, updates: Partial<ContextItem>) => void;
 
-  // Computed getters
-  getSessionDuration: () => number;
-  isSessionActive: () => boolean;
-  getProgressData: (task?: TaskMasterTask) => ProgressData | null;
-
-  // Integration with dataStore
-  syncWithDataStore: () => void;
-  reset: () => void;
+  // Computed Properties
+  getActiveTasks: () => Task[];
+  getBlockedTasks: () => Task[];
+  getCurrentFocusTask: () => Task | null;
+  getTaskById: (id: string) => Task | null;
+  getContextByTaskId: (taskId: string) => ContextItem[];
 }
 
-/**
- * Hook return types for better type safety
- */
-export interface UseActiveTaskReturn {
-  activeTask: TaskMasterTask | null;
-  hasMultipleActive: boolean;
-  isLoading: boolean;
-  error: string | null;
-  switchToTask: (taskId: string) => Promise<void>;
-  completeTask: (taskId: string) => Promise<void>;
+// Component Props
+export interface TaskCardProps {
+  task: Task;
+  variant: 'active' | 'idle' | 'blocked';
+  onAction: (action: string, taskId: string) => void;
 }
 
-export interface UseSessionTrackingReturn {
-  sessionState: SessionState;
-  startSession: () => void;
-  pauseSession: () => void;
-  resumeSession: () => void;
-  endSession: () => void;
-  getFormattedDuration: () => string;
+export interface ActiveTasksPanelProps {
+  tasks: Task[];
+  onTaskSelect: (id: string) => void;
+  selectedTaskId: string | null;
 }
 
-export interface UseFocusModeReturn {
-  isActive: boolean;
-  toggle: () => void;
-  enable: () => void;
-  disable: () => void;
+export interface CurrentFocusCardProps {
+  task: Task;
+  aiSession?: AISession;
+  onAction: (action: string) => void;
 }
 
-/**
- * Event types for analytics and tracking
- */
-export interface WorkingOnAnalyticsEvent {
-  type:
-    | 'task_completed'
-    | 'focus_mode_activated'
-    | 'session_started'
-    | 'task_switched'
-    | 'note_added';
-  timestamp: Date;
-  data: Record<string, any>;
+export interface AIActivityFeedProps {
+  activities: AIActivity[];
+  maxItems?: number;
+  autoScroll?: boolean;
 }
 
-/**
- * Error types specific to Working On feature
- */
-export interface WorkingOnError {
-  code: 'NO_ACTIVE_TASK' | 'MULTIPLE_ACTIVE_TASKS' | 'SYNC_FAILED' | 'SESSION_EXPIRED';
-  message: string;
-  details?: any;
+export interface ContextViewProps {
+  taskId: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
+
+export interface HandoffInterfaceProps {
+  task: Task;
+  isOpen: boolean;
+  onClose: () => void;
+  onHandoff: (method: HandoffMethod) => void;
+}
+
+export interface QuickActionsPanelProps {
+  onAction: (action: string) => void;
+}
+
+export interface BlockedTasksPanelProps {
+  blockedTasks: Task[];
+  onTaskSelect: (id: string) => void;
+}
+
+// Handoff related types
+export type HandoffMethod = 'direct' | 'clipboard' | 'file';
+
+export interface HandoffContext {
+  taskId: string;
+  contextQuality: number;
+  generatedContext: string;
+  tokenCount: number;
+}
+
+// Utility types
+export type TaskVariant = 'active' | 'idle' | 'blocked';
+export type Priority = 'low' | 'medium' | 'high';
+export type Status = 'pending' | 'in-progress' | 'done' | 'blocked' | 'cancelled';
+export type AIAgent = 'claude' | 'gpt' | 'gemini';
+export type ActivityType = 'progress' | 'question' | 'completion' | 'error' | 'research';

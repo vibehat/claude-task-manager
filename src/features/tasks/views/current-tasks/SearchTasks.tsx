@@ -2,7 +2,6 @@
 
 import { useSearchTasks } from '@/libs/client/hooks/tasks/queries/tasks/useSearchTasks';
 import { useSearchStore } from '@/store/searchStore';
-import { useDataStore } from '@/libs/client/stores';
 import { TaskLine } from '../../components/items/TaskLine';
 import { useMemo } from 'react';
 

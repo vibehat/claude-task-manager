@@ -5,8 +5,7 @@ import { useTaskMasterSync } from '@/libs/client/hooks/useTaskMasterSync';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { AlertTriangle, CheckCircle, Clock, RefreshCw, Zap } from 'lucide-react';
+import { CheckCircle, Clock, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function TaskMasterSyncExample(): React.JSX.Element {

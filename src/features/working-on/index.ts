@@ -1,20 +1,58 @@
-// Export types
-export type * from './types/workingOnTypes';
+// Main exports for Working On feature
+export { WorkingOnPage } from './views/WorkingOnPage';
+export { WorkingOnPageClient } from './views/WorkingOnPageClient';
+export { TaskDetailPage } from './views/TaskDetailPage';
 
-// Export hooks
-export { useActiveTask } from './hooks/useActiveTask';
-export { useSessionTracking } from './hooks/useSessionTracking';
-export { useFocusMode } from './hooks/useFocusMode';
+// Components
+export { ActiveTasksPanel } from './components/ActiveTasksPanel';
+export { TaskCard } from './components/TaskCard';
+export { AIActivityFeed } from './components/AIActivityFeed';
+export { QuickActionsPanel } from './components/QuickActionsPanel';
+export { BlockedTasksPanel } from './components/BlockedTasksPanel';
+export { ContextView } from './components/ContextView';
+export { TaskInformation } from './components/TaskInformation';
 
-// Export store
+// Store
 export { useWorkingOnStore } from './store/workingOnStore';
 
-// Export components
-export { ActiveTaskDisplay } from './components/ActiveTaskDisplay';
-export { QuickActionBar } from './components/QuickActionBar';
-export { ProgressIndicator } from './components/ProgressIndicator';
-export { SessionTimer } from './components/SessionTimer';
-export { TaskDetailPanel } from './components/TaskDetailPanel';
+// Hooks
+export {
+  useCurrentFocusTask,
+  useActiveTasks,
+  useBlockedTasks,
+  useWorkingOnUI,
+  useWorkingOnLoading,
+} from './hooks/useWorkingOnSelectors';
 
-// Export main Working On page component
-export { WorkingOnPage } from './components/WorkingOnPage';
+// Types
+export type {
+  Task,
+  AISession,
+  AIActivity,
+  ContextItem,
+  CommandSuggestion,
+  WorkingOnState,
+  TaskCardProps,
+  ActiveTasksPanelProps,
+  CurrentFocusCardProps,
+  AIActivityFeedProps,
+  ContextViewProps,
+  QuickActionsPanelProps,
+  BlockedTasksPanelProps,
+  HandoffInterfaceProps,
+} from './types/workingOnTypes';
+
+// Data
+export {
+  dummyTasks,
+  dummyAISessions,
+  dummyContextItems,
+  dummyCommandSuggestions,
+  getTaskById,
+  getActiveTasks,
+  getBlockedTasks,
+  getPendingTasks,
+  getTasksByPriority,
+  getContextByTaskId,
+  getRecentActivities,
+} from './data/dummyData';

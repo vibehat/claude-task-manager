@@ -1,230 +1,260 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { subscribeWithSelector } from 'zustand/middleware';
 import type {
-  WorkingOnStore,
-  SessionState,
-  WorkingOnPreferences,
-  ProgressData,
-  QuickNote,
+  WorkingOnState,
+  Task,
+  AISession,
+  AIActivity,
+  ContextItem,
 } from '../types/workingOnTypes';
-import type { TaskMasterTask } from '@/libs/client/stores/types';
+import { dummyTasks, dummyAISessions, dummyContextItems, getActiveTasks } from '../data/dummyData';
 
-/**
- * Calculate task progress based on subtask completion
- */
-const calculateTaskProgress = (task: TaskMasterTask): ProgressData => {
-  if (!task.subtasks?.length) {
-    // If no subtasks, progress is based on task status
-    const percentage = task.status === 'done' ? 100 : task.status === 'in-progress' ? 50 : 0;
-    return {
-      completedSubtasks: 0,
-      totalSubtasks: 0,
-      percentage,
-      status:
-        task.status === 'done'
-          ? 'complete'
-          : task.status === 'in-progress'
-            ? 'in-progress'
-            : 'not-started',
-    };
-  }
+// Task management slice
+const createTaskSlice = (set: any, get: any) => ({
+  tasks: dummyTasks,
+  activeTasks: getActiveTasks(),
+  currentFocusId: '28.2', // Default focus on the active JWT task
 
-  const completedSubtasks = task.subtasks.filter((subtask) => subtask.status === 'done').length;
-  const totalSubtasks = task.subtasks.length;
-  const percentage = Math.round((completedSubtasks / totalSubtasks) * 100);
+  setCurrentFocus: (taskId: string) => {
+    set({ currentFocusId: taskId });
+  },
 
-  let status: ProgressData['status'];
-  if (percentage === 0) {
-    status = 'not-started';
-  } else if (percentage >= 80) {
-    status = 'nearly-complete';
-  } else if (percentage === 100) {
-    status = 'complete';
-  } else {
-    status = 'in-progress';
-  }
+  updateTaskProgress: (taskId: string, progress: number) => {
+    set((state: WorkingOnState) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === taskId ? { ...task, progress, updatedAt: new Date().toISOString() } : task
+      ),
+    }));
+  },
 
-  return {
-    completedSubtasks,
-    totalSubtasks,
-    percentage,
-    status,
-  };
-};
+  updateContextQuality: (taskId: string, quality: number) => {
+    set((state: WorkingOnState) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === taskId ? { ...task, contextQuality: quality } : task
+      ),
+    }));
+  },
 
-/**
- * Default preferences for new users
- */
-const defaultPreferences: WorkingOnPreferences = {
-  timerEnabled: true,
-  pomodoroLength: 25, // 25 minutes
-  breakLength: 5, // 5 minutes
-  autoStartTimer: false,
-  soundEnabled: true,
-};
+  // Computed properties
+  getActiveTasks: () => {
+    const { tasks } = get();
+    return tasks.filter((task: Task) => task.status === 'in-progress' || task.aiSession);
+  },
 
-/**
- * Zustand store for Working On feature state management
- * Follows existing patterns in the codebase and integrates with dataStore
- */
-export const useWorkingOnStore = create<WorkingOnStore>()(
-  persist(
-    (set, get) => ({
-      // Initial state
-      activeTask: null,
-      isLoading: false,
-      focusMode: false,
-      sessionStartTime: null,
-      timeSpent: 0,
-      quickNotes: '',
-      lastActiveTask: null,
-      preferences: defaultPreferences,
+  getBlockedTasks: () => {
+    const { tasks } = get();
+    return tasks.filter((task: Task) => task.status === 'blocked');
+  },
 
-      // Actions
-      setActiveTask: (task: TaskMasterTask | null) => {
-        const currentState = get();
-        set({
-          activeTask: task,
-          lastActiveTask: currentState.activeTask || task || currentState.lastActiveTask,
-        });
-      },
+  getCurrentFocusTask: () => {
+    const { tasks, currentFocusId } = get();
+    return tasks.find((task: Task) => task.id === currentFocusId) || null;
+  },
 
-      setIsLoading: (loading: boolean) => {
-        set({ isLoading: loading });
-      },
+  getTaskById: (id: string) => {
+    const { tasks } = get();
+    return tasks.find((task: Task) => task.id === id) || null;
+  },
+});
 
-      toggleFocusMode: () => {
-        const currentState = get();
-        set({ focusMode: !currentState.focusMode });
-      },
+// AI management slice
+const createAISlice = (set: any, get: any) => ({
+  aiSessions: dummyAISessions,
 
-      startSession: () => {
-        const now = new Date();
-        set({
-          sessionStartTime: now,
-          timeSpent: 0,
-        });
-      },
+  addAIActivity: (sessionId: string, activity: AIActivity) => {
+    set((state: WorkingOnState) => ({
+      aiSessions: state.aiSessions.map((session) =>
+        session.id === sessionId
+          ? {
+              ...session,
+              activities: [...session.activities, activity],
+              lastActivity: activity.timestamp,
+              duration: calculateDuration(session.startTime, activity.timestamp),
+            }
+          : session
+      ),
+    }));
 
-      endSession: () => {
-        const currentState = get();
-        if (currentState.sessionStartTime) {
-          const endTime = new Date();
-          const duration = Math.floor(
-            (endTime.getTime() - currentState.sessionStartTime.getTime()) / 1000
-          );
-          set({
-            sessionStartTime: null,
-            timeSpent: currentState.timeSpent + duration,
-          });
-        }
-      },
-
-      pauseSession: () => {
-        const currentState = get();
-        if (currentState.sessionStartTime) {
-          const pauseTime = new Date();
-          const duration = Math.floor(
-            (pauseTime.getTime() - currentState.sessionStartTime.getTime()) / 1000
-          );
-          set({
-            sessionStartTime: null,
-            timeSpent: currentState.timeSpent + duration,
-          });
-        }
-      },
-
-      resumeSession: () => {
-        const now = new Date();
-        set({ sessionStartTime: now });
-      },
-
-      updateQuickNotes: (notes: string) => {
-        set({ quickNotes: notes });
-      },
-
-      addQuickNote: (content: string) => {
-        // For now, just update the quick notes field
-        // In Phase 2, we'll implement full note history
-        const currentState = get();
-        const timestamp = new Date().toLocaleTimeString();
-        const newNote = `[${timestamp}] ${content}`;
-        const updatedNotes = currentState.quickNotes
-          ? `${currentState.quickNotes}\n${newNote}`
-          : newNote;
-
-        set({ quickNotes: updatedNotes });
-      },
-
-      updatePreferences: (newPreferences: Partial<WorkingOnPreferences>) => {
-        const currentState = get();
-        set({
-          preferences: {
-            ...currentState.preferences,
-            ...newPreferences,
-          },
-        });
-      },
-
-      // Computed getters
-      getSessionDuration: (): number => {
-        const currentState = get();
-        if (!currentState.sessionStartTime) {
-          return currentState.timeSpent;
-        }
-
-        const now = new Date();
-        const currentSessionTime = Math.floor(
-          (now.getTime() - currentState.sessionStartTime.getTime()) / 1000
-        );
-        return currentState.timeSpent + currentSessionTime;
-      },
-
-      isSessionActive: (): boolean => {
-        const currentState = get();
-        return currentState.sessionStartTime !== null;
-      },
-
-      getProgressData: (task?: TaskMasterTask): ProgressData | null => {
-        const currentState = get();
-        const targetTask = task || currentState.activeTask;
-        if (!targetTask) return null;
-
-        return calculateTaskProgress(targetTask);
-      },
-
-      // Integration methods
-      syncWithDataStore: () => {
-        // This will be called when dataStore updates
-        // For now, just a placeholder - integration happens in useActiveTask hook
-        console.log('[WorkingOnStore] Syncing with dataStore...');
-      },
-
-      reset: () => {
-        set({
-          activeTask: null,
-          isLoading: false,
-          focusMode: false,
-          sessionStartTime: null,
-          timeSpent: 0,
-          quickNotes: '',
-          lastActiveTask: null,
-          preferences: defaultPreferences,
-        });
-      },
-    }),
-    {
-      name: 'working-on-store',
-      storage: createJSONStorage(() => localStorage),
-
-      // Only persist user preferences and session state, not active task
-      // (active task comes from dataStore)
-      partialize: (state) => ({
-        focusMode: state.focusMode,
-        timeSpent: state.timeSpent,
-        quickNotes: state.quickNotes,
-        preferences: state.preferences,
-      }),
+    // Also update the corresponding task's session
+    const { tasks } = get();
+    const session = get().aiSessions.find((s: AISession) => s.id === sessionId);
+    if (session) {
+      set({
+        tasks: tasks.map((task: Task) =>
+          task.id === session.taskId && task.aiSession
+            ? {
+                ...task,
+                aiSession: {
+                  ...task.aiSession,
+                  activities: [...task.aiSession.activities, activity],
+                },
+              }
+            : task
+        ),
+      });
     }
-  )
+  },
+
+  startAISession: (taskId: string, agent: 'claude' | 'gpt' | 'gemini') => {
+    const newSessionId = `session-${Date.now()}`;
+    const newSession: AISession = {
+      id: newSessionId,
+      taskId,
+      agent,
+      status: 'implementing',
+      startTime: new Date().toISOString(),
+      lastActivity: new Date().toISOString(),
+      duration: '0s',
+      activities: [],
+    };
+
+    set((state: WorkingOnState) => ({
+      aiSessions: [...state.aiSessions, newSession],
+      tasks: state.tasks.map((task) =>
+        task.id === taskId
+          ? { ...task, aiSession: newSession, status: 'in-progress' as const }
+          : task
+      ),
+    }));
+  },
+
+  stopAISession: (sessionId: string) => {
+    set((state: WorkingOnState) => ({
+      aiSessions: state.aiSessions.map((session) =>
+        session.id === sessionId ? { ...session, status: 'idle' as const } : session
+      ),
+      tasks: state.tasks.map((task) =>
+        task.aiSession?.id === sessionId
+          ? { ...task, aiSession: { ...task.aiSession, status: 'idle' as const } }
+          : task
+      ),
+    }));
+  },
+});
+
+// Context management slice
+const createContextSlice = (set: any, get: any) => ({
+  contextItems: dummyContextItems,
+
+  addContextItem: (item: ContextItem) => {
+    set((state: WorkingOnState) => ({
+      contextItems: [...state.contextItems, item],
+    }));
+  },
+
+  updateContextItem: (id: string, updates: Partial<ContextItem>) => {
+    set((state: WorkingOnState) => ({
+      contextItems: state.contextItems.map((item) =>
+        item.id === id ? { ...item, ...updates } : item
+      ),
+    }));
+  },
+
+  getContextByTaskId: (taskId: string) => {
+    const { contextItems } = get();
+    return contextItems.filter((item: ContextItem) => item.relatedTasks.includes(taskId));
+  },
+});
+
+// UI management slice
+const createUISlice = (set: any, get: any) => ({
+  layout: 'desktop' as const,
+  contextViewOpen: false,
+  handoffModalOpen: false,
+  selectedTaskId: null,
+
+  loading: {
+    tasks: false,
+    context: false,
+    handoff: false,
+  },
+
+  openContextView: (taskId: string) => {
+    set({
+      contextViewOpen: true,
+      selectedTaskId: taskId,
+    });
+  },
+
+  closeContextView: () => {
+    set({
+      contextViewOpen: false,
+      selectedTaskId: null,
+    });
+  },
+
+  startAIHandoff: (taskId: string) => {
+    set({
+      handoffModalOpen: true,
+      selectedTaskId: taskId,
+    });
+  },
+
+  closeHandoffModal: () => {
+    set({
+      handoffModalOpen: false,
+      selectedTaskId: null,
+    });
+  },
+
+  setLayout: (layout: 'desktop' | 'mobile') => {
+    set({ layout });
+  },
+
+  setLoading: (key: 'tasks' | 'context' | 'handoff', loading: boolean) => {
+    set((state: WorkingOnState) => ({
+      loading: {
+        ...state.loading,
+        [key]: loading,
+      },
+    }));
+  },
+});
+
+// Helper function to calculate duration
+function calculateDuration(startTime: string, endTime: string): string {
+  const start = new Date(startTime).getTime();
+  const end = new Date(endTime).getTime();
+  const diffMs = end - start;
+
+  const minutes = Math.floor(diffMs / (1000 * 60));
+  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+  if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  }
+  return `${seconds}s`;
+}
+
+// Main store
+export const useWorkingOnStore = create<WorkingOnState>()(
+  subscribeWithSelector((set, get) => ({
+    ...createTaskSlice(set, get),
+    ...createAISlice(set, get),
+    ...createContextSlice(set, get),
+    ...createUISlice(set, get),
+  }))
 );
+
+// Selectors for optimized subscriptions
+export const selectCurrentFocusTask = (state: WorkingOnState) => {
+  const { tasks, currentFocusId } = state;
+  return tasks.find((task) => task.id === currentFocusId) || null;
+};
+
+export const selectActiveTasks = (state: WorkingOnState) => {
+  return state.tasks.filter((task) => task.status === 'in-progress' || task.aiSession);
+};
+
+export const selectBlockedTasks = (state: WorkingOnState) => {
+  return state.tasks.filter((task) => task.status === 'blocked');
+};
+
+export const selectLoading = (state: WorkingOnState) => state.loading;
+
+export const selectUIState = (state: WorkingOnState) => ({
+  contextViewOpen: state.contextViewOpen,
+  handoffModalOpen: state.handoffModalOpen,
+  selectedTaskId: state.selectedTaskId,
+  layout: state.layout,
+});

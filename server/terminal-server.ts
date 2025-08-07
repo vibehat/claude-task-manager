@@ -6,13 +6,42 @@ import { spawn } from 'child_process';
 
 // Try to import node-pty with fallback
 let pty: any = null;
+let ptyLoadAttempted = false;
+
+// Temporarily suppress module not found errors during PTY operations
+const originalConsoleError = console.error;
+function suppressPtyErrors() {
+  console.error = (...args: any[]) => {
+    const errorStr = args.join(' ');
+    if (errorStr.includes('conpty.node') && errorStr.includes('MODULE_NOT_FOUND')) {
+      // Suppress this specific error
+      return;
+    }
+    originalConsoleError.apply(console, args);
+  };
+}
+
 async function loadPty() {
+  suppressPtyErrors();
   try {
     pty = await import('node-pty');
-    console.log('✅ node-pty loaded');
-  } catch {
-    console.log('⚠️  Using child_process fallback');
+    console.log('✅ node-pty loaded successfully');
+    ptyLoadAttempted = true;
+  } catch (error: any) {
+    // Only show the warning, not the full error stack
+    if (error.code === 'MODULE_NOT_FOUND' && error.message.includes('conpty.node')) {
+      console.log(
+        '⚠️  node-pty native module not built for Windows - using child_process fallback (terminal functionality preserved)'
+      );
+    } else {
+      console.log('⚠️  node-pty unavailable - using child_process fallback');
+    }
+    ptyLoadAttempted = true;
   }
+  // Restore normal error logging after a delay
+  setTimeout(() => {
+    console.error = originalConsoleError;
+  }, 5000);
 }
 loadPty();
 
@@ -33,7 +62,7 @@ class TerminalServer {
   private cleanupTimer: NodeJS.Timeout | null = null;
   private port: number;
 
-  constructor(port = 3001) {
+  constructor(port = 9001) {
     this.port = port;
   }
 
@@ -193,6 +222,7 @@ class TerminalServer {
       // Try PTY first
       if (pty) {
         try {
+          suppressPtyErrors(); // Suppress errors during spawn
           terminalProcess = pty.spawn(shell, [], {
             name: 'xterm-color',
             cols: 80,
@@ -202,8 +232,25 @@ class TerminalServer {
           });
           usingPty = true;
           console.log(`✅ PTY session ${sessionId} with ${shell}`);
-        } catch {
-          console.log(`⚠️  PTY failed for ${shell}, using child_process`);
+          setTimeout(() => {
+            console.error = originalConsoleError;
+          }, 100); // Restore after spawn
+        } catch (error: any) {
+          // Silently handle MODULE_NOT_FOUND errors as they're expected on Windows without rebuild
+          if (
+            error.code === 'MODULE_NOT_FOUND' &&
+            error.message &&
+            error.message.includes('conpty.node')
+          ) {
+            console.log(`⚠️  PTY failed for ${shell}, using child_process`);
+          } else {
+            console.log(`⚠️  PTY failed for ${shell}, using child_process`);
+            if (error.message) {
+              console.error('PTY error:', error.message);
+            }
+          }
+          // Disable PTY for future attempts in this session
+          pty = null;
         }
       }
 
@@ -388,15 +435,15 @@ class TerminalServer {
 // Singleton
 let server: TerminalServer | null = null;
 
-export function getTerminalServer(): TerminalServer {
+export function getTerminalServer(port?: number): TerminalServer {
   if (!server) {
-    server = new TerminalServer();
+    server = new TerminalServer(port);
   }
   return server;
 }
 
-export async function startTerminalServer(): Promise<TerminalServer> {
-  const s = getTerminalServer();
+export async function startTerminalServer(port = 9001): Promise<TerminalServer> {
+  const s = getTerminalServer(port);
   await s.start();
   return s;
 }

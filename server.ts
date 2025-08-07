@@ -1,8 +1,8 @@
 /**
  * Custom Next.js server that runs all services:
  * - Next.js HTTP server
- * - Terminal WebSocket server (port 3001)
- * - Signal WebSocket server (port 3002)
+ * - Terminal WebSocket server (port 9001)
+ * - Signal WebSocket server (port 9002)
  */
 
 import { createServer } from 'http';
@@ -43,12 +43,12 @@ async function startAllServers() {
     });
 
     // 4. Start Terminal WebSocket server
-    const terminalServer = await startTerminalServer();
-    console.log('✅ Terminal WebSocket server ready on ws://localhost:3001');
+    const terminalServer = await startTerminalServer(9001);
+    console.log('✅ Terminal WebSocket server ready on ws://localhost:9001');
 
     // 5. Start Signal WebSocket server
-    const signalServer = await startSignalServer();
-    console.log('✅ Signal WebSocket server ready on ws://localhost:3002');
+    const signalServer = await startSignalServer(9002);
+    console.log('✅ Signal WebSocket server ready on ws://localhost:9002');
 
     // 6. Start File Watcher
     const fileWatcher = await startFileWatcher();
@@ -56,8 +56,8 @@ async function startAllServers() {
 
     console.log('\n📡 All servers running:');
     console.log(`  - Next.js:  http://localhost:${port}`);
-    console.log(`  - Terminal: ws://localhost:3001`);
-    console.log(`  - Signal:   ws://localhost:3002`);
+    console.log(`  - Terminal: ws://localhost:9001`);
+    console.log(`  - Signal:   ws://localhost:9002`);
     console.log('\nPress Ctrl+C to stop all servers\n');
 
     // Handle graceful shutdown
