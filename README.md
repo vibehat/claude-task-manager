@@ -85,7 +85,7 @@ graph TB
     style TM_CLI fill:#2E7D32
 ```
 
-**[📊 See complete workflow diagrams →](.taskmaster/docs/diagrams.md)**
+**[📊 See complete workflow diagrams →](.taskmaster/docs/architecture/diagrams.md)**
 
 No more explaining context. No more lost decisions. Just building.
 
