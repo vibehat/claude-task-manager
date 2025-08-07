@@ -105,7 +105,7 @@ Your vision stays intact from day 1 to launch.
 🤝 **Want to contribute?** We're looking for developers interested in shaping the future of AI development tools:
 
 - Create issues with ideas and feedback
-- Check out our research docs: [`.taskmaster/docs/prd.txt`](.taskmaster/docs/prd.txt)
+- Check out our research docs: [`.taskmaster/docs/prd.txt`](.taskmaster/docs/prd/main.md)
 - Explore architecture: [`.taskmaster/docs/architecture/diagrams.md`](.taskmaster/docs/architecture/diagrams.md)
 - Review mockups: [`.taskmaster/docs/mockups/`](.taskmaster/docs/mockups/)
 
