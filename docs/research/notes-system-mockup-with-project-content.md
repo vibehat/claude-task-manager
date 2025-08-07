@@ -2,7 +2,7 @@
 
 ## Research Summary
 
-Based on analysis of the current Claude Task Master UI project documentation, I've researched how the proposed notes system would look when populated with actual project content. The project contains 46 markdown files across various categories including development guidelines, mockups, git workflows, and feature specifications.
+Based on analysis of the current Claude Task Master UI project documentation, I've researched how the proposed notes system would look when populated with actual project content. The project contains 46 markdown files across various categories including development guidelines, wireframes, git workflows, and feature specifications.
 
 ## Current Project Markdown File Structure
 
@@ -12,7 +12,7 @@ Based on analysis of the current Claude Task Master UI project documentation, I'
 - **Development docs**: fe-development.md, uiux.md, tdd.md, uiux-development.md, uiux-design.md
 - **Git workflow**: git-conventions.md, commit-reference.md, pullrequest-labels.md
 - **Release process**: releasing-guide.md, versioning-strategy.md, release-config.md
-- **Mockups**: Organized in 6 subsections (overview, layouts, features, interactions, responsive, implementation)
+- **Wireframes**: Organized in 6 subsections (overview, layouts, features, interactions, responsive, implementation)
 - **Architecture**: Diagrams, technical decisions, API documentation
 
 **Current Task Master State:**
@@ -72,16 +72,16 @@ Based on analysis of the current Claude Task Master UI project documentation, I'
 │ │   📍 /docs/ideas/feature-notes-system.md  🏷️ #knowledge #ai #smart      │
 │ │   🔗 Research notes for future implementation                            │
 │ │                                                                           │
-│ ├─ 📋 task-detail-page.md                             📂 /docs/mockups • 4d │
-│ │   Task Detail Page mockup - primary workspace for task-focused work     │
+│ ├─ 📋 task-detail-page.md                             📂 /docs/wireframes • 4d │
+│ │   Task Detail Page wireframe - primary workspace for task-focused work     │
 │ │   Hierarchical navigation, context panels, rich interactions            │
-│ │   📍 /docs/mockups/03-features/task-management/task-detail-page.md       │
-│ │   🏷️ #mockup #ui #task-management                                        │
+│ │   📍 /docs/wireframes/03-features/task-management/task-detail-page.md       │
+│ │   🏷️ #wireframe #ui #task-management                                        │
 │ │                                                                           │
-│ └─ 🎯 working-page.md                                  📂 /docs/mockups • 1d │
+│ └─ 🎯 working-page.md                                  📂 /docs/wireframes • 1d │
 │     Working On page design - AI-agent collaboration orchestration hub     │
 │     Real-time activity feeds, command palette, focus modes               │
-│     📍 /docs/mockups/03-features/workspace/working-page.md  🏷️ #ai-agents │
+│     📍 /docs/wireframes/03-features/workspace/working-page.md  🏷️ #ai-agents │
 │                                                                             │
 │ 🏷️ Process & Workflow                                [📍 Auto-detected]    │
 │ ├─ ⚙️ git-conventions.md                              📂 /docs/git • 5d ago │
@@ -95,15 +95,15 @@ Based on analysis of the current Claude Task Master UI project documentation, I'
 │     📍 /docs/release/releasing-guide.md                                    │
 │                                                                             │
 │ 🏷️ Design System                                     [📍 Auto-detected]    │
-│ ├─ 🎨 design-principles.md                            📂 /docs/mockups • 2w │
+│ ├─ 🎨 design-principles.md                            📂 /docs/wireframes • 2w │
 │ │   Core design philosophy and UI principles for the application          │
 │ │   Visual hierarchy, interaction patterns, accessibility standards        │
-│ │   📍 /docs/mockups/01-overview/design-principles.md                     │
+│ │   📍 /docs/wireframes/01-overview/design-principles.md                     │
 │ │                                                                           │
-│ └─ 📱 mobile-adaptations.md                           📂 /docs/mockups • 1w │
+│ └─ 📱 mobile-adaptations.md                           📂 /docs/wireframes • 1w │
 │     Mobile responsive design patterns and breakpoint specifications        │
 │     Touch interactions, mobile navigation, performance considerations      │
-│     📍 /docs/mockups/05-responsive/mobile-adaptations.md                   │
+│     📍 /docs/wireframes/05-responsive/mobile-adaptations.md                   │
 │                                                                             │
 │ 📂 Implementation Notes                               [🎯 Needs attention]  │
 │ ├─ 📄 Session notes from 2025-01-08                   📂 /working • 2h      │
