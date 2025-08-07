@@ -60,12 +60,12 @@ The AI will:
 - Set up initial configuration files
 - Guide you through the rest of the process
 
-5. Place your PRD document in the `.taskmaster/docs/` directory (e.g., `.taskmaster/docs/prd.txt`)
+5. Place your PRD document in the `docs/` directory (e.g., `docs/prd/main.md`)
 
 6. **Use natural language commands** to interact with Task Master:
 
 ```
-Can you parse my PRD at .taskmaster/docs/prd.txt?
+Can you parse my PRD at docs/prd/main.md?
 What's the next task I should work on?
 Can you help me implement task 3?
 ```
@@ -132,7 +132,7 @@ If you're not using MCP, you can still set up Cursor integration:
 
 1. After initializing your project, open it in Cursor
 2. The `.cursor/rules/dev_workflow.mdc` file is automatically loaded by Cursor, providing the AI with knowledge about the task management system
-3. Place your PRD document in the `.taskmaster/docs/` directory (e.g., `.taskmaster/docs/prd.txt`)
+3. Place your PRD document in the `docs/` directory (e.g., `docs/prd/main.md`)
 4. Open Cursor's AI chat and switch to Agent mode
 
 ### Alternative MCP Setup in Cursor
@@ -155,13 +155,13 @@ Once configured, you can interact with Task Master's task management commands di
 In Cursor's AI chat, instruct the agent to generate tasks from your PRD:
 
 ```
-Please use the task-master parse-prd command to generate tasks from my PRD. The PRD is located at .taskmaster/docs/prd.txt.
+Please use the task-master parse-prd command to generate tasks from my PRD. The PRD is located at docs/prd/main.md.
 ```
 
 The agent will execute:
 
 ```bash
-task-master parse-prd .taskmaster/docs/prd.txt
+task-master parse-prd docs/prd/main.md
 ```
 
 This will:
@@ -397,7 +397,7 @@ task-master expand --id=5 --research
 ### Starting a new project
 
 ```
-I've just initialized a new project with Claude Task Master. I have a PRD at .taskmaster/docs/prd.txt.
+I've just initialized a new project with Claude Task Master. I have a PRD at docs/prd/main.md.
 Can you help me parse it and set up the initial tasks?
 ```
 

@@ -424,7 +424,7 @@ This document provides a detailed reference for interacting with Taskmaster, cov
     *   `includeProjectTree`: `Include project file tree structure in context (default: false).` (CLI: `--tree`)
     *   `detailLevel`: `Detail level for the research response: 'low', 'medium', 'high' (default: medium).` (CLI: `--detail <level>`)
     *   `saveTo`: `Task or subtask ID (e.g., "15", "15.2") to automatically save the research conversation to.` (CLI: `--save-to <id>`)
-    *   `saveFile`: `If true, saves the research conversation to a markdown file in '.taskmaster/docs/research/'.` (CLI: `--save-file`)
+    *   `saveFile`: `If true, saves the research conversation to a markdown file in 'docs/research/'.` (CLI: `--save-file`)
     *   `noFollowup`: `Disables the interactive follow-up question menu in the CLI.` (CLI: `--no-followup`)
     *   `tag`: `Specify which tag context to use for task-based context gathering. Defaults to the current active tag.` (CLI: `--tag <name>`)
     *   `projectRoot`: `The directory of the project. Must be an absolute path.` (CLI: Determined automatically)

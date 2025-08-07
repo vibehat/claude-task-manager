@@ -85,8 +85,8 @@ This is a more structured approach for significant new features or epics.
 - **Your Suggested Prompt**: *"This sounds like a significant new feature. To manage this effectively, I suggest we create a dedicated task context for it. Here's the plan: I'll create a new tag called 'feature-xyz', then we can draft a Product Requirements Document (PRD) together to scope the work. Once the PRD is ready, I'll automatically generate all the necessary tasks within that new tag. How does that sound?"*
 - **Your Implementation Flow**:
     1.  **Create an empty tag**: `task-master add-tag feature-xyz --description "Tasks for the new XYZ feature"`. You can also start by creating a git branch if applicable, and then create the tag from that branch.
-    2.  **Collaborate & Create PRD**: Work with the user to create a detailed PRD file (e.g., `.taskmaster/docs/feature-xyz-prd.txt`).
-    3.  **Parse PRD into the new tag**: `task-master parse-prd .taskmaster/docs/feature-xyz-prd.txt --tag feature-xyz`
+    2.  **Collaborate & Create PRD**: Work with the user to create a detailed PRD file (e.g., `docs/feature-xyz-prd.md`).
+    3.  **Parse PRD into the new tag**: `task-master parse-prd docs/feature-xyz-prd.md --tag feature-xyz`
     4.  **Prepare the new task list**: Follow up by suggesting `analyze-complexity` and `expand-all` for the newly created tasks within the `feature-xyz` tag.
 
 #### Pattern 5: Version-Based Development
@@ -135,9 +135,9 @@ Once you transition to tag-based workflows, the `master` tag should ideally cont
 **For New Major Features**:
 1. **Identify the Initiative**: When user describes a significant feature
 2. **Create Dedicated Tag**: `add_tag feature-[name] --description="[Feature description]"`
-3. **Collaborative PRD Creation**: Work with user to create comprehensive PRD in `.taskmaster/docs/feature-[name]-prd.txt`
+3. **Collaborative PRD Creation**: Work with user to create comprehensive PRD in `docs/feature-[name]-prd.md`
 4. **Parse & Prepare**: 
-   - `parse_prd .taskmaster/docs/feature-[name]-prd.txt --tag=feature-[name]`
+   - `parse_prd docs/feature-[name]-prd.md --tag=feature-[name]`
    - `analyze_project_complexity --tag=feature-[name] --research`
    - `expand_all --tag=feature-[name] --research`
 5. **Add Master Reference**: Create a high-level task in `master` that references the feature tag

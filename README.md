@@ -85,7 +85,7 @@ graph TB
     style TM_CLI fill:#2E7D32
 ```
 
-**[📊 See complete workflow diagrams →](.taskmaster/docs/architecture/diagrams.md)**
+**[📊 See complete workflow diagrams →](docs/architecture/diagrams.md)**
 
 No more explaining context. No more lost decisions. Just building.
 
@@ -105,9 +105,9 @@ Your vision stays intact from day 1 to launch.
 🤝 **Want to contribute?** We're looking for developers interested in shaping the future of AI development tools:
 
 - Create issues with ideas and feedback
-- Check out our research docs: [`.taskmaster/docs/prd.txt`](.taskmaster/docs/prd/main.md)
-- Explore architecture: [`.taskmaster/docs/architecture/diagrams.md`](.taskmaster/docs/architecture/diagrams.md)
-- Review mockups: [`.taskmaster/docs/mockups/`](.taskmaster/docs/mockups/)
+- Check out our research docs: [`docs/prd/main.md`](docs/prd/main.md)
+- Explore architecture: [`docs/architecture/diagrams.md`](docs/architecture/diagrams.md)
+- Review mockups: [`docs/mockups/`](docs/mockups/)
 
 Every contribution helps shape this project. **Early contributors get to influence the core direction.**
 
