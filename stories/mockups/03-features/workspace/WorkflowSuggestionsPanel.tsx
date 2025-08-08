@@ -1,6 +1,4 @@
 import React from 'react';
-import type { ViewMode } from './WorkingPage';
-
 export interface ProjectContext {
   tag?: string;
   gitBranch?: string;
@@ -10,14 +8,12 @@ export interface ProjectContext {
 }
 
 export interface WorkflowSuggestionsPanelProps {
-  viewMode: ViewMode;
   projectContext?: ProjectContext;
   isCompact?: boolean;
   hasActiveTask?: boolean;
 }
 
 export default function WorkflowSuggestionsPanel({
-  viewMode,
   projectContext = {},
   isCompact = false,
   hasActiveTask = false,
@@ -253,5 +249,5 @@ export default function WorkflowSuggestionsPanel({
     </div>
   );
 
-  return viewMode === 'mobile' ? renderMobileLayout() : renderDesktopLayout();
+  return renderDesktopLayout();
 }

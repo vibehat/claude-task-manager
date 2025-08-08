@@ -31,9 +31,9 @@ The Working On Page serves as the strategic command center where human insight m
 - **MultiTaskOrchestration**: Concurrent task management with workload balancing
 - **TaskMasterCommands**: Integration with Task Master CLI and MCP tools
 
-### Responsive Design
-- **Mobile Layout**: Task-focused experience with streamlined actions
-- **Desktop Layout**: Multi-panel dashboard with comprehensive orchestration tools
+### Desktop-Only Design
+- **Desktop Layout**: Comprehensive orchestration dashboard with multi-panel interface designed for desktop use only
+- Mobile users should use the main task management interface instead
 
 ### Key UX Patterns
 - **Progressive Disclosure**: Information revealed based on context and user needs
@@ -59,11 +59,7 @@ The mockup demonstrates the complete workflow from idea conception through AI-po
       ],
       description: 'Current working state of the orchestration interface',
     },
-    viewMode: {
-      control: { type: 'select' },
-      options: ['mobile', 'desktop'],
-      description: 'Display mode for responsive design',
-    },
+    // viewMode removed - desktop-only interface
   },
 };
 
@@ -148,7 +144,6 @@ const sampleAIAgents = [
 export const DesktopNoActiveTask: Story = {
   args: {
     state: 'no-active-task',
-    viewMode: 'desktop',
     currentTask: null,
     activeTasks: [],
     aiAgents: [],
@@ -167,7 +162,6 @@ export const DesktopNoActiveTask: Story = {
 export const DesktopWithActiveTask: Story = {
   args: {
     state: 'ai-direction',
-    viewMode: 'desktop',
     currentTask: sampleTask,
     activeTasks: [sampleTask],
     aiAgents: sampleAIAgents,
@@ -186,7 +180,6 @@ export const DesktopWithActiveTask: Story = {
 export const DesktopMultiTaskMode: Story = {
   args: {
     state: 'multi-task-orchestration',
-    viewMode: 'desktop',
     activeTasks: sampleActiveTasks,
     aiAgents: sampleAIAgents,
   },
@@ -204,7 +197,6 @@ export const DesktopMultiTaskMode: Story = {
 export const DesktopBootstrapMode: Story = {
   args: {
     state: 'bootstrap-from-nothing',
-    viewMode: 'desktop',
   },
   parameters: {
     viewport: { defaultViewport: 'desktop' },
@@ -217,60 +209,9 @@ export const DesktopBootstrapMode: Story = {
   },
 };
 
-export const MobileTaskFocus: Story = {
-  args: {
-    state: 'ai-direction',
-    viewMode: 'mobile',
-    currentTask: sampleTask,
-    aiAgents: sampleAIAgents,
-  },
-  parameters: {
-    viewport: { defaultViewport: 'mobile1' },
-    docs: {
-      description: {
-        story: 'Mobile-optimized task focus interface with streamlined AI coordination controls.',
-      },
-    },
-  },
-};
-
-export const MobileNoActiveTask: Story = {
-  args: {
-    state: 'no-active-task',
-    viewMode: 'mobile',
-    currentTask: null,
-    aiAgents: [],
-  },
-  parameters: {
-    viewport: { defaultViewport: 'mobile1' },
-    docs: {
-      description: {
-        story:
-          'Mobile layout for workflow suggestions when no task is active, with touch-optimized interface.',
-      },
-    },
-  },
-};
-
-export const MobileBootstrap: Story = {
-  args: {
-    state: 'bootstrap-from-nothing',
-    viewMode: 'mobile',
-  },
-  parameters: {
-    viewport: { defaultViewport: 'mobile1' },
-    docs: {
-      description: {
-        story: 'Mobile bootstrap experience with guided project setup workflows.',
-      },
-    },
-  },
-};
-
 export const PlanningPhase: Story = {
   args: {
     state: 'planning-research',
-    viewMode: 'desktop',
     currentTask: {
       ...sampleTask,
       status: 'pending',
@@ -312,7 +253,6 @@ export const PlanningPhase: Story = {
 export const CompleteHandoffMode: Story = {
   args: {
     state: 'complete-handoff',
-    viewMode: 'desktop',
     currentTask: {
       ...sampleTask,
       subtasks: sampleTask.subtasks?.map((subtask) => ({
@@ -343,7 +283,6 @@ export const CompleteHandoffMode: Story = {
 export const EmptyState: Story = {
   args: {
     state: 'no-active-task',
-    viewMode: 'desktop',
     currentTask: null,
     activeTasks: [],
     aiAgents: [],
@@ -370,7 +309,6 @@ export const EmptyState: Story = {
 export const TaskFocusCardDemo: Story = {
   args: {
     state: 'ai-direction',
-    viewMode: 'desktop',
     currentTask: {
       ...sampleTask,
       subtasks: [
@@ -405,7 +343,6 @@ export const TaskFocusCardDemo: Story = {
 export const AIAgentCoordinationDemo: Story = {
   args: {
     state: 'ai-direction',
-    viewMode: 'desktop',
     currentTask: sampleTask,
     aiAgents: [
       ...sampleAIAgents,

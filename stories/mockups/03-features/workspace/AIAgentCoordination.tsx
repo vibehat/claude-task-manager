@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import type { AIAgent, ViewMode } from './WorkingPage';
+import type { AIAgent } from './WorkingPage';
 
 export interface AIAgentCoordinationProps {
   agents: AIAgent[];
-  viewMode: ViewMode;
 }
 
-export default function AIAgentCoordination({ agents, viewMode }: AIAgentCoordinationProps) {
+export default function AIAgentCoordination({ agents }: AIAgentCoordinationProps) {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const [commandInput, setCommandInput] = useState('');
 
@@ -126,45 +125,7 @@ export default function AIAgentCoordination({ agents, viewMode }: AIAgentCoordin
     </div>
   );
 
-  const renderMobileLayout = () => (
-    <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
-      <div className="space-y-4">
-        <h3 className="font-medium text-foreground flex items-center gap-2">
-          ── AI AGENT STATUS ──
-        </h3>
-
-        {primaryAgent && (
-          <div className="space-y-3">
-            {renderAgentStatus(primaryAgent)}
-
-            {agents.length > 1 && (
-              <div className="pt-2">
-                <details className="bg-secondary/30 rounded-lg">
-                  <summary className="p-3 cursor-pointer text-sm font-medium text-muted-foreground">
-                    View Other Agents ({agents.length - 1})
-                  </summary>
-                  <div className="px-3 pb-3 space-y-2">
-                    {agents.filter((agent) => agent.id !== primaryAgent.id).map(renderAgentStatus)}
-                  </div>
-                </details>
-              </div>
-            )}
-          </div>
-        )}
-
-        {agents.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
-            <p>No active AI agents</p>
-            <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm">
-              Start AI Agent
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  const renderDesktopLayout = () => (
+  return (
     <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
       <div className="space-y-6">
         <h2 className="text-lg font-semibold text-foreground">🤖 AI AGENT COORDINATION</h2>
@@ -221,6 +182,4 @@ export default function AIAgentCoordination({ agents, viewMode }: AIAgentCoordin
       </div>
     </div>
   );
-
-  return viewMode === 'mobile' ? renderMobileLayout() : renderDesktopLayout();
 }
