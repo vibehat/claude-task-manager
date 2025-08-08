@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import type { ViewMode } from './WorkingPage';
+export interface TaskMasterCommandsProps {}
 
-export interface TaskMasterCommandsProps {
-  viewMode: ViewMode;
-}
-
-export default function TaskMasterCommands({ viewMode }: TaskMasterCommandsProps) {
+export default function TaskMasterCommands({}: TaskMasterCommandsProps = {}) {
   const [selectedCategory, setSelectedCategory] = useState<string>('core');
 
   const commandCategories = {
@@ -209,5 +205,5 @@ export default function TaskMasterCommands({ viewMode }: TaskMasterCommandsProps
     </div>
   );
 
-  return viewMode === 'mobile' ? renderMobileLayout() : renderDesktopLayout();
+  return renderDesktopLayout();
 }

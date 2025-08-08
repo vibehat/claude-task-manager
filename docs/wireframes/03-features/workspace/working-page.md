@@ -78,128 +78,11 @@ The Working On Page serves as your strategic command center where human insight 
 
 ## ASCII Wireframes
 
-### Mobile Layout - Task Focus Mode
+### Desktop-Only Layout - Task Focus Mode
 
-```
-┌───────────────────────────────────┐
-│ 🎯 Working On            [⚙️][🔄] │
-├───────────────────────────────────┤
-│ 📁 Tag: sprint-12  🌿 feat/auth   │
-├───────────────────────────────────┤
-│                                   │
-│ ── CURRENT TASK ──                │
-│ 📋 28.2 JWT Implementation        │
-│ 🔄 Phase: AI Implementation       │
-│                                   │
-│ Your Role: 🎭 Strategic Oversight │
-│                                   │
-│ ── SUBTASKS ──                    │
-│ ✅ Research (Complete)            │
-│ 🤖 Token Gen (Claude - 12m)       │
-│ ⏸️ Validation (Ready)             │
-│ ⏸️ Tests (Blocked)                │
-│                                   │
-│ ── AI AGENT STATUS ──             │
-│ 🤖 Claude: Implementing JWT       │
-│    Files: jwt-service.ts          │
-│    Status: Writing unit tests     │
-│    [👀 Review] [💬 Direct]        │
-│                                   │
-│ ── SMART ACTIONS ──               │
-│ 💡 Review Claude's progress       │
-│ 💡 Direct validation next         │
-│ 💡 Hand off remaining tasks       │
-│                                   │
-│ ── QUICK HANDOFF ──               │
-│ [🚀 Complete Task Handoff]        │
-│ Let AI finish entire task         │
-│                                   │
-│ ── TASK MASTER COMMANDS ──        │
-│ [📋 Get Task] [✅ Set Status]     │
-│ [🔧 Expand] [📝 Update] [🔍 Next] │
-│                                   │
-└───────────────────────────────────┘
-```
+_This interface is designed for desktop use only. Mobile users should use the main task management interface._
 
-### Mobile Layout - No Active Task (Existing Project)
-
-```
-┌───────────────────────────────────┐
-│ 🎯 Working On            [⚙️][🔄] │
-├───────────────────────────────────┤
-│ 💡 Smart Workflow Suggestion      │
-├───────────────────────────────────┤
-│                                   │
-│ ── RECOMMENDED NEXT ACTION ──     │
-│                                   │
-│ 🎯 Start Task 28.3: API Endpoints │
-│ Priority: High | Ready to start   │
-│ Estimate: 2 hours                 │
-│                                   │
-│ Why this task:                    │
-│ • JWT task is 80% complete        │
-│ • APIs depend on JWT              │
-│ • No blockers or dependencies     │
-│                                   │
-│ [🎯 Start This Task]              │
-│                                   │
-│ ── OTHER OPTIONS ──               │
-│ [📋 View All Tasks (12 pending)]  │
-│ [📊 Complexity Analysis]          │
-│ [📈 Project Report]               │
-│ [📝 Add New Task]                 │
-│                                   │
-│ ── TASK MASTER TOOLS ──           │
-│ [🔄 Sync Tasks] [📋 Get Next]     │
-│ [🔧 Expand All] [📊 Analyze]      │
-│                                   │
-│ ── PROJECT CONTEXT ──             │
-│ Tasks: 28 total, 12 pending       │
-│ Tags: sprint-12 (active)          │
-│ Git: 3 branches, feat/auth main   │
-│                                   │
-└───────────────────────────────────┘
-```
-
-### Mobile Layout - Starting From Nothing
-
-```
-┌───────────────────────────────────┐
-│ 🚀 Starting From Nothing [⚙️][🔄] │
-├───────────────────────────────────┤
-│ Transform idea → AI execution     │
-├───────────────────────────────────┤
-│                                   │
-│ ── YOUR STRATEGIC ROLE ──         │
-│ Research → Plan → Direct AI       │
-│                                   │
-│ Choose your approach:             │
-│                                   │
-│ 🔬 [Start with Research]          │
-│ AI research → Strategic decisions │
-│ Example: "Research competitor     │
-│ pricing for SaaS tools"           │
-│                                   │
-│ 📋 [Create PRD First]             │
-│ Requirements → Task generation    │
-│ Perfect for: Clear vision needs   │
-│ structured documentation          │
-│                                   │
-│ 🎯 [Rapid Bootstrap]              │
-│ Quick tasks → Immediate handoff   │
-│ Perfect for: Prototypes, known    │
-│ domain projects                   │
-│                                   │
-│ ── CONTEXT EXAMPLES ──            │
-│ SaaS: Research → PRD → Tasks      │
-│ Open Source: Community analysis   │
-│ Client: Requirements gathering    │
-│                                   │
-│ 💡 Every choice creates context   │
-│ that flows to AI agents          │
-│                                   │
-└───────────────────────────────────┘
-```
+_Mobile layouts removed - this is now a desktop-only feature._
 
 ### Desktop Layout - Task Orchestration Dashboard
 
@@ -578,18 +461,18 @@ The Working On Page serves as your strategic command center where human insight 
 
 **Rationale**: Different projects and users have different starting points and preferences. The interface should guide users to the approach that matches their context while building toward the same goal: context-rich AI collaboration.
 
-### Mobile-First Task Focus
+### Desktop-First Task Focus
 
-**Context**: Mobile users need focused task execution capabilities without the full orchestration dashboard complexity.
+**Context**: Desktop users need comprehensive task orchestration capabilities with full dashboard complexity.
 
-**Design Decision**: Mobile interface that:
+**Design Decision**: Desktop-only interface that:
 
-- **Single Task Focus**: Dedicated mobile experience around current task context
-- **Essential Actions**: Streamlined action set focused on task progression and AI direction
-- **Smart Defaults**: System makes intelligent suggestions to reduce decision complexity
-- **Voice Integration**: Support for voice commands and notes for hands-free operation
+- **Multi-Task Management**: Rich desktop experience for managing multiple concurrent tasks
+- **Comprehensive Actions**: Full action set for complete task management and AI coordination
+- **Advanced Controls**: Power-user features and detailed configuration options
+- **Multi-Panel Layout**: Simultaneous visibility of task context, AI status, and workflow intelligence
 
-**Rationale**: Mobile context implies different user needs - often checking progress, providing quick input, or making urgent decisions. The mobile interface should support these patterns without trying to replicate desktop complexity.
+**Rationale**: Desktop context provides sufficient screen space and user focus for complex orchestration workflows. The interface leverages desktop advantages without mobile constraints.
 
 ### Context Intelligence Framework
 
@@ -747,13 +630,13 @@ The Working On Page serves as your strategic command center where human insight 
 - Smart caching of research results and project analysis
 - Optimistic updates for immediate feedback on orchestration actions
 
-### Mobile Optimization
+### Desktop Optimization
 
 **Task Focus Experience**:
 
-- Efficient mobile layouts that minimize data transfer for task context
-- Touch-optimized interfaces with appropriate gesture support for task navigation
-- Background sync capabilities for offline progress tracking and note-taking
+- Desktop-focused layouts that maximize screen real estate for comprehensive task context
+- Keyboard shortcuts and power-user features for efficient task navigation
+- Multi-panel interfaces for simultaneous task management and AI coordination
 
 ### Scalability Design
 
@@ -771,4 +654,4 @@ The Working On Page serves as your strategic command center where human insight 
 - [User Flows](../../01-overview/user-flows.md) - Complete orchestration workflows
 - [App Layout](../../02-layouts/app-layout.md) - Overall interface structure
 - [Task Detail Page](../task-management/task-detail-page.md) - Detailed task context design
-- [Mobile Adaptations](../../05-responsive/mobile-adaptations.md) - Mobile orchestration patterns
+- [Desktop Patterns](../../05-responsive/desktop-patterns.md) - Desktop-focused interface patterns

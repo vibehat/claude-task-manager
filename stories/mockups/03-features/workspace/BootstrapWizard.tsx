@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import type { ViewMode } from './WorkingPage';
-
 export type BootstrapMode = 'research' | 'prd' | 'rapid';
 
-export interface BootstrapWizardProps {
-  viewMode: ViewMode;
-}
+export interface BootstrapWizardProps {}
 
-export default function BootstrapWizard({ viewMode }: BootstrapWizardProps) {
+export default function BootstrapWizard({}: BootstrapWizardProps = {}) {
   const [selectedMode, setSelectedMode] = useState<BootstrapMode | null>(null);
   const [researchQuery, setResearchQuery] = useState('');
 
@@ -280,5 +276,5 @@ export default function BootstrapWizard({ viewMode }: BootstrapWizardProps) {
     </div>
   );
 
-  return viewMode === 'mobile' ? renderMobileLayout() : renderDesktopLayout();
+  return renderDesktopLayout();
 }

@@ -14,7 +14,7 @@ export type WorkingPageState =
   | 'multi-task-orchestration'
   | 'bootstrap-from-nothing';
 
-export type ViewMode = 'mobile' | 'desktop';
+// ViewMode removed - desktop-only interface
 
 export interface AIAgent {
   id: string;
@@ -50,7 +50,6 @@ export interface SubTask {
 
 export interface WorkingPageProps {
   state?: WorkingPageState;
-  viewMode?: ViewMode;
   currentTask?: Task | null;
   activeTasks?: Task[];
   aiAgents?: AIAgent[];
@@ -65,7 +64,6 @@ export interface WorkingPageProps {
 
 export default function WorkingPage({
   state = 'no-active-task',
-  viewMode = 'desktop',
   currentTask = null,
   activeTasks = [],
   aiAgents = [],
@@ -93,28 +91,26 @@ export default function WorkingPage({
               <>🎯 Working On</>
             )}
           </h1>
-          {viewMode === 'desktop' && (
-            <div className="flex gap-2">
-              <button
-                className={`px-3 py-1 rounded text-sm ${!isMultiTaskMode ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:text-foreground'}`}
-                onClick={() => {
-                  setIsMultiTaskMode(false);
-                  setCurrentView('no-active-task');
-                }}
-              >
-                Single Task
-              </button>
-              <button
-                className={`px-3 py-1 rounded text-sm ${isMultiTaskMode ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:text-foreground'}`}
-                onClick={() => {
-                  setIsMultiTaskMode(true);
-                  setCurrentView('multi-task-orchestration');
-                }}
-              >
-                Multi-Task
-              </button>
-            </div>
-          )}
+          <div className="flex gap-2">
+            <button
+              className={`px-3 py-1 rounded text-sm ${!isMultiTaskMode ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              onClick={() => {
+                setIsMultiTaskMode(false);
+                setCurrentView('no-active-task');
+              }}
+            >
+              Single Task
+            </button>
+            <button
+              className={`px-3 py-1 rounded text-sm ${isMultiTaskMode ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              onClick={() => {
+                setIsMultiTaskMode(true);
+                setCurrentView('multi-task-orchestration');
+              }}
+            >
+              Multi-Task
+            </button>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button className="p-2 hover:bg-accent rounded">⚙️</button>
@@ -129,46 +125,20 @@ export default function WorkingPage({
       <div className="flex items-center gap-4 text-sm text-muted-foreground">
         <span className="flex items-center gap-1">📁 Tag: {projectContext.tag}</span>
         <span className="flex items-center gap-1">🌿 Git: {projectContext.gitBranch}</span>
-        {viewMode === 'desktop' && (
-          <span className="flex items-center gap-1">
-            📊 {projectContext.filesModifiedToday} files modified today
-          </span>
-        )}
+        <span className="flex items-center gap-1">
+          📊 {projectContext.filesModifiedToday} files modified today
+        </span>
       </div>
     </div>
   );
 
-  const renderMobileLayout = () => (
-    <div className="min-h-screen bg-background">
-      {renderHeader()}
-      {renderProjectContext()}
-
-      <div className="p-4 space-y-4">
-        {currentView === 'bootstrap-from-nothing' && <BootstrapWizard viewMode="mobile" />}
-
-        {currentView === 'no-active-task' && (
-          <WorkflowSuggestionsPanel viewMode="mobile" projectContext={projectContext} />
-        )}
-
-        {(currentView === 'ai-direction' || currentView === 'planning-research') && currentTask && (
-          <>
-            <TaskFocusCard task={currentTask} aiAgents={aiAgents} viewMode="mobile" />
-            <AIAgentCoordination agents={aiAgents} viewMode="mobile" />
-          </>
-        )}
-
-        <TaskMasterCommands viewMode="mobile" />
-      </div>
-    </div>
-  );
-
-  const renderDesktopLayout = () => (
+  return (
     <div className="min-h-screen bg-background">
       {renderHeader()}
       {renderProjectContext()}
 
       <div className="p-6">
-        {currentView === 'bootstrap-from-nothing' && <BootstrapWizard viewMode="desktop" />}
+        {currentView === 'bootstrap-from-nothing' && <BootstrapWizard />}
 
         {currentView === 'multi-task-orchestration' && (
           <MultiTaskOrchestration activeTasks={activeTasks} aiAgents={aiAgents} />
@@ -181,28 +151,22 @@ export default function WorkingPage({
             {/* Main task focus area */}
             <div className="lg:col-span-2 space-y-6">
               {currentTask ? (
-                <TaskFocusCard task={currentTask} aiAgents={aiAgents} viewMode="desktop" />
+                <TaskFocusCard task={currentTask} aiAgents={aiAgents} />
               ) : (
-                <WorkflowSuggestionsPanel viewMode="desktop" projectContext={projectContext} />
+                <WorkflowSuggestionsPanel projectContext={projectContext} />
               )}
 
-              {currentTask && <AIAgentCoordination agents={aiAgents} viewMode="desktop" />}
+              {currentTask && <AIAgentCoordination agents={aiAgents} />}
             </div>
 
             {/* Right sidebar */}
             <div className="space-y-6">
-              <WorkflowSuggestionsPanel
-                viewMode="desktop"
-                projectContext={projectContext}
-                isCompact={true}
-              />
-              <TaskMasterCommands viewMode="desktop" />
+              <WorkflowSuggestionsPanel projectContext={projectContext} isCompact={true} />
+              <TaskMasterCommands />
             </div>
           </div>
         )}
       </div>
     </div>
   );
-
-  return viewMode === 'mobile' ? renderMobileLayout() : renderDesktopLayout();
 }

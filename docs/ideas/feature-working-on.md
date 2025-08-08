@@ -330,55 +330,7 @@ Human: Monitor and review only
 
 ## UI Design - Responsive Layout
 
-### Mobile Layout (Task Focus)
-
-```
-┌─────────────────────────────────┐
-│ Task Focus              [⚙️][🔄] │
-├─────────────────────────────────┤
-│ 📋 Task 28.2: JWT Implementation│
-│ 🔄 Phase: Implementation        │
-├─────────────────────────────────┤
-│                                 │
-│ ── Current Focus ──             │
-│ JWT Token Implementation        │
-│ Your Role: Directing AI         │
-│                                 │
-│ Subtasks:                       │
-│ ✅ Research (Done)              │
-│ 🔄 Token Gen (Claude)           │
-│ ⏸️ Validation (Next)            │
-│ ⏸️ Tests (Waiting)              │
-│                                 │
-│ ── Task Activity ──             │
-│ ✅ Token Gen: AI completed      │
-│   3 files changed • 12 min ago  │
-│   [Review] [Approve]            │
-│                                 │
-│ ❓ Rate Limit: Question         │
-│   Redis vs memory cache?        │
-│   [Answer] [View]               │
-│                                 │
-│ 🔄 API Endpoints: In progress   │
-│   45% done                      │
-│                                 │
-│ ⏸️ Write Tests: Ready to start  │
-│   [Start] [Assign AI]           │
-│                                 │
-│ ── Smart Actions ──             │
-│ 💡 Review Claude's code         │
-│ 💡 Direct validation next       │
-│ 💡 Or hand off entire task      │
-│                                 │
-│ ── Task Master ──               │
-│ [🎯 Next Task] [📊 Get Task]     │
-│ [✅ Set Status] [🔧 Expand]      │
-│ [📝 Add Notes] [📈 Analyze]      │
-│                                 │
-│ [🚀 Complete Handoff]           │
-│                                 │
-└─────────────────────────────────┘
-```
+_Mobile layout removed - this is now a desktop-only feature._
 
 ### Desktop Layout (Task Orchestration Dashboard)
 
