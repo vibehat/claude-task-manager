@@ -108,6 +108,7 @@ Your vision stays intact from day 1 to launch.
 - Check out our research docs: [`docs/prd/main.md`](docs/prd/main.md)
 - Explore architecture: [`docs/architecture/diagrams.md`](docs/architecture/diagrams.md)
 - Review wireframes: [`docs/wireframes/`](docs/wireframes/)
+- See mockups in action: [https://claude-task-manager.vercel.app/](https://claude-task-manager.vercel.app/)
 
 Every contribution helps shape this project. **Early contributors get to influence the core direction.**
 
