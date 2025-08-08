@@ -25,7 +25,7 @@ The Working On Page serves as your strategic command center where human insight 
 - Review smart workflow suggestions
 - Start recommended next task
 - Bootstrap new project from idea
-- Parse PRD into tasks
+- Create or parse tasks (see [Task Creation Hub](task-creation.md))
 - Analyze project complexity
 
 ### 2. Planning/Research State
@@ -154,7 +154,7 @@ _Mobile layouts removed - this is now a desktop-only feature._
 │                                                  │ [📝 Batch Update] [⚙️ Configure]    │ │
 │                                                  │                                     │ │
 │                                                  │ Strategic Tools:                    │ │
-│                                                  │ [🔬 Research] [📋 Create PRD]       │ │
+│                                                  │ [🔬 Research] [📋 Task Creation]    │ │
 │                                                  │ [🎯 Bootstrap] [📈 Analyze]         │ │
 │                                                  └─────────────────────────────────────┘ │
 └──────────────────────────────────────────────────────────────────────────────────────────┘
@@ -264,19 +264,19 @@ _Mobile layouts removed - this is now a desktop-only feature._
 │ └─────────────────────────────────────────────┘ │ Research Direction:                 │ │
 │                                                  │ ┌─────────────────────────────────┐ │ │
 │ ┌─────────────────────────────────────────────┐ │ │ Research query or focus area... │ │ │
-│ │ 📋 STRUCTURED PRD APPROACH                  │ │ └─────────────────────────────────┘ │ │
+│ │ 📋 STRUCTURED TASK APPROACH                 │ │ └─────────────────────────────────┘ │ │
 │ ├─────────────────────────────────────────────┤ │ [🔍 Direct AI Research]            │ │
 │ │                                             │ │                                     │ │
-│ │ Perfect for: Clear vision that needs        │ │ Quick PRD Creation:                 │ │
-│ │ structured documentation                    │ │ [📋 Create New PRD]                 │ │
-│ │                                             │ │ [📝 Use PRD Template]              │ │
-│ │ Strategic Workflow:                         │ │ [🔄 Import Existing PRD]           │ │
-│ │ 1. Create Requirements Document             │ │                                     │ │
+│ │ Perfect for: Clear vision that needs        │ │ Task Creation Hub:                  │ │
+│ │ organized task structure                    │ │ [📋 Create New Tasks]               │ │
+│ │                                             │ │ [📝 Use Task Templates]             │ │
+│ │ Strategic Workflow:                         │ │ [🔄 Parse Existing PRD]             │ │
+│ │ 1. Define Project Requirements              │ │                                     │ │
 │ │    • User stories and acceptance criteria   │ │ Rapid Bootstrap:                    │ │
 │ │    • Technical specifications              │ │ [🎯 Quick Task Creation]           │ │
 │ │    • Implementation constraints            │ │ [🤖 AI-Generated Structure]        │ │
 │ │                                             │ │ [📦 Use Project Template]          │ │
-│ │ 2. AI Parses PRD into Task Structure       │ │                                     │ │
+│ │ 2. Generate Task Structure                  │ │                                     │ │
 │ │    • Hierarchical task breakdown           │ │ Task Master Integration:            │ │
 │ │    • Dependency mapping                    │ │ [📋 tm init] [📝 tm parse-prd]      │ │
 │ │    • Complexity analysis                   │ │ [🔧 tm expand-all] [📊 tm analyze] │ │
@@ -287,7 +287,7 @@ _Mobile layouts removed - this is now a desktop-only feature._
 │ │    • How it fits the system               │ │ structures and approaches          │ │
 │ │    • What patterns to follow              │ │                                     │ │
 │ │                                             │ └─────────────────────────────────────┘ │
-│ │ [📋 Create Structured PRD]                  │                                       │
+│ │ [📋 Access Task Creation Hub]               │                                       │
 │ │                                             │                                       │
 │ └─────────────────────────────────────────────┘                                       │
 │                                                                                          │
@@ -318,96 +318,7 @@ _Mobile layouts removed - this is now a desktop-only feature._
 └──────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Desktop Layout - PRD Ready for Parsing
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────┐
-│ 📋 PRD Task Generation           [Single Task] [Multi-Task] [Settings] [🔄 Sync Tasks]   │
-├──────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                          │
-│ ┌────────────────────────────────────────────────────────────────────────────────────┐ │
-│ │ 📋 PRD READY FOR INTELLIGENT TASK GENERATION                                      │ │
-│ │ Transform requirements document into structured task hierarchy with AI context     │ │
-│ └────────────────────────────────────────────────────────────────────────────────────┘ │
-│                                                                                          │
-│ ┌─────────────────────────────────────────────┐ ┌─────────────────────────────────────┐ │
-│ │ 📄 DOCUMENT ANALYSIS                        │ │ 🎯 GENERATION PREVIEW               │ │
-│ ├─────────────────────────────────────────────┤ ├─────────────────────────────────────┤ │
-│ │                                             │ │                                     │ │
-│ │ Found PRD: docs/prd/main.md                 │ │ Estimated Task Structure:           │ │
-│ │ Last Modified: 2 hours ago                  │ │                                     │ │
-│ │ Size: 47KB | Word Count: ~8,500             │ │ 📊 High Level Features: 5           │ │
-│ │                                             │ │ 📋 Total Tasks: ~25-30              │ │
-│ │ Document Structure Detected:                │ │ 🔧 Subtasks: ~75-90                │ │
-│ │ ✅ Executive Summary                        │ │ 🔗 Dependencies: Auto-mapped        │ │
-│ │ ✅ User Stories (12 identified)             │ │                                     │ │
-│ │ ✅ Technical Requirements                   │ │ Complexity Distribution:            │ │
-│ │ ✅ Implementation Phases                    │ │ • Simple: 40% (quick wins)          │ │
-│ │ ✅ Acceptance Criteria                      │ │ • Medium: 45% (core features)      │ │
-│ │ ✅ Non-functional Requirements              │ │ • Complex: 15% (research needed)   │ │
-│ │                                             │ │                                     │ │
-│ │ Quality Indicators:                         │ │ Task Categories:                    │ │
-│ │ • Clarity Score: 9/10 ✅                   │ │ • Authentication & Security         │ │
-│ │ • Completeness: 8/10 ✅                    │ │ • API Development                   │ │
-│ │ • Technical Detail: 7/10 ⚠️                │ │ • Frontend Components               │ │
-│ │                                             │ │ • Database Design                   │ │
-│ │ Missing Sections:                           │ │ • Testing & QA                      │ │
-│ │ ⚠️ Performance requirements                 │ │                                     │ │
-│ │ ⚠️ Error handling specifications            │ │ [👀 Preview Full Structure]        │ │
-│ │                                             │ └─────────────────────────────────────┘ │
-│ │ [📝 Edit PRD First] [📊 Detailed Analysis] │                                       │
-│ └─────────────────────────────────────────────┘ ┌─────────────────────────────────────┐ │
-│                                                  │ ⚙️ GENERATION CONFIGURATION         │ │
-│ ┌─────────────────────────────────────────────┐ ├─────────────────────────────────────┤ │
-│ │ 🧠 AI-POWERED GENERATION                    │ │                                     │ │
-│ ├─────────────────────────────────────────────┤ │ Task Generation Options:            │ │
-│ │                                             │ │                                     │ │
-│ │ Generation Strategy:                        │ │ Number of Tasks:                    │ │
-│ │ 🎯 Strategic Task Creation                  │ │ ┌─────────────────────────────────┐ │ │
-│ │   • Focus on human orchestration points     │ │ │ [Auto] [25] [30] [35] [Custom] │ │ │
-│ │   • Create perfect AI handoff packages      │ │ └─────────────────────────────────┘ │ │
-│ │   • Include rich context and constraints    │ │                                     │ │
-│ │                                             │ │ ☐ Include research tasks           │ │
-│ │ Context Enhancement:                        │ │ ☐ Generate testing strategies      │ │
-│ │ ✅ Research-backed recommendations          │ │ ☑ Create dependency mapping        │ │
-│ │ ✅ Architectural decision context           │ │ ☑ Include acceptance criteria      │ │
-│ │ ✅ Implementation pattern suggestions       │ │ ☐ Add performance requirements     │ │
-│ │ ✅ Testing strategy integration             │ │                                     │ │
-│ │                                             │ │ Advanced Options:                   │ │
-│ │ Human Orchestration Focus:                  │ │ ☑ Use research model (Perplexity)  │ │
-│ │ • Tasks designed for strategic oversight    │ │ ☐ Append to existing tasks         │ │
-│ │ • Clear handoff points for AI agents       │ │ ☐ Custom task ID range             │ │
-│ │ • Context-rich requirement packages        │ │ ☐ Specific tag context             │ │
-│ │ • Built-in expansion opportunities         │ │                                     │ │
-│ │                                             │ │ Output Location:                    │ │
-│ │ Research Integration:                       │ │ .taskmaster/tasks/tasks.json       │ │
-│ │ If research model enabled, tasks will       │ │                                     │ │
-│ │ include current best practices and          │ │ [🔧 Advanced Configuration]        │ │
-│ │ technology recommendations                  │ └─────────────────────────────────────┘ │
-│ │                                             │                                       │
-│ │ [🚀 Generate Task Structure]                │                                       │ │
-│ │                                             │                                       │
-│ └─────────────────────────────────────────────┘                                       │
-│                                                                                          │
-│ ┌──────────────────────────────────────────────────────────────────────────────────────┐ │
-│ │ 💡 CONTEXT INTELLIGENCE PREVIEW                                                     │ │
-│ ├──────────────────────────────────────────────────────────────────────────────────────┤ │
-│ │                                                                                      │ │
-│ │ The generated tasks will be designed for optimal human-AI collaboration:            │ │
-│ │                                                                                      │ │
-│ │ Strategic Planning Tasks → You Research & Decide → AI Implements with Full Context  │ │
-│ │                                                                                      │ │
-│ │ Each Task Package Includes:                                                         │ │
-│ │ • Complete requirements from PRD section     • Implementation patterns & constraints│ │
-│ │ • Research findings and best practices       • Testing requirements & validation    │ │
-│ │ • Architectural decisions and reasoning      • Quality standards & acceptance       │ │
-│ │ • User experience context and constraints    • Integration points & dependencies    │ │
-│ │                                                                                      │ │
-│ │ Result: AI agents receive complete project understanding for autonomous execution   │ │
-│ │                                                                                      │ │
-│ └──────────────────────────────────────────────────────────────────────────────────────┘ │
-└──────────────────────────────────────────────────────────────────────────────────────────┘
-```
+_Task creation workflows, including PRD parsing, have been moved to the dedicated [Task Creation Hub](task-creation.md) for comprehensive coverage of all creation scenarios._
 
 ## Design Rationale
 
@@ -456,7 +367,7 @@ _Mobile layouts removed - this is now a desktop-only feature._
 **Design Decision**: Multiple bootstrap paths that match different user scenarios:
 
 - **Research-Driven**: For users who need market analysis and strategic insights first
-- **PRD-Structured**: For users with clear vision who need organized documentation
+- **Structured Task Creation**: For users with clear vision who need organized task hierarchy
 - **Rapid Prototype**: For users in known domains who want immediate AI collaboration
 
 **Rationale**: Different projects and users have different starting points and preferences. The interface should guide users to the approach that matches their context while building toward the same goal: context-rich AI collaboration.
@@ -555,7 +466,7 @@ _Mobile layouts removed - this is now a desktop-only feature._
 
 - Step-by-step workflow guidance with progress tracking
 - Integration with research AI for market analysis and technical recommendations
-- PRD creation tools with intelligent section suggestions
+- Task creation tools with intelligent generation and configuration
 - Automatic task generation and complexity analysis upon completion
 
 ### MultiTaskOrchestration Component
