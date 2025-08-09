@@ -56,21 +56,21 @@ export function ContextIntelligenceHeader({
   const data = getVariantData();
 
   return (
-    <header className="h-12 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
+    <header className="h-12 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between px-6 flex-shrink-0">
       {/* Left: Brand */}
       <div className="flex items-center gap-4">
-        <h1 className="text-lg font-semibold text-gray-900">Task Master AI</h1>
+        <h1 className="text-lg font-semibold text-foreground tracking-tight">Task Master AI</h1>
       </div>
 
       {/* Center: Context Search */}
       <div className="flex-1 max-w-md mx-8">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span className="text-gray-400">🔍</span>
+            <span className="text-muted-foreground">🔍</span>
           </div>
           <input
             type="text"
-            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="h-9 w-full rounded-md border border-input bg-transparent pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             placeholder={data.search}
             readOnly
           />
@@ -87,12 +87,12 @@ export function ContextIntelligenceHeader({
         {/* Context Quality */}
         {data.context && (
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-green-600 font-medium">{data.context}</span>
+            <span className="text-green-700 dark:text-green-300 font-medium">{data.context}</span>
           </div>
         )}
 
         {/* User Avatar */}
-        <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+        <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
           <span className="text-sm">👤</span>
         </div>
       </div>

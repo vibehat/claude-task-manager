@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContextIntelligenceHeader } from './ContextIntelligenceHeader';
-import { ContextSidebar } from './ContextSidebar';
+import { ContextSidebar } from '../sidebar/ContextSidebar';
 import { MainOrchestrationArea } from './MainOrchestrationArea';
 
 export interface AppLayoutProps {
@@ -14,7 +14,7 @@ export interface AppLayoutProps {
 
 export default function AppLayout({ variant = 'task-planning' }: AppLayoutProps) {
   return (
-    <div className="h-screen bg-gray-50 flex flex-col">
+    <div className="h-screen bg-background text-foreground flex flex-col">
       {/* Fixed Header - 48px */}
       <ContextIntelligenceHeader variant={variant} />
 

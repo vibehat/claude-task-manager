@@ -4,7 +4,6 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import type { ActiveTasksPanelProps } from '../types/workingOnTypes';
 import { cn } from '@/libs/client/utils';
 import Link from 'next/link';

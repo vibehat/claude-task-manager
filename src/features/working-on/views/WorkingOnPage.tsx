@@ -18,6 +18,8 @@ import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { dummyActivities } from '../data/dummyData';
 import Link from 'next/link';
+import { WorkingOnHeaderCard } from '../components/WorkingOnHeaderCard';
+import { ContextPackageCard } from '../components/ContextPackageCard';
 
 export function WorkingOnPage() {
   const isMobile = useIsMobile();
@@ -65,7 +67,7 @@ export function WorkingOnPage() {
     setCurrentFocus(taskId);
   };
 
-  const handleCurrentFocusAction = (action: string) => {
+  const _handleCurrentFocusAction = (action: string) => {
     switch (action) {
       case 'continue':
         console.log('Continue AI session');
@@ -126,7 +128,7 @@ export function WorkingOnPage() {
     }
   };
 
-  const handleTaskAction = (action: string, taskId: string) => {
+  const _handleTaskAction = (action: string, taskId: string) => {
     switch (action) {
       case 'continue':
       case 'start-ai':
@@ -220,6 +222,35 @@ export function WorkingOnPage() {
   // Desktop layout - 2-column layout optimized for MacBook Pro 13"
   return (
     <div className="px-6 space-y-6">
+      {/* Working On header and context package per MVP wireframe */}
+      <div className="space-y-4">
+        <WorkingOnHeaderCard
+          title={
+            currentFocusTask
+              ? `Working On — Task ${currentFocusTask.id}: ${currentFocusTask.title}`
+              : 'Working On — No Task Selected'
+          }
+          status={
+            currentFocusTask
+              ? currentFocusTask.status === 'in-progress'
+                ? 'In Progress'
+                : currentFocusTask.status
+              : 'Idle'
+          }
+          phase={currentFocusTask ? 'Planning → Implementation' : undefined}
+          subtasks={
+            currentFocusTask
+              ? [
+                  { id: 'gen', label: 'Gen', done: currentFocusTask.progress >= 20 },
+                  { id: 'validate', label: 'Validate', done: currentFocusTask.progress >= 60 },
+                  { id: 'tests', label: 'Tests', done: currentFocusTask.progress >= 90 },
+                ]
+              : []
+          }
+        />
+        <ContextPackageCard />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[600px]">
         {/* Left Panel - Task Management */}
         <div className="space-y-6 min-h-[600px]">

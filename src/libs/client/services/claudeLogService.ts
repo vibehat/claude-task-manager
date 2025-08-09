@@ -260,13 +260,8 @@ export class ClaudeLogService {
         try {
           const entry = JSON.parse(line) as RawClaudeLogEntry;
 
-          // Handle actual Claude JSONL format
-          if (
-            entry.type === 'user' ||
-            entry.type === 'assistant' ||
-            entry.type === 'user_message' ||
-            entry.type === 'assistant_message'
-          ) {
+          // Handle message-like entries
+          if (entry.type === 'user_message' || entry.type === 'assistant_message') {
             messageCount++;
             if (!firstMessageTime && entry.timestamp) {
               firstMessageTime = entry.timestamp;
@@ -334,7 +329,7 @@ export class ClaudeLogService {
               fileChanges.add(data.parameters.file_path);
             }
           }
-        } catch (lineError) {
+        } catch {
           // Skip malformed lines
           continue;
         }
@@ -522,16 +517,10 @@ export class ClaudeLogService {
    * Extract and map role from log entry
    */
   private mapRoleFromEntry(entry: RawClaudeLogEntry): 'user' | 'assistant' | 'system' {
-    // Handle actual Claude JSONL format
-    if (entry.type === 'user') return 'user';
-    if (entry.type === 'assistant') return 'assistant';
-
-    // Handle nested message format
-    const message = (entry as any).message;
-    if (message && message.role) {
-      return message.role;
-    }
-
+    if (entry.type === 'user_message') return 'user';
+    if (entry.type === 'assistant_message') return 'assistant';
+    const msgRole: unknown = (entry as any).message?.role;
+    if (msgRole === 'user' || msgRole === 'assistant') return msgRole;
     return 'system';
   }
 

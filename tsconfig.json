@@ -43,6 +43,8 @@
     "src/hooks/**/*.ts",
     "src/store/**/*.ts",
     "src/types/**/*.ts",
+    "stories/**/*.ts",
+    "stories/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [
@@ -53,6 +55,8 @@
     "**/*.spec.ts",
     "__tests__",
     "scripts",
-    "**/mock-data/**/*"
+    "**/mock-data/**/*",
+    "stories",
+    "stories/**"
   ]
 }

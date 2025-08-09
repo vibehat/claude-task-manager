@@ -68,7 +68,7 @@ export function ContextSidebar({ variant = 'task-planning' }: ContextSidebarProp
             ],
           },
           {
-            title: 'Context',
+            title: 'Context & Notes',
             icon: '📚',
             items: [{ label: 'PRD' }, { label: 'Research' }, { label: 'Mockups' }],
           },
@@ -204,7 +204,7 @@ export function ContextSidebar({ variant = 'task-planning' }: ContextSidebarProp
             ],
           },
           {
-            title: 'Overview',
+            title: 'Big Picture',
             icon: '🏗️',
             items: [
               { label: 'Vision', status: '🎯' },
@@ -228,29 +228,33 @@ export function ContextSidebar({ variant = 'task-planning' }: ContextSidebarProp
   const sections = getVariantSections();
 
   return (
-    <aside className="w-70 bg-white border-r border-gray-200 flex-shrink-0">
+    <aside className="w-[280px] bg-sidebar border-r border-border flex-shrink-0">
       <div className="h-full overflow-y-auto">
         <nav className="p-4 space-y-6">
           {sections.map((section, index) => (
             <div key={index} className="space-y-2">
               {/* Section Header */}
-              <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                 <span>{section.icon}</span>
                 <span>{section.title}</span>
               </div>
 
               {/* Section Items */}
-              <ul className="pl-6 space-y-1">
+              <ul className="pl-6 space-y-2">
                 {section.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      {item.status && <span className="text-xs">{item.status}</span>}
-                      <span className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
+                      {item.status && (
+                        <span className="text-xs text-muted-foreground">{item.status}</span>
+                      )}
+                      <span className="text-sm text-muted-foreground hover:text-foreground hover:bg-accent hover:text-accent-foreground rounded-md px-2 py-2 transition-colors cursor-pointer">
                         {item.label}
                       </span>
                     </div>
                     {item.badge && (
-                      <span className="text-xs text-gray-500 font-medium">{item.badge}</span>
+                      <span className="text-xs text-muted-foreground font-medium">
+                        {item.badge}
+                      </span>
                     )}
                   </li>
                 ))}

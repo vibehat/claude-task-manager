@@ -42,22 +42,38 @@ async function startAllServers() {
       console.log(`✅ Next.js ready on http://${hostname}:${port}`);
     });
 
-    // 4. Start Terminal WebSocket server
-    const terminalServer = await startTerminalServer(9001);
-    console.log('✅ Terminal WebSocket server ready on ws://localhost:9001');
+    let terminalServer = null;
+    let signalServer = null;
+    let fileWatcher = null;
 
-    // 5. Start Signal WebSocket server
-    const signalServer = await startSignalServer(9002);
-    console.log('✅ Signal WebSocket server ready on ws://localhost:9002');
+    // 4. Start Terminal WebSocket server (optional)
+    try {
+      terminalServer = await startTerminalServer(9001);
+      console.log('✅ Terminal WebSocket server ready on ws://localhost:9001');
+    } catch (error) {
+      console.log('⚠️ Terminal WebSocket server failed to start (optional feature)');
+    }
 
-    // 6. Start File Watcher
-    const fileWatcher = await startFileWatcher();
-    console.log('✅ File watcher started');
+    // 5. Start Signal WebSocket server (optional)
+    try {
+      signalServer = await startSignalServer(9002);
+      console.log('✅ Signal WebSocket server ready on ws://localhost:9002');
+    } catch (error) {
+      console.log('⚠️ Signal WebSocket server failed to start (optional feature)');
+    }
 
-    console.log('\n📡 All servers running:');
-    console.log(`  - Next.js:  http://localhost:${port}`);
-    console.log(`  - Terminal: ws://localhost:9001`);
-    console.log(`  - Signal:   ws://localhost:9002`);
+    // 6. Start File Watcher (optional)
+    try {
+      fileWatcher = await startFileWatcher();
+      console.log('✅ File watcher started');
+    } catch (error) {
+      console.log('⚠️ File watcher failed to start (optional feature)');
+    }
+
+    console.log('\n📡 Next.js server running:');
+    console.log(`  - HTTP: http://localhost:${port}`);
+    if (terminalServer) console.log(`  - Terminal: ws://localhost:9001`);
+    if (signalServer) console.log(`  - Signal: ws://localhost:9002`);
     console.log('\nPress Ctrl+C to stop all servers\n');
 
     // Handle graceful shutdown
@@ -66,16 +82,22 @@ async function startAllServers() {
 
       try {
         // Stop file watcher
-        await fileWatcher.stop();
-        console.log('✓ File watcher stopped');
+        if (fileWatcher) {
+          await fileWatcher.stop();
+          console.log('✓ File watcher stopped');
+        }
 
         // Stop signal server
-        await signalServer.stop();
-        console.log('✓ Signal server stopped');
+        if (signalServer) {
+          await signalServer.stop();
+          console.log('✓ Signal server stopped');
+        }
 
         // Stop terminal server
-        await terminalServer.stop();
-        console.log('✓ Terminal server stopped');
+        if (terminalServer) {
+          await terminalServer.stop();
+          console.log('✓ Terminal server stopped');
+        }
 
         // Close HTTP server
         server.close(() => {

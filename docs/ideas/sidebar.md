@@ -1,10 +1,8 @@
-# Sidebar Navigation Structure - Claude Task Manager UI
+# Sidebar Navigation Structure - Claude Task Master UI
 
 ## Executive Summary
 
-This document outlines the **context-intelligent sidebar navigation** for Claude Task Manager, designed around **seamless human-AI collaboration**. The structure enables **maximum productivity with minimal actions** through context-aware indicators, progressive disclosure, and intelligent AI agent coordination while maintaining exceptional user experience principles.
-
-**Success Measure**: Users can access any core workflow within 2 clicks while maintaining complete project context and AI agent awareness throughout their session.
+This document outlines a professional, UX-friendly sidebar navigation structure that prioritizes task and project management while maintaining excellent user experience principles. The structure is designed to help users focus on building products efficiently with appropriate AI assistance and proper project management tools.
 
 ## Research-Based Pain Points Analysis
 
@@ -31,243 +29,118 @@ This document outlines the **context-intelligent sidebar navigation** for Claude
 - **Information Architecture Problems** - Unclear grouping of related features
 - **Mobile/Desktop Inconsistency** - Navigation doesn't adapt well across devices
 
-## Context-Intelligent Sidebar Structure
-
-### Primary Navigation (Fixed Width: 280px)
+## User-Friendly Flow-Based Sidebar Structure
 
 ```
-🎯 Right Now                           ● Context: 94%
-├── Working On                         █████▓░ 28.2 (Claude: 12m)
-└── Up Next (3)                        🔄 Ready for handoff
+🎯 Right Now
+├── Working On
+└── Up Next
 
-📋 My Work
-├── To Do (89%)                        📊 15 ready ⚡ 3 high-context
-├── In Progress (●)                    🤖 2 agents active
-└── Done (47)                          ✨ 5 completed today
+📝 My Work
+├── To Do
+├── In Progress
+└── Done
 
-📚 Context & Notes                     ● Living connections
-├── Knowledge Web (●)                  🔗 28 active links
-├── Browse & Search                    📄 Documents synced
-└── Create (✏️)                        📝 Templates ready
+📚 Notes & Docs
+├── Browse Files
+└── Create New
 
-🏗️ Big Picture                        🟢 Project health
-├── Vision (🎯)                        📈 Sprint 12 progress
-├── Progress Timeline                  📊 Git activity high
-└── Health Dashboard                   ⚠️ 2 areas need attention
+🔍 Project Overview
+├── Big Picture
+└── Planning
 
-🤖 AI Helper                          ● 3 agents coordinated
-├── Agent Status (●)                   🤖 Claude • 🔬 Research • 🔧 Cursor
-├── Context History                    💬 12 conversations preserved
-└── Research & Analysis                📚 4 active research threads
+🤖 AI Helper
+├── Chat History
+└── Assistant Settings
 
-────────────────────────────────── Secondary
-⚙️ Project Setup                      ⚡ Task Master sync
-👤 My Preferences                      🎨 Interface & shortcuts
+⚙️ Preferences
+├── Project Setup
+└── My Settings
 ```
 
-### Context Intelligence Indicators
+## Design Principles & Rationale
 
-**Real-time Status Indicators**:
+### 1. Human-Centered Language
 
-- **● (Active)**: Live work in progress or high activity
-- **Context Percentages**: AI handoff readiness (94%, 89%, etc.)
-- **Progress Bars**: Agent work completion (█████▓░)
-- **Smart Badges**: Counts with intelligence (15 ready, 3 high-context)
-- **Health Colors**: 🟢 Good, 🟡 Attention needed, 🔴 Critical, ⚠️ Warning
+**Why It Matters:** Technical jargon creates barriers and makes tools feel impersonal
+**Solution:** Use warm, simple language - "Working On" instead of "What I'm Working On", "Done" instead of "Completed"
+**Benefit:** Reduces cognitive load, feels approachable, creates emotional comfort
 
-## Design Principles & Human-AI Collaboration
+### 2. Immediate Clarity
 
-### 1. Context Intelligence First
+**Why It Matters:** Users want instant understanding of what they should do next
+**Solution:** "Right Now" section at top with clear "Working On" and "Up Next"
+**Benefit:** Eliminates decision paralysis, provides instant focus, reduces overwhelm
 
-**Why It Matters:** Perfect AI handoffs require complete project understanding
-**Solution:** Context quality scores (94%) and AI readiness indicators throughout sidebar
-**Benefit:** Zero re-explanation overhead, seamless human → AI task handoffs
+### 3. Simplified Organization
 
-### 2. Human Orchestration Centered
+**Why It Matters:** Too many options create choice paralysis and scanning fatigue
+**Solution:** Maximum 2-3 items per section, clear visual hierarchy
+**Benefit:** Faster navigation, less cognitive overhead, better user experience
 
-**Why It Matters:** Humans excel at strategy, AI excels at execution with proper context
-**Solution:** "Right Now" prioritizes human direction, AI status integrated unobtrusively  
-**Benefit:** Strategic focus preserved, AI execution monitoring without interruption
+### 4. Meaningful Progress
 
-### 3. Progressive Context Disclosure
+**Why It Matters:** Users need sense of accomplishment and forward movement
+**Solution:** Clear "Done" section and progress-oriented language throughout
+**Benefit:** Emotional satisfaction, motivation boost, visible achievement
 
-**Why It Matters:** Avoid overwhelming users while providing intelligent depth when needed
-**Solution:** Simple defaults (Working On) with smart expansion (Context: 94%, Agent status)
-**Benefit:** Immediate productivity with advanced features revealed contextually
+### 5. Approachable AI Integration
 
-### 4. Cognitive Comfort Optimization
+**Why It Matters:** AI features can feel intimidating or overly technical
+**Solution:** "AI Helper" with focus on Chat History and simple Assistant Settings
+**Benefit:** Makes AI feel like a friendly assistant rather than complex system
 
-**Why It Matters:** Maximum 2-3 options per section prevents decision paralysis  
-**Solution:** Human-centered language + intelligent indicators ("My Work" not "User Tasks")
-**Benefit:** Emotional comfort with powerful context intelligence beneath the surface
+### 6. Local-First Simplicity
 
-### 5. Multi-Agent Coordination Intelligence
+**Why It Matters:** Complex settings and configurations create barriers to getting started
+**Solution:** Simple "Preferences" with just "Project Setup" and "My Settings"
+**Benefit:** Easy onboarding, reduced configuration overhead, focus on work
 
-**Why It Matters:** Managing multiple AI agents (Claude, Research, Cursor) requires unified interface
-**Solution:** "AI Helper" shows agent status, context synchronization, and coordination
-**Benefit:** Parallel AI productivity without context loss or agent coordination overhead
+## Implementation Guidelines
 
-### 6. Living Context Evolution
+### Sidebar Specifications
 
-**Why It Matters:** Project context must compound and improve over time
-**Solution:** "Context & Notes" with living connections, decision tracking, pattern recognition
-**Benefit:** Every collaboration enriches project intelligence for better future handoffs
+- **Width:** 280px (optimal for content density and screen real estate)
+- **Collapse:** Support for collapsed state showing only icons
+- **Responsive:** Mobile drawer overlay, tablet condensed view
+- **Theme:** Dark mode optimized with proper contrast ratios
 
-### 7. Flow State Preservation
+### Visual Design Standards
 
-**Why It Matters:** Context switching breaks deep work and strategic thinking
-**Solution:** All context preserved across navigation, background AI monitoring
-**Benefit:** Seamless transitions between human planning and AI execution phases
+- **Icons:** Use consistent icon library (Lucide/Heroicons recommended)
+- **Typography:** Clear hierarchy with primary/secondary text styles
+- **Spacing:** 12px between sections, 8px between items
+- **States:** Hover, active, disabled, loading states for all interactive elements
 
-## Responsive Behavior & Adaptive Intelligence
+### Interactive Behavior
 
-### Desktop Experience (>1200px)
+- **Sections:** Collapsible with persistent state
+- **Badges:** Real-time updates for counts and status
+- **Search:** Quick filter within sections
+- **Drag & Drop:** Support for task reordering where applicable
 
-**Fixed Sidebar (280px)** with full context intelligence:
+## Keyboard Shortcuts Reference
 
-- Complete navigation with context indicators and AI agent status
-- Real-time progress bars and context quality scoring
-- Multi-agent coordination dashboard always visible
-- Living context connections and decision tracking
+### Global Navigation
 
-### Tablet Experience (768-1200px)
+- `Cmd/Ctrl + K` - Open AI Command Palette
+- `Cmd/Ctrl + N` - New Task
+- `Cmd/Ctrl + F` - Search Tasks
+- `Cmd/Ctrl + Shift + P` - Project Settings
 
-**Collapsible Sidebar** with essential context preservation:
+### Section Navigation
 
-- Icon + text navigation with smart badges
-- Context quality scores on hover/tap
-- AI agent status condensed but accessible
-- Swipe gestures for context revelation
+- `1-7` - Jump to main sections (when sidebar focused)
+- `Tab` - Navigate between items
+- `Enter` - Activate selected item
+- `Escape` - Close expanded sections
 
-### Mobile Experience (<768px)
+### Quick Actions
 
-**Bottom Navigation Bar** with context intelligence:
-
-```
-┌─────────────────────────────────────────┐
-│  🎯      📋      📚      🏗️      🤖    │
-│ Now    Work   Context  Picture  AI     │
-│ ●94%   (15)     🔗      🟢      3●     │
-└─────────────────────────────────────────┘
-```
-
-- Essential routes with context quality indicators
-- Smart badges showing AI readiness and agent activity
-- Swipe up for context package preparation
-- Voice-to-text for rapid knowledge capture
-
-### Context Intelligence Adaptation
-
-**Context Preservation Across Screen Sizes**:
-
-- **Desktop**: Full context dashboard with multi-agent coordination
-- **Tablet**: Context indicators with hover/tap expansion
-- **Mobile**: Essential context scores with gesture-based revelation
-
-**Progressive Disclosure Strategy**:
-
-1. **Level 1**: Context quality scores, agent status, task counts
-2. **Level 2**: Progress details, AI coordination, relationship mapping
-3. **Level 3**: Complete context web, multi-agent orchestration
-
-## Visual Design & Context Intelligence
-
-### Sidebar Visual Hierarchy
-
-**Primary Focus (Prominence)**:
-
-- **🎯 Right Now**: Largest, most prominent with live context scoring
-- **AI Agent Status**: Real-time progress bars and activity indicators
-- **Context Quality**: Prominent percentage displays (94%, 89%)
-
-**Secondary Information (Supporting)**:
-
-- **📋 My Work**: Task counts with readiness indicators
-- **📚 Context & Notes**: Living connection counts and sync status
-- **🏗️ Big Picture**: Health indicators and timeline progress
-
-**Tertiary Access (Utility)**:
-
-- **Settings & Preferences**: Minimal visual weight, accessible when needed
-
-### Context Intelligence Visual Language
-
-**Status Indicators**:
-
-- **● Active**: Pulsing dot for live activity (Working On, Agent Status)
-- **Progress Bars**: Visual completion █████▓░ for AI work and context building
-- **Quality Scores**: Large, readable percentages (94%) for handoff readiness
-- **Health Colors**: Semantic colors for instant status recognition
-
-**Smart Badges & Counts**:
-
-- **Context-Aware Numbers**: (15 ready, 3 high-context) not just (18 total)
-- **Agent Activity**: 🤖 Claude • 🔬 Research • 🔧 Cursor with live status
-- **Intelligence Indicators**: ⚡ High-priority, 🔄 Ready for handoff, ✨ Recently completed
-
-### Interactive States & Micro-interactions
-
-**Hover States** (Desktop):
-
-- **Context Expansion**: Hover Right Now → Show task details + AI handoff options
-- **Agent Details**: Hover AI Helper → Show individual agent progress and context
-- **Health Insights**: Hover Big Picture → Show specific health metrics and recommendations
-
-**Touch States** (Mobile/Tablet):
-
-- **Context Cards**: Tap section → Slide up detailed context panel
-- **Agent Coordination**: Long press AI Helper → Quick agent direction interface
-- **Smart Actions**: Swipe gestures for handoff, complete, research actions
-
-## Keyboard Shortcuts & Power User Features
-
-### Primary Navigation Shortcuts
-
-```
-g + n        → Go to Right Now (focus on current work)
-g + w        → Go to My Work (task management)
-g + c        → Go to Context (knowledge management)
-g + b        → Go to Big Picture (strategic overview)
-g + a        → Go to AI Helper (agent coordination)
-
-?            → Show all keyboard shortcuts
-/            → Global search with context awareness
-.            → Command palette for task operations
-```
-
-### Task-Specific Shortcuts
-
-```
-t + s        → Start/focus current task
-t + h        → Hand off to AI agent with context package
-t + r        → Research task context and requirements
-t + c        → Complete task and trigger celebration
-t + n        → Navigate to next suggested task
-
-a + c        → Direct Claude agent with task context
-a + r        → Direct Research agent with query
-a + x        → Switch between multiple active agents
-```
-
-### Context Intelligence Shortcuts
-
-```
-c + s        → Search across all project knowledge
-c + l        → Link current note to active task
-c + t        → Create new note with task template
-c + d        → Create architectural decision record
-c + p        → Package context for AI handoff
-```
-
-### Quick Actions & Power Features
-
-```
-Cmd/Ctrl + K     → Open AI Command Palette with context
-Cmd/Ctrl + .     → Task operations command palette
-Cmd/Ctrl + /     → Global search with semantic understanding
-Cmd/Ctrl + Enter → Complete current task with celebration
-Cmd/Ctrl + Shift + H → Handoff current task to AI with full context
-```
+- `Cmd/Ctrl + Enter` - Complete current task
+- `Cmd/Ctrl + Shift + N` - New task with AI assistance
+- `Cmd/Ctrl + /` - Toggle sidebar
+- `Cmd/Ctrl + ,` - Settings
 
 ## Accessibility Considerations
 
@@ -291,428 +164,168 @@ Cmd/Ctrl + Shift + H → Handoff current task to AI with full context
 
 ## Technical Implementation Notes
 
-### Context-Intelligent State Management
+### State Management
 
 ```typescript
-interface ContextIntelligentSidebarState {
-  // Context Intelligence Layer
-  contextIntelligence: {
-    currentTaskContext: {
-      taskId: string;
-      contextQuality: number; // 0-100%
-      aiReadiness: boolean;
-      lastUpdated: Date;
-    };
-    activeAgents: {
-      claude: AgentStatus;
-      research: AgentStatus;
-      cursor: AgentStatus;
-    };
-    projectHealth: {
-      overall: 'healthy' | 'attention' | 'critical';
-      areas: HealthArea[];
-    };
+interface SidebarState {
+  expandedSections: string[];
+  currentView: string;
+  workCounts: {
+    toDo: number;
+    inProgress: number;
+    done: number;
   };
-
-  // Navigation State
-  navigation: {
-    expandedSections: string[];
-    currentRoute: string;
-    contextPreserved: boolean;
+  currentFocus: {
+    hasActiveTask: boolean;
+    upNextCount: number;
   };
-
-  // Work Intelligence
-  workIntelligence: {
-    rightNow: {
-      workingOn: Task & { aiProgress: number };
-      upNext: Task[];
-      contextPackageReady: boolean;
-    };
-    myWork: {
-      toDo: { total: number; aiReady: number; highContext: number };
-      inProgress: { total: number; agentsActive: number };
-      done: { total: number; completedToday: number };
-    };
+  documentation: {
+    totalFiles: number;
+    recentFiles: string[];
   };
-
-  // Living Context
-  livingContext: {
-    knowledgeWeb: {
-      activeConnections: number;
-      recentUpdates: ContextUpdate[];
-      patternRecognition: Pattern[];
-    };
-    documentation: {
-      syncStatus: 'synced' | 'updating' | 'drift';
-      totalFiles: number;
-      contextLinked: number;
-    };
+  aiHelper: {
+    connected: boolean;
+    chatCount: number;
   };
-
-  // Multi-Agent Coordination
-  agentOrchestration: {
-    coordination: {
-      synchronized: boolean;
-      activeAgents: number;
-      contextConsistency: number; // 0-100%
-    };
-    conversationMemory: {
-      totalConversations: number;
-      contextPreserved: boolean;
-      crossAgentLearning: boolean;
-    };
-  };
-}
-
-interface AgentStatus {
-  active: boolean;
-  currentTask?: string;
-  progress: number; // 0-100%
-  lastActivity: Date;
-  contextQuality: number;
-}
-
-interface HealthArea {
-  area: string;
-  status: 'good' | 'warning' | 'critical';
-  message: string;
-  actionRequired: boolean;
 }
 ```
 
-### Context-Intelligent Component Architecture
+### Component Structure
 
 ```
-ContextIntelligentSidebar/
-├── SidebarContainer.tsx              # Main container with context preservation
-├── ContextIntelligenceProvider.tsx   # Context state management and real-time updates
-├── ResponsiveNavigation.tsx          # Adaptive layout for desktop/tablet/mobile
-│
-├── components/
-│   ├── SidebarSection.tsx           # Section wrapper with context indicators
-│   ├── SidebarItem.tsx              # Item with smart badges and status
-│   ├── ContextQualityIndicator.tsx  # Visual context quality scoring (94%)
-│   ├── AgentStatusIndicator.tsx     # Real-time AI agent progress
-│   ├── ProgressBar.tsx              # Visual progress █████▓░ for AI work
-│   ├── SmartBadge.tsx               # Context-aware counting (15 ready, 3 high-context)
-│   └── HealthIndicator.tsx          # Project health status colors
-│
-├── sections/
-│   ├── RightNow/
-│   │   ├── RightNowSection.tsx      # Current work orchestration
-│   │   ├── WorkingOnIndicator.tsx   # Active task with AI progress
-│   │   └── UpNextPreview.tsx        # Ready tasks with handoff indicators
-│   │
-│   ├── MyWork/
-│   │   ├── MyWorkSection.tsx        # Task portfolio management
-│   │   ├── TaskCounters.tsx         # Intelligence-enhanced counting
-│   │   └── AIReadinessFilter.tsx    # Filter by handoff readiness
-│   │
-│   ├── ContextNotes/
-│   │   ├── ContextSection.tsx       # Living knowledge management
-│   │   ├── KnowledgeWebStatus.tsx   # Connection health indicators
-│   │   └── DocumentSyncStatus.tsx   # Real-time sync indicators
-│   │
-│   ├── BigPicture/
-│   │   ├── BigPictureSection.tsx    # Strategic project intelligence
-│   │   ├── ProjectHealthStatus.tsx  # Overall health dashboard
-│   │   └── TimelineProgress.tsx     # Git-enhanced progress tracking
-│   │
-│   └── AIHelper/
-│       ├── AIHelperSection.tsx      # Multi-agent coordination hub
-│       ├── MultiAgentStatus.tsx     # Agent coordination dashboard
-│       ├── ContextHistoryStatus.tsx # Conversation memory indicators
-│       └── AgentCoordination.tsx    # Cross-agent synchronization
-│
-├── hooks/
-│   ├── useContextIntelligence.ts    # Real-time context quality tracking
-│   ├── useAgentCoordination.ts      # Multi-agent status management
-│   ├── useResponsiveNavigation.ts   # Adaptive layout logic
-│   ├── useLivingContext.ts          # Dynamic context relationship tracking
-│   └── useKeyboardNavigation.ts     # Power user keyboard shortcuts
-│
-├── utils/
-│   ├── contextQualityCalculator.ts  # AI handoff readiness scoring
-│   ├── agentStatusAggregator.ts     # Multi-agent coordination logic
-│   ├── healthIndicatorCalculator.ts # Project health assessment
-│   └── responsiveBreakpoints.ts     # Adaptive layout breakpoints
-│
-└── types/
-    ├── contextIntelligence.types.ts # Context and AI coordination types
-    ├── agentOrchestration.types.ts  # Multi-agent coordination interfaces
-    └── responsiveNavigation.types.ts # Adaptive layout type definitions
+Sidebar/
+├── SidebarContainer.tsx
+├── SidebarSection.tsx
+├── SidebarItem.tsx
+├── RightNow/
+├── MyWork/
+├── NotesAndDocs/
+├── ProjectOverview/
+├── AIHelper/
+└── Preferences/
 ```
 
-## Context-Intelligent Section Analysis
+## Section-by-Section Deep Insights
 
-### 🎯 Right Now (Human Orchestration Center)
+### 🎯 Right Now (Immediate Focus)
 
-**Core Purpose:** **Immediate productivity with perfect AI handoffs**
+**Why This Matters Most:** Eliminates the overwhelming "what should I do?" question
 
-**Context Intelligence Features:**
+- **Working On** - Your current task with simple progress tracking
+- **Up Next** - 2-3 tasks ready to go when you finish the current one
 
-- **Working On**: Current task with real-time AI progress (█████▓░ 28.2 - Claude: 12m)
-- **Context Quality Scoring**: Live handoff readiness assessment (● Context: 94%)
-- **Up Next Intelligence**: Tasks prioritized by context completeness and dependency readiness
-- **Agent Coordination**: Quick access to multi-agent direction and status
+### 📝 My Work (Personal Tasks)
 
-**Why This Transforms Productivity:**
+**Why This Matters:** Simple, personal task management that feels natural
 
-- **Zero Decision Paralysis**: Instant clarity on current focus and next actions
-- **Perfect AI Handoffs**: Context packages pre-prepared for autonomous AI execution
-- **Parallel Productivity**: Plan next work while AI agents execute current tasks
+- **To Do** - Tasks waiting for you, sorted by what matters most
+- **In Progress** - Work you've started and are actively developing
+- **Done** - Completed work that gives you a sense of accomplishment
 
-### 📋 My Work (Context-Aware Task Portfolio)
+### 📚 Notes & Docs (Knowledge Management)
 
-**Core Purpose:** **Intelligent task management with AI readiness optimization**
+**Why This Matters:** Easy access to project knowledge without complex organization
 
-**Context Intelligence Features:**
+- **Browse Files** - Simple navigation through all your markdown files
+- **Create New** - Quick document creation when you need to capture thoughts
 
-- **To Do (89%)**: Tasks with AI handoff readiness scoring (📊 15 ready ⚡ 3 high-context)
-- **In Progress (●)**: Active development with multi-agent coordination (🤖 2 agents active)
-- **Done (47)**: Satisfying progress with impact tracking (✨ 5 completed today)
+### 🔍 Project Overview (Big Picture)
 
-**Advanced Intelligence:**
+**Why This Matters:** Strategic view without overwhelming complexity
 
-- **AI Readiness Filtering**: View tasks by handoff preparation completeness
-- **Agent Assignment**: Smart matching of tasks to optimal AI agents
-- **Pattern Recognition**: Similar task grouping with reusable implementation approaches
+- **Big Picture** - High-level project status and priority management
+- **Planning** - Timeline and milestone tracking for important deadlines
 
-### 📚 Context & Notes (Living Knowledge Intelligence)
+### 🤖 AI Helper (Your Assistant)
 
-**Core Purpose:** **Context preservation and pattern recognition for AI collaboration**
+**Why This Matters:** AI support that feels helpful, not intimidating
 
-**Context Intelligence Features:**
+- **Chat History** - Access to your previous conversations and context
+- **Assistant Settings** - Simple configuration for how AI helps you
 
-- **Knowledge Web (●)**: Living connections between decisions and implementations (🔗 28 active links)
-- **Browse & Search**: Semantic search across all project knowledge with context awareness
-- **Create (✏️)**: Context-aware templates that auto-link to current work and decisions
+### ⚙️ Preferences (Your Settings)
 
-**Living Intelligence:**
+**Why This Matters:** Personal customization without complexity overload
 
-- **Decision Impact Tracking**: Correlation between architectural choices and project outcomes
-- **Pattern Library**: Reusable implementation patterns with success metrics
-- **Context Package Templates**: Structured handoff formats for different AI agent types
+- **Project Setup** - Basic project configuration and integrations
+- **My Settings** - Personal preferences for how the interface works
 
-### 🏗️ Big Picture (Strategic Project Intelligence)
+## Implementation Roadmap
 
-**Core Purpose:** **Strategic oversight with git-enhanced insights and health monitoring**
+### Phase 1: Right Now & My Work (Weeks 1-2)
 
-**Context Intelligence Features:**
+- Right Now section with simple "Working On" and "Up Next" tracking
+- My Work with intuitive To Do, In Progress, and Done organization
+- Clean, user-friendly navigation with warm language
 
-- **Vision (🎯)**: Strategic alignment dashboard with context-driven prioritization
-- **Progress Timeline**: Git-enhanced journey with commit intelligence and decision correlation
-- **Health Dashboard (⚠️ 2 areas)**: Real-time quality metrics and predictive issue detection
+### Phase 2: Notes & Documentation (Weeks 3-4)
 
-**Strategic Intelligence:**
+- Notes & Docs section with easy file browsing
+- Simple document creation without complex organization requirements
+- Focus on accessibility and ease of use
 
-- **Crisis Detection**: Late-night commit patterns and hotfix identification
-- **Decision Point Timeline**: Major architectural decisions correlated with git activity
-- **Release Readiness**: Semantic commit analysis for version planning
+### Phase 3: Project Overview (Weeks 5-6)
 
-### 🤖 AI Helper (Multi-Agent Orchestration Hub)
+- Big Picture view with high-level project status
+- Planning tools for timeline and milestone management
+- Strategic view without overwhelming complexity
 
-**Core Purpose:** **Unified AI agent coordination with context synchronization**
+### Phase 4: AI Helper Integration (Weeks 7-8)
 
-**Context Intelligence Features:**
+- AI Helper section with approachable chat history access
+- Simple assistant settings that don't intimidate users
+- Focus on AI as helpful companion rather than complex system
 
-- **Agent Status (●)**: Multi-agent dashboard (🤖 Claude • 🔬 Research • 🔧 Cursor)
-- **Context History**: Conversation memory with cross-agent learning (💬 12 conversations preserved)
-- **Research & Analysis**: AI research coordination with strategic context integration
+## Success Metrics
 
-**Multi-Agent Intelligence:**
+### User Comfort & Satisfaction
 
-- **Unified Context Sharing**: All agents receive identical project understanding
-- **Cross-Agent Learning**: Implementation insights shared between different AI tools
-- **Agent Performance Analytics**: Success rates and effectiveness tracking by agent type
+- **Reduced Anxiety:** Clear "Right Now" focus eliminates overwhelming task lists
+- **Emotional Satisfaction:** "Done" section provides sense of accomplishment
+- **Approachable Language:** Warm, simple terminology reduces cognitive barriers
+- **Navigation Confidence:** Intuitive section names and clear purposes
 
-### Secondary Navigation (Minimal Friction Access)
+### Productivity Without Overwhelm
 
-**⚙️ Project Setup:** Task Master integration, AI model configuration, git intelligence setup
-**👤 My Preferences:** Interface customization, workflow optimization, keyboard shortcuts
+- **Decision Clarity:** "Working On" eliminates "what should I do next" paralysis
+- **Progress Visibility:** Simple To Do → In Progress → Done progression feels natural
+- **Simplified Organization:** 2-3 items per section reduces choice fatigue
+- **Meaningful Labels:** Section names immediately communicate their purpose
 
-**Design Philosophy:** Essential configuration accessible but not prominent - focus stays on productive work.
+### AI Integration Comfort
 
-## Implementation Roadmap & Context Intelligence Evolution
+- **Helper Mentality:** AI feels like friendly assistant rather than complex tool
+- **Accessible History:** Chat history easy to browse without technical barriers
+- **Simple Settings:** Assistant configuration doesn't intimidate users
+- **Human Connection:** AI support feels personal and approachable
 
-### Phase 1: Core Navigation Foundation (Weeks 1-2)
+### Documentation Ease
 
-**Essential Context Intelligence:**
+- **Effortless Browsing:** Find files without complex folder navigation
+- **Quick Creation:** Start new documents without workflow interruption
+- **Natural Organization:** Users organize files however feels right to them
+- **Low Barrier Entry:** Creating and managing docs feels simple and inviting
 
-- Right Now section with basic context quality scoring (● Context: 94%)
-- My Work with fundamental AI readiness indicators (📊 15 ready)
-- Basic multi-agent status monitoring (🤖 2 agents active)
-- Responsive sidebar with context preservation across screen sizes
+## Key Design Decisions
 
-**Foundation Components:**
+### Why This Flow Works
 
-- Context-intelligent sidebar container with real-time updates
-- Basic progress bars and smart badges for AI work tracking
-- Essential keyboard shortcuts for navigation and task operations
+1. **Human-Centered Design:** Right Now → My Work → Notes & Docs → Project Overview feels natural and approachable
+2. **Immediate Comfort:** "Working On" provides instant clarity without overwhelming choices
+3. **Emotional Connection:** "Done" section creates satisfaction, "My Work" feels personal
+4. **Simplified Choices:** 2-3 items per section eliminates decision fatigue
+5. **Approachable AI:** "AI Helper" feels friendly rather than intimidating or technical
 
-### Phase 2: Living Context Integration (Weeks 3-4)
+### What We Improved
 
-**Advanced Context Features:**
-
-- Context & Notes with living knowledge connections (🔗 28 active links)
-- Semantic search across project knowledge with context awareness
-- Context package preparation interface for perfect AI handoffs
-- Pattern recognition and decision impact tracking
-
-**Intelligence Components:**
-
-- Knowledge web visualization and relationship mapping
-- Context-aware templates that auto-link to current work
-- Cross-agent context synchronization and consistency monitoring
-
-### Phase 3: Strategic Intelligence & Big Picture (Weeks 5-6)
-
-**Strategic Context Orchestration:**
-
-- Big Picture with git-enhanced timeline and commit intelligence
-- Project health monitoring with predictive issue detection (⚠️ 2 areas need attention)
-- Crisis detection with context-aware response recommendations
-- Release readiness assessment with semantic commit analysis
-
-**Advanced Orchestration:**
-
-- Multi-agent coordination dashboard with performance analytics
-- Cross-agent learning and implementation insight sharing
-- Parallel productivity support with background AI monitoring
-
-### Phase 4: Mobile Intelligence & Polish (Weeks 7-8)
-
-**Responsive Context Intelligence:**
-
-- Mobile bottom navigation with context quality indicators
-- Touch-optimized agent coordination with gesture controls
-- Voice-to-text integration for rapid knowledge capture
-- Progressive Web App with offline context access
-
-**Performance & Intelligence Optimization:**
-
-- Real-time context quality calculation and caching
-- Intelligent agent load balancing and task routing
-- Context evolution tracking and pattern recognition refinement
-
-## Success Metrics & Context Intelligence Goals
-
-### Context-Aware Human-AI Collaboration Success
-
-**Perfect AI Handoffs:**
-
-- **Context Completeness**: >95% AI handoffs with complete project understanding
-- **Zero Re-explanation**: <2 minutes from human planning to AI execution start
-- **Cross-Agent Consistency**: 100% context synchronization between different AI tools
-- **Context Evolution**: Measurable improvement in handoff quality over project timeline
-
-**Strategic Human Control:**
-
-- **Decision Confidence**: >85% confidence in architectural choices with context support
-- **Strategic Focus**: Humans spend 80%+ time on vision vs. context explanation
-- **Flow State Preservation**: Minimal interruptions during deep work sessions
-- **Pattern Reuse**: >70% similar implementations leverage existing context patterns
-
-### Navigation Efficiency & Productivity
-
-**Immediate Productivity:**
-
-- **Primary Action Access**: <2 clicks to any core workflow
-- **Context Preservation**: 0% context loss during navigation
-- **Task Switching Speed**: <3 seconds between task contexts
-- **Right Now Clarity**: Instant understanding of current work focus
-
-**Cognitive Comfort Optimization:**
-
-- **Decision Paralysis Elimination**: Clear "Working On" focus removes choice anxiety
-- **Progressive Disclosure Success**: Simple defaults with contextual feature revelation
-- **Emotional Satisfaction**: "Done" section provides accomplishment and momentum
-- **Human-Centered Language**: Warm, approachable terminology throughout interface
-
-### Multi-Agent Orchestration Excellence
-
-**Agent Coordination Intelligence:**
-
-- **Unified Context Distribution**: All AI agents receive identical project understanding
-- **Parallel Productivity**: Seamless planning while AI agents execute current tasks
-- **Agent Performance Optimization**: Smart task routing based on agent capabilities
-- **Context Quality Maintenance**: >90% context accuracy across agent transitions
-
-**Living Context Evolution:**
-
-- **Knowledge Compound Rate**: Context intelligence improves measurably over time
-- **Decision Impact Tracking**: 100% architectural choices correlated with outcomes
-- **Pattern Recognition Success**: >60% faster delivery on similar implementations
-- **Documentation Accuracy**: Living docs maintain >90% current state alignment
-
-### Responsive Intelligence Adaptation
-
-**Cross-Device Context Consistency:**
-
-- **Mobile Context Preservation**: Complete core functionality with context indicators
-- **Tablet Intelligence**: Context quality scores accessible with hover/tap interactions
-- **Desktop Orchestration**: Full multi-agent coordination dashboard always visible
-- **Progressive Web App**: Offline context access with seamless sync restoration
-
-**Performance Intelligence Standards:**
-
-- **Context Loading**: <500ms for complete task context package
-- **AI Agent Status**: <50ms real-time updates across all interface elements
-- **Search Intelligence**: <100ms semantic knowledge discovery
-- **Navigation Transitions**: <200ms between routes with full context preservation
-
-## Strategic Context Intelligence Design Philosophy
-
-### Why This Context-Aware Flow Transforms Productivity
-
-**1. Human-AI Orchestration Excellence**
-
-- **Right Now → Context Intelligence**: Immediate productivity focus with perfect AI handoff preparation
-- **Context Quality First**: Every navigation element surfaces AI readiness and project context
-- **Multi-Agent Coordination**: Seamless orchestration of Claude, Research, and Cursor agents
-- **Living Context Evolution**: Project intelligence compounds with every human-AI collaboration
-
-**2. Progressive Context Disclosure**
-
-- **Simple Defaults**: "Working On" provides instant clarity without overwhelming intelligence
-- **Smart Expansion**: Context quality scores (94%) and agent status revealed contextually
-- **Emotional Comfort**: Human-centered language with powerful AI coordination beneath
-- **Strategic Control**: Clear distinction between human decision points and AI execution areas
-
-**3. Context Preservation Excellence**
-
-- **Zero Context Loss**: All project understanding preserved across navigation and agent handoffs
-- **Cross-Agent Consistency**: Unified context distribution ensures all AI agents share identical project intelligence
-- **Flow State Protection**: Context switching never breaks deep work or strategic thinking
-- **Pattern Recognition**: Similar implementations accelerated through contextual pattern reuse
-
-### Context Intelligence Innovations
-
-**What We Transformed:**
-
-- **Context Fragmentation** → **Living Knowledge Web**: Decisions automatically connect to implementations
-- **AI Re-explanation Overhead** → **Perfect Handoff Packages**: Complete context prepared for autonomous execution
-- **Agent Coordination Chaos** → **Unified Multi-Agent Orchestration**: All AI tools share identical project understanding
-- **Strategic Interruption** → **Background AI Monitoring**: Agent progress visible without workflow disruption
-- **Context Decay** → **Compounding Intelligence**: Every collaboration enriches future handoff quality
-
-**Human-AI Partnership Results:**
-
-- **Strategic Amplification**: Humans focus on vision, AI handles execution with complete context
-- **Zero Re-explanation**: Context packages eliminate manual context transfer overhead
-- **Parallel Productivity**: Plan future work while AI agents build current features
-- **Intelligence Multiplication**: Context quality improves measurably with each collaboration cycle
+- **Cognitive Overload:** Reduced from 4+ items per section to 2-3 maximum
+- **Technical Intimidation:** Replaced jargon with warm, human language throughout
+- **Decision Paralysis:** "Right Now" section provides immediate, clear focus
+- **Emotional Barriers:** Created sense of progress and accomplishment with "Done"
+- **AI Anxiety:** Made AI feel like helpful companion rather than complex system
 
 ---
 
-## The Context Intelligence Revolution
-
-This sidebar represents a fundamental shift from **traditional task management** to **context-aware human-AI collaboration orchestration**.
-
-**Success Measure**: When developers say _"My AI agents understand my project better than I can document it"_ - the interface has achieved seamless human-AI partnership through optimal context intelligence and minimal-friction collaboration workflows.
-
----
-
-_Last Updated: January 2025_  
-_Version: 6.0 - Context-Intelligent Human-AI Collaboration_  
-_Status: Ready for Context-Aware Implementation_
+_Last Updated: July 2025_
+_Version: 5.0 - User-Friendly with Emotional Comfort_
+_Status: Ready for Implementation_

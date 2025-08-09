@@ -6,10 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TaskInformation } from '../components/TaskInformation';
 import { useWorkingOnStore } from '../store/workingOnStore';
-import type { AIActivity } from '../types/workingOnTypes';
 import { cn } from '@/libs/client/utils';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface TaskDetailPageProps {
@@ -62,7 +60,6 @@ const formatTimeAgo = (timestamp: string) => {
 };
 
 export function TaskDetailPage({ taskId }: TaskDetailPageProps) {
-  const router = useRouter();
   const { getTaskById, tasks } = useWorkingOnStore();
 
   const task = getTaskById(taskId);
@@ -143,6 +140,69 @@ export function TaskDetailPage({ taskId }: TaskDetailPageProps) {
         {/* Main Task Information - Takes most space */}
         <div className="lg:col-span-2">
           <TaskInformation task={task} />
+
+          {/* Wireframe sections: Description (already in TaskInformation), Acceptance Criteria, Notes, Links/Files */}
+          <div className="mt-6 space-y-6">
+            {/* Acceptance Criteria */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">Acceptance Criteria</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" className="accent-primary" />
+                  <span>JWT generation with RS256 works for valid payloads</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" className="accent-primary" />
+                  <span>Invalid tokens are rejected with proper errors</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" className="accent-primary" />
+                  <span>Unit tests cover gen/validate and edge cases</span>
+                </label>
+              </CardContent>
+            </Card>
+
+            {/* Notes (timeline) */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">Notes</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm text-muted-foreground">
+                <div>15:35 — Decided on RS256 w/ key rotation plan</div>
+                <div>15:20 — Added performance constraints for token size</div>
+                <div>14:50 — Reviewed OWASP JWT guidance</div>
+              </CardContent>
+            </Card>
+
+            {/* Links / Files */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">Links / Files</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                <div>
+                  <span className="mr-2">•</span>
+                  <a className="text-blue-600 dark:text-blue-400 underline" href="#">
+                    RFC 7519: JSON Web Token (JWT)
+                  </a>
+                </div>
+                <div>
+                  <span className="mr-2">•</span>
+                  <a className="text-blue-600 dark:text-blue-400 underline" href="#">
+                    OWASP JWT Security Cheat Sheet
+                  </a>
+                </div>
+                <div>
+                  <span className="mr-2">•</span>
+                  <a className="text-blue-600 dark:text-blue-400 underline" href="#">
+                    jsonwebtoken docs
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Sidebar with AI Session and Actions */}
@@ -225,7 +285,7 @@ export function TaskDetailPage({ taskId }: TaskDetailPageProps) {
                         {aiSession!.activities
                           .slice(-3)
                           .reverse()
-                          .map((activity, index) => (
+                          .map((activity) => (
                             <div key={activity.id} className="text-xs text-muted-foreground">
                               <span className="font-medium">
                                 {formatTimeAgo(activity.timestamp)}:

@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import AppLayout from './AppLayout';
 
 const meta: Meta<typeof AppLayout> = {
@@ -9,28 +10,106 @@ const meta: Meta<typeof AppLayout> = {
     docs: {
       description: {
         component: `
-## Human-AI Orchestration Layout
+## Human-AI Orchestration Layout — Context Intelligence & Multi-Agent Coordination
 
-This layout implements the **context-intelligent viewport architecture** designed for optimal information flow between human strategic direction and AI autonomous execution. It creates a sophisticated orchestration interface where solo developers maintain strategic control while AI agents receive complete project context.
+### Critical Assessment
+~~~
+PROBLEM SOLVED: Fast, confident human orchestration of multiple AI agents with perfect context retention.
+PRIMARY ACTION: Hand off to AI.
+SUCCESS METRIC: >30% faster task throughput; <2% handoff errors; context quality ≥90%.
+REMOVED: Redundant nav, page-level scroll, decorative chrome; kept only orchestration-critical UI.
+~~~
 
-### Design Principles Applied:
-- **Context Intelligence First**: Real-time assessment of AI handoff readiness
-- **Human Orchestration Control**: Strategic overview with multi-agent status monitoring  
-- **AI Execution Intelligence**: Multi-agent coordination with unified project understanding
-- **Progressive Disclosure**: Context-intelligent information hierarchy
+### Visual Hierarchy Law
+~~~
+PRIMARY (60%) → Human Strategy + AI Handoff zone (Main orchestration area)
+SECONDARY (30%) → Context Intelligence panels (status, quality, links)
+TERTIARY (10%) → Utilities, legal/edge controls (collapsed)
+NEGATIVE SPACE → 40% minimum. Space IS design.
+~~~
 
-### Layout Architecture:
-- **Fixed Height Container (100vh)**: Desktop application feel with no page scrolling
-- **ContextIntelligenceHeader (48px, Fixed)**: AI agent status, context quality, search
-- **ContextSidebar (280px, Adaptive)**: Human-AI collaboration control center
-- **MainOrchestrationArea (Flexible)**: Context-intelligent workspace
+### ASCII Wireframe (Fixed-height, Desktop-first, 8px grid)
+~~~
+┌───────────────────────────────────────────────────────────────────────────────┐ 100vh
+│ Task Master AI     🔍 Context Search     🤖 3 Agents   ⚡ Context 94%    👤 │ 48px
+├───────────────────────────────────────────────────────────────────────────────┤ HEADER (Fixed)
+│┌───────────────┐┌─────────────────────────────────────────────────────────────┐
+││               ││ ╭─ Human Strategy Center (PRIMARY 60%) ─────────────────── │
+││🎯 Right Now   ││ │  [🤖 Hand off to AI]   [📦 Prepare Context]               │
+││├ My Work      ││ │  Headline: 32/40 bold, Actions: 24/32 bold               │
+││├ Context  📊  ││ │                                                             │
+││├ Overview     ││ │  ▓▓▓ Context Intelligence (SECONDARY 30%)                │
+││├ AI Helper    ││ │  - Context Quality: 94%                                   │
+││└──────────────┘│ │  - Agents: Claude, Cursor, Research                       │
+││  280px (Sidebar│ │  - Links: PRD, Research, Decisions, Patterns              │
+││  with internal ││ │                                                             │
+││  scroll)       ││ │  ░░░ Multi-Agent Status Dashboard                         │
+││               ││ │  - Claude: ████████▓ 80%                                   │
+││               ││ │  - Cursor: Ready                                          │
+││               ││ │  - Research: ██▓▓ 20%                                     │
+││               ││ │                                                             │
+││               ││ │  [✅ Approve] [💬 Guide] [📜 View History] (TERTIARY 10%)  │
+│└───────────────┘└─────────────────────────────────────────────────────────────┘
+│  SIDEBAR (Fixed height, 8px grid)       MAIN CONTENT (calc(100vh - 48px))       │
+│                                          Primary scrolling zone only             │
+└───────────────────────────────────────────────────────────────────────────────┘
 
-### Key Features:
-- Context quality scoring (1-100 scale)
-- Multi-agent status dashboard
-- Context package preparation interface
-- Real-time human guidance during AI implementation
-- Mobile-first progressive disclosure
+VISUAL WEIGHT: 60/30/10 (no exceptions)
+SCAN PATTERN: Z-pattern (primary action top-right within main)
+CONTRAST: 7:1 primary, 4.5:1 secondary
+~~~
+
+### State Matrix
+~~~
+Component        Default                 Hover                    Active                   Error
+────────────────────────────────────────────────────────────────────────────────────────────────
+Primary CTA      bg:#000 text:#FFF       bg:#333 cursor:pointer   scale:0.98 shadow:0,2   border:2px #F00
+("Hand off")     radius:8 shadow:0,4     duration:150ms ease-out  duration:50ms           shake:200ms text:#F00
+
+Secondary CTA    text:#111 underline:0   text:#000 underline:1    underline:2             disabled opacity:0.4
+("Prepare")      icon:#666               icon:#000                icon:#000                aria-disabled
+
+Sidebar Item     text:#444 bg:transparent bg:#F5F5F5              bg:#EAEAEA               —
+                 dot:●(status)           dot:● bold               dot:● bold               
+
+Table Row        bg:#FFF                  bg:#FAFAFA               bg:#F0F7FF border-left:4 #2B6CB0   row-error bg:#FFF5F5
+(virtual list)   dividers:#EEE           dividers:#E5E5E5         focus:ring: #99C2FF      text:#C53030
+~~~
+
+### Interaction Timing
+~~~
+User Intent → System Response
+─────────────────────────────
+Hover       → 150ms ease-out (no debate)
+Click       → 50ms feedback (instant feel)
+Load        → 300ms skeleton (perceived speed)
+Error       → 200ms shake + persist (acknowledgment)
+Success     → 500ms celebrate + continue (momentum)
+~~~
+
+### Handoff Specifications
+~~~
+GRID:        8px only. Period.
+BREAKPOINTS: 1280px desktop, 768px tablet, 375px mobile
+TYPOGRAPHY:  16/24 body, 24/32 subhead, 32/40 headline
+SPACING:     8, 16, 24, 40, 64 (nothing else)
+RADIUS:      0 (sharp), 4 (subtle), 8 (friendly)
+SHADOW:      0,2 (hint), 0,4 (float), 0,8 (emphasis)
+~~~
+
+### Measurements (Exact)
+- Header: 48px fixed; z-index above all scroll regions
+- Sidebar: 280px fixed width; own scroll when overflow; no page-level scroll
+- Main content height: calc(100vh - 48px); primary scroll zone
+- Minimum content width: 900px desktop; below that, collapse secondary regions
+- Primary CTA hit area: ≥44x44px; placement top-right of primary panel
+
+### Rationale → Hierarchy → States → Measurements → Business Impact
+- **Rationale**: Solo developer directs multiple AI agents without losing context
+- **Hierarchy**: Primary orchestration (60%); Context intelligence (30%); Utilities (10%)
+- **States**: Defined above for CTAs, sidebar, rows; accessible focus rings across controls
+- **Measurements**: Pixel-exact header/sidebar, hit areas, scroll containment to preserve context
+- **Business Impact**: Faster throughput, fewer handoff errors, preserved context; targets set in Success Metric
         `,
       },
     },
@@ -170,6 +249,27 @@ export const AISupervision: Story = {
 - AI responds to guidance while maintaining autonomous implementation
 - Performance validation and quality oversight by human
 - Context evolution captured for future project intelligence
+        `,
+      },
+    },
+  },
+};
+
+export const WireframeSpec: Story = {
+  args: {
+    variant: 'ai-handoff',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+This story demonstrates conformity to the wireframe guide:
+
+- **Grid**: 8px-only spacing scale; fixed header (48px), fixed sidebar (280px), main scroll zone
+- **Hierarchy**: 60/30/10 split with Z-pattern scan; primary action top-right in main
+- **States**: Primary/secondary CTA, sidebar items, table rows follow the state matrix
+- **Timing**: Hover 150ms ease-out, click 50ms feedback, load 300ms skeleton, error 200ms shake
+- **Accessibility**: ≥44px targets; 7:1 primary, 4.5:1 secondary contrast; focus-visible rings
         `,
       },
     },
