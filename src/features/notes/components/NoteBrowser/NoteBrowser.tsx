@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNotesData } from '../../hooks/useNotesData';
 import { NoteTabs } from './NoteTabs';
 import { BrowseTab } from './BrowseTab';

@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { TemplateSelector } from '@/features/templates';
-import type { TemplateMetadata } from '@/features/templates';
 import { useSearchTasks } from '@/libs/client/hooks/tasks/queries/tasks/useSearchTasks';
 import type { Task } from '@/features/tasks/types/taskTypes';
 import type { NoteCreatorState } from './NoteCreator';

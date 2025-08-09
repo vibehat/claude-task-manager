@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TaskInformation } from '../components/TaskInformation';
+import { TaskSubtasksSection } from '../components/TaskSubtasksSection';
 import { useWorkingOnStore } from '../store/workingOnStore';
 import { cn } from '@/libs/client/utils';
 import Link from 'next/link';
@@ -140,6 +141,11 @@ export function TaskDetailPage({ taskId }: TaskDetailPageProps) {
         {/* Main Task Information - Takes most space */}
         <div className="lg:col-span-2">
           <TaskInformation task={task} />
+
+          {/* Subtasks Section */}
+          <div className="mt-6">
+            <TaskSubtasksSection task={task} />
+          </div>
 
           {/* Wireframe sections: Description (already in TaskInformation), Acceptance Criteria, Notes, Links/Files */}
           <div className="mt-6 space-y-6">

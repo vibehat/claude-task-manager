@@ -13,6 +13,7 @@ export interface Task {
   tags: string[];
   contextQuality: number; // 1-5 stars
   aiSession?: AISession;
+  subtasks?: Task[];
   createdAt: string;
   updatedAt: string;
 }
