@@ -15,6 +15,13 @@
         "AZURE_OPENAI_API_KEY": "YOUR_AZURE_KEY_HERE",
         "OLLAMA_API_KEY": "YOUR_OLLAMA_API_KEY_HERE"
       }
+    },
+    "zen": {
+      "command": "python",
+      "args": ["/Users/minh/Documents/claude-task-master-ui/zen-mcp-server/server.py"],
+      "env": {
+        "PATH": "/Users/minh/Documents/claude-task-master-ui/zen-mcp-server/.zen_venv/bin:/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin"
+      }
     }
   }
 }

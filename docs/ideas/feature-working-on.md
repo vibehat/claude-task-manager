@@ -10,6 +10,18 @@ This document aligns the Working On page concept with the PRD and Use Cases. Pha
 - **Phase 3 (Collaboration)**: Lightweight docs (manual-first) and Git awareness (lightweight) — optional/future.
 - **Success metrics**: Quick context switching, clear multi-task visibility, fast direction, and high-quality handoffs without back-and-forth.
 
+## User Insights for Working On (Phase 1)
+
+- **Keep 2–4 tasks in focus**: A compact Active Tasks bar with instant switching.
+- **One place to direct work**: Single instruction box scoped to the focused task.
+- **Essential context only**: Show up to 3 key references by default; expand on demand.
+- **Minimal signals**: Readiness and status at a glance; deeper activity optional.
+- **Helpful, not noisy**: Suggestions available but tucked away by default.
+- **When unsure, one action**: Smart Workflow to recommend next steps.
+- **Keyboard-first**: Switch focus with Cmd/Ctrl+1..4; Enter to send; / opens command palette.
+- **Consistent language**: “Active Tasks”, “Focused Task”, “Suggestions”, “Updates”.
+- **No packaging overhead**: Use Task Master CLI links to reference PRD/use cases/decisions.
+
 ## Scope by Phase
 
 ### Phase 1: Multi-Task Orchestration (Weeks 1–4)
@@ -158,20 +170,32 @@ References:
 
   - Right Now, Working On (multi-task), Up Next; My Work: To Do, In Progress, Done.
 
-- **Working On Layout**
+- **Working On Layout (minimal)**
 
-  - Active Tasks bar/list (primary for switching)
-  - Focused Task Context panel
-  - Cross-Task Smart Suggestions panel
-  - Activity/Progress (per-task + rollup)
-  - Tag Context Switcher
-  - Quick Actions (always accessible), CLI actions
+  - **Header**: Active Tasks chips (2–4) with state and readiness micro-indicators; compact Tag Switcher; Command button (opens command palette).
+  - **Focused Task Panel (center)**:
+    - Title, state, priority, Ready/Blocked chip
+    - Essential references (max 3) + “+N more” drawer
+    - Single Quick Direction input with “Insert reference” menu
+    - Primary action: Send (Enter). Secondary: Show context
+  - **Right Panel (collapsible by default)**:
+    - Suggestions (default view)
+    - Updates (AI + recent activity)
+  - **Footer Quick Actions (≤5 visible)**: Start Workflow (if no active tasks), Set Status, Analyze, Smart Workflow, Switch Focus
+
+- **Empty States**
+
+  - **No active tasks**: “No active tasks. Start Workflow to pick 2–4 tasks and begin.”
+    - Actions: Start Workflow (primary), Select Active Tasks, Parse PRD, Smart Workflow
+  - **No suggestions**: “No suggestions right now.” Option to Analyze
 
 - **Interaction Guidelines**
+
   - Natural language for direction.
-  - Defaults that reduce clicks and mental overhead.
-  - Progressive disclosure—details on demand.
-  - Keyboard: Cmd/Ctrl+1..4 to switch focus; Enter to send direction; S to start workflow; T for tag switcher.
+  - Progressive disclosure—details, logs, and full references are collapsed by default.
+  - Defaults reduce clicks and decisions; show the essentials first.
+  - Keyboard: Cmd/Ctrl+1..4 to switch focus; Enter to send direction; S to start workflow; T for tag switcher; / opens command palette.
+  - Limit visible choices to ≤5 per region; avoid parallel primary actions.
 
 ## Examples (Phase 1)
 
@@ -200,7 +224,7 @@ Your role now: Direct implementation
 Actions: [View PRD] [Define Subtasks] [Direct Implementation]
 
 Quick direction (to 28.2):
-"Implement token validation according to PRD. Ref: docs/prd/main.md#auth, RS256, 15m+refresh"
+"Give one instruction for this task. Add refs as needed."
 ```
 
 ### Start Workflow
@@ -210,7 +234,7 @@ START WORKFLOW
 No active tasks selected
 
 Recommended next: [Next Task]
-Actions: [Parse PRD] [Select Active Tasks] [Create Tag from Branch] [Refresh]
+Actions: [Parse PRD] [Select Active Tasks] [Create Tag from Branch] [Smart Workflow] [Refresh]
 
 Select Active Tasks (2–4):
 [ ] 28.2 – JWT Token Implementation  [In Progress] [High]
@@ -229,6 +253,16 @@ Select Active Tasks (2–4):
 - **Reorg/Move**: `task-master move --from=<id> --to=<id>`
 - **Update Scope**: `task-master update --from=<id> --prompt="..."`, `task-master update-subtask --id=<id.x> --prompt="..."`
 - **Tags**: `task-master tags --show-metadata`, `task-master use-tag <name>`, `task-master add-tag --from-branch`, `task-master add-tag testing --copy-from-current`
+- **Smart Workflow**: `/tm:workflows:smart-workflow` (suggests optimal next steps)
+
+## Minimal UX Principles (Phase 1)
+
+- **One primary action** per surface; Enter always triggers it.
+- **Progressive disclosure** keeps UI clean; expand on demand.
+- **Defaults before choices** reduce user decisions.
+- **Keyboard-first** with consistent shortcuts and titles.
+- **Consistent terminology** across UI and docs.
+- **Small visible set**: actions and references capped to the essentials by default.
 
 ## Future/Optional Capabilities
 
