@@ -1,185 +1,172 @@
-# Working On Page — Phase 1 (Core Orchestration)
+# Working On Page — Phase 1 (Multi-Task Orchestration)
 
 ## Context & Overview
 
-The Working On page is a lightweight, human-centered orchestration center. Phase 1 focuses on fast task direction, concise handoffs, and clarity — leveraging existing references (PRD, use cases, notes/decisions) and Task Master CLI integration. No special context packaging.
+The Working On page gives the human full control over the whole working context. Phase 1 supports managing multiple active tasks (2–4), instant focus switching, concise direction inputs, cross-task suggestions, and Task Master CLI sync — using lightweight references (PRD, use cases, notes/decisions). No special context packaging.
 
-- **No special context packages**: Reference existing artifacts directly (PRD sections, use cases, notes/decisions).
-- **Single-task focus**: Set and direct the active task quickly.
-- **Quick direction & handoff**: One concise instruction input referencing linked context.
-- **Smart workflow suggestions**: Simple, actionable next steps.
-- **Simple progress visibility**: Status, recently touched files, next milestones.
-- **Task Master CLI sync**: Primary flows use existing CLI actions surfaced in the UI.
+- **Multi-task working context**: 2–4 active tasks visible, quick switching via click/shortcuts.
+- **Quick direction & handoff**: Single input scoped to focused task with insertable references.
+- **Cross-task smart suggestions**: Actions across active tasks based on readiness and dependencies.
+- **Simple progress (per-task + rollup)**: Status, recent files, next milestones.
+- **Task Master CLI sync**: Primary flows surfaced in UI (no ceremony).
+- **Tag context**: Lightweight context switching aligned with git branches or work streams.
 
 ## Primary States (Phase 1)
 
-### 1) No Active Task → Suggest Start
+### 1) Start Workflow (No Active Tasks)
 
-- Show one clear recommendation and why (dependencies, readiness).
-- Actions: Start Task, View Other Options, Refresh.
+- Present an onboarding panel to select active tasks (2–4) and/or create/select a tag.
+- Actions: Parse PRD, Next recommended, Select tasks (multi-select), Create tag from current branch, Refresh.
 
-### 2) Planning/Research → Implementation
+### 2) Multi-Task Working Context
 
-- Human actions: research, define requirements, create subtask breakdown.
-- Next: Direct implementation using a concise instruction referencing PRD/decisions.
+- Active Tasks bar/list for switching focus.
+- Cross-task suggestions and batch operations.
+- Focused task panel with quick direction and references.
 
-### 3) AI Implementation → Review/Refine
+### 3) Review & Refine (Across Tasks)
 
-- Monitor progress simply; provide short course-corrections.
+- Monitor statuses, recent activity, and rollup; provide short course-corrections.
 - Keep feedback tied to referenced artifacts.
-
-### 4) Manual Documentation (Optional)
-
-- Capture decisions where helpful; keep close to implementation.
 
 ---
 
 ## ASCII Wireframes (Desktop)
 
-### Working On — Active Task
+### Multi-Task Working Context (Active)
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ Navigation:  Right Now  |  Working On  |  Up Next  |  My Work: To Do • In Progress • Done │
-│ Actions: [🔄 Sync Tasks]                                                               │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                        │
-│ ┌──────────────────────────────────────────────┐   ┌──────────────────────────────────┐ │
-│ │ 🎯 CURRENT TASK FOCUS                        │   │ 💡 SMART WORKFLOW SUGGESTIONS    │ │
-│ ├──────────────────────────────────────────────┤   ├──────────────────────────────────┤ │
-│ │ Task: 28.2 – JWT Token Implementation        │   │ Next best actions:               │ │
-│ │ Status: In Progress                          │   │ 1) Review requirements           │ │
-│ │                                              │   │ 2) Define subtask breakdown      │ │
-│ │ References:                                  │   │ 3) Request implementation        │ │
-│ │ • PRD: docs/prd/main.md#auth                 │   │ 4) Write tests                    │ │
-│ │ • Use cases: docs/prd/usecases.md#auth       │   │                                  │ │
-│ │ • Decisions/notes: linked via CLI            │   │ Shortcuts:                        │ │
-│ │                                              │   │ [View PRD] [Define Subtasks]      │ │
-│ │ Your role now: Direct implementation         │   │ [Direct Implementation]           │ │
-│ └──────────────────────────────────────────────┘   └──────────────────────────────────┘ │
-│                                                                                        │
-│ ┌────────────────────────────────────────────────────────────────────────────────────┐ │
-│ │ 📝 QUICK DIRECTION & HANDOFF                                                       │ │
-│ ├────────────────────────────────────────────────────────────────────────────────────┤ │
-│ │ Instruction (concise; references allowed):                                         │ │
-│ │ ▏Implement according to Task 28.2.                                                │ │
-│ │ ▏References:                                                                       │ │
-│ │ ▏- PRD: docs/prd/main.md (Auth requirements)                                       │ │
-│ │ ▏- Decisions: RS256, 15m expiry + refresh                                          │ │
-│ │ ▏- Patterns: Follow existing auth middleware                                       │ │
-│ │ [Send] [Insert PRD Ref] [Insert Use Case] [Insert Decision]                        │ │
-│ └────────────────────────────────────────────────────────────────────────────────────┘ │
-│                                                                                        │
-│ ┌──────────────────────────────────────────────┐   ┌──────────────────────────────────┐ │
-│ │ 📊 ACTIVITY & PROGRESS                        │   │ 🔧 TASK MASTER (CLI) ACTIONS     │ │
-│ ├──────────────────────────────────────────────┤   ├──────────────────────────────────┤ │
-│ │ Status: Implementation                        │   │ [tm list] [tm set-active]        │ │
-│ │ Recently touched files:                       │   │ [tm set-status] [tm open-ref]     │ │
-│ │ • src/auth/jwt.ts                             │   │ [tm analyze] [tm report]          │ │
-│ │ • src/middleware/auth.ts                      │   │                                  │ │
-│ │ Next milestones:                              │   │ Notes/Decisions:                  │ │
-│ │ • Validation complete                         │   │ [Open Notes] [Link Decision]      │ │
-│ │ • Unit tests passing                          │   │                                  │ │
-│ └──────────────────────────────────────────────┘   └──────────────────────────────────┘ │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Navigation: Right Now | Working On | Up Next | My Work: To Do • In Progress • Done                         │
+│ Tag: [ user-auth ▼ ]  [🔄 Sync Tasks]  Shortcuts: 1..4 switch | Enter send | S start | T tag               │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ ACTIVE TASKS (3)                                                                                            │
+│ [1] 28.2 – JWT Token Impl  [In Progress] [Ready: Validation] [High] [□] | [Switch]                         │
+│ [2] 28.3 – API Endpoints    [Ready]       [No blockers]       [High] [□] | [Switch]                         │
+│ [3] 29.1 – Rate Limiting    [Blocked]     [Wait: 28.2]        [Med]  [□] | [Switch]                         │
+│ Batch: [Select All]  Actions: [Set In Progress] [Set Done] [Expand] [Move] [Add Tag] [Copy to Tag]         │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ ┌──────────────────────────────────────────────┐   ┌──────────────────────────────────────────────────────┐ │
+│ │ 🎯 FOCUSED TASK CONTEXT (28.2)               │   │ 💡 CROSS-TASK SMART SUGGESTIONS                      │ │
+│ ├──────────────────────────────────────────────┤   ├──────────────────────────────────────────────────────┤ │
+│ │ Title: 28.2 – JWT Token Implementation       │   │ For your active tasks:                               │ │
+│ │ Status: In Progress                          │   │ 1) 28.2 – Review validation approach                  │ │
+│ │ References:                                   │   │ 2) 28.3 – Define subtask breakdown                    │ │
+│ │ • PRD: docs/prd/main.md#auth                 │   │ 3) 28.3 – Request implementation                       │ │
+│ │ • Use cases: docs/prd/usecases.md#auth       │   │ 4) 29.1 – Pre-research rate limiting (blocked)         │ │
+│ │ • Decisions: RS256, 15m expiry + refresh     │   │                                                      │ │
+│ │ Your role now: Direct implementation         │   │ Quick CTAs: [View PRD] [Define Subtasks] [Research]   │ │
+│ └──────────────────────────────────────────────┘   └──────────────────────────────────────────────────────┘ │
+│                                                                                                            │
+│ ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │
+│ │ 📝 QUICK DIRECTION (Scoped to Focused Task 28.2)                                                         │ │
+│ ├────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │
+│ │ ▏Implement validation middleware per PRD. Refs: docs/prd/main.md#auth, RS256, 15m+refresh               │ │
+│ │ [Send]  [Insert PRD Ref] [Insert Use Case] [Insert Decision]  [Research]                                │ │
+│ └────────────────────────────────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                                            │
+│ ┌──────────────────────────────────────────────┐   ┌──────────────────────────────────────────────────────┐ │
+│ │ 📊 ACTIVITY & ROLLOUP                         │   │ 🔧 TASK MASTER (CLI) ACTIONS                         │ │
+│ ├──────────────────────────────────────────────┤   ├──────────────────────────────────────────────────────┤ │
+│ │ Recent activity (per task):                  │   │ Focused: [tm set-status] [tm open-ref] [tm analyze]   │ │
+│ │ • 28.2 src/auth/jwt.ts                       │   │ Cross-task: [tm list] [tm show 28.2,28.3,29.1]         │ │
+│ │ • 28.3 src/api/endpoints.ts                  │   │ Planning: [tm expand --id] [tm expand --all]           │ │
+│ │ Rollup: 1 ready • 1 in progress • 1 blocked  │   │ Reorg: [tm move] [tm update] [tm update-subtask]       │ │
+│ │ Next milestones:                             │   │ Tags: [tm tags] [tm use-tag] [tm add-tag --from-branch] │ │
+│ │ • 28.2 Validation complete                   │   │                                                          │ │
+│ │ • 28.3 Endpoint skeleton ready               │   │                                                          │ │
+│ └──────────────────────────────────────────────┘   └──────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Working On — No Active Task View
+### Start Workflow (No Active Tasks)
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ SMART WORKFLOW                                                                         │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│ No active task                                                                         │
-│                                                                                        │
-│ Recommended: Start Task 28.3 – API Endpoints                                           │
-│ Why: JWT (28.2) near complete; dependencies met; high priority                         │
-│                                                                                        │
-│ Actions: [Start Task] [View Other Options] [Refresh]                                   │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Lightweight Context Model (Phase 1)
-
-- Definition: References to existing artifacts (no packaging):
-  - PRD sections in `docs/prd/main.md`
-  - Use cases in `docs/prd/usecases.md`
-  - Notes/decisions maintained manually as needed
-  - Task Master CLI task metadata and relationships
-- Usage: Handoff instructions reference these artifacts; no bundling required.
-
-Example instruction:
-
-```text
-Implement authentication according to Task 2.
-References:
-- PRD: docs/prd/main.md (Auth requirements section)
-- Decisions: Use JWT RS256, 15m expiry + refresh
-- Patterns: Follow existing middleware/auth patterns
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│ 🚀 START WORKFLOW                                                                    │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│ You have no active tasks selected.                                                   │
+│                                                                                      │
+│ Recommended next: [Next Task] — based on dependencies and priority                   │
+│                                                                                      │
+│ Actions: [Parse PRD] [Select Active Tasks] [Create Tag from Branch] [Refresh]        │
+│                                                                                      │
+│ Select Active Tasks (multi-select):                                                   │
+│ [ ] 28.2 – JWT Token Implementation  [In Progress] [High]                            │
+│ [ ] 28.3 – API Endpoints             [Ready]       [High]                            │
+│ [ ] 29.1 – Rate Limiting             [Blocked]     [Med]                             │
+│                                                                                      │
+│ [Add to Active]  Keyboard: S start • T tag • 1..4 hot-switch                         │
+└────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Component Specifications (Phase 1)
 
-### CurrentTaskContext
+### ActiveTasksBar
 
-- Props: `currentTask`, `references`, `status`
+- Props: `activeTasks`, `onFocusChange`, `onBatchSelect`, `selectedTaskIds`
 - Behavior:
-  - Show task title, status, linked references (PRD/use cases/notes)
-  - Emphasize “Your role now” with a clear next strategic action
+  - Display up to 4 task chips with state/priority/blockers.
+  - Support single-click focus switch, checkboxes for batch selection.
+  - Keyboard shortcuts Cmd/Ctrl+1..4 to switch.
+
+### TagContextSwitcher
+
+- Props: `currentTag`, `availableTags`, `onSwitch`, `onCreateFromBranch`, `onCopyFromCurrent`
+- Behavior:
+  - Dropdown showing tag metadata; quick actions to switch/create.
+
+### BatchActionsToolbar
+
+- Props: `selectedTaskIds`, `onSetStatus`, `onExpand`, `onMove`, `onCopyToTag`
+- Behavior:
+  - Appears when one or more tasks are selected from ActiveTasksBar.
+
+### FocusedTaskContext
+
+- Props: `task`, `references`, `status`, `nextSteps`
+- Behavior:
+  - Show task title, status, linked references; emphasize “Your role now”.
 
 ### QuickDirectionInput
 
-- Props: `onSend`, `insertReferenceHandlers`
+- Props: `onSend`, `insertReferenceHandlers`, `onResearch`
 - Behavior:
-  - Single input for concise directive that can insert PRD/use case/decision links
+  - Single input for concise directive; insert PRD/use case/decision refs; optional research action.
 
-### WorkflowSuggestionsPanel
+### CrossTaskSuggestions
 
-- Props: `projectState`, `availableTasks`
+- Props: `activeTasks`, `dependencies`, `readiness`
 - Behavior:
-  - Suggest immediate next steps based on task state and dependencies
+  - Suggest next actions across tasks; respect dependencies; include quick CTAs.
 
-### ActivityProgress
+### ActivityRollup
 
-- Props: `status`, `recentFiles`, `milestones`
+- Props: `recentActivity`, `perTaskStatus`, `milestones`
 - Behavior:
-  - Simple visibility of status, recent file touches (if available), and next milestones
+  - Show per-task recent files and an overall rollup with upcoming milestones.
 
 ### TaskMasterActions
 
-- Props: `actions`
+- Props: `onAction`
 - Behavior:
-  - Surface common CLI actions in UI (e.g., `tm list`, `tm set-active`, `tm set-status`, `tm open-ref`)
-
----
-
-## Phase Boundaries
-
-The Working On page in Phase 1 intentionally excludes or defers:
-
-- Multi-task orchestration and balancing (Phase 2 – optional/future)
-- AI agent coordination hub (Phase 2 – optional/future)
-- Living documentation automation (Phase 3 – optional/future)
+  - Surface common CLI actions: list, show, set-status, open-ref, analyze, expand, move, update, tags.
 
 ---
 
 ## Accessibility
 
-- Clear landmark roles for: current task focus, suggestions, quick direction, activity, CLI actions
-- Descriptive headings reflecting strategic context and current state
-- Keyboard shortcuts for: Send direction, Start Task, View PRD, Sync Tasks
-- High contrast and visible focus indicators for primary actions
+- Landmarks for: active tasks, focused context, suggestions, direction input, activity, CLI actions.
+- Keyboard: Cmd/Ctrl+1..4 switch; Enter send; S start workflow; T open tag switcher.
+- Clear focus states; SR-friendly labels for batch/CLI actions.
 
 ## Performance
 
-- Real-time updates via WebSocket where available (status, activity)
-- Background sync for Task Master operations
-- Lazy-load detailed context; optimistic updates for task status changes
+- WebSocket updates for status/activity; background CLI sync.
+- Lazy-load heavy context/details; optimistic UI for status changes.
 
 ---
 
-Related references: see `docs/ideas/feature-working-on.md` for alignment with PRD and success metrics.
+Related references: `docs/ideas/feature-working-on.md`, `CLAUDE_TASK_MASTER.md` (commands & flows).
