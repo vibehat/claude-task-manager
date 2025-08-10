@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   Play,
   FileText,
@@ -13,12 +13,11 @@ import {
   Target,
   CheckCircle,
   Circle,
-  ChevronDown,
-  ChevronRight,
   ExternalLink,
   MessageCircle,
   Calendar,
   Link as LinkIcon,
+  CheckSquare,
 } from 'lucide-react';
 import { cn } from '@/libs/client/utils';
 import type { TaskDetailsSectionProps, WorkingOnTask } from '../../types';
@@ -94,10 +93,25 @@ export function TaskDetailsSection({
   onStartWork,
   onAddNote,
 }: TaskDetailsSectionProps): React.JSX.Element {
-  // Expand all sections by default
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(
-    new Set(['subtasks', 'files', 'dependencies', 'notes', 'description', 'details'])
-  );
+  const [activeTab, setActiveTab] = useState('dependencies');
+
+  // Always call hooks at the top level - determine available tabs based on task
+  const availableTabs = useMemo(() => {
+    const tabs: string[] = [];
+    if (task) {
+      if (task.relatedFiles.length > 0) tabs.push('files');
+      tabs.push('dependencies'); // Always show dependencies
+      if (task.notes.length > 0) tabs.push('notes');
+    }
+    return tabs;
+  }, [task]);
+
+  // Set default active tab to first available - always call this hook
+  useEffect(() => {
+    if (task && availableTabs.length > 0 && !availableTabs.includes(activeTab)) {
+      setActiveTab(availableTabs[0]);
+    }
+  }, [task, availableTabs, activeTab]);
 
   if (loading) {
     return (
@@ -123,16 +137,6 @@ export function TaskDetailsSection({
       </Card>
     );
   }
-
-  const toggleSection = (section: string) => {
-    const newExpanded = new Set(expandedSections);
-    if (newExpanded.has(section)) {
-      newExpanded.delete(section);
-    } else {
-      newExpanded.add(section);
-    }
-    setExpandedSections(newExpanded);
-  };
 
   const completedSubtasks = task.subtasks?.filter((s) => s.status === 'done').length || 0;
   const totalSubtasks = task.subtasks?.length || 0;
@@ -230,171 +234,94 @@ export function TaskDetailsSection({
 
         {/* Subtasks Section */}
         {totalSubtasks > 0 && (
-          <div className="border border-border rounded-lg overflow-hidden">
-            <Collapsible
-              open={expandedSections.has('subtasks')}
-              onOpenChange={() => toggleSection('subtasks')}
-            >
-              <CollapsibleTrigger className="flex items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 transition-colors w-full">
-                <div className="flex items-center gap-2">
-                  {expandedSections.has('subtasks') ? (
-                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                  )}
-                  <CheckCircle className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">Subtasks</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-xs">
-                    {completedSubtasks}/{totalSubtasks} completed
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <CheckSquare className="w-4 h-4 text-muted-foreground" />
+              <h3 className="text-sm font-medium text-foreground">
+                Subtasks ({completedSubtasks}/{totalSubtasks})
+              </h3>
+            </div>
+            <div className="space-y-2">
+              {task.subtasks?.map((subtask) => <SubtaskItem key={subtask.id} subtask={subtask} />)}
+            </div>
+          </div>
+        )}
+
+        {/* Tabbed Content */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="w-fit">
+            {task.relatedFiles.length > 0 && (
+              <TabsTrigger value="files">
+                <FileText className="w-4 h-4" />
+                Files ({task.relatedFiles.length})
+              </TabsTrigger>
+            )}
+            <TabsTrigger value="dependencies">
+              <LinkIcon className="w-4 h-4" />
+              Dependencies
+            </TabsTrigger>
+            {task.notes.length > 0 && (
+              <TabsTrigger value="notes">
+                <MessageCircle className="w-4 h-4" />
+                Notes ({task.notes.length})
+              </TabsTrigger>
+            )}
+          </TabsList>
+
+          {/* Related Files Tab */}
+          {task.relatedFiles.length > 0 && (
+            <TabsContent value="files" className="space-y-1">
+              {task.relatedFiles.map((file) => (
+                <RelatedFileItem key={file.path} file={file} />
+              ))}
+            </TabsContent>
+          )}
+
+          {/* Dependencies Tab */}
+          <TabsContent value="dependencies" className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5"></div>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-foreground mb-1">Blocked by</div>
+                <div className="text-sm text-muted-foreground">None</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5"></div>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-foreground mb-1">Blocks</div>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary" className="text-xs">
+                    #28.3 - API Security Review
                   </Badge>
-                  <div className="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-green-500 transition-all"
-                      style={{ width: `${(completedSubtasks / totalSubtasks) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="p-4 pt-2 space-y-1 bg-card">
-                  {task.subtasks?.map((subtask) => (
-                    <SubtaskItem key={subtask.id} subtask={subtask} />
-                  ))}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-        )}
-
-        {/* Related Files Section */}
-        {task.relatedFiles.length > 0 && (
-          <div className="border border-border rounded-lg overflow-hidden">
-            <Collapsible
-              open={expandedSections.has('files')}
-              onOpenChange={() => toggleSection('files')}
-            >
-              <CollapsibleTrigger className="flex items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 transition-colors w-full">
-                <div className="flex items-center gap-2">
-                  {expandedSections.has('files') ? (
-                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                  )}
-                  <FileText className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">Related Files</span>
-                </div>
-                <Badge variant="outline" className="text-xs">
-                  {task.relatedFiles.length} files
-                </Badge>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="p-4 pt-2 space-y-1 bg-card">
-                  {task.relatedFiles.map((file) => (
-                    <RelatedFileItem key={file.path} file={file} />
-                  ))}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-        )}
-
-        {/* Dependencies Section */}
-        <div className="border border-border rounded-lg overflow-hidden">
-          <Collapsible
-            open={expandedSections.has('dependencies')}
-            onOpenChange={() => toggleSection('dependencies')}
-          >
-            <CollapsibleTrigger className="flex items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 transition-colors w-full">
-              <div className="flex items-center gap-2">
-                {expandedSections.has('dependencies') ? (
-                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                )}
-                <LinkIcon className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium text-foreground">Dependencies</span>
-              </div>
-              <Badge variant="outline" className="text-xs">
-                2 connections
-              </Badge>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="p-4 bg-card space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5"></div>
-                  <div className="flex-1">
-                    <div className="text-xs font-medium text-muted-foreground mb-1">Blocked by</div>
-                    <div className="text-sm text-foreground">None</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5"></div>
-                  <div className="flex-1">
-                    <div className="text-xs font-medium text-muted-foreground mb-1">Blocks</div>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        #28.3 - API Security Review
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        #29.1 - Rate Limiting Setup
-                      </Badge>
-                    </div>
-                  </div>
+                  <Badge variant="secondary" className="text-xs">
+                    #29.1 - Rate Limiting Setup
+                  </Badge>
                 </div>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
+            </div>
+          </TabsContent>
 
-        {/* Notes Section */}
-        {task.notes.length > 0 && (
-          <div className="border border-border rounded-lg overflow-hidden">
-            <Collapsible
-              open={expandedSections.has('notes')}
-              onOpenChange={() => toggleSection('notes')}
-            >
-              <CollapsibleTrigger className="flex items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 transition-colors w-full">
-                <div className="flex items-center gap-2">
-                  {expandedSections.has('notes') ? (
-                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                  )}
-                  <MessageCircle className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">Notes</span>
+          {/* Notes Tab */}
+          {task.notes.length > 0 && (
+            <TabsContent value="notes" className="space-y-3">
+              {task.notes.map((note) => (
+                <div key={note.id} className="rounded-lg p-3 border border-border/50 bg-muted/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-foreground">
+                      {note.author || 'Anonymous'}
+                    </span>
+                    <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {new Date(note.timestamp).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{note.content}</p>
                 </div>
-                <Badge variant="outline" className="text-xs">
-                  {task.notes.length} notes
-                </Badge>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="p-4 bg-card space-y-3">
-                  {task.notes.map((note) => (
-                    <div
-                      key={note.id}
-                      className="bg-muted/30 rounded-lg p-3 border border-border/50"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-foreground">
-                          {note.author || 'Anonymous'}
-                        </span>
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {new Date(note.timestamp).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {note.content}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-        )}
+              ))}
+            </TabsContent>
+          )}
+        </Tabs>
       </CardContent>
     </Card>
   );

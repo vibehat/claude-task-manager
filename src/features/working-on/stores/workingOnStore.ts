@@ -105,18 +105,50 @@ export const useWorkingOnStore = create<WorkingOnStore>()(
 
       // Task actions
       selectTask: (taskId) => {
-        set((state) => ({
+        const state = get();
+
+        // Update selected task ID
+        set((prevState) => ({
           viewState: {
-            ...state.viewState,
+            ...prevState.viewState,
             selectedTaskId: taskId,
           },
         }));
 
-        // Find and set the current task from queue
-        const task = get().taskQueue.find((t) => t.id === taskId);
-        if (task) {
-          // In a real implementation, this would fetch full task details
-          console.log('Selecting task:', taskId);
+        // Find the task in the queue
+        const queueTask = state.taskQueue.find((t) => t.id === taskId);
+        if (queueTask) {
+          // Convert TaskQueueItem to WorkingOnTask for focus switching
+          const focusTask: WorkingOnTask = {
+            // Basic task properties from TaskQueueItem
+            id: queueTask.id,
+            title: queueTask.title,
+            // Map queue status to TaskMaster status
+            status:
+              queueTask.status === 'working'
+                ? 'in-progress'
+                : queueTask.status === 'ready'
+                  ? 'pending'
+                  : queueTask.status === 'queued'
+                    ? 'pending'
+                    : queueTask.status === 'blocked'
+                      ? 'blocked'
+                      : 'pending',
+            priority: queueTask.priority,
+            description: `Task ${queueTask.id}: ${queueTask.title}`, // Default description
+            dependencies: [], // TaskMaster Task property
+
+            // Working-on specific properties
+            progress: queueTask.progress || 0,
+            timeLeft: undefined,
+            relatedFiles: [],
+            notes: [],
+          };
+
+          // Set as current task (switch focus)
+          set({ currentTask: focusTask });
+
+          console.log('Focus switched to task:', taskId, focusTask.title);
         }
       },
 
@@ -198,6 +230,7 @@ export const useWorkingOnStore = create<WorkingOnStore>()(
           // Refresh would update workflow actions based on current task state
           console.log('Refreshing workflow actions...');
         } catch (error) {
+          console.error('Failed to refresh workflow actions:', error);
           get().setError('Failed to refresh workflow actions');
         } finally {
           get().setLoading('workflowActions', false);
@@ -273,6 +306,7 @@ export const useWorkingOnStore = create<WorkingOnStore>()(
             },
           }));
         } catch (error) {
+          console.error('Failed to refresh data:', error);
           store.setError('Failed to refresh data');
         } finally {
           store.setLoading('refreshing', false);
