@@ -94,8 +94,17 @@ Success metrics:
    - Status and recent activity per task; overall rollup (e.g., 2/4 active tasks “ready for review”).
 
 6. **Task Master CLI Sync**
+
    - Reads tasks/statuses and maps lightweight context links.
    - Primary flows use existing CLI actions surfaced in UI.
+
+7. **Tag Context Switcher (Lightweight)**
+
+   - Switch between tag contexts (often aligned to branches or work streams).
+   - Create a tag from current branch; copy tasks to a new tag for QA or experiments.
+
+8. **Batch Operations for Active Tasks**
+   - Multi-select tasks to apply: Set In Progress/Done, Expand, Move/Reorg, Copy to Tag.
 
 ## Lightweight Context Model (Phase 1)
 
@@ -118,10 +127,10 @@ References:
 
 ## Primary User Flows (Phase 1)
 
-- **No Active Task → Suggest Start**
+- **Start Workflow (No Active Tasks)**
 
-  - Show one clear recommendation and why (dependencies, readiness).
-  - Actions: Start Task, View Options, Refresh.
+  - Recommended next based on dependencies/priority.
+  - Actions: Parse PRD, Select Active Tasks (multi-select 2–4), Create Tag from Branch, Refresh.
 
 - **Multi-Task Setup & Switching**
 
@@ -132,11 +141,13 @@ References:
 
   - Research, define requirements, create subtask breakdown.
   - Direct implementation using concise instructions referencing PRD/decisions.
+  - Optional research CTA before direction.
 
 - **Review/Refine (Across Tasks)**
 
   - Monitor progress simply; provide short course-corrections.
   - Keep feedback tied to referenced artifacts.
+  - Use batch operations for status updates or structural changes.
 
 - **Manual Documentation (Optional)**
   - Capture decisions where helpful; keep close to implementation.
@@ -153,13 +164,14 @@ References:
   - Focused Task Context panel
   - Cross-Task Smart Suggestions panel
   - Activity/Progress (per-task + rollup)
+  - Tag Context Switcher
   - Quick Actions (always accessible), CLI actions
 
 - **Interaction Guidelines**
   - Natural language for direction.
   - Defaults that reduce clicks and mental overhead.
   - Progressive disclosure—details on demand.
-  - Keyboard: Cmd/Ctrl+1..4 to switch focus; Enter to send direction.
+  - Keyboard: Cmd/Ctrl+1..4 to switch focus; Enter to send direction; S to start workflow; T for tag switcher.
 
 ## Examples (Phase 1)
 
@@ -191,6 +203,33 @@ Quick direction (to 28.2):
 "Implement token validation according to PRD. Ref: docs/prd/main.md#auth, RS256, 15m+refresh"
 ```
 
+### Start Workflow
+
+```text
+START WORKFLOW
+No active tasks selected
+
+Recommended next: [Next Task]
+Actions: [Parse PRD] [Select Active Tasks] [Create Tag from Branch] [Refresh]
+
+Select Active Tasks (2–4):
+[ ] 28.2 – JWT Token Implementation  [In Progress] [High]
+[ ] 28.3 – API Endpoints             [Ready]       [High]
+[ ] 29.1 – Rate Limiting             [Blocked]     [Med]
+```
+
+## Task Master CLI Mappings (Phase 1)
+
+- **Start Workflow**: `task-master parse-prd`, `task-master next`, `task-master show <ids>`, `task-master add-tag --from-branch`
+- **Active Tasks & Status**: `task-master list`, `task-master set-status --id=<id> --status=<state>`
+- **Context & References**: `task-master open-ref`, links to PRD/use cases/notes
+- **Cross-Task Suggestions**: `task-master analyze`, readiness/blockers surfaced via CLI data
+- **Research (Optional)**: `task-master research "query" --id=<id> [--files=...]`
+- **Expand/Breakdown**: `task-master expand --id=<id> [--research]`, `task-master expand --all`
+- **Reorg/Move**: `task-master move --from=<id> --to=<id>`
+- **Update Scope**: `task-master update --from=<id> --prompt="..."`, `task-master update-subtask --id=<id.x> --prompt="..."`
+- **Tags**: `task-master tags --show-metadata`, `task-master use-tag <name>`, `task-master add-tag --from-branch`, `task-master add-tag testing --copy-from-current`
+
 ## Future/Optional Capabilities
 
 ### AI Agent Coordination (Phase 2)
@@ -209,6 +248,7 @@ Quick direction (to 28.2):
 - **Collaboration Efficiency**
 
   - Multi-task setup in < 2 minutes; focus switch in < 2 seconds.
+  - Start Workflow to active set (2–4 tasks) in < 60 seconds.
   - 90%+ of handoffs complete without back-and-forth.
 
 - **Navigation & Usability**
