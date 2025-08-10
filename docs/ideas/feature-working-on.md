@@ -1,613 +1,234 @@
-# Working On Page - Human Orchestration Center
+# Working On Page - Human Orchestration Center (PRD-Aligned)
 
-## Vision
+This document aligns the Working On page concept with the PRD and Use Cases. Phase 1 is reframed to give the human full control over the whole working context — managing multiple active tasks, switching focus instantly, and directing work with concise, reference-based instructions. No special context packaging; leverage Task Master CLI references. Phase 2/3 capabilities deepen automation and collaboration.
 
-The **Working On** page is your **entry point** as the human orchestrator - the command center where you provide strategic direction while AI agents execute with complete project understanding. This is where human insight meets AI capability through seamless context flow and intelligent task orchestration.
+## Alignment Summary
 
-**Your Strategic Role**: Research, planning, architectural decisions, and directing AI agents to execute implementation, documentation, and testing with perfect context handoffs.
+- **No special context packages**: Use Task Master CLI references to PRD, research, tasks, and decisions.
+- **Phase 1 (MVP)**: Whole working context control (multi-task orchestration, quick switching), Working On flow, Task Master CLI integration/sync, human-centered navigation.
+- **Phase 2 (Agents)**: AI agent coordination and balancing (assignments, monitoring) — optional/future.
+- **Phase 3 (Collaboration)**: Lightweight docs (manual-first) and Git awareness (lightweight) — optional/future.
+- **Success metrics**: Quick context switching, clear multi-task visibility, fast direction, and high-quality handoffs without back-and-forth.
 
-## Core Philosophy: Human Strategy + AI Execution = Seamless Partnership
+## Scope by Phase
 
-**You Focus On**:
+### Phase 1: Multi-Task Orchestration (Weeks 1–4)
 
-- Product vision and strategic direction
-- Requirements gathering and research
-- Architectural decisions and planning
-- Quality validation and refinement
-- Context provision and AI agent direction
+- **Whole Working Context**
+  - Manage 2–4 active tasks concurrently with a simple Active Tasks bar/list.
+  - Instant focus switching with keyboard and click.
+  - Unified visibility: status, key references, and next steps per task.
+- **Quick Direction & Handoff**
+  - One concise instruction input targeting the currently focused task.
+  - Insert references (PRD/use cases/decisions) inline — no packaging.
+- **Cross-Task Smart Suggestions**
+  - Next best actions across active tasks (e.g., review requirements for A, request implementation for B).
+  - Respect dependencies; surface “ready to start” items.
+- **Task Master Integration**
+  - Read/sync tasks and statuses from CLI.
+  - Use CLI references for context (PRD sections, research notes, decisions, patterns).
+- **Human-Centered Navigation**
+  - Right Now, Working On (multi-task), Up Next; My Work: To Do, In Progress, Done.
+- **Manual-First Docs (Optional)**
+  - Capture decisions where helpful; keep close to implementation.
 
-**AI Agents Focus On**:
+Success metrics:
 
-- Implementation and coding with full context
-- Documentation generation and updates
-- Testing and quality assurance
-- Research execution based on your direction
+- Switch focus between active tasks in < 2 seconds (keyboard or click).
+- Maintain 2–4 active tasks without confusion (self-reported clarity ≥ 90%).
+- 95% of actions accessible within 2 clicks or 1 keyboard shortcut.
+- 90%+ of handoffs complete without back-and-forth.
+- 90% of flows use Task Master actions directly in the UI.
 
-**Context Bridges Everything**: Every decision, requirement, mockup, and research finding flows seamlessly to AI agents, creating intelligence that compounds with each collaboration cycle.
+### Phase 2: AI Agent Coordination (Weeks 5–8) — Optional/Future
 
-## Core Purpose
+- **Agent Coordination**: Assign tasks to Claude, Cursor, Copilot from one place.
+- **Concurrent Work & Balancing**: Optional multi-agent balancing across active tasks.
+- **Shared Direction**: Consistent instructions shared across agents via the same lightweight CLI-linked context.
 
-**Orchestrate seamless human-AI collaboration**:
+Success metrics:
 
-- **Start from nothing**: Bootstrap new projects from idea to actionable tasks
-- **Research & plan**: Define requirements and create context-rich task packages
-- **Perfect handoffs**: Provide AI agents with complete project understanding
-- **Parallel productivity**: Plan next features while AI agents build current ones
-- **Context intelligence**: Every collaboration enriches project knowledge for better future handoffs
+- Seamless direction of 3+ agents without duplicate setup.
+- Human orchestration effort remains stable as agents scale.
 
-## Key Focus Areas
+### Phase 3: Collaboration & Ecosystem (Weeks 9–12+) — Optional/Future
 
-The Working On page centers on:
+- **Lightweight Documentation**: Manual-first updates close to implementation; automation optional.
+- **Git Awareness**: Branch context and basic status (lightweight).
+- **Exports/Shared Views**: Team-ready outputs as needed.
 
-1. **Current Task Context**: What task/subtask you're orchestrating
-2. **Task State**: Planning, directing, reviewing, or completing
-3. **AI Agent Direction**: Tell agents what to do (code, research, docs)
-4. **Smart Workflow**: Automatic suggestions for next actions
-5. **Task Completion**: Hand off to AI until task is fully done
+Success metrics:
 
-## Core Human Orchestration Workflows
+- Docs updated when needed (not ceremony); 80%+ of referenced docs remain current.
 
-### 1. Starting from Nothing - New Project Bootstrap
+## Core Philosophy
 
-**When you have an idea but no structure** (matches Use Case #1):
+- **Human Strategy, AI Execution**: You provide direction; AI executes. Keep handoffs simple and context-rich via references.
+- **Lightweight by Default**: No context packaging systems. Leverage existing assets (PRD, notes, tasks) through Task Master CLI links.
+- **Clarity First**: Immediate understanding of what to do now and what comes next across multiple active tasks.
+- **Minimal Friction**: Natural language direction, minimal clicks, friendly UI.
 
-```
-Empty Project → Research Phase → PRD Creation → Task Generation → First AI Handoff
-```
+## What the Working On Page Delivers (Phase 1)
 
-**Your Orchestration Process**:
+1. **Working Context Overview (Multi-Task)**
 
-1. **Research Direction**: "Research competitor pricing models for SaaS tools"
-2. **AI Agent Response**: Research agent gathers market data, creates structured analysis
-3. **Strategic Planning**: You review findings, make architectural decisions
-4. **PRD Creation**: With research context, create requirements document
-5. **Task Generation**: Parse PRD into organized task hierarchy
-6. **Perfect Handoff**: Hand first implementation task to AI agent with complete context
+   - Active Tasks bar/list with up to 2–4 tasks selected as “in focus”.
+   - Quick status chips: state, priority, readiness, blockers.
+   - One-click/shortcut switch to change the focused task.
 
-**Context Intelligence**: Research findings automatically connect to pricing tasks, feature requirements, and architectural decisions.
+2. **Focused Task Context**
 
-### 2. Research-Driven Planning - Complex Feature Development
+   - For the currently focused task: title, status, essential references (PRD/use cases/decisions), and immediate next steps.
 
-**When you need to add complex functionality** (matches Use Case #2):
+3. **Quick Direction & Handoff**
 
-```
-Feature Need → Research Direction → Context Integration → Intelligent Task Breakdown
-```
+   - A single input for concise instruction to your tooling/agent, scoped to the focused task.
+   - Insert PRD/use case/decision references inline.
 
-**Your Strategic Role**:
+4. **Cross-Task Smart Suggestions**
 
-- **Direct Research**: "Research real-time collaboration approaches - WebSockets vs alternatives"
-- **Make Decisions**: Choose operational transforms based on research analysis
-- **Create Context**: Connect decisions to existing architecture and patterns
-- **Task Creation**: Generate implementation tasks with rich research context
+   - Suggest next best actions across the active set (e.g., “Request implementation for Task B” while Task A compiles tests).
 
-**AI Agent Execution**: Each generated task contains complete context - why this approach, how it fits your system, what patterns to follow.
+5. **Simple Progress Visibility (Per-Task + Rollup)**
 
-### 3. Perfect Handoff - Human Planning to AI Execution
+   - Status and recent activity per task; overall rollup (e.g., 2/4 active tasks “ready for review”).
 
-**When you have well-researched, well-planned tasks** (matches Use Case #3):
+6. **Task Master CLI Sync**
+   - Reads tasks/statuses and maps lightweight context links.
+   - Primary flows use existing CLI actions surfaced in UI.
 
-```
-Complete Task Package → AI Agent Receives Full Context → Autonomous Implementation
-```
+## Lightweight Context Model (Phase 1)
 
-**Your Context Package Includes**:
+- **Definition**: References to existing artifacts (no bundling):
+  - PRD sections in `docs/prd/main.md`
+  - Use cases in `docs/prd/usecases.md`
+  - Notes/decisions maintained manually as needed
+  - Task Master CLI task metadata and relationships
+- **Usage**: Handoff instructions reference these artifacts; no packaging required.
 
-- Requirements from PRD and research
-- Architectural decisions with reasoning
-- Design mockups and user flows
-- Implementation patterns and constraints
-- Testing requirements and validation criteria
+Example handoff instruction:
 
-**AI Agent Result**: Feature ships exactly as envisioned because agent had complete understanding of your vision.
-
-### 4. Parallel Productivity - Planning While AI Builds
-
-**When you want maximum productivity** (matches Use Case #4):
-
-```
-You: Strategic Planning ↔ AI Agent 1: Current Implementation ↔ AI Agent 2: Future Research
-```
-
-**Your Orchestration**:
-
-- **Strategic Focus**: Planning Q2 roadmap while AI agents work
-- **Real-time Coordination**: Research findings feed into your planning
-- **Context Flow**: Your decisions inform AI agent priorities
-- **Zero Context Loss**: Perfect synchronization between human direction and AI execution
-
-### 5. Iterative Refinement - Human Oversight with Course Corrections
-
-**When AI agents need guidance during implementation** (matches Use Case #5):
-
-```
-AI Progress Monitoring → Strategic Guidance → Context Updates → Enhanced Implementation
+```text
+Implement authentication according to Task 2.
+References:
+- PRD: docs/prd/main.md (Auth requirements section)
+- Decisions: Use JWT RS256, 15m expiry + refresh
+- Patterns: Follow existing middleware/auth patterns
 ```
 
-**Your Oversight Role**:
+## Primary User Flows (Phase 1)
 
-- **Progress Review**: Monitor AI agent implementation in real-time
-- **Strategic Input**: "Add fuzzy matching - users often misspell categories"
-- **Context Enhancement**: Every guidance decision enriches project patterns
-- **Quality Assurance**: Ensure implementation aligns with strategic intent
+- **No Active Task → Suggest Start**
 
-### 6. Living Documentation - Context as Source of Truth
+  - Show one clear recommendation and why (dependencies, readiness).
+  - Actions: Start Task, View Options, Refresh.
 
-**When project knowledge needs to stay current** (matches Use Case #6):
+- **Multi-Task Setup & Switching**
 
-```
-Your Decisions → Automatic Doc Updates → AI Agent Implementation → Enhanced Project Intelligence
-```
+  - Select 2–4 tasks as active; switch focus instantly via bar/list or shortcuts.
+  - View cross-task suggestions; pick next actions per task.
 
-**Context Intelligence Benefits**:
+- **Planning/Research → Implementation (Per Task)**
 
-- **Always Current**: Documentation updates as AI agents implement features
-- **Strategic Continuity**: Your architectural decisions preserved and accessible
-- **Pattern Recognition**: Implementation learnings become project standards
-- **Trust Factor**: Documentation becomes reliable source for future AI handoffs
+  - Research, define requirements, create subtask breakdown.
+  - Direct implementation using concise instructions referencing PRD/decisions.
 
-## Task Orchestration Workflow
+- **Review/Refine (Across Tasks)**
 
-### Your Role as Strategic Orchestrator
+  - Monitor progress simply; provide short course-corrections.
+  - Keep feedback tied to referenced artifacts.
 
-1. **Empty Project State**: Bootstrap from idea through research to actionable tasks
-2. **Research & Planning**: Define strategic direction and create context-rich requirements
-3. **Perfect Handoff**: Provide AI agents with complete project understanding
-4. **Parallel Coordination**: Direct multiple AI agents while planning future work
-5. **Quality Orchestration**: Review, refine, and enhance AI agent implementations
-6. **Context Evolution**: Ensure every collaboration enriches project intelligence
+- **Manual Documentation (Optional)**
+  - Capture decisions where helpful; keep close to implementation.
 
-### Task States & Actions
+## UI Notes (Phase 1)
 
-#### State 1: No Active Task
+- **Navigation**
 
-```
-Smart Workflow: "Start Task 28.2: JWT Implementation"
-Suggested Actions:
-- Review task requirements
-- Research JWT best practices
-- Create implementation plan
-```
+  - Right Now, Working On (multi-task), Up Next; My Work: To Do, In Progress, Done.
 
-#### State 2: Planning/Research
+- **Working On Layout**
 
-```
-Current: Task 28.2 - Planning Phase
-Human Actions:
-- Research security patterns
-- Define requirements
-- Create subtask breakdown
-Next: Direct AI to implement
-```
+  - Active Tasks bar/list (primary for switching)
+  - Focused Task Context panel
+  - Cross-Task Smart Suggestions panel
+  - Activity/Progress (per-task + rollup)
+  - Quick Actions (always accessible), CLI actions
 
-#### State 3: AI Implementation
+- **Interaction Guidelines**
+  - Natural language for direction.
+  - Defaults that reduce clicks and mental overhead.
+  - Progressive disclosure—details on demand.
+  - Keyboard: Cmd/Ctrl+1..4 to switch focus; Enter to send direction.
 
-```
-Current: Task 28.2 - Implementation Phase
-AI Agent: Claude implementing JWT logic
-Human Actions:
-- Review progress
-- Provide clarification
-- Direct changes
+## Examples (Phase 1)
+
+### Active Tasks Overview
+
+```text
+ACTIVE TASKS (3)
+1) 28.2 – JWT Token Implementation  [In Progress] [Ready: Validation] [High]
+2) 28.3 – API Endpoints             [Ready]       [No blockers]       [High]
+3) 29.1 – Rate Limiting             [Blocked]     [Wait: 28.2]        [Med]
+
+Focused: 28.2 – JWT Token Implementation
+Actions: [Switch to 28.3] [Switch to 29.1] [Start New]
 ```
 
-#### State 4: Task Handoff
+### Focused Task Context + Quick Direction
 
-```
-Current: Task 28.2 - Handoff Mode
-Instruction: "Complete entire JWT implementation including tests"
-AI Agent: Working autonomously until done
-Human: Monitor and review only
-```
+```text
+TASK CONTEXT (Focused: 28.2 – JWT Token Implementation)
+Requirements (via PRD refs):
+- RS256 algorithm
+- 15-min expiry + refresh
+- Follow existing auth patterns
 
-## Example: Task-Centric View
+Your role now: Direct implementation
+Actions: [View PRD] [Define Subtasks] [Direct Implementation]
 
-### Current Task Focus
-
-```
-┌─ TASK CONTEXT ───────────────────────────────────────────────────┐
-│ 📁 Task Master Tag: sprint-12      🌿 Git: feat/auth-jwt         │
-│ 📋 Current Task: 28.2 - JWT Token Implementation                 │
-│ 📊 Phase: Planning → Implementation → Review → Complete          │
-└──────────────────────────────────────────────────────────────────┘
-
-┌─ CURRENT FOCUS: Task 28.2 ──────────────────────────────────────┐
-│                                                                  │
-│ JWT Token Implementation                                        │
-│ Status: 🔄 In Progress - Implementation Phase                   │
-│                                                                  │
-│ 📝 Requirements:                                                │
-│ • Use RS256 algorithm for scalability                          │
-│ • 15-minute token expiry with refresh                          │
-│ • Follow existing auth patterns in middleware/auth.ts          │
-│                                                                  │
-│ 🎯 Your Current Role: Directing Implementation                  │
-│                                                                  │
-│ Subtasks:                                                       │
-│ ✅ 28.2.1 Research JWT best practices (Complete)               │
-│ 🔄 28.2.2 Implement token generation (AI: Claude - Working)     │
-│ ⏸️ 28.2.3 Add validation middleware (Waiting)                   │
-│ ⏸️ 28.2.4 Write unit tests (Waiting)                           │
-│                                                                  │
-│ [📋 View Full Context] [🔍 Research More] [📝 Update Plan]      │
-└──────────────────────────────────────────────────────────────────┘
-
-┌─ AI AGENT STATUS ────────────────────────────────────────────────┐
-│ 🤖 Claude: Working on 28.2.2 - Token Generation                 │
-│    Status: Implementing JWT logic...                            │
-│    Duration: 12 minutes                                         │
-│    Files: jwt-service.ts, auth.types.ts                        │
-│                                                                  │
-│ Actions:                                                        │
-│ [👀 Review Code] [💬 Chat] [🔄 Request Changes] [✅ Approve]    │
-│                                                                  │
-│ Direct Command:                                                 │
-│ [Also implement refresh token rotation...           ] [Send]    │
-└──────────────────────────────────────────────────────────────────┘
-
-┌─ SMART WORKFLOW SUGGESTIONS ─────────────────────────────────────┐
-│ 💡 Next Actions:                                                │
-│                                                                  │
-│ 1. Review Claude's token generation implementation              │
-│ 2. Direct Claude to add validation middleware next              │
-│ 3. Hand off testing to Cursor when implementation done          │
-│                                                                  │
-│ Or: [🚀 Complete Task Handoff] - Let AI finish entire task      │
-└──────────────────────────────────────────────────────────────────┘
+Quick direction (to 28.2):
+"Implement token validation according to PRD. Ref: docs/prd/main.md#auth, RS256, 15m+refresh"
 ```
 
-### No Active Task View
+## Future/Optional Capabilities
 
-#### Existing Project with Available Tasks
+### AI Agent Coordination (Phase 2)
 
-```
-┌─ SMART WORKFLOW ─────────────────────────────────────────────────┐
-│ 💡 No Active Task - Suggested Next Action                       │
-│                                                                  │
-│ Based on project state, you should:                            │
-│                                                                  │
-│ Start: Task 28.3 - API Endpoints                               │
-│ Priority: High | Estimate: 2 hours | Ready to start            │
-│                                                                  │
-│ Why this task:                                                 │
-│ • Task 28.2 (JWT) is 80% complete                             │
-│ • API endpoints depend on JWT implementation                   │
-│ • No blockers, all dependencies met                           │
-│                                                                  │
-│ [🎯 Start Task] [📋 View Other Options] [🔄 Refresh]           │
-│ [📊 Analyze Complexity] [📈 View Report] [📝 Add New Task]     │
-└──────────────────────────────────────────────────────────────────┘
-```
+- Assign/monitor Claude, Cursor, Copilot.
+- Balance across active tasks.
+- Keep instructions consistent via the same reference-based context.
 
-#### Starting from Nothing - New Project State
+### Living Documentation (Phase 3)
 
-```
-┌─ 🚀 STARTING FROM NOTHING ───────────────────────────────────────┐
-│ You have an idea but no structure. Let's bootstrap your project: │
-│                                                                   │
-│ 🎯 Your Strategic Role: Research → Plan → Direct AI Agents       │
-│                                                                   │
-│ Choose your orchestration approach:                              │
-│                                                                   │
-│ 🔬 [Start with Research] → AI research agent → Strategic decisions│
-│   Perfect for: Market analysis, competitive research, tech choices │
-│   Example: "Research competitor pricing for SaaS finance tools"   │
-│                                                                   │
-│ 📋 [Create PRD First] → Requirements definition → Task generation │
-│   Perfect for: Clear vision needs structured documentation       │
-│   AI helps: Suggest sections, organize requirements               │
-│                                                                   │
-│ 🎯 [Rapid Bootstrap] → Quick task creation → Immediate AI handoff │
-│   Perfect for: Prototype development, known domain projects       │
-│   AI helps: Generate initial task structure, implementation start │
-│                                                                   │
-│ ── Context Intelligence Examples ──                              │
-│ SaaS App: Research findings → PRD sections → Implementation tasks │
-│ Open Source: Community research → Architecture → Development flow │
-│ Client Project: Requirements gathering → Planning → AI execution  │
-│                                                                   │
-│ 💡 Every choice creates context that flows to AI agents          │
-└───────────────────────────────────────────────────────────────────┘
-```
+- Manual-first docs that evolve alongside code.
+- Light automation only if/when it proves helpful.
 
-#### PRD Ready for Parsing
+## Success Metrics (Mapped to PRD)
 
-```
-┌─ 📋 PRD READY FOR TASK GENERATION ───────────────────────────────┐
-│ Found: docs/prd/main.md (updated 2 hours ago)                   │
-│                                                                  │
-│ 📊 Analysis Preview:                                            │
-│ • Estimated ~25-30 tasks will be generated                     │
-│ • 5 major features identified                                  │
-│ • Dependencies automatically mapped                            │
-│                                                                  │
-│ [🔄 Parse PRD into Tasks] [📝 Edit PRD First]                  │
-│ [👀 Preview Tasks] [⚙️ Advanced Options]                       │
-│                                                                  │
-│ ✨ Smart parsing will create organized task hierarchy          │
-└──────────────────────────────────────────────────────────────────┘
-```
+- **Collaboration Efficiency**
 
-## UI Design - Responsive Layout
+  - Multi-task setup in < 2 minutes; focus switch in < 2 seconds.
+  - 90%+ of handoffs complete without back-and-forth.
 
-_Mobile layout removed - this is now a desktop-only feature._
+- **Navigation & Usability**
 
-### Desktop Layout (Task Orchestration Dashboard)
+  - 95% of actions within 2 clicks or 1 shortcut.
+  - Users report strong control over the whole working context.
 
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ Task Orchestration Center        🎯[Single Task] 🔄[Multi-Task] [Settings] [🔄 Sync]   │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                        │
-│ ┌─────────────────────────────────────────────────────────────────────────────────┐   │
-│ │ CURRENT CONTEXT                                                                 │   │
-│ │ 📁 Task Master: sprint-12    🌿 Git: feat/auth-jwt    📊 Status: 2 files mod   │   │
-│ └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                        │
-│ ┌──────────────────────────────────────────────┐ ┌────────────────────────────────┐  │
-│ │ 🎯 CURRENT TASK FOCUS                        │ │ 💡 SMART WORKFLOW              │  │
-│ ├──────────────────────────────────────────────┤ ├────────────────────────────────┤  │
-│ │                                              │ │                                │  │
-│ │ Task 28.2: JWT Token Implementation          │ │ Suggested Next Actions:        │  │
-│ │ Phase: 🔄 Implementation (60% complete)      │ │                                │  │
-│ │                                              │ │ 1. Review Claude's work        │  │
-│ │ 📝 Requirements:                             │ │ 2. Direct validation task      │  │
-│ │ • RS256 algorithm                           │ │ 3. Prepare test strategy       │  │
-│ │ • 15-min expiry + refresh                   │ │                                │  │
-│ │ • Follow auth patterns                      │ │ Alternative:                   │  │
-│ │                                              │ │ [🚀 Complete Handoff Mode]     │  │
-│ │ 📊 Subtask Progress:                         │ │ Let AI complete entire task    │  │
-│ │ ✅ 28.2.1 Research best practices           │ │                                │  │
-│ │ 🔄 28.2.2 Token generation (Claude: 12m)    │ │ After This Task:               │  │
-│ │ ⏸️ 28.2.3 Validation middleware             │ │ • Task 28.3: API Endpoints     │  │
-│ │ ⏸️ 28.2.4 Unit tests                        │ │ • Task 28.4: Refresh tokens    │  │
-│ │ ⏸️ 28.2.5 Documentation                     │ │                                │  │
-│ │                                              │ │ [View All Suggestions]         │  │
-│ │ Your Role: 🎭 Orchestrating Implementation   │ └────────────────────────────────┘  │
-│ │                                              │                                     │
-│ │ [📋 Full Context] [🔍 Research] [📝 Plan]    │ ┌────────────────────────────────┐  │
-│ │ [🔧 Expand Task] [✅ Mark Complete] [📝 Notes] │ │ 📊 TASK INSIGHTS               │  │
-│ └──────────────────────────────────────────────┘ │                                │  │
-│                                                   ├────────────────────────────────┤  │
-│ ┌──────────────────────────────────────────────┐ │                                │  │
-│ │ 📰 TASK ACTIVITY FEED                        │ │ Complexity: 9/10 (Very High) ⚠️ │  │
-│ ├──────────────────────────────────────────────┤ │ Risk level: High               │  │
-│ │                                              │ │ Recommendation: Split task     │  │
-│ │                                              │ │                                │  │
-│ │                                              │ │ [🔪 Split Task] [🔧 Expand]     │  │
-│ │                                              │ │ [📊 Analyze Further]           │  │
-│ │ 📋 Task 28.2.2: Token Generation            │ │                                │  │
-│ │ ✅ Completed by AI • 12 min ago              │ │ Dependencies: 2 ready, 1 pending│  │
-│ │ → 3 files changed: +127 -23 lines           │ │ Blocks: 3 other tasks         │  │
-│ │ [Review Code] [Approve] [Request Changes]   │ │ Critical path: Yes             │  │
-│ │                                              │ │                                │  │
-│ │ 📋 Task 28.6: Rate Limiting                 │ │ Related Tasks:                 │  │
-│ │ ❓ Question: "Redis or in-memory cache?"     │ │ • 28.3 depends on this        │  │
-│ │ [Answer] [View Context] [Defer]             │ │ • 28.4 can parallel           │  │
-│ │                                              │ └────────────────────────────────┘  │
-│ │ 📋 Task 28.3: API Endpoints                 │                                     │
-│ │ 🔄 In Progress • 45% done                   │ ┌────────────────────────────────┐  │
-│ │                                              │ │ 🎮 TASK COMMANDS               │  │
-│ │ 📋 Task 28.4: Refresh Tokens                │ ├────────────────────────────────┤  │
-│ │ 🔄 In Progress • 20% done                   │ │                                │  │
-│ │                                              │ │ Batch Actions:                 │  │
-│ │ 📋 Task 28.5: Write Tests                   │ │ [Hand Off All] [Review All]    │  │
-│ │ ⏸️ Ready to start • Dependencies met        │ │ [Commit All] [Run Tests]       │  │
-│ │ [Start] [Assign AI] [Schedule Later]        │ │                                │  │
-│ │                                              │ │ Quick Start:                   │  │
-│ └──────────────────────────────────────────────┘ │                                │  │
-│                                                   │ AI Commands:                   │  │
-│                                                   │ [Commit] [Test] [Document]     │  │
-│                                                   │ [Research] [Refactor]          │  │
-│                                                   └────────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
+- **Execution Quality**
+  - Reduced rework due to clearer direction and visibility.
+  - 90% of flows use Task Master actions directly in the UI.
 
-### Multi-Task Concurrent Mode
+## Implementation Notes (Non-UI)
 
-When **Multi-Task Mode** is enabled, the interface adapts for concurrent work:
-
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ Task Orchestration Center        🎯[Single Task] 🔄[Multi-Task] [Settings] [🔄 Sync]   │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                        │
-│ ┌─────────────────────────────────────────────────────────────────────────────────┐   │
-│ │ 🔄 YOUR ACTIVE TASKS (3 concurrent)                                            │   │
-│ │ 1. Task 28.2: JWT Implementation (Planning) - You are here                     │   │
-│ │ 2. Task 30.1: API Documentation (AI Working)                                  │   │
-│ │ 3. Task 31.4: Unit Testing (Blocked - waiting on #1)                         │   │
-│ │                                                                                 │   │
-│ │ [Switch to #1] [Switch to #2] [Switch to #3] [+ Add Task]                     │   │
-│ └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                        │
-│ ┌──────────────────────────────────────────────┐ ┌────────────────────────────────┐  │
-│ │ 🎯 ACTIVE TASK: JWT Implementation (#1)      │ │ 💡 CONCURRENT WORKFLOW         │  │
-│ │ Status: Planning → Your turn                 │ ├────────────────────────────────┤  │
-│ │                                              │ │ While you plan Task #1:        │  │
-│ │ Requirements: RS256, 15-min expiry...        │ │ • AI continues Task #2 docs    │  │
-│ │ Your next: Define security approach          │ │ • Task #3 auto-starts when     │  │
-│ │                                              │ │   #1 planning complete         │  │
-│ │ [🔧 Expand] [📝 Plan] [🤖 Hand to AI]        │ │                                │  │
-│ └──────────────────────────────────────────────┘ │ Smart scheduling:              │  │
-│                                                   │ Plan → Code → Review → Deploy │  │
-│ ┌──────────────────────────────────────────────┐ │ [⚙️ Workflow Settings]         │  │
-│ │ 📰 MULTI-TASK ACTIVITY FEED                 │ └────────────────────────────────┘  │
-│ ├──────────────────────────────────────────────┤                                     │
-│ │ #2 📋 API Documentation (AI Active)          │ ┌────────────────────────────────┐  │
-│ │    🔄 Writing endpoint specs • 20 min        │ │ 🎮 MULTI-TASK COMMANDS         │  │
-│ │    [Monitor] [Adjust Scope]                 │ ├────────────────────────────────┤  │
-│ │                                              │ │ [📊 View All Tasks]            │  │
-│ │ #1 📋 JWT Implementation (You)               │ │ [🔄 Balance Workload]          │  │
-│ │    📝 Planning security approach             │ │ [⏸️ Pause All] [▶️ Resume]     │  │
-│ │    [Switch Focus] [Get AI Help]             │ │                                │  │
-│ │                                              │ │ Dependencies:                  │  │
-│ │ #3 📋 Unit Testing (Waiting)                │ │ Auto-schedule based on         │  │
-│ │    ⏸️ Blocked by Task #1 completion          │ │ completion and dependencies    │  │
-│ │    [Preview Prep] [Schedule]                │ └────────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Visual Hierarchy & Card Variations
-
-#### Hero Card (Top Left - Primary Action)
-
-- **Larger size** - draws immediate attention
-- **Rich details** - current recommendation with context
-- **Primary actions** - main CTAs for starting work
-
-#### Info Cards (Top Row - Quick Glance)
-
-- **Compact squares** - easy scanning
-- **Key metrics** - ready tasks, counts, status
-- **Quick actions** - one-click access
-
-#### Feature Cards (Middle - Detailed Insights)
-
-- **Horizontal rectangles** - more detailed information
-- **Rich content** - multitasking opportunities, patterns
-- **Secondary actions** - enable features, create plans
-
-#### Action Bar (Bottom - Global Actions)
-
-- **Full width** - always accessible
-- **Icon + text** - clear action buttons
-- **Quick access** - common operations
-
-### Design System & Visual Language
-
-#### Information Architecture
-
-**Primary Zone**: Current task context and requirements - always immediately visible with clear call-to-action for next strategic move.
-
-**Secondary Zone**: Smart workflow suggestions and task insights that guide decision-making without overwhelming the primary focus.
-
-**Activity Zone**: Background AI agent progress and task activity feed that provides awareness without demanding attention.
-
-#### Visual Design Principles
-
-**Task-Centric Hierarchy**: Current task dominates visually, with supporting information clearly structured as secondary and tertiary elements.
-
-**Context Richness**: Visual connections between related elements - research links to requirements, decisions link to implementation tasks.
-
-**Progressive Revelation**: Interface reveals complexity only when user requests it - simple default views with option to expand detail.
-
-#### Interaction Design
-
-**Natural Conversation**: Direct AI agents through conversational interface rather than complex command structures.
-
-**Smart Defaults**: System anticipates user needs and suggests logical next actions based on project state and patterns.
-
-**Contextual Adaptation**: Interface adapts to current task phase - different actions available during research vs implementation vs review phases.
-
-### User Experience Flows
-
-#### New Project Experience
-
-**Empty Canvas to Action**: Guide users from project conception through research direction to first implementation handoff with AI agents.
-
-**Research-Driven Setup**: Support market research, competitive analysis, and technical investigation as foundation for strategic decision-making.
-
-**Bootstrap Intelligence**: Transform initial user insights into structured project knowledge that AI agents can build upon.
-
-#### Task Orchestration Experience
-
-**Strategic Command Center**: Single task focus with all context needed for strategic decision-making clearly presented.
-
-**Seamless Handoffs**: One-click transition from human planning to AI agent execution with complete context transfer.
-
-**Parallel Productivity**: Interface supports planning next work while monitoring current AI agent implementation.
-
-#### Context Intelligence Experience
-
-**Living Knowledge Base**: User decisions and AI implementations automatically enrich project understanding for better future collaborations.
-
-**Connection Visualization**: Clear links between research findings, architectural decisions, task requirements, and implementation patterns.
-
-**Smart Recommendations**: System learns user patterns and project context to suggest optimal next actions and task priorities.
-
-## Implementation Focus
-
-### Experience Design Principles
-
-**Human-Centered Design:**
-
-- **Immediate Clarity**: What should I work on right now?
-- **Strategic Focus**: Emphasize planning and direction over execution details
-- **Context Richness**: Every task connected to research, decisions, and requirements
-- **Flow Preservation**: Minimize friction in human-AI handoffs
-
-**Visual Hierarchy:**
-
-- **Primary Focus**: Current task dominates the interface
-- **Secondary Context**: Smart suggestions and task insights
-- **Background Activity**: AI agent progress and task feed
-- **Quick Actions**: One-click task management and AI direction
-
-**Interaction Patterns:**
-
-- **Natural Language**: Direct AI agents through conversational interface
-- **Smart Defaults**: System suggests next best actions
-- **Progressive Disclosure**: Show details when needed, hide complexity otherwise
-- **Contextual Actions**: Available actions adapt to current task state
-
-## Core Product Features
-
-### Human Orchestration Experience
-
-**Task Command Center**: Single-task focus with complete context, requirements, and smart workflow suggestions for optimal human strategic input.
-
-**AI Agent Coordination**: Natural language interface for directing AI agents with automatic context sharing and real-time progress visibility.
-
-**Research & Planning Tools**: Integrated research direction, requirements gathering, and strategic decision-making interfaces that flow context to implementation.
-
-### Intelligent Workflow System
-
-**Smart Task Suggestions**: System intelligence recommends next best tasks based on project state, dependencies, and your working patterns.
-
-**Context-Rich Handoffs**: Perfect task packages that provide AI agents with complete project understanding - requirements, constraints, architectural decisions, and patterns.
-
-**Parallel Productivity**: Coordinate multiple AI agents working simultaneously while you focus on strategic planning and oversight.
-
-### Living Project Intelligence
-
-**Dynamic Documentation**: Requirements, decisions, and patterns that stay current as AI agents implement features.
-
-**Context Linking**: Automatic connections between tasks, research findings, architectural decisions, and implementation patterns.
-
-**Knowledge Compounding**: Every human decision and AI implementation enriches the project intelligence for better future collaborations.
-
-## Key Benefits
-
-**Seamless Human-AI Partnership:**
-
-- **Strategic Focus**: You spend 80%+ time on vision, research, and architecture while AI agents handle implementation
-- **Perfect Context Flow**: Every decision, requirement, and architectural choice flows seamlessly to AI agents
-- **Zero Context Loss**: AI agents receive complete project understanding, eliminating re-explanation overhead
-- **Intelligence Compounding**: Each collaboration cycle enriches project knowledge for better future handoffs
-
-**Human Orchestration Excellence:**
-
-- **Research-Driven Development**: Direct AI research agents, make strategic decisions based on findings
-- **Context-Rich Handoffs**: Provide AI agents with complete understanding - requirements, constraints, patterns, and reasoning
-- **Parallel Productivity**: Plan next features while AI agents build current ones, maximizing development velocity
-- **Quality Through Context**: AI implementations align with strategic intent because agents understand the complete vision
-
-**Solo Developer Empowerment:**
-
-- **Start from Nothing**: Bootstrap projects from idea to implementation through intelligent workflow guidance
-- **Strategic Amplification**: Your strategic thinking enhanced by AI execution capabilities
-- **Flow State Preservation**: No context explanation interruptions - pure focus on high-value strategic work
-- **Project Intelligence**: Living documentation and context that grows smarter with every collaboration
+- **UI Layer (Next.js + React)**: Feature-based structure under `/src`, real-time updates via WebSocket.
+- **Task Master Integration**: Strict compatibility with CLI; leverage existing analysis and operations.
+- **Integration Layer**: Simple wrappers for command execution; file system and git awareness where useful.
+- **Data Layer**: Local-first, real-time sync, export options later.
 
 ---
 
-## The Ultimate Vision
+## The Updated Vision
 
-**The Working On page transforms you from an AI supervisor into an AI orchestrator** - where your strategic thinking seamlessly connects to AI execution through perfect context flow.
-
-This is where human insight meets AI capability to create development partnerships that amplify both strategic vision and implementation excellence. You focus on what humans do best (research, planning, architectural decisions), while AI agents focus on what they do best (implementation, documentation, testing) - with complete understanding of your project vision.
-
-**Success measure**: When you can confidently say _"My AI agents understand my project better than I can document it"_ - the system has become a true collaboration multiplier.
-
-_The Working On page serves as your human orchestration center where strategic direction seamlessly flows to AI agent execution, creating intelligent development partnerships that compound project knowledge with every collaboration cycle._
+The Working On page gives the human full control of the whole working context from day one: manage multiple active tasks, switch focus instantly, and provide concise, reference-based direction — with simple visibility and minimal ceremony. Later phases deepen agent coordination and collaboration without compromising simplicity or human control.
