@@ -13,16 +13,16 @@ This directory contains comprehensive project documentation organized by purpose
 ### `/architecture` - System Architecture
 
 - `diagrams.md` - Architecture diagrams and system design
-- `TASKS.md` - Task system architecture
 - Technical architecture decisions and database schemas
 
 ### `/development` - Development Guidelines
 
 - `fe-development.md` - Frontend development guidelines
 - `tdd.md` - Test-Driven Development guidelines
-- `uiux-design.md` - UI/UX design principles
+- `style-guide.md` - Product and UI style guide
+- `wireframe-guide.md` - Wireframe authoring standards
+- `mockup-guide.md` - Mockup workflow and conventions
 - `uiux-development.md` - UI/UX development guidelines
-- `uiux.md` - General UI/UX documentation
 
 ### `/git-workflow` - Git & Version Control
 
@@ -49,6 +49,17 @@ This directory contains comprehensive project documentation organized by purpose
 
 - `main.md` - Main product requirements document
 - `usecases.md` - Detailed use cases and user stories
+
+### `/mvp` - Minimum Viable Product
+
+- `README.md` - MVP overview and links
+- `vision.md` - MVP vision aligned with product philosophy
+- `scope.md` - In-scope, out-of-scope, constraints
+- `features.md` - MVP feature set and acceptance criteria
+- `user-flows.md` - Golden-path flows for MVP
+- `wireframes.md` - MVP-specific wireframes and references
+- `success-metrics.md` - KPIs to validate MVP
+- `release-plan.md` - Phased delivery plan
 
 ### `/process` - Development Process
 

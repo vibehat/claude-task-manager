@@ -1,27 +1,76 @@
 'use client';
 
-import { useCommandPaletteStore } from '@/store/commandPaletteStore';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { RefreshCw, Focus, Maximize2, Minimize2, Command } from 'lucide-react';
+import type { WorkingOnHeaderActionsProps } from '../types';
 
-export function WorkingOnHeaderActions(): React.JSX.Element {
-  const { openCommandPalette } = useCommandPaletteStore();
+type WorkingOnHeaderActionsPropsExtended = WorkingOnHeaderActionsProps & {
+  showFocusToggle?: boolean;
+  onCommandPalette?: () => void;
+};
 
+export function WorkingOnHeaderActions({
+  focusMode = false,
+  onToggleFocusMode,
+  onRefresh,
+  showFocusToggle = true,
+  onCommandPalette,
+}: WorkingOnHeaderActionsPropsExtended): React.JSX.Element {
   return (
-    <div className="flex items-center gap-3">
-      <button
-        onClick={() => openCommandPalette()}
-        className="flex items-center gap-2 px-3 py-1 hover:bg-muted rounded-md transition-colors text-sm"
-        title="Command Palette (⌘K)"
+    <div className="flex items-center gap-2">
+      {/* Command Palette Button */}
+      {onCommandPalette && (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onCommandPalette}
+          className="flex items-center gap-2"
+          title="Open command palette (⌘K)"
+        >
+          <Command className="h-4 w-4" />
+          <span className="hidden sm:inline">Command</span>
+          <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-2">
+            ⌘K
+          </kbd>
+        </Button>
+      )}
+
+      {showFocusToggle && (
+        <Button
+          variant={focusMode ? 'default' : 'outline'}
+          size="sm"
+          onClick={onToggleFocusMode}
+          className="flex items-center gap-2"
+          title="Toggle focus mode (F)"
+        >
+          {focusMode ? (
+            <>
+              <Minimize2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Exit Focus</span>
+            </>
+          ) : (
+            <>
+              <Focus className="h-4 w-4" />
+              <span className="hidden sm:inline">Focus Mode</span>
+            </>
+          )}
+        </Button>
+      )}
+
+      {/* Refresh Button */}
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={onRefresh}
+        className="flex items-center gap-2"
+        title="Refresh tasks (R)"
       >
-        <span>Command Palette</span>
-        <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded">⌘K</kbd>
-      </button>
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-        <span className="text-xs text-muted-foreground">Sync</span>
-      </div>
-      <button className="p-1.5 hover:bg-muted rounded-md text-sm" title="Settings">
-        ⚙️
-      </button>
+        <RefreshCw className="h-4 w-4" />
+        <span className="hidden sm:inline">Refresh</span>
+      </Button>
     </div>
   );
 }
+
+export default WorkingOnHeaderActions;

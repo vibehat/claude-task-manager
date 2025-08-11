@@ -2,236 +2,127 @@
 
 ## Executive Summary
 
-Claude Task Manager is a **context-aware human-AI collaboration system** built on top of Claude Task Master CLI that transforms development through optimal information flow between human direction and AI execution. It creates a comprehensive development environment where humans provide strategic direction and context, while AI agents build and ship features with complete project understanding, all powered by Task Master's proven AI-driven task management foundation.
-
-**Core Value Proposition**: Transform from context-poor human-AI handoffs to seamless collaboration where humans efficiently provide direction and AI consistently receives complete project understanding - your strategic decisions inform AI execution, your project context flows automatically to all AI agents, your development workflows optimize for both human insight and AI capability.
-
-**Fundamental Philosophy: Context-Aware Human-AI Collaboration** - Humans excel at product direction and strategic thinking, AI excels at implementation and execution. By ensuring rich context flows seamlessly between human planning and AI building, both operate at their highest potential within a unified, intelligent development workflow.
+Claude Task Manager streamlines human-AI collaboration for building software. It gives developers a simple way to direct AI agents, track progress, and ship features using a clean workflow on top of the Task Master CLI. The focus is practical orchestration, clear navigation, and multi-agent support—without requiring special context packages or complex ceremony.
 
 ## Problem Statement
 
 ### Current Pain Points
 
-**Human-AI Collaboration Context Gaps**
-
-- Developers spend 15-20 minutes re-explaining project context to AI agents every session
-- Strategic decisions and product direction lost between human planning and AI execution
-- AI agents work with incomplete understanding of project goals and constraints
-- No systematic way to transfer rich context from human vision to AI implementation
-
-**Fragmented Development Intelligence**
-
-- Task management disconnected from AI execution context
-- Human strategic thinking separated from AI implementation capabilities
-- Project knowledge scattered across tools without unified access for AI agents
-- No seamless handoff mechanism between human direction and AI building
-
-**Inefficient Human-AI Workflows**
-
-- Constant context re-explanation disrupts productive human-AI collaboration
-- AI agents start implementation without full project understanding
-- Human oversight requires micromanagement due to context loss
-- Complex tool switching breaks the natural flow from planning to building
+- Fragmented workflows and tool switching slow developers down
+- Lack of a simple place to direct AI agents and track active work
+- Unclear handoffs between human planning and AI execution
+- Overhead from complex context handling and setup
 
 ## Solution Overview
 
-### Context-Aware Human-AI Collaboration on Task Master Foundation
+Provide a focused orchestration layer where developers:
 
-**Optimal Human Direction → AI Execution Flow**
+- Set the active work, share concise direction, and oversee progress
+- Coordinate multiple AI agents (Claude, Cursor, Copilot) from one place
+- Leverage Task Master CLI for task intelligence without extra setup
+- Navigate with comfort and clarity using a human-centered UI
 
-- Humans provide strategic direction, product requirements, and architectural decisions through rich context interfaces
-- AI agents receive complete project understanding including goals, constraints, patterns, and previous decisions
-- Context automatically flows from human planning to AI implementation without manual re-explanation
-- Task Master's AI-driven task management system provides the intelligent infrastructure for this collaboration
-
-**Comprehensive Context Intelligence Network**
-
-- **Human Decisions** ↔ **Task Master Tasks** ↔ **AI Execution** ↔ **Code Implementation** ↔ **Documentation** ↔ **Project Knowledge**
-- Each element enriches the overall project intelligence available to both humans and AI
-- Context quality compounds over time as decisions and implementations reinforce each other
-- Built on Task Master's proven context management and AI task orchestration capabilities
-
-**Context-Aware Development Interface**
-
-- Human interface optimized for providing strategic direction and context
-- AI agents receive rich, structured context packages for implementation
-- Real-time context synchronization between human oversight and AI execution
-- Task Master integration ensures all context flows through proven AI task management workflows
-
-**Seamless Human-AI Collaboration Workflow**
-
-- Humans focus on product strategy, architecture, and high-level direction
-- AI agents focus on implementation, testing, and shipping with full context
-- Context bridges between human insight and AI capability without information loss
-- Progressive intelligence building where every human decision and AI implementation enriches future collaboration
+No special context packages are required. Keep things lightweight and immediately useful.
 
 ## Target Users
 
 ### Primary: Individual Developers
 
-- **Claude Code power users** wanting enhanced workflow
-- **AI-assisted developers** using LLMs for code generation
-- **Flow state optimizers** who value deep focus sessions
-- **Context-heavy projects** with complex architectures
+- Claude/Cursor users who want faster, clearer workflows
+- AI-assisted developers who want a simple orchestration hub
+- Flow-focused builders who value minimal ceremony
 
-### Secondary: Small Development Teams
+### Secondary: Small Teams
 
-- **Tech leads** coordinating team AI interactions
-- **Startup founders** building products without process overhead
-- **Remote teams** needing shared project context
-- **Open source maintainers** managing contributor onboarding
+- Tech leads coordinating agent work
+- Startups shipping quickly without process overhead
 
 ## Core Features
 
-### 1. Working On - Human Orchestration Center
+### 1. Working On – Human Orchestration Center
 
-**Problem**: Humans struggle to efficiently direct AI agents and provide adequate context for implementation
-**Solution**: Dedicated interface for human orchestration of AI-driven development with rich context provision
+- Current task focus and clear oversight
+- Quick direction input and lightweight handoffs
+- Simple progress visibility and quick actions
 
-**Key Features:**
+Success metrics:
 
-- **Current Task Focus**: Clear view of what AI agents are working on with human oversight and direction capability
-- **Context Provision Interface**: Streamlined way for humans to provide strategic context, requirements, and architectural guidance
-- **AI Agent Coordination**: Direct multiple AI agents (Claude, Cursor, Copilot) with unified context and clear task delegation
-- **Smart Workflow Guidance**: Task Master-powered suggestions for optimal human direction and AI task assignment
-- **Progress Oversight**: Real-time visibility into AI execution with context-aware intervention points
-- **Handoff Management**: Seamless transitions between human planning phases and AI implementation phases
-
-**Success Metrics:**
-
-- Reduce context explanation time from 15-20 minutes to <2 minutes per AI session
-- AI agents receive complete project context 100% of sessions
-- Human direction → AI execution handoffs succeed 95% without clarification
+- Set and direct the active task in under 30 seconds
+- 90%+ of handoffs complete without back-and-forth
 
 ### 2. Task Master Foundation Integration
 
-**Problem**: Human-AI collaboration needs intelligent task management infrastructure
-**Solution**: Deep integration with Task Master's proven AI-driven task management system
+- Uses Task Master CLI for task analysis and operations
+- Real-time sync with local tasks and status
+- Smart task recommendations from existing CLI capabilities
 
-**Key Features:**
+Success metrics:
 
-- **AI Task Intelligence**: Leverage Task Master's task analysis, complexity assessment, and dependency management
-- **Dynamic Context Updates**: Tasks automatically evolve based on human decisions and AI implementation learnings
-- **Smart Task Recommendations**: Task Master suggests optimal next tasks for human attention and AI assignment
-- **Context-Aware Task Breakdown**: Intelligent task expansion based on implementation complexity and AI capability
+- 90% of flows use Task Master actions directly in the UI
+- Zero compatibility regressions with the CLI
 
-**Success Metrics:**
+### 3. Human-Centered Navigation
 
-- 90% of human-AI handoffs use optimal task breakdown and context
-- Task recommendations align with actual development needs 95% of the time
-- Zero critical dependency conflicts in human-AI workflows
+- "Right Now" for immediate clarity
+- "My Work" views for To Do, In Progress, Done
+- Simple, friendly language and minimal options
 
-### 3. Context-Aware AI Agent Integration
+Success metrics:
 
-**Problem**: AI agents (Claude, Cursor, etc.) lose project context between sessions and lack unified project understanding
-**Solution**: Comprehensive context provision system for all AI development tools
-
-**Key Features:**
-
-- **Universal Context Injection**: All AI agents receive the same rich project context automatically
-- **Cross-Tool Context Consistency**: Context remains consistent whether using Claude Code, Cursor, or other AI tools
-- **Human Direction Interface**: Streamlined way to direct any AI agent with complete context
-- **Collaborative AI Memory**: All AI interactions and learnings preserved and shared across tools
-
-**Success Metrics:**
-
-- All AI tools receive identical, complete project context 100% of sessions
-- Cross-tool AI collaboration maintains context continuity
-- Human direction to any AI agent succeeds without context re-explanation 95% of the time
-
-### 4. Human-Centered Navigation
-
-**Problem**: Complex interfaces intimidate users and disrupt flow
-**Solution**: Warm, simple navigation optimized for comfort
-
-**Key Features:**
-
-- **Immediate Clarity**: "Right Now" section eliminates overwhelm
-- **Emotional Connection**: "My Work" and "Done" create personal ownership
-- **Approachable AI**: "AI Helper" feels friendly, not technical
-- **Progressive Disclosure**: Show only what's needed when it's needed
-
-**Success Metrics:**
-
-- New users can navigate confidently within 2 minutes
+- New users navigate confidently within 2 minutes
 - 95% of actions accessible within 2 clicks
-- Users report feeling "comfortable" and "in control"
 
-### 5. Multi-Agent Orchestration Hub
+### 4. Multi-Agent Orchestration Hub
 
-**Problem**: Managing multiple AI agents (Claude, Cursor, Copilot) with consistent context and coordination becomes chaotic
-**Solution**: Unified orchestration system where humans direct multiple AI agents with shared project intelligence
+- Coordinate Claude, Cursor, Copilot from one interface
+- Clear roles and simple task delegation
+- Consistent direction shared across agents without extra packaging
 
-**Key Features:**
+Success metrics:
 
-- **Unified Agent Direction**: Single interface for directing Claude, Cursor, Copilot, and other AI tools
-- **Shared Project Intelligence**: All agents operate from the same comprehensive project context
-- **Specialized Agent Roles**: Leverage each AI tool's strengths while maintaining context consistency
-- **Human-Centered Coordination**: Humans orchestrate agent collaboration rather than managing tool complexity
+- Seamless direction of 3+ agents without duplicate setup
+- Human orchestration effort remains stable as agents scale
 
-**Success Metrics:**
+### 5. Lightweight Documentation (Optional)
 
-- Seamless direction of 3+ AI agents without context duplication or loss
-- Cross-agent collaboration maintains project intelligence consistency
-- Human orchestration effort remains constant regardless of number of AI agents involved
+- Capture decisions and outcomes when helpful
+- Keep docs practical and close to implementation
+- Avoid heavy, auto-generated context mechanisms
 
-### 6. Context-Intelligent Documentation System
+Success metrics:
 
-**Problem**: Documentation becomes stale and disconnected from human decisions and AI implementation
-**Solution**: Living documentation that captures human strategic decisions and evolves with AI implementation
-
-**Key Features:**
-
-- **Decision Documentation**: Captures human strategic decisions, architectural choices, and product direction
-- **Implementation Tracking**: Automatically updates based on AI implementation and code changes
-- **Context-Aware Creation**: New documentation generated with full human decision context and AI implementation history
-- **Bi-directional Intelligence Flow**: Human decisions inform AI documentation, AI learnings inform strategic documentation
-
-**Success Metrics:**
-
-- Strategic decision documentation captures 95% of human direction and reasoning
-- Implementation documentation stays >90% current with AI execution
-- Documentation serves both human strategic review and AI context provision effectively
+- Docs updated when needed, not as ceremony
+- 80%+ of referenced docs remain current
 
 ## User Experience Design
 
 ### Navigation Structure
 
 ```
-<� Right Now
-   Working On (current active task)
-   Up Next (prioritized ready tasks)
+< Right Now
+  Working On (current active task)
+  Up Next (prioritized ready tasks)
 
-=� My Work
-   To Do (prioritized backlog)
-   In Progress (active development)
-   Done (completed with satisfaction)
+= My Work
+  To Do
+  In Progress
+  Done
 
-=� Notes & Docs
-   Browse Files (project knowledge)
-   Create New (context-aware creation)
+= AI Helper
+  Chat History
+  Assistant Settings
 
-=
- Project Overview
-   Big Picture (strategic view)
-   Planning (milestones & timeline)
-
-> AI Helper
-   Chat History (persistent conversations)
-   Assistant Settings (simple configuration)
-
-� Preferences
-   Project Setup (integrations & config)
-   My Settings (personal preferences)
+= Preferences
+  Project Setup
+  My Settings
 ```
 
 ### Key Design Principles
 
-- **Human-Centered Language**: "Working On" not "Current Tasks"
-- **Immediate Clarity**: Answer "what should I do?" instantly
-- **Emotional Satisfaction**: Visible progress and accomplishment
-- **Cognitive Comfort**: Maximum 2-3 options per section
-- **Flow Preservation**: Minimal clicks to common actions
+- Human-centered language
+- Immediate clarity of "what should I do now?"
+- Minimal clicks to common actions
+- Friendly, low-friction UI for long focus sessions
 
 ## Technical Architecture
 
@@ -240,194 +131,94 @@ Claude Task Manager is a **context-aware human-AI collaboration system** built o
 **UI Layer (Next.js + React)**
 
 - Feature-based architecture under `/src`
-- Real-time updates via WebSocket connections
-- Responsive design optimized for development workflows
-- Dark mode optimized for focus sessions
-
-**Context Intelligence Layer**
-
-- Context discovery engine - automatically finds and connects human decisions, strategic direction, docs, code, and git history
-- Context inheritance system - propagates knowledge between human strategic decisions and AI implementation tasks
-- Bidirectional context synchronization - keeps human direction and AI execution synchronized in real-time
-- Human-AI context orchestration - prepares rich context packages for seamless human → AI handoffs
-- Multi-agent context coordination - ensures all AI agents receive consistent, complete project context
-- Context quality assessment - measures completeness of context flow from human direction to AI execution
+- Real-time updates via WebSocket
+- Responsive, dark-mode optimized UI
 
 **Task Master Integration Layer**
 
-- Full Claude Task Master CLI integration for AI-driven task management infrastructure
-- Task intelligence services - complexity analysis, dependency management, smart recommendations
-- Context-aware task breakdown - Task Master analyzes complexity and suggests optimal task structure for human-AI collaboration
-- Smart workflow orchestration - leverages Task Master's AI capabilities for optimal human direction and AI execution sequencing
+- Full Task Master CLI compatibility and sync
+- Task analysis, dependency awareness, and recommendations leveraged from CLI
 
 **Integration Layer**
 
-- Claude Task Master CLI wrapper
-- Claude Code MCP integration
-- File system synchronization
-- Git workflow awareness
+- CLI wrapper and command execution
+- Claude Code MCP and Cursor integrations where useful
+- File system and git awareness
 
 **Data Layer**
 
 - Local-first with `.taskmaster/` persistence
 - Real-time task synchronization
-- Context history and memory management
 - Export capabilities for team collaboration
 
-### Key Integrations
-
-**Claude Code Enhanced**
-
-- Custom MCP server for seamless integration
-- Auto-loaded CLAUDE.md context files
-- Enhanced slash commands for task operations
-- Persistent conversation memory
-
-**Development Tools**
-
-- VS Code extension compatibility
-- Cursor AI deep integration
-- Terminal embedding and command history
-- Git branch awareness and tag management
-
-**Task Master CLI**
-
-- Full CLI compatibility maintained
-- Real-time UI synchronization
-- Enhanced AI commands with context
-- Backward compatibility guarantee
+Note: No dedicated "context package" system. Keep integrations simple and pragmatic.
 
 ## Success Metrics
 
-### Human-AI Collaboration Efficiency
+### Collaboration Efficiency
 
-- **Context Handoff Speed**: Reduce human → AI context explanation from 15-20 minutes to <2 minutes
-- **Context Completeness**: AI agents receive complete project context 100% of handoffs
-- **Strategic Decision Capture**: 95% of human strategic decisions and reasoning preserved and accessible
-- **Cross-Agent Context Consistency**: All AI agents operate from identical project understanding
+- Human → AI handoff setup in <2 minutes without special packaging
+- 95% of directions executed without clarification
 
-### Human Direction Experience
+### Navigation & Usability
 
-- **Strategic Focus**: Humans spend 80%+ time on product strategy vs. context explanation
-- **Direction Confidence**: 95% of human direction successfully executed by AI without clarification
-- **Orchestration Efficiency**: Human effort remains constant regardless of number of AI agents involved
-- **Context Provision**: Streamlined interfaces reduce context provision overhead by 70%
+- 95% of actions within 2 clicks
+- Users report feeling comfortable and in control
 
-### AI Execution Intelligence
+### Execution Quality
 
-- **Context-Aware Implementation**: AI implementations align with human strategic intent 95% of the time
-- **Cross-Tool Context Consistency**: Context remains consistent across Claude, Cursor, and other AI tools
-- **Implementation Quality**: AI execution with full context reduces rework by 60%
-- **Learning Integration**: AI implementation learnings automatically enrich human strategic knowledge base
+- Reduced rework from clearer direction and status visibility
+- Consistent outcomes across agents without duplicate setup steps
 
 ## Development Roadmap
 
-### Phase 1: Core Smart Layer (Weeks 1-4)
+### Phase 1: Core (Weeks 1–4)
 
-- Right Now dashboard with intelligent task focus
-- Basic Claude Code integration with context preservation
-- Human-centered navigation with emotional design
-- Local task synchronization with CLI
+- Right Now dashboard and Working On flow
+- Task Master CLI integration and sync
+- Human-centered navigation
 
-### Phase 2: AI Enhancement (Weeks 5-8)
+### Phase 2: Agents (Weeks 5–8)
 
-- Multi-agent coordination system
-- Smart task recommendations and updates
-- Enhanced Claude Code commands and shortcuts
-- Research-driven development capabilities
+- Multi-agent orchestration
+- Smart task recommendations via CLI insights
+- Quality-of-life improvements and shortcuts
 
-### Phase 3: Advanced Intelligence (Weeks 9-12)
+### Phase 3: Collaboration (Weeks 9–12)
 
-- Living documentation that evolves with code
-- Git workflow intelligence and branch awareness
-- Team collaboration features with shared context
-- Advanced analytics and productivity insights
+- Optional lightweight documentation and decision capture
+- Git workflow awareness and branch context (lightweight)
+- Team-ready features (shared views, exports)
 
-### Phase 4: Ecosystem Integration (Weeks 13-16)
+### Phase 4: Ecosystem (Weeks 13–16)
 
 - VS Code and Cursor extensions
-- GitHub Projects synchronization
-- Advanced team coordination features
-- Enterprise-ready deployment options
+- GitHub Projects sync (optional)
+- Deployment options as needed
 
 ## Risk Mitigation
 
-### Technical Risks
+### Technical
 
-- **Claude API Dependencies**: Implement fallback models and offline modes
-- **Performance at Scale**: Design for projects with 1000+ tasks
-- **Data Privacy**: Ensure local-first architecture with optional cloud sync
+- CLI dependency changes → maintain strict compatibility
+- Performance → scoped data and incremental rendering
+- Privacy → local-first by default
 
-### User Adoption Risks
+### Adoption
 
-- **Complexity Creep**: Maintain simplicity principles through user testing
-- **Change Resistance**: Ensure CLI compatibility and gradual migration
-- **Learning Curve**: Optimize for <5 minute onboarding experience
-
-### Market Risks
-
-- **Tool Fragmentation**: Focus on integration over replacement
-- **AI Evolution**: Design flexible architecture for model updates
-- **Competition**: Emphasize unique semantic layer and context preservation
+- Avoid complexity creep; keep UX simple
+- 5-minute onboarding target
+- Ship incremental value; avoid big-bang features
 
 ## Workflow Scenarios & Use Cases
 
-For detailed workflow scenarios and use cases demonstrating how Claude Task Manager transforms development workflows, see **[Use Cases & Workflow Scenarios](./usecases.md)**.
-
-### Key Workflow Transformations
-
-**Individual Developer Workflows:**
-
-- **Solo Project Lifecycle**: From research → PRD → architecture → development → iteration
-- **Context Preservation**: Every decision and learning preserved across project timeline
-- **AI-Enhanced Development**: Smart handoffs and context-aware code generation
-
-**Team Collaboration Workflows:**
-
-- **Distributed Development**: 5-person team across 3 time zones with zero context loss
-- **AI Task Handoffs**: Seamless knowledge transfer between team members
-- **Multi-Agent Coordination**: Specialized AI agents managing different aspects of development
-
-**Advanced Workflow Patterns:**
-
-- **Version Control Intelligence**: Branch-aware task management with Git integration
-- **Crisis Management**: 3AM production issues resolved in 15 minutes with full context
-- **Research-Driven Development**: AI research agents feeding into implementation tasks
-- **Living Documentation**: Implementation-driven docs that evolve with code
-
-### Documentation as Source of Truth
-
-**Problem**: Documentation becomes stale and disconnected from reality
-**Solution**: Keep documentation continuously updated and actionable
-
-**Living Documentation Philosophy:**
-
-- **Always Current**: PRDs and development docs stay up-to-date throughout the project lifecycle
-- **Implementation Ready**: Developers can trust docs to build features, not waste time deciphering outdated specs
-- **Startup Friendly**: For MVPs and rapid prototyping, minimal yet accurate documentation enables fast execution
-- **Context Preservation**: Decisions and learnings captured in docs, not lost in code comments
-
-**Smart Documentation Features:**
-
-- **Real-time Updates**: Docs evolve as implementation progresses, reflecting actual decisions
-- **Context Linking**: Every doc connected to relevant tasks and code areas
-- **Change Intelligence**: AI identifies when docs need updates based on implementation changes
-- **Usage Analytics**: Track which docs are actually helpful vs ignored
-
-See [Use Cases & Workflow Scenarios](./usecases.md) for detailed examples and implementation patterns.
+See `./usecases.md` for example flows (solo dev, multi-agent, quick handoffs, and shipping loops).
 
 ## Success Definition
 
-**Claude Task Manager succeeds when:**
+Claude Task Manager succeeds when:
 
-1. **Human-AI collaboration becomes seamless** - developers provide strategic direction efficiently while AI agents execute with complete context
-2. **Context flows automatically** - human decisions and AI implementations reinforce each other without manual context transfer
-3. **All AI agents share unified intelligence** - Claude, Cursor, and other tools operate from the same comprehensive project understanding
-4. **Strategic understanding compounds** - each human decision and AI implementation enriches the context for future collaboration
-5. **Built on proven Task Master foundation** - leverages AI-driven task management infrastructure for optimal human-AI workflow orchestration
-
-**The ultimate measure**: When developers say _"AI agents understand my project vision better than I can explain it"_ - the system has become a true collaboration multiplier that seamlessly bridges human strategy with AI execution capability.
-
----
-
-_This PRD represents a context-aware human-AI collaboration system where optimal information flow is key - strategic human direction seamlessly connects to AI execution through comprehensive context management, built on Task Master's proven AI-driven task management foundation, transforming development from fragmented human-AI handoffs to unified, context-rich collaborative workflows._
+1. Developers can direct AI agents quickly and confidently
+2. Handoffs are lightweight and effective—no special context packages needed
+3. Multi-agent work stays consistent without duplicate setup
+4. The UI makes the next action obvious and fast

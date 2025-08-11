@@ -12,6 +12,7 @@ import {
    Settings as SettingsIcon,
    Wrench,
    User,
+   Bot,
    type LucideIcon,
 } from 'lucide-react';
 
@@ -100,6 +101,12 @@ export const projectOverviewItems: WorkspaceNavItem[] = [
 
 // 🤖 AI Helper
 export const aiHelperItems: WorkspaceNavItem[] = [
+   {
+      name: 'Agents',
+      url: '/workspace/agents',
+      icon: Bot,
+      description: 'Manage and configure AI agents for specialized tasks',
+   },
    {
       name: 'Chat History',
       url: '/workspace/chat-history',

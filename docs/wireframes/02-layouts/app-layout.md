@@ -1,372 +1,157 @@
-# Application Layout & Shell
+# Human-AI Orchestration Layout — Context Intelligence & Multi-Agent Coordination
 
-## Overall Shell Structure
-
-### Desktop Layout (> 1024px)
+## Critical Assessment
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  Claude Task Manager                                    ⚙️ 👤 │
-├─────────────┬───────────────────────────────────────────────┤
-│             │                                               │
-│  🎯 Right Now│          Main Content Area                   │
-│  ├ Working On│                                              │
-│  └ Up Next   │    ┌────────────────────────────────┐       │
-│              │    │                                 │       │
-│  📝 My Work  │    │   Primary Content Panel        │       │
-│  ├ To Do     │    │   (Dynamic based on section)   │       │
-│  ├ In Progress    │                                 │       │
-│  └ Done      │    └────────────────────────────────┘       │
-│              │                                              │
-│  📚 Notes    │    ┌────────────────────────────────┐       │
-│  ├ Browse    │    │   Secondary/Context Panel      │       │
-│  └ Create    │    │   (Optional, contextual)       │       │
-│              │    └────────────────────────────────┘       │
-│  🔍 Overview │                                              │
-│  ├ Big Picture                                              │
-│  └ Planning  │    ┌────────────────────────────────┐       │
-│              │    │   Tertiary/Action Panel        │       │
-│  🤖 AI Helper│    │   (Quick actions, metadata)     │       │
-│  ├ History   │    └────────────────────────────────┘       │
-│  └ Settings  │                                              │
-│              │                                              │
-│  ⚙️ Preferences                                             │
-│  ├ Project   │                                              │
-│  └ Personal  │                                              │
-└─────────────┴───────────────────────────────────────────────┘
+PROBLEM SOLVED: Fast, confident human orchestration of multiple AI agents with perfect context retention.
+PRIMARY ACTION: Hand off to AI.
+SUCCESS METRIC: >30% faster task throughput; <2% handoff errors; context quality ≥90%.
+REMOVED: Redundant nav, page-level scroll, decorative chrome; kept only orchestration-critical UI.
 ```
 
-### Component Breakdown
+## Visual Hierarchy Law
 
-**Header Bar (Fixed)**
+```
+PRIMARY (60%) → Human Strategy + AI Handoff zone (Main orchestration area)
+SECONDARY (30%) → Context Intelligence panels (status, quality, links)
+TERTIARY (10%) → Utilities, legal/edge controls (collapsed)
+NEGATIVE SPACE → 40% minimum. Space IS design.
+```
 
-- Application branding and title
-- Global search input
-- User avatar and settings menu
-- Notifications indicator
-- Theme toggle (light/dark)
+## ASCII Wireframe (Fixed-height, Desktop-first, 8px grid)
 
-**Sidebar (240px width, collapsible)**
+```
+┌───────────────────────────────────────────────────────────────────────────────┐ 100vh
+│ Task Master AI     🔍 Context Search     🤖 3 Agents   ⚡ Context 94%    👤 │ 48px
+├───────────────────────────────────────────────────────────────────────────────┤ HEADER (Fixed)
+│┌───────────────┐┌─────────────────────────────────────────────────────────────┐
+││               ││ ╭─ Human Strategy Center (PRIMARY 60%) ─────────────────── │
+││🎯 Right Now   ││ │  [🤖 Hand off to AI]   [📦 Prepare Context]               │
+││├ My Work      ││ │  Headline: 32/40 bold, Actions: 24/32 bold               │
+││├ Context  📊  ││ │                                                             │
+││├ Overview     ││ │  ▓▓▓ Context Intelligence (SECONDARY 30%)                │
+││├ AI Helper    ││ │  - Context Quality: 94%                                   │
+││└──────────────┘│ │  - Agents: Claude, Cursor, Research                       │
+││  280px (Sidebar│ │  - Links: PRD, Research, Decisions, Patterns              │
+││  with internal ││ │                                                             │
+││  scroll)       ││ │  ░░░ Multi-Agent Status Dashboard                         │
+││               ││ │  - Claude: ████████▓ 80%                                   │
+││               ││ │  - Cursor: Ready                                          │
+││               ││ │  - Research: ██▓▓ 20%                                     │
+││               ││ │                                                             │
+││               ││ │  [✅ Approve] [💬 Guide] [📜 View History] (TERTIARY 10%)  │
+│└───────────────┘└─────────────────────────────────────────────────────────────┘
+│  SIDEBAR (Fixed height, 8px grid)       MAIN CONTENT (calc(100vh - 48px))       │
+│                                          Primary scrolling zone only             │
+└───────────────────────────────────────────────────────────────────────────────┘
 
-- Primary navigation sections
-- Contextual sub-navigation
-- Collapse/expand toggle
-- Quick action shortcuts
+VISUAL WEIGHT: 60/30/10 (no exceptions)
+SCAN PATTERN: Z-pattern (primary action top-right within main)
+CONTRAST: 7:1 primary, 4.5:1 secondary
+```
 
-**Main Content Area (Flexible)**
+## State Matrix
 
-- Primary content panel (takes remaining space)
-- Optional secondary panels (300-400px each)
-- Responsive grid system for content organization
+```
+Component        Default                 Hover                    Active                   Error
+────────────────────────────────────────────────────────────────────────────────────────────────────────
+Primary CTA      bg:#000 text:#FFF       bg:#333 cursor:pointer   scale:0.98 shadow:0,2   border:2px #F00
+("Hand off")     radius:8 shadow:0,4     duration:150ms ease-out  duration:50ms           shake:200ms text:#F00
+
+Secondary CTA    text:#111 underline:0   text:#000 underline:1    underline:2             disabled opacity:0.4
+("Prepare")      icon:#666               icon:#000                icon:#000                aria-disabled
+
+Sidebar Item     text:#444 bg:transparent bg:#F5F5F5              bg:#EAEAEA               —
+                 dot:●(status)           dot:● bold               dot:● bold
+
+Table Row        bg:#FFF                  bg:#FAFAFA               bg:#F0F7FF border-left:4 #2B6CB0   row-error bg:#FFF5F5
+(virtual list)   dividers:#EEE           dividers:#E5E5E5         focus:ring: #99C2FF      text:#C53030
+```
+
+## Interaction Timing
+
+```
+User Intent → System Response
+─────────────────────────────
+Hover       → 150ms ease-out (no debate)
+Click       → 50ms feedback (instant feel)
+Load        → 300ms skeleton (perceived speed)
+Error       → 200ms shake + persist (acknowledgment)
+Success     → 500ms celebrate + continue (momentum)
+```
+
+## Handoff Specifications
+
+```
+GRID:        8px only. Period.
+BREAKPOINTS: 1280px desktop, 768px tablet, 375px mobile
+TYPOGRAPHY:  16/24 body, 24/32 subhead, 32/40 headline
+SPACING:     8, 16, 24, 40, 64 (nothing else)
+RADIUS:      0 (sharp), 4 (subtle), 8 (friendly)
+SHADOW:      0,2 (hint), 0,4 (float), 0,8 (emphasis)
+```
+
+## Measurements (Exact)
+
+- Header: 48px fixed; z-index above all scroll regions
+- Sidebar: 280px fixed width; own scroll when overflow; no page-level scroll
+- Main content height: calc(100vh - 48px); primary scroll zone
+- Minimum content width: 900px desktop; below that, collapse secondary regions
+- Primary CTA hit area: ≥44x44px; placement top-right of primary panel
+
+## Rationale → Hierarchy → States → Measurements → Business Impact
+
+- Rationale: Solo developer directs multiple AI agents without losing context
+- Hierarchy: Primary orchestration (60%); Context intelligence (30%); Utilities (10%)
+- States: Defined above for CTAs, sidebar, rows; accessible focus rings across controls
+- Measurements: Pixel-exact header/sidebar, hit areas, scroll containment to preserve context
+- Business Impact: Faster throughput, fewer handoff errors, preserved context; targets set in Success Metric
 
 ---
 
-## Responsive Breakpoints
+## Appendix: Reference Architecture (Condensed from prior doc)
 
-### Mobile Layout (< 768px)
+### Core Layout Concepts
 
-```
-┌─────────────────┐
-│ ☰ Task Manager  │ ← Header with hamburger menu
-├─────────────────┤
-│ 🎯 Working On   │ ← Collapsed to cards
-│                 │
-│ Authentication  │
-│ Task #5 • 45%   │
-│                 │
-│ [Details] [Done]│
-├─────────────────┤
-│ Up Next (3)     │ ← Collapsed list
-│ • Database      │
-│ • API endpoints │
-│ [View All]      │
-└─────────────────┘
-```
+- Fixed Height Container (100vh): Header 48px fixed; Sidebar fixed height; Main content smart scroll; No page-level scroll
+- Intelligent Scrolling Zones: Main primary; Sidebar internal; Modals independent
+- Information Architecture: L1 Active work; L2 Available tasks; L3 Background context
 
-**Mobile Adaptations:**
-
-- Sidebar becomes slide-out overlay menu
-- Content stacks vertically in single column
-- Touch-optimized button sizes (minimum 44px)
-- Swipe gestures for navigation
-- Bottom tab bar for primary sections
-
-### Tablet Layout (768px - 1024px)
+### Human-AI Orchestration Layout Structure
 
 ```
-┌─────────────────────────────────────────────┐
-│  Task Manager    🔍              ⚙️ 👤    │
-├─────────────────────────────────────────────┤
-│[≡]│              Main Content              │
-│   │                                       │
-│   │  ┌─────────────────────────────────┐  │
-│   │  │        Primary Panel            │  │
-│   │  │                                 │  │
-│   │  └─────────────────────────────────┘  │
-│   │                                       │
-│   │  ┌─────────────────────────────────┐  │
-│   │  │      Secondary Panel            │  │
-│   │  └─────────────────────────────────┘  │
-└───┴───────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────┐ 100vh
+│ Task Master AI      🔍 Context Search   🤖 3 Agents Active   ⚡ Context 94%   👤 │ 48px
+├─────────────┬────────────────────────────────────────────────────────────────────┤ (Fixed)
+│             │ ╭─ Human Strategy Center ──────────────────────────────────────────│
+│🎯 Right Now │ │  Context-intelligent views for human orchestration               │
+│📋 My Work   │ │  • Right Now: Status + context quality dashboard                 │
+│📚 Context   │ │  • My Work: Portfolio with AI readiness scoring                  │
+│🏗️ Overview  │ │  • Context Web: Decisions ↔ implementations                      │
+│🤖 AI Helper │ │  • AI Helper: Agent direction + context package prep             │
+└─────────────┴────────────────────────────────────────────────────────────────────┘
+  280px (Sidebar)                       Flexible width ≥900px (Main Content)
 ```
 
-**Tablet Adaptations:**
+### Human-AI Orchestration Components
 
-- Sidebar collapses to icon-only strip
-- Two-column content layout
-- Touch and mouse interaction support
-- Responsive grid adjusts column count
+- Context Intelligence Header (48px, Fixed): agent status, context quality metric, search
+- Context-Intelligent Sidebar (280px): Right Now, My Work, Context, Overview, AI Helper
+- Main Orchestration Area: Strategy, Context Panels, Multi-Agent Coordination, Context Web
+
+### Design Principles
+
+- Context Intelligence Consistency; Orchestration Context Preservation; Information Flow Efficiency
+- Solo Developer Standards; Seamless Human-AI Collaboration Intelligence
 
 ---
 
-## Layout States & Variations
+## Scenarios (Kept; design now governed by sections above)
 
-### Sidebar States
+- Scenario 1: Project Bootstrap — fixed header, sidebar stable, main scroll only
+- Scenario 2: Task Planning — high-density virtual list, keyboard nav, bulk ops
+- Scenario 3: AI Handoff — perfect context transfer with package and links
+- Scenario 4: Parallel Productivity — plan while AI works; live research input
+- Scenario 5: Real-Time Oversight — progress + guidance log; immediate feedback
 
-**Expanded Sidebar (240px)**
-
-```
-┌─────────────────┐
-│ 🎯 Right Now    │
-│ ├ Working On    │
-│ └ Up Next       │
-│                 │
-│ 📝 My Work      │
-│ ├ To Do         │
-│ ├ In Progress   │
-│ └ Done          │
-│                 │
-│ [« Collapse]    │
-└─────────────────┘
-```
-
-**Collapsed Sidebar (60px)**
-
-```
-┌───┐
-│🎯 │
-│   │
-│📝 │
-│   │
-│📚 │
-│   │
-│🔍 │
-│   │
-│🤖 │
-│   │
-│⚙️ │
-│   │
-│[»]│
-└───┘
-```
-
-**Mobile Overlay Sidebar**
-
-```
-┌─────────────────────────────┐
-│ × Task Manager              │
-│                             │
-│ 🎯 Right Now               │
-│    Working On              │
-│    Up Next                 │
-│                             │
-│ 📝 My Work                 │
-│    To Do                   │
-│    In Progress             │
-│    Done                    │
-│                             │
-│ ... (full navigation)       │
-└─────────────────────────────┘
-```
-
-### Content Panel Configurations
-
-**Single Panel (Full Width)**
-
-- Task detail view
-- Note editing view
-- Settings pages
-- Dashboard overview
-
-**Two Panel (70/30 Split)**
-
-- Main content + context panel
-- Task list + task preview
-- Notes list + note preview
-
-**Three Panel (50/25/25 Split)**
-
-- Main content + two context panels
-- Task + notes + files
-- Dashboard + recent activity + quick actions
-
----
-
-## Navigation Patterns
-
-### Primary Navigation
-
-**Section-based Navigation:**
-
-```
-Dashboard → Landing page, overview of all activity
-Tasks → Task management, lists, and detail views
-Working → Focus mode, active session management
-My Works → Portfolio, achievements, time tracking
-Notes → Knowledge management, note creation
-```
-
-**Visual Indicators:**
-
-- Active section highlighted in sidebar
-- Breadcrumb navigation in main content
-- Progress indicators for multi-step processes
-- Badge counts for pending items
-
-### Contextual Navigation
-
-**Within-Section Navigation:**
-
-- Sub-navigation appears when section is active
-- Contextual actions in content area
-- Quick-access shortcuts in sidebar
-- Related item suggestions
-
-**Cross-Section Navigation:**
-
-- Global search with section-specific results
-- Quick switch between related items
-- Recent items accessible from anywhere
-- Bookmarked/pinned items for fast access
-
----
-
-## Content Zones & Hierarchy
-
-### Z-Pattern Reading Flow
-
-**Primary Path (Top-Left to Bottom-Right):**
-
-1. **Header/Branding** - Establishes context
-2. **Main Navigation** - Primary wayfinding
-3. **Content Title** - Current focus area
-4. **Primary Actions** - Main task actions
-5. **Content Details** - Supporting information
-
-### Visual Weight Distribution
-
-**High Priority Areas (Bold, High Contrast):**
-
-- Current task/active work
-- Primary action buttons
-- Status indicators and alerts
-- Navigation active states
-
-**Medium Priority Areas (Standard Weight):**
-
-- Task lists and content
-- Secondary actions
-- Metadata and descriptions
-- Navigation inactive states
-
-**Low Priority Areas (Subtle, Lower Contrast):**
-
-- Support information
-- Timestamps and IDs
-- Tertiary actions
-- Background content
-
----
-
-## Layout Components
-
-### Header Component Structure
-
-```typescript
-interface HeaderProps {
-  title: string;
-  searchEnabled?: boolean;
-  userMenu?: boolean;
-  notifications?: number;
-  theme?: 'light' | 'dark' | 'auto';
-}
-```
-
-### Sidebar Component Structure
-
-```typescript
-interface SidebarProps {
-  collapsed: boolean;
-  activeSection: string;
-  sections: NavigationSection[];
-  user: UserInfo;
-  onToggle: () => void;
-}
-
-interface NavigationSection {
-  id: string;
-  title: string;
-  icon: string;
-  badge?: number;
-  children?: NavigationItem[];
-}
-```
-
-### Content Area Structure
-
-```typescript
-interface ContentLayoutProps {
-  panels: PanelConfig[];
-  responsive: boolean;
-  spacing: 'comfortable' | 'compact';
-}
-
-interface PanelConfig {
-  id: string;
-  width: string | number;
-  minWidth?: number;
-  collapsible?: boolean;
-  priority: number; // For responsive stacking
-}
-```
-
----
-
-## Accessibility Layout Considerations
-
-### Screen Reader Navigation
-
-```html
-<!-- Landmark structure -->
-<header role="banner">
-  <nav role="navigation" aria-label="Primary">
-    <main role="main">
-      <aside role="complementary" aria-label="Task Context">
-        <footer role="contentinfo"></footer>
-      </aside>
-    </main>
-  </nav>
-</header>
-```
-
-### Focus Management
-
-- **Focus trap** in modal overlays and sidebars
-- **Skip links** to main content and navigation
-- **Focus rings** clearly visible on all interactive elements
-- **Logical tab order** through interface sections
-
-### Layout Announcements
-
-- Sidebar expand/collapse announced to screen readers
-- Panel layout changes communicated clearly
-- Loading states described during content updates
-- Error states clearly announced and actionable
-
----
-
-**Related Documents:**
-
-- [Design Principles](../01-overview/design-principles.md) - Core layout philosophy
-- [User Flows](../01-overview/user-flows.md) - Navigation patterns through layout
-- [Page Templates](./page-templates.md) - Specific page layout implementations
+All scenarios must adhere to: 8px grid, 60/30/10 hierarchy, fixed-height layout, defined states, and timings above.

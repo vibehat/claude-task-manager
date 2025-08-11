@@ -2,6 +2,14 @@
 
 This document outlines detailed use cases and workflow scenarios that demonstrate how Claude Task Manager transforms **solo developer workflows** through seamless human-AI collaboration, context preservation, and intelligent task orchestration.
 
+### Alignment with PRD and Scope
+
+- Phase 1 focus: Right Now dashboard, Working On flow, and Task Master CLI sync.
+- Multi-agent orchestration: Phase 2. Examples here are marked optional/future.
+- Documentation: Optional and manual-first; automation is future work.
+- No special context packages: 'context bundle' means referencing existing PRD, research, tasks, and decisions via Task Master CLI links.
+- Agents refer to tools like Claude, Cursor, and Copilot orchestrated from one interface.
+
 ## Core Philosophy: Human Strategy + AI Execution = Seamless Collaboration
 
 **FUNDAMENTAL PRINCIPLE**: You focus on product strategy and direction, AI focuses on implementation and execution, with perfect context flow between both.
@@ -37,13 +45,13 @@ This system transforms you from an AI supervisor constantly re-explaining contex
 
 **What Happens - Smart Project Bootstrap:**
 
-1. **AI Research Agent**: Automatically starts competitive analysis
+1. **AI Research Agent (optional, Phase 2+)**: Assists with competitive analysis on request
 
    - Researches existing finance apps (Mint, YNAB, Personal Capital)
    - Analyzes pricing models, core features, market gaps
    - Creates structured research document in Notes & Docs
 
-2. **Context Web Formation**: Research findings automatically connect to:
+2. **Context linking via Task Master CLI references**: Research findings can connect to:
    - → Future pricing strategy tasks
    - → Feature requirement decisions
    - → Technology choice considerations
@@ -53,7 +61,7 @@ This system transforms you from an AI supervisor constantly re-explaining contex
 
 ```
 🎯 Right Now: "Research market landscape for personal finance SaaS"
-📚 Notes & Docs: "Competitive Analysis - Personal Finance Tools" (auto-created)
+📚 Notes & Docs: "Competitive Analysis - Personal Finance Tools" (can be created)
 💡 Up Next: "Create initial PRD outline" (suggested)
 ```
 
@@ -96,7 +104,7 @@ This system transforms you from an AI supervisor constantly re-explaining contex
 
 ```
 🎯 Right Now: "Break PRD into actionable tasks"
-📋 Auto-Generated: 45 tasks, intelligently organized
+📋 Generated via Task Master CLI (or AI assistance): 45 tasks, intelligently organized
 🔗 Context Links: Each task connected to relevant PRD sections and research
 ```
 
@@ -123,13 +131,13 @@ Task 15: Implement account linking
 
 ```
 🎯 Right Now: "Implement authentication system (Task 2)"
-📦 Context Package: Full PRD, research findings, architecture decisions
+📦 Lightweight context bundle (no special packaging): PRD, research findings, architecture decisions linked via Task Master CLI
 🤖 AI Receives: Complete project understanding
 ```
 
 **You**: _"Please implement the authentication system according to Task 2"_
 
-**AI Receives Complete Context Package:**
+**AI receives: Lightweight context bundle (no special packaging):**
 
 - Why JWT was chosen (privacy-first requirements from PRD)
 - What security patterns to follow (research on finance app security)
@@ -151,8 +159,8 @@ Task 15: Implement account linking
 
 ```
 🎯 Right Now: "Research real-time collaboration approaches"
-🔬 AI Research Agent: Active
-📚 Research Notes: Auto-organizing findings
+🔬 AI Research Agent (optional, Phase 2+): Active if enabled
+📚 Research Notes: Organizing findings as you go
 ```
 
 **You**: _"I need to add real-time collaboration. Research the best approaches."_
@@ -164,7 +172,7 @@ Task 15: Implement account linking
 3. **Scalability Considerations**: Connection limits, message routing, presence
 4. **Security Analysis**: Authentication for real-time connections, rate limiting
 
-**Research Output Automatically Organizes Into:**
+**Research output can be organized as:**
 
 ```markdown
 # Real-Time Collaboration Research
@@ -190,7 +198,7 @@ Task 15: Implement account linking
 
 #### Phase 2: Context Integration
 
-**What Happens Automatically:**
+**What Happens:**
 
 - Research findings connect to existing architecture docs
 - Security considerations link to your authentication system
@@ -201,8 +209,8 @@ Task 15: Implement account linking
 
 ```
 🎯 Right Now: "Generate tasks for real-time collaboration"
-📋 Context-Aware Tasks: Generated with full research context
-🔗 Smart Dependencies: Automatically mapped to existing systems
+📋 Context-aware tasks: Generated with full research context
+🔗 Smart dependencies: Mapped to existing systems via Task Master CLI references
 ```
 
 **Task Master generates tasks with rich context:**
@@ -241,7 +249,7 @@ Task 49: Add real-time user presence
 
 ```
 🎯 Right Now: "Implement user dashboard analytics (Task 23)"
-📦 Context Package Ready:
+📦 Lightweight context bundle ready (no special packaging):
    ✅ Requirements: From PRD section 4.2
    ✅ Research: Analytics approaches and best practices
    ✅ Mockups: Dashboard wireframes and user flows
@@ -255,7 +263,7 @@ Task 49: Add real-time user presence
 
 **You**: _"Please implement the user dashboard analytics according to Task 23"_
 
-**AI Receives Rich Context Package:**
+**AI receives: Lightweight context bundle (no special packaging):**
 
 ```markdown
 # Task 23: User Dashboard Analytics
@@ -315,7 +323,7 @@ Task 49: Add real-time user presence
 📈 Background: Second AI researching mobile app approaches
 ```
 
-#### Multi-Agent Orchestration
+#### Multi-Agent Orchestration (optional, Phase 2+)
 
 **Agent 1 - Code Builder**: Implementing current sprint tasks
 
@@ -343,7 +351,7 @@ Task 49: Add real-time user presence
 
 #### Seamless Context Flow
 
-**What happens automatically:**
+**What happens:**
 
 1. **Code Agent Progress** updates task status and unblocks dependent tasks
 2. **Research Agent Findings** flow into your roadmap planning in real-time
@@ -365,7 +373,7 @@ By end of day:
 - ✅ Payment integration shipped (Code Agent)
 - ✅ Q2 roadmap completed with research-backed decisions (You + Research Agent)
 - ✅ Mobile app technical approach decided (Research Agent)
-- ✅ Next sprint planned with proper dependencies (Automatic coordination)
+- ✅ Next sprint planned with proper dependencies (coordinated via task statuses and references)
 
 **Your time spent**: 100% on strategic planning and decision-making  
 **AI time spent**: 100% on research and implementation  
@@ -466,7 +474,7 @@ By end of day:
 **AI Implementation Process:**
 
 1. **Adds OAuth functionality** to existing auth system
-2. **Automatically updates documentation** with new capabilities:
+2. **Updates documentation alongside code (optional, manual-first)** with new capabilities:
 
 ```markdown
 # Authentication System
@@ -496,7 +504,7 @@ By end of day:
 
 #### Real-Time Context Integration
 
-**What Updates Automatically:**
+**What Updates:**
 
 - **API Documentation**: New OAuth endpoints with examples
 - **Architecture Docs**: OAuth flow diagrams and security considerations
@@ -518,7 +526,7 @@ By end of day:
 
 **Why this works:**
 
-- **Always Current**: Docs update automatically when code changes
+- **Always Current**: Docs update alongside code (manual-first; automation optional/future)
 - **Implementation Ready**: You can trust docs to build features accurately
 - **Context Rich**: Every doc connects to actual implementation and decisions
 - **Pattern Preservation**: Established approaches become reliable standards
@@ -551,7 +559,7 @@ By end of day:
 
 ```
 🎯 You: "Implement expense categorization (Task 52)"
-📦 AI Receives: Complete context package - why, how, what, where
+📦 AI Receives: Lightweight context bundle (no special packaging) - why, how, what, where
 ⚙️ AI: Builds feature following all patterns and requirements
 ```
 
@@ -575,9 +583,147 @@ By end of day:
 
 ```
 🧠 Project: Every decision and pattern enriches future development
-📖 Docs: Update automatically to reflect current reality
+📖 Docs: Update alongside code; automation optional/future
 🎯 Next: Better context for next feature, compounding intelligence
 ```
+
+---
+
+## Smart Workflow Feature
+
+### Intelligent Project State Analysis
+
+**The Challenge**: Developers often don't know what to do next or how to prioritize their work effectively.
+
+**The Solution**: Smart Workflow (`/tm:workflows:smart-workflow`) - An intelligent command that analyzes your current project state, recent commands, and task dependencies to suggest the optimal next steps.
+
+#### How Smart Workflow Works
+
+```
+🎯 Right Now: [Uncertain - Multiple options available]
+🤔 The Question: "What should I work on next?"
+💡 Smart Workflow: Analyzes everything to provide intelligent guidance
+```
+
+**You**: `/tm:workflows:smart-workflow`
+
+**Smart Analysis Process:**
+
+1. **Project State Assessment**:
+
+   - Current task statuses and dependencies
+   - Recent command history and work patterns
+   - Blocked tasks and available work
+   - Priority levels and deadlines
+
+2. **Context Analysis**:
+
+   - Recent changes in codebase
+   - Open pull requests and reviews
+   - Build status and test failures
+   - Documentation gaps
+
+3. **Intelligent Recommendations**:
+   - Next highest-value task to tackle
+   - Optimal work sequence considering dependencies
+   - Context-switching recommendations
+   - Research or planning needs
+
+#### Smart Workflow Scenarios
+
+**Scenario 1: Fresh Start - No Active Work**
+
+```bash
+/tm:workflows:smart-workflow
+# Output:
+🎯 Recommended: Start Task 15.2 - "Implement user authentication middleware"
+📋 Why: Unblocks 3 dependent tasks, high priority, all dependencies met
+🔗 Context: PRD section 3.1, security research completed
+⚡ Quick Start: Run `task-master show 15.2` for full context
+```
+
+**Scenario 2: Stuck on Current Task**
+
+```bash
+/tm:workflows:smart-workflow
+# Output:
+🚧 Current Blocker Detected: Task 23.1 - waiting for API documentation
+💡 Recommended: Switch to Task 18.3 - "Add input validation tests"
+📋 Why: Maintains momentum, similar context, can complete today
+🔄 Parallel Option: Research API design patterns for Task 23.1
+```
+
+**Scenario 3: Multiple High-Priority Options**
+
+```bash
+/tm:workflows:smart-workflow
+# Output:
+🎯 Top Options Analyzed:
+1. ⭐ Task 12.1 - Bug fix (affects users, quick win)
+2. 🏗️ Task 8.2 - Architecture work (unblocks team, complex)
+3. 📝 Task 25.1 - Documentation (low priority, good break task)
+
+💡 Recommended: Task 12.1 → Task 8.2 sequence
+📋 Why: Quick user impact, then strategic progress
+```
+
+**Scenario 4: Context Switch Needed**
+
+```bash
+/tm:workflows:smart-workflow
+# Output:
+🧠 Mental Context: Heavy backend work (3 hours)
+💡 Recommended: Switch to frontend Task 19.2 - "Polish user dashboard"
+📋 Why: Different mental context, visual progress, good energy shift
+⚡ Alternative: Take research break on Task 31.1 planning
+```
+
+#### Integration with Development Flow
+
+**Morning Planning:**
+
+```bash
+# Start your day with intelligent guidance
+/tm:workflows:smart-workflow
+# Get optimal task sequence for the day
+```
+
+**Mid-day Check-in:**
+
+```bash
+# When you complete a task or get stuck
+/tm:workflows:smart-workflow
+# Dynamically adjust based on new conditions
+```
+
+**Context Switching:**
+
+```bash
+# When you need a change of pace
+/tm:workflows:smart-workflow --context-switch
+# Get recommendations for different types of work
+```
+
+#### Smart Workflow Intelligence
+
+**Factors Analyzed:**
+
+- Task dependencies and blocking relationships
+- Your recent work patterns and energy levels
+- Project priorities and business impact
+- Code areas requiring attention (test coverage, tech debt)
+- Research and planning needs
+- Team collaboration opportunities
+- Context switching benefits for productivity
+
+**Learning Patterns:**
+
+- Tracks your most productive work sequences
+- Identifies when you work best on different task types
+- Learns your preferences for deep work vs quick wins
+- Adapts recommendations based on success patterns
+
+**Result**: Never wonder "what should I do next?" - Smart Workflow provides intelligent, context-aware guidance that keeps you productive and moving toward your goals efficiently.
 
 ---
 
@@ -599,7 +745,7 @@ Project B: Portfolio website
 📚 Knowledge: 3 months of design decisions, SEO patterns
 
 Switch Command: "Switch to Project B"
-🔄 Result: AI instantly has full Project B context, zero Project A contamination
+🔄 Result: AI quickly loads full Project B context, zero Project A contamination
 ```
 
 ### Research-Driven Development
@@ -620,8 +766,8 @@ Switch Command: "Switch to Project B"
 **3:00 AM Scenario**: Payment processing failing
 
 ```
-🚨 Alert: System automatically switches to crisis mode
-📚 Context: AI instantly accesses payment system architecture, recent changes, debugging patterns
+🚨 Alert: You can switch to crisis mode
+📚 Context: AI quickly accesses payment system architecture, recent changes, debugging patterns
 🔧 Action: AI suggests likely causes based on system knowledge and recent deployments
 ⚡ Resolution: Hotfix deployed with full context of why this approach is safe
 📖 Learning: Crisis response patterns captured for future prevention
@@ -669,7 +815,7 @@ Switch Command: "Switch to Project B"
 
 **Documentation Quality:**
 
-- Implementation-driven docs that stay current automatically
+- Implementation-driven docs that stay current alongside code
 - Rich context linking between code, tasks, and decisions
 - Higher documentation usage because it's trustworthy
 - Living knowledge base that grows with your project
