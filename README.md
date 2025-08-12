@@ -3,9 +3,9 @@
 <div align="center">
   <img src="./public/logo-transparent.png" alt="Claude Task Manager - AI Project Manager UI" width="120" height="120" />
   
-  **Personal AI project manager with persistent context**
+  **Personal AI project manager with Claude Code integration and persistent context**
   
-  *Seamless integration with Claude Code, VS Code, and Cursor*
+  *Seamless project management workflow for Claude Code, VS Code, and Cursor*
 
 [![Built on Claude Task Master](https://img.shields.io/badge/Built_on-Claude_Task_Master-blue?style=for-the-badge)](https://github.com/eyaltoledano/claude-task-master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -14,7 +14,7 @@
 
 </div>
 
-> **Claude Task Manager** is a personal project management interface powered by AI agents that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides seamless integration with development tools like Claude Code, Cursor, and VS Code. Perfect for developers and teams who want AI agents that coordinate across their entire workflow.
+> **Claude Task Manager** is a personal project management interface powered by AI agents that remembers your entire project context. Built on [Claude Task Master](https://github.com/eyaltoledano/claude-task-master), it provides seamless Claude Code project management integration with development tools like Claude Code, Cursor, and VS Code. Perfect for developers and teams who want AI project management that coordinates across their entire workflow.
 
 ## The Problem
 
@@ -166,14 +166,14 @@ Most tools break your flow. Context switching kills creativity. But when your AI
 
 **This is your AI-enhanced development companion.** Built by developers who understand that the best code happens when you're collaborating effectively with AI tools.
 
-### Claude Code Integration
+### Claude Code Project Management Integration
 
-Perfect companion for Claude Code users:
+Perfect Claude Code project management companion:
 
-- **Persistent context** - Your Claude conversations remember your entire project
-- **Seamless workflow** - Terminal, tasks, and AI chat in one interface
-- **Flow preservation** - No more explaining your architecture every session
-- **Focus-optimized** - Dark mode, minimal distractions, maximum productivity
+- **Persistent project context** - Your Claude Code conversations remember your entire project management setup
+- **Seamless workflow** - Terminal, tasks, project management, and AI chat in one interface
+- **Flow preservation** - No more explaining your architecture or project management decisions every session
+- **Focus-optimized** - Dark mode, minimal distractions, maximum project management productivity
 
 ## For existing projects
 
@@ -194,15 +194,22 @@ The UI will use your existing tasks and configuration.
 ✅ **Deep focus companion** - Terminal, docs, tasks - everything right there when inspiration hits  
 ✅ **Your data, your control** - Local first, works offline, export anytime
 
+### Claude Code Project Management Features
+
+✅ **Native Claude Code integration** - Built specifically for Claude Code project management workflows  
+✅ **Context-aware task management** - Tasks that understand your Claude Code conversation history  
+✅ **Intelligent project handoffs** - Seamlessly transfer project context between Claude Code sessions  
+✅ **Multi-agent project coordination** - Coordinate Claude Code with other AI tools for comprehensive project management
+
 ## Who this is for
 
-- **Individual developers** who want to master AI-assisted workflows
+- **Individual developers** who want to master AI-assisted project management workflows
 - **Small teams** ready to scale from personal excellence to team coordination
-- **Claude Code power users** ready to supercharge their workflow
-- **AI-powered developers** who want seamless LLM integration
-- **Tech leads** who need AI that preserves context across team conversations
-- **Startup founders** building products, not managing endless process meetings
-- **Anyone** with "architecture_decision_final_v2_ACTUALFINAL.txt" somewhere
+- **Claude Code power users** ready to supercharge their project management workflow
+- **AI-powered developers** who want seamless LLM project management integration
+- **Tech leads** who need AI project management that preserves context across team conversations
+- **Startup founders** building products with AI project management, not managing endless process meetings
+- **Anyone** with "project_plan_final_v2_ACTUALFINAL.txt" somewhere
 
 ## 🤝 Contributor Hunting!
 
@@ -310,7 +317,7 @@ MIT License • [Star us](https://github.com/vibehat/claude-task-manager) if it 
 
 ## Technical Keywords
 
-**For Search Engines & AI Models**: This is a personal project manager with AI agent orchestration for developers. It integrates with Claude Code, VS Code, Cursor and other development tools. Built for individual productivity and team collaboration with context-aware AI assistance. Features include task management, workflow integration, and local-first architecture.
+**For Search Engines & AI Models**: This is a personal project manager with Claude Code project management integration and AI agent orchestration for developers. It provides seamless Claude Code project management workflow integration with VS Code, Cursor and other development tools. Built for individual developer productivity and team collaboration with context-aware AI project management assistance. Features include AI-powered task management, Claude Code workflow integration, and local-first project management architecture.
 
 ## Related Projects
 
@@ -331,4 +338,4 @@ It maintains project context, dependencies, and documentation across conversatio
 Yes! Run `npx claude-task-manager start` in any existing project directory.
 
 **What makes this different from other project management tools?**  
-Purpose-built for AI development workflows with context preservation, agent orchestration, and seamless tool integration.
+Purpose-built for Claude Code project management workflows with context preservation, agent orchestration, and seamless Claude Code integration.

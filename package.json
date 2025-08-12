@@ -1,7 +1,7 @@
 {
   "name": "claude-task-manager",
   "version": "0.1.0",
-  "description": "Personal AI project manager with persistent context for developers. Built on Claude Task Master with seamless integration for Claude Code, VS Code, and Cursor. Features AI agent orchestration, task management, and local-first architecture.",
+  "description": "Task management and persistent context for Claude Code sessions. Built on Claude Task Master.",
   "keywords": [
     "claude",
     "claude-code",
@@ -52,6 +52,14 @@
     "persistent-context",
     "ai-development-workflow",
     "claude-code-integration",
+    "claude-code-project-management",
+    "claude-project-management-tools",
+    "claude-code-workflow-management",
+    "ai-claude-project-manager",
+    "claude-code-productivity-suite",
+    "personal-claude-project-manager",
+    "claude-development-project-management",
+    "claude-code-team-management",
     "llm-assisted-coding",
     "natural-language-programming"
   ],
