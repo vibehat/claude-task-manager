@@ -51,7 +51,7 @@ export function TerminalWindow({ className }: TerminalWindowProps) {
       {/* Terminal Content - iframe to simple-terminal */}
       <div className="h-[calc(100%-48px)] w-full">
         <iframe
-          src={`/simple-terminal?terminalId=${activeTerminal.id}`}
+          src={`/simple-terminal?terminalId=${activeTerminal.id}${activeTerminal.initCommand ? `&initCommand=${encodeURIComponent(activeTerminal.initCommand)}` : ''}`}
           className="w-full h-full border-0 bg-black"
           title={activeTerminal.title}
           allow="clipboard-write"

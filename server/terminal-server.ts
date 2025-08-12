@@ -75,7 +75,8 @@ class TerminalServer {
         const url = new URL(req.url || '', `http://${req.headers.host}`);
         const sessionId = url.searchParams.get('sessionId') || this.generateId();
         const requestedShell = url.searchParams.get('shell');
-        this.handleConnection(ws, sessionId, requestedShell);
+        const initCommand = url.searchParams.get('initCommand');
+        this.handleConnection(ws, sessionId, requestedShell, initCommand);
       });
 
       this.server.listen(this.port, () => {
@@ -92,7 +93,12 @@ class TerminalServer {
     return Math.random().toString(36).substring(2, 10);
   }
 
-  private handleConnection(ws: WebSocket, sessionId: string, requestedShell?: string | null) {
+  private handleConnection(
+    ws: WebSocket,
+    sessionId: string,
+    requestedShell?: string | null,
+    initCommand?: string | null
+  ) {
     let session = this.sessions.get(sessionId);
 
     if (session) {
@@ -112,8 +118,10 @@ class TerminalServer {
     } else {
       // Create new session
       const shell = this.resolveShell(requestedShell);
-      console.log(`🆕 Creating session ${sessionId} with ${shell}`);
-      session = this.createSession(sessionId, shell);
+      console.log(
+        `🆕 Creating session ${sessionId} with ${shell}${initCommand ? ` (init: ${initCommand})` : ''}`
+      );
+      session = this.createSession(sessionId, shell, initCommand);
       if (!session) {
         this.send(ws, { type: 'error', message: `Failed to create session with ${shell}` });
         ws.close();
@@ -130,6 +138,7 @@ class TerminalServer {
         usingPty: session.usingPty,
         platform: process.platform,
         cwd: process.cwd(),
+        initCommand,
       });
     }
 
@@ -228,7 +237,11 @@ class TerminalServer {
     return available;
   }
 
-  private createSession(sessionId: string, shell: string): Session | null {
+  private createSession(
+    sessionId: string,
+    shell: string,
+    initCommand?: string | null
+  ): Session | null {
     try {
       let terminalProcess: any;
       let usingPty = false;
@@ -290,6 +303,24 @@ class TerminalServer {
 
       this.sessions.set(sessionId, session);
       this.setupProcess(session);
+
+      // Execute init command if provided
+      if (initCommand) {
+        setTimeout(() => {
+          try {
+            const command = initCommand + '\r\n';
+            if (usingPty) {
+              terminalProcess.write(command);
+            } else {
+              terminalProcess.stdin.write(command);
+            }
+            console.log(`⚡ Executed init command in ${sessionId}: ${initCommand}`);
+          } catch (error) {
+            console.error(`❌ Failed to execute init command in ${sessionId}:`, error);
+          }
+        }, 500); // Give the terminal a moment to initialize
+      }
+
       return session;
     } catch (error) {
       console.error(`❌ Failed to create session with ${shell}:`, error);

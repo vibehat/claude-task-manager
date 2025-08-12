@@ -9,6 +9,7 @@ export interface TerminalMessage {
   message?: string;
   usingPty?: boolean;
   ptySupport?: boolean;
+  initCommand?: string;
 }
 
 export interface TerminalResizeData {
@@ -135,7 +136,7 @@ export interface MultiTerminalContextValue {
   activeTerminalId: string | null;
 
   // Terminal management
-  createTerminal: (title?: string) => string;
+  createTerminal: (title?: string, initCommand?: string) => string;
   closeTerminal: (id: string) => void;
   setActiveTerminal: (id: string) => void;
   getTerminal: (id: string) => MultiTerminalInstance | undefined;

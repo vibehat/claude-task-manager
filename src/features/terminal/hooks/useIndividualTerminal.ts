@@ -13,6 +13,7 @@ interface UseTerminalOptions {
   fontFamily?: string;
   sessionId?: string; // For session restoration
   clientId?: string; // For client identification
+  initCommand?: string; // Initial command to execute
   onConnect?: () => void;
   onDisconnect?: () => void;
   onError?: (error: string) => void;
@@ -26,6 +27,7 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
     fontFamily = 'Monaco, Menlo, "Ubuntu Mono", monospace',
     sessionId,
     clientId,
+    initCommand,
     onConnect,
     onDisconnect,
     onError,
@@ -172,12 +174,13 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
           let websocketUrl = await getWebSocketUrl();
 
           // Add session restoration parameters if available
-          if (sessionId || clientId) {
+          if (sessionId || clientId || initCommand) {
             const urlParams = new URLSearchParams();
             if (sessionId) urlParams.set('sessionId', sessionId);
             if (clientId) urlParams.set('clientId', clientId);
+            if (initCommand) urlParams.set('initCommand', initCommand);
             websocketUrl += `?${urlParams.toString()}`;
-            console.log(`🔄 Attempting session restoration with URL: ${websocketUrl}`);
+            console.log(`🔄 Attempting connection with URL: ${websocketUrl}`);
           }
 
           const ws = new WebSocket(websocketUrl);

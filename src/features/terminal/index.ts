@@ -2,12 +2,7 @@
 export { MultiTerminalTray, XTermStyles } from './components';
 
 // Re-export new wireframe-based components
-export {
-  TerminalButtonSystem,
-  TerminalWindow,
-  TerminalButtonBar,
-  SafeTerminalButtonSystem,
-} from './components';
+export { TerminalWindow, TerminalButtonBar, SafeTerminalButtonSystem } from './components';
 
 // Re-export stores
 export {

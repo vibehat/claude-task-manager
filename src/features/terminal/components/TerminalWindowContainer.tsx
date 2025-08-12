@@ -10,6 +10,7 @@ interface TerminalWindowContainerProps {
   title: string;
   isVisible: boolean;
   isMaximized?: boolean;
+  initCommand?: string;
   onClose: () => void;
   onMinimize?: () => void;
   onMaximize?: () => void;
@@ -21,6 +22,7 @@ export function TerminalWindowContainer({
   title,
   isVisible,
   isMaximized = false,
+  initCommand,
   onClose,
   onMinimize,
   onMaximize,
@@ -95,7 +97,7 @@ export function TerminalWindowContainer({
       {/* Terminal iframe - Always rendered to preserve state */}
       <div className="h-[calc(100%-32px)] w-full bg-background">
         <iframe
-          src="/simple-terminal"
+          src={`/simple-terminal?terminalId=${id}${initCommand ? `&initCommand=${encodeURIComponent(initCommand)}` : ''}`}
           className="w-full h-full border-0 bg-background"
           title={`Terminal ${title}`}
         />

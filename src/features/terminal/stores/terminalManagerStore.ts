@@ -6,6 +6,7 @@ export interface Terminal {
   title: string;
   isActive: boolean;
   createdAt: Date;
+  initCommand?: string;
 }
 
 interface TerminalManagerState {
@@ -26,7 +27,7 @@ interface TerminalManagerState {
 
 interface TerminalManagerActions {
   // Terminal management
-  createTerminal: (title?: string) => string;
+  createTerminal: (title?: string, initCommand?: string) => string;
   closeTerminal: (id: string) => void;
   switchToTerminal: (id: string) => void;
   renameTerminal: (id: string, title: string) => void;
@@ -65,7 +66,7 @@ export const useTerminalManagerStore = create<TerminalManagerStore>()(
       ...initialState,
 
       // Terminal management
-      createTerminal: (title) => {
+      createTerminal: (title, initCommand) => {
         const store = get();
         const terminalNumber = store.terminals.length + 1;
         const id = `terminal-${Date.now()}`;
@@ -76,6 +77,7 @@ export const useTerminalManagerStore = create<TerminalManagerStore>()(
           title: terminalTitle,
           isActive: true,
           createdAt: new Date(),
+          initCommand,
         };
 
         set((state) => ({
@@ -238,14 +240,13 @@ export const useTerminals = () => useTerminalManagerStore((state) => state.termi
 export const useActiveTerminalId = () => useTerminalManagerStore((state) => state.activeTerminalId);
 export const useActiveTerminal = () =>
   useTerminalManagerStore((state) => state.terminals.find((t) => t.id === state.activeTerminalId));
-export const useTerminalVisibility = () =>
-  useTerminalManagerStore(
-    (state) => ({
-      isButtonBarVisible: state.isButtonBarVisible,
-      isTerminalVisible: state.isTerminalVisible,
-    }),
-    (a, b) =>
-      a.isButtonBarVisible === b.isButtonBarVisible && a.isTerminalVisible === b.isTerminalVisible
-  );
+export const useIsButtonBarVisible = () =>
+  useTerminalManagerStore((state) => state.isButtonBarVisible);
+export const useIsTerminalVisible = () =>
+  useTerminalManagerStore((state) => state.isTerminalVisible);
+export const useTerminalVisibility = () => ({
+  isButtonBarVisible: useIsButtonBarVisible(),
+  isTerminalVisible: useIsTerminalVisible(),
+});
 export const useTerminalLoading = () => useTerminalManagerStore((state) => state.loading);
 export const useTerminalError = () => useTerminalManagerStore((state) => state.error);

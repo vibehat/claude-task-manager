@@ -10,6 +10,7 @@ import { RightPanel } from '../components/RightPanel/RightPanel';
 import { MobileWorkflowPanel } from '../components/MobileWorkflowPanel/MobileWorkflowPanel';
 import { useWorkingOnStore } from '../stores/workingOnStore';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { useTerminalManagerStore } from '@/features/terminal/stores/terminalManagerStore';
 import {
   ScreenReaderAnnouncer,
   setupFocusVisible,
@@ -51,6 +52,9 @@ export function WorkingOnPageClient(): React.JSX.Element {
     refreshWorkflowActions,
     refresh,
   } = useWorkingOnStore();
+
+  // Terminal store
+  const { createTerminal } = useTerminalManagerStore();
 
   // Initialize with mock data on mount
   useEffect(() => {
@@ -132,8 +136,8 @@ export function WorkingOnPageClient(): React.JSX.Element {
 
   const handleExecuteWorkflow = (suggestionId: string) => {
     console.log('Execute workflow:', suggestionId);
-    // TODO: Implement workflow execution logic
-    // This would integrate with TaskMaster CLI commands
+    // Create a new terminal with smart workflow init command
+    createTerminal('Smart Workflow Terminal', 'echo "smart workflow"');
   };
 
   const handleDismissSuggestion = (suggestionId: string) => {

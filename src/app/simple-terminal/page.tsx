@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useIndividualTerminal } from '@/features/terminal/hooks/useIndividualTerminal';
 import { TerminalConnectionStatus } from '@/features/terminal/types/terminal';
 import { XTermStyles } from '@/features/terminal/components/XTermStyles';
@@ -8,12 +9,19 @@ import { XTermStyles } from '@/features/terminal/components/XTermStyles';
 export default function SimpleTerminalPage(): React.JSX.Element {
   const terminalContainerRef = useRef<HTMLDivElement>(null);
   const terminalMountedRef = useRef(false);
+  const searchParams = useSearchParams();
+
+  // Extract parameters from URL
+  const terminalId = searchParams.get('terminalId');
+  const initCommand = searchParams.get('initCommand');
 
   const { terminal, initializeTerminal, connectionStatus, connect, fit, isConnected, error } =
     useIndividualTerminal({
       theme: 'dark',
       fontSize: 14,
       fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+      sessionId: terminalId || undefined,
+      initCommand: initCommand || undefined,
       onConnect: () => console.log('Simple terminal connected'),
       onDisconnect: () => console.log('Simple terminal disconnected'),
       onError: (err) => console.error('Simple terminal error:', err),

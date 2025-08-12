@@ -1,73 +1,46 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { cn } from '@/libs/client/utils';
 import { TerminalWindowContainer } from './TerminalWindowContainer';
 import { SimpleTerminalButtonBar } from './SimpleTerminalButtonBar';
-
-interface TerminalInstance {
-  id: string;
-  title: string;
-}
+import { useTerminalManagerStore } from '../stores/terminalManagerStore';
 
 interface SafeTerminalButtonSystemProps {
   className?: string;
 }
 
 export function SafeTerminalButtonSystem({ className }: SafeTerminalButtonSystemProps) {
-  const [terminals, setTerminals] = useState<TerminalInstance[]>([]);
-  const [activeTerminalId, setActiveTerminalId] = useState<string | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMaximized, setIsMaximized] = useState(false);
+  const {
+    terminals,
+    activeTerminalId,
+    isTerminalVisible,
+    createTerminal,
+    closeTerminal,
+    switchToTerminal,
+    showTerminals,
+    hideTerminals,
+  } = useTerminalManagerStore();
 
-  const createTerminal = useCallback(() => {
-    const id = `terminal-${Date.now()}`;
+  const handleCreateTerminal = useCallback(() => {
     const title = `Terminal ${terminals.length + 1}`;
-
-    setTerminals((prev) => [...prev, { id, title }]);
-    setActiveTerminalId(id);
-    setIsVisible(true);
-  }, [terminals.length]);
-
-  const closeTerminal = useCallback(
-    (id: string) => {
-      setTerminals((prev) => {
-        const updated = prev.filter((t) => t.id !== id);
-        if (activeTerminalId === id) {
-          const newActive = updated.length > 0 ? updated[updated.length - 1].id : null;
-          setActiveTerminalId(newActive);
-          setIsVisible(updated.length > 0);
-        }
-        return updated;
-      });
-    },
-    [activeTerminalId]
-  );
-
-  const switchTerminal = useCallback((id: string) => {
-    setActiveTerminalId(id);
-    setIsVisible(true);
-  }, []);
-
-  const hideTerminals = useCallback(() => {
-    setIsVisible(false);
-  }, []);
-
-  const showTerminals = useCallback(() => {
-    if (terminals.length === 0) {
-      createTerminal();
-    } else {
-      setIsVisible(true);
-    }
+    createTerminal(title);
   }, [terminals.length, createTerminal]);
 
-  const handleMaximize = useCallback(() => {
-    setIsMaximized(!isMaximized);
-  }, [isMaximized]);
+  const handleSwitchTerminal = useCallback(
+    (id: string) => {
+      switchToTerminal(id);
+    },
+    [switchToTerminal]
+  );
 
-  const handleMinimize = useCallback(() => {
-    setIsVisible(false);
-  }, []);
+  const handleShowTerminals = useCallback(() => {
+    if (terminals.length === 0) {
+      handleCreateTerminal();
+    } else {
+      showTerminals();
+    }
+  }, [terminals.length, handleCreateTerminal, showTerminals]);
 
   const handleDelete = useCallback(
     (id: string) => {
@@ -86,11 +59,12 @@ export function SafeTerminalButtonSystem({ className }: SafeTerminalButtonSystem
           key={terminal.id}
           id={terminal.id}
           title={terminal.title}
-          isVisible={isVisible && activeTerminalId === terminal.id}
-          isMaximized={isMaximized}
+          initCommand={terminal.initCommand}
+          isVisible={isTerminalVisible && activeTerminalId === terminal.id}
+          isMaximized={false}
           onClose={hideTerminals}
-          onMinimize={handleMinimize}
-          onMaximize={handleMaximize}
+          onMinimize={hideTerminals}
+          onMaximize={() => {}}
           onDelete={() => handleDelete(terminal.id)}
         />
       ))}
@@ -99,8 +73,8 @@ export function SafeTerminalButtonSystem({ className }: SafeTerminalButtonSystem
       <SimpleTerminalButtonBar
         terminals={terminals}
         activeTerminalId={activeTerminalId}
-        onSwitchTerminal={switchTerminal}
-        onCreateTerminal={createTerminal}
+        onSwitchTerminal={handleSwitchTerminal}
+        onCreateTerminal={handleCreateTerminal}
       />
     </div>
   );
