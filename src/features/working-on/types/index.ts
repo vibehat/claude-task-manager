@@ -140,6 +140,7 @@ export interface WorkingOnViewState {
 export interface ContextSectionProps {
   context: ProjectContext;
   onSettings: () => void;
+  onTerminal?: () => void;
 }
 
 export interface MyTasksSectionProps {
@@ -175,7 +176,7 @@ export interface QuickActionsSectionProps {
 export interface WorkingOnHeaderActionsProps {
   focusMode: boolean;
   onToggleFocusMode: () => void;
-  onRefresh: () => void;
+  onRefresh?: () => void;
 }
 
 // Additional extracted component props

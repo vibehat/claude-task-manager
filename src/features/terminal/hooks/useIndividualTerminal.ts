@@ -53,20 +53,22 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
   // Send input to terminal
   const sendInput = useCallback((data: string) => {
     console.log(
-      'Sending input to WebSocket:',
-      data,
+      '🟢 Sending input to WebSocket:',
+      JSON.stringify(data),
       'WebSocket state:',
-      webSocketRef.current?.readyState
+      webSocketRef.current?.readyState,
+      'WebSocket:',
+      !!webSocketRef.current
     ); // Debug logging
     if (webSocketRef.current && webSocketRef.current.readyState === WebSocket.OPEN) {
-      webSocketRef.current.send(
-        JSON.stringify({
-          type: 'input',
-          data,
-        })
-      );
+      const message = JSON.stringify({
+        type: 'input',
+        data,
+      });
+      console.log('🟢 Sending message:', message);
+      webSocketRef.current.send(message);
     } else {
-      console.warn('WebSocket not available for input:', webSocketRef.current?.readyState);
+      console.warn('🔴 WebSocket not available for input:', webSocketRef.current?.readyState);
     }
   }, []);
 
@@ -110,8 +112,11 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
   }, [theme, fontSize, fontFamily]);
 
   // Attach input handler to terminal
-  const attachInputHandler = useCallback(() => {
-    if (!terminalRef.current) return null;
+  const attachInputHandler = useCallback((): boolean => {
+    if (!terminalRef.current) {
+      console.log('Cannot attach input handler: terminal not ready');
+      return false;
+    }
 
     console.log('Attaching input handler to terminal');
 
@@ -120,15 +125,28 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
       (terminalRef.current as any)._inputDisposable.dispose();
     }
 
-    // Attach new input handler
-    const disposable = terminalRef.current.onData((data) => {
-      console.log('Terminal input received:', data, 'Connection status:', connectionStatus);
-      sendInput(data);
-    });
+    try {
+      // Attach new input handler
+      const disposable = terminalRef.current.onData((data) => {
+        console.log(
+          '🔵 Terminal input received:',
+          JSON.stringify(data),
+          'Connection status:',
+          connectionStatus,
+          'WebSocket state:',
+          webSocketRef.current?.readyState
+        );
+        sendInput(data);
+      });
 
-    // Store disposable for cleanup
-    (terminalRef.current as any)._inputDisposable = disposable;
-    return disposable;
+      // Store disposable for cleanup
+      (terminalRef.current as any)._inputDisposable = disposable;
+      console.log('Input handler attached successfully');
+      return true;
+    } catch (error) {
+      console.error('Failed to attach input handler:', error);
+      return false;
+    }
   }, [sendInput, connectionStatus]);
 
   // Clear error
@@ -170,10 +188,19 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
             setConnectionStatus(TerminalConnectionStatus.CONNECTED);
             reconnectAttemptsRef.current = 0;
 
-            // Attach input handler now that we're connected
+            // Attach input handler now that we're connected - retry multiple times to ensure it works
+            const attachWithRetry = (attempts = 0) => {
+              if (attempts < 5) {
+                const success = attachInputHandler();
+                if (!success) {
+                  setTimeout(() => attachWithRetry(attempts + 1), 50);
+                }
+              }
+            };
+
             setTimeout(() => {
-              attachInputHandler();
-            }, 100);
+              attachWithRetry();
+            }, 50);
 
             onConnect?.();
             resolve();
@@ -211,15 +238,16 @@ export function useIndividualTerminal(options: UseTerminalOptions = {}): UseTerm
                   break;
 
                 case 'data':
-                  console.log('Received data from server:', JSON.stringify(message.data));
+                  console.log('📥 Received data from server:', JSON.stringify(message.data));
                   if (terminalRef.current && message.data) {
-                    console.log('Writing data to xterm:', JSON.stringify(message.data));
-                    console.log('Terminal state:', {
+                    console.log('📝 Writing data to xterm:', JSON.stringify(message.data));
+                    console.log('🖥️  Terminal state:', {
                       cols: terminalRef.current.cols,
                       rows: terminalRef.current.rows,
-                      element: terminalRef.current.element,
+                      element: !!terminalRef.current.element,
                       isOpen: !!terminalRef.current.element,
                       hasBuffer: !!terminalRef.current.buffer,
+                      activeElement: document.activeElement?.tagName,
                     });
                     terminalRef.current.write(message.data);
 

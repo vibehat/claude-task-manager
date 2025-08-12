@@ -100,11 +100,14 @@ class TerminalServer {
       console.log(`🔄 Reconnecting to session ${sessionId} (${session.shell})`);
       session.clients.add(ws);
       session.lastActiveAt = new Date();
+      console.log(`📥 Sending 'connected' message to existing session ${sessionId}`);
       this.send(ws, {
         type: 'connected',
         sessionId,
         shell: session.shell,
         usingPty: session.usingPty,
+        platform: process.platform,
+        cwd: process.cwd(),
       });
     } else {
       // Create new session
@@ -117,6 +120,17 @@ class TerminalServer {
         return;
       }
       session.clients.add(ws);
+
+      // Send connected message for new session
+      console.log(`📥 Sending 'connected' message to new session ${sessionId}`);
+      this.send(ws, {
+        type: 'connected',
+        sessionId,
+        shell: session.shell,
+        usingPty: session.usingPty,
+        platform: process.platform,
+        cwd: process.cwd(),
+      });
     }
 
     this.setupClient(ws, session);
@@ -286,6 +300,7 @@ class TerminalServer {
   private setupProcess(session: Session) {
     if (session.usingPty) {
       session.process.onData((data: string) => {
+        console.log(`📤 PTY data from ${session.id}:`, JSON.stringify(data));
         this.broadcast(session, { type: 'data', data });
       });
 
@@ -296,10 +311,12 @@ class TerminalServer {
       });
     } else {
       session.process.stdout?.on('data', (data: Buffer) => {
+        console.log(`📤 Stdout from ${session.id}:`, JSON.stringify(data.toString()));
         this.broadcast(session, { type: 'data', data: data.toString() });
       });
 
       session.process.stderr?.on('data', (data: Buffer) => {
+        console.log(`📤 Stderr from ${session.id}:`, JSON.stringify(data.toString()));
         this.broadcast(session, { type: 'data', data: data.toString() });
       });
 
@@ -312,12 +329,20 @@ class TerminalServer {
   }
 
   private setupClient(ws: WebSocket, session: Session) {
+    console.log(`🔌 Setting up client for session ${session.id}`);
+
     ws.on('message', (data) => {
       try {
         const { type, data: payload } = JSON.parse(data.toString());
+        console.log(
+          `📨 Received message from client:`,
+          type,
+          payload ? `(${JSON.stringify(payload).length} chars)` : ''
+        );
         session.lastActiveAt = new Date();
 
         if (type === 'input') {
+          console.log(`⌨️  Input received for ${session.id}:`, JSON.stringify(payload));
           if (session.usingPty) {
             session.process.write(payload);
           } else {
@@ -325,6 +350,7 @@ class TerminalServer {
           }
         } else if (type === 'resize' && session.usingPty) {
           const { cols, rows } = payload;
+          console.log(`📏 Resize request for ${session.id}:`, cols, 'x', rows);
           if (cols > 0 && rows > 0) {
             session.process.resize(cols, rows);
           }
@@ -354,9 +380,16 @@ class TerminalServer {
 
   private broadcast(session: Session, message: any) {
     const payload = JSON.stringify(message);
+    console.log(
+      `📡 Broadcasting to ${session.clients.size} clients:`,
+      message.type,
+      message.data ? `(${message.data.length} chars)` : ''
+    );
     session.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(payload);
+      } else {
+        console.log('🔴 Client not ready for broadcast, state:', client.readyState);
       }
     });
   }

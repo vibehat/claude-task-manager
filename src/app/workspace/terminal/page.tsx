@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { WorkspaceLayout } from '@/components/layout/WorkspaceLayout';
 import { useTerminalContext } from '@/features/terminal';
 import { useMultiTerminalStore } from '@/store/multiTerminalStore';
-import { Terminal as TerminalIcon, Plus, Minimize2, Maximize2, X, Clock } from 'lucide-react';
+import { Terminal as TerminalIcon, Plus, X, Clock, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/libs/client/utils';
 import type { TerminalInstance } from '@/store/multiTerminalStore';
@@ -12,33 +12,25 @@ import type { TerminalInstance } from '@/store/multiTerminalStore';
 interface TerminalCardProps {
   terminal: TerminalInstance;
   isActive: boolean;
+  onOpenInIframe: (terminalId: string) => void;
 }
 
-function TerminalCard({ terminal, isActive }: TerminalCardProps): React.JSX.Element {
-  const { setActiveTerminal, closeTerminal } = useTerminalContext();
-  const { restoreTerminal, minimizeTerminal, maximizeTerminal, bringTerminalToFront } =
-    useMultiTerminalStore();
+function TerminalCard({
+  terminal,
+  isActive,
+  onOpenInIframe,
+}: TerminalCardProps): React.JSX.Element {
+  const { closeTerminal } = useTerminalContext();
 
   const handleOpenTerminal = () => {
-    setActiveTerminal(terminal.id);
-    if (terminal.isMinimized) {
-      restoreTerminal(terminal.id);
-    }
-    bringTerminalToFront(terminal.id);
+    // Open terminal in iframe within this page
+    onOpenInIframe(terminal.id);
   };
 
-  const handleMinimize = (e: React.MouseEvent) => {
+  const handleOpenInNewWindow = (e: React.MouseEvent) => {
     e.stopPropagation();
-    minimizeTerminal(terminal.id);
-  };
-
-  const handleMaximize = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (terminal.isMaximized) {
-      restoreTerminal(terminal.id);
-    } else {
-      maximizeTerminal(terminal.id);
-    }
+    // Open terminal in dedicated page/window
+    window.open(`/workspace/terminal/${terminal.id}`, '_blank', 'width=1200,height=800');
   };
 
   const handleClose = (e: React.MouseEvent) => {
@@ -100,20 +92,11 @@ function TerminalCard({ terminal, isActive }: TerminalCardProps): React.JSX.Elem
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleMinimize}
+            onClick={handleOpenInNewWindow}
             className="h-6 w-6 p-0"
-            title="Minimize"
+            title="Open in new window"
           >
-            <Minimize2 className="h-3 w-3" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleMaximize}
-            className="h-6 w-6 p-0"
-            title={terminal.isMaximized ? 'Restore' : 'Maximize'}
-          >
-            <Maximize2 className="h-3 w-3" />
+            <ExternalLink className="h-3 w-3" />
           </Button>
           <Button
             variant="ghost"
@@ -207,9 +190,18 @@ function TerminalPageError(): React.JSX.Element {
 function TerminalPageContent(): React.JSX.Element {
   const { createTerminal, activeTerminalId } = useTerminalContext();
   const { terminals } = useMultiTerminalStore();
+  const [iframeTerminalId, setIframeTerminalId] = useState<string | null>(null);
 
   const handleCreateNewTerminal = () => {
     createTerminal();
+  };
+
+  const handleOpenInIframe = (terminalId: string) => {
+    setIframeTerminalId(terminalId);
+  };
+
+  const handleCloseIframe = () => {
+    setIframeTerminalId(null);
   };
 
   return (
@@ -245,6 +237,7 @@ function TerminalPageContent(): React.JSX.Element {
                 key={terminal.id}
                 terminal={terminal}
                 isActive={terminal.id === activeTerminalId}
+                onOpenInIframe={handleOpenInIframe}
               />
             ))}
           </div>
@@ -277,6 +270,34 @@ function TerminalPageContent(): React.JSX.Element {
                 💡 Pro tip: Create multiple terminals for different tasks - they all stay connected
                 while you navigate between pages
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Iframe Terminal Modal */}
+      {iframeTerminalId && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl w-full max-w-6xl h-full max-h-[90vh] flex flex-col">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                <TerminalIcon className="h-5 w-5" />
+                Terminal {iframeTerminalId}
+              </h3>
+              <Button variant="ghost" size="sm" onClick={handleCloseIframe} className="h-8 w-8 p-0">
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Modal Content - Iframe */}
+            <div className="flex-1 p-4">
+              <iframe
+                src={`/terminal/${iframeTerminalId}`}
+                className="w-full h-full border border-gray-200 dark:border-gray-700 rounded-lg"
+                title={`Terminal ${iframeTerminalId}`}
+                style={{ minHeight: '500px' }}
+              />
             </div>
           </div>
         </div>

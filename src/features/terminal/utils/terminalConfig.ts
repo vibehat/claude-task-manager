@@ -77,9 +77,12 @@ export const getXTermConfig = (theme: TerminalTheme, fontSize: number, fontFamil
   minimumContrastRatio: 1,
   // Use DOM renderer - simpler and standard approach
   rendererType: 'dom' as const,
-  logLevel: 'warn' as const,
+  logLevel: 'info' as const, // More verbose logging for debugging
   screenReaderMode: false,
   rightClickSelectsWord: true,
+  disableStdin: false, // Ensure input is enabled
+  macOptionIsMeta: true, // Enable proper key handling on Mac
+  windowsMode: false,
   theme: {
     background: theme.background,
     foreground: theme.foreground,

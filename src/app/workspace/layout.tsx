@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { TerminalProvider } from '@/features/terminal';
 
 export const metadata: Metadata = {
   title: 'Workspace | Circle',
@@ -14,5 +13,5 @@ interface WorkspaceLayoutPageProps {
 export default function WorkspaceLayoutPage({
   children,
 }: WorkspaceLayoutPageProps): React.JSX.Element {
-  return <TerminalProvider>{children}</TerminalProvider>;
+  return <>{children}</>;
 }

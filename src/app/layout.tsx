@@ -70,6 +70,7 @@ import { DataInitializer } from '@/components/layout/DataInitializer';
 import { CommandPaletteProvider } from '@/components/command-palette';
 import { GlobalCommandPalette } from '@/features/commands';
 import { TaskMasterSyncProvider } from '@/components/sync/TaskMasterSyncProvider';
+import { SafeTerminalButtonSystem } from '@/features/terminal/components/SafeTerminalButtonSystem';
 
 export default function RootLayout({
   children,
@@ -91,6 +92,7 @@ export default function RootLayout({
               <CommandPaletteProvider>
                 {children}
                 <GlobalCommandPalette />
+                <SafeTerminalButtonSystem />
                 <Toaster />
               </CommandPaletteProvider>
             </TaskMasterSyncProvider>
