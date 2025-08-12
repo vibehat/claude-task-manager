@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/TooltipProvider';
 import {
   Settings,
   Clock,
@@ -111,15 +112,20 @@ export function ContextSection({
           {/* Actions Section */}
           <div className="lg:col-span-2 p-4 lg:p-5 flex flex-row lg:flex-col gap-2 justify-center">
             {/* Terminal toggle removed (now in global layout) */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onSettings}
-              className="flex-1 lg:flex-initial"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              <span>Settings</span>
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onSettings}
+                  className="flex-1 lg:flex-initial"
+                >
+                  <Settings className="h-4 w-4 mr-2" />
+                  <span>Settings</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Configure project settings and preferences</TooltipContent>
+            </Tooltip>
           </div>
         </div>
       </CardContent>

@@ -3,6 +3,9 @@
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/empty-states';
+import { WorkflowItem, type WorkflowItemData } from '@/components/ui/WorkflowItem';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/TooltipProvider';
 import {
   Plus,
   RefreshCw,
@@ -19,39 +22,14 @@ import { cn } from '@/libs/client/utils';
 import { workflowEngine } from '../../utils/workflowEngine';
 import type { WorkflowSectionProps, WorkflowAction, SmartWorkflowSuggestion } from '../../types';
 
-function WorkflowItem({
-  title,
-  description,
-  id,
-  onAction,
-  onDismiss,
-  actionLabel,
-  completed = false,
-}: {
-  title: string;
-  description: string;
-  id: string;
-  onAction: (id: string) => void;
-  onDismiss: (id: string) => void;
-  actionLabel: string;
-  completed?: boolean;
-}): React.JSX.Element {
-  return (
-    <div
-      className={cn('p-3 rounded-lg border border-border bg-muted/30', completed && 'opacity-60')}
-    >
-      <div className="flex-1 mb-3">
-        <h3 className={cn('font-medium text-sm text-foreground mb-1', completed && 'line-through')}>
-          {title}
-        </h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </div>
-
-      <Button variant="outline" size="sm" onClick={() => onAction(id)} disabled={completed}>
-        {actionLabel}
-      </Button>
-    </div>
-  );
+// Helper function to convert workflow action to WorkflowItemData
+function convertToWorkflowItemData(action: any): WorkflowItemData {
+  return {
+    id: action.id,
+    title: action.action || action.title,
+    description: action.description,
+    completed: action.completed || false,
+  };
 }
 
 export function WorkflowSection({
@@ -182,12 +160,22 @@ export function WorkflowSection({
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold text-foreground">Workflow</CardTitle>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" onClick={onRefresh} className="h-8 w-8 p-0">
-              <RefreshCw className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={onAddAction} className="h-8 w-8 p-0">
-              <Plus className="w-4 h-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="sm" onClick={onRefresh} className="h-8 w-8 p-0">
+                  <RefreshCw className="w-4 h-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Refresh workflow suggestions</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="sm" onClick={onAddAction} className="h-8 w-8 p-0">
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Add custom workflow action</TooltipContent>
+            </Tooltip>
           </div>
         </div>
       </CardHeader>
@@ -218,13 +206,10 @@ export function WorkflowSection({
           {coreWorkflowActions.map((action) => (
             <WorkflowItem
               key={action.id}
-              id={action.id}
-              title={action.action}
-              description={action.description}
+              item={convertToWorkflowItemData(action)}
               onAction={onActionToggle}
-              onDismiss={() => {}}
               actionLabel="☐"
-              completed={false}
+              variant="compact"
             />
           ))}
         </div>
@@ -253,14 +238,16 @@ export function WorkflowSection({
 
         {/* Empty State */}
         {coreWorkflowActions.length === 0 && (
-          <div className="text-center py-6 text-muted-foreground">
-            <Target className="w-8 h-8 mx-auto mb-3 opacity-50" />
-            <p className="text-sm mb-3">No workflow items</p>
-            <Button variant="outline" size="sm" onClick={onAddAction}>
-              <Plus className="w-3 h-3 mr-1" />
-              Add Action
-            </Button>
-          </div>
+          <EmptyState
+            icon={<Target className="w-4 h-4 text-muted-foreground opacity-50" />}
+            title="No workflow items"
+            action={{
+              label: 'Add Action',
+              onClick: onAddAction,
+              variant: 'outline',
+              size: 'sm',
+            }}
+          />
         )}
       </CardContent>
     </Card>

@@ -3,6 +3,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/empty-states';
+import { KbdShortcut } from '@/components/ui/KbdShortcut';
 import { Command } from 'lucide-react';
 import type { QuickActionsSectionProps } from '../../types';
 
@@ -31,21 +33,15 @@ export function QuickActionsSection({
                   <span className="text-base">{action.icon}</span>
                   <span className="font-medium text-sm">{action.label}</span>
                 </div>
-                {action.shortcut && (
-                  <kbd className="px-2 py-1 text-xs font-mono bg-muted rounded border text-muted-foreground">
-                    {action.shortcut}
-                  </kbd>
-                )}
+                {action.shortcut && <KbdShortcut keys={action.shortcut} size="sm" />}
               </Button>
             ))}
           </div>
         ) : (
-          <div className="text-center py-6 text-muted-foreground">
-            <div className="w-8 h-8 mx-auto mb-2 bg-muted rounded-full flex items-center justify-center">
-              <span className="text-muted-foreground">⚡</span>
-            </div>
-            <p className="text-sm">No quick actions available</p>
-          </div>
+          <EmptyState
+            icon={<span className="text-muted-foreground">⚡</span>}
+            title="No quick actions available"
+          />
         )}
 
         {/* Command Palette */}
@@ -59,9 +55,7 @@ export function QuickActionsSection({
               <Command className="w-4 h-4" />
               <span className="font-medium text-sm">Command Palette</span>
             </div>
-            <kbd className="px-2 py-1 text-xs font-mono bg-muted rounded border text-muted-foreground">
-              ⌘K
-            </kbd>
+            <KbdShortcut keys="⌘K" size="sm" />
           </Button>
         </div>
       </CardContent>

@@ -6,13 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { CompletedIcon, ToDoIcon } from '@/components/icons';
 import {
   Play,
   FileText,
   Clock,
   Target,
-  CheckCircle,
-  Circle,
   ExternalLink,
   MessageCircle,
   Calendar,
@@ -33,7 +32,7 @@ function SubtaskItem({ subtask }: { subtask: WorkingOnTask['subtasks'][0] }): Re
           isCompleted ? 'text-green-600' : 'text-muted-foreground'
         )}
       >
-        {isCompleted ? <CheckCircle className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
+        {isCompleted ? <CompletedIcon className="w-4 h-4" /> : <ToDoIcon className="w-4 h-4" />}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
