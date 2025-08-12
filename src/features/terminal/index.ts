@@ -1,27 +1,31 @@
-// Re-export components
+// Re-export components (legacy)
+export { MultiTerminalTray, XTermStyles } from './components';
+
+// Re-export new wireframe-based components
 export {
-  Terminal,
-  TerminalStatus,
-  PersistentTerminal,
-  TerminalToggle,
-  MultiTerminalManager,
-  MultiTerminalWrapper,
-  XTermStyles,
+  TerminalButtonSystem,
+  TerminalWindow,
+  TerminalButtonBar,
+  SafeTerminalButtonSystem,
 } from './components';
 
-// Re-export contexts
-export { default as TerminalProvider, useTerminalContext } from './contexts/TerminalContext';
+// Re-export stores
+export {
+  useTerminalManagerStore,
+  useTerminals,
+  useActiveTerminalId,
+  useActiveTerminal,
+  useTerminalVisibility,
+  useTerminalLoading,
+  useTerminalError,
+  type Terminal,
+} from './stores/terminalManagerStore';
 
-// Re-export hooks
-export { useTerminal } from './hooks/useTerminal';
+// Re-export hooks (only the one we use)
 export { useIndividualTerminal } from './hooks/useIndividualTerminal';
 
 // Re-export types
 export type {
-  TerminalComponentProps,
-  TerminalStatusProps,
-  PersistentTerminalProps,
-  MultiTerminalInstance,
   TerminalConfig,
   TerminalMessage,
   TerminalDimensions,
@@ -36,8 +40,3 @@ export {
   lightTheme,
   darkTheme,
 } from './utils/terminalConfig';
-export {
-  TerminalStartupManager,
-  terminalStartupManager,
-  useTerminalStartup,
-} from './utils/terminalStartup';

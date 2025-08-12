@@ -1,12 +1,9 @@
-export { Terminal } from './Terminal';
-export { TerminalStatus } from './TerminalStatus';
-export { PersistentTerminal } from './PersistentTerminal';
-export { TerminalToggle } from './TerminalToggle';
-export { MultiTerminalManager } from './MultiTerminalManager';
-export { MultiTerminalWrapper } from './MultiTerminalWrapper';
+// Legacy components (for backward compatibility)
+export { MultiTerminalTray } from './MultiTerminalTray';
 export { XTermStyles } from './XTermStyles';
-export type {
-  TerminalComponentProps,
-  TerminalStatusProps,
-  PersistentTerminalProps,
-} from '../types/terminal';
+
+// New wireframe-based terminal system components
+export { TerminalButtonSystem } from './TerminalButtonSystem';
+export { TerminalWindow } from './TerminalWindow';
+export { TerminalButtonBar } from './TerminalButtonBar';
+export { SafeTerminalButtonSystem } from './SafeTerminalButtonSystem';

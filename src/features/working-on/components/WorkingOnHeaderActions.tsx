@@ -58,17 +58,7 @@ export function WorkingOnHeaderActions({
         </Button>
       )}
 
-      {/* Refresh Button */}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={onRefresh}
-        className="flex items-center gap-2"
-        title="Refresh tasks (R)"
-      >
-        <RefreshCw className="h-4 w-4" />
-        <span className="hidden sm:inline">Refresh</span>
-      </Button>
+      {/* Terminal Button - Removed (now in global layout) */}
     </div>
   );
 }

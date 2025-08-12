@@ -12,7 +12,6 @@ import { WorkspaceProjectProvider } from '@/libs/client/contexts/WorkspaceProjec
 import { WorkspaceSidebar } from '@/components/layout/sidebar/WorkspaceSidebar';
 import { cn } from '@/libs/client/utils';
 import WorkspaceHeader from '@/components/layout/headers/workspace/WorkspaceHeader';
-import { TerminalToggle, MultiTerminalManager } from '@/features/terminal';
 
 interface WorkspaceLayoutProps {
   children: React.ReactNode;
@@ -40,13 +39,8 @@ export function WorkspaceLayout({
     2: 'h-[calc(100svh-80px)] lg:h-[calc(100svh-96px)]',
   };
 
-  // Default actions include terminal toggle
-  const defaultActions = (
-    <>
-      <TerminalToggle />
-      {headerActions}
-    </>
-  );
+  // Default actions (terminal toggle removed as it's now in global layout)
+  const defaultActions = headerActions;
 
   // Use provided header or create default shared header
   const headerElement = header || (
@@ -77,9 +71,6 @@ export function WorkspaceLayout({
             </div>
           </div>
         </SidebarInset>
-
-        {/* Multi-Terminal Manager */}
-        <MultiTerminalManager />
       </SidebarProvider>
     </WorkspaceProjectProvider>
   );

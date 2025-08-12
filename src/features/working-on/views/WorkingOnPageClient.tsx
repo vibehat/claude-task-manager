@@ -87,6 +87,11 @@ export function WorkingOnPageClient(): React.JSX.Element {
     // TODO: Navigate to settings page
   };
 
+  const handleTerminal = () => {
+    console.log('Terminal button clicked');
+    // The TerminalToggle component handles its own logic
+  };
+
   const handleTaskSelect = (taskId: number) => {
     selectTask(taskId);
   };
@@ -220,6 +225,7 @@ export function WorkingOnPageClient(): React.JSX.Element {
             <ContextSection
               context={projectContext || mockProjectContext}
               onSettings={handleSettings}
+              onTerminal={handleTerminal}
             />
           </div>
 

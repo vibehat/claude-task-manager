@@ -16,7 +16,11 @@ import {
 import type { ContextSectionProps } from '../../types';
 import { cn } from '@/libs/client/utils';
 
-export function ContextSection({ context, onSettings }: ContextSectionProps): React.JSX.Element {
+export function ContextSection({
+  context,
+  onSettings,
+  onTerminal,
+}: ContextSectionProps): React.JSX.Element {
   const formatSyncTime = (syncTime: string) => {
     const date = new Date(syncTime);
     const now = new Date();
@@ -106,6 +110,7 @@ export function ContextSection({ context, onSettings }: ContextSectionProps): Re
 
           {/* Actions Section */}
           <div className="lg:col-span-2 p-4 lg:p-5 flex flex-row lg:flex-col gap-2 justify-center">
+            {/* Terminal toggle removed (now in global layout) */}
             <Button
               variant="outline"
               size="sm"

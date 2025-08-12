@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/SidebarProvider';
 import { useCommandPaletteStore } from '@/store/commandPaletteStore';
 import { SearchIcon } from 'lucide-react';
-import { TerminalToggle } from '@/features/terminal';
 
 export default function HeaderNav(): React.JSX.Element {
   const { openCommandPalette } = useCommandPaletteStore();
@@ -31,7 +30,7 @@ export default function HeaderNav(): React.JSX.Element {
         >
           <SearchIcon className="h-4 w-4" />
         </Button>
-        <TerminalToggle />
+        {/* Terminal toggle removed (now in global layout) */}
       </div>
     </div>
   );
