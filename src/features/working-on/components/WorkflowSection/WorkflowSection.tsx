@@ -154,6 +154,14 @@ export function WorkflowSection({
   // Enhanced quick actions with terminal integration
   const quickTerminalActions = [
     {
+      id: 'terminal-smart-workflow',
+      title: 'Smart Analysis',
+      description: 'Execute smart workflow analysis',
+      command: 'claude --dangerously-skip-permissions /tm:workflows:smart-workflow',
+      icon: Brain,
+      priority: 'high' as const,
+    },
+    {
       id: 'terminal-next-task',
       title: 'Next Task',
       description: 'Get the next available task from TaskMaster',
@@ -176,14 +184,6 @@ export function WorkflowSection({
       command: 'pnpm build',
       icon: Rocket,
       priority: 'medium' as const,
-    },
-    {
-      id: 'terminal-lint',
-      title: 'Run Linter',
-      description: 'Check code quality',
-      command: 'pnpm lint',
-      icon: CheckCircle,
-      priority: 'low' as const,
     },
   ];
 
@@ -242,13 +242,21 @@ export function WorkflowSection({
   ];
 
   const handleSmartWorkflow = () => {
-    // Execute the top contextual suggestion or show smart workflow dialog
-    if (contextualSuggestions.length > 0) {
-      onExecuteWorkflow(contextualSuggestions[0].id);
-    } else {
-      // Fallback to general workflow guidance
-      onExecuteWorkflow('smart-workflow-guide');
-    }
+    // Create and execute the smart workflow action using Claude Code
+    const smartWorkflowAction = TerminalExecutor.createAction(
+      'claude --dangerously-skip-permissions /tm:workflows:smart-workflow',
+      {
+        title: 'Smart Project Analysis',
+        description: 'Execute smart workflow analysis using Claude Code',
+        priority: 'high',
+        autoExecute: true,
+        terminalTitle: 'Smart Workflow Analysis',
+      }
+    );
+
+    // Add to store and execute immediately
+    useWorkflowActionStore.getState().addAction(smartWorkflowAction);
+    handleExecuteAction(smartWorkflowAction.id);
   };
 
   return (
