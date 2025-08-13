@@ -31,6 +31,8 @@ import { workflowEngine } from '../../utils/workflowEngine';
 import type { WorkflowSectionProps, WorkflowAction, SmartWorkflowSuggestion } from '../../types';
 import { useWorkflowActionStore } from '../../stores/workflowActionStore';
 import { TerminalExecutor } from '../../services/executors/TerminalExecutor';
+// Ensure executors are registered
+import '../../services/executors';
 
 // Helper function to convert workflow action to WorkflowItemData
 function convertToWorkflowItemData(action: any): WorkflowItemData {
@@ -130,21 +132,27 @@ export function WorkflowSection({
   };
 
   const handleExecuteAction = async (actionId: string) => {
+    console.log('Executing action:', actionId);
     try {
-      await executeAction(actionId);
+      const result = await executeAction(actionId);
+      console.log('Action execution result:', result);
     } catch (error) {
       console.error('Failed to execute action:', error);
     }
   };
 
   const handleQuickTerminalAction = (command: string, title: string) => {
+    console.log('Creating quick terminal action:', { command, title });
     const action = TerminalExecutor.createAction(command, {
       title,
       priority: 'high',
     });
 
+    console.log('Created action:', action);
+
     // Add to store and execute immediately
     useWorkflowActionStore.getState().addAction(action);
+    console.log('Added action to store, executing...');
     handleExecuteAction(action.id);
   };
 
@@ -242,6 +250,7 @@ export function WorkflowSection({
   ];
 
   const handleSmartWorkflow = () => {
+    console.log('Smart workflow button clicked');
     // Create and execute the smart workflow action using Claude Code
     const smartWorkflowAction = TerminalExecutor.createAction(
       'claude --dangerously-skip-permissions /tm:workflows:smart-workflow',
@@ -254,8 +263,11 @@ export function WorkflowSection({
       }
     );
 
+    console.log('Created smart workflow action:', smartWorkflowAction);
+
     // Add to store and execute immediately
     useWorkflowActionStore.getState().addAction(smartWorkflowAction);
+    console.log('Added smart workflow action to store, executing...');
     handleExecuteAction(smartWorkflowAction.id);
   };
 
