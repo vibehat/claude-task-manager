@@ -17,10 +17,20 @@ import {
   ArrowRight,
   CheckCircle,
   Target,
+  Play,
+  Square,
+  Terminal,
+  Globe,
+  FileText,
+  Zap,
+  Bell,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/libs/client/utils';
 import { workflowEngine } from '../../utils/workflowEngine';
 import type { WorkflowSectionProps, WorkflowAction, SmartWorkflowSuggestion } from '../../types';
+import { useWorkflowActionStore } from '../../stores/workflowActionStore';
+import { TerminalExecutor } from '../../services/executors/TerminalExecutor';
 
 // Helper function to convert workflow action to WorkflowItemData
 function convertToWorkflowItemData(action: any): WorkflowItemData {
@@ -42,6 +52,17 @@ export function WorkflowSection({
   onExecuteWorkflow,
   onDismissSuggestion,
 }: WorkflowSectionProps): React.JSX.Element {
+  // Enhanced workflow action store integration
+  const {
+    executeAction,
+    runningActions,
+    actionQueue,
+    addToQueue,
+    removeFromQueue,
+    executeQueue,
+    setShowCreateDialog,
+  } = useWorkflowActionStore();
+
   const totalItems = smartSuggestions.length + workflowActions.length;
   const pendingCount = workflowActions.filter((action) => !action.completed).length;
 
@@ -89,6 +110,82 @@ export function WorkflowSection({
 
   const workflowState = getWorkflowState();
   const StateIcon = workflowState.icon;
+
+  // Helper functions for action execution
+  const getActionIcon = (actionType: string) => {
+    switch (actionType) {
+      case 'terminal':
+        return Terminal;
+      case 'web':
+        return Globe;
+      case 'file':
+        return FileText;
+      case 'api':
+        return Zap;
+      case 'notification':
+        return Bell;
+      default:
+        return ArrowRight;
+    }
+  };
+
+  const handleExecuteAction = async (actionId: string) => {
+    try {
+      await executeAction(actionId);
+    } catch (error) {
+      console.error('Failed to execute action:', error);
+    }
+  };
+
+  const handleQuickTerminalAction = (command: string, title: string) => {
+    const action = TerminalExecutor.createAction(command, {
+      title,
+      priority: 'high',
+    });
+
+    // Add to store and execute immediately
+    useWorkflowActionStore.getState().addAction(action);
+    handleExecuteAction(action.id);
+  };
+
+  const isActionRunning = (actionId: string) => runningActions.has(actionId);
+  const isActionQueued = (actionId: string) => actionQueue.includes(actionId);
+
+  // Enhanced quick actions with terminal integration
+  const quickTerminalActions = [
+    {
+      id: 'terminal-next-task',
+      title: 'Next Task',
+      description: 'Get the next available task from TaskMaster',
+      command: 'task-master next',
+      icon: ArrowRight,
+      priority: 'high' as const,
+    },
+    {
+      id: 'terminal-run-tests',
+      title: 'Run Tests',
+      description: 'Execute project test suite',
+      command: 'pnpm test',
+      icon: CheckCircle,
+      priority: 'medium' as const,
+    },
+    {
+      id: 'terminal-build',
+      title: 'Build Project',
+      description: 'Build project for production',
+      command: 'pnpm build',
+      icon: Rocket,
+      priority: 'medium' as const,
+    },
+    {
+      id: 'terminal-lint',
+      title: 'Run Linter',
+      description: 'Check code quality',
+      command: 'pnpm lint',
+      icon: CheckCircle,
+      priority: 'low' as const,
+    },
+  ];
 
   // Combine all workflow items with proper categorization
   const coreWorkflowActions = [
@@ -201,6 +298,43 @@ export function WorkflowSection({
           </Button>
         </div>
 
+        {/* Quick Terminal Actions */}
+        <div className="space-y-2">
+          <div className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
+            <Terminal className="w-4 h-4" />
+            Quick Actions
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {quickTerminalActions.map((action) => {
+              const IconComponent = action.icon;
+              const isRunning = isActionRunning(action.id);
+
+              return (
+                <Button
+                  key={action.id}
+                  variant="outline"
+                  size="sm"
+                  className="h-auto p-2 flex flex-col items-start gap-1 text-left"
+                  disabled={isRunning}
+                  onClick={() => handleQuickTerminalAction(action.command, action.title)}
+                >
+                  <div className="flex items-center gap-2 w-full">
+                    {isRunning ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <IconComponent className="w-3 h-3" />
+                    )}
+                    <span className="text-xs font-medium truncate">{action.title}</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground truncate w-full">
+                    {action.description}
+                  </span>
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Core Workflow Actions */}
         <div className="space-y-2">
           {coreWorkflowActions.map((action) => (
@@ -215,25 +349,70 @@ export function WorkflowSection({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2 pt-2">
-          <Button
-            variant={workflowState.state === 'completed' ? 'default' : 'outline'}
-            size="sm"
-            className="flex-1 gap-2"
-            onClick={() => onActionToggle('primary-action')}
-          >
-            <StateIcon className="w-4 h-4" />
-            {workflowState.primaryAction}
-          </Button>
-          {workflowState.state === 'working' && (
-            <Button variant="ghost" size="sm" onClick={() => onActionToggle('pause-action')}>
-              <Pause className="w-4 h-4" />
+        <div className="space-y-2 pt-2">
+          <div className="flex items-center gap-2">
+            <Button
+              variant={workflowState.state === 'completed' ? 'default' : 'outline'}
+              size="sm"
+              className="flex-1 gap-2"
+              onClick={() => onActionToggle('primary-action')}
+            >
+              <StateIcon className="w-4 h-4" />
+              {workflowState.primaryAction}
             </Button>
+            {workflowState.state === 'working' && (
+              <Button variant="ghost" size="sm" onClick={() => onActionToggle('pause-action')}>
+                <Pause className="w-4 h-4" />
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={onRefresh}>
+              <RefreshCw className="w-4 h-4" />
+            </Button>
+          </div>
+
+          {/* Action Queue Controls */}
+          {actionQueue.length > 0 && (
+            <div className="flex items-center gap-2 p-2 bg-accent/20 rounded-md">
+              <div className="flex-1 text-sm text-muted-foreground">
+                {actionQueue.length} action{actionQueue.length > 1 ? 's' : ''} queued
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => executeQueue(true)}
+                className="gap-1"
+              >
+                <Play className="w-3 h-3" />
+                Run Queue
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => useWorkflowActionStore.getState().clearQueue()}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
           )}
-          <Button variant="ghost" size="sm" onClick={onRefresh}>
-            <RefreshCw className="w-4 h-4" />
-            Refresh
-          </Button>
+
+          {/* Running Actions Indicator */}
+          {runningActions.size > 0 && (
+            <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-950/20 rounded-md">
+              <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+              <div className="flex-1 text-sm text-blue-700 dark:text-blue-300">
+                {runningActions.size} action{runningActions.size > 1 ? 's' : ''} running
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => useWorkflowActionStore.getState().cancelAllActions()}
+                className="text-blue-600 hover:text-blue-700"
+              >
+                <Square className="w-3 h-3" />
+                Stop All
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Empty State */}
